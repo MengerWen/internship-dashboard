@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /*
+    Starter for content/daily/YYYY-MM-DD.show.html.
+    CSS variables below are copied from site/css/tokens.css; keep them manually synchronized.
+    Do not reference external CDN assets if this page must work offline.
+    */
+    :root {
+      --bg: #111827;
+      --surface: #182231;
+      --surface-2: #202b3b;
+      --line: #344255;
+      --text: #e5e7eb;
+      --muted: #8a95a5;
+      --focus: #fff6d6;
+      --font-serif: "Libre Baskerville", "Noto Serif SC", serif;
+      --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-serif);
+      line-height: 1.75;
+    }
+
+    .panel {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <h1>自定义展示页标题</h1>
+    <p>这里编写当天专属交互展示。脚本会在 iframe srcdoc 中执行。</p>
+  </main>
+  <script>
+    // Put local interaction code here. No external scripts.
+  </script>
+</body>
+</html>

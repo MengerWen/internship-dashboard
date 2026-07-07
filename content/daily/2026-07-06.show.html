@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #111827;
+      --surface: #182231;
+      --surface-2: #202b3b;
+      --line: #344255;
+      --text: #e5e7eb;
+      --muted: #8a95a5;
+      --focus: #fff6d6;
+      --font-serif: "Libre Baskerville", "Noto Serif SC", serif;
+      --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-serif);
+      line-height: 1.75;
+    }
+
+    h1 { margin: 0 0 12px; font-size: 26px; }
+    p { color: var(--muted); }
+
+    button {
+      min-height: 36px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--focus);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 18px;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid var(--line);
+      text-align: left;
+    }
+
+    th { color: var(--focus); background: var(--surface); }
+    tr.is-sorted td { background: rgb(255 246 214 / 0.07); }
+  </style>
+</head>
+<body>
+  <h1>快照重放原型:定制展示页</h1>
+  <p>示例内容,待替换。点击按钮会切换表格排序状态,用于验证 iframe srcdoc 中脚本确实执行。</p>
+  <button id="toggle-sort" type="button">切换占位排序</button>
+  <table>
+    <thead>
+      <tr><th>时间</th><th>买一</th><th>卖一</th></tr>
+    </thead>
+    <tbody id="rows">
+      <tr><td>09:30:03</td><td>0.00</td><td>0.00</td></tr>
+      <tr><td>09:30:00</td><td>0.00</td><td>0.00</td></tr>
+      <tr><td>09:30:06</td><td>0.00</td><td>0.00</td></tr>
+    </tbody>
+  </table>
+  <script>
+    const button = document.getElementById("toggle-sort");
+    const rows = document.getElementById("rows");
+    let sorted = false;
+    button.addEventListener("click", () => {
+      sorted = !sorted;
+      const items = Array.from(rows.querySelectorAll("tr"));
+      items.sort((a, b) => sorted
+        ? a.cells[0].textContent.localeCompare(b.cells[0].textContent)
+        : b.cells[0].textContent.localeCompare(a.cells[0].textContent));
+      rows.replaceChildren(...items);
+      rows.querySelectorAll("tr").forEach((row) => row.classList.toggle("is-sorted", sorted));
+      button.textContent = sorted ? "恢复占位排序" : "切换占位排序";
+    });
+  </script>
+</body>
+</html>

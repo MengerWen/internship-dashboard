@@ -20,6 +20,7 @@ title: "日报标题"
 date: 2026-07-08
 stage: algo-footprint
 summary: "一句话摘要,会显示在时间轴上。"
+# 可选: published: 2026-07-08 21:34:12
 ---
 
 # 日报标题
@@ -30,6 +31,39 @@ summary: "一句话摘要,会显示在时间轴上。"
 ```
 
 `stage` 必须使用 `config.json` 中已有的阶段 id。缺失或未知时构建不会中断,但会打印警告并归入 `unclassified`。
+
+发布时间默认来自 git 历史:首次提交时间作为发布时间,最后一次提交时间作为更新时间。若 Cloudflare 浅克隆或历史不可得,构建会降级到文件 mtime 并打印警告。需要稳定控制首次发布时间时,在 frontmatter 中手填 `published: YYYY-MM-DD HH:MM:SS`。
+
+## 为某天写展示版
+
+每篇日报最多配一个展示版,与主日报放在同一目录:
+
+```text
+content/daily/2026-07-08.md
+content/daily/2026-07-08.show.md
+content/daily/2026-07-08.show.html
+```
+
+`.show.md` 和 `.show.html` 二选一。两者同时存在时 `.show.html` 生效。
+
+标准写法使用 `.show.md`,每个 H2 是一幕:
+
+```markdown
+---
+title: "当日成果展示"
+---
+
+## 幕一:问题
+
+正文。
+
+## 幕二:构建
+
+??? note "细节"
+    折叠内容。
+```
+
+完全定制写法使用 `.show.html`,会通过 iframe `srcdoc` 隔离运行,脚本可以执行。不要引用外部 CDN。模板在 `templates/show-html-starter.html`。
 
 ## 更新正式成果页
 

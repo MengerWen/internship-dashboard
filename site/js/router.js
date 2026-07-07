@@ -58,8 +58,8 @@
 
     parseHash() {
       const clean = window.location.hash.replace(/^#\/?/, "");
-      const [view, key] = clean.split("/");
-      if (view === "daily") return {view: "daily", key};
+      const [view, key, subview] = clean.split("/");
+      if (view === "daily") return {view: "daily", key, subview};
       if (view === "showcase") return {view: "showcase", key};
       return {view: "showcase", key: null};
     },
@@ -70,14 +70,14 @@
         window.location.replace("#/showcase");
         return;
       }
-      const {view, key} = this.parseHash();
+      const {view, key, subview} = this.parseHash();
       document.querySelectorAll(".view").forEach((node) => node.classList.remove("is-active"));
       document.querySelectorAll(".tab").forEach((node) => node.classList.remove("is-active"));
 
       if (view === "daily") {
         document.getElementById("view-daily").classList.add("is-active");
         document.getElementById("tab-daily").classList.add("is-active");
-        window.DailyView.show(key);
+        window.DailyView.show(key, subview);
       } else {
         document.getElementById("view-showcase").classList.add("is-active");
         document.getElementById("tab-showcase").classList.add("is-active");

@@ -70,7 +70,23 @@ dist
 D:\MG\anaconda3\python.exe --version
 ```
 
-6. 保存后,每次 `git push` 都会触发 Cloudflare Pages 自动构建和发布。
+9. 保存后,每次 `git push` 都会触发 Cloudflare Pages 自动构建和发布。
+
+### Git 时间与浅克隆
+
+日报的 `published_at` 和 `updated_at` 默认来自 git 历史。Cloudflare 构建环境可能是浅克隆,导致首次提交时间不可得。`build.py` 会检测 `.git/shallow` 并尝试 `git fetch --unshallow`;失败时不会中断构建,但对应日报会降级到 mtime 并打印警告。
+
+如果你需要在 Cloudflare 上稳定获得 git 时间,可以把 Build command 改成:
+
+```bash
+git fetch --unshallow || true && pip install -r requirements.txt && python build.py
+```
+
+更稳妥的做法是在日报 frontmatter 中手填:
+
+```yaml
+published: 2026-07-07 21:34:12
+```
 
 ## 3. 门禁与防索引
 

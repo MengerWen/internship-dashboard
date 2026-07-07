@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>量化实习成果看板</title>
-  <link rel="stylesheet" href="css/tokens.css?v=20260707">
-  <link rel="stylesheet" href="css/base.css?v=20260707">
-  <link rel="stylesheet" href="css/showcase.css?v=20260707">
-  <link rel="stylesheet" href="css/daily.css?v=20260707">
+  <link rel="stylesheet" href="css/tokens.css?v=20260708">
+  <link rel="stylesheet" href="css/base.css?v=20260708">
+  <link rel="stylesheet" href="css/showcase.css?v=20260708">
+  <link rel="stylesheet" href="css/daily.css?v=20260708">
 </head>
 <body>
   <!-- INLINE_DATA -->
@@ -39,9 +39,17 @@
     <section id="view-daily" class="view daily-view" aria-labelledby="tab-daily">
       <article class="daily-document">
         <div id="daily-meta" class="daily-meta"></div>
+        <div class="daily-local-tabs" role="tablist" aria-label="日报局部视图">
+          <button id="daily-doc-tab" class="daily-local-tab is-active" type="button" role="tab" aria-selected="true">文档</button>
+          <button id="daily-show-tab" class="daily-local-tab" type="button" role="tab" aria-selected="false">展示</button>
+        </div>
+        <div id="daily-notice" class="daily-notice" hidden></div>
         <div class="daily-mainline">
           <nav id="daily-toc" class="daily-toc" aria-label="文档目录"></nav>
-          <div id="daily-content" class="markdown-body daily-content"></div>
+          <div class="daily-content-frame">
+            <div id="daily-content" class="markdown-body daily-content"></div>
+            <div id="daily-show-content" class="daily-show-content" hidden></div>
+          </div>
         </div>
         <div class="daily-nav">
           <button id="daily-prev" class="text-button" type="button">上一篇</button>
@@ -65,9 +73,9 @@
     </div>
   </dialog>
 
-  <script src="js/router.js?v=20260707"></script>
-  <script src="js/showcase.js?v=20260707"></script>
-  <script src="js/daily.js?v=20260707"></script>
-  <script src="js/search.js?v=20260707"></script>
+  <script src="js/router.js?v=20260708"></script>
+  <script src="js/showcase.js?v=20260708"></script>
+  <script src="js/daily.js?v=20260708"></script>
+  <script src="js/search.js?v=20260708"></script>
 </body>
 </html>
