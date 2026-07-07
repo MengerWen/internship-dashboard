@@ -1,4 +1,14 @@
 (function () {
+  function escapeHtml(text) {
+    return String(text ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;",
+    }[char]));
+  }
+
   const DailyView = {
     manifest: null,
     app: null,
@@ -9,6 +19,7 @@
     contentEl: null,
     showEl: null,
     tocEl: null,
+    mainlineEl: null,
     noticeTimer: null,
 
     async init(manifest, app) {
@@ -18,6 +29,7 @@
       this.contentEl = document.getElementById("daily-content");
       this.showEl = document.getElementById("daily-show-content");
       this.tocEl = document.getElementById("daily-toc");
+      this.mainlineEl = document.querySelector(".daily-mainline");
       this.renderTimeline();
       this.bind();
     },
@@ -36,17 +48,19 @@
         }
         const stage = this.app.getStage(item.stage);
         const button = document.createElement("button");
+        const summary = item.summary || "无摘要";
+        const published = this.formatTime(item.published_at);
         button.type = "button";
         button.className = "timeline-item";
         button.dataset.date = item.date;
-        button.title = `${item.summary || "无摘要"}\n发布于 ${this.formatTime(item.published_at)}`;
+        button.title = `${summary}\n发布于 ${published}`;
         button.style.setProperty("--stage-color", stage.color);
         button.innerHTML = `
           <span class="timeline-dot" aria-hidden="true"></span>
           <span>
             <span class="timeline-date">${item.date}</span>
-            <span class="timeline-title">${item.title}${item.has_show ? '<span class="show-badge" title="当天有展示版">◆</span>' : ""}</span>
-            <span class="timeline-summary">${item.summary || "无摘要"}<br><span>发布于 ${this.formatTime(item.published_at)}</span></span>
+            <span class="timeline-title">${escapeHtml(item.title)}${item.has_show ? '<span class="show-badge" title="当天有展示版">◆</span>' : ""}</span>
+            <span class="timeline-summary">${escapeHtml(summary)}<br><span>发布于 ${escapeHtml(published)}</span></span>
           </span>
         `;
         button.addEventListener("click", () => {
@@ -111,9 +125,9 @@
       meta.style.setProperty("--stage-color", stage.color);
       meta.innerHTML = `
         <span class="meta-chip">${item.date}</span>
-        <span class="meta-chip stage">${stage.label}</span>
-        <span class="meta-chip">${item.summary || "无摘要"}</span>
-        <span class="meta-time">${this.timeMeta(item)}</span>
+        <span class="meta-chip stage">${escapeHtml(stage.label)}</span>
+        <span class="meta-chip">${escapeHtml(item.summary || "无摘要")}</span>
+        <span class="meta-time">${escapeHtml(this.timeMeta(item))}</span>
       `;
     },
 
@@ -150,17 +164,19 @@
         this.tocEl.innerHTML = "<span class=\"meta-chip\">无目录</span>";
         return;
       }
-      this.tocEl.innerHTML = headings.map((heading, index) => {
+      this.tocEl.innerHTML = "";
+      headings.forEach((heading, index) => {
         if (!heading.id) heading.id = `section-${index + 1}`;
         const level = heading.tagName.replace("H", "");
-        return `<a href="#${heading.id}" data-level="${level}">${heading.textContent}</a>`;
-      }).join("");
-      this.tocEl.querySelectorAll("a").forEach((link) => {
+        const link = document.createElement("a");
+        link.setAttribute("href", `#${heading.id}`);
+        link.dataset.level = level;
+        link.textContent = heading.textContent;
         link.addEventListener("click", (event) => {
           event.preventDefault();
-          const target = this.contentEl.querySelector(link.getAttribute("href"));
-          target.scrollIntoView({behavior: "smooth", block: "start"});
+          heading.scrollIntoView({behavior: "smooth", block: "start"});
         });
+        this.tocEl.appendChild(link);
       });
       this.observeHeadings(headings);
     },
@@ -211,6 +227,7 @@
       this.contentEl.hidden = mode !== "doc";
       this.showEl.hidden = mode !== "show";
       this.tocEl.hidden = mode !== "doc";
+      this.mainlineEl.classList.toggle("is-show-mode", mode === "show");
       if (mode === "show") {
         await this.renderShow(item);
       }
@@ -220,12 +237,16 @@
     },
 
     async renderShow(item) {
-      const html = await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
       if (item.show_type === "html") {
-        this.showEl.innerHTML = `<iframe class="daily-show-frame" sandbox="allow-scripts" title="${item.title} 展示版"></iframe>`;
+        const inline = document.getElementById(`daily-show-html-${item.date}`);
+        const html = inline
+          ? JSON.parse(inline.textContent)
+          : await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
+        this.showEl.innerHTML = `<iframe class="daily-show-frame" sandbox="allow-scripts" title="${escapeHtml(item.title)} 展示版"></iframe>`;
         this.showEl.querySelector("iframe").srcdoc = html;
         return;
       }
+      const html = await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
       this.showEl.innerHTML = `
         <div class="daily-show-player">
           <div class="daily-show-scenes">${html}</div>

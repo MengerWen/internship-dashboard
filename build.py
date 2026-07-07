@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import html as html_lib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -38,6 +39,7 @@ class Builder:
     def __init__(self, offline: bool = False) -> None:
         self.offline = offline
         self.out_dir = OFFLINE_DIR if offline else DIST_DIR
+        self.build_stamp = datetime.now(CN_TZ).strftime("%Y%m%d%H%M%S")
         self.warnings: list[str] = []
         self.git_checked = False
         self.git_available = False
@@ -225,6 +227,13 @@ class Builder:
         if self.out_dir.exists():
             shutil.rmtree(self.out_dir)
         shutil.copytree(SITE_DIR, self.out_dir)
+        self.inject_asset_versions()
+
+    def inject_asset_versions(self) -> None:
+        index_path = self.out_dir / "index.html"
+        html = index_path.read_text(encoding="utf-8")
+        html = re.sub(r"\?v=\d+", f"?v={self.build_stamp}", html)
+        index_path.write_text(html, encoding="utf-8", newline="\n")
 
     def build_showcase(self) -> list[dict[str, Any]]:
         content_by_stage: dict[str, RenderedPage] = {}
@@ -336,6 +345,7 @@ class Builder:
             if date_key not in primary_dates:
                 self.warnings.append(f"{orphan.relative_to(ROOT)} 缺少对应主日报,已跳过")
 
+        seen_dates: set[str] = set()
         for path in primary_paths:
             try:
                 post = frontmatter.loads(path.read_text(encoding="utf-8"))
@@ -344,12 +354,29 @@ class Builder:
                 continue
 
             meta = dict(post.metadata)
-            date_value = str(meta.get("date") or path.stem)
             try:
-                date_key = datetime.fromisoformat(date_value).date().isoformat()
+                date_key = datetime.fromisoformat(path.stem).date().isoformat()
+                if date_key != path.stem:
+                    raise ValueError
             except ValueError:
                 self.warnings.append(f"{path.relative_to(ROOT)} 日期解析失败,已跳过")
                 continue
+            date_value = meta.get("date")
+            if date_value:
+                try:
+                    meta_date = datetime.fromisoformat(str(date_value)).date().isoformat()
+                    if meta_date != date_key:
+                        self.warnings.append(
+                            f"{path.relative_to(ROOT)} frontmatter date 与文件名不一致,以文件名为准"
+                        )
+                except ValueError:
+                    self.warnings.append(
+                        f"{path.relative_to(ROOT)} frontmatter date 解析失败,以文件名为准"
+                    )
+            if date_key in seen_dates:
+                self.warnings.append(f"{path.relative_to(ROOT)} 日期 {date_key} 重复,已跳过")
+                continue
+            seen_dates.add(date_key)
 
             stage_id = str(meta.get("stage") or "unclassified")
             if stage_id not in self.stage_by_id:
@@ -554,9 +581,15 @@ class Builder:
         for page in self.daily_pages:
             templates.append(f'<template id="daily-{page.key}">\n{page.html}\n</template>')
         for page in self.daily_show_pages:
-            templates.append(
-                f'<template id="daily-show-{page.key}" data-show-type="{page.meta["show_type"]}">\n{page.html}\n</template>'
-            )
+            if page.meta["show_type"] == "html":
+                payload = json.dumps(page.html, ensure_ascii=False).replace("</", "<\\/")
+                templates.append(
+                    f'<script type="application/json" id="daily-show-html-{page.key}">{payload}</script>'
+                )
+            else:
+                templates.append(
+                    f'<template id="daily-show-{page.key}" data-show-type="{page.meta["show_type"]}">\n{page.html}\n</template>'
+                )
         payload = (
             '<script type="application/json" id="inline-manifest">'
             + json.dumps(manifest, ensure_ascii=False)
@@ -651,6 +684,11 @@ def serve() -> None:
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(description="Build internship dashboard.")
     parser.add_argument("--offline", action="store_true", help="build dist-offline for file:// use")
     parser.add_argument("--serve", action="store_true", help="build dist and serve locally")

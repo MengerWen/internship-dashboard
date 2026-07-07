@@ -13,7 +13,7 @@ git push
 ```
 
 3. 日常日报的 commit/push 发生在 `dashboard` 子仓库内。父仓库中的 submodule 指针不会自动前进;如果希望父仓库记录最新 dashboard 版本,再到父仓库执行 `git add dashboard && git commit`。
-4. Cloudflare Pages 直接连接 `internship-dashboard` 仓库,网站发布只取决于 dashboard 子仓库的 push,与父仓库 submodule 指针是否更新无关。
+4. Cloudflare Workers Builds 直接连接 `internship-dashboard` 仓库,网站发布只取决于 dashboard 子仓库的 push,与父仓库 submodule 指针是否更新无关。
 5. 重新 clone 父仓库时使用:
 
 ```powershell
@@ -28,17 +28,16 @@ git submodule update --init
 
 6. 权限边界提醒:如果父仓库是 public,submodule 会暴露子仓库 URL 和 commit hash,但不会暴露 private 子仓库内容。子仓库必须保持 private。
 
-## 2. Cloudflare Pages
+## 2. Cloudflare Workers 静态资产
 
-1. 进入 Cloudflare Dashboard -> Workers & Pages -> Create application -> Pages -> Connect to Git。
-2. 选择 `internship-dashboard` private repo。
-3. Build command 填:
+1. 进入 Cloudflare Dashboard -> Workers & Pages -> 导入 Git 仓库,选择 `internship-dashboard` private repo。
+2. Build command 填:
 
 ```bash
 pip install -r requirements.txt && python build.py
 ```
 
-4. Deploy command 填:
+3. Deploy command 填:
 
 ```bash
 npx wrangler deploy
@@ -46,31 +45,31 @@ npx wrangler deploy
 
 `wrangler.jsonc` 已经声明 `assets.directory = "./dist"`,所以不需要在表单里重复写 `--assets ./dist`。
 
-5. 如果开启 preview/non-production branch builds,Non-production branch deploy command 填:
+4. 如果开启 preview/non-production branch builds,Non-production branch deploy command 填:
 
 ```bash
 npx wrangler versions upload
 ```
 
-6. Path 填:
+5. Path 填:
 
 ```text
 /
 ```
 
-7. 如果界面要求 Output directory,填:
+6. 如果界面要求 Output directory,填:
 
 ```text
 dist
 ```
 
-8. Environment variables 中设置 `PYTHON_VERSION`。本地版本可用以下命令查询:
+7. Environment variables 中设置 `PYTHON_VERSION`。本地版本可用以下命令查询:
 
 ```powershell
 D:\MG\anaconda3\python.exe --version
 ```
 
-9. 保存后,每次 `git push` 都会触发 Cloudflare Pages 自动构建和发布。
+8. 保存后,每次 `git push` 都会触发 Workers Builds 自动构建,并通过 `npx wrangler deploy` 发布 `dist/` 静态资产。
 
 ### Git 时间与浅克隆
 
@@ -107,14 +106,14 @@ Disallow: /
 
 Cloudflare Access 配置:
 
-1. 进入 Cloudflare Zero Trust -> Access -> Applications。
-2. Add an application -> Self-hosted。
-3. Domain 填 Pages 生产域名。
+1. 进入 Workers 项目 -> Settings -> Domains & Routes -> workers.dev -> Enable Cloudflare Access。
+2. 在 Zero Trust -> Access -> Applications 中确认对应应用已创建并指向 Worker 的 workers.dev 域名。
+3. Domain 使用 Worker 的生产 workers.dev 域名。
 4. Policy 选择 Allow。
 5. Include 选择 Emails 或 Email domain,填入白名单。
 6. Login methods 建议启用 One-time PIN。
 7. Session duration 建议设置 7 days。
-8. 必须同时保护 preview 部署:在 Pages 项目设置里启用 Access integration 或为 preview 域名添加同样的 Access 应用。preview URL 未保护等于后门。
+8. 必须确认 preview 版本 URL(`<version>-<name>.<subdomain>.workers.dev`)在保护范围内。preview URL 未保护等于后门。
 9. 增删白名单:Zero Trust -> Access -> Applications -> 对应应用 -> Policies -> Include。
 10. 查看访问日志:Zero Trust -> Logs -> Access。
 

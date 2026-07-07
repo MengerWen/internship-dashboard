@@ -6,7 +6,10 @@
       const dialog = document.getElementById("search-dialog");
       const open = document.getElementById("search-open");
       const close = document.getElementById("search-close");
-      if (document.body.dataset.offline === "true") return;
+      if (document.body.dataset.offline === "true") {
+        open.hidden = true;
+        return;
+      }
       open.addEventListener("click", async () => {
         dialog.showModal();
         if (!this.initialized) await this.mount();

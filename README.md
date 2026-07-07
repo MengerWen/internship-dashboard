@@ -63,7 +63,7 @@ title: "当日成果展示"
     折叠内容。
 ```
 
-完全定制写法使用 `.show.html`,会通过 iframe `srcdoc` 隔离运行,脚本可以执行。不要引用外部 CDN。模板在 `templates/show-html-starter.html`。
+完全定制写法使用 `.show.html`,会通过 iframe `srcdoc` 隔离运行,脚本可以执行。定制页应自包含,不要依赖 `<head>` 中的外部引用,也不要引用外部 CDN。模板在 `templates/show-html-starter.html`。
 
 ## 更新正式成果页
 
@@ -88,7 +88,7 @@ git commit -m "update dashboard content"
 git push
 ```
 
-Cloudflare Pages 连接 dashboard 仓库后,每次 push 会自动重新构建发布。
+Cloudflare Workers Builds 连接 dashboard 仓库后,每次 push 会自动重新构建并部署静态资产。
 
 ## 导出离线版
 
