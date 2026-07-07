@@ -35,16 +35,36 @@ git submodule update --init
 3. Build command 填:
 
 ```bash
-pip install -r requirements.txt && python build.py && npx -y pagefind --site dist
+pip install -r requirements.txt && python build.py
 ```
 
-4. Output directory 填:
+4. Deploy command 填:
+
+```bash
+npx wrangler deploy
+```
+
+`wrangler.jsonc` 已经声明 `assets.directory = "./dist"`,所以不需要在表单里重复写 `--assets ./dist`。
+
+5. 如果开启 preview/non-production branch builds,Non-production branch deploy command 填:
+
+```bash
+npx wrangler versions upload
+```
+
+6. Path 填:
+
+```text
+/
+```
+
+7. 如果界面要求 Output directory,填:
 
 ```text
 dist
 ```
 
-5. Environment variables 中设置 `PYTHON_VERSION`。本地版本可用以下命令查询:
+8. Environment variables 中设置 `PYTHON_VERSION`。本地版本可用以下命令查询:
 
 ```powershell
 D:\MG\anaconda3\python.exe --version
