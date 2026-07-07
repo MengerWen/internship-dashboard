@@ -27,6 +27,47 @@
   color: var(--muted);
 }
 
+.daily-downloads {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  padding: 2px;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: rgb(11 17 32 / 0.45);
+}
+
+.daily-download-label {
+  padding: 0 6px 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.daily-download-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 52px;
+  min-height: 26px;
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.daily-download-link:hover {
+  border-color: var(--focus);
+  color: var(--focus);
+}
+
 .meta-chip {
   display: inline-flex;
   align-items: center;
@@ -365,6 +406,12 @@
   .daily-content,
   .daily-show-content {
     padding: 18px;
+  }
+
+  .daily-downloads {
+    width: 100%;
+    justify-content: flex-start;
+    margin-left: 0;
   }
 
   .daily-show-player {

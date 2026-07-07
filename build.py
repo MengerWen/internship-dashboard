@@ -379,6 +379,14 @@ class Builder:
             title = self.infer_title(path, post.content, meta)
             out_rel = Path("daily") / f"{date_key}.html"
             self.write_text(self.out_dir / out_rel, html)
+            download_md_rel = Path("downloads") / "daily" / f"{date_key}.md"
+            download_html_rel = Path("downloads") / "daily" / f"{date_key}.html"
+            (self.out_dir / download_md_rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path, self.out_dir / download_md_rel)
+            self.write_text(
+                self.out_dir / download_html_rel,
+                self.downloadable_daily_html(title, html),
+            )
             published_at, updated_at, time_source = self.daily_times(path, meta)
             show_md = daily_dir / f"{date_key}.show.md"
             show_html = daily_dir / f"{date_key}.show.html"
@@ -427,6 +435,8 @@ class Builder:
                     "has_show": has_show,
                     "show_type": show_type,
                     "show_path": show_path,
+                    "download_md_path": download_md_rel.as_posix(),
+                    "download_html_path": download_html_rel.as_posix(),
                 },
             )
             self.daily_pages.append(page)
@@ -453,6 +463,8 @@ class Builder:
                     "has_show": has_show,
                     "show_type": show_type,
                     "show_path": show_path,
+                    "download_md_path": download_md_rel.as_posix(),
+                    "download_html_path": download_html_rel.as_posix(),
                 }
             )
 
@@ -541,6 +553,82 @@ class Builder:
   {meta_tags}
   <main data-pagefind-body>
     <h1>{title_attr}</h1>
+    {body}
+  </main>
+</body>
+</html>
+"""
+
+    @staticmethod
+    def downloadable_daily_html(title: str, body: str) -> str:
+        title_attr = html_lib.escape(title, quote=True)
+        body = (
+            body
+            .replace('src="assets/', 'src="../../assets/')
+            .replace("src='assets/", "src='../../assets/")
+            .replace('href="assets/', 'href="../../assets/')
+            .replace("href='assets/", "href='../../assets/")
+        )
+        return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title_attr}</title>
+  <style>
+    body {{
+      margin: 0;
+      padding: 32px;
+      background: #111827;
+      color: #e5e7eb;
+      font-family: "Noto Serif SC", "Microsoft YaHei", serif;
+      line-height: 1.85;
+    }}
+    main {{
+      max-width: 980px;
+      margin: 0 auto;
+    }}
+    h1, h2, h3, h4 {{
+      line-height: 1.35;
+    }}
+    h2 {{
+      color: #fff6d6;
+      margin-top: 32px;
+    }}
+    a {{
+      color: #fff6d6;
+    }}
+    table {{
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+    }}
+    th, td {{
+      border: 1px solid #344255;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }}
+    th {{
+      background: #202b3b;
+      color: #fff6d6;
+    }}
+    blockquote {{
+      margin: 18px 0;
+      padding: 12px 16px;
+      border-left: 3px solid #fff6d6;
+      background: #182231;
+    }}
+    pre {{
+      overflow: auto;
+      padding: 16px;
+      background: #0a0f1c;
+      border: 1px solid #344255;
+    }}
+  </style>
+</head>
+<body>
+  <main>
     {body}
   </main>
 </body>

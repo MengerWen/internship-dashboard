@@ -136,6 +136,35 @@
         <span class="meta-chip stage">${escapeHtml(stage.label)}</span>
         <span class="meta-chip">${escapeHtml(item.summary || "无摘要")}</span>
         <span class="meta-time">${escapeHtml(this.timeMeta(item))}</span>
+        ${this.renderDownloads(item)}
+      `;
+    },
+
+    renderDownloads(item) {
+      const links = [
+        item.download_md_path ? {
+          href: item.download_md_path,
+          filename: `${item.date}.md`,
+          label: ".md",
+          title: "Download Markdown",
+        } : null,
+        item.download_html_path ? {
+          href: item.download_html_path,
+          filename: `${item.date}.html`,
+          label: ".html",
+          title: "Download HTML",
+        } : null,
+      ].filter(Boolean);
+      if (!links.length) return "";
+      return `
+        <span class="daily-downloads" aria-label="&#19979;&#36733;&#24403;&#21069;&#26085;&#25253;">
+          <span class="daily-download-label">&#19979;&#36733;</span>
+          ${links.map((link) => `
+            <a class="daily-download-link" href="${escapeHtml(link.href)}" download="${escapeHtml(link.filename)}" title="${escapeHtml(link.title)}">
+              <span aria-hidden="true">↓</span><span>${escapeHtml(link.label)}</span>
+            </a>
+          `).join("")}
+        </span>
       `;
     },
 
