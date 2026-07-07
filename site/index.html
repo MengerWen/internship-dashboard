@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>量化实习成果看板</title>
+  <link rel="stylesheet" href="css/tokens.css?v=20260707">
+  <link rel="stylesheet" href="css/base.css?v=20260707">
+  <link rel="stylesheet" href="css/showcase.css?v=20260707">
+  <link rel="stylesheet" href="css/daily.css?v=20260707">
+</head>
+<body>
+  <!-- INLINE_DATA -->
+  <header class="topbar">
+    <a class="brand" href="#/showcase" aria-label="回到正式成果展示板">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span id="site-title">量化实习成果看板</span>
+    </a>
+    <nav class="tabs" aria-label="主视图">
+      <a id="tab-showcase" class="tab" href="#/showcase">正式成果展示</a>
+      <a id="tab-daily" class="tab" href="#/daily">每日汇报文档</a>
+    </nav>
+    <button id="search-open" class="icon-button" type="button" aria-label="打开全文搜索" title="搜索">
+      <span aria-hidden="true">⌕</span>
+    </button>
+  </header>
+
+  <main class="app-shell">
+    <section id="view-showcase" class="view showcase-view" aria-labelledby="tab-showcase">
+      <aside id="showcase-stepper" class="stage-stepper" aria-label="阶段导航"></aside>
+      <div id="showcase-sections" class="showcase-sections"></div>
+      <div class="page-arrows" aria-label="翻页控制">
+        <button id="showcase-prev" class="icon-button" type="button" aria-label="上一阶段">↑</button>
+        <button id="showcase-next" class="icon-button" type="button" aria-label="下一阶段">↓</button>
+      </div>
+    </section>
+
+    <section id="view-daily" class="view daily-view" aria-labelledby="tab-daily">
+      <article class="daily-document">
+        <div id="daily-meta" class="daily-meta"></div>
+        <div class="daily-mainline">
+          <nav id="daily-toc" class="daily-toc" aria-label="文档目录"></nav>
+          <div id="daily-content" class="markdown-body daily-content"></div>
+        </div>
+        <div class="daily-nav">
+          <button id="daily-prev" class="text-button" type="button">上一篇</button>
+          <button id="daily-next" class="text-button" type="button">下一篇</button>
+        </div>
+      </article>
+      <aside class="timeline-wrap">
+        <div class="timeline-heading">时间轴</div>
+        <div id="daily-timeline" class="daily-timeline"></div>
+      </aside>
+    </section>
+  </main>
+
+  <dialog id="search-dialog" class="search-dialog" aria-label="全文搜索">
+    <div class="search-panel">
+      <div class="search-head">
+        <h2>全文搜索</h2>
+        <button id="search-close" class="icon-button" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-root" class="search-root"></div>
+    </div>
+  </dialog>
+
+  <script src="js/router.js?v=20260707"></script>
+  <script src="js/showcase.js?v=20260707"></script>
+  <script src="js/daily.js?v=20260707"></script>
+  <script src="js/search.js?v=20260707"></script>
+</body>
+</html>
