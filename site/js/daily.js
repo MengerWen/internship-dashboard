@@ -75,6 +75,14 @@
       document.getElementById("daily-next").addEventListener("click", () => this.goRelative(-1));
       document.getElementById("daily-doc-tab").addEventListener("click", () => this.switchMode("doc", true));
       document.getElementById("daily-show-tab").addEventListener("click", () => this.switchMode("show", true));
+      const fullscreen = document.getElementById("daily-show-fullscreen");
+      fullscreen.addEventListener("click", () => this.toggleShowFullscreen());
+      document.addEventListener("fullscreenchange", () => {
+        const isFullscreen = document.fullscreenElement === this.showEl;
+        fullscreen.classList.toggle("is-active", isFullscreen);
+        fullscreen.setAttribute("aria-label", isFullscreen ? "缩小展示栏" : "放大展示栏");
+        fullscreen.title = isFullscreen ? "退出全屏展示" : "放大/缩小展示栏";
+      });
       document.addEventListener("keydown", (event) => {
         if (!document.getElementById("view-daily").classList.contains("is-active")) return;
         if (this.currentMode !== "show") return;
@@ -224,6 +232,7 @@
       showTab.setAttribute("aria-selected", String(mode === "show"));
       showTab.disabled = !item.has_show;
       showTab.title = item.has_show ? "查看当天展示版" : "当天未撰写展示版";
+      document.getElementById("daily-show-fullscreen").disabled = !item.has_show || mode !== "show";
       this.contentEl.hidden = mode !== "doc";
       this.showEl.hidden = mode !== "show";
       this.tocEl.hidden = mode !== "doc";
@@ -303,6 +312,18 @@
     goRelative(delta) {
       const target = this.manifest.daily[this.currentIndex + delta];
       if (target) window.location.hash = `#/daily/${target.date}`;
+    },
+
+    async toggleShowFullscreen() {
+      if (this.currentMode !== "show") {
+        this.notice("请先切到展示栏。");
+        return;
+      }
+      if (!document.fullscreenElement) {
+        await this.showEl.requestFullscreen();
+        return;
+      }
+      await document.exitFullscreen();
     },
   };
 
