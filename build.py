@@ -67,6 +67,7 @@ class Builder:
             extensions=[
                 "extra",
                 "toc",
+                "pymdownx.arithmatex",
                 "pymdownx.details",
                 "pymdownx.superfences",
                 "admonition",
@@ -74,6 +75,11 @@ class Builder:
             ],
             extension_configs={
                 "toc": {"slugify": uslugify, "permalink": False},
+                "pymdownx.arithmatex": {
+                    "generic": True,
+                    "tex_inline_wrap": ["\\(", "\\)"],
+                    "tex_block_wrap": ["\\[", "\\]"],
+                },
                 "codehilite": {
                     "guess_lang": False,
                     "noclasses": False,
@@ -403,7 +409,10 @@ class Builder:
                 show_title = date_key
                 show_content = show_html.read_text(encoding="utf-8")
                 show_rel = Path("daily") / f"{date_key}.show.html"
-                self.write_text(self.out_dir / show_rel, show_content)
+                self.write_text(
+                    self.out_dir / show_rel,
+                    self.html_with_runtime_assets(show_content, prefix="../"),
+                )
                 show_path = show_rel.as_posix()
                 self.show_stats["html"] += 1
                 self.show_stats["html_unindexed"] += 1
@@ -575,6 +584,24 @@ class Builder:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title_attr}</title>
+  <script>
+    window.MathJax = {{
+      tex: {{
+        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+        displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+        processEscapes: true
+      }},
+      svg: {{fontCache: 'global'}},
+      startup: {{typeset: false}}
+    }};
+  </script>
+  <script defer src="../../vendor/mathjax/tex-svg.js"></script>
+  <script defer src="../../js/content-enhance.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {{
+      window.ContentEnhancer?.enhance(document);
+    }});
+  </script>
   <style>
     body {{
       margin: 0;
@@ -634,6 +661,38 @@ class Builder:
 </body>
 </html>
 """
+
+    @staticmethod
+    def html_with_runtime_assets(html_text: str, *, prefix: str = "") -> str:
+        cleaned = re.sub(
+            r'<script\b[^>]*\bsrc=["\'][^"\']*mathjax[^"\']*["\'][^>]*>\s*</script>',
+            "",
+            html_text,
+            flags=re.IGNORECASE,
+        )
+        inject = f"""
+<script>
+  window.MathJax = {{
+    tex: {{
+      inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+      displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+      processEscapes: true
+    }},
+    svg: {{fontCache: 'global'}},
+    startup: {{typeset: false}}
+  }};
+</script>
+<script defer src="{prefix}vendor/mathjax/tex-svg.js"></script>
+<script defer src="{prefix}js/content-enhance.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {{
+    window.ContentEnhancer?.enhance(document);
+  }});
+</script>
+"""
+        if re.search(r"</head>", cleaned, flags=re.IGNORECASE):
+            return re.sub(r"</head>", inject + "</head>", cleaned, count=1, flags=re.IGNORECASE)
+        return inject + cleaned
 
     def write_security_files(self) -> None:
         self.write_text(

@@ -56,6 +56,38 @@
       };
     },
 
+    enhanceContent(root) {
+      return window.ContentEnhancer?.enhance(root) || Promise.resolve();
+    },
+
+    prepareIsolatedHtml(html) {
+      const cleaned = String(html).replace(/<script\b[^>]*\bsrc=["'][^"']*mathjax[^"']*["'][^>]*>\s*<\/script>/gi, "");
+      const inject = `
+        <script>
+          window.MathJax = {
+            tex: {
+              inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+              displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+              processEscapes: true
+            },
+            svg: {fontCache: 'global'},
+            startup: {typeset: false}
+          };
+        <\/script>
+        <script defer src="vendor/mathjax/tex-svg.js"><\/script>
+        <script defer src="js/content-enhance.js"><\/script>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            window.ContentEnhancer?.enhance(document);
+          });
+        <\/script>
+      `;
+      if (/<\/head>/i.test(cleaned)) {
+        return cleaned.replace(/<\/head>/i, `${inject}</head>`);
+      }
+      return `${inject}${cleaned}`;
+    },
+
     parseHash() {
       const clean = window.location.hash.replace(/^#\/?/, "");
       const [view, key, subview] = clean.split("/");

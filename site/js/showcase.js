@@ -67,6 +67,7 @@
           body.innerHTML = await this.app.loadFragment(item.path, `showcase-${item.id}`);
         }),
       );
+      await this.app.enhanceContent(this.sectionsEl);
     },
 
     bind() {

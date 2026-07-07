@@ -108,6 +108,7 @@
       this.currentIndex = index >= 0 ? index : 0;
       const item = this.manifest.daily[this.currentIndex];
       this.contentEl.innerHTML = await this.app.loadFragment(item.path, `daily-${item.date}`);
+      await this.app.enhanceContent(this.contentEl);
       this.showEl.innerHTML = "";
       this.currentScene = 0;
       this.renderMeta(item);
@@ -281,7 +282,7 @@
           ? JSON.parse(inline.textContent)
           : await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
         this.showEl.innerHTML = `<iframe class="daily-show-frame" sandbox="allow-scripts" title="${escapeHtml(item.title)} 展示版"></iframe>`;
-        this.showEl.querySelector("iframe").srcdoc = html;
+        this.showEl.querySelector("iframe").srcdoc = this.app.prepareIsolatedHtml(html);
         return;
       }
       const html = await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
@@ -306,6 +307,7 @@
       this.showEl.querySelector("#daily-show-prev").addEventListener("click", () => this.goScene(-1));
       this.showEl.querySelector("#daily-show-next").addEventListener("click", () => this.goScene(1));
       this.setScene(this.currentScene);
+      await this.app.enhanceContent(this.showEl);
     },
 
     setScene(index) {
