@@ -83,7 +83,7 @@
         <\/script>
       `;
       if (/<\/head>/i.test(cleaned)) {
-        return cleaned.replace(/<\/head>/i, `${inject}</head>`);
+        return cleaned.replace(/<\/head>/i, () => `${inject}</head>`);
       }
       return `${inject}${cleaned}`;
     },

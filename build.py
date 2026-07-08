@@ -625,6 +625,11 @@ class Builder:
     a {{
       color: #fff6d6;
     }}
+    strong, b {{
+      color: #ffffff;
+      font-family: "Microsoft YaHei", "SimHei", "Noto Sans CJK SC", sans-serif;
+      font-weight: 700;
+    }}
     table {{
       width: 100%;
       border-collapse: collapse;
@@ -642,9 +647,12 @@ class Builder:
     }}
     blockquote {{
       margin: 18px 0;
-      padding: 12px 16px;
-      border-left: 3px solid #fff6d6;
-      background: #182231;
+      padding: 14px 18px;
+      border: 1px solid rgb(138 149 165 / 0.38);
+      border-left: 4px solid #8a95a5;
+      border-radius: 8px;
+      background: rgb(138 149 165 / 0.16);
+      color: #e5e7eb;
     }}
     pre {{
       overflow: auto;
@@ -665,9 +673,15 @@ class Builder:
     @staticmethod
     def html_with_runtime_assets(html_text: str, *, prefix: str = "") -> str:
         cleaned = re.sub(
-            r'<script\b[^>]*\bsrc=["\'][^"\']*mathjax[^"\']*["\'][^>]*>\s*</script>',
+            r"<script\b[^>]*>\s*window\.MathJax\s*=\s*[\s\S]*?;\s*</script>",
             "",
             html_text,
+            flags=re.IGNORECASE,
+        )
+        cleaned = re.sub(
+            r'<script\b[^>]*\bsrc=["\'][^"\']*mathjax[^"\']*["\'][^>]*>\s*</script>',
+            "",
+            cleaned,
             flags=re.IGNORECASE,
         )
         inject = f"""
@@ -691,7 +705,13 @@ class Builder:
 </script>
 """
         if re.search(r"</head>", cleaned, flags=re.IGNORECASE):
-            return re.sub(r"</head>", inject + "</head>", cleaned, count=1, flags=re.IGNORECASE)
+            return re.sub(
+                r"</head>",
+                lambda match: inject + match.group(0),
+                cleaned,
+                count=1,
+                flags=re.IGNORECASE,
+            )
         return inject + cleaned
 
     def write_security_files(self) -> None:
