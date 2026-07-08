@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRUNS 因子重构 - 2026-07-08</title>
+  <style>
+    :root {
+      --bg: #101312;
+      --ink: #eef3ee;
+      --muted: #a8b5ae;
+      --line: #34423c;
+      --panel: #18201c;
+      --accent: #d7b75f;
+      --cyan: #75c7c0;
+      --rose: #e98b76;
+      --blue: #84a7df;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #101312;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
+      line-height: 1.65;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    header { min-height: 52vh; display: grid; align-content: end; padding: 36px 0 28px; border-bottom: 1px solid var(--line); }
+    .eyebrow { color: var(--cyan); font-size: 13px; text-transform: uppercase; }
+    h1 { max-width: 900px; margin: 8px 0 14px; font-size: clamp(32px, 6vw, 64px); line-height: 1.08; }
+    .lede { max-width: 760px; color: var(--muted); font-size: 18px; }
+    nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 8px; padding: 12px 0; background: rgba(16,19,18,.96); border-bottom: 1px solid var(--line); overflow-x: auto; }
+    nav a { flex: 0 0 auto; padding: 8px 10px; color: var(--muted); border: 1px solid var(--line); text-decoration: none; font-size: 13px; }
+    nav a:hover { color: var(--ink); border-color: var(--accent); }
+    section { padding: 34px 0; border-bottom: 1px solid var(--line); }
+    h2 { margin: 0 0 14px; color: var(--accent); font-size: 28px; }
+    h3 { margin: 24px 0 10px; color: var(--cyan); }
+    p { margin: 10px 0; }
+    code { color: var(--accent); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .tile { min-height: 142px; padding: 14px; border: 1px solid var(--line); background: var(--panel); }
+    .tile b { color: var(--accent); }
+    .warn { padding: 14px 16px; border-left: 4px solid var(--rose); background: rgba(233,139,118,.1); color: #f6d7cf; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); }
+    table { width: 100%; min-width: 680px; border-collapse: collapse; background: #151b18; }
+    th, td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; font-size: 14px; }
+    th { color: var(--accent); background: #202821; }
+    figure { margin: 18px 0; border: 1px solid var(--line); background: #f7faf7; color: #16201a; }
+    figure img { display: block; width: 100%; height: auto; }
+    figcaption { padding: 10px 12px; color: #3c4b44; font-size: 13px; }
+    .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    footer { padding: 28px 0 44px; color: var(--muted); }
+    @media (max-width: 860px) {
+      main { padding: 16px; }
+      .grid, .two, .cases { grid-template-columns: 1fr; }
+      nav { position: static; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">2026-07-08 / algo-footprint / SRUNS rework</div>
+    <h1>SRUNS 因子重构：把链长口径从订单数改回消息数</h1>
+    <p class="lede">今天完成代码层重构、可复现校准脚本、91 notebook 和网页素材同步。主列仍叫 <code>ccp__sruns</code>，但语义已经改为 <code>message_count >= run_min_len_msg</code>。</p>
+  </header>
+
+  <nav>
+    <a href="#problem">问题诊断</a>
+    <a href="#code">代码改动</a>
+    <a href="#params">冻结参数</a>
+    <a href="#figures">校准图</a>
+    <a href="#cases">链条剖检</a>
+    <a href="#limits">限制</a>
+  </nav>
+
+  <section id="problem">
+    <h2>问题诊断</h2>
+    <div class="grid">
+      <div class="tile"><b>阈值口径错位</b><p>旧版把 <code>run_min_len=10</code> 卡在 <code>n_orders</code> 上；论文和 lowlat 统计口径都是消息数，即订单、撤单、成交合计。</p></div>
+      <div class="tile"><b>链接条件失衡</b><p>旧规则数量精确匹配，价格不设限，通道不检查。数量过严会断链，价格过松会误接。</p></div>
+      <div class="tile"><b>下游兼容</b><p>主力列名沿用 <code>ccp__sruns</code>，新增 family 列做对照，减少 scorecard 和报告层改动。</p></div>
+    </div>
+  </section>
+
+  <section id="code">
+    <h2>代码改动</h2>
+    <h3>lowlat 链接规则</h3>
+    <p><code>build_runs</code> 新增 <code>abs_qty_tol_lots</code>、<code>price_band_ticks</code>、<code>require_same_channel</code>。默认值保持旧行为；显式传参时才收紧或放宽。</p>
+    <p>链接明细新增 <code>d_qty</code>、<code>d_price_ticks</code>、<code>same_channel</code>，用于后续 A/B/F 图。</p>
+    <h3>algobench CCP family</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>列名</th><th>定义</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td><code>ccp__sruns_all</code></td><td>全部成链 run 计数</td><td>无阈值基线</td></tr>
+          <tr><td><code>ccp__sruns</code></td><td><code>message_count >= N*</code></td><td>主力口径</td></tr>
+          <tr><td><code>ccp__sruns_msg10</code></td><td><code>message_count >= 10</code></td><td>论文可比口径</td></tr>
+          <tr><td><code>ccp__sruns_wt</code></td><td>sum(<code>n_orders - 1</code>)</td><td>链接强度</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="params">
+    <h2>当前冻结参数</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>参数</th><th>值</th></tr></thead>
+        <tbody>
+          <tr><td><code>sruns_link_window_ms</code></td><td>1000</td></tr>
+          <tr><td><code>sruns_qty_tol</code></td><td>0.1</td></tr>
+          <tr><td><code>sruns_abs_qty_tol_lots</code></td><td>1</td></tr>
+          <tr><td><code>sruns_price_band_ticks</code></td><td>10</td></tr>
+          <tr><td><code>sruns_require_same_channel</code></td><td>false</td></tr>
+          <tr><td><code>run_min_len_msg</code></td><td>6</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="warn">校准脚本已按计划 full 模式跑完 6 股票 × 3 日期样本，覆盖高/中/低流动性各 2 只。时间平移 placebo 偏高，A 图保留为诊断，不单独作为选参证据。</p>
+  </section>
+
+  <section id="figures">
+    <h2>校准图 A-E</h2>
+    <div class="two">
+      <figure><img src="assets/algo-footprint-2026-07-08/fig_a_excess_curves.png" alt="excess curves"><figcaption>A. real-minus-placebo 链接率曲线。当前 placebo 偏高，作为诊断保留。</figcaption></figure>
+      <figure><img src="assets/algo-footprint-2026-07-08/fig_b_superset_distributions.png" alt="superset distributions"><figcaption>B. 超集链接下的数量差、价差、lag 分布。</figcaption></figure>
+      <figure><img src="assets/algo-footprint-2026-07-08/fig_c_length_survival.png" alt="length survival"><figcaption>C. run 的 message_count 生存曲线。</figcaption></figure>
+      <figure><img src="assets/algo-footprint-2026-07-08/fig_d_coverage.png" alt="coverage"><figcaption>D. 不同消息阈值下的非零股票日覆盖率。</figcaption></figure>
+    </div>
+    <figure><img src="assets/algo-footprint-2026-07-08/fig_e_stability_heatmap.png" alt="stability heatmap"><figcaption>E. 窗口 × 消息阈值的跨日 rank 稳定性热图；full 样本覆盖 3 个日期。</figcaption></figure>
+  </section>
+
+  <section id="cases">
+    <h2>链条剖检 F</h2>
+    <div class="cases">
+      <figure><img src="assets/algo-footprint-2026-07-08/fig_f_case_01.png" alt="case 1"><figcaption>F1. 真实链条案例。</figcaption></figure>
+      <figure><img src="assets/algo-footprint-2026-07-08/fig_f_case_02.png" alt="case 2"><figcaption>F2. 真实链条案例。</figcaption></figure>
+      <figure><img src="assets/algo-footprint-2026-07-08/fig_f_case_03.png" alt="case 3"><figcaption>F3. 真实链条案例。</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="limits">
+    <h2>限制与遗留</h2>
+    <p>full 样本暴露出一个需要继续修正的点：当前时间平移 placebo 比真实流产生更高链接率，因此它还不能作为最终噪声上界解释。这里如实保留图和诊断，不把 excess 曲线单独当作最终参数证据。</p>
+    <p>本轮按计划不改 <code>m6_gb.positive_run_min_len</code>、KKST、PCA、HJM。完整重跑后需要复查 GB seed 和依赖 <code>flag_ccp_sruns</code> 的下游指标。</p>
+  </section>
+
+  <footer>Artifacts: <code>algobench/notebooks/91_sruns_rework.ipynb</code>, <code>algobench/scripts/sruns_rework_report.py</code>, <code>outputs/sruns_calibration</code>.</footer>
+</main>
+</body>
+</html>
