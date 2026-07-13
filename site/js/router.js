@@ -75,6 +75,7 @@
           };
         <\/script>
         <script defer src="vendor/mathjax/tex-svg.js"><\/script>
+        <script defer src="vendor/mermaid/mermaid.min.js"><\/script>
         <script defer src="js/content-enhance.js"><\/script>
         <script>
           document.addEventListener('DOMContentLoaded', () => {

@@ -7,3 +7,4 @@
 - 2026-07-07: `.show.html` 使用 sandbox iframe `srcdoc` 且只允许 `allow-scripts`,不加 `allow-same-origin`,以隔离定制页脚本。
 - 2026-07-07: Daily 展示模式单列布局采用 JS 显式模式类 `.is-show-mode`,不使用 `:has()`,避免兼容性差异并复用现有状态管理。
 - 2026-07-07: 离线 `.show.html` 改用 JSON script 载体内联完整 HTML,避免 `<template>` 经 HTML 解析后剥离 doctype、`html`、`head`、`body` 等结构标签。
+- 2026-07-13: Mermaid 11.16.0 浏览器运行时随站点自托管；Markdown 构建期输出 `.mermaid` 容器，动态内容插入后由 `ContentEnhancer` 显式调用 `mermaid.run()`，保证正式站、下载页和离线版一致可用。

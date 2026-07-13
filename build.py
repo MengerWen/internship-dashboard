@@ -15,6 +15,7 @@ from typing import Any
 import frontmatter
 import markdown
 from pymdownx.slugs import uslugify
+from pymdownx.superfences import fence_div_format
 
 
 ROOT = Path(__file__).resolve().parent
@@ -79,6 +80,15 @@ class Builder:
                     "generic": True,
                     "tex_inline_wrap": ["\\(", "\\)"],
                     "tex_block_wrap": ["\\[", "\\]"],
+                },
+                "pymdownx.superfences": {
+                    "custom_fences": [
+                        {
+                            "name": "mermaid",
+                            "class": "mermaid",
+                            "format": fence_div_format,
+                        }
+                    ]
                 },
                 "codehilite": {
                     "guess_lang": False,
@@ -603,6 +613,7 @@ class Builder:
     }};
   </script>
   <script defer src="../../vendor/mathjax/tex-svg.js"></script>
+  <script defer src="../../vendor/mermaid/mermaid.min.js"></script>
   <script defer src="../../js/content-enhance.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {{
@@ -704,6 +715,7 @@ class Builder:
   }};
 </script>
 <script defer src="{prefix}vendor/mathjax/tex-svg.js"></script>
+<script defer src="{prefix}vendor/mermaid/mermaid.min.js"></script>
 <script defer src="{prefix}js/content-enhance.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {{

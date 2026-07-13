@@ -51,6 +51,37 @@
         margin: 16px auto;
         cursor: zoom-in;
       }
+      .mermaid {
+        max-width: 100%;
+        margin: 20px 0;
+        padding: 18px;
+        overflow-x: auto;
+        border: 1px solid var(--line, #344255);
+        border-radius: var(--radius, 8px);
+        background: rgb(10 15 28 / 0.48);
+        text-align: center;
+      }
+      .mermaid svg {
+        display: block;
+        max-width: none;
+        height: auto;
+        margin: 0 auto;
+      }
+      .mermaid.mermaid-error {
+        color: #fca5a5;
+        font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        text-align: left;
+        white-space: pre-wrap;
+      }
+      .mermaid.mermaid-error::before {
+        display: block;
+        margin-bottom: 8px;
+        font-family: "Microsoft YaHei", sans-serif;
+        font-weight: 700;
+        content: "Mermaid 图表语法错误，已保留源码";
+      }
       .image-longpress-overlay {
         position: fixed;
         inset: 0;
@@ -92,6 +123,40 @@
       return Promise.resolve();
     };
     return mathJax.startup?.promise ? mathJax.startup.promise.then(run) : run();
+  }
+
+  async function typesetMermaid(root) {
+    const win = root.ownerDocument?.defaultView || window;
+    const mermaid = win.mermaid;
+    if (!mermaid) return;
+    const target = root.nodeType === 9 ? root.documentElement : root;
+    const selector = ".mermaid:not([data-processed='true']):not([data-mermaid-error='true'])";
+    const nodes = Array.from(target.querySelectorAll(selector));
+    if (target.matches?.(selector)) nodes.unshift(target);
+    if (!nodes.length) return;
+
+    if (!win.__dashboardMermaidInitialized) {
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: "strict",
+        theme: "dark",
+        flowchart: {htmlLabels: true, useMaxWidth: false},
+      });
+      win.__dashboardMermaidInitialized = true;
+    }
+
+    for (const node of nodes) {
+      const source = node.textContent;
+      try {
+        await mermaid.run({nodes: [node]});
+      } catch (error) {
+        node.removeAttribute("data-processed");
+        node.dataset.mermaidError = "true";
+        node.classList.add("mermaid-error");
+        node.textContent = source;
+        console.warn("Mermaid render failed", error);
+      }
+    }
   }
 
   function wrapTables(root) {
@@ -167,7 +232,7 @@
     injectStyles(doc);
     wrapTables(root);
     prepareImages(root);
-    return typesetMath(root);
+    return Promise.all([typesetMath(root), typesetMermaid(root)]).then(() => undefined);
   }
 
   window.ContentEnhancer = {enhance};

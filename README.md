@@ -77,7 +77,14 @@ status: active
 ---
 ```
 
-`status` 可用值为 `done`、`active`、`planned`。正文支持表格、代码块、`??? note` 折叠块和 `!!! warning` 提示块。
+`status` 可用值为 `done`、`active`、`planned`。正文支持表格、代码块、Mermaid 图表、`??? note` 折叠块和 `!!! warning` 提示块。Mermaid 使用标准围栏写法：
+
+````markdown
+```mermaid
+flowchart LR
+    A[输入] --> B[输出]
+```
+````
 
 ## 发布流程
 
