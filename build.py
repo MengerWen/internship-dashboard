@@ -213,14 +213,30 @@ class Builder:
         return datetime.fromtimestamp(path.stat().st_mtime, tz=CN_TZ)
 
     def daily_times(self, path: Path, meta: dict[str, Any]) -> tuple[str, str, str]:
+        published_override = self.parse_datetime_value(meta.get("published"))
+        git_first, git_last = self.git_times_for(path)
         mtime = self.mtime_for(path)
-        published = mtime
-        updated = mtime
-        self.time_stats["mtime"] += 1
+        source = "mtime"
+        if published_override:
+            published = published_override
+            source = "frontmatter"
+        elif git_first:
+            published = git_first
+            source = "git"
+        else:
+            published = mtime
+            self.warnings.append(f"{path.relative_to(ROOT)} 发布时间来自 mtime，可能不准")
+
+        if git_last:
+            updated = git_last
+        else:
+            updated = mtime
+            self.warnings.append(f"{path.relative_to(ROOT)} 更新时间来自 mtime，可能不准")
+        self.time_stats[source] += 1
         return (
             self.normalize_to_cn(published).isoformat(timespec="seconds"),
             self.normalize_to_cn(updated).isoformat(timespec="seconds"),
-            "mtime",
+            source,
         )
 
     def prepare_output(self) -> None:
