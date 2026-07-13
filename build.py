@@ -217,6 +217,13 @@ class Builder:
         if self.out_dir.exists():
             shutil.rmtree(self.out_dir)
         shutil.copytree(SITE_DIR, self.out_dir)
+        content_assets = CONTENT_DIR / "assets"
+        if content_assets.exists():
+            shutil.copytree(
+                content_assets,
+                self.out_dir / "assets",
+                dirs_exist_ok=True,
+            )
         self.inject_asset_versions()
 
     def inject_asset_versions(self) -> None:
