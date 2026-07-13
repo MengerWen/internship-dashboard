@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LV2 逐笔数据重建 100ms 快照：项目总结</title>
+<link rel="stylesheet" href="assets/lv2_snapshot/report.css">
+</head>
+<body>
+<main>
+<h1 id="lv2-100ms">LV2 逐笔数据重建 100ms 快照：项目总结</h1>
+<blockquote>
+<p>项目一句话总结：把交易所 Level 2 的委托、成交、撤单逐笔流水，按真实事件顺序逐条回放，重建为每 100ms 一张的订单簿快照；同时生成 3 秒快照，并通过与 RiceQuant（米筐）官方 3 秒数据逐档对比，验证沪深两市样本的连续交易盘口 100% 一致。</p>
+</blockquote>
+<p>本文依据的项目目录为 <code>D:\MG\！Internship\26 Summer\❗思瑞投资\lv2_snapshot_workspace</code>，完整讲解 Notebook 为 <code>D:\MG\_GitLinked\Quant_Research-Trading\26 Summer\❗思瑞投资\lv2_snapshot_workspace\notebooks\00_项目全流程讲解.ipynb</code>。报告保留了该 Notebook 的全部正文、代码、输出数值和成品图，并在此基础上补充了更直观的状态机示例、指标解释与汇报话术。</p>
+<h2 id="_1">一、项目成果先行</h2>
+<p>本项目完成了一条可复现、可验证的 LV2 订单簿重建流水线：</p>
+<ul>
+<li>输入：交易所逐笔委托、逐笔成交、逐笔撤单三张 Parquet 表。</li>
+<li>核心：把三类事件合并成统一事件流，维护“订单账本 + 买卖各价位聚合量”的状态机。</li>
+<li>输出：100ms 快照、3 秒快照、全深度盘口、买卖五档宽表及统计字段。</li>
+<li>特殊处理：开盘/收盘集合竞价、市价单与本方最优单、上海主动单缺少独立委托记录等交易所差异。</li>
+<li>正确性证明：深圳 <code>000001</code>（平安银行）和上海 <code>600000</code>（浦发银行），各 7 个交易日；“我的 3s vs 我的 100ms”完全一致，且连续交易时段按累计成交量对齐米筐后，买卖五档逐档命中率均为 <strong>100%</strong>。</li>
+</ul>
+<p>这里的关键不是简单“把数据每 100ms 分组”，而是先恢复每个时点的市场状态。逐笔数据像监控录像里的动作记录，盘口快照则像在指定时刻按下暂停键后看到的完整画面。</p>
+<h2 id="_2">二、任务是什么：把“流水账”还原成“盘口”</h2>
+<p>交易所给出的 Level 2 数据并不是现成的买一、卖一、买二、卖二，而是一条条事件：谁在什么时间、以什么价格挂了多少买单或卖单，哪些订单成交了，哪些订单撤回了。</p>
+<p>所谓“盘口”，是某一瞬间市场上各个价格的待成交买量和卖量。例如：愿意以 9.40 元买入的订单共多少股，愿意以 9.41 元卖出的订单共多少股。股票软件显示的“买一/卖一、买二/卖二”就是订单簿前几档的切片。</p>
+<p>因此，本项目的目标可以形式化为：</p>
+<ul>
+<li>输入：按真实先后顺序排列的委托、成交和撤单事件；</li>
+<li>状态：每个未完成订单的方向、价格和剩余量，以及买卖两侧各价格的总排队量；</li>
+<li>输出：每隔 0.1 秒记录一次当前状态，形成 100ms 订单簿快照。</li>
+</ul>
+<h2 id="_3">三、全流程</h2>
+<div class="mermaid">flowchart LR
+    A["原始逐笔三张表<br/>委托 / 成交 / 撤单<br/><br/>E盘：交易所原始数据"]
+    -->|"io.py<br/>读取并按股票筛选"| B["统一事件流<br/>按真实顺序排列<br/><br/>events.py"]
+    B -->|"orderbook.py<br/>逐条回放事件"| C["任意时刻的盘口状态<br/>订单账本 + 各价位排队量"]
+    C -->|"snapshot.py<br/>每 100ms 拍照<br/>auction.py 处理竞价"| D["100ms 快照<br/>核心产品"]
+    D -->|"同引擎改为 3000ms 网格"| E["3 秒快照"]
+    E -->|"rqref.py 获取米筐<br/>validate.py 逐档对比"| F["米筐官方 3 秒快照"]
+    F --> G["验证一致性<br/>形成表格与可视化"]
+</div>
+<p>对应的核心代码位于原项目 <code>src/snapshot/</code>：</p>
+<p><code>io.py → events.py → orderbook.py → snapshot.py / auction.py → rqref.py → validate.py</code></p>
+<h2 id="_4">四、原始数据与真值数据</h2>
+<h3 id="41">4.1 交易所逐笔数据</h3>
+<p>原始数据位于：</p>
+<p><code>E:/rql2_tick_20240102_20260622/data/parquet_by_day/</code></p>
+<p>每个交易日一个文件夹，其中有三张表：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>中文含义</th>
+<th>一行代表什么</th>
+<th>关键字段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>order.parquet</code></td>
+<td>逐笔委托</td>
+<td>新增一个买单或卖单，例如“9.40 元买 100 股”</td>
+<td>价格、数量、方向、订单号</td>
+</tr>
+<tr>
+<td><code>trade.parquet</code></td>
+<td>逐笔成交</td>
+<td>一个买单与一个卖单发生配对成交</td>
+<td>成交价、成交量、买方订单号、卖方订单号</td>
+</tr>
+<tr>
+<td><code>cancel.parquet</code></td>
+<td>逐笔撤单</td>
+<td>撤回此前挂出订单的全部或部分剩余量</td>
+<td>撤单量、订单号</td>
+</tr>
+</tbody>
+</table>
+<p>全市场一天三张表合计约 <strong>2.3 亿行</strong>。因此读取层不能一次性把整日全市场数据装入内存，而是使用 Parquet 的列裁剪和股票代码过滤，只读取某天、某只股票所需的列与行。单个文件可能达到约 1.7GB，按需读取对性能和内存都很重要。</p>
+<p>原始时间字段为 <code>data_time</code>，是毫秒级交易所时间，存储为 UTC；在标准化事件时转换为北京时间（<code>Asia/Shanghai</code>）。</p>
+<p>对应代码：</p>
+<ul>
+<li><code>src/snapshot/io.py</code>：读取 Parquet，并按日期、股票筛选；</li>
+<li><code>src/snapshot/rqref.py</code>：获取并缓存米筐参考数据。</li>
+</ul>
+<h3 id="42">4.2 米筐官方快照</h3>
+<p>米筐（RiceQuant）环境位于 <code>D:/MG/rq</code>，通过 <code>rqdatac</code> 联网获取某股票、某交易日的官方快照，并缓存到 <code>outputs/ref/</code>，避免重复联网。</p>
+<p>米筐数据是每约 <strong>3 秒</strong>一张、买卖各 <strong>5 档</strong>的盘口快照。它是本项目的外部参考真值，但最高频率只有 3 秒，没有 100ms 真值。因此：</p>
+<ul>
+<li>100ms 快照由本项目自行重建；</li>
+<li>只能在可对齐的 3 秒或同一累计成交量状态上与米筐核验；</li>
+<li>不能把“没有 100ms 官方参考”误解为“100ms 无法验证”，因为 100ms 与 3s 使用的是同一状态机，只是拍照网格不同。</li>
+</ul>
+<h2 id="_5">五、核心算法：逐条回放重建订单簿</h2>
+<h3 id="51">5.1 三张表合并为统一事件流</h3>
+<p><code>src/snapshot/events.py</code> 把委托、成交、撤单标准化为共同字段，再合并和排序。主要字段包括：</p>
+<ul>
+<li><code>evtype</code>：<code>order</code>、<code>trade</code> 或 <code>cancel</code>；</li>
+<li><code>seq</code>：交易所原始事件序号；</li>
+<li><code>channel_no</code>：频道号；</li>
+<li><code>ts</code>：转换后的北京时间；</li>
+<li><code>qty</code>、<code>price_i</code>、<code>side</code>、<code>order_id</code>、<code>ord_type</code>；</li>
+<li><code>bid_id</code>、<code>ask_id</code>：成交引用的买卖双方订单号。</li>
+</ul>
+<p>项目对样本数据做过验证：同一只股票内，三张表的 <code>seq</code> 可以共同刻画真实发生顺序，连续且不重复。实现中进一步按 <code>channel_no, seq</code> 稳定排序；可以理解为“频道是事件通道，<code>seq</code> 是通道中的时间顺序”。这一步是整个项目的前提：顺序一旦错位，撤单可能发生在委托之前，成交也可能扣错订单，后续所有快照都会失真。</p>
+<p>价格不使用浮点数长期计算，而是采用 <code>price_scale=10000</code> 转为整数，例如：</p>
+<p><code>9.40 元 → 94000</code></p>
+<p>这样可以避免浮点误差造成同一价位被错误拆成多个键。</p>
+<h3 id="52">5.2 订单簿状态机</h3>
+<p><code>src/snapshot/orderbook.py</code> 是项目的核心。状态机持续维护三类状态：</p>
+<ol>
+<li>订单账本：<code>订单号 → 方向、价格、剩余量、是否真实挂在盘口中</code>；</li>
+<li>买盘聚合表：<code>价格 → 当前买方总排队量</code>；</li>
+<li>卖盘聚合表：<code>价格 → 当前卖方总排队量</code>。</li>
+</ol>
+<p>三类事件的更新规则如下：</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>状态更新</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>委托</td>
+<td>在订单账本中新建订单；普通限价单还要把数量加到对应方向、对应价位</td>
+</tr>
+<tr>
+<td>成交</td>
+<td>根据 <code>bid_id</code>、<code>ask_id</code> 找到两边订单，分别扣减剩余量，并同步扣减其价位聚合量</td>
+</tr>
+<tr>
+<td>撤单</td>
+<td>根据 <code>order_id</code> 找到原订单，扣减订单剩余量和对应价位聚合量</td>
+</tr>
+</tbody>
+</table>
+<p>用一个极简例子理解：</p>
+<ol>
+<li>A 挂 <code>9.40 买 100</code>，则买盘 9.40 从 0 变成 100；</li>
+<li>B 挂 <code>9.41 卖 60</code>，则卖盘 9.41 从 0 变成 60；</li>
+<li>A 撤回 20，买盘 9.40 变成 80；</li>
+<li>A 的订单成交 50，买盘 9.40 只剩 30。</li>
+</ol>
+<p>只要严格按事件顺序更新，任何时刻的盘口都是此前全部事件作用后的唯一状态。</p>
+<h3 id="53">5.3 两个关键边界问题</h3>
+<p><strong>问题一：市价单和“本方最优”单。</strong></p>
+<p>这类订单的价格可能是 0，或者其实际价格要在进入市场时根据盘口决定。如果把它们当普通限价单直接挂入盘口，可能出现“0 元卖一”等明显错误。因此项目不会把这类订单直接作为固定价位的 resting order 放进盘口，而是在成交和集合竞价逻辑中按其真实语义处理。</p>
+<p><strong>问题二：上海主动单可能没有独立委托记录。</strong></p>
+<p>上海市场中，一来就立即全部成交、未在盘口停留过的主动单，可能不单独发送委托记录。于是成交事件会引用一个订单账本中不存在的订单号。这是交易所数据口径造成的正常情况，不是数据丢失，也不需要从盘口扣减一个本来就没有挂过的订单。上海任务需要使用 <code>strict=False</code>，CLI 中对应 <code>--non-strict</code>；深圳没有这一现象。</p>
+<h2 id="100ms">六、从连续状态生成 100ms 快照</h2>
+<h3 id="61">6.1 交易时间网格</h3>
+<p><code>src/snapshot/sessions.py</code> 定义 A 股交易阶段：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开盘集合竞价</td>
+<td>09:15–09:25</td>
+</tr>
+<tr>
+<td>上午连续交易</td>
+<td>09:30–11:30</td>
+</tr>
+<tr>
+<td>下午连续交易</td>
+<td>13:00–14:57</td>
+</tr>
+<tr>
+<td>收盘集合竞价</td>
+<td>14:57–15:00</td>
+</tr>
+</tbody>
+</table>
+<p>实现会在有效交易时段内以 100ms 为间隔生成网格点：09:25 和 15:00 撮合点单独保留，中午休市等空档不生成快照。</p>
+<p><code>src/snapshot/snapshot.py</code> 对每个网格时刻 <code>t</code> 做两件事：</p>
+<ol>
+<li>消费全部满足 <code>event_time &lt;= t</code> 的事件；</li>
+<li>把事件消费后的订单簿状态写成快照。</li>
+</ol>
+<p>这种语义很重要：时间点 <code>t</code> 的快照包含 <code>t</code> 时刻已经发生的事件，而不包含 <code>t</code> 之后的事件。</p>
+<h3 id="62">6.2 集合竞价不能照搬连续竞价</h3>
+<p>连续交易中，买卖订单实时撮合；集合竞价中，订单先积累，到 09:25 或 15:00 再统一确定价格和成交量。因此 <code>src/snapshot/auction.py</code> 单独模拟指示性集合竞价结果，即“如果现在立刻撮合，虚拟成交价、可成交量和未平衡量分别是多少”。</p>
+<p>候选价来自当前买卖盘出现过的价格；对每个候选价 <code>p</code>：</p>
+<ul>
+<li>需求量 = 市价买单 + 所有价格不低于 <code>p</code> 的限价买量；</li>
+<li>供给量 = 市价卖单 + 所有价格不高于 <code>p</code> 的限价卖量；</li>
+<li>可成交量 = <code>min(需求量, 供给量)</code>；</li>
+<li>不平衡量 = <code>需求量 - 供给量</code>。</li>
+</ul>
+<p>择价规则依次为：</p>
+<ol>
+<li>可成交量最大；</li>
+<li>买卖不平衡量绝对值最小；</li>
+<li>离参考价最近；</li>
+<li>若仍相同，选择更高价格。</li>
+</ol>
+<p>若买卖盘没有可成交重叠，即 <code>matched_vol == 0</code>，项目输出 <code>(0, 0, 0)</code>，与交易所/米筐口径一致，而不是硬给一个没有实际意义的虚拟价格。</p>
+<h2 id="3">七、为什么还生成 3 秒快照</h2>
+<p>米筐只有约 3 秒频率。为了处在同一频率上逐档比较，项目复用同一个重建引擎，仅把拍照网格从 <code>100ms</code> 改为 <code>3000ms</code>，额外生成 3 秒快照。</p>
+<p>因此可以同时观察：</p>
+<ul>
+<li>我的 100ms：最细粒度结果；</li>
+<li>我的 3s：同一引擎的低频输出，也可视为 100ms 的公共网格取样；</li>
+<li>米筐 3s：外部参考。</li>
+</ul>
+<p>在公共时点三者重合，能同时说明“我的 3s 与官方一致”以及“我的 100ms 在公共点与 3s 自洽”。三方比较由 <code>src/snapshot/cli.py</code> 的 <code>compare3</code> 命令执行，结果写到 <code>outputs/reports/threeway/</code>。</p>
+<h2 id="_6">八、验证体系：怎样证明“做对了”</h2>
+<p>项目没有只看一张图，而是设计了三条互相补充的校验。</p>
+<h3 id="81-c1-3s-100ms-3">8.1 校验 C1：我的 3s = 我的 100ms 在 3 秒点上的取样</h3>
+<p>二者使用完全相同的状态机和规则，仅拍照频率不同。因此公共 3 秒点上的全部字段必须完全相等。</p>
+<p>结果：<code>c1_exact_rate = 1.0</code>，逐字段完全相等，<code>c1_mismatch_count = 0</code>。这证明 3 秒与 100ms 输出自洽，没有因网格切换引入额外错误。</p>
+<h3 id="82">8.2 权威校验：按累计成交量对齐米筐</h3>
+<p>这是判断订单簿是否还原正确的最重要标准。米筐某张快照若显示累计成交量为 <code>V</code>，就从本项目的事件回放过程中找到累计成交量同为 <code>V</code> 的状态，再逐档比较买卖五档。</p>
+<p>累计成交量单调不减，比存在打标偏移的墙钟时间更适合作为状态键。结果是：沪深各 7 天，连续交易时段前五档逐档命中率全部为 <strong>100%</strong>。</p>
+<h3 id="83">8.3 诊断校验：按米筐时间标签直接对齐</h3>
+<p>直接把米筐快照标注的时间与本项目网格对齐，深圳约为 0.95、上海约为 0.9。这个指标较低并不表示盘口重建错误，而是米筐时间标签与实际状态时刻存在偏移：</p>
+<ul>
+<li>深圳标签基本落在整秒，但内容通常对应其后约 0.1–1 秒的状态；</li>
+<li>上海时间戳本身常带约 0.7 秒的亚秒偏移，例如 <code>09:15:00.747</code>；</li>
+<li>上海对比实现使用 1600ms 对称窗口内的最近网格点，只用于诊断，字段相等标准没有放宽。</li>
+</ul>
+<p>因此最终汇报把 <code>c2_wallclock_match_rate</code> 明确标为诊断列，并以成交量对齐结果作为正确性依据。</p>
+<h3 id="84-2024-01-02">8.4 米筐时间戳证据（2024-01-02）</h3>
+<table>
+<thead>
+<tr>
+<th>证据点</th>
+<th style="text-align: right;">深圳 <code>000001</code></th>
+<th style="text-align: right;">上海 <code>600000</code></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>米筐首条时间戳</td>
+<td style="text-align: right;"><code>09:15:00</code></td>
+<td style="text-align: right;"><code>09:15:00.747000</code></td>
+<td>上海自带约 0.7 秒零头</td>
+</tr>
+<tr>
+<td>米筐末条时间戳</td>
+<td style="text-align: right;"><code>15:00:00</code></td>
+<td style="text-align: right;"><code>15:00:03.746000</code></td>
+<td>上海快照时间标签并非整 3 秒网格</td>
+</tr>
+<tr>
+<td>行数</td>
+<td style="text-align: right;">4828</td>
+<td style="text-align: right;">4513</td>
+<td>当日缓存快照行数</td>
+</tr>
+<tr>
+<td>毫秒分布 Top 5</td>
+<td style="text-align: right;"><code>{0: 4828}</code></td>
+<td style="text-align: right;"><code>{746: 206, 743: 198, 744: 193, 749: 182, 745: 172}</code></td>
+<td>深圳为整秒；上海集中在 743–749ms</td>
+</tr>
+<tr>
+<td>间隔分布 Top 5</td>
+<td style="text-align: right;"><code>{3.0: 4742, 9.0: 80, 18.0: 3, 300.0: 1, 5400.0: 1}</code></td>
+<td style="text-align: right;"><code>{2.998: 114, 3.0: 109, 3.002: 107, 2.999: 107, 3.001: 103}</code></td>
+<td>米筐是约 3 秒快照，不是 100ms 真值</td>
+</tr>
+<tr>
+<td>墙钟对齐命中率</td>
+<td style="text-align: right;"><code>0.954167</code></td>
+<td style="text-align: right;"><code>0.940285</code></td>
+<td>受时间标签偏移影响</td>
+</tr>
+<tr>
+<td>墙钟差异行数</td>
+<td style="text-align: right;"><code>5959</code></td>
+<td style="text-align: right;"><code>7243</code></td>
+<td>仅作诊断</td>
+</tr>
+<tr>
+<td>成交量对齐命中率</td>
+<td style="text-align: right;"><code>4743/4743 = 1.0</code></td>
+<td style="text-align: right;"><code>4402/4402 = 1.0</code></td>
+<td>同一累计成交量下，连续竞价前五档全部对上</td>
+</tr>
+</tbody>
+</table>
+<p>结论：米筐时间戳可以帮助诊断，但不能作为唯一对齐标准；最终正确性应看同一累计成交量下盘口是否一致。</p>
+<h2 id="_7">九、沪深市场差异与兼容方案</h2>
+<p>项目选择了两只低价、活跃的银行股：</p>
+<ul>
+<li>深圳：<code>000001</code> 平安银行，代码以 0/3 开头，米筐后缀 <code>.XSHE</code>；</li>
+<li>上海：<code>600000</code> 浦发银行，代码以 6 开头，米筐后缀 <code>.XSHG</code>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>差异</th>
+<th>深圳</th>
+<th>上海</th>
+<th>项目处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>order_id</code> 是否等于 <code>seq</code></td>
+<td>相等</td>
+<td>不相等</td>
+<td>排序使用事件序号，订单查找使用订单号，职责分开</td>
+</tr>
+<tr>
+<td>即时成交主动单</td>
+<td>通常有委托记录</td>
+<td>可能没有独立委托记录</td>
+<td>上海以 <code>--non-strict</code> 跳过不存在于账本的主动单引用</td>
+</tr>
+<tr>
+<td>米筐时间戳</td>
+<td>基本为整秒</td>
+<td>常带约 0.7 秒零头</td>
+<td>墙钟诊断使用窗口内最近点，权威校验使用累计成交量</td>
+</tr>
+</tbody>
+</table>
+<p>这些市场差异均没有改变最终结论：两市各 7 天的连续交易盘口按成交量对齐均为 100%。</p>
+<h2 id="_8">十、工程文件地图</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/snapshot/io.py</code></td>
+<td>读取 E 盘逐笔 Parquet，按股票和日期筛选所需数据</td>
+</tr>
+<tr>
+<td><code>src/snapshot/events.py</code></td>
+<td>三张表标准化为统一事件流；按 <code>channel_no, seq</code> 排序；价格转整数</td>
+</tr>
+<tr>
+<td><code>src/snapshot/orderbook.py</code></td>
+<td>核心状态机：维护订单账本与买卖盘口</td>
+</tr>
+<tr>
+<td><code>src/snapshot/auction.py</code></td>
+<td>集合竞价集中定价，生成虚拟价格、可成交量和不平衡量</td>
+</tr>
+<tr>
+<td><code>src/snapshot/sessions.py</code></td>
+<td>定义交易阶段、100ms/3s 时间网格及阶段判断</td>
+</tr>
+<tr>
+<td><code>src/snapshot/snapshot.py</code></td>
+<td>在每个网格点记录全深度、五档宽表及统计字段</td>
+</tr>
+<tr>
+<td><code>src/snapshot/rqref.py</code></td>
+<td>获取并缓存米筐官方 3 秒快照</td>
+</tr>
+<tr>
+<td><code>src/snapshot/validate.py</code></td>
+<td>C1、成交量对齐、墙钟诊断和三方对比</td>
+</tr>
+<tr>
+<td><code>src/snapshot/cli.py</code></td>
+<td>CLI 入口：<code>build-day</code>、<code>compare3</code>、<code>eventwise-ref</code>、<code>render-sz-sh</code> 等</td>
+</tr>
+<tr>
+<td><code>tests/test_orderbook.py</code></td>
+<td>单元测试与防回归测试，包括故意造错、确认校验必须能抓到</td>
+</tr>
+<tr>
+<td><code>notebooks/</code></td>
+<td>分阶段展示和验证报告，<code>00_项目全流程讲解.ipynb</code> 为总讲解</td>
+</tr>
+<tr>
+<td><code>outputs/</code></td>
+<td>快照 Parquet、米筐缓存、差异报告、汇总表与图片</td>
+</tr>
+<tr>
+<td><code>PLAN.md</code></td>
+<td>第一阶段计划</td>
+</tr>
+<tr>
+<td><code>PLAN_02_3s_and_threeway.md</code></td>
+<td>3 秒快照与三方验证计划</td>
+</tr>
+<tr>
+<td><code>PLAN_03_shanghai_stock.md</code></td>
+<td>上海样本扩展计划</td>
+</tr>
+<tr>
+<td><code>FIX_PLAN_01_validation.md</code></td>
+<td>校验缺陷修复计划</td>
+</tr>
+<tr>
+<td><code>FIX_PLAN_02_sse_c2_and_auction.md</code></td>
+<td>上海墙钟诊断与竞价修复计划</td>
+</tr>
+<tr>
+<td><code>FIX_PLAN_03_overlay_viz.md</code></td>
+<td>三方重合图优化计划</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_9">十一、运行方式</h2>
+<p>所有操作统一通过 <code>python -m snapshot.cli &lt;子命令&gt;</code>。以上海 <code>600000</code>、<code>2024-01-02</code> 为例：</p>
+<pre><code class="language-bash"># 1) 获取米筐官方 3 秒快照，缓存到 outputs/ref/
+python -m snapshot.cli cache-ref     --code 600000 --date 2024-01-02
+
+# 2) 生成 100ms 快照；上海需要 --non-strict
+python -m snapshot.cli build-day     --code 600000 --date 2024-01-02 --grid-ms 100  --non-strict
+
+# 3) 生成 3 秒快照
+python -m snapshot.cli build-day     --code 600000 --date 2024-01-02 --grid-ms 3000 --non-strict
+
+# 4) 三方比较：我的 100ms / 我的 3s / 米筐 3s
+python -m snapshot.cli compare3      --code 600000 --date 2024-01-02
+
+# 5) 权威校验：按累计成交量对齐
+python -m snapshot.cli eventwise-ref --code 600000 --date 2024-01-02
+
+# 6) 汇总为沪深对照表
+python -m snapshot.cli render-sz-sh
+</code></pre>
+<p>原 README 的环境示例使用：</p>
+<pre><code class="language-powershell">D:\MG\rq\python.exe -m pip install -e .[dev]
+D:\MG\rq\python.exe -m snapshot.cli --help
+D:\MG\rq\python.exe -m pytest
+</code></pre>
+<h2 id="_10">十二、验证结果</h2>
+<h3 id="121-7">12.1 沪深 × 7 个交易日汇总</h3>
+<table>
+<thead>
+<tr>
+<th>市场</th>
+<th style="text-align: right;">股票</th>
+<th>日期</th>
+<th style="text-align: right;">C1 精确率</th>
+<th style="text-align: right;">连续段成交量对齐</th>
+<th style="text-align: right;">集合竞价命中率</th>
+<th style="text-align: right;">Crossed book 数</th>
+<th style="text-align: right;">墙钟诊断命中率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSE</td>
+<td style="text-align: right;">600000</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.940285</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td style="text-align: right;">600000</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.940902</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td style="text-align: right;">600000</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.920880</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td style="text-align: right;">600000</td>
+<td>2024-01-05</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.988235</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.927479</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td style="text-align: right;">600000</td>
+<td>2024-01-08</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.986667</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.879543</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td style="text-align: right;">600000</td>
+<td>2024-01-09</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.870923</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td style="text-align: right;">600000</td>
+<td>2024-01-10</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.990000</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.887598</td>
+</tr>
+<tr>
+<td>SZSE</td>
+<td style="text-align: right;">000001</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.954167</td>
+</tr>
+<tr>
+<td>SZSE</td>
+<td style="text-align: right;">000001</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.963900</td>
+</tr>
+<tr>
+<td>SZSE</td>
+<td style="text-align: right;">000001</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.955241</td>
+</tr>
+<tr>
+<td>SZSE</td>
+<td style="text-align: right;">000001</td>
+<td>2024-01-05</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.933722</td>
+</tr>
+<tr>
+<td>SZSE</td>
+<td style="text-align: right;">000001</td>
+<td>2024-01-08</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.988506</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.954469</td>
+</tr>
+<tr>
+<td>SZSE</td>
+<td style="text-align: right;">000001</td>
+<td>2024-01-09</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.987179</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.963814</td>
+</tr>
+<tr>
+<td>SZSE</td>
+<td style="text-align: right;">000001</td>
+<td>2024-01-10</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.967751</td>
+</tr>
+<tr>
+<td><strong>SSE 7 日汇总/均值</strong></td>
+<td style="text-align: right;"><strong>600000</strong></td>
+<td>—</td>
+<td style="text-align: right;"><strong>1.0</strong></td>
+<td style="text-align: right;"><strong>1.0</strong></td>
+<td style="text-align: right;"><strong>0.994986</strong></td>
+<td style="text-align: right;"><strong>13</strong></td>
+<td style="text-align: right;"><strong>0.909658</strong></td>
+</tr>
+<tr>
+<td><strong>SZSE 7 日汇总/均值</strong></td>
+<td style="text-align: right;"><strong>000001</strong></td>
+<td>—</td>
+<td style="text-align: right;"><strong>1.0</strong></td>
+<td style="text-align: right;"><strong>1.0</strong></td>
+<td style="text-align: right;"><strong>0.996526</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>0.956152</strong></td>
+</tr>
+</tbody>
+</table>
+<p><code>c1_mismatch_count</code> 在 14 个每日样本中全部为 0。两只股票 7 日累计成交笔数分别为：上海 <code>146,163</code>，深圳 <code>352,858</code>。</p>
+<p>可下载原始汇总：<a href="assets/lv2_snapshot/summary_sz_vs_sh.csv">summary_sz_vs_sh.csv</a>。</p>
+<p><img alt="沪深七日对照汇总" src="assets/lv2_snapshot/summary_sz_vs_sh.png"></p>
+<h3 id="122">12.2 深圳三方重合图</h3>
+<p>图中同时展示我的 100ms 细线、我的 3 秒点和米筐 3 秒点。公共状态上的点完全重合；放大后还能看到 100ms 捕捉到的、3 秒采样会漏掉的盘中细节。</p>
+<p><img alt="深圳 000001 三方重合图" src="assets/lv2_snapshot/threeway_overlay_sz_000001.png"></p>
+<h3 id="123">12.3 上海三方重合图</h3>
+<p><img alt="上海 600000 三方重合图" src="assets/lv2_snapshot/threeway_overlay_sh_600000.png"></p>
+<h3 id="124">12.4 逐行三方并排表</h3>
+<p>选取若干时点，把“我的 100ms / 我的 3s / 米筐 3s”的买一卖一价量、最新价和累计量并排展示，可以逐行看到三方一致。</p>
+<p><img alt="深圳 000001 逐行三方并排表" src="assets/lv2_snapshot/threeway_table_sz_000001.png"></p>
+<h2 id="_11">十三、走过的弯路与工程改进</h2>
+<h3 id="131">13.1 第一版校验出现“假一致”</h3>
+<p>第一版验证逻辑存在隐蔽 bug：合并后的列名发生冲突，导致盘口字段实际上没有被正确比较，却输出了“无差异”。后来重写了校验逻辑，并增加防回归测试：故意修改盘口值，验证器必须报告差异。这个教训很重要——验证代码本身也需要被验证，不能因为报告显示 100% 就默认它正确。</p>
+<h3 id="132">13.2 按阶段迭代补齐能力</h3>
+<p>在核心重建完成后，项目依次补上：</p>
+<ol>
+<li>3 秒快照和三方对比；</li>
+<li>深圳、上海各 7 个交易日；</li>
+<li>修复上海墙钟诊断列显示 0.0 的误导；</li>
+<li>修复集合竞价首刻编码；</li>
+<li>优化重合图，使 100ms 细节和 3 秒点同时可见。</li>
+</ol>
+<h3 id="133">13.3 收盘竞价首刻的米筐空占位</h3>
+<p>部分日期在收盘集合竞价首刻 <code>14:57:00</code> 附近，米筐给出空占位 <code>(0,0,0)</code>，而项目根据当时真实订单簿仍能看到交叉状态。这不是连续交易重建错误，也不是成交量对齐错误，而是参考数据在边界时刻的编码差异。</p>
+<p>实际异常清单共有 5 条：深圳 2024-01-08、2024-01-09；上海 2024-01-05、2024-01-08、2024-01-10。它们都被如实记录在 <a href="assets/lv2_snapshot/auction_boundary_misses.csv">auction_boundary_misses.csv</a>，没有为了追求表面 100% 而隐藏。</p>
+<p>另外，上海 7 日中出现的少量 <code>continuous_crossed_book</code> 计数集中于 09:25 或 15:00 附近的阶段边界网格点，不是连续交易逐档不一致；权威的成交量对齐指标仍为 100%。</p>
+<h2 id="mentor">十四、可以怎样向面试官或 Mentor 解释</h2>
+<p>一个清晰的 90 秒版本可以这样说：</p>
+<blockquote>
+<p>交易所 Level 2 给我的不是现成盘口，而是委托、成交、撤单三类逐笔事件。我先按交易所序号把三张表合并成统一事件流，再实现一个订单簿状态机：每来一笔委托就增加订单与价位量，成交或撤单就根据订单号扣减剩余量。然后在 A 股有效交易时段内每 100ms 消费到当前时刻为止的全部事件并拍一张快照。集合竞价不能用连续撮合逻辑，所以我另外实现了最大成交量、最小不平衡量等择价规则。为了验证，我用同一引擎生成 3 秒快照，一方面证明 3 秒与 100ms 公共点完全一致，另一方面按累计成交量与米筐五档快照逐档对比。深圳平安银行和上海浦发银行各跑 7 天，连续交易对齐命中率都是 100%。过程中还处理了上海主动单可能没有委托记录、米筐上海时间戳约 0.7 秒偏移以及竞价边界空占位等数据口径问题。</p>
+</blockquote>
+<p>这个项目体现的不只是数据处理，还包括：市场微观结构理解、状态机设计、大规模数据读取优化、跨市场数据口径兼容、验证体系设计和防回归测试。</p>
+<h2 id="_12">十五、最终结论</h2>
+<ol>
+<li>项目成功把 LV2 委托、成交、撤单流水还原为每 100ms 一张的订单簿快照。</li>
+<li>同一引擎生成的 100ms 与 3s 快照，在公共 3 秒点逐字段完全相等。</li>
+<li>深圳 <code>000001</code> 和上海 <code>600000</code> 各 7 个交易日，在同一累计成交量下与米筐连续交易买卖五档逐档 <strong>100% 一致</strong>。</li>
+<li>墙钟对齐分数较低来自米筐时间标签偏移，只作为诊断指标，不影响订单簿正确性结论。</li>
+<li>集合竞价边界的少量差异已定位为米筐空占位，并完整留痕；没有把参考数据口径差异误报为引擎错误。</li>
+<li>最终交付物包括 100ms/3s Parquet 快照、米筐缓存、差异报告、沪深 7 日汇总表、三方重合图和逐行并排表。</li>
+</ol>
+<hr>
+<h2 id="anotebook">附录 A：Notebook 中的时间戳证据复现代码</h2>
+<p>以下代码完整保留自 <code>00_项目全流程讲解.ipynb</code>：</p>
+<pre><code class="language-python">from pathlib import Path
+import pandas as pd
+
+ROOT = Path.cwd().parent if Path.cwd().name == &quot;notebooks&quot; else Path(&quot;lv2_snapshot_workspace&quot;)
+
+def ref_timestamp_profile(code: str, date: str = &quot;2024-01-02&quot;) -&gt; dict:
+    ref = pd.read_parquet(ROOT / &quot;outputs&quot; / &quot;ref&quot; / f&quot;{code}_{date}.parquet&quot;, columns=[&quot;dt&quot;, &quot;volume&quot;])
+    dt = pd.to_datetime(ref[&quot;dt&quot;])
+    ms_counts = dt.dt.microsecond.floordiv(1000).value_counts().head(5).to_dict()
+    gaps = dt.diff().dropna().dt.total_seconds().round(3).value_counts().head(5).to_dict()
+    return {
+        &quot;code&quot;: code,
+        &quot;rows&quot;: len(ref),
+        &quot;first_dt&quot;: str(dt.iloc[0]),
+        &quot;last_dt&quot;: str(dt.iloc[-1]),
+        &quot;sample_first_3&quot;: &quot; | &quot;.join(str(x) for x in dt.head(3).tolist()),
+        &quot;top_ms&quot;: ms_counts,
+        &quot;top_gap_s&quot;: gaps,
+    }
+
+def validation_profile(code: str, date: str = &quot;2024-01-02&quot;) -&gt; dict:
+    threeway = pd.read_csv(
+        ROOT / &quot;outputs&quot; / &quot;reports&quot; / &quot;threeway&quot; / f&quot;code={code}&quot; / f&quot;date={date}&quot; / &quot;summary.csv&quot;,
+        dtype={&quot;code&quot;: str, &quot;date&quot;: str},
+    ).iloc[0]
+    eventwise = pd.read_csv(
+        ROOT / &quot;outputs&quot; / &quot;reports&quot; / &quot;eventwise&quot; / f&quot;code={code}&quot; / f&quot;date={date}&quot; / &quot;summary.csv&quot;,
+        dtype={&quot;code&quot;: str, &quot;date&quot;: str},
+    ).iloc[0]
+    return {
+        &quot;code&quot;: code,
+        &quot;c1_100ms_vs_3s&quot;: threeway[&quot;c1_exact_rate&quot;],
+        &quot;wallclock_rate&quot;: threeway[&quot;c2_wallclock_match_rate&quot;],
+        &quot;wallclock_diff_rows&quot;: int(threeway[&quot;c2_diff_rows&quot;]),
+        &quot;volume_keyed_rate&quot;: eventwise[&quot;volume_keyed_cont_hit_rate&quot;],
+        &quot;volume_keyed_matched&quot;: f&quot;{int(eventwise['volume_keyed_cont_matched'])}/{int(eventwise['volume_keyed_cont_total'])}&quot;,
+    }
+
+timestamp_evidence = pd.DataFrame([ref_timestamp_profile(&quot;000001&quot;), ref_timestamp_profile(&quot;600000&quot;)])
+validation_evidence = pd.DataFrame([validation_profile(&quot;000001&quot;), validation_profile(&quot;600000&quot;)])
+
+print(&quot;米筐缓存快照的时间戳证据：&quot;)
+print(timestamp_evidence.to_string(index=False))
+print(&quot;\n同一天验证结果对比：&quot;)
+print(validation_evidence.to_string(index=False))
+</code></pre>
+<p>其输出的完整数值已经整理在本文 8.4 节；Notebook 原始首三条时间戳为：</p>
+<ul>
+<li>深圳：<code>2024-01-02 09:15:00 | 2024-01-02 09:15:09 | 2024-01-02 09:15:27</code>；</li>
+<li>上海：<code>2024-01-02 09:15:00.747000 | 2024-01-02 09:15:03.799000 | 2024-01-02 09:15:06.786000</code>。</li>
+</ul>
+<h2 id="bnotebook">附录 B：Notebook 中的结果展示代码</h2>
+<p>以下代码完整保留原 Notebook 读取汇总与展示图片的方式：</p>
+<pre><code class="language-python"># 读出沪深对照汇总表
+from pathlib import Path
+import pandas as pd
+from IPython.display import Image, display
+
+WS = Path.cwd()
+if WS.name == 'notebooks':
+    WS = WS.parent
+
+summary = pd.read_csv(WS / 'outputs' / 'reports' / 'summary_sz_vs_sh.csv')
+key_cols = [c for c in ['exchange','code','date','c1_exact_rate',
+                        'cont_volume_keyed_hit_rate','auction_hit_rate',
+                        'crossed_book_count','c2_wallclock_match_rate'] if c in summary.columns]
+print(&quot;沪深 x 7天 验证汇总（头三列是权威指标）：&quot;)
+display(summary[key_cols])
+print(&quot;\n核心结论：c1_exact_rate 与 cont_volume_keyed_hit_rate 全部 = 1.0 (100%)&quot;)
+print(&quot;即：我的3s≡我的100ms，且连续段逐档 100% 对齐米筐官方数据。&quot;)
+
+# 成品图 1：沪深对照汇总表（图片版）
+p = WS / 'outputs' / 'reports' / 'summary_sz_vs_sh.png'
+display(Image(filename=str(p))) if p.exists() else print('未找到', p)
+
+# 成品图 2：深圳 000001 三方重合图（100ms线 / 我的3s点 / 米筐3s点）
+p = WS / 'outputs' / 'reports' / 'threeway' / 'code=000001' / 'date=2024-01-02' / 'threeway_overlay.png'
+display(Image(filename=str(p))) if p.exists() else print('未找到', p)
+
+# 成品图 3：上海 600000 三方重合图
+p = WS / 'outputs' / 'reports' / 'threeway' / 'code=600000' / 'date=2024-01-02' / 'threeway_overlay.png'
+display(Image(filename=str(p))) if p.exists() else print('未找到', p)
+
+# 成品图 4：逐行三方并排表（某些时点价/量三方完全一致）
+p = WS / 'outputs' / 'reports' / 'threeway' / 'code=000001' / 'date=2024-01-02' / 'threeway_table.png'
+display(Image(filename=str(p))) if p.exists() else print('未找到', p)
+</code></pre>
+<p>Notebook 对上述汇总的原始打印结论是：</p>
+<pre><code class="language-text">核心结论：c1_exact_rate 与 cont_volume_keyed_hit_rate 全部 = 1.0 (100%)
+即：我的3s≡我的100ms，且连续段逐档 100% 对齐米筐官方数据。
+</code></pre>
+<h2 id="cnotebook">附录 C：Notebook 内容覆盖索引</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Notebook 单元</th>
+<th>原内容</th>
+<th>本文位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0–1</td>
+<td>项目标题、任务、盘口解释、全流程、最终结论</td>
+<td>一、二、三</td>
+</tr>
+<tr>
+<td style="text-align: right;">2–3</td>
+<td>原始逐笔、米筐数据、<code>io.py</code>、<code>rqref.py</code></td>
+<td>四</td>
+</tr>
+<tr>
+<td style="text-align: right;">4–5</td>
+<td>输入/状态/输出、事件合并、订单簿状态机、两类边界问题</td>
+<td>五</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td>时间网格与集合竞价</td>
+<td>六</td>
+</tr>
+<tr>
+<td style="text-align: right;">7–9</td>
+<td>三条校验与米筐时间戳证据、代码和输出</td>
+<td>八、附录 A</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td>单独生成 3 秒快照与三方关系</td>
+<td>七</td>
+</tr>
+<tr>
+<td style="text-align: right;">11</td>
+<td>沪深样本和市场差异</td>
+<td>九</td>
+</tr>
+<tr>
+<td style="text-align: right;">12</td>
+<td>工程文件地图和阶段计划</td>
+<td>十</td>
+</tr>
+<tr>
+<td style="text-align: right;">13</td>
+<td>CLI 运行命令</td>
+<td>十一</td>
+</tr>
+<tr>
+<td style="text-align: right;">14</td>
+<td>校验 bug、阶段修复、竞价首刻差异</td>
+<td>十三</td>
+</tr>
+<tr>
+<td style="text-align: right;">15–21</td>
+<td>14 日汇总、4 张成品图、结论与展示代码</td>
+<td>十二、十五、附录 B</td>
+</tr>
+</tbody>
+</table>
+<p>本文覆盖原 Notebook 的全部 Markdown 事实、代码、输出数值与图片，并增加了状态机示例、集合竞价公式化解释、面试表述和指标解读。</p>
+</main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+mermaid.initialize({startOnLoad:true, theme:"neutral", securityLevel:"loose"});
+</script>
+</body>
+</html>
