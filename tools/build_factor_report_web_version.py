@@ -6,6 +6,8 @@ import json
 import re
 from pathlib import Path
 
+import factor_report_explanations as formula_explanations
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = (
@@ -43,7 +45,9 @@ def main() -> None:
     if not SOURCE.is_file():
         raise FileNotFoundError(f"self-contained source is missing: {SOURCE}")
 
-    source_html = SOURCE.read_text(encoding="utf-8")
+    source_html = formula_explanations.enrich_report_html(
+        SOURCE.read_text(encoding="utf-8")
+    )
     match = REPORT_DATA_RE.search(source_html)
     if match is None:
         raise RuntimeError("report-data JSON script was not found")

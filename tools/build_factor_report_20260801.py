@@ -14,6 +14,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 
+import factor_report_explanations as formula_explanations
+
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_DIR = ROOT / "artifacts" / "factor-report-2026-07-31"
@@ -814,6 +816,7 @@ def main() -> None:
     evidence = load_evidence(source_root)
     payload, facts = refresh_payload(old_payload, evidence, args.quant_local_head)
     self_html = build_self_contained(template_html, match, payload, facts)
+    self_html = formula_explanations.enrich_report_html(self_html)
     SELF_CONTAINED_HTML.write_text(self_html, encoding="utf-8", newline="\n")
     website_html, website_stats = build_website(self_html)
     WEBSITE_HTML.write_text(website_html, encoding="utf-8", newline="\n")
