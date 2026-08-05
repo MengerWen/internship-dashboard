@@ -6,9 +6,13 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "factor-formula-guide-v1"
+SCHEMA_VERSION = "factor-formula-guide-v2-all-order-summary"
 REPORT_DATA_RE = re.compile(
     r'(<script id="report-data" type="application/json">)(.*?)(</script>)',
+    flags=re.DOTALL,
+)
+RANKING_SECTION_RE = re.compile(
+    r'<section class="shell chapter" id="ranking"(?: [^>]*)?>.*?</section>',
     flags=re.DOTALL,
 )
 
@@ -580,8 +584,8 @@ F03_EXPANDED_FORMULA = (
 
 
 AGGREGATION_NOTE = (
-    "卡片公式先产生订单、边、簇或链级得分。随后 c/q/a 分别按订单笔数、申报数量、"
-    "动作前参考金额归约到股票日；c/q/a 是三个输出口径，不是公式中的可调参数。"
+    "卡片公式先产生订单、边、簇或链级得分。卡片内 c/q/a 是历史报告的条件分母输出；"
+    "2026-08-05 起主研究口径只保留笔数型 c，并用全部有效去重新委托数作统一分母，详见汇总章。"
 )
 
 ZERO_NA_NOTE = (
@@ -644,6 +648,111 @@ GUIDE_CSS = r"""
 """.strip()
 
 
+CURRENT_RESEARCH_CSS = r"""
+.research-update{margin-top:22px;border:1px solid #c9c0b3;background:linear-gradient(145deg,#f7f2e9 0%,#fff 58%,#edf3f1 100%);box-shadow:0 16px 40px rgba(29,45,54,.08)}
+.research-update-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:start;padding:22px 24px;border-bottom:1px solid #d8d0c4}
+.research-update-head .stamp{font:800 10px var(--mono);letter-spacing:.09em;color:#fff;background:var(--red);padding:7px 9px;white-space:nowrap}
+.research-update-head h3{margin:4px 0 8px;font-size:22px;line-height:1.28;color:var(--ink)}
+.research-update-head p{margin:0;max-width:980px;color:#44535b;font-size:13px;line-height:1.8}
+.research-verdict{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#d8d0c4;border-bottom:1px solid #d8d0c4}
+.research-verdict article{padding:18px 20px;background:#fff}
+.research-verdict b{display:block;margin-bottom:6px;font:800 10px var(--mono);letter-spacing:.07em;color:var(--teal)}
+.research-verdict strong{display:block;margin-bottom:7px;font-size:18px;line-height:1.35;color:var(--ink)}
+.research-verdict p{margin:0;color:#536169;font-size:12px;line-height:1.7}
+.research-block{padding:20px 24px;border-bottom:1px solid #ddd5ca}
+.research-block:last-child{border-bottom:0}
+.research-block h3{margin:0 0 9px;font-size:17px;color:var(--ink)}
+.research-block>p{margin:0 0 12px;color:#4d5b63;font-size:12px;line-height:1.75}
+.definition-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+.definition-card{padding:15px 17px;border:1px solid #d8d0c4;background:rgba(255,255,255,.78)}
+.definition-card b{display:block;margin-bottom:8px;color:var(--red);font-size:12px}
+.definition-card code{font-family:var(--mono);font-size:11px;color:#163b44;overflow-wrap:anywhere}
+.definition-card p{margin:7px 0 0;color:#536169;font-size:11px;line-height:1.7}
+.research-table-wrap{overflow:auto;border:1px solid #d8d0c4;background:#fff}
+.research-table{width:100%;min-width:980px;border-collapse:collapse;table-layout:auto}
+.research-table th,.research-table td{padding:9px 10px;border-right:1px solid #e3ddd4;border-bottom:1px solid #e3ddd4;text-align:right;font-size:11px;white-space:nowrap}
+.research-table th{background:#eae3d8;font:700 10px var(--mono);letter-spacing:.03em;color:#4c5960}
+.research-table th:first-child,.research-table th:nth-child(2),.research-table td:first-child,.research-table td:nth-child(2){text-align:left}
+.research-table tbody tr[data-period="q2"] td{background:#f3f7f5}
+.research-table .all{font-weight:800;color:#0d5e62}
+.research-table .neg{color:#9a3c31}
+.research-foot{margin:10px 0 0;color:#68757b;font-size:10px;line-height:1.65}
+.q2-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;align-items:start}
+.q2-card{padding:16px 18px;border-left:4px solid var(--red);background:#f5eee5}
+.q2-card strong{display:block;margin-bottom:7px;color:var(--ink);font-size:15px}
+.q2-card p{margin:0;color:#4e5d64;font-size:12px;line-height:1.75}
+.coverage-list{margin:0;padding-left:18px;color:#4e5d64;font-size:11px;line-height:1.75}
+.coverage-list li+li{margin-top:4px}
+.research-next{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.research-next div{padding:14px 16px;border-top:3px solid var(--gold);background:#fff}
+.research-next b{display:block;margin-bottom:6px;color:var(--ink);font-size:12px}
+.research-next p{margin:0;color:#56646b;font-size:11px;line-height:1.7}
+.legacy-ranking{margin-top:18px;border:1px dashed #b7ada0;background:#f4efe7}
+.legacy-ranking>summary{cursor:pointer;padding:14px 16px;font-weight:800;color:#5e4c43}
+.legacy-ranking-body{padding:0 16px 16px}
+.legacy-warning{margin:0 0 14px;padding:12px 14px;border-left:4px solid var(--gold);background:#fff;color:#5d676c;font-size:11px;line-height:1.7}
+@media(max-width:820px){.research-update-head,.definition-grid,.q2-grid{grid-template-columns:1fr}.research-verdict,.research-next{grid-template-columns:1fr}.research-update-head .stamp{justify-self:start}.research-block{padding:17px}.research-update-head{padding:19px}}
+""".strip()
+
+
+CURRENT_RESEARCH_HTML = r"""<section class="shell chapter" id="ranking" data-research-summary="all-order-denominator-v1">
+<div class="chapter-head"><div class="chapter-no">04</div><div><div class="kicker">Current research conclusion · 2026-08-05</div><h2>因子表现的总结性报告</h2><p class="chapter-lead">本章已按统一全订单分母重写。当前主研究只比较 54 个可计算的笔数型因子，并把 IC、Rank_IC、ICIR 放在一起；下方旧 165 口径排名仅作为历史审计存档。</p></div></div>
+<div class="research-update">
+  <div class="research-update-head"><div><h3>全订单分母修正后：Q2 异常依然存在，且不是 coverage 制造的</h3><p>复用现有 09:30–09:33 因子面板直接派生，没有重读原始 L2、没有重建订单生命周期、也没有重跑 scorer。正式样本覆盖 2025-01-02 至 2026-07-31，共 364 个交易日、1,046,287 个股票日；55 个 <code>_c</code> 因子中预注册排除无有效横截面 IC 的 <code>c04_oneshot_c</code>，正式比较 54 个。</p></div><span class="stamp">CURRENT PRIMARY RESULT</span></div>
+  <div class="research-verdict">
+    <article><b>口径结论</b><strong><code>_c_all</code> 应作为主口径</strong><p>它统一回答“全部有效去重新委托中出现多少可识别算法痕迹”，避免各 scorer 的可判断条件改变分母。</p></article>
+    <article><b>异常归因</b><strong>换分母不能解释 2026Q2</strong><p>Q2 相对非 Q2 的中位 Rank_IC 溢价仍约 5.8%–6.5%；分母变更对该溢价的中位贡献只有 -0.00051 至 -0.00014。</p></article>
+    <article><b>经济边界</b><strong>代理 / 下界，不是真实订单占比</strong><p>高值表示“可观察算法痕迹更多”。同一订单可能命中多个因子，因此 54 列不能直接相加。</p></article>
+  </div>
+  <div class="research-block">
+    <h3>1 · 当前口径与三个 target</h3>
+    <div class="definition-grid">
+      <div class="definition-card"><b>统一分母</b><code>_c_cond = activity_count / determinable_total_count</code><br><code>coverage_count = determinable_total_count / window_total_count</code><br><code>_c_all = activity_count / window_total_count = _c_cond × coverage_count</code><p><code>window_total_count</code> 是 [09:30,09:33) 内全部有效、去重后的新委托订单数；成交、撤单及其他生命周期消息不重复计作新订单。最大恒等式误差为 1.11×10<sup>-16</sup>。</p></div>
+      <div class="definition-card"><b>收益标签</b><code>D2 open / D1 09:33 L1 close - 1</code><br><code>D2 09:30–09:33 L1 VWAP / D1 09:33 L1 close - 1</code><br><code>D1 09:44–09:45 VWAP / D1 09:33 last - 1</code><p>分别在 2026Q2（60 日）、2026 年至 07-31（131 日）、2025 年至 2026-07-31（364 日）比较。</p></div>
+    </div>
+  </div>
+  <div class="research-block">
+    <h3>2 · 54 个因子的横截面中位数：IC / Rank_IC / ICIR</h3>
+    <p>以下每个数字都是“54 个逐因子统计量的横截面中位数”，不是把 54 个因子合成后得到的 IC。<span class="all">all</span> 为当前主口径，cond 为旧条件分母对照。</p>
+    <div class="research-table-wrap"><table class="research-table">
+      <thead><tr><th rowspan="2">target</th><th rowspan="2">period</th><th colspan="2">IC</th><th colspan="2">Rank_IC</th><th colspan="2">ICIR</th><th rowspan="2">中位 ΔRank<br>all−cond</th></tr><tr><th>cond</th><th>all</th><th>cond</th><th>all</th><th>cond</th><th>all</th></tr></thead>
+      <tbody>
+        <tr data-period="q2"><td>D2 open</td><td>2026Q2 · 60 日</td><td>+0.04561</td><td class="all">+0.05265</td><td>+0.02186</td><td class="all">+0.03008</td><td>+0.13781</td><td class="all">+0.20797</td><td>+0.00326</td></tr>
+        <tr><td>D2 open</td><td>2026 至 07-31 · 131 日</td><td>+0.00002</td><td class="all">+0.00555</td><td class="neg">-0.02507</td><td class="all neg">-0.01822</td><td class="neg">-0.18537</td><td class="all neg">-0.11353</td><td>+0.00063</td></tr>
+        <tr><td>D2 open</td><td>2025 至 2026-07-31 · 364 日</td><td class="neg">-0.00846</td><td class="all">+0.00038</td><td class="neg">-0.03303</td><td class="all neg">-0.02617</td><td class="neg">-0.25002</td><td class="all neg">-0.19118</td><td>+0.00098</td></tr>
+        <tr data-period="q2"><td>D2 09:30–09:33 VWAP</td><td>2026Q2 · 60 日</td><td>+0.04912</td><td class="all">+0.05294</td><td>+0.02637</td><td class="all">+0.03264</td><td>+0.17727</td><td class="all">+0.24392</td><td>+0.00309</td></tr>
+        <tr><td>D2 09:30–09:33 VWAP</td><td>2026 至 07-31 · 131 日</td><td>+0.00145</td><td class="all">+0.00586</td><td class="neg">-0.02298</td><td class="all neg">-0.01768</td><td class="neg">-0.15920</td><td class="all neg">-0.11591</td><td>+0.00062</td></tr>
+        <tr><td>D2 09:30–09:33 VWAP</td><td>2025 至 2026-07-31 · 364 日</td><td class="neg">-0.00380</td><td class="all">+0.00371</td><td class="neg">-0.02802</td><td class="all neg">-0.02111</td><td class="neg">-0.21836</td><td class="all neg">-0.15821</td><td>+0.00097</td></tr>
+        <tr data-period="q2"><td>D1 09:44–09:45 VWAP</td><td>2026Q2 · 60 日</td><td>+0.04759</td><td class="all">+0.04604</td><td>+0.03751</td><td class="all">+0.03302</td><td>+0.30108</td><td class="all">+0.27790</td><td class="neg">-0.00099</td></tr>
+        <tr><td>D1 09:44–09:45 VWAP</td><td>2026 至 07-31 · 131 日</td><td>+0.01437</td><td class="all">+0.01349</td><td class="neg">-0.00177</td><td class="all neg">-0.00299</td><td class="neg">-0.00994</td><td class="all neg">-0.01696</td><td class="neg">-0.00084</td></tr>
+        <tr><td>D1 09:44–09:45 VWAP</td><td>2025 至 2026-07-31 · 364 日</td><td>+0.00706</td><td class="all">+0.00701</td><td class="neg">-0.01472</td><td class="all neg">-0.01495</td><td class="neg">-0.11563</td><td class="all neg">-0.12058</td><td>+0.00004</td></tr>
+      </tbody>
+    </table></div>
+    <p class="research-foot">IC 为 mean Pearson；Rank_IC 为 mean Spearman；ICIR 为日度 IC 均值 / 日度 IC 标准差。三项在表内相邻展示。正负号均按“痕迹越多”为因子正方向，未为了提高结果而翻转。</p>
+  </div>
+  <div class="research-block">
+    <h3>3 · 为什么不能把 Q2 的好结果归因于新分母</h3>
+    <div class="q2-grid">
+      <div class="research-table-wrap"><table class="research-table" style="min-width:700px"><thead><tr><th>target</th><th>Q2−304 日 non-Q2<br>cond Rank_IC</th><th>Q2−304 日 non-Q2<br>all Rank_IC</th><th>分母贡献<br>逐因子中位数</th><th>Q2 正 / 长期负</th></tr></thead><tbody><tr><td>D2 open</td><td>+0.06365</td><td class="all">+0.06260</td><td>-0.00014</td><td>41 / 54</td></tr><tr><td>D2 09:30–09:33 VWAP</td><td>+0.06094</td><td class="all">+0.05842</td><td>-0.00014</td><td>38 / 54</td></tr><tr><td>D1 09:44–09:45 VWAP</td><td>+0.06458</td><td class="all">+0.05822</td><td>-0.00051</td><td>45 / 54</td></tr></tbody></table></div>
+      <div class="q2-card"><strong>这是跨 target、跨因子的普遍符号翻转</strong><p>Q2 的异常不只出现在隔日标签，也出现在原始日内 09:44–09:45 标签。用 2026 年内 71 个 non-Q2 交易日复核，分母对 Rank_IC 溢价的中位贡献也只有 +0.00003、+0.00001、-0.00042。表中的“分母贡献”是逐因子贡献的中位数，因此不要求等于前两列中位数之差。</p></div>
+    </div>
+  </div>
+  <div class="research-block">
+    <h3>4 · Coverage 的真实作用与经济解释</h3>
+    <div class="definition-grid">
+      <div class="definition-card"><b>Coverage 在 Q2 确实更高，但量级不够</b><ul class="coverage-list"><li>54 因子的 Q2−长期 coverage gap：股票日等权平均 +2.08 个百分点；订单数加权平均 +1.81 个百分点。</li><li>order-weighted：f18 长期 42.97% → Q2 49.61%；f20 17.68% → 19.78%；f52 14.72% → 17.10%。</li><li>Q2 coverage gap 与分母导致的 Q2 premium 变化关联很弱：订单加权 Pearson 为 0.189 / 0.130 / -0.020，Spearman 为 0.054 / 0.034 / 0.112。</li></ul></div>
+      <div class="definition-card"><b>个别低 coverage 因子仍会显著改写</b><p>例如 Q2、D2 open 的 Rank_IC：<code>f17_split_c</code> -0.0029 → +0.0250，<code>f18_merge_c</code> +0.0096 → +0.0334，<code>f21_repburst_c</code> -0.0003 → +0.0175。因此全订单分母不是“小修饰”，只是它无法解释整个 Q2 的约 6% Rank_IC 溢价。</p></div>
+    </div>
+  </div>
+  <div class="research-block">
+    <h3>5 · 当前可接受的研究结论与下一步</h3>
+    <div class="research-next"><div><b>低关注流动性折价：方向上有长期证据，但尚未完成识别</b><p>长期 <code>_c_all</code> 中位 Rank_IC 在三个 target 上分别为 -0.0262、-0.0211、-0.0150，与“低算法关注标的获得流动性折价 / 风险补偿”方向一致；但 Q2 全部翻正，不能据此宣称存在稳定机制。</p></div><div><b>根因诊断应转向风格与市场状态</b><p>优先对市值、价格、换手、成交额、买卖价差、波动率、开盘 gap、停牌与涨跌停做横截面中性化，并检查滚动日度 IC 与底部 5% / 10% / 20% 非线性分组。</p></div><div><b>保留 cond 与 coverage 作为诊断列</b><p><code>_c_all</code> 是主因子；<code>_c_cond</code> 与 <code>coverage_count</code> 用于区分行为浓度和可判断状态。coverage 本身也携带市场状态，不应被当作纯技术噪声。</p></div><div><b>综合关注度必须避免重复计数</b><p>最佳方案是在订单级保存 54 类痕迹 bitmask / 分数向量，用 <code>any(trace)</code>、逐订单 max 或校准 union 后再除以全订单数。只有面板时可按经济行为族做 rank-PCA，但只能称关注强度潜变量。</p></div></div>
+  </div>
+</div>
+<details class="legacy-ranking"><summary>展开历史 165 口径排名（旧条件分母，仅供审计）</summary><div class="legacy-ranking-body"><p class="legacy-warning">以下互动表来自各日期原报告：同时包含 c/q/a，使用“可判断订单”条件分母，且只有原 09:44–09:45 target。它们不再代表当前主研究结论；保留仅为追溯当时的计算和说明。</p><div class="grid-3" id="ranking-leaders"></div><div id="ranking-tables"></div><div class="callout"><div><strong>历史 Top 20 交集不再用于当前候选池判断。</strong><p>当前筛选应以 54 个 <code>_c_all</code> 因子的三 target、三时期对照和后续中性化结果为准。</p><div class="overlap" id="overlap"></div></div></div></div></details>
+</section>"""
+
+
 GUIDE_JS = r"""
 function formulaGuide(idea){
   const guide=idea.formula_guide,glossary=R.formula_glossary;
@@ -668,21 +777,34 @@ def _replace_once(text: str, old: str, new: str, label: str) -> str:
 
 
 def patch_formula_runtime(html: str) -> str:
-    if f'content="{SCHEMA_VERSION}"' not in html:
-        html = _replace_once(
-            html,
-            '<meta name="color-scheme" content="light">',
-            '<meta name="color-scheme" content="light">\n'
-            f'<meta name="formula-explanations" content="{SCHEMA_VERSION}">',
-            "formula explanation build metadata",
-        )
+    html = re.sub(
+        r'\n?<meta name="formula-explanations" content="[^"]+">',
+        "",
+        html,
+    )
+    html = _replace_once(
+        html,
+        '<meta name="color-scheme" content="light">',
+        '<meta name="color-scheme" content="light">\n'
+        f'<meta name="formula-explanations" content="{SCHEMA_VERSION}">',
+        "formula explanation build metadata",
+    )
     if ".formula-guide{" not in html:
         html = _replace_once(
             html,
             ".evidence-tags strong{display:block;font:800 10px var(--mono);color:var(--ink);margin-bottom:4px}",
             ".evidence-tags strong{display:block;font:800 10px var(--mono);color:var(--ink);margin-bottom:4px}\n"
-            + GUIDE_CSS,
+            + GUIDE_CSS
+            + "\n"
+            + CURRENT_RESEARCH_CSS,
             "formula guide styles",
+        )
+    elif ".research-update{" not in html:
+        html = _replace_once(
+            html,
+            GUIDE_CSS,
+            GUIDE_CSS + "\n" + CURRENT_RESEARCH_CSS,
+            "current research summary styles",
         )
     if "function formulaGuide(idea){" not in html:
         html = _replace_once(
@@ -703,6 +825,14 @@ def patch_formula_runtime(html: str) -> str:
     return html
 
 
+def patch_current_research_summary(html: str) -> str:
+    matches = list(RANKING_SECTION_RE.finditer(html))
+    if len(matches) != 1:
+        raise RuntimeError(f"expected one ranking section, found {len(matches)}")
+    match = matches[0]
+    return html[: match.start()] + CURRENT_RESEARCH_HTML + html[match.end() :]
+
+
 def serialize_payload(payload: dict[str, Any]) -> str:
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace(
         "</", "<\\/"
@@ -717,7 +847,8 @@ def enrich_report_html(html: str) -> str:
     payload = json.loads(match.group(2))
     apply_formula_explanations(payload)
     html = html[: match.start(2)] + serialize_payload(payload) + html[match.end(2) :]
-    return patch_formula_runtime(html)
+    html = patch_formula_runtime(html)
+    return patch_current_research_summary(html)
 
 
 def enrich_report_file(path: Path) -> bool:

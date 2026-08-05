@@ -74,6 +74,24 @@ def test_formula_enrichment_is_idempotent() -> None:
     assert explanations.enrich_report_html(html) == html
 
 
+@pytest.mark.parametrize("path", REPORTS, ids=lambda path: path.name)
+def test_every_factor_report_uses_the_current_all_order_summary(path: Path) -> None:
+    html = path.read_text(encoding="utf-8")
+    assert html.count('data-research-summary="all-order-denominator-v1"') == 1
+    assert html.count(".research-update{") == 1
+    assert "_c_all = activity_count / window_total_count" in html
+    assert "_c_cond = activity_count / determinable_total_count" in html
+    assert "IC</th><th colspan=\"2\">Rank_IC</th><th colspan=\"2\">ICIR" in html
+    assert "+0.06365" in html
+    assert "-0.00051" in html
+    assert "41 / 54" in html
+    assert "38 / 54" in html
+    assert "45 / 54" in html
+    assert html.count('id="ranking-leaders"') == 1
+    assert html.count('id="ranking-tables"') == 1
+    assert html.count('id="overlap"') == 1
+
+
 def test_formula_inventory_covers_exactly_the_published_ideas() -> None:
     payload = payload_from(REPORTS[-1].read_text(encoding="utf-8"))
     published = {idea["idea_id"] for idea in payload["ideas"]}
@@ -82,4 +100,3 @@ def test_formula_inventory_covers_exactly_the_published_ideas() -> None:
         {key for keys in explanations.IDEA_TERM_KEYS.values() for key in keys}
         - set(explanations.FORMULA_GLOSSARY)
     )
-

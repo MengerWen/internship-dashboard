@@ -11,7 +11,7 @@ import build_factor_report_20260801 as base
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_HTML = ROOT / "content" / "daily" / "2026-08-02.html"
 EXPECTED_TEMPLATE_SHA256 = (
-    "e37687b07afcdda32c147f40694dc5849a1968c4f5515d63d2d3f790b6b83e7c"
+    "23891297d19a4986778ae8d089211c765ddf21f59e7f23894ee19d53abcab18a"
 )
 
 
