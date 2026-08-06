@@ -162,21 +162,52 @@
   background: var(--surface);
 }
 
+.daily-toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.daily-toc .daily-toc-list .daily-toc-list {
+  padding-left: 13px;
+}
+
+.daily-toc-list[hidden] {
+  display: none;
+}
+
+.daily-toc-item,
+.daily-toc-row {
+  min-width: 0;
+}
+
+.daily-toc-row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 3px;
+  align-items: start;
+}
+
+.daily-toc .toc-collapse-toggle {
+  width: 22px;
+  height: 28px;
+  border-radius: 5px;
+}
+
+.daily-toc .toc-collapse-toggle:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
 .daily-toc a {
   display: block;
-  padding: 7px 0;
+  min-width: 0;
+  padding: 6px 0;
   color: var(--muted);
   text-decoration: none;
   font-size: 13px;
   line-height: 1.4;
-}
-
-.daily-toc a[data-level="3"] {
-  padding-left: 12px;
-}
-
-.daily-toc a[data-level="4"] {
-  padding-left: 24px;
+  overflow-wrap: anywhere;
 }
 
 .daily-toc a.is-active,

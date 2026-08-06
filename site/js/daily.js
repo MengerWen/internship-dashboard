@@ -21,6 +21,7 @@
     tocEl: null,
     mainlineEl: null,
     noticeTimer: null,
+    tocEntries: new Map(),
 
     async init(manifest, app) {
       this.manifest = manifest;
@@ -30,6 +31,9 @@
       this.showEl = document.getElementById("daily-show-content");
       this.tocEl = document.getElementById("daily-toc");
       this.mainlineEl = document.querySelector(".daily-mainline");
+      this.contentEl.addEventListener("content-section-toggle", (event) => {
+        this.syncTocEntry(event.detail?.section, event.detail?.expanded);
+      });
       this.renderTimeline();
       this.bind();
     },
@@ -197,26 +201,81 @@
     },
 
     renderToc() {
-      const headings = [...this.contentEl.querySelectorAll("h2, h3, h4")];
+      const headings = [...this.contentEl.querySelectorAll("h1, h2, h3, h4, h5, h6")];
+      this.tocEntries = new Map();
       if (!headings.length) {
         this.tocEl.innerHTML = "<span class=\"meta-chip\">无目录</span>";
         return;
       }
       this.tocEl.innerHTML = "";
+      const rootList = document.createElement("ul");
+      rootList.className = "daily-toc-list";
+      const stack = [{level: 0, list: rootList}];
+
       headings.forEach((heading, index) => {
         if (!heading.id) heading.id = `section-${index + 1}`;
-        const level = heading.tagName.replace("H", "");
+        const level = Number(heading.tagName.replace("H", ""));
+        while (stack.length > 1 && stack[stack.length - 1].level >= level) stack.pop();
+
+        const item = document.createElement("li");
+        item.className = "daily-toc-item";
+        item.dataset.headingId = heading.id;
+
+        const row = document.createElement("div");
+        row.className = "daily-toc-row";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "toc-collapse-toggle";
+
         const link = document.createElement("a");
         link.setAttribute("href", `#${heading.id}`);
-        link.dataset.level = level;
         link.textContent = heading.textContent;
+
+        const childList = document.createElement("ul");
+        childList.className = "daily-toc-list";
+        childList.id = `toc-children-${index + 1}`;
+
+        const section = window.ContentEnhancer?.sectionForHeading(heading);
+        if (section) {
+          const sectionBody = section.querySelector(":scope > .collapsible-section-body");
+          toggle.setAttribute("aria-controls", [sectionBody?.id, childList.id].filter(Boolean).join(" "));
+          toggle.addEventListener("click", () => {
+            const expanded = toggle.getAttribute("aria-expanded") === "true";
+            window.ContentEnhancer?.setSectionExpanded(section, !expanded);
+          });
+          this.tocEntries.set(section, {toggle, childList, heading});
+          this.syncTocEntry(section, !section.classList.contains("is-collapsed"));
+        } else {
+          toggle.disabled = true;
+          toggle.setAttribute("aria-label", "此标题不可折叠");
+          toggle.setAttribute("aria-expanded", "true");
+        }
+
         link.addEventListener("click", (event) => {
           event.preventDefault();
+          if (section) window.ContentEnhancer?.expandSectionAncestors(section);
           heading.scrollIntoView({behavior: "smooth", block: "start"});
         });
-        this.tocEl.appendChild(link);
+
+        row.append(toggle, link);
+        item.append(row, childList);
+        stack[stack.length - 1].list.appendChild(item);
+        stack.push({level, list: childList});
       });
+      this.tocEl.appendChild(rootList);
       this.observeHeadings(headings);
+    },
+
+    syncTocEntry(section, expanded) {
+      const entry = this.tocEntries.get(section);
+      if (!entry) return;
+      const nextExpanded = Boolean(expanded);
+      const headingText = entry.heading.textContent.trim() || "当前标题";
+      entry.toggle.setAttribute("aria-expanded", String(nextExpanded));
+      entry.toggle.setAttribute("aria-label", `${nextExpanded ? "收起" : "展开"}“${headingText}”章节`);
+      entry.toggle.title = nextExpanded ? "收起本节" : "展开本节";
+      entry.childList.hidden = !nextExpanded;
     },
 
     observeHeadings(headings) {

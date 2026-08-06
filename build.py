@@ -697,7 +697,7 @@ class Builder:
   </style>
 </head>
 <body>
-  <main>
+  <main class="markdown-body">
     {body}
   </main>
 </body>

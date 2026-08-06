@@ -1,5 +1,6 @@
 (function () {
   const LONG_PRESS_MS = 600;
+  const HEADING_SELECTOR = "h1, h2, h3, h4, h5, h6";
 
   function injectStyles(doc) {
     if (doc.getElementById("content-enhance-styles")) return;
@@ -82,6 +83,74 @@
         font-weight: 700;
         content: "Mermaid 图表语法错误，已保留源码";
       }
+      .collapsible-section {
+        min-width: 0;
+      }
+      .collapsible-heading-row {
+        display: grid;
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 7px;
+        align-items: center;
+      }
+      .collapsible-section[data-heading-level="1"] > .collapsible-heading-row {
+        margin: 0 0 18px;
+      }
+      .collapsible-section[data-heading-level="2"] > .collapsible-heading-row {
+        margin-top: 32px;
+      }
+      .collapsible-section[data-heading-level="3"] > .collapsible-heading-row {
+        margin-top: 24px;
+      }
+      .collapsible-section[data-heading-level="4"] > .collapsible-heading-row,
+      .collapsible-section[data-heading-level="5"] > .collapsible-heading-row,
+      .collapsible-section[data-heading-level="6"] > .collapsible-heading-row {
+        margin-top: 20px;
+      }
+      .collapsible-heading-row > :is(h1, h2, h3, h4, h5, h6) {
+        min-width: 0;
+        margin: 0;
+      }
+      .heading-collapse-toggle,
+      .toc-collapse-toggle {
+        position: relative;
+        display: inline-grid;
+        place-items: center;
+        flex: 0 0 auto;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted, #8a95a5);
+        cursor: pointer;
+      }
+      .heading-collapse-toggle::before,
+      .toc-collapse-toggle::before {
+        width: 0;
+        height: 0;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        border-top: 7px solid currentColor;
+        content: "";
+        transform: rotate(0deg);
+        transition: transform 150ms ease;
+      }
+      .heading-collapse-toggle[aria-expanded="false"]::before,
+      .toc-collapse-toggle[aria-expanded="false"]::before {
+        transform: rotate(-90deg);
+      }
+      .heading-collapse-toggle:hover,
+      .heading-collapse-toggle:focus-visible,
+      .toc-collapse-toggle:hover,
+      .toc-collapse-toggle:focus-visible {
+        border-color: var(--focus, #fff6d6);
+        color: var(--focus, #fff6d6);
+        outline: 0;
+      }
+      .collapsible-section-body[hidden] {
+        display: none !important;
+      }
       .image-longpress-overlay {
         position: fixed;
         inset: 0;
@@ -103,6 +172,12 @@
         margin: 0;
         border-radius: 6px;
         box-shadow: 0 24px 80px rgb(0 0 0 / 0.55);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .heading-collapse-toggle::before,
+        .toc-collapse-toggle::before {
+          transition: none;
+        }
       }
     `;
     doc.head.appendChild(style);
@@ -226,15 +301,142 @@
     });
   }
 
+  function directChildByClass(parent, className) {
+    return Array.from(parent?.children || []).find((child) => child.classList.contains(className));
+  }
+
+  function headingForSection(section) {
+    const row = directChildByClass(section, "collapsible-heading-row");
+    return Array.from(row?.children || []).find((child) => child.matches?.(HEADING_SELECTOR)) || null;
+  }
+
+  function sectionForHeading(heading) {
+    const row = heading?.parentElement;
+    const section = row?.parentElement;
+    return row?.classList.contains("collapsible-heading-row")
+      && section?.classList.contains("collapsible-section")
+      ? section
+      : null;
+  }
+
+  function setSectionExpanded(section, expanded) {
+    if (!section?.classList.contains("collapsible-section")) return;
+    const row = directChildByClass(section, "collapsible-heading-row");
+    const body = directChildByClass(section, "collapsible-section-body");
+    const toggle = directChildByClass(row, "heading-collapse-toggle");
+    const heading = headingForSection(section);
+    if (!body || !toggle || !heading) return;
+
+    const nextExpanded = Boolean(expanded);
+    const previousExpanded = toggle.getAttribute("aria-expanded") !== "false";
+    const headingText = heading.textContent.trim() || "当前标题";
+    section.classList.toggle("is-collapsed", !nextExpanded);
+    body.hidden = !nextExpanded;
+    toggle.setAttribute("aria-expanded", String(nextExpanded));
+    toggle.setAttribute("aria-label", `${nextExpanded ? "收起" : "展开"}“${headingText}”内容`);
+    toggle.title = nextExpanded ? "收起本节" : "展开本节";
+
+    if (previousExpanded !== nextExpanded) {
+      const EventType = section.ownerDocument.defaultView?.CustomEvent || CustomEvent;
+      section.dispatchEvent(new EventType("content-section-toggle", {
+        bubbles: true,
+        detail: {section, expanded: nextExpanded},
+      }));
+    }
+  }
+
+  function expandSectionAncestors(section) {
+    let ancestor = section?.parentElement?.closest?.(".collapsible-section") || null;
+    while (ancestor) {
+      setSectionExpanded(ancestor, true);
+      ancestor = ancestor.parentElement?.closest?.(".collapsible-section") || null;
+    }
+  }
+
+  function nextCollapseBodyId(doc) {
+    doc.__contentCollapseId = (doc.__contentCollapseId || 0) + 1;
+    return `collapsible-section-body-${doc.__contentCollapseId}`;
+  }
+
+  function prepareCollapsibleContainer(container) {
+    const hasPreparedSections = Array.from(container.children).some((child) => (
+      child.classList.contains("collapsible-section")
+    ));
+    if (container.dataset.collapsibleReady === "true" && hasPreparedSections) return;
+    delete container.dataset.collapsibleReady;
+    const children = Array.from(container.children);
+    if (!children.some((child) => child.matches?.(HEADING_SELECTOR))) return;
+
+    const doc = container.ownerDocument;
+    const fragment = doc.createDocumentFragment();
+    const stack = [];
+
+    children.forEach((child) => {
+      if (!child.matches?.(HEADING_SELECTOR)) {
+        const target = stack.length ? stack[stack.length - 1].body : fragment;
+        target.appendChild(child);
+        return;
+      }
+
+      const level = Number(child.tagName.slice(1));
+      while (stack.length && stack[stack.length - 1].level >= level) stack.pop();
+
+      const section = doc.createElement("section");
+      section.className = "collapsible-section";
+      section.dataset.headingLevel = String(level);
+
+      const row = doc.createElement("div");
+      row.className = "collapsible-heading-row";
+
+      const body = doc.createElement("div");
+      body.className = "collapsible-section-body";
+      body.id = nextCollapseBodyId(doc);
+
+      const toggle = doc.createElement("button");
+      toggle.type = "button";
+      toggle.className = "heading-collapse-toggle";
+      toggle.setAttribute("aria-controls", body.id);
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.addEventListener("click", () => {
+        setSectionExpanded(section, toggle.getAttribute("aria-expanded") === "false");
+      });
+
+      row.append(toggle, child);
+      section.append(row, body);
+      const target = stack.length ? stack[stack.length - 1].body : fragment;
+      target.appendChild(section);
+      stack.push({level, body});
+      setSectionExpanded(section, true);
+    });
+
+    container.appendChild(fragment);
+    container.dataset.collapsibleReady = "true";
+  }
+
+  function prepareCollapsibleSections(root) {
+    const containers = [];
+    if (root.matches?.(".markdown-body")) containers.push(root);
+    root.querySelectorAll?.(".markdown-body").forEach((container) => containers.push(container));
+    containers.forEach(prepareCollapsibleContainer);
+  }
+
   function enhance(root) {
     const doc = root.ownerDocument || root;
     if (!doc?.head || !doc?.body) return Promise.resolve();
     injectStyles(doc);
+    prepareCollapsibleSections(root);
     wrapTables(root);
     prepareImages(root);
     return Promise.all([typesetMath(root), typesetMermaid(root)]).then(() => undefined);
   }
 
-  window.ContentEnhancer = {enhance};
+  window.ContentEnhancer = {
+    enhance,
+    expandSectionAncestors,
+    headingForSection,
+    prepareCollapsibleSections,
+    sectionForHeading,
+    setSectionExpanded,
+  };
   document.addEventListener("DOMContentLoaded", () => enhance(document));
 })();
