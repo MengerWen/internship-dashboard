@@ -27,11 +27,17 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EVIDENCE = ROOT / "artifacts" / "open5m-report-2026-08-07"
 DEFAULT_RESEARCH_REPO = ROOT.parent.parent / "26 Summer" / "❗思瑞投资" / "sirui-quant-research"
 DEFAULT_OUTPUT = ROOT / "content" / "daily" / "2026-08-07.html"
+DEFAULT_WEBSITE_OUTPUT = ROOT / "content" / "daily" / "2026-08-07.show.html"
+DEFAULT_ASSET_DIR = ROOT / "content" / "assets" / "open5m-factor-report-2026-08-07"
+DEFAULT_ASSET_URL_PREFIX = "assets/open5m-factor-report-2026-08-07"
 OLD_SELF_CONTAINED = ROOT / "content" / "daily" / "2026-08-04.html"
 EXPECTED_FACTORS = 495
 EXPECTED_FORMAL = 490
 EXPECTED_DIAGNOSTICS = 5
 EXPECTED_IMAGES = EXPECTED_FACTORS * 4
+CLOUDFLARE_SINGLE_ASSET_LIMIT = 25 * 1024 * 1024
+INLINE_IMAGE_RUNTIME = 'src="data:${im.mime};base64,${im.data}"'
+WEBSITE_IMAGE_RUNTIME = 'src="${im.url}"'
 METRICS = {"ic": "IC", "rank_ic": "Rank_IC", "icir": "ICIR"}
 PERIODS = {"full_history": "完整历史", "q2": "2026Q2"}
 LAYER_LABELS = {
@@ -821,6 +827,132 @@ def build_html(payload: dict[str, Any], old_report: Path) -> str:
     return result
 
 
+def extract_report_payload(source: str) -> tuple[re.Match[str], dict[str, Any]]:
+    match = re.search(
+        r'(<script id="report-data" type="application/json">)(.*?)(</script>)',
+        source,
+        flags=re.S,
+    )
+    if not match:
+        raise RuntimeError("report-data block is missing")
+    return match, json.loads(match.group(2))
+
+
+def atomic_write_text(path: Path, source: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_text(source, encoding="utf-8", newline="\n")
+    temporary.replace(path)
+
+
+def build_website_html(
+    self_contained_source: str,
+    asset_dir: Path,
+    asset_url_prefix: str,
+) -> tuple[str, dict[str, Any]]:
+    match, payload = extract_report_payload(self_contained_source)
+    expected_assets: set[str] = set()
+    references: list[dict[str, Any]] = []
+    decoded_reference_bytes = 0
+    max_asset_bytes = 0
+    asset_dir.mkdir(parents=True, exist_ok=True)
+
+    for record in payload["records"]:
+        images = record.get("images", [])
+        if len(images) != 4:
+            raise RuntimeError(f'{record["record_id"]}: website build did not receive four images')
+        for position, image in enumerate(images, start=1):
+            encoded = image.pop("data", None)
+            if not isinstance(encoded, str):
+                raise RuntimeError(f'{record["record_id"]} image {position}: base64 payload is missing')
+            decoded = base64.b64decode(encoded, validate=True)
+            digest = hashlib.sha256(decoded).hexdigest()
+            if digest != image.get("sha256") or len(decoded) != image.get("bytes"):
+                raise RuntimeError(f'{record["record_id"]} image {position}: payload audit mismatch')
+            with Image.open(BytesIO(decoded)) as observed:
+                observed.verify()
+            with Image.open(BytesIO(decoded)) as observed:
+                if observed.format != "WEBP" or observed.size != (image["width"], image["height"]):
+                    raise RuntimeError(f'{record["record_id"]} image {position}: WebP metadata mismatch')
+
+            filename = f"{digest[:24]}.webp"
+            asset_path = asset_dir / filename
+            expected_assets.add(filename)
+            if asset_path.exists():
+                if sha256_file(asset_path) != digest:
+                    raise RuntimeError(f"existing website asset hash mismatch: {asset_path}")
+            else:
+                asset_path.write_bytes(decoded)
+            image["url"] = f"{asset_url_prefix}/{filename}"
+            decoded_reference_bytes += len(decoded)
+            max_asset_bytes = max(max_asset_bytes, len(decoded))
+            references.append(
+                {
+                    "record_id": record["record_id"],
+                    "position": position,
+                    "name": image["name"],
+                    "url": image["url"],
+                    "sha256": digest,
+                    "bytes": len(decoded),
+                    "width": image["width"],
+                    "height": image["height"],
+                }
+            )
+
+    actual_assets = {path.name for path in asset_dir.glob("*.webp")}
+    unexpected = sorted(actual_assets - expected_assets)
+    missing = sorted(expected_assets - actual_assets)
+    if unexpected or missing:
+        raise RuntimeError(
+            f"website asset set is not deterministic: unexpected={unexpected}, missing={missing}"
+        )
+
+    website_source = (
+        self_contained_source[: match.start(2)]
+        + safe_json(payload)
+        + self_contained_source[match.end(2) :]
+    )
+    if website_source.count(INLINE_IMAGE_RUNTIME) != 1:
+        raise RuntimeError("self-contained image runtime signature differs from one")
+    website_source = website_source.replace(INLINE_IMAGE_RUNTIME, WEBSITE_IMAGE_RUNTIME, 1)
+    website_source = website_source.replace(
+        '<meta name="viewport" content="width=device-width,initial-scale=1">',
+        '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+        '<meta name="report-build" content="website-hashed-local-assets-v1">',
+        1,
+    )
+    website_source = website_source.replace(
+        "一个可离线检索的研究档案",
+        "一个可在线检索的研究档案",
+        1,
+    )
+    website_source = website_source.replace(
+        "OPEN5M COUNT PROXY BANK · SELF-CONTAINED HTML · NO EXTERNAL NETWORK ASSETS",
+        "OPEN5M COUNT PROXY BANK · WEBSITE HTML · HASHED LOCAL IMAGE ASSETS",
+        1,
+    )
+    website_bytes = len(website_source.encode("utf-8"))
+    if website_bytes > CLOUDFLARE_SINGLE_ASSET_LIMIT:
+        raise RuntimeError(f"website HTML exceeds 25 MiB: {website_bytes}")
+    if max_asset_bytes > CLOUDFLARE_SINGLE_ASSET_LIMIT:
+        raise RuntimeError(f"website image exceeds 25 MiB: {max_asset_bytes}")
+
+    manifest = {
+        "schema_version": "open5m-factor-report-web-assets-v1",
+        "status": "complete",
+        "factor_count": EXPECTED_FACTORS,
+        "image_references": len(references),
+        "unique_assets": len(expected_assets),
+        "decoded_reference_bytes": decoded_reference_bytes,
+        "website_html_bytes": website_bytes,
+        "max_asset_bytes": max_asset_bytes,
+        "asset_url_prefix": asset_url_prefix,
+        "references": references,
+    }
+    atomic_write_text(asset_dir / "manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2))
+    return website_source, manifest
+
+
 def validate_html(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     source = path.read_text(encoding="utf-8")
     if source.count('<script id="report-data" type="application/json">') != 1:
@@ -852,24 +984,92 @@ def validate_html(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def validate_website_html(path: Path, asset_dir: Path) -> dict[str, Any]:
+    source = path.read_text(encoding="utf-8")
+    _, payload = extract_report_payload(source)
+    images = [image for record in payload.get("records", []) for image in record.get("images", [])]
+    if len(payload.get("records", [])) != EXPECTED_FACTORS or len(images) != EXPECTED_IMAGES:
+        raise RuntimeError("website payload inventory is incomplete")
+    if any("data" in image or not image.get("url") for image in images):
+        raise RuntimeError("website payload still contains inline images or lacks URLs")
+    if source.count(WEBSITE_IMAGE_RUNTIME) != 1 or INLINE_IMAGE_RUNTIME in source:
+        raise RuntimeError("website image runtime was not replaced exactly once")
+    if len(source.encode("utf-8")) > CLOUDFLARE_SINGLE_ASSET_LIMIT:
+        raise RuntimeError("website HTML exceeds Cloudflare's single-asset limit")
+    if re.search(r'<(?:script|link|img)[^>]+(?:src|href)=["\']https?://', source, flags=re.I):
+        raise RuntimeError("website HTML contains an external network asset")
+    for image in images:
+        asset_path = asset_dir / Path(image["url"]).name
+        if not asset_path.exists() or sha256_file(asset_path) != image["sha256"]:
+            raise RuntimeError(f"website image asset is missing or corrupt: {asset_path}")
+    return {
+        "status": "complete",
+        "bytes": path.stat().st_size,
+        "sha256": sha256_file(path),
+        "records": len(payload["records"]),
+        "images": len(images),
+        "unique_assets": len({image["url"] for image in images}),
+        "max_asset_bytes": max(path.stat().st_size for path in asset_dir.glob("*.webp")),
+        "external_network_assets": 0,
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--evidence", type=Path, default=DEFAULT_EVIDENCE)
     parser.add_argument("--research-repo", type=Path, default=DEFAULT_RESEARCH_REPO)
     parser.add_argument("--old-report", type=Path, default=OLD_SELF_CONTAINED)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--website-output", type=Path, default=DEFAULT_WEBSITE_OUTPUT)
+    parser.add_argument("--asset-dir", type=Path, default=DEFAULT_ASSET_DIR)
+    parser.add_argument("--asset-url-prefix", default=DEFAULT_ASSET_URL_PREFIX)
+    parser.add_argument(
+        "--website-only",
+        action="store_true",
+        help="Reuse the existing self-contained --output and only build the website assets/version.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    payload = build_payload(args.evidence.resolve(), args.research_repo.resolve())
-    html_source = build_html(payload, args.old_report.resolve())
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    temporary = args.output.with_name(f".{args.output.name}.tmp")
-    temporary.write_text(html_source, encoding="utf-8", newline="\n")
-    temporary.replace(args.output)
-    print(json.dumps(validate_html(args.output, payload), ensure_ascii=True, sort_keys=True))
+    if args.website_only:
+        html_source = args.output.resolve().read_text(encoding="utf-8")
+        _, payload = extract_report_payload(html_source)
+    else:
+        payload = build_payload(args.evidence.resolve(), args.research_repo.resolve())
+        html_source = build_html(payload, args.old_report.resolve())
+        atomic_write_text(args.output, html_source)
+    self_contained_stats = validate_html(args.output, payload)
+    website_source, website_manifest = build_website_html(
+        html_source,
+        args.asset_dir.resolve(),
+        args.asset_url_prefix,
+    )
+    atomic_write_text(args.website_output, website_source)
+    website_stats = validate_website_html(args.website_output, args.asset_dir.resolve())
+    print(
+        json.dumps(
+            {
+                "status": "complete",
+                "self_contained": self_contained_stats,
+                "website": website_stats,
+                "website_manifest": {
+                    key: website_manifest[key]
+                    for key in (
+                        "factor_count",
+                        "image_references",
+                        "unique_assets",
+                        "decoded_reference_bytes",
+                        "website_html_bytes",
+                        "max_asset_bytes",
+                    )
+                },
+            },
+            ensure_ascii=True,
+            sort_keys=True,
+        )
+    )
     return 0
 
 
