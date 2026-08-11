@@ -1,0 +1,178 @@
+<!doctype html>
+<!--
+  方向 A · 信号切面
+  假设：这个成果看板首先需要“推进感”，其次才是长文阅读器。
+  推理：以六阶段色谱组成斜切信号带，把研究路线做成第一视觉锚点；
+        用巨型数字与硬朗栅格代替常规仪表盘卡片。
+  占位：本原型只演示首页与日报阅读骨架，搜索和下载沿用现有功能，未在此复刻。
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>方向 A · 信号切面</title>
+  <style>
+    @font-face{font-family:"Noto Serif SC";src:url("../site/fonts/NotoSerifSC-Regular.woff2") format("woff2");font-weight:400}
+    @font-face{font-family:"Noto Serif SC";src:url("../site/fonts/NotoSerifSC-Bold.woff2") format("woff2");font-weight:700}
+    :root{
+      --ink:#10120f;--paper:#f4f0e6;--white:#fffdf7;--line:#c9c4b8;--muted:#696c65;
+      --cyan:#4c9da0;--olive:#85975f;--ochre:#c09a46;--coral:#d86f51;--blue:#426a8c;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-width:320px;min-height:100%;background:var(--paper);color:var(--ink)}
+    body{font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;text-rendering:geometricPrecision}
+    button{font:inherit;color:inherit}
+    button:focus-visible{outline:3px solid var(--ochre);outline-offset:3px}
+    .shell{min-height:100vh;overflow:hidden;background:var(--paper)}
+    .topbar{height:66px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 34px;border-bottom:1px solid #2a2d28;background:var(--ink);color:var(--white)}
+    .brand{display:flex;align-items:center;gap:12px;font-family:Bahnschrift,"Arial Narrow",sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+    .brand-mark{width:30px;height:30px;display:grid;place-items:center;border:1px solid #6a6d66;transform:skewX(-12deg);background:var(--white);color:var(--ink);font-size:12px;letter-spacing:-.08em}
+    .brand-mark span{transform:skewX(12deg)}
+    .primary-nav{height:100%;display:flex;align-items:stretch}
+    .primary-nav button{position:relative;min-width:142px;padding:0 20px;border:0;border-left:1px solid #343732;background:transparent;color:#9fa29a;font-size:13px;cursor:pointer}
+    .primary-nav button:last-child{border-right:1px solid #343732}
+    .primary-nav button.active{color:var(--white)}
+    .primary-nav button.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--cyan),var(--ochre),var(--coral));clip-path:polygon(4% 0,100% 0,96% 100%,0 100%)}
+    .top-actions{display:flex;justify-content:flex-end;align-items:center;gap:14px;color:#9fa29a;font-family:Consolas,monospace;font-size:12px}
+    .search{width:34px;height:34px;border:1px solid #4c4f48;background:transparent;color:var(--white);cursor:pointer}
+    .view{display:none;min-height:calc(100vh - 66px)}
+    .view.active{display:block}
+    .signal-band{position:relative;display:grid;grid-template-columns:repeat(6,1fr);height:42px;overflow:hidden;background:var(--white);border-bottom:1px solid var(--ink)}
+    .signal-band::after{content:"";position:absolute;inset:0;background:linear-gradient(103deg,transparent 0 18%,rgb(255 255 255/.34) 18.1% 20%,transparent 20.1% 66%,rgb(255 255 255/.27) 66.1% 68%,transparent 68.1%);pointer-events:none}
+    .stage{position:relative;display:flex;align-items:center;gap:8px;padding:0 18px;border-right:1px solid rgb(16 18 15/.45);font-size:12px;font-weight:700;white-space:nowrap;transform:skewX(-11deg);margin-left:-8px}
+    .stage>*{transform:skewX(11deg)}
+    .stage:nth-child(1){background:#d9dbd4}.stage:nth-child(2){background:#8fb7c0}.stage:nth-child(3){background:#aab77c}.stage:nth-child(4){background:#d1ab55}.stage:nth-child(5){background:#c4856c}.stage:nth-child(6){background:#f4e7be}
+    .stage .num{font-family:Consolas,monospace;font-weight:400;opacity:.65}
+    .stage.current{box-shadow:inset 0 -7px 0 var(--ink)}
+    .hero{position:relative;display:grid;grid-template-columns:minmax(0,1.23fr) minmax(380px,.77fr);min-height:432px;border-bottom:1px solid var(--ink);background:var(--white)}
+    .hero::before{content:"";position:absolute;inset:0 34% 0 -10%;background:linear-gradient(116deg,transparent 0 58%,rgb(76 157 160/.12) 58.2% 62%,transparent 62.2% 67%,rgb(216 111 81/.11) 67.2% 71%,transparent 71.2%);pointer-events:none}
+    .hero-copy{position:relative;padding:46px 5vw 40px 5vw;border-right:1px solid var(--ink)}
+    .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:22px;font-family:Consolas,monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .eyebrow::before{content:"";width:54px;height:6px;background:linear-gradient(90deg,var(--cyan) 0 32%,var(--ochre) 32% 67%,var(--coral) 67%);transform:skewX(-18deg)}
+    h1{max-width:820px;margin:0;font-family:Bahnschrift,"Arial Narrow",sans-serif;font-size:clamp(50px,5.1vw,76px);font-weight:800;line-height:.98;letter-spacing:-.055em;text-wrap:balance}
+    h1 .accent{color:var(--blue)}
+    .hero-lead{max-width:700px;margin:24px 0 0;font-family:"Noto Serif SC",serif;font-size:16px;line-height:1.8;color:#3c403a}
+    .hero-foot{display:flex;align-items:center;gap:24px;margin-top:30px}
+    .go-report{display:inline-flex;align-items:center;gap:18px;min-height:46px;padding:0 20px;border:1px solid var(--ink);background:var(--ink);color:var(--white);font-size:13px;font-weight:700;cursor:pointer;clip-path:polygon(0 0,94% 0,100% 50%,94% 100%,0 100%)}
+    .go-report span{font-size:19px}
+    .update{font-family:Consolas,monospace;font-size:11px;color:var(--muted)}
+    .focus-panel{position:relative;padding:38px 42px 32px;background:#ebe7dc}
+    .panel-kicker{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--ink);font-family:Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+    .status{display:flex;align-items:center;gap:7px;color:#496b4d}
+    .status::before{content:"";width:7px;height:7px;border-radius:50%;background:#78a05e;box-shadow:0 0 0 4px rgb(120 160 94/.16)}
+    .metric-row{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:22px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+    .metric{padding:18px 0}.metric+.metric{padding-left:22px;border-left:1px solid var(--ink)}
+    .metric strong{display:block;font-family:Bahnschrift,"Arial Narrow",sans-serif;font-size:52px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.05em}
+    .metric span{display:block;margin-top:7px;color:var(--muted);font-size:12px}
+    .report-label{font-family:Consolas,monospace;font-size:11px;color:var(--coral);text-transform:uppercase}
+    .focus-panel h2{margin:9px 0 12px;font-family:"Noto Serif SC",serif;font-size:25px;line-height:1.34}
+    .focus-panel p{margin:0;color:#555950;font-size:13px;line-height:1.72}
+    .lower{display:grid;grid-template-columns:minmax(0,1fr) 420px;min-height:300px;background:var(--paper)}
+    .recent{padding:25px 5vw 28px;border-right:1px solid var(--ink)}
+    .section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:15px}
+    .section-head h3{margin:0;font-family:Bahnschrift,"Arial Narrow",sans-serif;font-size:22px;letter-spacing:-.02em}
+    .section-head a{font-family:Consolas,monospace;color:var(--muted);font-size:11px;text-decoration:none}
+    .report-list{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+    .report-item{min-height:132px;padding:15px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);background:rgb(255 253 247/.5);cursor:pointer;transition:background .2s,transform .2s}
+    .report-item:hover{background:var(--white);transform:translateY(-3px)}
+    .report-item time{font-family:Consolas,monospace;font-size:11px;color:var(--muted)}
+    .report-item h4{margin:12px 0 0;font-size:14px;line-height:1.5}
+    .report-item b{display:block;margin-top:12px;color:var(--coral);font-family:Consolas,monospace;font-size:10px;font-weight:400;text-transform:uppercase}
+    .progress-note{padding:25px 32px 20px;background:var(--ink);color:var(--white)}
+    .progress-note .section-head{border-bottom:1px solid #474a45;padding-bottom:14px}
+    .progress-note .section-head h3{font-size:18px}.progress-note .section-head span{font:11px Consolas,monospace;color:#969990}
+    .track{position:relative;margin:28px 6px 0 8px;padding-left:28px;border-left:1px solid #5a5e56}
+    .track-item{position:relative;padding:0 0 24px}
+    .track-item::before{content:"";position:absolute;left:-34px;top:2px;width:11px;height:11px;background:var(--ink);border:2px solid #7f8379;transform:rotate(45deg)}
+    .track-item.done::before{background:var(--cyan);border-color:var(--cyan)}.track-item.current::before{background:var(--ochre);border-color:var(--ochre);box-shadow:0 0 0 5px rgb(192 154 70/.18)}
+    .track-item small{color:#83877e;font:10px Consolas,monospace}.track-item div{margin-top:4px;font-size:13px}.track-item.current div{color:#f2d584;font-weight:700}
+    /* Daily view */
+    .daily-layout{display:grid;grid-template-columns:270px minmax(0,1fr) 300px;min-height:calc(100vh - 66px);background:var(--white)}
+    .daily-index{padding:38px 28px;border-right:1px solid var(--ink);background:var(--paper)}
+    .daily-index .back{font:11px Consolas,monospace;color:var(--muted);text-transform:uppercase}
+    .daily-index h2{margin:22px 0 6px;font-family:Bahnschrift,"Arial Narrow",sans-serif;font-size:34px;line-height:1}.daily-index p{margin:0 0 26px;color:var(--muted);font-size:12px}
+    .toc-link{display:block;padding:11px 0;border-top:1px solid var(--line);font-size:12px;color:#555950}.toc-link.active{color:var(--ink);font-weight:700}
+    .document{padding:42px 7vw 70px;overflow:auto}
+    .document .doc-meta{font:11px Consolas,monospace;color:var(--coral);letter-spacing:.06em;text-transform:uppercase}
+    .document h1{max-width:820px;margin-top:16px;font-family:"Noto Serif SC",serif;font-size:42px;line-height:1.2;letter-spacing:-.03em}
+    .document .dek{font-family:"Noto Serif SC",serif;font-size:17px;line-height:1.75;color:#4e514b}
+    .fact-strip{display:grid;grid-template-columns:repeat(4,1fr);margin:28px 0;border:1px solid var(--ink)}
+    .fact{padding:15px}.fact+.fact{border-left:1px solid var(--ink)}.fact b{font:28px Bahnschrift,sans-serif}.fact span{display:block;margin-top:3px;font-size:11px;color:var(--muted)}
+    .document h3{margin:30px 0 10px;font-family:"Noto Serif SC",serif;font-size:22px}.document p,.document li{font-size:15px;line-height:1.8}.document li{margin:5px 0}
+    .daily-rail{padding:32px 24px;background:var(--ink);color:var(--white)}
+    .daily-rail h3{margin:0 0 18px;font:16px Bahnschrift,sans-serif}.date-item{display:grid;grid-template-columns:62px 1fr;gap:12px;padding:15px 0;border-top:1px solid #3b3e39}.date-item time{font:10px Consolas,monospace;color:#8d9188}.date-item b{font-size:12px;line-height:1.5}.date-item.active b{color:#f2d584}
+    @media(max-width:1000px){.topbar{grid-template-columns:1fr auto;padding:0 18px}.top-actions{display:none}.primary-nav button{min-width:auto}.signal-band{overflow-x:auto;grid-template-columns:repeat(6,160px)}.hero{grid-template-columns:1fr}.hero-copy{border-right:0}.focus-panel{border-top:1px solid var(--ink)}.lower{grid-template-columns:1fr}.progress-note{display:none}.daily-layout{grid-template-columns:220px 1fr}.daily-rail{display:none}}
+    @media(max-width:680px){.topbar{height:auto;min-height:66px;grid-template-columns:1fr}.brand{display:none}.primary-nav{justify-content:center}.hero-copy{padding:34px 22px}h1{font-size:48px}.focus-panel{padding:28px 22px}.lower{display:block}.recent{padding:24px 22px}.report-list{grid-template-columns:1fr}.daily-layout{grid-template-columns:1fr}.daily-index{display:none}.document{padding:32px 22px}.fact-strip{grid-template-columns:1fr 1fr}.fact:nth-child(3){border-left:0;border-top:1px solid var(--ink)}.fact:nth-child(4){border-top:1px solid var(--ink)}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark"><span>Q/</span></span><span>量化实习成果看板</span></div>
+      <nav class="primary-nav" aria-label="主导航">
+        <button class="active" data-view="showcase">正式成果</button>
+        <button data-view="daily">每日汇报</button>
+      </nav>
+      <div class="top-actions"><span>UPDATED 2026.08.10</span><button class="search" aria-label="搜索">⌕</button></div>
+    </header>
+
+    <main id="showcase" class="view active">
+      <div class="signal-band" aria-label="研究阶段">
+        <div class="stage"><span class="num">01</span><span>数据处理</span></div>
+        <div class="stage"><span class="num">02</span><span>快照构建</span></div>
+        <div class="stage"><span class="num">03</span><span>算法痕迹</span></div>
+        <div class="stage current"><span class="num">04</span><span>因子构建</span></div>
+        <div class="stage"><span class="num">05</span><span>模型搭建</span></div>
+        <div class="stage"><span class="num">06</span><span>交易策略</span></div>
+      </div>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Quant Research Internship · 2026</div>
+          <h1>从逐笔数据<br>到<span class="accent">可解释因子</span></h1>
+          <p class="hero-lead">把分散在日报、代码和图表里的研究过程，整理成一条可追溯的证据链。先看成果全景，再进入每个假设、验证与边界。</p>
+          <div class="hero-foot"><button class="go-report">查看当前研究 <span>→</span></button><span class="update">04 / 06 · FACTOR BUILDING</span></div>
+        </div>
+        <aside class="focus-panel">
+          <div class="panel-kicker"><span>Current focus / 04</span><span class="status">进行中</span></div>
+          <div class="metric-row"><div class="metric"><strong>490</strong><span>正式候选因子</span></div><div class="metric"><strong>1,980</strong><span>张评价图</span></div></div>
+          <span class="report-label">Latest evidence package</span>
+          <h2>开盘五分钟算法痕迹新因子：正式候选全景报告</h2>
+          <p>覆盖 5 个诊断列、135 个逻辑家族，并系统说明 L1–L5 分层、白皮书迁移、双区间表现和解释边界。</p>
+        </aside>
+      </section>
+      <section class="lower">
+        <div class="recent">
+          <div class="section-head"><h3>最近研究记录</h3><a href="#">VIEW ARCHIVE →</a></div>
+          <div class="report-list">
+            <article class="report-item"><time>2026—08—07</time><h4>490 个正式候选全景报告</h4><b>因子构建 · 展示版</b></article>
+            <article class="report-item"><time>2026—08—06</time><h4>精确 Pair 热路收口与本地进度热盘</h4><b>工程优化 · 日报</b></article>
+            <article class="report-item"><time>2026—08—05</time><h4>Q2 异常归因、方向拆分与冗余诊断</h4><b>诊断研究 · 日报</b></article>
+          </div>
+        </div>
+        <aside class="progress-note">
+          <div class="section-head"><h3>研究路线</h3><span>2 DONE · 2 ACTIVE</span></div>
+          <div class="track">
+            <div class="track-item done"><small>01—02</small><div>数据基础设施</div></div>
+            <div class="track-item done"><small>03</small><div>算法痕迹检测</div></div>
+            <div class="track-item current"><small>04 · NOW</small><div>因子构建与验证</div></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <main id="daily" class="view">
+      <div class="daily-layout">
+        <aside class="daily-index"><span class="back">Daily archive / 08.07</span><h2>研究<br>工作日志</h2><p>文档目录</p><span class="toc-link active">开盘五分钟新因子</span><span class="toc-link">查看完整报告</span><span class="toc-link">报告生成说明</span><span class="toc-link">解释边界</span></aside>
+        <article class="document"><div class="doc-meta">2026—08—07 · 因子构建 · 展示版可用</div><h1>开盘五分钟算法痕迹新因子：490 个正式候选全景报告</h1><p class="dek">把 2025-01-02 至 2026-06-30 的新因子正式结果整理为可检索的研究档案，并明确区分结果、诊断与解释边界。</p><div class="fact-strip"><div class="fact"><b>490</b><span>正式候选</span></div><div class="fact"><b>5</b><span>诊断列</span></div><div class="fact"><b>135</b><span>逻辑家族</span></div><div class="fact"><b>1,980</b><span>评价图</span></div></div><h3>本轮整理带来了什么</h3><p>与旧因子报告相比，本轮不仅增加 scorer 数量，还引入多证据共识、订单级微观结构情境、股票日窗口状态、算法目的及流动性机制。</p><ul><li>沿用「原因子序号 + 备注」的老 scorer 五方向投影；</li><li>真正新增 f54–f133 逻辑；</li><li>只用于质量控制，不进入正式候选排名的诊断列。</li></ul></article>
+        <aside class="daily-rail"><h3>2026—08 / 时间轴</h3><div class="date-item active"><time>08.07</time><b>490 个正式候选全景报告</b></div><div class="date-item"><time>08.06</time><b>精确 Pair 热路收口</b></div><div class="date-item"><time>08.05</time><b>Q2 异常归因与冗余诊断</b></div><div class="date-item"><time>08.04</time><b>165 口径长历史评估</b></div><div class="date-item"><time>08.02</time><b>固定参数历史评估</b></div></aside>
+      </div>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll('[data-view]').forEach((button)=>button.addEventListener('click',()=>{
+      document.querySelectorAll('[data-view]').forEach((item)=>item.classList.toggle('active',item===button));
+      document.querySelectorAll('.view').forEach((view)=>view.classList.toggle('active',view.id===button.dataset.view));
+    }));
+  </script>
+</body>
+</html>

@@ -14,7 +14,7 @@
         margin: 18px 0;
         border: 1px solid var(--line, #344255);
         border-radius: var(--radius, 8px);
-        background: rgb(11 17 32 / 0.18);
+        background: var(--surface, #f8f4eb);
       }
       .enhanced-table-scroll table {
         width: max-content;
@@ -59,7 +59,7 @@
         overflow-x: auto;
         border: 1px solid var(--line, #344255);
         border-radius: var(--radius, 8px);
-        background: rgb(10 15 28 / 0.48);
+        background: var(--surface, #f8f4eb);
         text-align: center;
       }
       .mermaid svg {
@@ -69,7 +69,7 @@
         margin: 0 auto;
       }
       .mermaid.mermaid-error {
-        color: #fca5a5;
+        color: var(--danger, #ad4339);
         font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
         font-size: 0.88rem;
         line-height: 1.6;
