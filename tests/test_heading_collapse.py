@@ -43,7 +43,7 @@ def test_downloadable_html_is_enhanced_as_markdown_content() -> None:
 def test_changed_browser_assets_are_cache_busted() -> None:
     index = read("site/index.html")
 
-    assert 'base.css?v=20260806' in index
-    assert 'daily.css?v=20260806' in index
-    assert 'content-enhance.js?v=20260806' in index
-    assert 'daily.js?v=20260806' in index
+    assert 'base.css?v=20260811' in index
+    assert 'daily.css?v=20260811' in index
+    assert 'content-enhance.js?v=20260811' in index
+    assert 'daily.js?v=20260811' in index

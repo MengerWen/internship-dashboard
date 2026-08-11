@@ -1,4 +1,14 @@
 (function () {
+  function escapeHtml(text) {
+    return String(text ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;",
+    }[char]));
+  }
+
   const ShowcaseView = {
     manifest: null,
     app: null,
@@ -55,9 +65,35 @@
             </div>
           </header>
           <div class="section-body markdown-body" tabindex="0" aria-label="${item.title}"></div>
+          <aside class="section-briefings" aria-label="${item.title}近期简报">
+            ${this.renderBriefings(item.id)}
+          </aside>
         `;
         this.sectionsEl.appendChild(section);
       });
+    },
+
+    renderBriefings(stageId) {
+      const reports = this.manifest.daily
+        .filter((report) => report.stage === stageId)
+        .slice(0, 3);
+      const items = reports.length
+        ? reports.map((report, index) => `
+          <button class="briefing-item${index === 0 ? " is-featured" : ""}" type="button" data-date="${escapeHtml(report.date)}">
+            <span class="briefing-meta">${escapeHtml(report.date.replaceAll("-", "."))}</span>
+            <strong>${escapeHtml(report.title)}</strong>
+            <span class="briefing-summary">${escapeHtml(report.summary || "查看研究记录")}</span>
+          </button>
+        `).join("")
+        : '<p class="briefing-empty">该阶段尚无日报归档。</p>';
+      return `
+        <div class="briefings-heading">
+          <span>近期简报</span>
+          <small>Daily archive</small>
+        </div>
+        <div class="briefings-list">${items}</div>
+        <a class="briefings-all" href="#/daily">阅读全部日报 <span aria-hidden="true">→</span></a>
+      `;
     },
 
     async loadSections() {
@@ -76,6 +112,12 @@
       this.sectionsEl.addEventListener("click", (event) => {
         const target = event.target;
         if (!(target instanceof HTMLElement)) return;
+        const briefing = target.closest(".briefing-item");
+        if (briefing) {
+          window.history.pushState(null, "", `#/daily/${briefing.dataset.date}`);
+          this.app.route();
+          return;
+        }
         const section = target.closest(".showcase-section");
         if (!section) return;
         if (target.classList.contains("expand-all")) {

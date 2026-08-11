@@ -1,0 +1,143 @@
+<!doctype html>
+<!--
+  方向 C · 数据旅程图谱
+  假设：这个项目的独特价值不是“有多少功能”，而是把一段复杂研究过程留下了完整轨迹。
+  推理：借鉴 Giorgia Lupi 的 Data Humanism，把阶段、证据和日期变成可阅读的线、点、注释，
+        让数据服务于个人研究叙事；所有数值均来自项目真实内容，不构造收益或评价。
+  占位：路径形态表达研究关系而非统计量；选定后再根据真实文档关联生成可计算的图谱。
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>方向 C · 数据旅程图谱</title>
+  <style>
+    @font-face{font-family:"Noto Serif SC";src:url("../site/fonts/NotoSerifSC-Regular.woff2") format("woff2");font-weight:400}
+    @font-face{font-family:"Noto Serif SC";src:url("../site/fonts/NotoSerifSC-Bold.woff2") format("woff2");font-weight:700}
+    :root{--paper:#f7f2e8;--ink:#1b2524;--muted:#70756e;--line:#c9c0af;--red:#d95c4a;--blue:#26788b;--yellow:#d0a02c;--green:#4f7e5e;--clay:#ac735a;--pale:#e6ddcc}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-width:320px;min-height:100%;background:var(--paper);color:var(--ink)}
+    body{font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;text-rendering:optimizeLegibility}
+    button{font:inherit;color:inherit}
+    button:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+    .site{min-height:100vh;background-color:var(--paper);background-image:radial-gradient(circle at 1px 1px,rgb(27 37 36/.1) 1px,transparent 1.2px);background-size:24px 24px}
+    .header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px;padding:0 32px;border-bottom:1px solid var(--ink);background:rgb(247 242 232/.92);backdrop-filter:blur(12px)}
+    .brand{display:flex;align-items:center;gap:13px;font-size:14px;font-weight:700}
+    .brand-glyph{position:relative;width:31px;height:31px}
+    .brand-glyph i{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+    .brand-glyph i:nth-child(1){left:2px;top:12px;background:var(--blue)}.brand-glyph i:nth-child(2){left:12px;top:3px;background:var(--red)}.brand-glyph i:nth-child(3){right:1px;top:11px;background:var(--yellow)}.brand-glyph i:nth-child(4){left:12px;bottom:2px;background:var(--green)}
+    .brand-glyph::before,.brand-glyph::after{content:"";position:absolute;inset:7px;border:1px solid var(--ink);transform:rotate(45deg)}.brand-glyph::after{inset:2px 13px;transform:rotate(-30deg)}
+    .tabs{display:flex;gap:28px;height:100%;align-items:stretch}
+    .tabs button{position:relative;padding:0 4px;border:0;background:transparent;color:var(--muted);font-size:12px;cursor:pointer}
+    .tabs button.active{color:var(--ink);font-weight:700}.tabs button.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:5px;background:var(--red);border-radius:50% 50% 0 0}
+    .header-meta{display:flex;justify-content:flex-end;align-items:center;gap:15px;font:10px "Cascadia Mono",Consolas,monospace;color:var(--muted)}
+    .header-meta button{width:34px;height:34px;border:1px solid var(--ink);border-radius:50%;background:var(--paper);cursor:pointer}
+    .view{display:none}.view.active{display:block}
+    .atlas-layout{display:grid;grid-template-columns:250px minmax(0,1fr) 320px;min-height:calc(100vh - 72px)}
+    .atlas-intro{padding:36px 28px 26px 32px;border-right:1px solid var(--ink);background:rgb(247 242 232/.74)}
+    .kicker{font:10px "Cascadia Mono",Consolas,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--red)}
+    .atlas-intro h1{margin:17px 0 18px;font-family:"Noto Serif SC",serif;font-size:34px;line-height:1.25;letter-spacing:-.045em}
+    .atlas-intro>p{margin:0;font-family:"Noto Serif SC",serif;font-size:13px;line-height:1.85;color:#525a55}
+    .atlas-key{margin-top:29px;padding-top:17px;border-top:1px solid var(--ink)}
+    .key-title{margin-bottom:11px;font:9px "Cascadia Mono",Consolas,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .key-row{display:grid;grid-template-columns:28px 1fr;align-items:center;gap:9px;margin:8px 0;font-size:11px;color:#4f5752}
+    .key-line{height:2px;background:var(--blue)}.key-line.red{background:var(--red)}.key-line.yellow{background:var(--yellow)}.key-line.green{background:var(--green)}
+    .quote{margin-top:30px;padding:15px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:"Noto Serif SC",serif;font-size:12px;line-height:1.7}
+    .quote b{display:block;margin-top:8px;font:9px "Cascadia Mono",Consolas,monospace;color:var(--muted)}
+    .atlas-canvas{position:relative;min-width:0;overflow:hidden;background:rgb(255 253 247/.44)}
+    .canvas-head{position:absolute;z-index:4;left:38px;right:34px;top:28px;display:flex;justify-content:space-between;align-items:end;padding-bottom:11px;border-bottom:1px solid var(--ink)}
+    .canvas-head h2{margin:0;font-family:"Noto Serif SC",serif;font-size:22px}.canvas-head p{margin:0;font:9px "Cascadia Mono",Consolas,monospace;color:var(--muted);text-transform:uppercase}
+    .journey-map{position:absolute;inset:70px 0 142px}
+    .route-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+    .route-svg path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .route-main{stroke:var(--ink);stroke-width:1.4}.route-blue{stroke:var(--blue);stroke-width:3}.route-red{stroke:var(--red);stroke-width:4}.route-yellow{stroke:var(--yellow);stroke-width:2;stroke-dasharray:4 7}.route-green{stroke:var(--green);stroke-width:2}
+    .stage-point{position:absolute;z-index:3;width:134px;min-height:78px;padding:10px 12px;border:1px solid var(--ink);background:var(--paper);box-shadow:5px 5px 0 rgb(27 37 36/.1);cursor:pointer;transition:transform .2s,box-shadow .2s}
+    .stage-point:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 rgb(27 37 36/.12)}
+    .stage-point::before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:var(--color);border:3px solid var(--paper);box-shadow:0 0 0 1px var(--ink)}
+    .stage-point .n{font:9px "Cascadia Mono",Consolas,monospace;color:var(--color)}.stage-point b{display:block;margin-top:7px;font-size:12px;line-height:1.3}.stage-point small{display:block;margin-top:5px;font-size:9px;color:var(--muted)}
+    .p1{left:7%;top:58%;--color:#858b86}.p1::before{left:-22px;top:31px}.p2{left:19%;top:22%;--color:var(--blue)}.p2::before{left:48px;bottom:-22px}.p3{left:40%;top:9%;--color:var(--green)}.p3::before{left:52px;bottom:-22px}.p4{left:53%;top:50%;width:188px;min-height:102px;--color:var(--red);background:#fff8ec;border-width:2px}.p4::before{left:-24px;top:41px}.p4 b{font-family:"Noto Serif SC",serif;font-size:17px}.p4 small{color:var(--red)}.p5{right:9%;top:21%;--color:var(--clay)}.p5::before{left:48px;bottom:-22px}.p6{right:2%;top:69%;--color:var(--yellow)}.p6::before{left:-22px;top:31px}
+    .annotation{position:absolute;z-index:2;font:9px "Cascadia Mono",Consolas,monospace;color:var(--muted);line-height:1.5}.a1{left:30%;bottom:12%}.a2{right:7%;top:4%;text-align:right}.a3{left:54%;top:17%;color:var(--red)}
+    .focus-orbit{position:absolute;z-index:1;left:45%;top:38%;width:310px;height:190px;border:1px solid rgb(217 92 74/.55);border-radius:50%;transform:rotate(-15deg)}.focus-orbit::before,.focus-orbit::after{content:"";position:absolute;border-radius:50%;border:1px dashed rgb(217 92 74/.34)}.focus-orbit::before{inset:17px -18px;transform:rotate(19deg)}.focus-orbit::after{inset:-12px 34px;transform:rotate(-8deg)}
+    .evidence-strip{position:absolute;left:38px;right:34px;bottom:24px;display:grid;grid-template-columns:1.2fr repeat(3,.65fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:rgb(247 242 232/.88)}
+    .evidence{min-height:98px;padding:15px 17px}.evidence+.evidence{border-left:1px solid var(--ink)}.evidence .value{font-family:"Noto Serif SC",serif;font-size:31px;line-height:1;color:var(--red)}.evidence .value.title{font-size:15px;line-height:1.45;color:var(--ink)}.evidence span{display:block;margin-top:8px;font-size:9px;line-height:1.5;color:var(--muted)}
+    .evidence-rail{padding:36px 27px 28px;border-left:1px solid var(--ink);background:rgb(230 221 204/.65)}
+    .rail-head{display:flex;justify-content:space-between;align-items:end;padding-bottom:13px;border-bottom:1px solid var(--ink)}.rail-head h2{margin:0;font-family:"Noto Serif SC",serif;font-size:19px}.rail-head span{font:9px "Cascadia Mono",Consolas,monospace;color:var(--muted)}
+    .entry{position:relative;padding:17px 0 17px 23px;border-bottom:1px solid var(--line);cursor:pointer}.entry::before{content:"";position:absolute;left:0;top:22px;width:8px;height:8px;border-radius:50%;background:var(--dot,var(--yellow))}.entry time{font:9px "Cascadia Mono",Consolas,monospace;color:var(--muted)}.entry h3{margin:7px 0 6px;font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.48}.entry p{margin:0;font-size:9px;line-height:1.55;color:var(--muted)}.entry.current{--dot:var(--red)}.entry:nth-of-type(3){--dot:var(--blue)}.entry:nth-of-type(4){--dot:var(--green)}
+    .rail-summary{margin-top:20px;padding:15px;border:1px solid var(--ink);background:var(--paper)}.rail-summary b{display:block;font-family:"Noto Serif SC",serif;font-size:14px}.rail-summary p{margin:6px 0 0;font-size:9px;line-height:1.6;color:var(--muted)}
+    /* Daily map */
+    .daily-canvas{display:grid;grid-template-columns:210px minmax(0,1fr) 260px;min-height:calc(100vh - 72px);background:rgb(247 242 232/.88)}
+    .day-thread{padding:35px 22px 30px 32px;border-right:1px solid var(--ink)}.day-thread .month{font-family:"Noto Serif SC",serif;font-size:31px}.day-thread .month span{color:var(--red)}.thread{position:relative;margin-top:25px;padding-left:22px;border-left:1px solid var(--ink)}.thread-item{position:relative;padding:0 0 22px}.thread-item::before{content:"";position:absolute;left:-28px;top:2px;width:10px;height:10px;border-radius:50%;background:var(--paper);border:1px solid var(--ink)}.thread-item.active::before{background:var(--red);border-color:var(--red);box-shadow:0 0 0 5px rgb(217 92 74/.13)}.thread-item time{font:9px "Cascadia Mono",Consolas,monospace;color:var(--muted)}.thread-item b{display:block;margin-top:4px;font-size:10px;line-height:1.4}.thread-item.active b{color:var(--red)}
+    .daily-article{padding:36px 6vw 70px;overflow:auto}.article-meta{font:9px "Cascadia Mono",Consolas,monospace;color:var(--red);text-transform:uppercase;letter-spacing:.08em}.daily-article h1{margin:15px 0 16px;font-family:"Noto Serif SC",serif;font-size:39px;line-height:1.25;letter-spacing:-.045em}.daily-article .lead{font-family:"Noto Serif SC",serif;font-size:16px;line-height:1.8;color:#4e5651}.count-line{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:27px 0}.count{position:relative;min-height:96px;padding:13px;border-top:4px solid var(--c);background:rgb(230 221 204/.48)}.count:nth-child(1){--c:var(--red)}.count:nth-child(2){--c:var(--blue)}.count:nth-child(3){--c:var(--yellow)}.count:nth-child(4){--c:var(--green)}.count b{font-family:"Noto Serif SC",serif;font-size:28px}.count span{display:block;margin-top:5px;font-size:9px;color:var(--muted)}.daily-article h2{margin:30px 0 10px;font-family:"Noto Serif SC",serif;font-size:22px}.daily-article p,.daily-article li{font-size:14px;line-height:1.85}.daily-article li{margin:5px 0}
+    .margin-notes{padding:35px 24px;border-left:1px solid var(--ink);background:var(--pale)}.margin-notes h3{margin:0 0 17px;font:10px "Cascadia Mono",Consolas,monospace;letter-spacing:.08em;text-transform:uppercase}.note-card{position:relative;margin:0 0 19px;padding:12px 0 0 18px;border-top:1px solid var(--ink)}.note-card::before{content:"";position:absolute;left:0;top:15px;width:8px;height:8px;background:var(--note,var(--red));transform:rotate(45deg)}.note-card:nth-child(3){--note:var(--blue)}.note-card:nth-child(4){--note:var(--green)}.note-card b{font-family:"Noto Serif SC",serif;font-size:12px}.note-card p{margin:6px 0 0;font-size:9px;line-height:1.65;color:var(--muted)}
+    @media(max-width:1120px){.atlas-layout{grid-template-columns:210px 1fr 270px}.atlas-intro{padding-left:24px}.atlas-intro h1{font-size:29px}.stage-point{transform:scale(.88);transform-origin:center}.stage-point:hover{transform:scale(.88) translate(-2px,-2px)}.p4{left:48%}.evidence{padding:12px}.evidence .value{font-size:26px}}
+    @media(max-width:900px){.header{grid-template-columns:1fr auto}.header-meta{display:none}.atlas-layout{grid-template-columns:190px 1fr}.evidence-rail{display:none}.daily-canvas{grid-template-columns:170px 1fr}.margin-notes{display:none}.journey-map{inset-bottom:150px}.p6{right:0}}
+    @media(max-width:680px){.header{grid-template-columns:1fr;height:auto;min-height:72px;padding:10px 20px}.brand{display:none}.tabs{justify-content:center;min-height:52px}.atlas-layout{display:block}.atlas-intro{border-right:0;border-bottom:1px solid var(--ink);padding:26px 22px}.atlas-key,.quote{display:none}.atlas-canvas{height:760px}.canvas-head{left:22px;right:22px}.journey-map{inset:82px 0 150px}.stage-point{width:118px}.p1{left:8%;top:64%}.p2{left:5%;top:19%}.p3{left:38%;top:3%}.p4{left:34%;top:45%;width:165px}.p5{right:1%;top:20%}.p6{right:2%;top:72%}.evidence-strip{left:22px;right:22px;grid-template-columns:1fr 1fr}.evidence:nth-child(3){border-left:0;border-top:1px solid var(--ink)}.evidence:nth-child(4){border-top:1px solid var(--ink)}.daily-canvas{grid-template-columns:1fr}.day-thread{display:none}.daily-article{padding:30px 22px}.count-line{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header class="header">
+      <div class="brand"><span class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>量化实习成果看板</span></div>
+      <nav class="tabs"><button class="active" data-view="showcase">研究图谱</button><button data-view="daily">每日日志</button></nav>
+      <div class="header-meta"><span>2026 · SHANGHAI</span><span>LAST UPDATE 08.10</span><button aria-label="搜索">⌕</button></div>
+    </header>
+
+    <main id="showcase" class="view active">
+      <div class="atlas-layout">
+        <aside class="atlas-intro">
+          <span class="kicker">Research journey / 01—06</span>
+          <h1>研究不是一条直线，而是一组被保留下来的判断。</h1>
+          <p>这里记录从逐笔数据、订单簿快照、算法痕迹到因子构建的路径。每个点是一项成果，每条线代表它与下一步之间的证据关系。</p>
+          <div class="atlas-key"><div class="key-title">How to read this map</div><div class="key-row"><i class="key-line"></i><span>数据与样本基础</span></div><div class="key-row"><i class="key-line green"></i><span>识别与诊断</span></div><div class="key-row"><i class="key-line red"></i><span>当前研究焦点</span></div><div class="key-row"><i class="key-line yellow"></i><span>下一阶段假设</span></div></div>
+          <div class="quote">「把冷冰冰的数字重新连接到它代表的判断、方法与边界。」<b>本方向的设计命题</b></div>
+        </aside>
+
+        <section class="atlas-canvas">
+          <header class="canvas-head"><h2>实习研究路线图</h2><p>Scroll / select a stage</p></header>
+          <div class="journey-map">
+            <svg class="route-svg" viewBox="0 0 820 500" preserveAspectRatio="none" aria-hidden="true">
+              <path class="route-main" d="M40 365 C120 340 150 145 255 160 S390 95 465 145 S505 340 590 323 S650 145 735 165 S755 350 810 385"/>
+              <path class="route-blue" d="M40 365 C120 340 150 145 255 160"/>
+              <path class="route-green" d="M255 160 C340 130 365 91 445 140"/>
+              <path class="route-red" d="M445 140 C520 180 500 335 590 323"/>
+              <path class="route-yellow" d="M590 323 C650 220 645 130 735 165 S760 350 810 385"/>
+            </svg>
+            <div class="focus-orbit"></div>
+            <button class="stage-point p1"><span class="n">01 / FOUNDATION</span><b>数据处理</b><small>样本、字段与口径</small></button>
+            <button class="stage-point p2"><span class="n">02 / BUILT</span><b>快照构建</b><small>逐笔 → 订单簿</small></button>
+            <button class="stage-point p3"><span class="n">03 / ACTIVE</span><b>算法痕迹检测</b><small>撤单与盘口迁移</small></button>
+            <button class="stage-point p4"><span class="n">04 / CURRENT FOCUS</span><b>因子构建</b><small>490 个正式候选 · 135 个逻辑家族</small></button>
+            <button class="stage-point p5"><span class="n">05 / PLANNED</span><b>模型搭建</b><small>等待当前证据收口</small></button>
+            <button class="stage-point p6"><span class="n">06 / PLANNED</span><b>交易策略</b><small>解释边界优先</small></button>
+            <span class="annotation a1">两次历史窗口扩展<br>验证定义是否稳定</span><span class="annotation a2">终点暂时留白<br>不把规划伪装成成果</span><span class="annotation a3">当前最密集的证据结点</span>
+          </div>
+          <div class="evidence-strip"><div class="evidence"><div class="value title">开盘五分钟算法痕迹<br>新因子全景报告</div><span>最新证据包 · 2026—08—07</span></div><div class="evidence"><div class="value">490</div><span>正式候选</span></div><div class="evidence"><div class="value">5</div><span>诊断列</span></div><div class="evidence"><div class="value">1,980</div><span>评价图</span></div></div>
+        </section>
+
+        <aside class="evidence-rail">
+          <div class="rail-head"><h2>最近留下的证据</h2><span>08 / 2026</span></div>
+          <article class="entry current"><time>2026.08.07 · 因子构建</time><h3>490 个正式候选全景报告</h3><p>多证据共识、逻辑家族、双区间表现与解释边界。</p></article>
+          <article class="entry"><time>2026.08.06 · 工程收口</time><h3>精确 Pair 热路与数量门修复</h3><p>495 列面板在 300.657 秒内完成。</p></article>
+          <article class="entry"><time>2026.08.05 · 诊断</time><h3>Q2 异常归因与冗余拆分</h3><p>54 因子相关性、PCA 与买卖方向检验。</p></article>
+          <article class="entry"><time>2026.08.04 · 长历史</time><h3>165 口径固定参数评估</h3><p>覆盖 364 个交易日。</p></article>
+          <div class="rail-summary"><b>档案原则</b><p>结果、诊断和推断分层呈现；规划阶段不填充伪数据，所有结论保留证据入口。</p></div>
+        </aside>
+      </div>
+    </main>
+
+    <main id="daily" class="view">
+      <div class="daily-canvas">
+        <aside class="day-thread"><div class="month">2026 / <span>08</span></div><div class="thread"><div class="thread-item active"><time>08.07</time><b>490 个正式候选</b></div><div class="thread-item"><time>08.06</time><b>Pair 热路收口</b></div><div class="thread-item"><time>08.05</time><b>Q2 异常归因</b></div><div class="thread-item"><time>08.04</time><b>165 口径长历史</b></div><div class="thread-item"><time>08.02</time><b>固定参数评估</b></div></div></aside>
+        <article class="daily-article"><span class="article-meta">因子构建 · 文档 / 展示 · 2026—08—07</span><h1>开盘五分钟算法痕迹新因子：490 个正式候选全景报告</h1><p class="lead">汇总 2025-01-02 至 2026-06-30 的正式结果，把 490 个候选、诊断列、逻辑家族与评价图重新组织为一份可检索的研究档案。</p><div class="count-line"><div class="count"><b>490</b><span>正式候选</span></div><div class="count"><b>5</b><span>诊断列</span></div><div class="count"><b>135</b><span>逻辑家族</span></div><div class="count"><b>1,980</b><span>评价图</span></div></div><h2>这不是单纯增加 scorer 数量</h2><p>本轮还引入多证据共识、订单级微观结构情境、股票日窗口状态、算法目的及流动性机制，并明确区分结果、诊断与解释边界。</p><ul><li>沿用「原因子序号 + 备注」的五方向投影；</li><li>真正新增 f54–f133 逻辑；</li><li>诊断列只用于质量控制，不进入正式候选排名。</li></ul></article>
+        <aside class="margin-notes"><h3>Evidence notes</h3><div class="note-card"><b>完整性</b><p>每个正式候选保留四张评价图，支持从排序回到证据。</p></div><div class="note-card"><b>可解释性</b><p>把算法目的、盘口情境和流动性机制写进命名与说明。</p></div><div class="note-card"><b>边界</b><p>本页是研究档案，不构成可用于投资决策的真实结论。</p></div></aside>
+      </div>
+    </main>
+  </div>
+  <script>
+    document.querySelectorAll('[data-view]').forEach((button)=>button.addEventListener('click',()=>{
+      document.querySelectorAll('[data-view]').forEach((item)=>item.classList.toggle('active',item===button));
+      document.querySelectorAll('.view').forEach((view)=>view.classList.toggle('active',view.id===button.dataset.view));
+    }));
+  </script>
+</body>
+</html>
