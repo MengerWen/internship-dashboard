@@ -42,3 +42,12 @@
 - 网站真实路由截图：`screenshots-v4/desktop/site-embedded-paired.png`
 - 桌面对照截图：`screenshots-v4/desktop/02-frequency-pair.png`、`04-daily-pair.png`、`05-monthly-pair.png`
 - 移动端对照截图：`screenshots-v4/mobile/02-frequency-pair.png`、`04-daily-pair.png`、`05-monthly-pair.png`
+
+## 2026-08-20频数与逐日上下排列修正确认
+
+- 用户纠正原话：`“原生频数”和“逐日结构”部分的深市↔沪市的图要上下排列啊！！！`
+- 上一版将“同一section”误实现为桌面左右并排；本次明确修正为：原生频数与逐日结构在所有视口均为沪市上、深市下，两图各自占满章节宽度。
+- 月度变化不在本次纠正范围，保持同一章节的双市场对照布局。
+- 网站真实路由截图：`screenshots-v5/desktop/site-frequency-vertical.png`
+- 桌面上下排列截图：`screenshots-v5/desktop/02-frequency-vertical.png`、`04-daily-vertical.png`
+- 移动端上下排列截图：`screenshots-v5/mobile/02-frequency-vertical.png`、`04-daily-vertical.png`

@@ -36,6 +36,7 @@
     .chart-stage{position:relative;min-width:0;min-height:0;border-bottom:1px solid var(--hair)}
     canvas.chart{display:block;width:100%;height:100%;min-width:0;min-height:0}
     .market-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.8vw,38px);min-width:0;min-height:0}
+    .market-pair.vertical-pair{grid-template-columns:1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:8px}
     .market-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:6px;min-width:0;min-height:0;border-top:1px solid var(--ink);padding-top:7px}
     .market-panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;min-width:0}
     .market-panel-head h3{font-size:clamp(16px,1.5vw,21px);line-height:1.25}.market-panel-head span{color:var(--muted);font:10px/1.3 Consolas,"Microsoft YaHei",monospace;white-space:nowrap}
@@ -123,7 +124,7 @@
       <section class="slide" data-label="原生频数" aria-labelledby="slide-title-2">
         <div class="slide-inner">
           <header class="slide-head"><span class="figure-no">FIGURE 01</span><div><h2 id="slide-title-2">沪深原生频数对照：单峰带与多峰列</h2><p class="dek">0–10秒全部1,000个10ms格点；两市共用相同纵轴，均为116日日均撤单消息数，未平滑、未累计。</p></div></header>
-          <div class="market-pair">
+          <div class="market-pair vertical-pair">
             <section class="market-panel" aria-labelledby="raw-sse-title"><div class="market-panel-head"><h3 id="raw-sse-title" style="color:var(--sse)">沪市A股</h3><span>日均撤单数 / 10ms</span></div><div class="chart-stage"><canvas id="raw-sse" class="chart" aria-label="沪市10秒内原生10ms日均撤单频数"></canvas></div><div class="market-note"><span><strong class="sse">6,000ms</strong> · 日均19,410条</span><span>局部背景13.54×</span></div></section>
             <section class="market-panel" aria-labelledby="raw-szse-title"><div class="market-panel-head"><h3 id="raw-szse-title" style="color:var(--szse)">深市A股</h3><span>日均撤单数 / 10ms</span></div><div class="chart-stage"><canvas id="raw-szse" class="chart" aria-label="深市10秒内原生10ms日均撤单频数"></canvas></div><div class="market-note"><span><strong class="szse">3,000ms</strong> · 日均16,544条</span><span>离散固定峰列</span></div></section>
           </div>
@@ -142,7 +143,7 @@
       <section class="slide" data-label="逐日结构" aria-labelledby="slide-title-4">
         <div class="slide-inner">
           <header class="slide-head"><span class="figure-no">FIGURE 03</span><div><h2 id="slide-title-4">沪深逐日热力图：固定延时形成贯穿日期的竖纹</h2><p class="dek">横轴0–10秒、纵轴116个交易日；五个原生格点合并为50ms，每日按本市场总撤单量标准化，两市使用共同对数色阶。</p></div></header>
-          <div class="market-pair">
+          <div class="market-pair vertical-pair">
             <section class="market-panel" aria-labelledby="heat-sse-title"><div class="market-panel-head"><h3 id="heat-sse-title" style="color:var(--sse)">沪市逐日结构</h3><span>每百万条 / 50ms</span></div><div class="chart-stage"><canvas id="heat-sse" class="chart" aria-label="沪市逐日撤单时间热力图"></canvas></div><div class="market-note"><span><strong class="sse">6秒竖纹</strong>贯穿上半年</span><span>116个交易日</span></div></section>
             <section class="market-panel" aria-labelledby="heat-szse-title"><div class="market-panel-head"><h3 id="heat-szse-title" style="color:var(--szse)">深市逐日结构</h3><span>每百万条 / 50ms</span></div><div class="chart-stage"><canvas id="heat-szse" class="chart" aria-label="深市逐日撤单时间热力图"></canvas></div><div class="market-note"><span><strong class="szse">1–6秒</strong>多条稳定竖纹</span><span>116个交易日</span></div></section>
           </div>
