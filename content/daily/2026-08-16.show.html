@@ -35,6 +35,12 @@
     .dek{max-width:72em;margin-top:5px;color:#3f3e3a;font-size:clamp(13px,1.25vw,16px);line-height:1.65;text-wrap:pretty}
     .chart-stage{position:relative;min-width:0;min-height:0;border-bottom:1px solid var(--hair)}
     canvas.chart{display:block;width:100%;height:100%;min-width:0;min-height:0}
+    .market-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.8vw,38px);min-width:0;min-height:0}
+    .market-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:6px;min-width:0;min-height:0;border-top:1px solid var(--ink);padding-top:7px}
+    .market-panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;min-width:0}
+    .market-panel-head h3{font-size:clamp(16px,1.5vw,21px);line-height:1.25}.market-panel-head span{color:var(--muted);font:10px/1.3 Consolas,"Microsoft YaHei",monospace;white-space:nowrap}
+    .market-panel .chart-stage{border-bottom:1px solid var(--hair)}
+    .market-note{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font:10px/1.4 Consolas,"Microsoft YaHei",monospace}.market-note strong{color:var(--ink)}.market-note .sse{color:var(--sse)}.market-note .szse{color:var(--szse)}
     .caption{display:flex;justify-content:space-between;gap:22px;color:var(--muted);font:11px/1.55 Consolas,"Microsoft YaHei",monospace}
     .caption strong{color:var(--ink)}
     .caption .sse{color:var(--sse)}.caption .szse{color:var(--szse)}
@@ -53,6 +59,7 @@
     .legend span:before{content:"";display:inline-block;width:24px;border-top:2px solid;margin-right:7px;vertical-align:middle}
     .legend .sse:before{border-color:var(--sse)}.legend .szse:before{border-color:var(--szse)}
     .month-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:14px 18px;min-height:0}
+    .monthly-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.8vw,38px);min-width:0;min-height:0}.month-market{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:7px;min-width:0;min-height:0;border-top:1px solid var(--ink);padding-top:7px}.month-market>.market-note{border-top:1px solid var(--hair);padding-top:5px}
     .mini{display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0;min-height:0;border-top:1px solid var(--hair);padding-top:6px}
     .mini h3{font:11px/1.3 Consolas,monospace;color:var(--muted)}
     .mini canvas{display:block;width:100%;height:100%;min-width:0;min-height:0;border-bottom:1px solid var(--hair)}
@@ -82,7 +89,7 @@
       .deck-head{grid-template-columns:1fr;grid-template-rows:40px 52px}.brand{border-right:0;border-bottom:1px solid var(--hair);padding:0 14px}.tabs{height:52px}.tab{padding:0 14px}
       .slide{padding:14px 14px 12px}.slide-inner{gap:9px}.slide-head{grid-template-columns:1fr;gap:3px;padding-top:6px}.dek{line-height:1.5}.figure-no{font-size:10px}
       .cover-grid{grid-template-columns:1fr;gap:18px;align-content:center}.cover h1{font-size:clamp(36px,10vw,58px)}.cover .lead{margin-top:12px;line-height:1.6}.cover-facts{display:grid;grid-template-columns:1fr 1fr;border-left:0;padding-left:0;gap:14px}.fact{padding:10px 0}.fact:first-child{border-top:1px solid var(--ink)}.fact:nth-child(2){border-top:1px solid var(--ink)}.fact b{font-size:clamp(21px,6vw,30px)}.fact p{font-size:12px;line-height:1.5}.cover-meta span:last-child{display:none}
-      .month-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:8px 10px}
+      .market-pair,.monthly-pair{grid-template-columns:1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:8px}.market-panel{padding-top:4px;gap:3px}.market-panel-head h3{font-size:14px}.market-panel-head span{font-size:8px}.market-note{font-size:8px;line-height:1.25}.monthly-pair{gap:7px}.month-market{padding-top:4px;gap:3px}.month-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:4px 6px}.mini{padding-top:2px}.mini h3{font-size:8px}.month-market>.market-note{padding-top:2px}
       .method-grid{grid-template-columns:1fr;gap:15px;align-content:start;overflow:auto}.method-copy{font-size:14px;line-height:1.72}.audit-row{padding:7px 0;font-size:10px}
       .caption{font-size:9px;line-height:1.45}.caption span:last-child{text-align:right}.progress-wrap{padding:0 10px}.controls{padding:0 8px;gap:5px}.nav-button{padding:0 8px}.counter{min-width:58px}.foot-hint{display:none}.deck-foot{grid-template-columns:minmax(44px,1fr) auto minmax(44px,1fr)}
     }
@@ -113,73 +120,58 @@
         </div>
       </section>
 
-      <section class="slide" data-label="沪市频数" aria-labelledby="slide-title-2">
+      <section class="slide" data-label="原生频数" aria-labelledby="slide-title-2">
         <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">FIGURE 01A</span><div><h2 id="slide-title-2">沪市原生频数：6秒形成最突出的连续峰带</h2><p class="dek">0–10秒全部1,000个10ms格点；纵轴为116日的日均撤单消息数，未平滑、未累计。</p></div></header>
-          <div class="chart-stage"><canvas id="raw-sse" class="chart" aria-label="沪市10秒内原生10ms日均撤单频数"></canvas></div>
-          <div class="caption"><span><strong class="sse">6,000ms</strong> · 日均19,410条 · 半峰高约5,960–6,040ms</span><span>纵轴：日均撤单消息数 / 10ms</span></div>
+          <header class="slide-head"><span class="figure-no">FIGURE 01</span><div><h2 id="slide-title-2">沪深原生频数对照：单峰带与多峰列</h2><p class="dek">0–10秒全部1,000个10ms格点；两市共用相同纵轴，均为116日日均撤单消息数，未平滑、未累计。</p></div></header>
+          <div class="market-pair">
+            <section class="market-panel" aria-labelledby="raw-sse-title"><div class="market-panel-head"><h3 id="raw-sse-title" style="color:var(--sse)">沪市A股</h3><span>日均撤单数 / 10ms</span></div><div class="chart-stage"><canvas id="raw-sse" class="chart" aria-label="沪市10秒内原生10ms日均撤单频数"></canvas></div><div class="market-note"><span><strong class="sse">6,000ms</strong> · 日均19,410条</span><span>局部背景13.54×</span></div></section>
+            <section class="market-panel" aria-labelledby="raw-szse-title"><div class="market-panel-head"><h3 id="raw-szse-title" style="color:var(--szse)">深市A股</h3><span>日均撤单数 / 10ms</span></div><div class="chart-stage"><canvas id="raw-szse" class="chart" aria-label="深市10秒内原生10ms日均撤单频数"></canvas></div><div class="market-note"><span><strong class="szse">3,000ms</strong> · 日均16,544条</span><span>离散固定峰列</span></div></section>
+          </div>
+          <div class="caption"><span>沪市6秒形成最突出的连续峰带；深市1.01、1.5、2、3、4、5、6秒形成多峰序列。</span><span>两图共用坐标尺度</span></div>
         </div>
       </section>
 
-      <section class="slide" data-label="深市频数" aria-labelledby="slide-title-3">
+      <section class="slide" data-label="标准化" aria-labelledby="slide-title-3">
         <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">FIGURE 01B</span><div><h2 id="slide-title-3">深市原生频数：多个固定时点组成离散峰列</h2><p class="dek">与沪市共用相同坐标尺度。3秒峰最高，1.01、1.5、2、4、5、6秒也形成清晰尖峰。</p></div></header>
-          <div class="chart-stage"><canvas id="raw-szse" class="chart" aria-label="深市10秒内原生10ms日均撤单频数"></canvas></div>
-          <div class="caption"><span><strong class="szse">3,000ms</strong> · 日均16,544条 · 1,010ms与6,000ms同样显著</span><span>纵轴：日均撤单消息数 / 10ms</span></div>
-        </div>
-      </section>
-
-      <section class="slide" data-label="标准化" aria-labelledby="slide-title-4">
-        <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">FIGURE 02</span><div><h2 id="slide-title-4">排除市场总量差异后，固定时点偏好仍然存在</h2><p class="dek">每个交易日先除以本市场当日全部匹配撤单数，再换算为每百万条中的格点频数，最后对116日等权平均。</p></div></header>
+          <header class="slide-head"><span class="figure-no">FIGURE 02</span><div><h2 id="slide-title-3">排除市场总量差异后，固定时点偏好仍然存在</h2><p class="dek">每个交易日先除以本市场当日全部匹配撤单数，再换算为每百万条中的格点频数，最后对116日等权平均。</p></div></header>
           <div class="chart-stage"><canvas id="normalized" class="chart" aria-label="沪深每百万条撤单标准化频率"></canvas></div>
           <div class="caption"><div class="legend"><span class="sse">沪市</span><span class="szse">深市</span></div><span>每日等权 · 每百万条 / 10ms</span></div>
         </div>
       </section>
 
-      <section class="slide" data-label="沪市逐日" aria-labelledby="slide-title-5">
+      <section class="slide" data-label="逐日结构" aria-labelledby="slide-title-4">
         <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">FIGURE 03A</span><div><h2 id="slide-title-5">沪市逐日热力图：6秒竖纹贯穿整个上半年</h2><p class="dek">横轴0–10秒，纵轴116个交易日；五个原生格点合并为50ms，每日按本市场总撤单量标准化。</p></div></header>
-          <div class="chart-stage"><canvas id="heat-sse" class="chart" aria-label="沪市逐日撤单时间热力图"></canvas></div>
-          <div class="caption"><span><strong class="sse">竖向条纹</strong>表示同一延时在不同日期重复出现</span><span>共同对数色阶 · 每百万条 / 50ms</span></div>
+          <header class="slide-head"><span class="figure-no">FIGURE 03</span><div><h2 id="slide-title-4">沪深逐日热力图：固定延时形成贯穿日期的竖纹</h2><p class="dek">横轴0–10秒、纵轴116个交易日；五个原生格点合并为50ms，每日按本市场总撤单量标准化，两市使用共同对数色阶。</p></div></header>
+          <div class="market-pair">
+            <section class="market-panel" aria-labelledby="heat-sse-title"><div class="market-panel-head"><h3 id="heat-sse-title" style="color:var(--sse)">沪市逐日结构</h3><span>每百万条 / 50ms</span></div><div class="chart-stage"><canvas id="heat-sse" class="chart" aria-label="沪市逐日撤单时间热力图"></canvas></div><div class="market-note"><span><strong class="sse">6秒竖纹</strong>贯穿上半年</span><span>116个交易日</span></div></section>
+            <section class="market-panel" aria-labelledby="heat-szse-title"><div class="market-panel-head"><h3 id="heat-szse-title" style="color:var(--szse)">深市逐日结构</h3><span>每百万条 / 50ms</span></div><div class="chart-stage"><canvas id="heat-szse" class="chart" aria-label="深市逐日撤单时间热力图"></canvas></div><div class="market-note"><span><strong class="szse">1–6秒</strong>多条稳定竖纹</span><span>116个交易日</span></div></section>
+          </div>
+          <div class="caption"><span>竖向条纹表示同一延时在不同日期重复出现；两市结构均非少数异常日驱动。</span><span>共同色阶，可直接比较</span></div>
         </div>
       </section>
 
-      <section class="slide" data-label="深市逐日" aria-labelledby="slide-title-6">
+      <section class="slide" data-label="月度变化" aria-labelledby="slide-title-5">
         <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">FIGURE 03B</span><div><h2 id="slide-title-6">深市逐日热力图：多条固定时点竖纹同时存在</h2><p class="dek">与沪市使用共同色阶，可以比较相对强度；离散峰不是由少数交易日的异常值造成。</p></div></header>
-          <div class="chart-stage"><canvas id="heat-szse" class="chart" aria-label="深市逐日撤单时间热力图"></canvas></div>
-          <div class="caption"><span><strong class="szse">1–6秒</strong>范围出现多条稳定竖纹</span><span>共同对数色阶 · 每百万条 / 50ms</span></div>
+          <header class="slide-head"><span class="figure-no">FIGURE 04</span><div><h2 id="slide-title-5">沪深月度小多图：峰位稳定，强弱变化不同</h2><p class="dek">每图为当月交易日的原生10ms日均频数；同一市场六个月共用纵轴，直接观察峰值增强、减弱与峰间切换。</p></div></header>
+          <div class="monthly-pair">
+            <section class="month-market" aria-labelledby="month-sse-title"><div class="market-panel-head"><h3 id="month-sse-title" style="color:var(--sse)">沪市 · 1—6月</h3><span>6秒峰位稳定</span></div><div id="monthly-sse" class="month-grid" aria-label="沪市一至六月撤单频数小多图"></div><div class="market-note"><span><strong class="sse">+33.0%</strong> · 6秒强度</span><span>1月→6月</span></div></section>
+            <section class="month-market" aria-labelledby="month-szse-title"><div class="market-panel-head"><h3 id="month-szse-title" style="color:var(--szse)">深市 · 1—6月</h3><span>峰间强弱切换</span></div><div id="monthly-szse" class="month-grid" aria-label="深市一至六月撤单频数小多图"></div><div class="market-note"><span><strong class="szse">+116.8%</strong> · 3秒强度</span><span>1月→6月</span></div></section>
+          </div>
+          <div class="caption"><span>沪市6秒每百万条强度由6,826升至9,077；深市3秒由4,818升至10,443。</span><span>原生10ms月均频数</span></div>
         </div>
       </section>
 
-      <section class="slide" data-label="沪市月度" aria-labelledby="slide-title-7">
+      <section class="slide" data-label="峰值证据" aria-labelledby="slide-title-6">
         <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">FIGURE 04A</span><div><h2 id="slide-title-7">沪市月度小多图：6秒峰位稳定，强度升高</h2><p class="dek">每图为当月交易日的原生10ms日均频数；六个月共用纵轴。6秒标准化强度从1月6,826升至6月9,077条/百万。</p></div></header>
-          <div id="monthly-sse" class="month-grid" aria-label="沪市一至六月撤单频数小多图"></div>
-          <div class="caption"><span><strong class="sse">+33.0%</strong> · 6秒每百万条强度：1月→6月</span><span>同市场六图共用纵轴</span></div>
-        </div>
-      </section>
-
-      <section class="slide" data-label="深市月度" aria-labelledby="slide-title-8">
-        <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">FIGURE 04B</span><div><h2 id="slide-title-8">深市月度小多图：峰位稳定，峰间强弱发生切换</h2><p class="dek">3秒标准化强度从1月4,818升至6月10,443条/百万；1.01秒同期下降38.1%，1.5秒上升242%。</p></div></header>
-          <div id="monthly-szse" class="month-grid" aria-label="深市一至六月撤单频数小多图"></div>
-          <div class="caption"><span><strong class="szse">+116.8%</strong> · 3秒每百万条强度：1月→6月</span><span>同市场六图共用纵轴</span></div>
-        </div>
-      </section>
-
-      <section class="slide" data-label="峰值证据" aria-labelledby="slide-title-9">
-        <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">TABLE 01</span><div><h2 id="slide-title-9">主要局部峰：强度、宽度与逐日持续率</h2><p class="dek">局部背景为中心±250ms内、排除±80ms后的格点中位数；表内各取0–10秒日均数量最高的五个局部峰。</p></div></header>
+          <header class="slide-head"><span class="figure-no">TABLE 01</span><div><h2 id="slide-title-6">主要局部峰：强度、宽度与逐日持续率</h2><p class="dek">局部背景为中心±250ms内、排除±80ms后的格点中位数；表内各取0–10秒日均数量最高的五个局部峰。</p></div></header>
           <div class="table-shell"><table><thead><tr><th>市场</th><th>峰中心</th><th>半峰高区间</th><th>日均格点数</th><th>局部背景</th><th>峰/背景</th><th>持续日</th><th>市场占比</th></tr></thead><tbody id="peak-table"></tbody></table></div>
           <div class="caption"><span>持续日：中心±50ms当日最大值至少为当日局部背景2倍</span><span>深市12秒、13秒尖峰留作延伸观察</span></div>
         </div>
       </section>
 
-      <section class="slide" data-label="解释边界" aria-labelledby="slide-title-10">
+      <section class="slide" data-label="解释边界" aria-labelledby="slide-title-7">
         <div class="slide-inner">
-          <header class="slide-head"><span class="figure-no">INTERPRETATION</span><div><h2 id="slide-title-10">这些峰说明“存在固定时点偏好”，不直接说明参与者身份</h2><p class="dek">读图边界与数据质量检查。</p></div></header>
+          <header class="slide-head"><span class="figure-no">INTERPRETATION</span><div><h2 id="slide-title-7">这些峰说明“存在固定时点偏好”，不直接说明参与者身份</h2><p class="dek">读图边界与数据质量检查。</p></div></header>
           <div class="method-grid">
             <p class="method-copy">原生10ms格点上的集中、逐日持续以及跨月强度变化，与<strong>定时撤单、批处理或统一风控时钟</strong>相容，可以作为自动化执行痕迹的描述性证据。但研究没有参与者身份、席位或策略标签，不能把固定延时峰直接等同于机构身份，也不能仅凭峰形判断具体算法。</p>
             <div class="audit" aria-label="数据质量检查"><div class="audit-row"><span>负时间差</span><b>0</b></div><div class="audit-row"><span>非10ms网格</span><b>0</b></div><div class="audit-row"><span>超过300秒</span><b>0</b></div><div class="audit-row"><span>孤儿撤单</span><b>0</b></div><div class="audit-row"><span>重复订单号</span><b>0</b></div></div>
@@ -193,7 +185,7 @@
 
   <footer class="deck-foot">
     <div class="progress-wrap" aria-hidden="true"><div class="progress-line"><i></i></div></div>
-    <div class="controls"><button class="nav-button" id="prev" type="button" aria-label="上一节">← <span class="word">上一节</span></button><span class="counter"><b id="current">01</b> / <span id="total">10</span></span><button class="nav-button" id="next" type="button" aria-label="下一节"><span class="word">下一节</span> →</button></div>
+    <div class="controls"><button class="nav-button" id="prev" type="button" aria-label="上一节">← <span class="word">上一节</span></button><span class="counter"><b id="current">01</b> / <span id="total">07</span></span><button class="nav-button" id="next" type="button" aria-label="下一节"><span class="word">下一节</span> →</button></div>
     <div class="foot-hint">← → 键盘切换 · 触屏左右滑动</div>
   </footer>
 </div>
@@ -206,7 +198,7 @@
   const MONTHS={'2026-01':'1月','2026-02':'2月','2026-03':'3月','2026-04':'4月','2026-05':'5月','2026-06':'6月'};
   const DPR=Math.min(window.devicePixelRatio||1,2);
   const fmt=new Intl.NumberFormat('zh-CN',{maximumFractionDigits:0});
-  const deckKey='cancelLagSectionV3';
+  const deckKey='cancelLagSectionV4';
 
   function fit(canvas){
     const w=Math.max(1,Math.floor(canvas.clientWidth)),h=Math.max(1,Math.floor(canvas.clientHeight));
@@ -239,7 +231,8 @@
   function readStoredSection(){try{return localStorage.getItem(deckKey)}catch(error){return null}}
   function storeSection(index){try{localStorage.setItem(deckKey,String(index))}catch(error){/* sandboxed srcdoc may have an opaque origin */}}
   let current=Math.max(0,Math.min(slides.length-1,Number.parseInt(readStoredSection()||'0',10)||0));
-  function goTo(index,{announce=true,persist=true}={}){current=Math.max(0,Math.min(slides.length-1,index));track.style.transform=`translate3d(${-current*100}%,0,0)`;slides.forEach((slide,i)=>slide.setAttribute('aria-hidden',String(i!==current)));tabButtons.forEach((tab,i)=>tab.setAttribute('aria-selected',String(i===current)));tabButtons[current].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});currentEl.textContent=String(current+1).padStart(2,'0');progress.style.width=`${(current+1)/slides.length*100}%`;prev.disabled=current===0;next.disabled=current===slides.length-1;if(persist)storeSection(current);if(announce)live.textContent=`第${current+1}节，共${slides.length}节：${slides[current].dataset.label}`;requestAnimationFrame(renderAll);}
+  function centerActiveTab(tab){const left=tab.offsetLeft-(tabs.clientWidth-tab.offsetWidth)/2;tabs.scrollTo({left:Math.max(0,left),behavior:'smooth'});}
+  function goTo(index,{announce=true,persist=true}={}){current=Math.max(0,Math.min(slides.length-1,index));track.style.transform=`translate3d(${-current*100}%,0,0)`;slides.forEach((slide,i)=>slide.setAttribute('aria-hidden',String(i!==current)));tabButtons.forEach((tab,i)=>tab.setAttribute('aria-selected',String(i===current)));centerActiveTab(tabButtons[current]);currentEl.textContent=String(current+1).padStart(2,'0');progress.style.width=`${(current+1)/slides.length*100}%`;prev.disabled=current===0;next.disabled=current===slides.length-1;if(persist)storeSection(current);if(announce)live.textContent=`第${current+1}节，共${slides.length}节：${slides[current].dataset.label}`;requestAnimationFrame(renderAll);}
   prev.addEventListener('click',()=>goTo(current-1));next.addEventListener('click',()=>goTo(current+1));
   window.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();goTo(current-1)}else if(event.key==='ArrowRight'){event.preventDefault();goTo(current+1)}else if(event.key==='Home'){event.preventDefault();goTo(0)}else if(event.key==='End'){event.preventDefault();goTo(slides.length-1)}});
   let startX=0,startY=0,tracking=false;

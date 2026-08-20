@@ -32,3 +32,13 @@
 - 网站真实路由截图：`screenshots-v3/desktop/site-embedded.png`
 - 桌面单屏截图：`screenshots-v3/desktop/01-cover.png`、`02-sse-raw.png`、`05-sse-heat.png`、`07-sse-monthly.png`、`09-peak-table.png`、`10-boundary.png`
 - 移动单屏截图：`screenshots-v3/mobile/01-cover.png`、`02-sse-raw.png`、`07-sse-monthly.png`、`09-peak-table.png`
+
+## 2026-08-20沪深对照合并改稿确认
+
+- 用户确认原话：`沪市频数↔深市频数，沪市逐日↔深市逐日，沪市月度↔深市月度；放在一起，不要单独每张图设一个section`
+- 本次仍属于方案 C 内部的章节重组，不重新走三方向门。
+- 原10节收敛为7节：结论、沪深原生频数、标准化、沪深逐日结构、沪深月度变化、峰值证据、解释边界。
+- 三组沪深图均在同一章节内并列或上下成对呈现；桌面优先并列直接比较，窄屏在同一章节内上下排列，不拆成两个章节。
+- 网站真实路由截图：`screenshots-v4/desktop/site-embedded-paired.png`
+- 桌面对照截图：`screenshots-v4/desktop/02-frequency-pair.png`、`04-daily-pair.png`、`05-monthly-pair.png`
+- 移动端对照截图：`screenshots-v4/mobile/02-frequency-pair.png`、`04-daily-pair.png`、`05-monthly-pair.png`
