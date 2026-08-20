@@ -37,6 +37,25 @@ test('full report renders, filters, and preserves audited metrics', async ({ pag
   expect(integrity.lgbCpu).toBeCloseTo(4.944, 3);
   expect(integrity.ridge).toBeCloseTo(0.00704, 5);
 
+  const zeroBaselineDeclared = await page.evaluate(() => draw.toString().includes("fillText('0%'") && draw.toString().includes('zeroY=Y(0)'));
+  expect(zeroBaselineDeclared).toBe(true);
+
+  const hoverTarget = await page.evaluate(() => {
+    const bounds = plot.getBoundingClientRect();
+    const point = hitPoints.find(item => item.x < bounds.width * 0.25 && item.y > 130);
+    return { x: bounds.x + point.x, y: bounds.y + point.y, relX: point.x, width: bounds.width };
+  });
+  await page.mouse.move(hoverTarget.x, hoverTarget.y);
+  await expect(page.locator('#tooltip')).toBeVisible();
+  const tooltipGeometry = await page.evaluate(() => {
+    const plotBounds = plot.getBoundingClientRect();
+    const tipBounds = tooltip.getBoundingClientRect();
+    return { left: tipBounds.left - plotBounds.left, bottom: tipBounds.bottom - plotBounds.top };
+  });
+  expect(tooltipGeometry.left).toBeGreaterThan(hoverTarget.relX + 20);
+  expect(tooltipGeometry.bottom).toBeLessThanOrEqual(96);
+  await page.locator('.chart-grid').screenshot({ path: 'screenshots/tooltip-zero-baseline.png' });
+
   await page.locator('#selectNone').click();
   await expect(page.locator('#visibleCount')).toHaveText('0 / 16');
   await page.locator('#selectAll').click();
