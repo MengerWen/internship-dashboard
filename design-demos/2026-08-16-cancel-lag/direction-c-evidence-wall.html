@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>方向 C · 证据墙</title>
+  <!--
+    假设：研究人员会优先核对口径、市场差异与数据密度，而不是先读故事。
+    设计思想：Edward Tufte式高数据墨水比；不使用装饰卡片，所有线条都承担尺度、比较或注释功能。
+    Form：原生10ms格点变成整页的水平测量尺，红色只标记6秒观察带。
+  -->
+  <style>
+    :root{--paper:#fbfbf8;--ink:#171715;--gray:#75756f;--hair:#cfcec7;--red:#b23b2a;--blue:#336d86;--green:#4d7566}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif SC","Songti SC",serif;font-synthesis:none;line-break:strict}.page{max-width:1420px;margin:auto;padding:28px 38px 70px}.utility{display:flex;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:10px;font:11px Consolas,monospace;letter-spacing:.06em}.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;padding:54px 0 42px;border-bottom:1px solid var(--ink)}h1{font-size:clamp(48px,5.3vw,76px);line-height:1.08;margin:0 0 30px;font-weight:800;letter-spacing:-.02em;max-width:12em}.intro{font-size:18px;line-height:1.85;max-width:40em;margin:0}.sample{border-left:1px solid var(--ink);padding-left:28px;display:grid;align-content:end}.sample b{font:600 48px/1 Consolas,monospace;display:block;margin:8px 0}.sample span{font:11px/1.5 Consolas,monospace;color:var(--gray)}.sample hr{border:0;border-top:1px solid var(--hair);margin:18px 0}
+    .ruler{height:94px;position:relative;border-bottom:1px solid var(--ink);background:repeating-linear-gradient(90deg,var(--hair) 0 1px,transparent 1px calc(100%/30));margin:36px 0}.ruler .band{position:absolute;left:18.3%;width:3.4%;inset:0 auto 0;background:#b23b2a1c;border-left:2px solid var(--red);border-right:2px solid var(--red)}.ruler .band b{position:absolute;top:22px;left:50%;transform:translateX(-50%);font:600 24px Consolas,monospace;color:var(--red)}.ruler label{position:absolute;bottom:-22px;font:10px Consolas,monospace;color:var(--gray)}
+    .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;padding-top:40px}.panel{border-top:3px solid var(--ink);padding-top:12px;margin-bottom:48px}.panel-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px}.panel h2{font:700 25px/1.3 "Noto Serif SC","Songti SC",serif;margin:0}.panel-head span{font:10px Consolas,monospace;color:var(--gray)}
+    table{width:100%;border-collapse:collapse;font:13px/1.35 Consolas,monospace;font-variant-numeric:tabular-nums}th,td{padding:10px 8px;border-bottom:1px solid var(--hair);text-align:right}th:first-child,td:first-child{text-align:left}thead th{font-weight:400;color:var(--gray)}tbody tr:last-child td{border-bottom:1px solid var(--ink)}.heat{background:linear-gradient(90deg,#b23b2a22 var(--v),transparent var(--v))}
+    .cdf{width:100%;height:auto}.g{stroke:var(--hair);stroke-width:1}.txt{font:10px Consolas,monospace;fill:var(--gray)}.ln{fill:none;stroke-width:2.2}.sz{stroke:var(--blue)}.sh{stroke:var(--red)}.all{stroke:var(--ink);stroke-width:3}.legend{display:flex;gap:22px;font:11px Consolas,monospace;margin-top:8px}.legend i{display:inline-block;width:22px;border-top:2px solid;margin-right:7px;vertical-align:middle}.legend .a i{border-color:var(--blue)}.legend .b i{border-color:var(--red)}.legend .c i{border-color:var(--ink)}
+    .spark-row{display:grid;grid-template-columns:42px 1fr 74px;align-items:center;gap:12px;border-bottom:1px solid var(--hair);padding:11px 0;font:11px Consolas,monospace}.spark{height:18px;position:relative;background:linear-gradient(90deg,var(--red) 0 var(--v),#ecebe5 var(--v))}.spark:after{content:"";position:absolute;left:var(--m);top:-3px;bottom:-3px;border-left:1px solid var(--blue)}.spark-row b{text-align:right;font-weight:400}.notes{counter-reset:n}.note{display:grid;grid-template-columns:32px 1fr;gap:8px;margin:0 0 22px;font-size:16px;line-height:1.75}.note:before{counter-increment:n;content:counter(n);font:12px Consolas,monospace;color:var(--red);padding-top:5px}.boundary{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:30px 0;display:grid;grid-template-columns:180px 1fr;gap:30px}.boundary b{font:12px Consolas,monospace;color:var(--red)}.boundary p{font-size:20px;line-height:1.8;margin:0;max-width:48em}.footnotes{columns:2;column-gap:50px;padding-top:32px;font:11px/1.7 Consolas,monospace;color:var(--gray)}
+    @media(max-width:900px){.hero,.grid,.boundary{grid-template-columns:1fr}.sample{border-left:0;border-top:1px solid var(--ink);padding:24px 0 0}.footnotes{columns:1}}
+    @media(max-width:520px){.page{padding:18px 18px 50px}h1{font-size:42px}.hero{gap:28px}.utility span:last-child{display:none}.sample b{font-size:34px}.grid{gap:10px}.grid>div{min-width:0}.panel{overflow-x:auto}.boundary p{font-size:17px}}
+  </style>
+</head>
+<body><main class="page">
+  <header class="utility"><span>OPEN5M / CANCEL-LAG / 10MS GRID</span><span>2026-01-05—2026-06-30</span></header>
+  <section class="hero"><div><h1>撤单时间差的三条证据</h1><p class="intro">深市早段更密集；沪市在6秒附近形成连续峰带；全市场一半撤单在8.08秒内完成，但P99仍延伸至218.95秒。</p></div><aside class="sample"><span>OBSERVATIONS</span><b>562,390,536</b><span>匹配撤单消息</span><hr><span>COVERAGE</span><b>116 days</b><span>602,706个股票日 · 沪深普通A股</span></aside></section>
+  <div class="ruler" aria-label="0至30秒时间尺"><div class="band"><b>6s</b></div><label style="left:0">0</label><label style="left:20%">6</label><label style="left:40%">12</label><label style="left:60%">18</label><label style="left:80%">24</label><label style="right:0">30秒</label></div>
+  <div class="grid">
+    <div>
+      <section class="panel"><div class="panel-head"><h2>累计分布</h2><span>越靠左，撤单越早</span></div><svg id="cdf" class="cdf" viewBox="0 0 660 330" role="img" aria-label="深市沪市合计累计撤单分布"></svg><div class="legend"><span class="a"><i></i>深市</span><span class="b"><i></i>沪市</span><span class="c"><i></i>合计</span></div></section>
+      <section class="panel"><div class="panel-head"><h2>分位数对照</h2><span>单位：秒</span></div><table><thead><tr><th>市场</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P95</th><th>P99</th></tr></thead><tbody><tr><td>深市</td><td>1.41</td><td>3.03</td><td>7.94</td><td>22.55</td><td>118.69</td><td>227.17</td></tr><tr><td>沪市</td><td>2.18</td><td>4.42</td><td>8.33</td><td>21.97</td><td>104.84</td><td>209.50</td></tr><tr><td>合计</td><td>1.69</td><td>3.54</td><td>8.08</td><td>22.23</td><td>111.78</td><td>218.95</td></tr></tbody></table></section>
+    </div>
+    <div>
+      <section class="panel"><div class="panel-head"><h2>月度变化</h2><span>红：5.5–6.5秒带 · 蓝线：日P50</span></div><div class="spark-row"><span>JAN</span><div class="spark" style="--v:68%;--m:85%"></div><b>8.49%</b></div><div class="spark-row"><span>FEB</span><div class="spark" style="--v:71%;--m:68%"></div><b>8.90%</b></div><div class="spark-row"><span>MAR</span><div class="spark" style="--v:82%;--m:69%"></div><b>10.24%</b></div><div class="spark-row"><span>APR</span><div class="spark" style="--v:85%;--m:71%"></div><b>10.61%</b></div><div class="spark-row"><span>MAY</span><div class="spark" style="--v:99%;--m:62%"></div><b>12.38%</b></div><div class="spark-row"><span>JUN</span><div class="spark" style="--v:100%;--m:50%"></div><b>12.46%</b></div></section>
+      <section class="panel notes"><div class="panel-head"><h2>三条可复核事实</h2><span>不含机制先验</span></div><p class="note">深市3秒内占23.68%，沪市为16.78%；深市早段撤单更密集。</p><p class="note">沪市最高十个10ms格点连续覆盖5.95–6.04秒；6,000ms单格占0.847%。</p><p class="note">合计市场97/116日的最高格点位于5.9–6.1秒，但最高十格合计仅占5.06%，宽分布仍是主体。</p></section>
+      <section class="panel"><div class="panel-head"><h2>质量检查</h2><span>116日合计</span></div><table><tbody><tr><td>负时间差</td><td>0</td></tr><tr><td>非10ms网格</td><td>0</td></tr><tr><td>超过300秒</td><td>0</td></tr><tr><td>孤儿撤单</td><td>0</td></tr><tr><td>重复订单号</td><td>0</td></tr></tbody></table></section>
+    </div>
+  </div>
+  <section class="boundary"><b>INTERPRETATION</b><p>时间集中与定时撤单、批处理或统一风控时钟相容，可视为自动化执行痕迹；但没有参与者身份、席位或策略标签，不能直接推断机构身份。</p></section>
+  <footer class="footnotes"><p>口径：订单提交和撤单消息均处于[09:30:00,09:35:00)，每条撤单消息单独计数。</p><p>原生精度：10ms；允许范围：[0,300000ms)。未运行收益标签、IC、Bootstrap、安慰剂或敏感性分析。</p></footer>
+  <script>
+    const xs=[1,3,5,10,30,60,120],S={sz:[2.62,23.68,34.83,54.69,79.54,88.74,95.08],sh:[1.92,16.78,27.71,54.78,80.72,90.09,96.02],all:[2.29,20.42,31.46,54.73,80.10,89.38,95.53]};
+    const svg=document.getElementById('cdf'),W=660,H=330,p={l:48,r:15,t:10,b:38},X=v=>p.l+Math.log10(v)/Math.log10(120)*(W-p.l-p.r),Y=v=>H-p.b-v/100*(H-p.t-p.b);
+    [0,25,50,75,100].forEach(v=>svg.insertAdjacentHTML('beforeend',`<line class="g" x1="${p.l}" y1="${Y(v)}" x2="${W-p.r}" y2="${Y(v)}"/><text class="txt" x="2" y="${Y(v)+4}">${v}%</text>`));xs.forEach(v=>svg.insertAdjacentHTML('beforeend',`<text class="txt" text-anchor="middle" x="${X(v)}" y="${H-9}">${v}s</text>`));Object.entries(S).forEach(([k,a])=>svg.insertAdjacentHTML('beforeend',`<path class="ln ${k}" d="${a.map((v,i)=>`${i?'L':'M'}${X(xs[i])},${Y(v)}`).join(' ')}"/>`));
+  </script>
+</main></body></html>
