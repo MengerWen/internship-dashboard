@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>撤单时间并不连续｜沪深2026H1</title>
+  <!--
+    Assumptions: the reader wants to inspect native timing structure, not a cumulative speed summary.
+    Reasoning: raw 10ms curves are the primary evidence; normalization, daily heatmaps and monthly panels test comparability and persistence.
+    Source data: frozen 2026H1 SSE/SZSE daily and aggregate cancel-lag histograms.
+  -->
+  <style>
+    :root{--paper:#fff;--ink:#171717;--muted:#66645f;--hair:#d5d3cd;--grid:#e7e5df;--sse:#c90020;--szse:#174f78;--wash:#f4f2ec}
+    *{box-sizing:border-box}html{background:var(--paper);font-synthesis:none;line-break:strict}body{margin:0;color:var(--ink);background:var(--paper);font-family:"Source Serif 4","Noto Serif SC","Songti SC",serif;font-variant-numeric:tabular-nums slashed-zero}.report{max-width:1320px;margin:auto;padding:30px 42px 72px}.mast{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--ink);padding-bottom:12px;font:12px/1.5 Consolas,"Microsoft YaHei",monospace;letter-spacing:.06em}.mast strong{font-size:13px}.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:60px;padding:55px 0 42px;border-bottom:1px solid var(--ink)}h1{font-size:clamp(43px,5.4vw,74px);line-height:1.13;letter-spacing:-.015em;margin:0 0 24px;font-weight:800;text-wrap:balance}.lead{font-size:20px;line-height:1.85;max-width:34em;margin:0;text-wrap:pretty}.hero-note{border-left:1px solid var(--ink);padding-left:28px;align-self:end}.hero-note b{display:block;font:700 33px/1.1 Consolas,monospace;margin:5px 0 10px}.hero-note p{font-size:15px;line-height:1.75;margin:0 0 22px}.eyebrow,.figure-no{font:11px/1.4 Consolas,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+    .section{min-width:0;padding:48px 0 8px;border-bottom:1px solid var(--ink)}.section-head{display:grid;grid-template-columns:110px 1fr;gap:22px;align-items:start;margin-bottom:24px}.section h2{font-size:30px;line-height:1.35;margin:0;font-weight:750;text-wrap:balance}.section-intro{font-size:16px;line-height:1.75;max-width:58em;margin:8px 0 0;color:#343330}.plot-block{min-width:0;margin:28px 0 34px}.plot-title{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--ink);padding-top:10px;margin-bottom:8px}.plot-title h3{font-size:19px;margin:0}.plot-title span{font:11px Consolas,monospace;color:var(--muted)}.plot-scroll{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;border-bottom:1px solid var(--hair)}canvas.wide{display:block;width:100%;min-width:760px;height:310px}canvas.compare{height:360px}canvas.heat{min-width:420px;height:310px}.chart-note{font-size:13px;line-height:1.65;color:var(--muted);margin:8px 0 0}.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;border-top:1px solid var(--hair);padding:24px 0 8px}.finding{font-size:15px;line-height:1.72}.finding b{display:block;font:700 24px/1.2 Consolas,monospace;margin-bottom:8px}.finding.sse b{color:var(--sse)}.finding.szse b{color:var(--szse)}
+    .heat-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}.heat-grid>*{min-width:0}.month-market{margin:34px 0}.month-market h3{font-size:22px;margin:0 0 16px;border-bottom:1px solid var(--ink);padding-bottom:9px}.month-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 18px}.mini{min-width:0}.mini h4{font:12px Consolas,monospace;margin:0 0 5px}.mini canvas{width:100%;height:128px;display:block;border-bottom:1px solid var(--hair)}
+    .table-wrap{width:100%;max-width:100%;overflow-x:auto;border-top:2px solid var(--ink)}table{width:100%;border-collapse:collapse;min-width:820px;font:13px/1.45 Consolas,"Microsoft YaHei",monospace}th,td{text-align:right;padding:11px 10px;border-bottom:1px solid var(--hair);white-space:nowrap}th:first-child,td:first-child{text-align:left}th{font-weight:400;color:var(--muted)}tr.market-start td{border-top:1px solid var(--ink)}td.sse{color:var(--sse);font-weight:700}td.szse{color:var(--szse);font-weight:700}.method{display:grid;grid-template-columns:160px 1fr;gap:28px;padding:34px 0;border-bottom:1px solid var(--ink)}.method b{font:12px Consolas,monospace;color:var(--muted)}.method p{font-size:16px;line-height:1.85;margin:0;max-width:60em}.foot{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding-top:26px;font:11px/1.75 Consolas,"Microsoft YaHei",monospace;color:var(--muted)}.legend{display:flex;gap:20px;font:12px Consolas,monospace}.legend span:before{content:"";display:inline-block;width:24px;border-top:2px solid;margin-right:7px;vertical-align:middle}.legend .sse:before{border-color:var(--sse)}.legend .szse:before{border-color:var(--szse)}
+    @media(max-width:900px){.report{padding:24px 24px 60px}.hero{grid-template-columns:1fr;gap:30px}.hero-note{border-left:0;border-top:1px solid var(--ink);padding:24px 0 0}.section-head{grid-template-columns:1fr;gap:4px}.heat-grid{grid-template-columns:1fr}.findings{grid-template-columns:1fr}.month-grid{grid-template-columns:repeat(2,1fr)}.method{grid-template-columns:1fr}.foot{grid-template-columns:1fr}}
+    @media(max-width:520px){.report{padding:18px 17px 48px}.mast span:last-child{display:none}h1{font-size:40px}.lead{font-size:18px}.section{padding-top:38px}.section h2{font-size:25px}.month-grid{grid-template-columns:1fr}.foot{font-size:10px}.plot-scroll:after{content:"横向滑动查看原生格点";display:block;position:sticky;left:0;width:max-content;padding:5px 0;font:10px Consolas,monospace;color:var(--muted)}}
+  </style>
+</head>
+<body>
+<main class="report">
+  <header class="mast"><strong>OPEN5M / CANCEL-LAG / NATIVE 10MS</strong><span>2026-01-05—2026-06-30 · 116 TRADING DAYS</span></header>
+  <section class="hero">
+    <div><div class="eyebrow">2026H1沪深A股开盘五分钟撤单研究</div><h1>撤单时间并不连续：固定延时形成针状峰</h1><p class="lead">沪市最强结构集中在6秒附近；深市则在1.01、1.5、2、3、4、5、6秒形成多峰序列。以下所有主图都保留原生10ms格点，不用累计曲线掩盖尖峰。</p></div>
+    <aside class="hero-note"><span class="eyebrow">最强原生格点</span><b style="color:var(--sse)">沪市 6,000ms</b><p>日均19,410条，是局部背景的13.54倍；116/116个交易日达到当日局部背景的2倍以上。</p><b style="color:var(--szse)">深市 3,000ms</b><p>日均16,544条，是局部背景的9.33倍；深市同时存在一组离散固定延时峰。</p></aside>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="figure-no">FIGURE 01</span><div><h2>10秒内原生撤单频数：沪深结构完全不同</h2><p class="section-intro">每个点代表一个10ms格点；纵轴是116个交易日的日均撤单消息数。两图共用相同横轴和纵轴，未平滑、未累计。</p></div></div>
+    <div class="plot-block"><div class="plot-title"><h3>沪市A股</h3><span>日均撤单数 / 10ms</span></div><div class="plot-scroll"><canvas id="raw-sse" class="wide" aria-label="沪市10秒内原生10ms日均撤单频数"></canvas></div></div>
+    <div class="plot-block"><div class="plot-title"><h3>深市A股</h3><span>日均撤单数 / 10ms</span></div><div class="plot-scroll"><canvas id="raw-szse" class="wide" aria-label="深市10秒内原生10ms日均撤单频数"></canvas></div></div>
+    <div class="findings"><div class="finding sse"><b>6,000ms</b>沪市6秒峰日均19,410条，半峰高区间约为5,960–6,040ms；这不是累计比例，而是原生格点的直接尖峰。</div><div class="finding szse"><b>3,000ms</b>深市最高峰日均16,544条；1,010ms和6,000ms也分别达到约14,022和14,238条。</div><div class="finding"><b>0–10,000ms</b>整数秒参考线只作为读图坐标。所有峰位和宽度均在原始分布冻结后识别，没有预先指定“算法撤单时点”。</div></div>
+    <p class="chart-note">注：零毫秒表示订单与撤单消息具有相同交易所时间戳且事件顺序合法；仍按原生事件顺序计入。</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="figure-no">FIGURE 02</span><div><h2>排除市场总量差异后，固定时点偏好仍然存在</h2><p class="section-intro">每个交易日先除以本市场当日全部匹配撤单数，再换算为每百万条撤单中的格点频数，最后对116日等权平均。</p></div></div>
+    <div class="plot-title"><div class="legend"><span class="sse">沪市</span><span class="szse">深市</span></div><span>每日等权 · 每百万条 / 10ms</span></div>
+    <div class="plot-scroll"><canvas id="normalized" class="wide compare" aria-label="沪深每百万条撤单标准化频率"></canvas></div>
+    <p class="chart-note">标准化图用于比较“相对偏好”，不替代图1的日均绝对数量。两种口径同时显示，避免把市场规模误当成峰值强度。</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="figure-no">FIGURE 03</span><div><h2>逐日热力图：固定延时表现为贯穿日期的竖向条纹</h2><p class="section-intro">横轴仍为0–10秒；纵轴为116个交易日。为保证屏幕可读性，热力图将五个相邻原生格点合并为50ms，但每一行都按当日本市场撤单总量标准化。</p></div></div>
+    <div class="heat-grid">
+      <div class="plot-block"><div class="plot-title"><h3>沪市逐日结构</h3><span>每百万条 / 50ms</span></div><div class="plot-scroll"><canvas id="heat-sse" class="wide heat" aria-label="沪市逐日撤单时间热力图"></canvas></div></div>
+      <div class="plot-block"><div class="plot-title"><h3>深市逐日结构</h3><span>每百万条 / 50ms</span></div><div class="plot-scroll"><canvas id="heat-szse" class="wide heat" aria-label="深市逐日撤单时间热力图"></canvas></div></div>
+    </div>
+    <p class="chart-note">颜色使用共同的对数刻度，避免极端尖峰把较弱但稳定的竖纹压成白色；共同色阶使沪深强度仍可横向比较。</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="figure-no">FIGURE 04</span><div><h2>月度小多图：峰的位置稳定，但强度在变化</h2><p class="section-intro">每张小图都是当月交易日的原生10ms日均频数；同一市场六个月使用同一纵轴，便于判断峰值增强、减弱或迁移。</p></div></div>
+    <div id="monthly"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="figure-no">TABLE 01</span><div><h2>主要局部峰：强度、宽度与逐日持续率</h2><p class="section-intro">局部背景定义为峰中心前后250ms、排除中心前后80ms后的格点中位数；“持续日”是峰中心前后50ms的当日最大值至少达到当日局部背景2倍，仅作描述性筛选。</p></div></div>
+    <div class="table-wrap"><table><thead><tr><th>市场</th><th>峰中心</th><th>半峰高区间</th><th>日均格点数</th><th>局部背景</th><th>峰/背景</th><th>持续日</th><th>市场占比</th></tr></thead><tbody id="peak-table"></tbody></table></div>
+    <p class="chart-note">表中展示0–10秒内日均数量最高的主要局部峰。深市12秒和13秒还存在非常尖锐的补充结构，分别约为局部背景的27.98倍和33.67倍，留在延伸观察而不压缩主图横轴。</p>
+  </section>
+
+  <section class="method"><b>INTERPRETATION</b><p>原生10ms格点上的集中、逐日持续以及跨月强度变化，与定时撤单、批处理或统一风控时钟相容，可以作为自动化执行痕迹的描述性证据。但本研究没有参与者身份、席位或策略标签，不能把固定延时峰直接等同于机构身份，也不能仅凭峰形判断具体算法。</p></section>
+  <footer class="foot"><p>样本：2026-01-05至2026-06-30，共116个已接受交易日；沪市267,814个股票日、265,877,449条匹配撤单；深市334,892个股票日、296,513,087条匹配撤单。订单提交和撤单均位于[09:30:00,09:35:00)。</p><p>数据来源：沪深交易所逐笔委托、逐笔成交与撤单数据；思瑞投资Open5m正式研究工件。原生时间精度10ms。负时间差、非10ms网格、超过300秒、孤儿撤单与重复订单号均为0。</p></footer>
+</main>
+
+<script type="application/json" id="visual-data">__VISUAL_DATA__</script>
+<script>
+  const DATA=JSON.parse(document.getElementById('visual-data').textContent);
+  const COLORS={sse:'#c90020',szse:'#174f78',ink:'#171717',muted:'#66645f',grid:'#e7e5df',paper:'#ffffff'};
+  const LABELS={sse:'沪市',szse:'深市'};
+  const MONTHS={'2026-01':'1月','2026-02':'2月','2026-03':'3月','2026-04':'4月','2026-05':'5月','2026-06':'6月'};
+  const DPR=Math.min(window.devicePixelRatio||1,2);
+  const fmt=new Intl.NumberFormat('zh-CN',{maximumFractionDigits:0});
+
+  function fit(canvas){const minimum=canvas.classList.contains('heat')?420:760,w=Math.max(canvas.clientWidth,minimum),h=parseFloat(getComputedStyle(canvas).height);canvas.width=Math.round(w*DPR);canvas.height=Math.round(h*DPR);const ctx=canvas.getContext('2d');ctx.setTransform(DPR,0,0,DPR,0,0);return{ctx,w,h};}
+  function niceMax(value,step){return Math.ceil(value/step)*step;}
+  function axes(ctx,w,h,yMax,yLabel,{left=66,right=18,top=28,bottom=48}={}){const pw=w-left-right,ph=h-top-bottom;ctx.clearRect(0,0,w,h);ctx.fillStyle=COLORS.paper;ctx.fillRect(0,0,w,h);ctx.font='11px Consolas,monospace';ctx.textAlign='center';ctx.textBaseline='top';for(let s=0;s<=10;s++){const x=left+pw*s/10;ctx.strokeStyle=s===6?'#b8b4ab':COLORS.grid;ctx.lineWidth=s===6?1.2:1;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+ph);ctx.stroke();ctx.fillStyle=COLORS.muted;ctx.fillText(`${s}s`,x,top+ph+12)}ctx.textAlign='right';ctx.textBaseline='middle';for(let i=0;i<=4;i++){const v=yMax*i/4,y=top+ph-ph*i/4;ctx.strokeStyle=COLORS.grid;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(left+pw,y);ctx.stroke();ctx.fillStyle=COLORS.muted;ctx.fillText(v>=1000?`${(v/1000).toFixed(v%1000?1:0)}k`:fmt.format(v),left-9,y)}ctx.save();ctx.translate(13,top+ph/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText(yLabel,0,0);ctx.restore();ctx.strokeStyle=COLORS.ink;ctx.beginPath();ctx.moveTo(left,top);ctx.lineTo(left,top+ph);ctx.lineTo(left+pw,top+ph);ctx.stroke();return{left,right,top,bottom,pw,ph};}
+  function plotSeries(ctx,geom,values,yMax,color,width=1.35){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin='round';ctx.beginPath();values.forEach((v,i)=>{const x=geom.left+geom.pw*i/(values.length-1),y=geom.top+geom.ph-(v/yMax)*geom.ph;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();}
+  function drawRaw(id,market,sharedMax){const canvas=document.getElementById(id),{ctx,w,h}=fit(canvas),values=DATA.markets[market].daily_average_10ms_0_10s,geom=axes(ctx,w,h,sharedMax,'日均撤单消息数 / 10ms');plotSeries(ctx,geom,values,sharedMax,COLORS[market],1.45);const peaks=DATA.markets[market].peaks_0_15s.filter(p=>p.center_ms<10000).sort((a,b)=>b.daily_average_count-a.daily_average_count).slice(0,6);ctx.font='11px Consolas,monospace';ctx.textAlign='center';ctx.textBaseline='bottom';peaks.forEach((p,k)=>{const x=geom.left+geom.pw*p.center_ms/9990,y=geom.top+geom.ph-(p.daily_average_count/sharedMax)*geom.ph;ctx.fillStyle=COLORS[market];ctx.fillRect(x-1.5,y-3,3,3);const ly=Math.max(geom.top+13,y-7-(k%2)*13);ctx.fillText(`${(p.center_ms/1000).toFixed(p.center_ms%1000?2:0)}s`,x,ly)});}
+  function drawNormalized(){const canvas=document.getElementById('normalized'),{ctx,w,h}=fit(canvas),sse=DATA.markets.sse.equal_day_per_million_10ms_0_10s,szse=DATA.markets.szse.equal_day_per_million_10ms_0_10s,yMax=niceMax(Math.max(...sse,...szse),2000),geom=axes(ctx,w,h,yMax,'每百万条撤单 / 10ms');plotSeries(ctx,geom,sse,yMax,COLORS.sse,1.35);plotSeries(ctx,geom,szse,yMax,COLORS.szse,1.35);}
+  function quantile(values,q){const a=[...values].sort((x,y)=>x-y);return a[Math.min(a.length-1,Math.floor(a.length*q))];}
+  function heatColor(value,cap,market){const scaled=Math.min(1,Math.log1p(value)/Math.log1p(cap)),t=Math.pow(scaled,2.2);const target=market==='sse'?[201,0,32]:[23,79,120];const base=[255,255,255];return`rgb(${base.map((v,i)=>Math.round(v+(target[i]-v)*t)).join(',')})`;}
+  function drawHeat(id,market,cap){const canvas=document.getElementById(id),{ctx,w,h}=fit(canvas),rows=DATA.markets[market].daily_per_million_50ms_0_10s,dates=DATA.dates,left=62,right=18,top=20,bottom=39,pw=w-left-right,ph=h-top-bottom,cw=pw/rows[0].length,ch=ph/rows.length;ctx.clearRect(0,0,w,h);ctx.fillStyle=COLORS.paper;ctx.fillRect(0,0,w,h);rows.forEach((row,r)=>row.forEach((v,c)=>{ctx.fillStyle=heatColor(v,cap,market);ctx.fillRect(left+c*cw,top+r*ch,Math.ceil(cw+.2),Math.ceil(ch+.2))}));ctx.font='10px Consolas,monospace';ctx.textAlign='right';ctx.textBaseline='top';let previous='';dates.forEach((date,r)=>{const month=date.slice(0,7);if(month!==previous){const y=top+r*ch;ctx.strokeStyle='#8b8880';ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(left+pw,y);ctx.stroke();ctx.fillStyle=COLORS.muted;ctx.fillText(MONTHS[month],left-8,y);previous=month}});ctx.textAlign='center';for(let s=0;s<=10;s++){const x=left+pw*s/10;ctx.strokeStyle=s===6?'rgba(23,23,23,.7)':'rgba(23,23,23,.16)';ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+ph);ctx.stroke();ctx.fillStyle=COLORS.muted;ctx.fillText(`${s}s`,x,top+ph+11)}ctx.strokeStyle=COLORS.ink;ctx.strokeRect(left,top,pw,ph);}
+  function miniCanvas(market,month,values,yMax){const wrap=document.createElement('div');wrap.className='mini';wrap.innerHTML=`<h4>${MONTHS[month]}</h4><canvas aria-label="${LABELS[market]}${MONTHS[month]}撤单分布"></canvas>`;const canvas=wrap.querySelector('canvas');requestAnimationFrame(()=>{const w=Math.max(canvas.clientWidth,220),h=128;canvas.width=w*DPR;canvas.height=h*DPR;const ctx=canvas.getContext('2d');ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,w,h);const left=8,right=5,top=8,bottom=23,pw=w-left-right,ph=h-top-bottom;ctx.strokeStyle=COLORS.grid;[0,3,6,9].forEach(s=>{const x=left+pw*s/10;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+ph);ctx.stroke()});ctx.strokeStyle=COLORS[market];ctx.lineWidth=1.05;ctx.beginPath();values.forEach((v,i)=>{const x=left+pw*i/(values.length-1),y=top+ph-v/yMax*ph;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.font='9px Consolas,monospace';ctx.fillStyle=COLORS.muted;ctx.textAlign='center';ctx.fillText('0',left,h-8);ctx.fillText('3s',left+pw*.3,h-8);ctx.fillText('6s',left+pw*.6,h-8);ctx.fillText('10s',left+pw,h-8)});return wrap;}
+  function renderMonthly(){const host=document.getElementById('monthly');host.innerHTML='';['sse','szse'].forEach(market=>{const block=document.createElement('div');block.className='month-market';block.innerHTML=`<h3 style="color:${COLORS[market]}">${LABELS[market]} · 1—6月</h3><div class="month-grid"></div>`;const monthly=DATA.markets[market].monthly_daily_average_10ms_0_10s,yMax=niceMax(Math.max(...Object.values(monthly).flat()),5000),grid=block.querySelector('.month-grid');Object.entries(monthly).forEach(([month,values])=>grid.appendChild(miniCanvas(market,month,values,yMax)));host.appendChild(block)});}
+  function renderTable(){const body=document.getElementById('peak-table');body.innerHTML='';['sse','szse'].forEach(market=>{DATA.markets[market].peaks_0_15s.filter(p=>p.center_ms<10000).sort((a,b)=>b.daily_average_count-a.daily_average_count).slice(0,7).forEach((p,i)=>{const tr=document.createElement('tr');if(i===0)tr.className='market-start';const [lo,hi]=p.half_prominence_interval_ms;tr.innerHTML=`<td class="${market}">${i? '':LABELS[market]}</td><td>${fmt.format(p.center_ms)}ms</td><td>${fmt.format(lo)}–${fmt.format(hi)}ms</td><td>${fmt.format(p.daily_average_count)}</td><td>${fmt.format(p.local_baseline_daily_average)}</td><td>${p.local_ratio.toFixed(2)}×</td><td>${p.persistence_days_2x}/116</td><td>${(p.market_share*100).toFixed(3)}%</td>`;body.appendChild(tr)})});}
+  function renderAll(){const rawMax=niceMax(Math.max(...DATA.markets.sse.daily_average_10ms_0_10s,...DATA.markets.szse.daily_average_10ms_0_10s),5000);drawRaw('raw-sse','sse',rawMax);drawRaw('raw-szse','szse',rawMax);drawNormalized();const heatValues=[...DATA.markets.sse.daily_per_million_50ms_0_10s.flat(),...DATA.markets.szse.daily_per_million_50ms_0_10s.flat()],cap=quantile(heatValues,.995);drawHeat('heat-sse','sse',cap);drawHeat('heat-szse','szse',cap);renderMonthly();renderTable();}
+  let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(renderAll,120)});requestAnimationFrame(renderAll);
+</script>
+</body>
+</html>
