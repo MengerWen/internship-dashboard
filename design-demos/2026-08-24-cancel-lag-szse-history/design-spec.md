@@ -28,4 +28,3 @@ Top tabs, bottom previous/next controls, keyboard left/right/Home/End, and horiz
 ## Evidence constraints
 
 All numbers come from the accepted formal artifact. The page states that 485 dates were computed and 116 accepted 2026H1 dates were reused with hash and quality verification. It displays raw frequency and descriptive changes only. Fixed-delay peaks may be described as compatible with automated timing, batch processing, or common risk clocks, but not identified as institutional activity without participant labels.
-
