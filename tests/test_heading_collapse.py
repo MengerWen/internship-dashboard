@@ -46,4 +46,4 @@ def test_changed_browser_assets_are_cache_busted() -> None:
     assert 'base.css?v=20260811' in index
     assert 'daily.css?v=20260811' in index
     assert 'content-enhance.js?v=20260811' in index
-    assert 'daily.js?v=20260811' in index
+    assert 'daily.js?v=20260907' in index

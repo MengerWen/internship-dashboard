@@ -1,0 +1,9 @@
+{
+  "name": "report-tags-browser-test",
+  "main": "fixtures/tag-worker.mjs",
+  "compatibility_date": "2026-07-07",
+  "assets": {"directory":"../dist", "binding":"ASSETS", "run_worker_first":["/api/*", "/__test/*"]},
+  "vars": {"TAG_EDITORS":"*"},
+  "durable_objects": {"bindings":[{"name":"REPORT_TAGS","class_name":"ReportTags"}]},
+  "migrations": [{"tag":"test-v1","new_sqlite_classes":["ReportTags"]}]
+}

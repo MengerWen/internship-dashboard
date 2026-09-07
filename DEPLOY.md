@@ -136,3 +136,29 @@ D:\MG\anaconda3\python.exe build.py --offline
 ```
 
 正常情况下 push 后 1-2 分钟线上页面会更新。
+
+## 5. 在线标签存储
+
+`wrangler.jsonc` 已配置生产入口 `worker/index.mjs`、`ASSETS` 静态资源绑定和 `REPORT_TAGS` SQLite Durable Object。首次部署通过 `report-tags-v1` migration 建立持久存储，不需要手工创建数据库 ID。后续发布不会用仓库快照覆盖已保存标签。
+
+Cloudflare Workers Builds 需安装 `package-lock.json` 对应的 Node 依赖。平台自动检测 `package.json` 时会安装；如配置过跳过依赖安装，Build command 应改为：
+
+```bash
+npm ci && pip install -r requirements.txt && python build.py
+```
+
+Deploy command 仍为 `npx wrangler deploy`。SQLite Durable Object 使用事务检查版本号，整批操作只写入一次；重复操作 ID 支持在响应丢失后重试。每次请求最多 512 KB，最多 200 个标签和 10000 篇汇报归属。
+
+`GET /api/report-tags` 和 `PUT /api/report-tags` 都验证 Access JWT 的签名、签发者、应用 audience、有效期和邮箱。写入另外校验同源 Origin，并拒绝跨站请求。浏览器携带现有 Access 登录状态，不保存管理密码或 API 密钥。
+
+当前配置：
+
+- `ACCESS_ISSUER`：本站实际使用的 Cloudflare Access 团队域名。
+- `ACCESS_AUD`：本站 Access 应用 audience，从生产域名的 Access 登录重定向核实。
+- `TAG_EDITORS="*"`：所有通过本站 Access 登录的邮箱均可编辑，按 2026-09-07 用户要求设置。`*` 不代表允许匿名或任意未验证邮箱。
+
+如果更换 Access 应用，需要同步 issuer/audience，否则标签 API 会拒绝访问。如果之后需要限制编辑者，可将 `TAG_EDITORS` 改为逗号分隔的邮箱，其余已登录访问者只读。保留原有 Cloudflare Access 站点保护，包括 preview 域名；API 自身校验不能代替静态正文的访问保护。
+
+保存失败或冲突处理、导入导出和离线快照见 README。生产存储和仓库快照独立；需要最新离线分类时，应先从网页导出 JSON，再使用 `--tags-snapshot` 构建。
+
+实现依据：[Cloudflare Access JWT 验证](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/)、[SQLite Durable Objects 存储](https://developers.cloudflare.com/durable-objects/best-practices/access-durable-objects-storage/)。

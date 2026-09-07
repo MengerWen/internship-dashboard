@@ -90,7 +90,7 @@
     },
 
     parseHash() {
-      const clean = window.location.hash.replace(/^#\/?/, "");
+      const clean = window.location.hash.replace(/^#\/?/, "").split("?")[0];
       const [view, key, subview] = clean.split("/");
       if (view === "daily") return {view: "daily", key, subview};
       if (view === "showcase") return {view: "showcase", key};

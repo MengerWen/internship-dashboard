@@ -37,8 +37,9 @@ class RenderedPage:
 
 
 class Builder:
-    def __init__(self, offline: bool = False) -> None:
+    def __init__(self, offline: bool = False, tags_snapshot: Path | None = None) -> None:
         self.offline = offline
+        self.tags_snapshot = tags_snapshot or CONTENT_DIR / "report-tags.json"
         self.out_dir = OFFLINE_DIR if offline else DIST_DIR
         self.build_stamp = datetime.now(CN_TZ).strftime("%Y%m%d%H%M%S")
         self.warnings: list[str] = []
@@ -369,6 +370,7 @@ class Builder:
                 self.warnings.append(f"{orphan.relative_to(ROOT)} 缺少对应主日报,已跳过")
 
         seen_dates: set[str] = set()
+        seen_report_ids: set[str] = set()
         for path in primary_paths:
             try:
                 post = frontmatter.loads(path.read_text(encoding="utf-8"))
@@ -400,6 +402,10 @@ class Builder:
                 self.warnings.append(f"{path.relative_to(ROOT)} 日期 {date_key} 重复,已跳过")
                 continue
             seen_dates.add(date_key)
+            report_id = str(meta.get("report_id") or date_key)
+            if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", report_id) or report_id in {"__proto__", "constructor", "prototype"} or report_id in seen_report_ids:
+                raise ValueError(f"{path.name}: report_id 无效或重复")
+            seen_report_ids.add(report_id)
 
             stage_id = str(meta.get("stage") or "unclassified")
             if stage_id not in self.stage_by_id:
@@ -494,6 +500,7 @@ class Builder:
                 )
             daily_entries.append(
                 {
+                    "id": report_id,
                     "date": date_key,
                     "title": title,
                     "stage": stage_id,
@@ -515,12 +522,16 @@ class Builder:
         return daily_entries
 
     def manifest(self, stage_entries: list[dict[str, Any]], daily_entries: list[dict[str, Any]]) -> dict[str, Any]:
+        report_tags = self.read_json(self.tags_snapshot)
+        if report_tags.get("schemaVersion") != 1 or not isinstance(report_tags.get("tags"), list) or not isinstance(report_tags.get("assignments"), dict):
+            raise ValueError(f"标签快照格式不正确: {self.tags_snapshot}")
         data = {
             "built_at": datetime.now(CN_TZ).isoformat(timespec="seconds"),
             "site_title": self.config["site_title"],
             "stages": self.config["stages"],
             "showcase": stage_entries,
             "daily": daily_entries,
+            "report_tags": report_tags,
         }
         self.write_text(
             self.out_dir / "manifest.json",
@@ -778,7 +789,7 @@ class Builder:
                 )
         payload = (
             '<script type="application/json" id="inline-manifest">'
-            + json.dumps(manifest, ensure_ascii=False)
+            + json.dumps(manifest, ensure_ascii=False).replace("</", "<\\/")
             + "</script>\n"
             + "\n".join(templates)
         )
@@ -878,9 +889,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Build internship dashboard.")
     parser.add_argument("--offline", action="store_true", help="build dist-offline for file:// use")
     parser.add_argument("--serve", action="store_true", help="build dist and serve locally")
+    parser.add_argument("--tags-snapshot", type=Path, help="use an exported report-tags JSON snapshot, including for offline builds")
     args = parser.parse_args()
 
-    builder = Builder(offline=args.offline)
+    builder = Builder(offline=args.offline, tags_snapshot=args.tags_snapshot)
     builder.build()
     if args.serve:
         serve()

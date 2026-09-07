@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/base.css?v=20260811">
   <link rel="stylesheet" href="css/showcase.css?v=20260811">
   <link rel="stylesheet" href="css/daily.css?v=20260811">
+  <link rel="stylesheet" href="css/report-tags.css?v=20260907">
 </head>
 <body>
   <!-- INLINE_DATA -->
@@ -53,6 +54,7 @@
     <section id="view-daily" class="view daily-view" aria-labelledby="tab-daily">
       <article class="daily-document">
         <div id="daily-meta" class="daily-meta"></div>
+        <div id="daily-report-tags" class="daily-report-tags" aria-label="当前汇报标签"></div>
         <div class="daily-local-tabs" role="tablist" aria-label="日报局部视图">
           <button id="daily-doc-tab" class="daily-local-tab is-active" type="button" role="tab" aria-selected="true">文档</button>
           <button id="daily-show-tab" class="daily-local-tab" type="button" role="tab" aria-selected="false">展示</button>
@@ -72,11 +74,12 @@
         </div>
       </article>
       <aside class="timeline-wrap">
-        <div class="timeline-heading">时间轴</div>
+        <div id="report-tag-toolbar" class="report-tag-toolbar"></div>
         <div id="daily-timeline" class="daily-timeline"></div>
       </aside>
     </section>
   </main>
+  <dialog id="tag-manager" class="tag-manager" aria-labelledby="tag-manager-title"></dialog>
 
   <dialog id="search-dialog" class="search-dialog" aria-label="全文搜索">
     <div class="search-panel">
@@ -102,9 +105,11 @@
   <script defer src="vendor/mathjax/tex-svg.js?v=20260708"></script>
   <script defer src="vendor/mermaid/mermaid.min.js?v=20260713"></script>
   <script defer src="js/content-enhance.js?v=20260811"></script>
-  <script src="js/router.js?v=20260811"></script>
+  <script src="js/tag-model.js?v=20260907"></script>
+  <script src="js/report-tags.js?v=20260907"></script>
+  <script src="js/router.js?v=20260907"></script>
   <script src="js/showcase.js?v=20260811"></script>
-  <script src="js/daily.js?v=20260811"></script>
+  <script src="js/daily.js?v=20260907"></script>
   <script src="js/search.js?v=20260811"></script>
 </body>
 </html>

@@ -34,6 +34,7 @@
       this.contentEl.addEventListener("content-section-toggle", (event) => {
         this.syncTocEntry(event.detail?.section, event.detail?.expanded);
       });
+      await window.ReportTagsUI.init(this);
       this.renderTimeline();
       this.bind();
     },
@@ -41,7 +42,17 @@
     renderTimeline() {
       this.timelineEl.innerHTML = "";
       let month = "";
-      this.manifest.daily.forEach((item) => {
+      const tagUI = window.ReportTagsUI;
+      if (tagUI.collapsed) {
+        this.timelineEl.innerHTML = '<p class="tag-empty">列表已收起，点击汇报一览或标签展开。</p>';
+        return;
+      }
+      const items = tagUI.items();
+      if (!items.length) {
+        this.timelineEl.innerHTML = `<p class="tag-empty">${tagUI.query ? "没有匹配的搜索结果" : "该标签暂无汇报"}</p>`;
+        return;
+      }
+      items.forEach((item) => {
         const itemMonth = item.date.slice(0, 7);
         if (itemMonth !== month) {
           month = itemMonth;
@@ -64,11 +75,12 @@
           <span>
             <span class="timeline-date">${item.date}</span>
             <span class="timeline-title">${escapeHtml(item.title)}${item.has_show ? '<span class="show-badge" title="当天有展示版">◆</span>' : ""}</span>
+            <span class="timeline-report-tags">${tagUI.chips(item)}</span>
             <span class="timeline-summary">${escapeHtml(summary)}<br><span>发布于 ${escapeHtml(published)}</span></span>
           </span>
         `;
         button.addEventListener("click", () => {
-          window.location.hash = `#/daily/${item.date}`;
+          window.location.hash = tagUI.route(item.date);
         });
         this.timelineEl.appendChild(button);
       });
@@ -104,6 +116,8 @@
     },
 
     async show(date, subview) {
+      window.ReportTagsUI.readURL();
+      window.ReportTagsUI.render();
       if (!this.manifest.daily.length) {
         this.contentEl.innerHTML = "<p>暂无日报。</p>";
         return;
@@ -128,7 +142,7 @@
       }
       const suffix = this.currentMode === "show" ? "/show" : "";
       if (date !== item.date || subview !== (this.currentMode === "show" ? "show" : undefined)) {
-        window.history.replaceState(null, "", `#/daily/${item.date}${suffix}`);
+        window.history.replaceState(null, "", `#/daily/${item.date}${suffix}${window.ReportTagsUI.suffix()}`);
       }
     },
 
@@ -143,6 +157,7 @@
         <span class="meta-time">${escapeHtml(this.timeMeta(item))}</span>
         ${this.renderDownloads(item)}
       `;
+      window.ReportTagsUI.renderCurrent(item);
     },
 
     renderDownloads(item) {
@@ -301,8 +316,11 @@
     updateNav() {
       const prev = document.getElementById("daily-prev");
       const next = document.getElementById("daily-next");
-      prev.disabled = this.currentIndex >= this.manifest.daily.length - 1;
-      next.disabled = this.currentIndex <= 0;
+      const items = window.ReportTagsUI.items();
+      const current = this.manifest.daily[this.currentIndex];
+      const index = items.findIndex((item) => item.date === current?.date);
+      prev.disabled = index < 0 || index >= items.length - 1;
+      next.disabled = index <= 0;
     },
 
     async switchMode(mode, updateHash) {
@@ -330,7 +348,7 @@
         await this.renderShow(item);
       }
       if (updateHash) {
-        window.location.hash = `#/daily/${item.date}${mode === "show" ? "/show" : ""}`;
+        window.location.hash = window.ReportTagsUI.route(item.date, mode);
       }
     },
 
@@ -400,8 +418,10 @@
     },
 
     goRelative(delta) {
-      const target = this.manifest.daily[this.currentIndex + delta];
-      if (target) window.location.hash = `#/daily/${target.date}`;
+      const items = window.ReportTagsUI.items();
+      const index = items.findIndex((item) => item.date === this.manifest.daily[this.currentIndex]?.date);
+      const target = index >= 0 ? items[index + delta] : null;
+      if (target) window.location.hash = window.ReportTagsUI.route(target.date);
     },
 
     async toggleShowFullscreen() {
