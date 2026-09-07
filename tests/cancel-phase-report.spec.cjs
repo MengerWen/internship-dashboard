@@ -1,0 +1,74 @@
+const { test, expect } = require('@playwright/test');
+const path = require('path');
+const { pathToFileURL } = require('url');
+const offline = pathToFileURL(path.resolve(__dirname, '../content/daily/2026-09-06.html')).href;
+
+test('offline report supports evidence, factor exploration, interval changes and export', async ({ page }) => {
+  const errors = [], network = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.route(/^https?:/, route => { network.push(route.request().url()); return route.abort(); });
+  await page.goto(offline);
+  await expect(page.locator('h1')).toContainText('固定的等待节奏');
+  await expect(page.locator('#factor-list .factor-item')).toHaveCount(24);
+  await expect(page.locator('#pre-periods tr')).toHaveCount(3);
+  await expect(page.locator('#ranking tbody tr')).toHaveCount(24);
+  await expect(page.locator('#report-validation')).toContainText('1,212'.replace(',', ''));
+  await page.screenshot({ path: 'test-results/cancel-phase-desktop.png' });
+  await page.selectOption('#family-filter', '7');
+  await expect(page.locator('#factor-list .factor-item')).toHaveCount(2);
+  await page.locator('[data-id="F24"]').click();
+  await expect(page.locator('#detail-id')).toContainText('F24 / cph07');
+  await page.selectOption('#detail-period', '2026Q2');
+  await expect(page.locator('#group-period-label')).toHaveText('2026Q2');
+  const groups = await page.locator('#group-counts tr').count();
+  expect(groups).toBe(10);
+  const plotted = await page.locator('#group-chart svg').getAttribute('aria-label');
+  expect(plotted).toContain('F24');
+  const download = page.waitForEvent('download');
+  await page.click('#download-groups');
+  expect((await download).suggestedFilename()).toBe('F24-2026Q2-deciles.csv');
+  await page.click('#reset-filters');
+  await page.fill('#factor-search', 'cph03');
+  await expect(page.locator('#factor-list .factor-item')).toHaveCount(4);
+  await page.fill('#factor-search', 'no-such-factor');
+  await expect(page.locator('#factor-count')).toHaveText('0 / 24 列');
+  await page.click('#reset-filters');
+  await page.selectOption('#demo-case', 'half');
+  await page.selectOption('#demo-period', '1000');
+  await expect(page.locator('#demo-result')).toContainText('620ms');
+  await page.selectOption('#demo-period', '500');
+  await expect(page.locator('#demo-result')).toHaveText('相位：120ms、120ms、120ms');
+  await page.locator('[data-figure="overview"]').click();
+  await expect(page.locator('#lightbox')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#lightbox')).not.toBeVisible();
+  const loaded = await page.evaluate(async () => {
+    const figs = JSON.parse(document.getElementById('figure-data').textContent);
+    return Promise.all(Object.values(figs).map(src => new Promise(resolve => {
+      const img = new Image(); img.onload = () => resolve(img.naturalWidth > 0);
+      img.onerror = () => resolve(false); img.src = 'data:image/webp;base64,' + src;
+    })));
+  });
+  expect(loaded.length).toBe(78);
+  expect(loaded.every(Boolean)).toBe(true);
+  expect(network).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
+test('mobile layout and web companion preserve readable content and local figures', async ({ page }) => {
+  const errors = [], failed = [];
+  page.on('pageerror', e => errors.push(e.message));
+  page.on('response', r => { if (r.status() >= 400 && !r.url().endsWith('favicon.ico')) failed.push(r.url()); });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('http://127.0.0.1:8766/content/daily/2026-09-06.show.html#factor-F01');
+  await expect(page.locator('#detail-id')).toContainText('F01');
+  await expect(page.locator('#detail-daily')).toBeVisible();
+  expect(await page.locator('#detail-daily').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+  expect(overflow).toBe(false);
+  await page.locator('#factor-detail').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: 'test-results/cancel-phase-mobile-detail.png' });
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  await page.screenshot({ path: 'test-results/cancel-phase-mobile.png' });
+  expect(errors).toEqual([]); expect(failed).toEqual([]);
+});
