@@ -12,9 +12,22 @@ spec = importlib.util.spec_from_file_location('cancel_report', ROOT / 'tools/bui
 report = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(report)
 from cancel_phase_diagnostics import average_ranks, correlation, fit_ols
+from cancel_phase_dispersion import daily_group_dispersion, nw_mean_se
 
 
 class ReportChecks(unittest.TestCase):
+    def test_daily_variance_decomposition_separates_known_group_structure(self):
+        x = np.arange(100)
+        y = x//10 + np.tile([-1, 1], 50)
+        means, variances, within, between, total = daily_group_dispersion(x, y)
+        np.testing.assert_allclose(means, np.arange(10))
+        np.testing.assert_allclose(variances, 1)
+        self.assertAlmostEqual(within, 1)
+        self.assertAlmostEqual(between, 8.25)
+        self.assertAlmostEqual(total, 9.25)
+
+    def test_newey_west_se_uses_the_daily_sequence(self):
+        self.assertAlmostEqual(nw_mean_se([1, 2, 3, 4]), .625)
     def test_average_ranks_handle_ties_without_using_input_order(self):
         np.testing.assert_array_equal(average_ranks([7, 1, 7, 4, 1]), [4.5, 1.5, 4.5, 3, 1.5])
         self.assertAlmostEqual(correlation([1, 2, 3], [6, 4, 2]), -1)
@@ -65,6 +78,12 @@ class ReportChecks(unittest.TestCase):
                 self.assertEqual(sum(stats['group_counts']), stats['paired'], (factor['id'], period))
                 self.assertLessEqual(stats['paired'], stats['finite'])
                 self.assertLessEqual(stats['finite'], stats['rows'])
+                dispersion = stats['dispersion']
+                self.assertAlmostEqual(dispersion['within_variance_fraction']+dispersion['between_variance_fraction'],1)
+                self.assertGreaterEqual(dispersion['within_variance_fraction'],0)
+                self.assertLessEqual(dispersion['within_variance_fraction'],1)
+                np.testing.assert_allclose((np.array(dispersion['ci95_low_bps'])+dispersion['ci95_high_bps'])/2,stats['groups_bps'],atol=1e-10)
+                self.assertAlmostEqual(stats['spread_bps']/dispersion['spread_nw_se_bps'],stats['spread_t_nw'])
                 g = stats['diagnosis_groups']
                 np.testing.assert_allclose(g['mean_bps'], stats['groups_bps'], atol=1e-10)
                 np.testing.assert_allclose(np.array(g['winsor_bps'])+g['tail_bps'], g['mean_bps'], atol=1e-10)

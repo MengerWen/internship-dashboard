@@ -335,8 +335,12 @@ def render():
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--render-only',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);mode=parser.add_mutually_exclusive_group()
+    mode.add_argument('--render-only',action='store_true');mode.add_argument('--dispersion-only',action='store_true');args=parser.parse_args()
     ASSETS.mkdir(parents=True,exist_ok=True)
     if not args.render_only:
-        configure_plots();extract()
+        configure_plots()
+        if not args.dispersion_only: extract()
+        from cancel_phase_dispersion import enrich_report
+        enrich_report(RAW,ASSETS,save_fig)
     render()
