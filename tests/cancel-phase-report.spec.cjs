@@ -19,6 +19,7 @@ test('offline report supports evidence, factor exploration, interval changes and
   await page.locator('[data-id="F24"]').click();
   await expect(page.locator('#detail-id')).toContainText('F24 / cph07');
   await page.selectOption('#detail-period', '2026Q2');
+  await page.click('#tab-groups');
   await expect(page.locator('#group-period-label')).toHaveText('2026Q2');
   const groups = await page.locator('#group-counts tr').count();
   expect(groups).toBe(10);
@@ -49,7 +50,7 @@ test('offline report supports evidence, factor exploration, interval changes and
       img.onerror = () => resolve(false); img.src = 'data:image/webp;base64,' + src;
     })));
   });
-  expect(loaded.length).toBe(78);
+  expect(loaded.length).toBe(102);
   expect(loaded.every(Boolean)).toBe(true);
   expect(network).toEqual([]);
   expect(errors).toEqual([]);
@@ -68,7 +69,39 @@ test('mobile layout and web companion preserve readable content and local figure
   expect(overflow).toBe(false);
   await page.locator('#factor-detail').scrollIntoViewIfNeeded();
   await page.screenshot({ path: 'test-results/cancel-phase-mobile-detail.png' });
+  await page.click('#tab-scatter');
+  await expect(page.locator('#pane-scatter')).toBeVisible();
+  await expect(page.locator('#pane-daily')).not.toBeVisible();
+  await expect(page.locator('#ols-equation')).toContainText('因子原值');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
   await page.screenshot({ path: 'test-results/cancel-phase-mobile.png' });
   expect(errors).toEqual([]); expect(failed).toEqual([]);
+});
+
+test('detail navigation exposes one panel and preserves the selected topic across factors', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.goto(offline + '#factor-F22');
+  await expect(page.locator('.detail-pane:visible')).toHaveCount(1);
+  await expect(page.locator('#cumulative-reading')).toContainText('-5.620478');
+  await page.locator('#tab-daily').focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('#tab-monthly')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#pane-monthly')).toBeVisible();
+  await page.click('#tab-scatter');
+  await expect(page.locator('#ols-metrics')).toContainText('1,705,782');
+  await expect(page.locator('#ols-metrics')).toContainText('散点绘制全部 1,705,782 个真实股票日');
+  await page.locator('#tab-scatter').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: 'test-results/cancel-phase-desktop-tabs.png' });
+  await page.locator('[data-id="F01"]').click();
+  await expect(page.locator('#pane-scatter')).toBeVisible();
+  await expect(page.locator('#detail-scatter')).toHaveAttribute('src', /^data:image\/webp/);
+  const download = page.waitForEvent('download');
+  await page.click('#download-ols');
+  expect((await download).suggestedFilename()).toBe('F01-full-ols.json');
+  await page.click('#tab-groups');
+  await expect(page.locator('#diagnosis-groups tr')).toHaveCount(10);
+  await expect(page.locator('.detail-pane:visible')).toHaveCount(1);
+  expect(errors).toEqual([]);
 });

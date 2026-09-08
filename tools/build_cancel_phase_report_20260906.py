@@ -10,6 +10,9 @@ import io
 import json
 from pathlib import Path
 import re
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from cancel_phase_diagnostics import diagnose_day, fit_ols
 
 import numpy as np
 import pandas as pd
@@ -133,12 +136,20 @@ def extract():
         kernel = re.search(r'__kernel_(.*?)__den_', column)[1]
         alias = f'{fid} · {FAMILY_NAMES[family-1]} · T{period} / ' + ('20−50' if kernel.startswith('sharp') else kernel.removeprefix('heat_').removesuffix('ms'))
         means, counts, finite_counts, zero_counts, row_counts = [], [], [], [], []
+        diagnoses = []
+        ds = daily[daily.formal_column.eq(column)].set_index('date').loc[dates]
         for date in dates:
             day = byday[date]
             values = day[column].to_numpy()
             finite_counts.append(int(np.isfinite(values).sum()))
             zero_counts.append(int((values == 0).sum()))
             row_counts.append(len(day))
+            diagnosis = diagnose_day(values, day[LABEL].to_numpy())
+            stored = ds.loc[date]
+            assert diagnosis['n'] == stored.n, (fid, date, '样本数')
+            assert np.isclose(diagnosis['ic'], stored.pearson_ic, atol=1e-12, rtol=0), (fid, date, 'IC')
+            assert np.isclose(diagnosis['rank'], stored.rank_ic, atol=1e-12, rtol=0), (fid, date, 'Rank IC')
+            diagnoses.append(diagnosis)
             mu, n = daily_deciles(day[column], day[LABEL])
             expected = spreads.loc[(date, column)]
             difference = mu[9] - mu[0]
@@ -167,18 +178,25 @@ def extract():
                 'group_days': np.isfinite(means[mask]).sum(axis=0),
                 'group_counts': counts[mask].sum(axis=0),
                 'spread_bps': np.nanmean(spread)*10000, 'spread_t_nw': nw_t(spread),
+                'diagnosis_groups': {k: np.nanmean(np.array([d['groups'][k] for d in diagnoses])[mask], axis=0)
+                                     for k in diagnoses[0]['groups']},
+                'rank_x_return': float(np.mean([d['rank_x_return'] for d,m in zip(diagnoses,mask) if m])),
+                'negative_spread_days': int((spread < 0).sum()),
+                'positive_rank_negative_spread_days': int(((ds.rank_ic.to_numpy()[mask]>0)&(spread<0)).sum()),
             }
         finite = panel[column].to_numpy(); finite = finite[np.isfinite(finite)]
         q = np.quantile(finite, [0, .005, .01, .25, .5, .75, .99, .995, 1])
-        fig, axes = plt.subplots(2, 1, figsize=(10, 5), sharex=True, gridspec_kw={'height_ratios': [2, 1]})
+        fig, axes = plt.subplots(2, 2, figsize=(12, 7), sharex=True)
         xdates = pd.to_datetime(dates); r = ds.rank_ic.to_numpy()
-        axes[0].plot(xdates, r, lw=.65, color='#a7c9c4', label='每日 Rank IC')
-        axes[0].plot(xdates, pd.Series(r).rolling(20, min_periods=10).mean(), lw=1.3, color=TEAL, label='20 日均值（至少 10 日）')
-        axes[0].axhline(0, color=INK, lw=.5); axes[0].legend(loc='upper right', ncol=2, fontsize=9)
-        axes[0].set_ylabel('Rank IC'); axes[0].set_title(f'{fid} · 每日横截面相关 · 全部 601 日', loc='left')
-        axes[1].plot(xdates, np.nancumsum(r), color=TEAL, lw=1.3)
-        axes[1].axhline(0, color=INK, lw=.5); axes[1].set_ylabel('累计 Rank IC')
-        axes[1].set_xlabel('交易日期 · 累计 IC 为相关系数之和，不是资金净值')
+        pearson = ds.pearson_ic.to_numpy()
+        for col, (series, name, color) in enumerate([(pearson,'Pearson IC',RUST),(r,'Rank IC',TEAL)]):
+            axes[0,col].plot(xdates, series, lw=.6, color=color, alpha=.3, label='每日相关')
+            axes[0,col].plot(xdates, pd.Series(series).rolling(20,min_periods=10).mean(),lw=1.4,color=color,label='20 日均值（至少 10 日）')
+            axes[0,col].set_title(f'{fid} · {name}',loc='left');axes[0,col].legend(fontsize=8)
+            axes[1,col].plot(xdates,np.nancumsum(series),color=color,lw=1.4)
+            axes[1,col].set_title('累计 '+name,loc='left');axes[1,col].set_xlabel('交易日期 · 相关系数之和，不是资金净值')
+            for row in (0,1):
+                axes[row,col].axhline(0,color=INK,lw=.5);axes[row,col].tick_params(axis='x',labelrotation=25)
         fig.tight_layout(); save_fig(fig, fid+'-daily')
         monthly = ds.groupby(ds.index.str[:7]).rank_ic.mean()
         fig, ax = plt.subplots(figsize=(10, 3.6)); ax.bar(np.arange(len(monthly)), monthly, color=[TEAL if a>=0 else RUST for a in monthly])
@@ -190,10 +208,30 @@ def extract():
         ax.set_ylabel('股票日数'); ax.set_xlabel('因子原值 · 横轴只展示 P0.5—P99.5，尾部数单列')
         ax.set_title(f'{fid} · 全区间分布；未把负数截为零', loc='left'); fig.tight_layout()
         save_fig(fig, fid+'-distribution')
+        pair = panel[[column,LABEL]].replace([np.inf,-np.inf],np.nan).dropna()
+        vx, vy = pair[column].to_numpy(), pair[LABEL].to_numpy()
+        ols = fit_ols(vx,vy)
+        fig,axes = plt.subplots(1,2,figsize=(12,5))
+        for ax, central in zip(axes,[False,True]):
+            ax.scatter(vx,vy*10000,s=.4,alpha=.035,color=TEAL,edgecolors='none',rasterized=True)
+            lo,hi=ols['x_quantiles'][[1,3] if central else [0,4]]
+            xx=np.array([lo,hi]);ax.plot(xx,(ols['intercept']+ols['slope']*xx)*10000,color=RUST,lw=2,label='完整样本 OLS')
+            ax.set_xlim(lo,hi)
+            if central: ax.set_ylim(ols['y_quantiles'][1]*10000,ols['y_quantiles'][3]*10000)
+            else: ax.set_ylim(ols['y_quantiles'][0]*10000,ols['y_quantiles'][4]*10000)
+            ax.set_xlabel('因子原值');ax.set_ylabel('同日收益（bp）')
+            ax.set_title('中央 P0.5—P99.5 视野' if central else '完整数值范围',loc='left');ax.legend(fontsize=9,loc='upper right')
+        fig.suptitle(f'{fid} · 全量真实散点与 OLS：{len(pair):,} 个成对有效股票日',fontsize=11)
+        fig.tight_layout();save_fig(fig,fid+'-scatter')
+        audit = {'max_ic_abs_error':float(np.max(abs(np.array([d['ic'] for d in diagnoses])-pearson))),
+                 'max_rank_abs_error':float(np.max(abs(np.array([d['rank'] for d in diagnoses])-r))),
+                 'rounded_rank_mean':float(np.mean([d['rounded_rank'] for d in diagnoses])),
+                 'daily_ic_sum':float(np.sum(pearson)), 'daily_rank_sum':float(np.sum(r)),
+                 'scatter_point_count':len(pair),'ols':ols}
         factors.append({'id': fid, 'column': column, 'family': family, 'period': period, 'kernel': kernel,
                         'alias': alias, 'stats': stats, 'quantiles': q,
                         'left_tail': int((finite < q[1]).sum()), 'right_tail': int((finite > q[-2]).sum()),
-                        'daily_rank': r, 'daily_n': ds.n.to_numpy()})
+                        'daily_rank': r, 'daily_ic':pearson, 'daily_n': ds.n.to_numpy(), 'diagnosis':audit})
         print(f'Aggregated and plotted {fid}/F24', flush=True)
     for left, right in [(0, 16), (1, 17), (2, 18), (3, 19), (20, 22), (21, 23)]:
         a, b = panel[columns[left]].to_numpy(), panel[columns[right]].to_numpy()
@@ -277,7 +315,7 @@ def render():
     def dimensions(match):
         tag = match.group(0)
         name = re.search(r'data-plot="([^"]+)"', tag)
-        detail = re.search(r'id="detail-(daily|monthly|distribution)"', tag)
+        detail = re.search(r'id="detail-(daily|monthly|distribution|scatter)"', tag)
         stem = name[1] if name else ('F01-' + detail[1] if detail else None)
         if stem:
             with Image.open(ASSETS / (stem + '.webp')) as picture:
