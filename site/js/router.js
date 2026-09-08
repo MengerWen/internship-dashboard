@@ -64,6 +64,20 @@
       const cleaned = String(html).replace(/<script\b[^>]*\bsrc=["'][^"']*mathjax[^"']*["'][^>]*>\s*<\/script>/gi, "");
       const inject = `
         <script>
+          document.addEventListener('click', (event) => {
+            if (event.defaultPrevented || event.button !== 0 ||
+                event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+            const link = event.target.closest?.('a[href]');
+            if (!link || link.hasAttribute('download')) return;
+            const target = link.getAttribute('target');
+            if (target && target.toLowerCase() !== '_self') return;
+            const href = link.getAttribute('href');
+            if (!href.startsWith('#')) return;
+            // srcdoc resolves href="#section" against the dashboard URL.
+            // Set this frame's fragment to retain native scrolling and hashchange.
+            event.preventDefault();
+            window.location.href = window.location.href.split('#')[0] + href;
+          });
           window.MathJax = {
             tex: {
               inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],

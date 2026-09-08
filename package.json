@@ -4,6 +4,7 @@
   "scripts": {
     "test": "node --test tests/tag-model.test.cjs tests/tag-api.test.mjs",
     "test:browser": "playwright test -c tests/playwright.config.cjs",
+    "test:browser:embedded": "playwright test -c tests/isolated-html.config.cjs",
     "dev": "wrangler dev --ip 127.0.0.1",
     "deploy": "wrangler deploy"
   },
