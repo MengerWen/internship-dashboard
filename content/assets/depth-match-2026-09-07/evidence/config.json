@@ -1,0 +1,51 @@
+{
+  "benchmark": {
+    "date": "2026-04-01",
+    "runs_required": 1,
+    "wall_seconds_limit": 30.0
+  },
+  "date_range": {
+    "end": "2026-06-30",
+    "expected_trading_days": 601,
+    "start": "2024-01-01"
+  },
+  "default_parameter_approval": "awaiting_human_review",
+  "denominator": "all_valid_deduplicated_new_orders",
+  "directions": [
+    "buy",
+    "sell"
+  ],
+  "factor_count": 24,
+  "missing_policy": "observed_evidence_over_all_orders_side_all_unknown_nan",
+  "parameters": {
+    "depth_lag_ms": 1000,
+    "excess_cancel_ms": 100,
+    "persistence_bin_ms": 60000,
+    "quantity_grid": 100,
+    "recency_half_life_ms": 60000,
+    "repeat_gap_ms": 1000,
+    "soft_under_tolerance": 0.01
+  },
+  "runtime": {
+    "memory_max": "100G",
+    "parser_backend": "pyarrow",
+    "parser_threads_per_query": 1,
+    "prefetch_queue_batches": 2,
+    "replay_batch_codes": 32,
+    "replay_workers": 16,
+    "stream_query_shards_by_table": {
+      "cancel": 1,
+      "order": 4,
+      "trade": 3
+    },
+    "table_parallelism": 3,
+    "watchdog_check_interval_seconds": 30,
+    "watchdog_timeout_seconds": 900,
+    "worker_internal_threads": 1
+  },
+  "schema_version": "open5m-depth-match-v1",
+  "window": {
+    "end_exclusive": "09:35:00",
+    "start": "09:30:00"
+  }
+}

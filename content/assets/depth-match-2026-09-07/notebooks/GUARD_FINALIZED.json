@@ -1,0 +1,193 @@
+{
+  "guard": {
+    "argv": [
+      "python",
+      "/tmp/sirui-wangly/open5m-depth-match/20260908T100452Z-full-history-i01-147ab55/verify_notebooks.py"
+    ],
+    "cleanup_elapsed_seconds": 0.0,
+    "cpu_quota": null,
+    "end_ts": "2026-09-08T12:51:19.505522Z",
+    "exit_code": 0,
+    "git_revision": "147ab55c38939f3754ced42576c1b82c0b2d60f0",
+    "guard_error": null,
+    "hostname": "dataserver-2",
+    "killed_by_guard": false,
+    "lock_name": "heavy_task",
+    "memory_high": null,
+    "memory_max": "100G",
+    "memory_swap_max": "0",
+    "mode": "systemd",
+    "name": "dm-notebooks-1788871724",
+    "parent_slice": {
+      "events_delta": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      },
+      "events_end": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      },
+      "events_source": "memory.events.local",
+      "events_start": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      },
+      "high": 128849018880,
+      "max": 137438953472,
+      "path": "/sys/fs/cgroup/user.slice/user-1007.slice",
+      "peak_bytes": 448151552
+    },
+    "peak_source": "memory.peak",
+    "psi_memory": {
+      "end": "some avg10=0.00 avg60=0.00 avg300=0.00 total=33988581510\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=33748532248",
+      "start": "some avg10=0.00 avg60=0.00 avg300=0.00 total=33988581508\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=33748532247"
+    },
+    "resource_evidence": {
+      "average_effective_cores": {
+        "source": "cgroup_v2",
+        "status": "observed"
+      },
+      "cpu_system_seconds": {
+        "source": "cgroup_v2",
+        "status": "observed"
+      },
+      "cpu_throttled_seconds": {
+        "alternative": "root_cgroup_upper_bound",
+        "source": "cgroup_v2_root_cpu.stat",
+        "status": "observed_upper_bound"
+      },
+      "cpu_usage_seconds": {
+        "source": "cgroup_v2",
+        "status": "observed"
+      },
+      "cpu_user_seconds": {
+        "source": "cgroup_v2",
+        "status": "observed"
+      },
+      "io_read_bytes": {
+        "source": "procfs_cgroup_processes",
+        "status": "observed"
+      },
+      "io_read_operations": {
+        "source": "procfs_cgroup_processes",
+        "status": "observed"
+      },
+      "io_write_bytes": {
+        "source": "procfs_cgroup_processes",
+        "status": "observed"
+      },
+      "io_write_operations": {
+        "source": "procfs_cgroup_processes",
+        "status": "observed"
+      },
+      "memory_current_end_bytes": {
+        "source": "cgroup_v2",
+        "status": "observed"
+      },
+      "memory_peak_bytes": {
+        "source": "cgroup_v2",
+        "status": "observed"
+      },
+      "swap_peak_bytes": {
+        "source": "cgroup_v2",
+        "status": "observed"
+      },
+      "wall_seconds": {
+        "source": "guard_monotonic_clock",
+        "status": "observed"
+      }
+    },
+    "resource_usage": {
+      "average_effective_cores": 0.12770502812440404,
+      "cpu_system_seconds": 4.170607,
+      "cpu_throttled_seconds": 0.0,
+      "cpu_usage_seconds": 19.670284,
+      "cpu_user_seconds": 15.499677,
+      "io_read_bytes": 4231168,
+      "io_read_operations": 414957,
+      "io_write_bytes": 8385294,
+      "io_write_operations": 17993,
+      "memory_current_end_bytes": 133795840,
+      "memory_peak_bytes": 317009920,
+      "swap_peak_bytes": 0,
+      "wall_seconds": 154.02904872968793
+    },
+    "scope": {
+      "events_delta": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      },
+      "events_end": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      },
+      "events_source": "memory.events",
+      "events_start": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      }
+    },
+    "scope_cleanup_by_guard": false,
+    "scope_empty_after_cleanup": null,
+    "scope_kill_escalated": false,
+    "scope_memory_peak_bytes": 317009920,
+    "scope_unit": "guard-dm-notebooks-1788871724-3238ba79.scope",
+    "sentinel_exit_code": 0,
+    "start_ts": "2026-09-08T12:48:44.750789Z",
+    "termination_reason": null,
+    "watchdog": {
+      "check_interval_seconds": 30.0,
+      "cpu_progress": {
+        "enabled": true,
+        "last_observed_delta_usec": 4506377,
+        "marks": 5,
+        "min_delta_usec": 1000000,
+        "usage_baseline_usec": 19171565
+      },
+      "enabled": true,
+      "idle_seconds": 1.0277909096330404,
+      "last_progress_source": "guard_log",
+      "last_progress_ts": "2026-09-08T12:51:18.462718Z",
+      "paths": [
+        "/tmp/sirui-wangly/open5m-depth-match/20260908T100452Z-full-history-i01-147ab55/progress/notebooks.json"
+      ],
+      "termination_reason": null,
+      "timeout_seconds": 900.0,
+      "trigger_ts": null,
+      "triggered": false
+    }
+  },
+  "scope_inactive": true,
+  "source": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/dm-notebooks-1788871724_20260908T124844Z_c2abb6a774054196bd03676612e5525e.json",
+  "source_sha256": "0fb20e4d24c35be6e6523c28c1cd927408349982bf6565f0943761b1d1b04650"
+}

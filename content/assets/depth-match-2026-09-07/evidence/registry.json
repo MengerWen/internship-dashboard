@@ -1,0 +1,669 @@
+{
+  "columns": [
+    "dm01_exact_buy",
+    "dm01_exact_sell",
+    "dm02_confirmed_buy",
+    "dm02_confirmed_sell",
+    "dm03_price_room_buy",
+    "dm03_price_room_sell",
+    "dm04_price_cap_buy",
+    "dm04_price_cap_sell",
+    "dm05_lot_floor_buy",
+    "dm05_lot_floor_sell",
+    "dm06_soft_under_buy",
+    "dm06_soft_under_sell",
+    "dm07_fresh_match_buy",
+    "dm07_fresh_match_sell",
+    "dm08_adaptive_repeat_buy",
+    "dm08_adaptive_repeat_sell",
+    "dm09_two_level_buy",
+    "dm09_two_level_sell",
+    "dm10_excess_cancel_buy",
+    "dm10_excess_cancel_sell",
+    "dm11_recent_buy",
+    "dm11_recent_sell",
+    "dm12_persistent_buy",
+    "dm12_persistent_sell"
+  ],
+  "denominator": "all_valid_deduplicated_new_orders",
+  "directions": [
+    "buy",
+    "sell"
+  ],
+  "factor_count": 24,
+  "formula_version": "dm-v1",
+  "missing_policy": "observed_evidence_over_all_orders_side_all_unknown_nan",
+  "parameters": {
+    "depth_lag_ms": 1000,
+    "excess_cancel_ms": 100,
+    "persistence_bin_ms": 60000,
+    "quantity_grid": 100,
+    "recency_half_life_ms": 60000,
+    "repeat_gap_ms": 1000,
+    "soft_under_tolerance": 0.01
+  },
+  "schema_version": "open5m-depth-match-v1",
+  "specs": [
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A and Q == D1",
+      "formula_version": "dm-v1",
+      "name": "dm01_exact",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "提交量精确匹配一档",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A and Q == D1",
+      "formula_version": "dm-v1",
+      "name": "dm01_exact",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "提交量精确匹配一档",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and E",
+      "formula_version": "dm-v1",
+      "name": "dm02_confirmed",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "initial_execution"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "执行确认的一档匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and E",
+      "formula_version": "dm-v1",
+      "name": "dm02_confirmed",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "initial_execution"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "执行确认的一档匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and R2",
+      "formula_version": "dm-v1",
+      "name": "dm03_price_room",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "second_price"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "价格允许第二档",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and R2",
+      "formula_version": "dm-v1",
+      "name": "dm03_price_room",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "second_price"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "价格允许第二档",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and B1",
+      "formula_version": "dm-v1",
+      "name": "dm04_price_cap",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "second_price"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "价格封顶第一档",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and B1",
+      "formula_version": "dm-v1",
+      "name": "dm04_price_cap",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "second_price"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "价格封顶第一档",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A and D1 >= 100 and Q == (D1 // 100) * 100",
+      "formula_version": "dm-v1",
+      "name": "dm05_lot_floor",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "百股网格匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A and D1 >= 100 and Q == (D1 // 100) * 100",
+      "formula_version": "dm-v1",
+      "name": "dm05_lot_floor",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "百股网格匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A * I(Q<=D1) * max(0, 1-(D1-Q)/(0.01*D1))",
+      "formula_version": "dm-v1",
+      "name": "dm06_soft_under",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "一档以下软匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A * I(Q<=D1) * max(0, 1-(D1-Q)/(0.01*D1))",
+      "formula_version": "dm-v1",
+      "name": "dm06_soft_under",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "一档以下软匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and D1_now != D1_lag and p1_now == p1_lag",
+      "formula_version": "dm-v1",
+      "name": "dm07_fresh_match",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "strict_lag"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "新深度匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and D1_now != D1_lag and p1_now == p1_lag",
+      "formula_version": "dm-v1",
+      "name": "dm07_fresh_match",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "strict_lag"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "新深度匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and adjacent_marketable_dm01 and gap<=1000ms and Q!=previous_Q",
+      "formula_version": "dm-v1",
+      "name": "dm08_adaptive_repeat",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "adjacent_order"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "相邻变数量匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 and adjacent_marketable_dm01 and gap<=1000ms and Q!=previous_Q",
+      "formula_version": "dm-v1",
+      "name": "dm08_adaptive_repeat",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "adjacent_order"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "相邻变数量匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A and R2 and D2>0 and Q == D1+D2",
+      "formula_version": "dm-v1",
+      "name": "dm09_two_level",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "second_depth"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "两档累计量匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "A and R2 and D2>0 and Q == D1+D2",
+      "formula_version": "dm-v1",
+      "name": "dm09_two_level",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "second_depth"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "两档累计量匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "Q>D1 and A and B1 and E and full_remainder_cancel<=100ms and no_passive_trade",
+      "formula_version": "dm-v1",
+      "name": "dm10_excess_cancel",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "initial_execution",
+        "remainder_cancel"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "超额提交后撤余量",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "Q>D1 and A and B1 and E and full_remainder_cancel<=100ms and no_passive_trade",
+      "formula_version": "dm-v1",
+      "name": "dm10_excess_cancel",
+      "observable_dependencies": [
+        "submit",
+        "book",
+        "initial_execution",
+        "remainder_cancel"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "超额提交后撤余量",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 * 2**(-(09:35-t_submit)/60s)",
+      "formula_version": "dm-v1",
+      "name": "dm11_recent",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "近期匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "dm01 * 2**(-(09:35-t_submit)/60s)",
+      "formula_version": "dm-v1",
+      "name": "dm11_recent",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "近期匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "C/N * (-sum(p_m*log(p_m))/log(5))",
+      "formula_version": "dm-v1",
+      "name": "dm12_persistent",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "buy",
+      "title": "持续匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    },
+    {
+      "denominator": "all_valid_deduplicated_new_orders",
+      "formula": "C/N * (-sum(p_m*log(p_m))/log(5))",
+      "formula_version": "dm-v1",
+      "name": "dm12_persistent",
+      "observable_dependencies": [
+        "submit",
+        "book"
+      ],
+      "parameters": {
+        "depth_lag_ms": 1000,
+        "excess_cancel_ms": 100,
+        "persistence_bin_ms": 60000,
+        "quantity_grid": 100,
+        "recency_half_life_ms": 60000,
+        "repeat_gap_ms": 1000,
+        "soft_under_tolerance": 0.01
+      },
+      "side": "sell",
+      "title": "持续匹配",
+      "window": {
+        "end_exclusive": "09:35:00",
+        "start": "09:30:00"
+      }
+    }
+  ],
+  "timezone": "Asia/Shanghai",
+  "window": {
+    "end_exclusive": "09:35:00",
+    "start": "09:30:00"
+  }
+}
