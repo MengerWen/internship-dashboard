@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 
 def main():
@@ -42,9 +43,17 @@ for side in ('buy','sell'):
   'execution':result,'result_sha256':hashlib.sha256(result_path.read_bytes()).hexdigest() if result else None}
 print(json.dumps(snapshots))
 '''.replace('RUN_ROOT', repr(args.run_root)).replace('REQUIRE_COMPLETE', repr(args.complete))
-    response = subprocess.run(['ssh', 'sirui-server-wangly', 'python3', '-'], input=query,
-                              text=True, encoding='utf-8', capture_output=True, check=True, timeout=60)
-    snapshots = json.loads(response.stdout)
+    for attempt in range(4):
+        try:
+            response = subprocess.run(['ssh', 'sirui-server-wangly', 'python3', '-'], input=query,
+                                      text=True, encoding='utf-8', capture_output=True, check=True, timeout=60)
+            snapshots = json.loads(response.stdout)
+            break
+        except (subprocess.SubprocessError, ValueError) as error:
+            if attempt == 3:
+                raise
+            print(f'Input inventory connection retry {attempt + 1}: {type(error).__name__}', flush=True)
+            time.sleep(10)
     for side, manifest in snapshots.items():
         directory = root / 'data/cancel-phase-2026-09-06/raw' / side
         directory.mkdir(parents=True, exist_ok=True)
