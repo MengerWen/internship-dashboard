@@ -183,13 +183,13 @@ test('all view exposes 72 accurate hierarchical Rank IC entries and numeric IC s
   await expect(page.locator('#factor-list .factor-family')).toHaveCount(7);
   await expect(page.locator('#factor-list .factor-time')).toHaveCount(14);
   await expect(page.locator('#factor-list .factor-item')).toHaveCount(72);
-  await page.selectOption('#nav-period','2026Q2');
+  await page.selectOption('#detail-period','2026Q2');
   const audit=await page.evaluate(()=>{
     const bundle=JSON.parse(document.getElementById('report-data').textContent);
     return [...document.querySelectorAll('#factor-list .factor-item')].every(button=>{
       const side=button.dataset.side,data=side==='total'?bundle:bundle.directions[side];
       const f=data.factors.find(f=>f.id===button.dataset.id),rank=f.stats['2026Q2'].rank;
-      return button.querySelector('.rank-value').textContent===(rank>0?'+':'')+rank.toFixed(6)
+      return button.querySelector('.ic-value').textContent===(f.stats['2026Q2'].ic>0?'+':'')+f.stats['2026Q2'].ic.toFixed(6) && button.querySelector('.rank-value').textContent===(rank>0?'+':'')+rank.toFixed(6)
         &&button.closest('.factor-family').dataset.family===String(f.family)
         &&button.closest('.factor-time').dataset.time===f.family+'-'+f.period;
     });
@@ -215,8 +215,10 @@ test('all view exposes 72 accurate hierarchical Rank IC entries and numeric IC s
   for(const side of ['total','buy','sell'])expect(csv.filter(line=>line.startsWith('"'+side+'",'))).toHaveLength(24);
   await page.locator('#factor-list [data-id="F03"][data-side="buy"]').click();
   await expect(page.locator('#detail-id')).toContainText('F03 / cph01 · Buy');
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(1);
+  await page.locator('.tree-title[data-kind="variant"][data-key="F03"]').click();
   await expect(page.locator('#factor-comparison tbody tr')).toHaveCount(3);
-  await expect(page.locator('.detail-stack .detail')).toHaveCount(3);
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(3);
   await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';document.getElementById('factor-comparison').scrollIntoView()});
   await page.screenshot({path:'test-results/cancel-phase-all-navigation.png'});
   expect(errors).toEqual([]);
@@ -225,11 +227,13 @@ test('all view exposes 72 accurate hierarchical Rank IC entries and numeric IC s
 test('all direction cards synchronize topics and keep companion exports and images attached to their side',async({page})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(offline+'?view=all&direction=sell#factor-F02');
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(1);
+  await page.locator('.tree-title[data-kind="variant"][data-key="F02"]').click();
   await page.selectOption('#detail-period','2025');
-  await expect(page.locator('#nav-period')).toHaveValue('2025');
+  await expect(page.locator('#detail-period')).toHaveValue('2025');
   for(const side of ['total','buy','sell']){
     const card=page.locator('.detail-stack .detail[data-side="'+side+'"]');
-    await expect(card.locator('[data-detail-key="detail-period"]')).toHaveValue('2025');
+    await expect(card.locator('[data-detail-key="detail-coverage"]')).toContainText('2025');
     await expect(card.locator('[data-detail-key="detail-id"]')).toContainText('F02');
   }
   for(const pane of ['daily','monthly','groups','scatter','distribution','definition']){
@@ -259,7 +263,7 @@ test('all direction cards synchronize topics and keep companion exports and imag
   await page.locator('.direction-select').first().selectOption('buy');
   await page.locator('.view-mode-select').first().selectOption('all');
   await expect(page.locator('#factor-list .factor-item')).toHaveCount(72);
-  await expect(page.locator('#detail-id')).toContainText('Buy');
+  await expect(page.locator('.detail-stack .detail[data-side="buy"]')).toHaveCount(1);
   await expect(page.locator('.detail-stack [data-detail-key="pane-scatter"]:visible')).toHaveCount(3);
   const duplicates=await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.length-new Set(ids).size});
   expect(duplicates).toBe(0);expect(errors).toEqual([]);
@@ -277,4 +281,68 @@ test('all view is readable on mobile and searchable by Chinese logic, ID and dir
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';document.querySelector('.factor-navigation').scrollIntoView()});
   await page.screenshot({path:'test-results/cancel-phase-all-mobile.png'});
+});
+
+test('navigation titles select exact scopes while arrows only expand and collapse',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(offline);
+  await expect(page.locator('#factor-controls #detail-period')).toHaveCount(1);
+  await expect(page.locator('#factor-controls #factor-sort')).toHaveCount(1);
+  await expect(page.locator('.detail-stack .period-select')).toHaveCount(0);
+  await page.locator('.factor-item[data-id="F03"][data-side="sell"]').click();
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(1);
+  await expect(page.locator('#detail-id')).toContainText('F03 / cph01 · Sell');
+  const family=page.locator('.factor-family[data-family="1"]');
+  await family.locator(':scope > summary .tree-toggle').click();
+  await expect(family).not.toHaveAttribute('open','');
+  await expect(page.locator('#detail-id')).toContainText('Sell');
+  await family.locator(':scope > summary .tree-title').click();
+  await expect(family).not.toHaveAttribute('open','');
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(12);
+  await family.locator(':scope > summary .tree-toggle').click();
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(12);
+  await page.locator('.tree-title[data-kind="time"][data-key="1-1000"]').click();
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(6);
+  await page.locator('.tree-title[data-kind="variant"][data-key="F04"]').click();
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(3);
+  await page.locator('.factor-item[data-id="F04"][data-side="buy"]').click();
+  await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(1);
+  await page.locator('.tree-title[data-kind="family"][data-key="1"]').click();
+  await page.selectOption('#detail-period','2026Q2');
+  for(const sort of ['ic','ic_abs','rank_value','rank']){
+    await page.selectOption('#factor-sort',sort);
+    const valid=await page.evaluate(sort=>{
+      const bundle=JSON.parse(document.getElementById('report-data').textContent);
+      const values=[...document.querySelectorAll('.detail-stack .detail')].map(card=>{
+        const data=card.dataset.side==='total'?bundle:bundle.directions[card.dataset.side];
+        const f=data.factors.find(f=>f.id===card.dataset.factor),v=f.stats['2026Q2'][sort.startsWith('ic')?'ic':'rank'];
+        return ['ic_abs','rank'].includes(sort)?Math.abs(v):v;
+      });return values.length===12&&values.every((v,i)=>!i||values[i-1]>=v);
+    },sort);expect(valid).toBe(true);
+  }
+  await page.click('#tab-scatter');
+  const card=page.locator('.detail-stack .detail[data-factor="F04"][data-side="buy"]');
+  const pending=page.waitForEvent('download');await card.locator('[data-detail-key="download-ols"]').click();
+  const download=await pending,ols=JSON.parse(require('fs').readFileSync(await download.path(),'utf8'));
+  expect(ols.factor).toBe('F04');expect(ols.direction).toBe('buy');
+  const ids=await page.locator('[id]').evaluateAll(nodes=>nodes.map(n=>n.id));expect(new Set(ids).size).toBe(ids.length);
+  expect(await page.locator('body').innerText()).not.toContain('Pearson IC');
+  await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';document.getElementById('factor-controls').scrollIntoView()});
+  await page.screenshot({path:'test-results/cancel-phase-scope-navigation.png'});
+  expect(errors).toEqual([]);
+});
+
+test('overview plots place total buy and sell side by side and support mobile horizontal scrolling',async({page})=>{
+  await page.goto('http://127.0.0.1:8766/content/daily/2026-09-06.show.html?view=all');
+  const row=page.locator('.direction-plot-row').first();
+  expect(await row.locator('figure').evaluateAll(nodes=>nodes.map(n=>n.dataset.side))).toEqual(['total','buy','sell']);
+  const boxes=await row.locator('figure').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width}}));
+  expect(boxes.every(b=>Math.abs(b.y-boxes[0].y)<1)).toBe(true);
+  expect(boxes[0].x+boxes[0].width<=boxes[1].x).toBe(true);expect(boxes[1].x+boxes[1].width<=boxes[2].x).toBe(true);
+  await row.scrollIntoViewIfNeeded();
+  await expect.poll(()=>row.locator('img').evaluateAll(imgs=>imgs.every(im=>im.complete&&im.naturalWidth>0))).toBe(true);
+  await row.screenshot({path:'test-results/cancel-phase-side-by-side.png'});
+  await row.locator('figure[data-side="sell"] button').click();await expect(page.locator('#lightbox-title')).toContainText('Sell');await page.keyboard.press('Escape');
+  await page.setViewportSize({width:390,height:844});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(await row.evaluate(el=>el.scrollWidth>el.clientWidth)).toBe(true);
 });

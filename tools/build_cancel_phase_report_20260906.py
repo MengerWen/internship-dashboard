@@ -99,6 +99,20 @@ def save_fig(fig, name):
     return name
 
 
+def draw_daily_figure(fid, dates, pearson, r):
+    fig, axes = plt.subplots(2, 2, figsize=(12, 7), sharex=True)
+    xdates = pd.to_datetime(dates)
+    for col, (series, name, color) in enumerate([(pearson,'IC',RUST),(r,'Rank IC',TEAL)]):
+        axes[0,col].plot(xdates, series, lw=.6, color=color, alpha=.3, label='每日相关')
+        axes[0,col].plot(xdates, pd.Series(series).rolling(20,min_periods=10).mean(),lw=1.4,color=color,label='20 日均值（至少 10 日）')
+        axes[0,col].set_title(f'{fid} · {name}',loc='left');axes[0,col].legend(fontsize=8)
+        axes[1,col].plot(xdates,np.nancumsum(series),color=color,lw=1.4)
+        axes[1,col].set_title('累计 '+name,loc='left');axes[1,col].set_xlabel('交易日期 · 相关系数之和，不是资金净值')
+        for row in (0,1):
+            axes[row,col].axhline(0,color=INK,lw=.5);axes[row,col].tick_params(axis='x',labelrotation=25)
+    fig.tight_layout(); save_fig(fig, fid+'-daily')
+
+
 def extract():
     manifest = json.loads((RAW / 'input-manifest.json').read_text())
     for f in manifest['files']:
@@ -190,18 +204,8 @@ def extract():
             }
         finite = panel[column].to_numpy(); finite = finite[np.isfinite(finite)]
         q = np.quantile(finite, [0, .005, .01, .25, .5, .75, .99, .995, 1])
-        fig, axes = plt.subplots(2, 2, figsize=(12, 7), sharex=True)
-        xdates = pd.to_datetime(dates); r = ds.rank_ic.to_numpy()
-        pearson = ds.pearson_ic.to_numpy()
-        for col, (series, name, color) in enumerate([(pearson,'Pearson IC',RUST),(r,'Rank IC',TEAL)]):
-            axes[0,col].plot(xdates, series, lw=.6, color=color, alpha=.3, label='每日相关')
-            axes[0,col].plot(xdates, pd.Series(series).rolling(20,min_periods=10).mean(),lw=1.4,color=color,label='20 日均值（至少 10 日）')
-            axes[0,col].set_title(f'{fid} · {name}',loc='left');axes[0,col].legend(fontsize=8)
-            axes[1,col].plot(xdates,np.nancumsum(series),color=color,lw=1.4)
-            axes[1,col].set_title('累计 '+name,loc='left');axes[1,col].set_xlabel('交易日期 · 相关系数之和，不是资金净值')
-            for row in (0,1):
-                axes[row,col].axhline(0,color=INK,lw=.5);axes[row,col].tick_params(axis='x',labelrotation=25)
-        fig.tight_layout(); save_fig(fig, fid+'-daily')
+        r = ds.rank_ic.to_numpy(); pearson = ds.pearson_ic.to_numpy()
+        draw_daily_figure(fid, dates, pearson, r)
         monthly = ds.groupby(ds.index.str[:7]).rank_ic.mean()
         fig, ax = plt.subplots(figsize=(10, 3.6)); ax.bar(np.arange(len(monthly)), monthly, color=[TEAL if a>=0 else RUST for a in monthly])
         ax.axhline(0,color=INK,lw=.6); ax.set_xticks(np.arange(len(monthly))[::2], monthly.index[::2], rotation=35, ha='right')
@@ -311,6 +315,23 @@ def extract():
     return payload
 
 
+def rebuild_daily_figures():
+    """Draw current IC labels from the accepted daily series without changing data."""
+    global ASSETS, DIRECTION
+    base = ASSETS
+    bundle = json.loads((base / 'report.json').read_text(encoding='utf-8'))
+    for side in ('total', 'buy', 'sell'):
+        data = bundle if side == 'total' else bundle['directions'][side]
+        ASSETS = base if side == 'total' else base / side
+        DIRECTION = side
+        for factor in data['factors']:
+            draw_daily_figure(factor['id'], data['dates'],
+                              np.asarray(factor['daily_ic'], dtype=float),
+                              np.asarray(factor['daily_rank'], dtype=float))
+        print(f'Rebuilt {side}: 24 daily IC figures', flush=True)
+    ASSETS, DIRECTION = base, 'total'
+
+
 def render():
     from PIL import Image
     raw=(ASSETS/'report.json').read_text(encoding='utf-8')
@@ -388,9 +409,13 @@ def build_directions():
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);mode=parser.add_mutually_exclusive_group()
     mode.add_argument('--all-directions', action='store_true')
+    mode.add_argument('--daily-figures-only', action='store_true')
     mode.add_argument('--render-only',action='store_true');mode.add_argument('--dispersion-only',action='store_true');args=parser.parse_args()
     ASSETS.mkdir(parents=True,exist_ok=True)
-    if args.all_directions:
+    if args.daily_figures_only:
+        configure_plots()
+        rebuild_daily_figures()
+    elif args.all_directions:
         configure_plots()
         build_directions()
     elif not args.render_only:

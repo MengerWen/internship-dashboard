@@ -15,10 +15,27 @@
 @media(max-width:700px){.inventory,.audit-grid{grid-template-columns:1fr}.detail{padding:16px}.detail-tabs{top:51px;margin-inline:-3px}.detail-tabs button{padding:8px 10px}.detail-metrics{margin:12px 0}.metric{padding:8px 5px}.metric b{font-size:20px}}
 @media print{.detail-tabs{display:none}.detail-pane[hidden]{display:block!important}}
 
+
 #side-paths,#direction-run-evidence{overflow-wrap:anywhere}
+.factor-navigation .factor-list{max-height:calc(100vh - 245px)}
+.inventory{grid-template-columns:340px minmax(0,1fr)}
+.nav-metric-header,.factor-item{display:grid;grid-template-columns:minmax(50px,1fr) 86px 86px;gap:5px}
+.nav-metric-header{font-size:11px;padding:9px 10px;border-bottom:1px solid var(--rule);color:var(--muted)}
+.nav-metric-header span:not(:first-child),.factor-item .metric-value{text-align:right}
+.factor-item .metric-value{font:12px Consolas,monospace;white-space:nowrap}
+.factor-navigation summary{list-style:none;display:flex;align-items:center;padding:0!important}
+.factor-navigation summary::-webkit-details-marker{display:none}
+.tree-toggle{border:0;background:transparent;padding:8px 5px;flex:0 0 25px;align-self:stretch}
+.tree-toggle span{display:block;transition:transform .12s}
+details[open]>summary .tree-toggle span{transform:rotate(90deg)}
+.tree-title{flex:1;min-width:0;text-align:left;border:0;background:transparent;font-size:12px;padding:10px 5px;color:inherit}
+.tree-title small{padding-left:0!important}.tree-title[aria-pressed=true]{background:#e4eeea;color:var(--teal)}
+.factor-variant{padding:0;border-block:0}.factor-variant>summary{font-weight:400;font-size:12px;color:var(--muted)}
+@media(max-width:960px){.inventory{grid-template-columns:310px minmax(0,1fr)}}
+@media(max-width:700px){.inventory{grid-template-columns:1fr}.factor-navigation .factor-list{max-height:380px}}
+
 [hidden]{display:none!important}.detail-stack{min-width:0}.factor-navigation{position:sticky;top:72px;min-width:0}
 .factor-navigation .factor-list{max-height:calc(100vh - 240px);min-height:260px;border:0}
-.nav-period-label{display:grid;gap:5px;font-size:12px}.nav-period-label select{width:100%;padding:8px;border:1px solid var(--rule);background:white;color:var(--ink)}
 .tree-controls{display:flex;gap:6px;margin:10px 0}.tree-controls button{padding:5px 9px;font-size:12px}
 .factor-family,.factor-time{margin:0;padding:0;border:0}.factor-family>summary{padding:12px 5px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink)}
 .factor-family>summary small{display:block;padding-left:16px;font-weight:400;color:var(--muted)}
@@ -30,7 +47,7 @@
 .comparison-summary{background:#e7eee8;padding:15px 20px;margin-bottom:20px;overflow-wrap:anywhere}.comparison-summary h3{font-size:20px;margin:0}
 .comparison-summary .table-scroll{margin-bottom:0}.comparison-summary table{font-size:12px}.comparison-summary td,.comparison-summary th{padding:9px}
 #comparison-details .detail{margin-top:24px;border-top:3px solid var(--teal)}
-.overview-comparisons{display:grid;grid-template-columns:1fr;gap:18px}.overview-comparisons figure{margin:0}.overview-comparisons h4{color:var(--teal)}
+.direction-plot-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;overflow-x:auto}.direction-plot-row figure{margin:0;min-width:0}.direction-plot-row h4{color:var(--teal);font-size:14px}.direction-plot-row button{cursor:zoom-in}@media(max-width:700px){.direction-plot-row{grid-template-columns:repeat(3,minmax(280px,1fr));padding-bottom:12px}}
 .mode-summary td:first-child{white-space:nowrap}.detail-tabs{scroll-margin-top:72px}
 @media(max-width:700px){.factor-navigation{position:static}.factor-navigation .factor-list{max-height:380px}.comparison-summary{padding:12px}.comparison-summary h3{font-size:18px}}
 
@@ -76,7 +93,7 @@
 <div class="formula">r<sub>d,s</sub> = VWAP<sub>d,s,[09:44:00,09:45:00)</sub> / P<sub>d,s,last trade &lt;09:35:00</sub> − 1<small>目标 VWAP = 区间内 Σ(成交价 × 成交量) / Σ成交量。起点取当日 09:35 前最后一笔合法成交，终点取同日 09:44—09:45 的成交量加权均价。</small></div>
 <div class="two"><div><h3>边界写到秒</h3><p>09:35:00 的成交不进入锚点，09:45:00 的成交不进入目标窗口。锚点查询保留当日更早的合法成交上下文；无成交、无效价格或缺失产生空值，不填成 0。</p><p>因子和起点价格都只使用 09:35 前信息。但这一历史锚点价不保证在因子完成后仍可成交；本页检验的是收益标签关联，尚未验证执行价格。</p></div><div><h3>日期、股票与有效样本</h3><p>2024 年 242 日，2025 年 243 日，2026H1 共 116 日，合计 601 日。因子与标签均有 1,719,612 个股票日，键缺失与重复均为 0；有效标签 1,710,977 个，空标签 8,635 个（0.5021%）。</p><p>每个因子的有限值数不同；计算 IC 时再取因子与标签成对有效的股票，每日每因子至少 30 只。下文把“因子覆盖率”和“成对样本数”分开展示。</p></div></div>
 <details><summary>展开评价指标的含义与统计口径</summary><div class="table-scroll"><table><thead><tr><th>指标</th><th>怎么算</th><th>阅读边界</th></tr></thead><tbody>
-<tr><td>Pearson IC</td><td>每日横截面因子原值与收益的 Pearson 相关，再对有效日等权平均。</td><td>受数值尺度、极端值影响，与排序相关可能异号。</td></tr><tr><td>Rank IC</td><td>每日横截面 Spearman 相关，再对有效日等权平均。</td><td>衡量整体排序；不等同于最高、最低组收益差。</td></tr><tr><td>ICIR</td><td>日均 Rank IC / 日度 Rank IC 标准差，ddof=1。</td><td>没有乘 √252，不年化。</td></tr><tr><td>NW t / 区间</td><td>日度序列使用 Newey–West、Bartlett 权重、lag=1；图中区间为均值 ±1.96×标准误。</td><td>描述性统计，未校正多因子、三个方向、多周期及多月份的比较；短期区间也不是独立验证。</td></tr><tr><td>十分组收益</td><td>每日在成对有效样本内，以平均秩百分位分入 (0,10%]…(90%,100%]，每组股票等权，再对该组有效交易日等权。</td><td>并列值不拆开，因此各组人数可不等、部分组可为空。最高减最低保持原方向，未计成本、未作对冲。</td></tr><tr><td>累计 IC</td><td>日度 Rank IC 的累计和。</td><td>相关系数的和，不是策略资金净值。</td></tr></tbody></table></div><p>历史字段名 <code>ret_intraday_vwap_0944_0945_from_d1_0935_last</code> 中保留了 <code>d1</code>；实际合同与数据均为<strong>同日</strong>，不能按字段名误读为下一交易日。</p></details>
+<tr><td>IC</td><td>每日横截面因子原值与收益的 Pearson 相关，再对有效日等权平均。</td><td>受数值尺度、极端值影响，与排序相关可能异号。</td></tr><tr><td>Rank IC</td><td>每日横截面 Spearman 相关，再对有效日等权平均。</td><td>衡量整体排序；不等同于最高、最低组收益差。</td></tr><tr><td>ICIR</td><td>日均 Rank IC / 日度 Rank IC 标准差，ddof=1。</td><td>没有乘 √252，不年化。</td></tr><tr><td>NW t / 区间</td><td>日度序列使用 Newey–West、Bartlett 权重、lag=1；图中区间为均值 ±1.96×标准误。</td><td>描述性统计，未校正多因子、三个方向、多周期及多月份的比较；短期区间也不是独立验证。</td></tr><tr><td>十分组收益</td><td>每日在成对有效样本内，以平均秩百分位分入 (0,10%]…(90%,100%]，每组股票等权，再对该组有效交易日等权。</td><td>并列值不拆开，因此各组人数可不等、部分组可为空。最高减最低保持原方向，未计成本、未作对冲。</td></tr><tr><td>累计 IC</td><td>日度 Rank IC 的累计和。</td><td>相关系数的和，不是策略资金净值。</td></tr></tbody></table></div><p>历史字段名 <code>ret_intraday_vwap_0944_0945_from_d1_0935_last</code> 中保留了 <code>d1</code>；实际合同与数据均为<strong>同日</strong>，不能按字段名误读为下一交易日。</p></details>
 </section>
 <section id="results">
 <div class="section-head"><span class="num">04</span><div><div class="eyebrow">601-DAY EVIDENCE</div><h2>三个订单方向的全区间结果</h2><p class="text-limit" id="direction-results-intro"></p></div></div>
@@ -86,7 +103,7 @@
 <div class="note" id="f22-diagnosis"></div>
 <div class="controls"><label class="view-mode-control">查看方式<select class="view-mode-select" aria-label="查看方式"><option value="all">全部查看</option><option value="separate">分别查看</option></select></label><label class="direction-control">订单方向<select class="direction-select" aria-label="订单方向"><option value="total">Total · 买卖合并</option><option value="buy">Buy · 原始买单</option><option value="sell">Sell · 原始卖单</option></select></label><label>结果表统计区间<select id="overview-period" class="period-select"></select></label><label>排序<select id="rank-sort"><option value="id">按定义编号</option><option value="ic">按照 IC 排序 · 数值降序</option><option value="ic_abs">按照 |IC| 排序</option><option value="rank_value">按照 Rank IC 排序 · 数值降序</option><option value="rank">按照 |Rank IC| 排序</option><option value="spread">按 |G10−G1|</option></select></label><button id="download-summary">下载当前表 CSV</button></div>
 <p class="small">区间选择更新下面的数值表；本节总览图固定为全部 601 日。年份、季度和月份相互重叠，不能当作独立重复实验。</p>
-<div class="table-scroll"><table id="ranking"><thead><tr><th>编号 / 定义参数</th><th>订单方向</th><th class="number">Pearson IC</th><th class="number">Rank IC</th><th class="number">ICIR</th><th class="number">Rank NW t</th><th class="number">G10−G1 / bp</th><th class="number">收益差 NW t</th><th class="number">有效日</th></tr></thead><tbody></tbody></table></div>
+<div class="table-scroll"><table id="ranking"><thead><tr><th>编号 / 定义参数</th><th>订单方向</th><th class="number">IC</th><th class="number">Rank IC</th><th class="number">ICIR</th><th class="number">Rank NW t</th><th class="number">G10−G1 / bp</th><th class="number">收益差 NW t</th><th class="number">有效日</th></tr></thead><tbody></tbody></table></div>
 <figure><button class="figure-button" data-figure="period-heatmap" aria-label="放大分期Rank IC热力图"><img alt="24个因子按年份及季度排列的日均Rank IC热力图" data-plot="period-heatmap" loading="lazy"></button><figcaption>图 5 · 三个年度／半年汇总与十个季度。红色为正，蓝色为负，同一张图内所有单元格共用色阶；跨方向比较以数值为准，数值保留三位小数。0.000 可能是很小的非零值，精确结果可在表格中查询。2026H1 与汇总入口“2026”日期相同。</figcaption></figure>
 <div class="two"><div><h3>24 列不等于 24 个独立想法</h3><p><span id="redundancy-reading">完整样本相关矩阵的有效秩为 3.4151。</span>有效秩按相关矩阵特征值的熵计算，只描述这组数值的相关结构；它不是可直接拿来修正多重检验的“独立检验数”。</p><p>同周期、同尺度下，cph01 与 cph05，以及 cph06 与 cph07 非常接近。下表在共同有限样本上比较数值，避免把覆盖范围不同造成的变化混入定义差异。</p></div><div><h3>定义改变后，应比较什么</h3><p>20ms 与 50ms 比较平滑尺度；500ms 与 1000ms 比较折叠周期。cph02 看跨周期是否仍集中，cph03 看一半周期发现的方向能否在另一半重现。cph04 还引入了撤单消息相对全部合格委托的数量权重，变化不能全部归因于相位。</p><p>这些是相同历史数据上的定义比较，没有随机分配或控制其他市场状态，不能写成因果 A/B。</p></div></div>
 <div class="table-scroll"><table class="pair-table"><thead><tr><th>同 T / 核的配对</th><th class="number">共同有效股票日</th><th class="number">逐值相等比例</th><th class="number">Pearson r</th><th class="number">平均绝对差</th><th class="number">最大绝对差</th></tr></thead><tbody id="pair-body"></tbody></table></div>
@@ -95,13 +112,13 @@
 </section>
 <section id="factors">
 <div class="section-head"><span class="num">05</span><div><div class="eyebrow">FACTOR ATLAS · 24 DEFINITIONS / 72 SERIES</div><h2>逐因子查看：它测了什么，结果长什么样</h2><p>先选定义，再看数值。保留因子的原始方向，负 IC 和负组间收益都如实显示。F01—F24 只是本报告的检索编号，cph01—cph07 才是七类定义。</p></div></div>
-<div class="controls"><label>检索中文、F 编号或正式列名<input id="factor-search" type="search" placeholder="例如：跨周期 / F21 / cph06"></label><label>定义族<select id="family-filter"><option value="">全部 7 类</option></select></label><label>周期<select id="period-filter"><option value="">全部周期</option><option value="500">500ms</option><option value="1000">1000ms</option></select></label><label>核<select id="kernel-filter"><option value="">全部核</option><option value="heat_20ms">heat 20ms</option><option value="heat_50ms">heat 50ms</option><option value="sharp_20_50ms">sharp 20−50ms</option></select></label><button id="reset-filters">清空筛选</button><span id="factor-count" class="small" aria-live="polite"></span></div>
-<div class="inventory"><aside class="factor-navigation"><p class="small">大逻辑 → 时间口径 → 核参数 → 买卖方向</p><label class="nav-period-label">导航 Rank IC 统计区间<select id="nav-period" class="period-select"></select></label><div class="tree-controls"><button id="expand-tree">全部展开</button><button id="collapse-tree">收起分组</button></div><div class="factor-list" id="factor-list" aria-label="分层因子导航"></div></aside><div class="detail-stack"><div id="factor-comparison" class="comparison-summary"></div><article class="detail" id="factor-detail" aria-live="polite">
+<div class="controls" id="factor-controls"><label>检索中文、F 编号或正式列名<input id="factor-search" type="search" placeholder="例如：跨周期 / F21 / cph06"></label><label>定义族<select id="family-filter"><option value="">全部 7 类</option></select></label><label>周期<select id="period-filter"><option value="">全部周期</option><option value="500">500ms</option><option value="1000">1000ms</option></select></label><label>核<select id="kernel-filter"><option value="">全部核</option><option value="heat_20ms">heat 20ms</option><option value="heat_50ms">heat 50ms</option><option value="sharp_20_50ms">sharp 20−50ms</option></select></label><label class="view-mode-control">查看方式<select class="view-mode-select" aria-label="查看方式"><option value="all">全部查看</option><option value="separate">分别查看</option></select></label><label class="direction-control">订单方向<select class="direction-select" aria-label="订单方向"><option value="total">Total · 买卖合并</option><option value="buy">Buy · 原始买单</option><option value="sell">Sell · 原始卖单</option></select></label><label>评价区间（IC / Rank IC）<select id="detail-period" class="period-select"></select></label><label>组内与结果排序<select id="factor-sort"><option value="id">按定义编号</option><option value="ic">按 IC 降序</option><option value="ic_abs">按 |IC| 降序</option><option value="rank_value">按 Rank IC 降序</option><option value="rank">按 |Rank IC| 降序</option></select></label><button id="reset-filters">清空筛选</button><span id="factor-count" class="small" aria-live="polite"></span></div>
+<div class="inventory"><aside class="factor-navigation"><p class="small">大逻辑 → 时间口径 → 核参数 → 买卖方向</p><p class="small">标题选择显示范围；箭头展开或收起。</p><div class="tree-controls"><button id="expand-tree">全部展开</button><button id="collapse-tree">收起分组</button></div><div class="nav-metric-header"><span>因子 / 方向</span><span>IC</span><span>Rank IC</span></div><div class="factor-list" id="factor-list" aria-label="分层因子导航"></div></aside><div class="detail-stack"><div id="factor-comparison" class="comparison-summary"></div><article class="detail" id="factor-detail" aria-live="polite">
 <div class="eyebrow" id="detail-id"></div><h3 id="detail-title"></h3>
 <div class="detail-tabs" role="tablist" aria-label="因子详情导航">
 <button role="tab" id="tab-daily" aria-controls="pane-daily" aria-selected="true" tabindex="0" data-pane="daily">日度与累计</button><button role="tab" id="tab-monthly" aria-controls="pane-monthly" aria-selected="false" tabindex="-1" data-pane="monthly">月度相关</button><button role="tab" id="tab-groups" aria-controls="pane-groups" aria-selected="false" tabindex="-1" data-pane="groups">分组与诊断</button><button role="tab" id="tab-scatter" aria-controls="pane-scatter" aria-selected="false" tabindex="-1" data-pane="scatter">散点与 OLS</button><button role="tab" id="tab-distribution" aria-controls="pane-distribution" aria-selected="false" tabindex="-1" data-pane="distribution">原值分布</button><button role="tab" id="tab-definition" aria-controls="pane-definition" aria-selected="false" tabindex="-1" data-pane="definition">定义与口径</button></div>
-<div class="controls"><label class="view-mode-control">查看方式<select class="view-mode-select" aria-label="查看方式"><option value="all">全部查看</option><option value="separate">分别查看</option></select></label><label class="direction-control">订单方向<select class="direction-select" aria-label="订单方向"><option value="total">Total · 买卖合并</option><option value="buy">Buy · 原始买单</option><option value="sell">Sell · 原始卖单</option></select></label><label>本因子的评价区间<select id="detail-period" class="period-select"></select></label></div><div class="detail-metrics" id="detail-metrics"></div><p id="detail-coverage" class="small"></p>
-<div class="detail-pane" role="tabpanel" id="pane-daily" aria-labelledby="tab-daily"><h4>日度 Pearson IC、Rank IC 与各自累计轨迹</h4><figure><button class="figure-button" id="daily-button" aria-label="放大日度IC图"><img id="detail-daily" alt="当前因子的每日Pearson IC、Rank IC及两种累计轨迹"></button><figcaption>全部 601 日：左列 Pearson IC，右列 Rank IC；上排每日值与 20 日滚动均值，下排各自累计和。累计 IC 是相关系数之和，不是资金净值。区间选择不裁剪本图。</figcaption></figure><p id="cumulative-reading"></p></div>
+<div class="detail-metrics" id="detail-metrics"></div><p id="detail-coverage" class="small"></p>
+<div class="detail-pane" role="tabpanel" id="pane-daily" aria-labelledby="tab-daily"><h4>日度 IC、Rank IC 与各自累计轨迹</h4><figure><button class="figure-button" id="daily-button" aria-label="放大日度IC图"><img id="detail-daily" alt="当前因子的每日IC、Rank IC及两种累计轨迹"></button><figcaption>全部 601 日：左列 IC，右列 Rank IC；上排每日值与 20 日滚动均值，下排各自累计和。累计 IC 是相关系数之和，不是资金净值。区间选择不裁剪本图。</figcaption></figure><p id="cumulative-reading"></p></div>
 <div class="detail-pane" role="tabpanel" id="pane-monthly" aria-labelledby="tab-monthly" hidden><h4>30 个月的 Rank IC</h4><figure><button class="figure-button" id="monthly-button" aria-label="放大月度IC图"><img id="detail-monthly" alt="当前因子的30个月平均Rank IC"></button><figcaption>固定展示 30 个月。颜色代表月内日均 Rank IC 的符号，与统计显著性无关。</figcaption></figure></div>
 <div class="detail-pane" role="tabpanel" id="pane-groups" aria-labelledby="tab-groups" hidden><h4><span id="group-period-label" class="period-label"></span> · 十分组毛收益</h4><div class="groups-wrap" id="group-chart"></div><p id="group-reading" class="group-caption"></p><h4>均值差异有多大，组内收益又有多分散？</h4><div class="two" id="group-errorbars"></div><p id="dispersion-reading"></p><p class="small">左图：均值 ± 典型日内组内标准差，标准差 = √(有效日组内总体方差的平均)，用于展示股票收益的离散尺度，不是均值的置信区间，也不承诺覆盖 68% 样本。右图：组日均收益的均值 ± 1.96 × Newey–West 标准误（lag 1），使用交易日序列，不把股票日当作独立观测；这是正态近似描述性区间，未校正多重比较。两图纵轴尺度不同。</p><div class="download-row"><button id="errorbars-full-button">放大全区间误差棒图</button><button id="download-errorbars">下载所选区间误差棒数据</button></div><div class="download-row"><button id="download-groups">下载十分组 CSV</button><button id="download-group-svg">下载分组图 SVG</button><button id="download-diagnosis">下载分组诊断 CSV</button></div><h4>保持分组不变，比较收益幅度与收益排名</h4><p id="diagnosis-reading"></p><div class="table-scroll"><table class="diagnostic-table"><thead><tr><th>组</th><th class="number">均值 bp</th><th class="number">平均收益百分位 %</th><th class="number">日内中位数 bp</th><th class="number">1% 缩尾均值 bp</th><th class="number">尾部贡献 bp</th></tr></thead><tbody id="diagnosis-groups"></tbody></table></div><p class="small">收益百分位：在每日同一成对样本内对收益取平均秩，再除以当日样本数；表中每组先在日内平均，再对有效日等权。中位数是各日组内中位数的平均，不能解释成全区间合并样本中位数。缩尾阈值为当日整个成对样本的收益 P1/P99，分组保持原样；尾部贡献 = 原均值 − 缩尾均值。这是敏感性诊断，不替换正式标签和 IC。</p><details><summary>各组有效天数和样本数</summary><div class="table-scroll"><table><thead><tr><th>组别</th><th class="number">日均毛收益 / bp</th><th class="number">有效日</th><th class="number">累计股票日</th></tr></thead><tbody id="group-counts"></tbody></table></div></details></div>
 <div class="detail-pane" role="tabpanel" id="pane-scatter" aria-labelledby="tab-scatter" hidden><h4>因子原值 ↔ 同日收益 · 全部 601 日</h4><p class="fit-equation" id="ols-equation"></p><p id="ols-metrics"></p><figure><button class="figure-button" id="scatter-button" aria-label="放大散点与OLS拟合图"><img id="detail-scatter" alt="因子原值与收益率的散点及完整样本OLS拟合线"></button><figcaption>左图保留完整数值范围，右图放大 x、y 各自 P0.5—P99.5 范围。两图都把全部成对有效股票日传入散点绘制，橙线用同一份完整样本拟合。右图仅改变坐标显示范围；点重叠时使用透明度呈现密度。没有抽样、模拟点或对拟合样本截尾。</figcaption></figure><p>模型为 r = α + βx + ε，包含截距、每个股票日等权。R²、斜率和拟合线是全样本描述，不是样本外预测结果。汇集股票日的 Pearson r 与“每日横截面 IC 的等权平均”口径不同；日期、股票重复带来相关性，这里不报告假设观测独立的 OLS t 或 p 值。区间选择不改变本页全历史拟合。</p><button id="download-ols">下载 OLS 结果 JSON</button></div>
@@ -142,7 +159,7 @@ const dataFor=side=>side==='total'?BUNDLE:BUNDLE.directions[side];
 const visibleSides=()=>viewMode==='all'?SIDES:[direction];
 let DATA=dataFor(direction);
 let activePane='daily';
-const collapsedFamilies=new Set(),collapsedTimes=new Set();
+const collapsedFamilies=new Set(),collapsedTimes=new Set(),collapsedVariants=new Set();
 const directionName=(side=direction)=>({total:'Total · 买卖合并',buy:'Buy · 原始买单',sell:'Sell · 原始卖单'})[side];
 const $=id=>document.getElementById(id), FULL='2024-2026Q2';
 const FAMILIES=[
@@ -175,9 +192,10 @@ $('demo-period').onchange=phase;$('demo-case').onchange=phase;phase();
 const periods=DATA.periods.map(p=>p.period);document.querySelectorAll('.period-select').forEach(s=>{s.innerHTML=periods.map(p=>`<option value="${p}">${periodName(p)}</option>`).join('');s.value=FULL});
 FAMILIES.forEach((f,i)=>$('family-filter').add(new Option('cph0'+(i+1)+' · '+f.name,i+1)));
 let selected='F22';
+let selection={kind:'variant',id:selected};
 function refreshOverview(){
 const strongest=DATA.factors.reduce((a,b)=>Math.abs(a.stats[FULL].rank)>Math.abs(b.stats[FULL].rank)?a:b),extreme=DATA.factors.reduce((a,b)=>Math.abs(a.stats[FULL].spread_bps)>Math.abs(b.stats[FULL].spread_bps)?a:b);
-const es=extreme.stats[FULL];$('result-reading').innerHTML=`<strong>用同一个因子对照指标：</strong><p>${extreme.id}（${FAMILIES[extreme.family-1].name}，${spec(extreme)}）的日均 Rank IC 为 ${num(es.rank,6)}，Pearson IC 为 ${num(es.ic,6)}，G10−G1 为 ${num(es.spread_bps,3)}bp（收益差 NW t = ${num(es.spread_t_nw,3)}）。其 G1 日均收益 ${num(es.groups_bps[0],3)}bp，G10 为 ${num(es.groups_bps[9],3)}bp，十分组总体呈下降形状，中间有局部起伏。这个收益幅度现象与微小的正排序相关同时存在，不能用一个统计替代另一个。</p>`;
+const es=extreme.stats[FULL];$('result-reading').innerHTML=`<strong>用同一个因子对照指标：</strong><p>${extreme.id}（${FAMILIES[extreme.family-1].name}，${spec(extreme)}）的日均 Rank IC 为 ${num(es.rank,6)}，IC 为 ${num(es.ic,6)}，G10−G1 为 ${num(es.spread_bps,3)}bp（收益差 NW t = ${num(es.spread_t_nw,3)}）。其 G1 日均收益 ${num(es.groups_bps[0],3)}bp，G10 为 ${num(es.groups_bps[9],3)}bp，十分组总体呈下降形状，中间有局部起伏。这个收益幅度现象与微小的正排序相关同时存在，不能用一个统计替代另一个。</p>`;
 $('year-reading').textContent=strongest.id+'（'+spec(strongest)+'）在全区间的 |日均 Rank IC| 最大。2024、2025、2026H1 的日均 Rank IC 分别为 '+['2024','2025','2026H1'].map(p=>num(strongest.stats[p].rank,6)).join('、')+'，呈负—正—负；2026Q2 为 '+num(strongest.stats['2026Q2'].rank,6)+'。全期的小正值并不代表各阶段方向一致。对应三个年份／半年区间的 G10−G1 分别为 '+['2024','2025','2026H1'].map(p=>num(strongest.stats[p].spread_bps,3)+'bp').join('、')+'，仍保持负号。';
 
 const auditIC=Math.max(...DATA.factors.map(f=>f.diagnosis.max_ic_abs_error)),auditRank=Math.max(...DATA.factors.map(f=>f.diagnosis.max_rank_abs_error));
@@ -202,7 +220,7 @@ function ranked(){
  const value=row=>{const st=row.f.stats[p],v=st[sort==='rank'||sort==='rank_value'?'rank':sort==='spread'?'spread_bps':'ic'];return Number.isFinite(v)?(['rank','ic_abs','spread'].includes(sort)?Math.abs(v):v):-Infinity};
  return rows.sort((a,b)=>(sort==='id'?0:value(b)-value(a))||a.f.id.localeCompare(b.f.id)||SIDES.indexOf(a.side)-SIDES.indexOf(b.side));
 }
-function factorHref(id,side){const url=new URL(location.href);url.searchParams.set('view',viewMode);url.searchParams.set('direction',side);url.hash='factor-'+id;return url.href}
+function factorHref(id,side){const url=new URL(location.href);url.searchParams.set('scope','leaf');url.searchParams.set('view',viewMode);url.searchParams.set('direction',side);url.hash='factor-'+id;return url.href}
 function drawRanking(){
  const p=$('overview-period').value;
  $('ranking').querySelector('tbody').innerHTML=ranked().map(({f,side})=>{
@@ -214,7 +232,7 @@ function drawRanking(){
 $('overview-period').onchange=drawRanking;$('rank-sort').onchange=drawRanking;
 $('download-summary').onclick=()=>{
  const p=$('overview-period').value;
- const rows=[['direction','period','id','formal_column','Pearson_IC','Rank_IC','ICIR_unannualized','Rank_NW_t_lag1','G10_minus_G1_bps','spread_NW_t_lag1','days'],...ranked().map(({f,side})=>{const st=f.stats[p];return[side,p,f.id,f.column,st.ic,st.rank,st.icir,st.t,st.spread_bps,st.spread_t_nw,st.days]})];
+ const rows=[['direction','period','id','formal_column','IC','Rank_IC','ICIR_unannualized','Rank_NW_t_lag1','G10_minus_G1_bps','spread_NW_t_lag1','days'],...ranked().map(({f,side})=>{const st=f.stats[p];return[side,p,f.id,f.column,st.ic,st.rank,st.icir,st.t,st.spread_bps,st.spread_t_nw,st.days]})];
  save(csv(rows,null),'cancel-phase-'+p+'.csv','text/csv;charset=utf-8',viewMode==='all'?'all':direction);
 };
 function refreshPairs(){
@@ -226,43 +244,83 @@ function filtered(){
  const q=$('factor-search').value.trim().toLowerCase(),fam=$('family-filter').value,t=$('period-filter').value,k=$('kernel-filter').value;
  return visibleSides().flatMap(side=>dataFor(side).factors.filter(f=>(!q||(f.id+' '+f.alias+' '+f.column+' '+FAMILIES[f.family-1].name+' '+directionName(side)).toLowerCase().includes(q))&&(!fam||f.family===+fam)&&(!t||f.period===+t)&&(!k||f.kernel===k)).map(f=>({f,side})));
 }
+
+function sortFactors(rows){
+ const sort=$('factor-sort').value,period=$('detail-period').value;
+ const value=r=>{const v=r.f.stats[period][sort.startsWith('ic')?'ic':'rank'];return Number.isFinite(v)?(sort==='ic_abs'||sort==='rank'?Math.abs(v):v):-Infinity};
+ return [...rows].sort((a,b)=>(sort==='id'?0:value(b)-value(a))||a.f.id.localeCompare(b.f.id)||SIDES.indexOf(a.side)-SIDES.indexOf(b.side));
+}
+function inScope({f,side}){
+ return selection.kind==='leaf'?f.id===selection.id&&side===selection.side:
+ selection.kind==='variant'?f.id===selection.id:
+ selection.kind==='family'?f.family===selection.family:
+ f.family===selection.family&&f.period===selection.period;
+}
+function scopeRows(){return sortFactors(filtered().filter(inScope))}
+function selectScope(kind,identity){
+ selection={kind,...identity};const first=scopeRows()[0];
+ if(first){selected=first.f.id;direction=first.side;DATA=dataFor(direction)}
+ updateURL();refreshPage();
+}
+function branchTitle(kind,key,title,count){
+ const active=selection.kind===kind&&(kind==='family'?String(selection.family)===key:kind==='time'?selection.family+'-'+selection.period===key:selection.id===key);
+ return '<summary><button class="tree-toggle" aria-label="展开或收起 '+title+'"><span aria-hidden="true">▸</span></button><button class="tree-title" data-kind="'+kind+'" data-key="'+key+'" aria-pressed="'+active+'">'+title+(count?'<small>'+count+' 个方向因子</small>':'')+'</button></summary>';
+}
 function drawList(){
- const rows=filtered(),period=$('nav-period').value,total=visibleSides().length*24;
+ const rows=sortFactors(filtered()),period=$('detail-period').value,total=visibleSides().length*24;
  $('factor-count').textContent=rows.length+' / '+total+' 个方向因子';
  let html='';
  FAMILIES.forEach((family,index)=>{
   const group=rows.filter(r=>r.f.family===index+1);if(!group.length)return;
   const fk=String(index+1);
-  html+='<details class="factor-family" data-family="'+fk+'" '+(collapsedFamilies.has(fk)?'':'open')+'><summary>cph0'+fk+' · '+family.name+'<small>'+group.length+' 个方向因子</small></summary>';
+  html+='<details class="factor-family" data-family="'+fk+'" '+(collapsedFamilies.has(fk)?'':'open')+'>'+branchTitle('family',fk,'cph0'+fk+' · '+family.name,group.length);
   [500,1000].forEach(time=>{
    const items=group.filter(r=>r.f.period===time);if(!items.length)return;const tk=fk+'-'+time;
-   html+='<details class="factor-time" data-time="'+tk+'" '+(collapsedTimes.has(tk)?'':'open')+'><summary>周期 '+time+'ms · 年龄 [1s, 10s)</summary>';
+   html+='<details class="factor-time" data-time="'+tk+'" '+(collapsedTimes.has(tk)?'':'open')+'>'+branchTitle('time',tk,'周期 '+time+'ms · 年龄 [1s, 10s)');
    [...new Set(items.map(r=>r.f.id))].forEach(id=>{
     const variants=items.filter(r=>r.f.id===id),f=variants[0].f;
-    html+='<div class="factor-variant"><h4>'+f.id+' · '+spec(f).split(' / ')[1]+'</h4>';
-    variants.forEach(({f,side})=>{const rank=f.stats[period].rank,active=selected===f.id&&direction===side;html+='<button class="factor-item '+(active?'active':'')+'" data-id="'+f.id+'" data-side="'+side+'" aria-pressed="'+active+'" aria-label="'+f.id+' '+directionName(side)+' Rank IC '+num(rank,6)+'"><span class="side-label">'+side.toUpperCase()+'</span><span class="rank-value '+(rank>0?'rank-positive':rank<0?'rank-negative':'')+'">'+(rank>0?'+':'')+num(rank,6)+'</span></button>'});
-    html+='</div>';
+    html+='<details class="factor-variant" data-variant="'+id+'" '+(collapsedVariants.has(id)?'':'open')+'>'+branchTitle('variant',id,f.id+' · '+spec(f).split(' / ')[1]);
+    variants.forEach(({f,side})=>{
+     const st=f.stats[period],active=selection.kind==='leaf'&&selection.id===f.id&&selection.side===side;
+     const metric=(value,key)=>'<span class="metric-value '+key+'-value '+(value>0?'rank-positive':value<0?'rank-negative':'')+'">'+(value>0?'+':'')+num(value,6)+'</span>';
+     html+='<button class="factor-item '+(active?'active':'')+'" data-id="'+f.id+'" data-side="'+side+'" aria-pressed="'+active+'" aria-label="'+f.id+' '+directionName(side)+' IC '+num(st.ic,6)+' Rank IC '+num(st.rank,6)+'"><span class="side-label">'+side.toUpperCase()+'</span>'+metric(st.ic,'ic')+metric(st.rank,'rank')+'</button>';
+    });
+    html+='</details>';
    });html+='</details>';
   });html+='</details>';
  });
  $('factor-list').innerHTML=html||'<p class="empty">没有符合筛选条件的因子。</p>';
  $('factor-list').querySelectorAll('.factor-item').forEach(b=>b.onclick=()=>selectFactor(b.dataset.id,b.dataset.side));
- $('factor-list').querySelectorAll('details').forEach(el=>el.ontoggle=()=>{if(!el.isConnected)return;const set=el.classList.contains('factor-family')?collapsedFamilies:collapsedTimes,key=el.dataset.family||el.dataset.time;if(el.open)set.delete(key);else set.add(key)});
+ $('factor-list').querySelectorAll('summary').forEach(el=>el.onclick=e=>e.preventDefault());
+ $('factor-list').querySelectorAll('.tree-title').forEach(button=>button.onclick=e=>{
+  e.preventDefault();e.stopPropagation();const kind=button.dataset.kind,key=button.dataset.key;
+  selectScope(kind,kind==='family'?{family:+key}:kind==='time'?{family:+key.split('-')[0],period:+key.split('-')[1]}:{id:key});
+ });
+ $('factor-list').querySelectorAll('details').forEach(el=>{
+  const set=el.classList.contains('factor-family')?collapsedFamilies:el.classList.contains('factor-time')?collapsedTimes:collapsedVariants;
+  const key=el.dataset.family||el.dataset.time||el.dataset.variant,button=el.querySelector(':scope > summary .tree-toggle');
+  const sync=()=>{button.setAttribute('aria-expanded',String(el.open));if(el.open)set.delete(key);else set.add(key)};
+  button.setAttribute('aria-expanded',String(el.open));
+  button.onclick=e=>{e.preventDefault();e.stopPropagation();el.open=!el.open;sync()};
+  el.ontoggle=()=>{if(el.isConnected)sync()};
+ });
 }
-['factor-search','family-filter','period-filter','kernel-filter'].forEach(id=>$(id).addEventListener(id==='factor-search'?'input':'change',drawList));
-$('reset-filters').onclick=()=>{['factor-search','family-filter','period-filter','kernel-filter'].forEach(id=>$(id).value='');drawList()};
-$('expand-tree').onclick=()=>{collapsedFamilies.clear();collapsedTimes.clear();drawList()};
+function refreshFactors(){drawList();drawDetail()}
+['factor-search','family-filter','period-filter','kernel-filter'].forEach(id=>$(id).addEventListener(id==='factor-search'?'input':'change',refreshFactors));
+$('reset-filters').onclick=()=>{['factor-search','family-filter','period-filter','kernel-filter'].forEach(id=>$(id).value='');refreshFactors()};
+$('expand-tree').onclick=()=>{collapsedFamilies.clear();collapsedTimes.clear();collapsedVariants.clear();drawList()};
 $('collapse-tree').onclick=()=>{FAMILIES.forEach((_,i)=>collapsedFamilies.add(String(i+1)));drawList()};
-$('nav-period').onchange=()=>setDetailPeriod($('nav-period').value);
+$('detail-period').onchange=()=>setDetailPeriod($('detail-period').value);
+$('factor-sort').onchange=refreshFactors;
 function groupSVG(f,s,side=direction,period=$('detail-period').value){const width=800,height=340,left=63,right=24,top=37,bottom=58,vals=s.groups_bps.filter(v=>v!==null);let lo=Math.min(0,...vals),hi=Math.max(0,...vals),pad=Math.max((hi-lo)*.15,.02);lo-=pad;hi+=pad;let y=v=>top+(hi-v)/(hi-lo)*(height-top-bottom),base=y(0),bw=(width-left-right)/10;let out=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${f.id} 十分组日均毛收益" style="font-family:Microsoft YaHei,sans-serif;background:white"><rect width="100%" height="100%" fill="white"/><text x="${left}" y="20" font-size="13" fill="#243648">${side.toUpperCase()} · ${f.id} · ${period} · 日均毛收益（bp）</text>`;
  for(let i=0;i<=4;i++){let v=lo+(hi-lo)*i/4;out+=`<line x1="${left}" y1="${y(v)}" x2="${width-right}" y2="${y(v)}" stroke="#e4e8e2"/><text x="${left-9}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="#61716f">${v.toFixed(2)}</text>`}
  s.groups_bps.forEach((v,i)=>{let x=left+i*bw+bw*.17;if(v!==null)out+=`<rect x="${x}" y="${Math.min(base,y(v))}" width="${bw*.66}" height="${Math.max(Math.abs(y(v)-base),.5)}" fill="${v>=0?'#087b78':'#b24f35'}"><title>G${i+1}: ${v.toFixed(5)}bp，${s.group_days[i]}日，${s.group_counts[i]}股票日</title></rect><text x="${x+bw*.33}" y="${v>=0?y(v)-6:y(v)+16}" text-anchor="middle" font-size="10" fill="#243648">${v.toFixed(2)}</text>`;out+=`<text x="${x+bw*.33}" y="${height-bottom+24}" text-anchor="middle" font-size="12" fill="#243648">G${i+1}</text>`});out+=`<line x1="${left}" y1="${base}" x2="${width-right}" y2="${base}" stroke="#61716f"/><text x="${width/2}" y="${height-7}" text-anchor="middle" font-size="12" fill="#61716f">因子原值由低到高 → · 平均秩分组 · 未计成本</text></svg>`;return out}
 function errorbarSVG(f,s,kind){const d=s.dispersion,mu=s.groups_bps,errors=kind==='within'?d.within_sd_bps:d.nw_se_bps.map(v=>1.96*v),color=kind==='within'?'#087b78':'#b24f35',title=kind==='within'?'组内离散：均值 ± 日内标准差':'均值估计：95% NW 区间';const w=520,h=360,l=62,r=16,t=46,b=53;let lo=Math.min(0,...mu.map((m,i)=>m-errors[i])),hi=Math.max(0,...mu.map((m,i)=>m+errors[i]));let pad=Math.max((hi-lo)*.1,.01);lo-=pad;hi+=pad;const y=v=>t+(hi-v)/(hi-lo)*(h-t-b),x=i=>l+(i+.5)*(w-l-r)/10;let out=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${title}" style="background:white"><rect width="100%" height="100%" fill="white"/><text x="${l}" y="23" fill="#243648" font-size="15">${title}</text>`;for(let j=0;j<=4;j++){let v=lo+(hi-lo)*j/4;out+=`<line x1="${l}" x2="${w-r}" y1="${y(v)}" y2="${y(v)}" stroke="#e4e8e2"/><text x="${l-7}" y="${y(v)+4}" text-anchor="end" fill="#61716f" font-size="13">${v.toFixed(1)}</text>`}out+=`<line x1="${l}" x2="${w-r}" y1="${y(0)}" y2="${y(0)}" stroke="#61716f"/><polyline points="${mu.map((v,i)=>x(i)+','+y(v)).join(' ')}" fill="none" stroke="${color}" stroke-width="1.2"/>`;mu.forEach((m,i)=>{const top=y(m+errors[i]),bottom=y(m-errors[i]),xx=x(i);out+=`<g><title>G${i+1}：均值 ${m.toFixed(5)}bp；误差棒半宽 ${errors[i].toFixed(5)}bp</title><line x1="${xx}" x2="${xx}" y1="${top}" y2="${bottom}" stroke="${color}" stroke-width="1.5"/><path d="M ${xx-5} ${top} H ${xx+5} M ${xx-5} ${bottom} H ${xx+5}" fill="none" stroke="${color}" stroke-width="1.5"/><circle cx="${xx}" cy="${y(m)}" r="3.5" fill="${color}"/></g><text x="${xx}" y="${h-b+24}" text-anchor="middle" fill="#243648" font-size="13">G${i+1}</text>`});return out+`<text x="${w/2}" y="${h-6}" text-anchor="middle" font-size="13" fill="#61716f">因子原值由低到高 → · 收益单位 bp</text></svg>`}
 
-function updateURL(){const url=new URL(location.href);url.searchParams.set('view',viewMode);url.searchParams.set('direction',direction);url.hash='factor-'+selected;history.replaceState(null,'',url)}
+function updateURL(){const url=new URL(location.href);url.searchParams.set('view',viewMode);url.searchParams.set('direction',direction);url.searchParams.set('scope',selection.kind==='leaf'?'leaf':selection.kind==='variant'?'variant-'+selection.id:selection.kind==='family'?'family-'+selection.family:'time-'+selection.family+'-'+selection.period);url.hash='factor-'+selected;history.replaceState(null,'',url)}
 function selectFactor(id,side=direction){
  if(!SIDES.includes(side)||!dataFor(side).factors.some(f=>f.id===id))return;
- selected=id;direction=side;DATA=dataFor(side);updateURL();refreshPage();
+ selected=id;direction=side;DATA=dataFor(side);selection={kind:'leaf',id,side};updateURL();refreshPage();
 }
 function prepareDetail(root,prefix=''){
  root.querySelectorAll('[id]').forEach(el=>{el.dataset.detailKey=el.id;if(prefix)el.id=prefix+el.id});
@@ -270,28 +328,28 @@ function prepareDetail(root,prefix=''){
 }
 const detailPrototype=$('factor-detail').cloneNode(true);
 prepareDetail($('factor-detail'));
-function setDetailPeriod(value){$('detail-period').value=value;$('nav-period').value=value;drawList();drawDetail()}
+
+function setDetailPeriod(value){$('detail-period').value=value;refreshFactors()}
 function drawDetail(){
- const main=$('factor-detail'),period=$('detail-period').value;
- main.dataset.side=direction;renderDetail(main,direction);bindDetail(main,direction);
- $('comparison-details').replaceChildren();
- if(viewMode==='all')SIDES.filter(side=>side!==direction).forEach(side=>{
-  const root=detailPrototype.cloneNode(true);root.id='detail-'+side;root.dataset.side=side;
-  root.querySelectorAll('.view-mode-control,.direction-control').forEach(el=>el.remove());
-  prepareDetail(root,side+'-');root.querySelector('[data-detail-key="detail-period"]').value=period;
-  $('comparison-details').append(root);renderDetail(root,side);bindDetail(root,side);
+ const main=$('factor-detail'),period=$('detail-period').value,rows=scopeRows();
+ main.hidden=!rows.length;$('comparison-details').replaceChildren();
+ rows.forEach(({f,side},index)=>{
+  const root=index===0?main:detailPrototype.cloneNode(true);
+  if(index){root.id='detail-'+side+'-'+f.id;prepareDetail(root,side+'-'+f.id+'-');$('comparison-details').append(root)}
+  root.dataset.side=side;root.dataset.factor=f.id;
+  renderDetail(root,side,f.id);bindDetail(root,side,f.id);
  });
- const summary=$('factor-comparison');summary.hidden=viewMode!=='all';
- if(viewMode==='all'){
-  const f=DATA.factors.find(f=>f.id===selected);
-  summary.innerHTML='<h3>'+selected+' · '+FAMILIES[f.family-1].name+' · 三方向对照</h3><p class="small">'+spec(f)+'；'+periodName(period)+'。下方三份详情同步统计区间与标签页，各侧使用自身有效样本。</p><div class="table-scroll"><table><thead><tr><th>方向</th><th>Rank IC</th><th>Pearson IC</th><th>NW t</th><th>G10−G1 / bp</th><th>成对股票日</th></tr></thead><tbody>'+SIDES.map(side=>{const st=dataFor(side).factors.find(f=>f.id===selected).stats[period];return '<tr data-side="'+side+'"><td>'+side.toUpperCase()+'</td>'+[st.rank,st.ic,st.t,st.spread_bps].map((v,i)=>'<td class="number">'+num(v,i<2?6:3)+'</td>').join('')+'<td class="number">'+comma(st.paired)+'</td></tr>'}).join('')+'</tbody></table></div>';
- }
+ const summary=$('factor-comparison');summary.hidden=false;
+ const title=selection.kind==='family'?'cph0'+selection.family+' · '+FAMILIES[selection.family-1].name:
+ selection.kind==='time'?'cph0'+selection.family+' · 周期 '+selection.period+'ms':
+ selection.id+(selection.kind==='leaf'?' · '+directionName(selection.side):' · 参数组合');
+ summary.innerHTML='<h3>'+title+'</h3><p class="small">'+periodName(period)+' · 当前范围 '+rows.length+' 个方向因子。标题选择范围，筛选行统一调整统计区间与排序。</p>'+(rows.length?'<div class="table-scroll"><table><thead><tr><th>因子</th><th>方向</th><th>IC</th><th>Rank IC</th><th>NW t</th><th>G10−G1 / bp</th><th>成对股票日</th></tr></thead><tbody>'+rows.map(({f,side})=>{const st=f.stats[period];return '<tr data-side="'+side+'" data-factor="'+f.id+'"><td>'+f.id+'</td><td>'+side.toUpperCase()+'</td>'+[st.ic,st.rank,st.t,st.spread_bps].map((v,i)=>'<td class="number">'+num(v,i<2?6:3)+'</td>').join('')+'<td class="number">'+comma(st.paired)+'</td></tr>'}).join('')+'</tbody></table></div>':'<p>该范围内没有符合筛选条件的因子，可调整筛选或选择其他标题。</p>');
  showPane(activePane);
 }
-function renderDetail(root,side){
- const $=id=>root.querySelector('[data-detail-key="'+id+'"]'),DATA=dataFor(side),direction=side,directionName=()=>({total:'Total · 买卖合并',buy:'Buy · 原始买单',sell:'Sell · 原始卖单'})[side];
+function renderDetail(root,side,selected){
+ const $=id=>id==='detail-period'?document.getElementById(id):root.querySelector('[data-detail-key="'+id+'"]'),DATA=dataFor(side),direction=side,directionName=()=>({total:'Total · 买卖合并',buy:'Buy · 原始买单',sell:'Sell · 原始卖单'})[side];
  const f=DATA.factors.find(f=>f.id===selected),family=FAMILIES[f.family-1],p=$('detail-period').value,s=f.stats[p];$('detail-id').textContent=f.id+' / cph0'+f.family+' · '+directionName()+' / '+spec(f);$('detail-title').textContent=family.name;$('detail-description').textContent=family.q+' '+family.body;$('detail-column').textContent=f.column;$('detail-formula').textContent=family.formula;
- const ms=[['日均 Rank IC',num(s.rank,6)],['Pearson IC',num(s.ic,6)],['ICIR · 不年化',num(s.icir,4)],['Rank IC · NW t',num(s.t,3)],['G10−G1 · bp',num(s.spread_bps,3)],['收益差 · NW t',num(s.spread_t_nw,3)]];$('detail-metrics').innerHTML=ms.map(([l,v])=>`<div class="metric"><b>${v}</b><span>${l}</span></div>`).join('');
+ const ms=[['IC',num(s.ic,6)],['日均 Rank IC',num(s.rank,6)],['ICIR · 不年化',num(s.icir,4)],['Rank IC · NW t',num(s.t,3)],['G10−G1 · bp',num(s.spread_bps,3)],['收益差 · NW t',num(s.spread_t_nw,3)]];$('detail-metrics').innerHTML=ms.map(([l,v])=>`<div class="metric"><b>${v}</b><span>${l}</span></div>`).join('');
  $('detail-coverage').textContent=periodName(p)+'：'+s.days+' 个有效 IC 日；成对样本 '+comma(s.paired)+' 股票日。因子有限值 '+comma(s.finite)+' / '+comma(s.rows)+'（覆盖率 '+num(s.finite/s.rows*100,3)+'%）；空／非有限值 '+comma(s.rows-s.finite)+'；有限值中恰为零 '+comma(s.zeros)+'。';
  ['daily','monthly','distribution','scatter'].forEach(kind=>{const name=f.id+'-'+kind,im=$('detail-'+kind);im.src=imgSrc(name,side);$(kind+'-button').onclick=()=>openFigure(name,f.id+' · '+{daily:'日度与累计 IC / Rank IC',monthly:'月度 Rank IC',distribution:'因子原值分布',scatter:'散点与完整样本 OLS'}[kind],side)});
  $('group-period-label').textContent=periodName(p);$('group-chart').innerHTML=groupSVG(f,s,side,p);$('group-reading').textContent='所选区间 G10−G1 日均为 '+num(s.spread_bps,3)+'bp，NW t（lag 1）为 '+num(s.spread_t_nw,3)+'。各组先按日计算，再对该组有效日等权；收益差只用两端均有效的交易日。图示原始毛收益包含共同市场波动，不是超额收益或净收益。';
@@ -304,17 +362,16 @@ function renderDetail(root,side){
  $('group-errorbars').innerHTML=errorbarSVG(f,s,'within')+errorbarSVG(f,s,'mean');
  $('dispersion-reading').textContent=periodName(p)+'：G1 / G10 的典型日内组内标准差为 '+num(disp.within_sd_bps[0],2)+' / '+num(disp.within_sd_bps[9],2)+'bp，对应均值为 '+num(s.groups_bps[0],3)+' / '+num(s.groups_bps[9],3)+'bp。每日按样本数加权分解收益总体方差，再对日期等权平均，组内部分占 '+num(disp.within_variance_fraction*100,2)+'%，组间均值差异占 '+num(disp.between_variance_fraction*100,2)+'%（描述性分解，包含有限样本波动，不是样本外 R²）。G10−G1 的配对 95% NW 区间为 ['+num(s.spread_bps-spreadHalf,3)+', '+num(s.spread_bps+spreadHalf,3)+']bp；它直接使用每日组差，已保留同日两组的共同波动。';
  $('errorbars-full-button').onclick=()=>openFigure(f.id+'-errorbars',f.id+' · 全部 601 日 · 组内离散与均值不确定性',side);
- $('cumulative-reading').textContent='全历史终点：累计 Pearson IC = '+num(d.daily_ic_sum,6)+'；累计 Rank IC = '+num(d.daily_rank_sum,6)+'。两项分别由 601 个日度相关值直接求和。';
+ $('cumulative-reading').textContent='全历史终点：累计 IC = '+num(d.daily_ic_sum,6)+'；累计 Rank IC = '+num(d.daily_rank_sum,6)+'。两项分别由 601 个日度相关值直接求和。';
  $('diagnosis-reading').textContent=periodName(p)+'：只对因子取秩、收益保持原值，日均相关为 '+num(s.rank_x_return,6)+'；因子与收益都取秩，日均 Rank IC 为 '+num(s.rank,6)+'。G10−G1 为负的交易日有 '+s.negative_spread_days+' 日，其中 '+s.positive_rank_negative_spread_days+' 日同时 Rank IC 为正。平均收益是分布的幅度统计，平均收益百分位是位置统计；收益分布形状不同，两者可以有不同方向。';
  $('diagnosis-groups').innerHTML=g.mean_bps.map((v,i)=>`<tr><td>G${i+1}</td>${['mean_bps','rank_pct','median_bps','winsor_bps','tail_bps'].map(k=>`<td class="number">${num(g[k][i],3)}</td>`).join('')}</tr>`).join('');
  $('ols-equation').textContent='收益（bp） = '+num(o.intercept*10000,6)+(o.slope>=0?' + ':' − ')+num(Math.abs(o.slope)*10000,6)+' × 因子原值';
  $('ols-metrics').textContent='OLS 拟合样本 '+comma(o.n)+' 股票日；带截距 R² = '+o.r2.toExponential(6)+'（'+num(o.r2*100,6)+'%）；汇集样本 Pearson r = '+num(o.r,6)+'；RMSE = '+num(o.rmse*10000,3)+'bp。散点绘制全部 '+comma(d.scatter_point_count)+' 个真实股票日，与 OLS 拟合样本完全一致。';
  $('factor-audit').textContent=f.id+' 的 601 日独立复算：IC 最大绝对误差 '+d.max_ic_abs_error.toExponential(3)+'，Rank IC 最大绝对误差 '+d.max_rank_abs_error.toExponential(3)+'。将因子原值舍入到小数点后 12 位后，日均 Rank IC 为 '+num(d.rounded_rank_mean,9)+'，原值为 '+num(f.stats[FULL].rank,9)+'；这个额外敏感性检查不改写正式因子。';
 }
-function bindDetail(root,side){
- const $=id=>root.querySelector('[data-detail-key="'+id+'"]'),DATA=dataFor(side),direction=side;
+function bindDetail(root,side,selected){
+ const $=id=>id==='detail-period'?document.getElementById(id):root.querySelector('[data-detail-key="'+id+'"]'),DATA=dataFor(side),direction=side;
  const saveSide=(text,name,type)=>save(text,name,type,side),csvSide=rows=>csv(rows,side);
- $('detail-period').onchange=()=>setDetailPeriod($('detail-period').value);
  const tabs=[...root.querySelectorAll('.detail-tabs [role=tab]')];
  tabs.forEach((button,i)=>{button.onclick=()=>showPane(button.dataset.pane,false,root);button.onkeydown=e=>{const index=e.key==='ArrowRight'?(i+1)%tabs.length:e.key==='ArrowLeft'?(i+tabs.length-1)%tabs.length:e.key==='Home'?0:e.key==='End'?tabs.length-1:null;if(index!==null){e.preventDefault();showPane(tabs[index].dataset.pane,true,root)}}});
 
@@ -325,7 +382,17 @@ $('download-ols').onclick=()=>{let f=DATA.factors.find(f=>f.id===selected);saveS
 $('download-errorbars').onclick=()=>{let f=DATA.factors.find(f=>f.id===selected),p=$('detail-period').value,s=f.stats[p],d=s.dispersion;saveSide(csvSide([['factor','period','group','mean_bps','within_daily_rms_sd_bps','nw_se_lag1_bps','ci95_low_bps','ci95_high_bps','valid_days'],...s.groups_bps.map((m,i)=>[f.id,p,'G'+(i+1),m,d.within_sd_bps[i],d.nw_se_bps[i],d.ci95_low_bps[i],d.ci95_high_bps[i],s.group_days[i]])]),f.id+'-'+p+'-errorbars.csv','text/csv;charset=utf-8')};
 
 }
-function hashSelect(){let match=location.hash.match(/^#factor-(F\d{2})$/);if(match&&DATA.factors.some(f=>f.id===match[1])){selectFactor(match[1]);$('factors').scrollIntoView()}}
+
+function hashSelect(){
+ const match=location.hash.match(/^#factor-(F\d{2})$/),scope=new URLSearchParams(location.search).get('scope')||'leaf';
+ if(!match||!DATA.factors.some(f=>f.id===match[1]))return;
+ if(/^family-[1-7]$/.test(scope))selectScope('family',{family:+scope.split('-')[1]});
+ else if(/^time-[1-7]-(500|1000)$/.test(scope))selectScope('time',{family:+scope.split('-')[1],period:+scope.split('-')[2]});
+ else if(/^variant-F\d{2}$/.test(scope))selectScope('variant',{id:match[1]});
+ else selectFactor(match[1]);
+ $('factors').scrollIntoView();
+}
+
 window.addEventListener('hashchange',hashSelect);
 function refreshEvidence(){
  $('total-paths').hidden=direction!=='total';$('side-paths').hidden=direction==='total';document.querySelectorAll('.total-evidence').forEach(el=>el.hidden=direction!=='total');
@@ -348,7 +415,7 @@ function refreshDirectionSummary(strongest,extreme){
  $('pair-reading').textContent='所选方向这六组配对的最大绝对差为 '+Math.max(...DATA.comparisons.map(c=>c.max_abs_diff)).toExponential(3)+'。';
  if(direction!=='total'){
   document.querySelector('.lead').textContent='当前展示 '+name+' 的 24 个相位因子结果。使用原订单方向筛选合格撤单，同侧统计事件数、订单数与配对分母；与 Total 使用相同的 601 日、股票池和收益标签。';
-  $('result-reading').innerHTML='<strong>'+name+' · 全区间结果</strong><p>'+extreme.id+' 的日均 Pearson IC 为 '+num(s.ic,6)+'，Rank IC 为 '+num(s.rank,6)+'；G10−G1 为 '+num(s.spread_bps,3)+'bp，组差 NW t 为 '+num(s.spread_t_nw,3)+'。保留原值排序，不按收益表现翻转符号。</p>';
+  $('result-reading').innerHTML='<strong>'+name+' · 全区间结果</strong><p>'+extreme.id+' 的日均 IC 为 '+num(s.ic,6)+'，Rank IC 为 '+num(s.rank,6)+'；G10−G1 为 '+num(s.spread_bps,3)+'bp，组差 NW t 为 '+num(s.spread_t_nw,3)+'。保留原值排序，不按收益表现翻转符号。</p>';
   $('year-reading').textContent=strongest.id+' 的 |日均 Rank IC| 在当前方向最大。2024、2025、2026H1 分别为 '+['2024','2025','2026H1'].map(p=>num(strongest.stats[p].rank,6)).join('、')+'；同期 G10−G1 分别为 '+['2024','2025','2026H1'].map(p=>num(strongest.stats[p].spread_bps,3)+'bp').join('、')+'。';
   $('f22-diagnosis').innerHTML='<strong>'+name+' · F22 收益与分组诊断</strong><p>G1 / G10 日均收益为 '+num(fs.groups_bps[0],3)+' / '+num(fs.groups_bps[9],3)+'bp；平均收益百分位为 '+num(fs.diagnosis_groups.rank_pct[0],3)+'% / '+num(fs.diagnosis_groups.rank_pct[9],3)+'%。组内典型日内标准差为 '+num(fs.dispersion.within_sd_bps[0],2)+' / '+num(fs.dispersion.within_sd_bps[9],2)+'bp。完整结果见“分组与诊断”。</p>';
  }else document.querySelector('.lead').textContent='撤单等待时间中的固定峰，提供了构造因子的线索。Total 全区间检验显示，横截面排序相关较弱；部分定义的高值组收益低于低值组。可切换 Buy、Sell 查看两侧同口径结果。';
@@ -359,18 +426,20 @@ function refreshModePresentation(){
  document.querySelectorAll('.direction-control').forEach(el=>el.hidden=viewMode==='all');
  document.querySelectorAll('.direction-select').forEach(el=>el.value=direction);
  document.querySelectorAll('.direction-note').forEach(el=>el.textContent=viewMode==='all'?'全部查看 · 24 个定义 × Total / Buy / Sell；各侧有效样本独立统计':'分别查看 · '+directionName());
- document.querySelectorAll('.overview-comparisons').forEach(el=>el.remove());
+
+ document.querySelectorAll('.direction-plot-row').forEach(el=>el.remove());
  document.querySelectorAll('#results [data-plot]').forEach(im=>{
   im.src=imgSrc(im.dataset.plot);
-  let title=im.closest('figure').querySelector('.plot-side-title');
-  if(!title){title=document.createElement('h4');title.className='plot-side-title';im.closest('figure').prepend(title)}
-  title.textContent=directionName();
+  const figure=im.closest('figure'),primary=im.closest('button');
+  let title=figure.querySelector('.plot-side-title');
+  if(!title){title=document.createElement('h4');title.className='plot-side-title';figure.prepend(title)}
+  title.textContent=directionName();title.hidden=viewMode==='all';primary.hidden=viewMode==='all';
   if(viewMode==='all'){
-   const extra=document.createElement('div');extra.className='overview-comparisons';
-   SIDES.filter(side=>side!==direction).forEach(side=>{
+   const row=document.createElement('div');row.className='direction-plot-row';row.setAttribute('aria-label','Total、Buy、Sell 三方向并排图表');
+   SIDES.forEach(side=>{
     const fig=document.createElement('figure'),heading=document.createElement('h4'),button=document.createElement('button'),picture=document.createElement('img');
-    heading.textContent=directionName(side);button.className='figure-button';picture.alt=directionName(side)+' · '+im.alt;picture.src=imgSrc(im.dataset.plot,side);picture.loading='lazy';button.append(picture);button.onclick=()=>openFigure(im.dataset.plot,im.alt,side);fig.append(heading,button);extra.append(fig);
-   });im.closest('figure').after(extra);
+    fig.dataset.side=side;heading.textContent=directionName(side);button.className='figure-button';picture.alt=directionName(side)+' · '+im.alt;picture.src=imgSrc(im.dataset.plot,side);picture.loading='lazy';button.append(picture);button.onclick=()=>openFigure(im.dataset.plot,im.alt,side);fig.append(heading,button);row.append(fig);
+   });figure.insertBefore(row,figure.querySelector('figcaption'));
   }
  });
  if(viewMode!=='all')return;
@@ -378,12 +447,12 @@ function refreshModePresentation(){
  const hero=document.querySelectorAll('.hero-note strong'),labels=document.querySelectorAll('.hero-note small');
  hero[0].textContent=num(Math.max(...rows.map(r=>Math.abs(r.f.stats[FULL].rank))),5);hero[1].textContent=num(Math.max(...rows.map(r=>Math.abs(r.f.stats[FULL].t))),2);
  labels[0].textContent='全部 72 个方向因子中的最大 |日均 Rank IC|';labels[1].textContent='全部 72 个方向因子中的最大 |Rank IC 的 NW t| · lag 1';
- document.querySelector('.lead').textContent='同一套 24 个定义，分别观察 Total、Buy、Sell。全部查看将三个方向列在一起；逐因子导航按大逻辑、时间口径和方向展开，每一项都显示对应 Rank IC。';
+ document.querySelector('.lead').textContent='同一套 24 个定义，分别观察 Total、Buy、Sell。全部查看将三个方向列在一起；逐因子导航按大逻辑、时间口径和方向展开，每一项依次显示 IC、Rank IC。';
  $('direction-results-intro').textContent='全部查看：72 个方向因子共同列入结果表，可按 IC 或 Rank IC 的数值、绝对值排序。图表按方向分别展示，分期与评价口径相同。';
  $('ic-audit-summary').textContent=SIDES.map(side=>{const fs=dataFor(side).factors;return side.toUpperCase()+'：14,424 个日期×因子独立复算，IC / Rank IC 最大误差 '+Math.max(...fs.map(f=>f.diagnosis.max_ic_abs_error)).toExponential(2)+' / '+Math.max(...fs.map(f=>f.diagnosis.max_rank_abs_error)).toExponential(2)}).join('；')+'。';
  $('result-reading').innerHTML='<strong>三方向 · 全区间结果</strong><div class="table-scroll"><table class="mode-summary"><thead><tr><th>方向</th><th>最大 |Rank IC| 对应因子</th><th>该因子 Rank IC</th><th>该因子 NW t</th></tr></thead><tbody>'+SIDES.map(side=>{const f=dataFor(side).factors.reduce((a,b)=>Math.abs(a.stats[FULL].rank)>Math.abs(b.stats[FULL].rank)?a:b),st=f.stats[FULL];return '<tr><td>'+directionName(side)+'</td><td>'+f.id+'</td><td>'+num(st.rank,6)+'</td><td>'+num(st.t,3)+'</td></tr>'}).join('')+'</tbody></table></div><p class="small">各方向内分别选取绝对 Rank IC 最大的一列，保留原始符号；表中可能是不同定义。</p>';
  $('year-reading').textContent=SIDES.map(side=>{const f=dataFor(side).factors.find(f=>f.id==='F22');return side.toUpperCase()+' · F22：2024 / 2025 / 2026H1 的 Rank IC = '+['2024','2025','2026H1'].map(p=>num(f.stats[p].rank,6)).join(' / ')}).join('；')+'。';
- $('f22-diagnosis').textContent=SIDES.map(side=>{const st=dataFor(side).factors.find(f=>f.id==='F22').stats[FULL];return side.toUpperCase()+' · F22：Rank IC '+num(st.rank,6)+'，G10−G1 '+num(st.spread_bps,3)+'bp'}).join('；')+'。完整三侧分组与诊断可在逐因子详情中同时查看。';
+ $('f22-diagnosis').textContent=SIDES.map(side=>{const st=dataFor(side).factors.find(f=>f.id==='F22').stats[FULL];return side.toUpperCase()+' · F22：Rank IC '+num(st.rank,6)+'，G10−G1 '+num(st.spread_bps,3)+'bp'}).join('；')+'。点击逐因子导航的 F22 标题可查看三侧分组与诊断。';
  $('redundancy-reading').textContent=SIDES.map(side=>side.toUpperCase()+' 有效秩 '+num(dataFor(side).redundancy.effective_rank,4)).join('；')+'。';
  $('pair-body').innerHTML=SIDES.flatMap(side=>dataFor(side).comparisons.map(c=>'<tr><td>'+side.toUpperCase()+' · '+c.a+' ↔ '+c.b+'</td><td class="number">'+comma(c.n)+'</td><td class="number">'+num(c.exact_equal/c.n*100,4)+'%</td><td class="number">'+num(c.pearson,12)+'</td><td class="number">'+c.mean_abs_diff.toExponential(3)+'</td><td class="number">'+c.max_abs_diff.toExponential(3)+'</td></tr>')).join('');
  $('pair-reading').textContent='以上分别列出三个方向的六组配对。';
@@ -401,7 +470,7 @@ function refreshPage(){
  refreshOverview();refreshPairs();refreshEvidence();drawRanking();drawList();drawDetail();refreshModePresentation();
 }
 function switchDirection(value){
- if(!SIDES.includes(value))return;direction=value;DATA=dataFor(value);updateURL();refreshPage();
+ if(!SIDES.includes(value))return;direction=value;DATA=dataFor(value);if(selection.kind==='leaf')selection.side=value;updateURL();refreshPage();
 }
 document.addEventListener('change',e=>{
  if(e.target.matches('.view-mode-select')){viewMode=e.target.value;updateURL();refreshPage()}
