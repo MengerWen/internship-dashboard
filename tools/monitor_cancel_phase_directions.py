@@ -15,7 +15,8 @@ def main():
 root=pathlib.Path(RUN_ROOT)
 def read(name):
  p=root/name
- return json.loads(p.read_text()) if p.exists() else None
+ try: return json.loads(p.read_text())
+ except FileNotFoundError: return None
 pid=int((root/'launcher.pid').read_text())
 snapshot={'time':time.time(),'launcher_pid':pid,'alive':pathlib.Path(f'/proc/{pid}').exists(),'progress':read('progress.json')}
 snapshot['processes']=subprocess.check_output(['ps','-u','wangly','-o','pid,ppid,pcpu,rss,comm'],text=True)
@@ -27,17 +28,19 @@ print(json.dumps(snapshot))
 '''.replace('RUN_ROOT', repr(args.run_root))
     args.log.parent.mkdir(parents=True, exist_ok=True)
     while True:
-        result = subprocess.run(['ssh', 'sirui-server-wangly', 'python3', '-'], input=script,
-                                text=True, capture_output=True, timeout=30)
-        if result.returncode:
-            print(json.dumps({'monitor_error': result.stderr[-1000:]}), flush=True)
-        else:
+        try:
+            result = subprocess.run(['ssh', 'sirui-server-wangly', 'python3', '-'], input=script,
+                                    text=True, encoding='utf-8', errors='replace', capture_output=True, timeout=30)
+            if result.returncode:
+                raise RuntimeError(result.stderr[-1000:] or result.stdout[-1000:])
             snapshot = json.loads(result.stdout)
             with args.log.open('a', encoding='utf-8') as stream:
                 stream.write(json.dumps(snapshot, ensure_ascii=False) + '\n')
             print(json.dumps({k: snapshot[k] for k in ('time', 'alive', 'progress', 'result_status')}, ensure_ascii=False), flush=True)
             if snapshot['guard'] is not None and not snapshot['alive']:
                 break
+        except (subprocess.TimeoutExpired, RuntimeError, ValueError, TypeError) as error:
+            print(json.dumps({'monitor_error': str(error)}, ensure_ascii=False), flush=True)
         time.sleep(40)
 
 

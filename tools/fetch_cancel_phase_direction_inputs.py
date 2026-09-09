@@ -43,7 +43,7 @@ for side in ('buy','sell'):
 print(json.dumps(snapshots))
 '''.replace('RUN_ROOT', repr(args.run_root)).replace('REQUIRE_COMPLETE', repr(args.complete))
     response = subprocess.run(['ssh', 'sirui-server-wangly', 'python3', '-'], input=query,
-                              text=True, capture_output=True, check=True, timeout=60)
+                              text=True, encoding='utf-8', capture_output=True, check=True, timeout=60)
     snapshots = json.loads(response.stdout)
     for side, manifest in snapshots.items():
         directory = root / 'data/cancel-phase-2026-09-06/raw' / side
