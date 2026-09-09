@@ -334,6 +334,7 @@ def rebuild_daily_figures():
 
 def render():
     from PIL import Image
+    from cancel_phase_math import render_report_math
     raw=(ASSETS/'report.json').read_text(encoding='utf-8')
     payload = json.loads(raw)
     side_paths = {side: ASSETS / side / 'report.json' for side in ('buy', 'sell')}
@@ -346,6 +347,7 @@ def render():
         raw = json.dumps(payload, ensure_ascii=False, separators=(',', ':'), allow_nan=False)
         (ASSETS/'report.json').write_text(raw, encoding='utf-8')
     template=(ROOT/'tools/templates/cancel-phase-20260906.html').read_text(encoding='utf-8')
+    template = render_report_math(template)
     # Intrinsic dimensions reserve layout space before lazy images decode.
     def dimensions(match):
         tag = match.group(0)

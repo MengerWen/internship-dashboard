@@ -346,3 +346,38 @@ test('overview plots place total buy and sell side by side and support mobile ho
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   expect(await row.evaluate(el=>el.scrollWidth>el.clientWidth)).toBe(true);
 });
+
+test('mathematical definitions render stacked fractions offline and after factor navigation', async ({page})=>{
+ const errors=[],network=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.route(/^https?:/,route=>{network.push(route.request().url());return route.abort()});
+ await page.goto(offline);
+ await expect(page.locator('#family-definitions .formula math')).toHaveCount(7);
+ await page.locator('#definition > details > summary').click();
+ await expect(page.locator('[data-equation="CYCLE_ENERGY"]')).toBeVisible();
+ const fractions=await page.locator('#definition mfrac, #contract mfrac').evaluateAll(nodes=>nodes.map(node=>{
+  const a=node.children[0].getBoundingClientRect(),b=node.children[1].getBoundingClientRect();
+  return {namespace:node.namespaceURI,visible:a.height>0,stacked:a.bottom<=b.top+1,overlap:Math.min(a.right,b.right)>Math.max(a.left,b.left)};
+ }).filter(x=>x.visible));
+ expect(fractions.length).toBeGreaterThan(20);
+ expect(fractions.every(x=>x.namespace==='http://www.w3.org/1998/Math/MathML'&&x.stacked&&x.overlap)).toBe(true);
+ await page.locator('#family-definitions').screenshot({path:'test-results/cancel-phase-math-families.png'});
+ await page.locator('#contract > .formula').screenshot({path:'test-results/cancel-phase-math-return.png'});
+ await page.locator('#definition > details').screenshot({path:'test-results/cancel-phase-math-exact.png'});
+ await page.locator('.factor-item[data-id="F24"][data-side="sell"]').click();
+ await page.click('#tab-definition');
+ await expect(page.locator('#detail-formula math[data-equation="FAMILY_7"]')).toBeVisible();
+ await expect(page.locator('#pane-definition math[data-equation="IC"] mfrac')).toBeVisible();
+ await page.locator('.tree-title[data-kind="variant"][data-key="F24"]').click();
+ await expect(page.locator('.detail [data-equation="FAMILY_7"]')).toHaveCount(3);
+ await page.selectOption('#detail-period','2026Q2');
+ await expect(page.locator('.detail [data-equation="FAMILY_7"]')).toHaveCount(3);
+ await page.setViewportSize({width:390,height:844});
+ await page.locator('#family-definitions').screenshot({path:'test-results/cancel-phase-math-mobile.png'});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ const mobile=await page.locator('#family-definitions mfrac').evaluateAll(nodes=>nodes.map(n=>{
+  const a=n.children[0].getBoundingClientRect(),b=n.children[1].getBoundingClientRect();return a.bottom<=b.top+1;
+ }));
+ expect(mobile.every(Boolean)).toBe(true);
+ expect(errors).toEqual([]);expect(network).toEqual([]);
+});
