@@ -10,7 +10,7 @@ import numpy as np
 
 TEAL, RUST, INK = '#087b78', '#b24f35', '#243648'
 
-def render(root):
+def render(root, daily_only=False):
     font = Path('C:/Windows/Fonts/msyh.ttc')
     font_manager.fontManager.addfont(str(font))
     plt.rcParams.update({'font.family':font_manager.FontProperties(fname=str(font)).get_name(),
@@ -31,7 +31,7 @@ def render(root):
     for c,ds in daily.groupby('formal_column',sort=False):
         ds=ds.sort_values('date');dates=pd.to_datetime(ds.date)
         fig,axes=plt.subplots(2,2,figsize=(12,7.4),sharex=True)
-        for col,(metric,label,color) in enumerate([('pearson_ic','Pearson IC',RUST),('rank_ic','Rank IC',TEAL)]):
+        for col,(metric,label,color) in enumerate([('pearson_ic','IC',RUST),('rank_ic','Rank IC',TEAL)]):
             ax=axes[0,col]
             ax.plot(dates,ds[metric],lw=.65,color=color,alpha=.28,label='每日相关')
             ax.plot(dates,ds[metric+'_rolling20'],lw=1.65,color=color,label='20 日滚动均值')
@@ -49,6 +49,8 @@ def render(root):
         fig.suptitle(c+'  /  全部 601 日',x=.06,ha='left',fontsize=13)
         fig.tight_layout(rect=(0,0,1,.96),h_pad=2.3,w_pad=2.5)
         save(fig,c+'-daily')
+        if daily_only:
+            continue
         monthly=ds.groupby(ds.date.str[:7]).rank_ic.mean()
         fig,ax=plt.subplots(figsize=(12,4.2));x=np.arange(len(monthly))
         ax.bar(x,monthly,width=.68,color=[TEAL if v>=0 else RUST for v in monthly])

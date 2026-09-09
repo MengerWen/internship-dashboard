@@ -1,8 +1,8 @@
 """Render the depth-match briefing from the accepted evaluation, without recomputing factors."""
 import argparse
+import base64
 import csv
 import hashlib
-import html
 import json
 from pathlib import Path
 import re
@@ -63,14 +63,32 @@ def build(source):
     assert len(data['daily_ic']) == 14424
     assert len(list((ASSETS / 'assets').glob('*.png'))) == 120
     from depth_match_figures import render
-    rendered = render(ASSETS)
-    template = (ROOT / 'content/daily/2026-09-06.show.html').read_text(encoding='utf-8')
-    css = re.search(r'<style>(.*?)</style>', template, re.S).group(1)
-    body = (ROOT / 'tools/depth_match_report_20260907.html').read_text(encoding='utf-8')
-    page = body.replace('/* REFERENCE_STYLE */', css).replace('/* REPORT_DATA */', json.dumps(data, ensure_ascii=False, separators=(',', ':'), allow_nan=False).replace('</', '<\\/'))
-    OUT.write_text(page, encoding='utf-8', newline='\n')
-    audit = {'status':'complete','source_status':'accepted','source_result_sha256':digest(evidence/'DM_RESULT.json'),'source_seal':data['seal'],'reference_sha256':digest(ROOT/'content/daily/2026-09-06.show.html'),'html_sha256':digest(OUT),'copied_files':copied,'factor_count':24,'factor_days':14424,'figures':120,'periods':len(set(x['period'] for x in data['period_summary'])),'rendered_figures':{str(p.relative_to(ASSETS)):digest(p) for p in rendered},'method':'Presentation of sealed evaluation; no factor or return recalculation.'}
-    (ASSETS/'2026-09-07-report-build-audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2),encoding='utf-8')
+    render(ASSETS)
+    publish(data, copied, digest(evidence/'DM_RESULT.json'))
+
+
+def publish(data, copied, source_result_sha256, raw=None):
+    from depth_match_math import render_math, formulas
+    reference = ROOT / 'content/daily/2026-09-06.show.html'
+    css = re.search(r'<style>(.*?)</style>', reference.read_text(encoding='utf-8'), re.S).group(1)
+    template_path = ROOT / 'tools/depth_match_report_20260907.html'
+    script_path = ROOT / 'tools/depth_match_report_20260907.js'
+    body = render_math(template_path.read_text(encoding='utf-8'))
+    raw = raw or json.dumps(data, ensure_ascii=False, separators=(',', ':'), allow_nan=False).replace('</', '<\\/')
+    page = body.replace('/* REFERENCE_STYLE */', css).replace('/* REPORT_DATA */', raw).replace('/* FORMULA_DATA */', json.dumps(formulas(), ensure_ascii=False).replace('</', '<\\/')).replace('/* DEPTH_SCRIPT */', script_path.read_text(encoding='utf-8'))
+    OUT.write_text(page.replace('/* FIGURE_DATA */', '{}'), encoding='utf-8', newline='\n')
+    shown = sorted((ASSETS / 'figures').glob('*.png')) + sorted(p for p in (ASSETS / 'assets').glob('*.png') if p.stem.endswith(('-scatter', '-distribution')))
+    assert len(shown) == 120
+    figures = {p.relative_to(ASSETS).as_posix(): base64.b64encode(p.read_bytes()).decode() for p in shown}
+    offline = OUT.with_name('2026-09-07.html')
+    offline.write_text(page.replace('/* FIGURE_DATA */', json.dumps(figures, separators=(',', ':'))), encoding='utf-8', newline='\n')
+    audit = {'status':'complete','source_status':'accepted','source_result_sha256':source_result_sha256,'source_seal':data['seal'],'reference_sha256':digest(reference),'html_sha256':digest(OUT),'offline_html_sha256':digest(offline),'data_sha256':hashlib.sha256(raw.encode()).hexdigest(),'template_sha256':digest(template_path),'script_sha256':digest(script_path),'copied_files':copied,'factor_count':24,'factor_days':14424,'figures':120,'periods':len(set(x['period'] for x in data['period_summary'])),'rendered_figures':{p.relative_to(ASSETS).as_posix():digest(p) for p in sorted((ASSETS / 'figures').glob('*'))},'method':'Presentation of sealed evaluation; no factor or return recalculation.'}
+    (ASSETS/'2026-09-07-report-build-audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2),encoding='utf-8',newline='\n')
+    package()
+    print(json.dumps({'html_bytes':OUT.stat().st_size,'offline_bytes':offline.stat().st_size,'data_sha256':audit['data_sha256'],'periods':audit['periods']}))
+
+
+def package():
     bundle = ASSETS / '2026-09-07-depth-match-review.zip'
     with zipfile.ZipFile(bundle, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         archive.write(OUT, OUT.relative_to(ROOT / 'content'))
@@ -95,9 +113,30 @@ def build(source):
                 for item in batch:
                     output.writestr(item.filename, archive.read(item))
             assert part.stat().st_size < 25 * 1024**2
-    print(json.dumps({'html_bytes':OUT.stat().st_size,'copied_files':len(copied),'periods':audit['periods']}))
+
+
+def render_existing(daily_figures=False):
+    current = OUT.read_text(encoding='utf-8')
+    raw = re.search(r'<script[^>]*id="report-data"[^>]*>(.*?)</script>', current, re.S).group(1)
+    data = json.loads(raw)
+    audit = json.loads((ASSETS/'2026-09-07-report-build-audit.json').read_text(encoding='utf-8'))
+    for name, expected in audit['copied_files'].items():
+        if digest(ASSETS / name) != expected:
+            raise ValueError('Accepted input changed: ' + name)
+    if daily_figures:
+        from depth_match_figures import render
+        render(ASSETS, daily_only=True)
+    publish(data, audit['copied_files'], audit['source_result_sha256'], raw=raw)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=Path, required=True)
-    build(parser.parse_args().source)
+    modes = parser.add_mutually_exclusive_group(required=True)
+    modes.add_argument('--source', type=Path)
+    modes.add_argument('--render-only', action='store_true')
+    parser.add_argument('--daily-figures', action='store_true')
+    args = parser.parse_args()
+    if args.render_only:
+        render_existing(args.daily_figures)
+    else:
+        build(args.source)
