@@ -75,10 +75,26 @@ def build(source):
     with zipfile.ZipFile(bundle, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         archive.write(OUT, OUT.relative_to(ROOT / 'content'))
         for p in sorted(ASSETS.rglob('*')):
-            if p.is_file() and p != bundle:
+            if p.is_file() and p.suffix != '.zip':
                 archive.write(p, p.relative_to(ROOT / 'content'))
     with zipfile.ZipFile(bundle) as archive:
         assert archive.testzip() is None
+    with zipfile.ZipFile(bundle) as archive:
+        batches = [[]]
+        size = 0
+        for item in archive.infolist():
+            if size + item.compress_size > 19 * 1024**2 and batches[-1]:
+                batches.append([])
+                size = 0
+            batches[-1].append(item)
+            size += item.compress_size
+        assert len(batches) == 3, 'Update the three reading-package links for the new archive layout'
+        for index, batch in enumerate(batches, 1):
+            part = bundle.with_name(bundle.stem + f'-part{index:02}.zip')
+            with zipfile.ZipFile(part, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as output:
+                for item in batch:
+                    output.writestr(item.filename, archive.read(item))
+            assert part.stat().st_size < 25 * 1024**2
     print(json.dumps({'html_bytes':OUT.stat().st_size,'copied_files':len(copied),'periods':audit['periods']}))
 
 if __name__ == '__main__':
