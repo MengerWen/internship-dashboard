@@ -11,7 +11,7 @@ test('offline report supports evidence, factor exploration, interval changes and
   await expect(page.locator('h1')).toContainText('固定的等待节奏');
   await expect(page.locator('#factor-list .factor-item')).toHaveCount(24);
   await expect(page.locator('#pre-periods tr')).toHaveCount(3);
-  await expect(page.locator('#ranking tbody tr')).toHaveCount(24);
+  await expect(page.locator('#ranking tbody tr[data-factor]')).toHaveCount(24);
   await expect(page.locator('#report-validation')).toContainText('1,212'.replace(',', ''));
   await page.screenshot({ path: 'test-results/cancel-phase-desktop.png' });
   await page.selectOption('#family-filter', '7');
@@ -179,7 +179,7 @@ test('all view exposes 72 accurate hierarchical Rank IC entries and numeric IC s
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(offline);
   await expect(page.locator('.view-mode-select').first()).toHaveValue('all');
-  await expect(page.locator('#ranking tbody tr')).toHaveCount(72);
+  await expect(page.locator('#ranking tbody tr[data-factor]')).toHaveCount(72);
   await expect(page.locator('#factor-list .factor-family')).toHaveCount(7);
   await expect(page.locator('#factor-list .factor-time')).toHaveCount(14);
   await expect(page.locator('#factor-list .factor-item')).toHaveCount(72);
@@ -195,12 +195,13 @@ test('all view exposes 72 accurate hierarchical Rank IC entries and numeric IC s
     });
   });
   expect(audit).toBe(true);
-  await page.selectOption('#overview-period','2026Q2');
+  await page.selectOption('#detail-period','2026Q2');
+  await page.selectOption('#factor-arrangement','flat');
   for(const sort of ['ic','ic_abs','rank_value','rank','spread']){
-    await page.selectOption('#rank-sort',sort);
+    await page.selectOption('#factor-sort',sort);
     const sorted=await page.evaluate(sort=>{
       const bundle=JSON.parse(document.getElementById('report-data').textContent);
-      const values=[...document.querySelectorAll('#ranking tbody tr')].map(row=>{
+      const values=[...document.querySelectorAll('#ranking tbody tr[data-factor]')].map(row=>{
         const data=row.dataset.side==='total'?bundle:bundle.directions[row.dataset.side];
         const stats=data.factors.find(f=>f.id===row.dataset.factor).stats['2026Q2'];
         const v=stats[sort==='spread'?'spread_bps':sort.startsWith('rank')?'rank':'ic'];
@@ -213,6 +214,7 @@ test('all view exposes 72 accurate hierarchical Rank IC entries and numeric IC s
   const csv=require('fs').readFileSync(await download.path(),'utf8').trim().split(/\r?\n/);
   expect(csv).toHaveLength(73);
   for(const side of ['total','buy','sell'])expect(csv.filter(line=>line.startsWith('"'+side+'",'))).toHaveLength(24);
+  await page.selectOption('#factor-arrangement','grouped');
   await page.locator('#factor-list [data-id="F03"][data-side="buy"]').click();
   await expect(page.locator('#detail-id')).toContainText('F03 / cph01 · Buy');
   await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(1);
@@ -255,7 +257,7 @@ test('all direction cards synchronize topics and keep companion exports and imag
   await expect(page.locator('#image-download')).toHaveAttribute('download','buy-F02-scatter.webp');
   await page.keyboard.press('Escape');
   await page.locator('.view-mode-select').first().selectOption('separate');
-  await expect(page.locator('#ranking tbody tr')).toHaveCount(24);
+  await expect(page.locator('#ranking tbody tr[data-factor]')).toHaveCount(24);
   await expect(page.locator('#factor-list .factor-item')).toHaveCount(24);
   await expect(page.locator('.detail-stack .detail')).toHaveCount(1);
   await expect(page.locator('#pane-scatter')).toBeVisible();
@@ -380,4 +382,73 @@ test('mathematical definitions render stacked fractions offline and after factor
  }));
  expect(mobile.every(Boolean)).toBe(true);
  expect(errors).toEqual([]);expect(network).toEqual([]);
+});
+
+test('factor atlas shares grouped or flat ordering across its table, navigation and filtered export',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(offline);
+ await expect(page.locator('#results #ranking')).toHaveCount(0);
+ await expect(page.locator('#factors #ranking')).toHaveCount(1);
+ await expect(page.locator('#factor-controls #factor-arrangement')).toHaveCount(1);
+ await expect(page.locator('#ranking .ranking-group')).toHaveCount(14);
+ const sameOrder=()=>page.evaluate(()=>{
+  const table=[...document.querySelectorAll('#ranking tr[data-factor]')].map(n=>n.dataset.factor+'/'+n.dataset.side);
+  const nav=[...document.querySelectorAll('#factor-list .factor-item')].map(n=>n.dataset.id+'/'+n.dataset.side);
+  return JSON.stringify(table)===JSON.stringify(nav);
+ });
+ expect(await sameOrder()).toBe(true);
+ await page.locator('.tree-title[data-kind="family"][data-key="1"]').click();
+ await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(12);
+ await page.selectOption('#factor-arrangement','flat');
+ await expect(page.locator('#factor-sort')).toHaveValue('ic');
+ await expect(page.locator('#ranking .ranking-group')).toHaveCount(0);
+ await expect(page.locator('#factor-list details')).toHaveCount(0);
+ await expect(page.locator('.tree-controls')).toBeHidden();
+ await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(1);
+ await expect(page.locator('#factor-list .factor-item')).toHaveCount(72);
+ for(const sort of ['ic','ic_abs','rank_value','rank','spread']){
+  await page.selectOption('#factor-sort',sort);expect(await sameOrder()).toBe(true);
+ }
+ await page.selectOption('#family-filter','2');
+ await page.selectOption('#period-filter','1000');
+ await page.selectOption('#kernel-filter','heat_20ms');
+ await page.selectOption('#detail-period','2025');
+ await expect(page.locator('#ranking tr[data-factor]')).toHaveCount(3);
+ await expect(page.locator('#factor-list .factor-item')).toHaveCount(3);
+ expect(await sameOrder()).toBe(true);
+ const correct=await page.locator('#ranking tr[data-factor]').evaluateAll(nodes=>{
+  const bundle=JSON.parse(document.getElementById('report-data').textContent);
+  return nodes.every(n=>{const data=n.dataset.side==='total'?bundle:bundle.directions[n.dataset.side],f=data.factors.find(f=>f.id===n.dataset.factor);
+   return f.family===2&&f.period===1000&&f.kernel==='heat_20ms'&&n.children[2].textContent===f.stats['2025'].ic.toFixed(6);
+  });
+ });expect(correct).toBe(true);
+ await page.locator('#ranking a[data-side="buy"]').click();
+ await expect(page.locator('#detail-id')).toContainText('Buy');
+ await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(1);
+ const order=await page.locator('#ranking tr[data-factor]').evaluateAll(nodes=>nodes.map(n=>[n.dataset.side,n.dataset.factor]));
+ const pending=page.waitForEvent('download');await page.click('#download-summary');
+ const download=await pending,lines=require('fs').readFileSync(await download.path(),'utf8').trim().split(/\r?\n/);
+ expect(lines).toHaveLength(4);
+ lines.slice(1).forEach((line,i)=>expect(line).toContain('"'+order[i][0]+'","2025","'+order[i][1]+'",'));
+ await page.fill('#factor-search','no_matching_factor');
+ await expect(page.locator('#ranking tr[data-factor]')).toHaveCount(0);
+ await expect(page.locator('#download-summary')).toBeDisabled();
+ await expect(page.locator('.detail-stack .detail:visible')).toHaveCount(0);
+ await page.click('#reset-filters');await page.selectOption('#factor-sort','ic');
+ await expect(page.locator('#ranking tr[data-factor]')).toHaveCount(72);
+ await page.locator('.atlas-results').screenshot({path:'test-results/cancel-phase-flat-ranking.png'});
+ await page.locator('.factor-navigation').screenshot({path:'test-results/cancel-phase-flat-navigation.png'});
+ await page.reload();
+ await expect(page.locator('#factor-arrangement')).toHaveValue('flat');
+ await expect(page.locator('#factor-sort')).toHaveValue('ic');
+ await expect(page.locator('#detail-period')).toHaveValue('2025');
+ expect(await sameOrder()).toBe(true);
+ await page.selectOption('#factor-arrangement','grouped');
+ await expect(page.locator('#ranking .ranking-group')).toHaveCount(14);
+ await expect(page.locator('#factor-list .factor-family')).toHaveCount(7);
+ expect(await sameOrder()).toBe(true);
+ await page.locator('.atlas-results').screenshot({path:'test-results/cancel-phase-grouped-ranking.png'});
+ await page.setViewportSize({width:390,height:844});await page.selectOption('#factor-arrangement','flat');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await page.locator('.factor-navigation').screenshot({path:'test-results/cancel-phase-flat-mobile.png'});
+ expect(errors).toEqual([]);
 });
