@@ -213,6 +213,14 @@ class Builder:
     def mtime_for(self, path: Path) -> datetime:
         return datetime.fromtimestamp(path.stat().st_mtime, tz=CN_TZ)
 
+    def file_updated_time(self, path: Path) -> tuple[str, str]:
+        _, git_last = self.git_times_for(path)
+        source = "git" if git_last else "mtime"
+        updated = git_last or self.mtime_for(path)
+        if source == "mtime":
+            self.warnings.append(f"{path.relative_to(ROOT)} 更新时间来自 mtime，可能不准")
+        return self.normalize_to_cn(updated).isoformat(timespec="seconds"), source
+
     def daily_times(self, path: Path, meta: dict[str, Any]) -> tuple[str, str, str]:
         published_override = self.parse_datetime_value(meta.get("published"))
         git_first, git_last = self.git_times_for(path)
@@ -440,6 +448,8 @@ class Builder:
             show_path: str | None = None
             show_title: str | None = None
             show_content: str | None = None
+            show_updated_at: str | None = None
+            show_time_source: str | None = None
             if show_html.exists() and show_md.exists():
                 self.warnings.append(f"{date_key} 同时存在 .show.md 与 .show.html,已使用 .show.html")
             if show_html.exists():
@@ -467,6 +477,10 @@ class Builder:
                     self.show_stats["md"] += 1
             else:
                 self.show_stats["none"] += 1
+            if has_show:
+                show_updated_at, show_time_source = self.file_updated_time(
+                    show_html if show_type == "html" else show_md
+                )
             page = RenderedPage(
                 key=date_key,
                 title=title,
@@ -483,6 +497,8 @@ class Builder:
                     "has_show": has_show,
                     "show_type": show_type,
                     "show_path": show_path,
+                    "show_updated_at": show_updated_at,
+                    "show_time_source": show_time_source,
                     "download_md_path": download_md_rel.as_posix(),
                     "download_html_path": download_html_rel.as_posix(),
                 },
@@ -512,6 +528,8 @@ class Builder:
                     "has_show": has_show,
                     "show_type": show_type,
                     "show_path": show_path,
+                    "show_updated_at": show_updated_at,
+                    "show_time_source": show_time_source,
                     "download_md_path": download_md_rel.as_posix(),
                     "download_html_path": download_html_rel.as_posix(),
                 }

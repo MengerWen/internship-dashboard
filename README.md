@@ -46,6 +46,8 @@ content/daily/2026-07-08.show.html
 
 `.show.md` 和 `.show.html` 二选一。两者同时存在时 `.show.html` 生效。
 
+每日汇报顶部会分别显示文档和展示版的最后更新时间。展示版使用实际生效的 `.show.html` 或 `.show.md` 文件的最后一次 Git 提交时间；没有 Git 历史时，使用该文件的修改时间。
+
 标准写法使用 `.show.md`,每个 H2 是一幕:
 
 ```markdown

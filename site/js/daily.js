@@ -191,10 +191,14 @@
     timeMeta(item) {
       const published = this.formatTime(item.published_at);
       const updated = this.formatTime(item.updated_at);
-      if (!updated || updated.slice(0, 16) === published.slice(0, 16)) {
-        return `发布于 ${published}`;
+      const times = [`发布于 ${published}`];
+      if (updated) times.push(`文档最后更新 ${updated}`);
+      const showUpdated = this.formatTime(item.show_updated_at);
+      if (item.has_show && showUpdated) {
+        const label = item.show_type === "html" ? "HTML 展示版" : "展示版";
+        times.push(`${label}最后更新 ${showUpdated}`);
       }
-      return `发布于 ${published} · 最后更新 ${updated}`;
+      return times.join(" · ");
     },
 
     formatTime(value) {
