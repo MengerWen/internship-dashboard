@@ -10,7 +10,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-root', required=True)
     parser.add_argument('--log', type=Path, required=True)
+    parser.add_argument('--interval', type=float, default=600)
+    parser.add_argument('--once', action='store_true')
     args = parser.parse_args()
+    if args.interval <= 0:
+        parser.error('--interval must be positive')
     script = '''import json,pathlib,subprocess,time
 root=pathlib.Path(RUN_ROOT)
 def read(name):
@@ -45,7 +49,9 @@ print(json.dumps(snapshot))
                 break
         except (subprocess.TimeoutExpired, RuntimeError, ValueError, TypeError) as error:
             print(json.dumps({'monitor_error': str(error)}, ensure_ascii=False), flush=True)
-        time.sleep(40)
+        if args.once:
+            break
+        time.sleep(args.interval)
 
 
 if __name__ == '__main__':
