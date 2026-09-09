@@ -314,6 +314,16 @@ def extract():
 def render():
     from PIL import Image
     raw=(ASSETS/'report.json').read_text(encoding='utf-8')
+    payload = json.loads(raw)
+    side_paths = {side: ASSETS / side / 'report.json' for side in ('buy', 'sell')}
+    if all(path.exists() for path in side_paths.values()):
+        sides = {side: json.loads(path.read_text(encoding='utf-8')) for side, path in side_paths.items()}
+        for side, data in sides.items():
+            if data.get('direction') != side or data['dates'] != payload['dates'] or data['periods'] != payload['periods']:
+                raise ValueError('direction report does not match the total report contract')
+        payload.update(schema=2, direction='total', directions=sides)
+        raw = json.dumps(payload, ensure_ascii=False, separators=(',', ':'), allow_nan=False)
+        (ASSETS/'report.json').write_text(raw, encoding='utf-8')
     template=(ROOT/'tools/templates/cancel-phase-20260906.html').read_text(encoding='utf-8')
     # Intrinsic dimensions reserve layout space before lazy images decode.
     def dimensions(match):
