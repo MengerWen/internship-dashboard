@@ -27,7 +27,7 @@ test('offline report supports evidence, factor exploration, interval changes and
   expect(plotted).toContain('F24');
   const download = page.waitForEvent('download');
   await page.click('#download-groups');
-  expect((await download).suggestedFilename()).toBe('F24-2026Q2-deciles.csv');
+  expect((await download).suggestedFilename()).toBe('total-F24-2026Q2-deciles.csv');
   await page.click('#reset-filters');
   await page.fill('#factor-search', 'cph03');
   await expect(page.locator('#factor-list .factor-item')).toHaveCount(4);
@@ -50,7 +50,7 @@ test('offline report supports evidence, factor exploration, interval changes and
       img.onerror = () => resolve(false); img.src = 'data:image/webp;base64,' + src;
     })));
   });
-  expect(loaded.length).toBe(126);
+  expect(loaded.length).toBe(378);
   expect(loaded.every(Boolean)).toBe(true);
   expect(network).toEqual([]);
   expect(errors).toEqual([]);
@@ -104,7 +104,7 @@ test('detail navigation exposes one panel and preserves the selected topic acros
   await expect(page.locator('#detail-scatter')).toHaveAttribute('src', /^data:image\/webp/);
   const download = page.waitForEvent('download');
   await page.click('#download-ols');
-  expect((await download).suggestedFilename()).toBe('F01-full-ols.json');
+  expect((await download).suggestedFilename()).toBe('total-F01-full-ols.json');
   await page.click('#tab-groups');
   await expect(page.locator('#diagnosis-groups tr')).toHaveCount(10);
   await expect(page.locator('#group-errorbars svg')).toHaveCount(2);
@@ -112,7 +112,7 @@ test('detail navigation exposes one panel and preserves the selected topic acros
   await expect(page.locator('#dispersion-reading')).toContainText('2026Q2');
   const errorbarDownload = page.waitForEvent('download');
   await page.click('#download-errorbars');
-  expect((await errorbarDownload).suggestedFilename()).toBe('F01-2026Q2-errorbars.csv');
+  expect((await errorbarDownload).suggestedFilename()).toBe('total-F01-2026Q2-errorbars.csv');
   await page.click('#errorbars-full-button');
   await expect(page.locator('#lightbox')).toBeVisible();
   await expect(page.locator('#lightbox-title')).toContainText('全部 601 日');
@@ -121,4 +121,56 @@ test('detail navigation exposes one panel and preserves the selected topic acros
   await page.screenshot({path:'test-results/cancel-phase-errorbars.png'});
   await expect(page.locator('.detail-pane:visible')).toHaveCount(1);
   expect(errors).toEqual([]);
+});
+
+
+test('buy and sell switch the complete report, preserve factor and interval, and export side identity', async ({ page }) => {
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('http://127.0.0.1:8766/content/daily/2026-09-06.show.html#factor-F22');
+  await page.selectOption('#detail-period','2026Q2');
+  for(const side of ['buy','sell','total']){
+    await page.locator('.direction-select').last().selectOption(side);
+    await expect(page.locator('#detail-id')).toContainText(side==='total'?'Total':side==='buy'?'Buy':'Sell');
+    await expect(page.locator('#detail-id')).toContainText('F22');
+    await expect(page.locator('#detail-period')).toHaveValue('2026Q2');
+    for(const select of await page.locator('.direction-select').all())await expect(select).toHaveValue(side);
+    const verified=await page.evaluate(side=>{
+      const bundle=JSON.parse(document.getElementById('report-data').textContent);
+      const data=side==='total'?bundle:bundle.directions[side];
+      const f=data.factors.find(f=>f.id==='F22');
+      return {n:f.stats['2026Q2'].paired,rank:f.stats['2026Q2'].rank,root:data.audit.run_root};
+    },side);
+    await expect(page.locator('#detail-coverage')).toContainText(verified.n.toLocaleString('zh-CN'));
+    await expect(page.locator('#run-root')).toHaveText(verified.root);
+    for(const tab of ['daily','monthly','groups','scatter','distribution','definition']){
+      await page.click('#tab-'+tab);await expect(page.locator('#pane-'+tab)).toBeVisible();
+      await expect(page.locator('.detail-pane:visible')).toHaveCount(1);
+    }
+    const images=await page.locator('#factor-detail img').evaluateAll((imgs,side)=>Promise.all(imgs.map(img=>new Promise(resolve=>{
+      const check=()=>resolve(img.naturalWidth>0&&(side==='total'?!img.src.includes('/buy/')&&!img.src.includes('/sell/'):img.src.includes('/'+side+'/')));
+      if(img.complete)check();else{img.onload=check;img.onerror=()=>resolve(false)}
+    }))),side);
+    expect(images.every(Boolean)).toBe(true);
+    await page.click('#tab-scatter');
+    const downloadPromise=page.waitForEvent('download');await page.click('#download-ols');
+    const download=await downloadPromise;expect(download.suggestedFilename()).toBe(side+'-F22-full-ols.json');
+    const fs=require('fs');const exported=JSON.parse(fs.readFileSync(await download.path(),'utf8'));
+    expect(exported.direction).toBe(side);
+    await page.click('#tab-groups');
+    await page.locator('#factor-detail').scrollIntoViewIfNeeded();
+    await page.screenshot({path:'test-results/cancel-phase-'+side+'-groups.png'});
+  }
+  expect(errors).toEqual([]);
+});
+
+test('direction deep links and mobile side changes load real side figures',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('http://127.0.0.1:8766/content/daily/2026-09-06.show.html?direction=sell#factor-F03');
+  await expect(page.locator('#detail-id')).toContainText('Sell');
+  await expect(page.locator('#detail-id')).toContainText('F03');
+  await page.locator('.direction-select').last().selectOption('buy');
+  await page.click('#tab-groups');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.locator('#factor-detail').scrollIntoViewIfNeeded();
+  await page.screenshot({path:'test-results/cancel-phase-buy-mobile.png'});
 });

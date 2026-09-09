@@ -62,9 +62,10 @@ def main():
             raise ValueError(f'Input hash mismatch: {path}')
     (root / 'input-manifest.json').write_text(json.dumps({
         'run_root': manifest['run_root'], 'files': items,
-        'result_sha256': hashlib.sha256(args.manifest.read_bytes()).hexdigest(),
+        'result_sha256': manifest.get('result_sha256', hashlib.sha256(args.manifest.read_bytes()).hexdigest()),
         'business_revision': manifest['business_revision'],
         'evaluation_revision': manifest['evaluation_revision'],
+        **{key: manifest[key] for key in ('direction', 'execution', 'parent_run_root') if key in manifest},
     }, indent=2), encoding='utf-8')
     print(f'Verified {len(items)} inputs ({sum(f["bytes"] for f in items):,} bytes)', flush=True)
 

@@ -24,6 +24,8 @@ from matplotlib.colors import LogNorm
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'content/assets/cancel-phase-2026-09-06'
 RAW = ROOT / 'data/cancel-phase-2026-09-06/raw'
+LABEL_RAW = RAW
+DIRECTION = 'total'
 LABEL = 'ret_intraday_vwap_0944_0945_from_d1_0935_last'
 FULL = '2024-2026Q2'
 TEAL, RUST, INK = '#087b78', '#b24f35', '#243648'
@@ -87,6 +89,8 @@ def configure_plots():
 
 def save_fig(fig, name):
     from PIL import Image
+    if DIRECTION != 'total' and not name.startswith('inspiration'):
+        fig.text(.995, .995, DIRECTION.upper(), ha='right', va='top', fontsize=11, color=INK)
     buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=140, bbox_inches='tight')
     plt.close(fig)
@@ -114,7 +118,7 @@ def extract():
     for date in dates:
         f = pd.read_parquet(RAW / f'panel/days/{date}/factors.parquet')
         lp = RAW / f'labels/intraday_labels/intraday_vwap_0944_0945_from_0935_v1/shards/date={date}.parquet'
-        lab = pd.read_parquet(lp)
+        lab = pd.read_parquet(LABEL_RAW / lp.relative_to(RAW))
         assert not f.duplicated(['date', 'code']).any()
         assert not lab.duplicated(['date', 'code']).any()
         m = f[['date', 'code'] + columns].merge(lab[['date', 'code', LABEL]],
@@ -323,7 +327,7 @@ def render():
             tag = tag[:-1] + f' width="{width}" height="{height}">'
         return tag
     template = re.sub(r'<img\b[^>]*>', dimensions, template)
-    figures={p.stem:base64.b64encode(p.read_bytes()).decode() for p in sorted(ASSETS.glob('*.webp'))}
+    figures={p.relative_to(ASSETS).with_suffix('').as_posix():base64.b64encode(p.read_bytes()).decode() for p in sorted(ASSETS.rglob('*.webp'))}
     html=template.replace('__REPORT_DATA__',raw.replace('</','<\\/')).replace('__FIGURE_DATA__',json.dumps(figures))
     assert '__REPORT_DATA__' not in html and '__FIGURE_DATA__' not in html
     (ROOT/'content/daily/2026-09-06.html').write_text(html,encoding='utf-8')
@@ -334,11 +338,52 @@ def render():
     print(f'Wrote offline HTML: {len(html.encode()):,} bytes; web HTML: {len(web.encode()):,} bytes')
 
 
+def build_directions():
+    """Use the same report calculations for each side and retain accepted total data."""
+    global RAW, ASSETS, DIRECTION
+    from cancel_phase_dispersion import enrich_report
+    base_raw, base_assets = RAW, ASSETS
+    total = json.loads((base_assets / 'report.json').read_text(encoding='utf-8'))
+    total.pop('directions', None)
+    directions = {}
+    label_manifest = json.loads((base_raw / 'input-manifest.json').read_text(encoding='utf-8'))
+    label_files = [f for f in label_manifest['files'] if f['path'].startswith('labels/')]
+    for item in label_files:
+        assert digest(base_raw / item['path']) == item['sha256']
+    for side in ('buy', 'sell'):
+        RAW, ASSETS, DIRECTION = base_raw / side, base_assets / side, side
+        ASSETS.mkdir(parents=True, exist_ok=True)
+        extract()
+        enrich_report(RAW, ASSETS, save_fig, label_raw=LABEL_RAW)
+        payload = json.loads((ASSETS / 'report.json').read_text(encoding='utf-8'))
+        payload['direction'] = side
+        payload['audit'].update(direction=side, label_source=label_manifest['run_root'],
+                                verified_label_files=len(label_files))
+        source_manifest = json.loads((RAW / 'input-manifest.json').read_text(encoding='utf-8'))
+        if source_manifest.get('direction') != side:
+            raise ValueError('report input direction does not match its destination')
+        payload['audit']['execution'] = source_manifest['execution']
+        payload['audit']['direction_root'] = payload['audit']['run_root']
+        payload['audit']['run_root'] = source_manifest['parent_run_root']
+        for factor in payload['factors']:
+            factor['direction'] = side
+        assert payload['dates'] == total['dates'] and payload['periods'] == total['periods']
+        (ASSETS / 'report.json').write_text(json.dumps(payload, ensure_ascii=False, separators=(',', ':'), allow_nan=False), encoding='utf-8')
+        directions[side] = payload
+    RAW, ASSETS, DIRECTION = base_raw, base_assets, 'total'
+    total.update(schema=2, direction='total', directions=directions)
+    (ASSETS / 'report.json').write_text(json.dumps(total, ensure_ascii=False, separators=(',', ':'), allow_nan=False), encoding='utf-8')
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);mode=parser.add_mutually_exclusive_group()
+    mode.add_argument('--all-directions', action='store_true')
     mode.add_argument('--render-only',action='store_true');mode.add_argument('--dispersion-only',action='store_true');args=parser.parse_args()
     ASSETS.mkdir(parents=True,exist_ok=True)
-    if not args.render_only:
+    if args.all_directions:
+        configure_plots()
+        build_directions()
+    elif not args.render_only:
         configure_plots()
         if not args.dispersion_only: extract()
         from cancel_phase_dispersion import enrich_report

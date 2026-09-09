@@ -34,7 +34,8 @@ def daily_group_dispersion(x, y):
     return means, variances, within, between, total
 
 
-def enrich_report(raw, assets, save_fig):
+def enrich_report(raw, assets, save_fig, *, label_raw=None):
+    label_raw = raw if label_raw is None else label_raw
     report_path = assets/'report.json'
     report = json.loads(report_path.read_text(encoding='utf-8'))
     manifest = json.loads((raw/'input-manifest.json').read_text())
@@ -47,7 +48,7 @@ def enrich_report(raw, assets, save_fig):
     variance_parts = np.full((24,601,3),np.nan)
     for day_index,date in enumerate(dates):
         panel = pd.read_parquet(raw/f'panel/days/{date}/factors.parquet')
-        labels = pd.read_parquet(raw/f'labels/intraday_labels/intraday_vwap_0944_0945_from_0935_v1/shards/date={date}.parquet')
+        labels = pd.read_parquet(label_raw/f'labels/intraday_labels/intraday_vwap_0944_0945_from_0935_v1/shards/date={date}.parquet')
         merged = panel.merge(labels[['date','code',label]],on=['date','code'],how='outer',validate='one_to_one',indicator=True)
         assert merged['_merge'].eq('both').all()
         y = merged[label].to_numpy()
