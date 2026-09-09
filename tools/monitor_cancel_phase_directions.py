@@ -21,7 +21,11 @@ pid=int((root/'launcher.pid').read_text())
 snapshot={'time':time.time(),'launcher_pid':pid,'alive':pathlib.Path(f'/proc/{pid}').exists(),'progress':read('progress.json')}
 snapshot['processes']=subprocess.check_output(['ps','-u','wangly','-o','pid,ppid,pcpu,rss,comm'],text=True)
 snapshot['log_tail']=(root/'formal.log').read_text(errors='replace').splitlines()[-3:] if (root/'formal.log').exists() else []
-guard=read('guard_manifest.json')
+guard_path=root/'guard_manifest.json'
+guard=None
+if guard_path.exists():
+ guard_text=guard_path.read_text().strip()
+ guard=json.loads(guard_text) if guard_text.startswith('{') else json.loads(pathlib.Path(guard_text).read_text())
 snapshot['guard']=guard
 snapshot['result_status']=(read('DIRECTION_RESULT.json') or {}).get('status')
 print(json.dumps(snapshot))

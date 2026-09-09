@@ -211,7 +211,7 @@ function hashSelect(){let match=location.hash.match(/^#factor-(F\d{2})$/);if(mat
 window.addEventListener('hashchange',hashSelect);selectFactor(selected);hashSelect();
 function refreshEvidence(){
  $('total-paths').hidden=direction!=='total';$('side-paths').hidden=direction==='total';document.querySelectorAll('.total-evidence').forEach(el=>el.hidden=direction!=='total');
- $('side-paths').textContent=direction==='total'?'':'所选方向目录：'+direction+'/panel/days/YYYY-MM-DD/factors.parquet；'+direction+'/evaluation/。共享运行证据：DIRECTION_RESULT.json、total_comparison.json、guard_manifest.json、RUN_SEAL.json、evidence/SHA256SUMS。收益标签来源：'+DATA.audit.label_source+'。';
+ $('side-paths').textContent=direction==='total'?'':'所选方向目录：'+direction+'/panel/days/YYYY-MM-DD/factors.parquet；'+direction+'/evaluation/。共享运行证据：DIRECTION_RESULT.json、total_comparison.json、guard_manifest.json（资源记录入口）、evidence/guard.json（完整资源记录）、RUN_SEAL.json、evidence/SHA256SUMS。收益标签来源：'+DATA.audit.label_source+'。';
  const ex=BUNDLE.directions?.buy?.audit?.execution;
  $('direction-run-evidence').textContent=ex?'Buy / Sell 补充计算：601 日，两侧各 24 列。共享因子计算实测 '+num(ex.factor_wall_seconds,3)+' 秒；Buy / Sell 评价分别为 '+num(ex.evaluations.buy.wall_seconds,3)+' / '+num(ex.evaluations.sell.wall_seconds,3)+' 秒。单日 Total 对照最大绝对误差 '+ex.total_comparison.max_absolute_error.toExponential(3)+'，NaN 位置一致。业务 revision：'+ex.revision+'。':'';
 $('report-validation').textContent='本页重建的 14,424 个“日期 × 因子”十分组端点，已与正式评价逐日核对组人数和收益差。最大收益差绝对误差 '+DATA.audit.max_decile_spread_abs_error.toExponential(3)+'（收益小数单位）；输入 '+DATA.audit.verified_input_files+' 个文件的哈希全部一致。';
