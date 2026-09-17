@@ -484,7 +484,7 @@
     "formula": "按冻结组件 x14_tradeflow8_oppose 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f72_algo_aggressive": {
-    "name": "深度匹配委托量",
+    "name": "主动委托",
     "description": "订单情境与行为证据相互作用，组件为 x15_aggressive；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x15_aggressive 构造方向贡献；使用全部有效去重新委托数分母。"
   },
@@ -499,7 +499,7 @@
     "formula": "按冻结组件 x17_multilevel_sweep 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f75_algo_instant_fill": {
-    "name": "撤单流",
+    "name": "即时成交",
     "description": "订单情境与行为证据相互作用，组件为 x18_instant_fill；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x18_instant_fill 构造方向贡献；使用全部有效去重新委托数分母。"
   },
@@ -524,32 +524,32 @@
     "formula": "按冻结组件 x22_trend32_oppose 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f80_algo_short_volatility": {
-    "name": "近期价格跳跃",
+    "name": "短期波动",
     "description": "订单情境与行为证据相互作用，组件为 x23_short_volatility；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x23_short_volatility 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f81_algo_recent_jump": {
-    "name": "成交强度",
+    "name": "近期价格跳跃",
     "description": "订单情境与行为证据相互作用，组件为 x24_recent_jump；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x24_recent_jump 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f82_algo_same_book_frontloaded": {
-    "name": "撤单强度",
+    "name": "同侧订单簿前端集中",
     "description": "订单情境与行为证据相互作用，组件为 x25_common_book_frontloaded；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x25_common_book_frontloaded 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f83_algo_opponent_book_frontloaded": {
-    "name": "低对手深度",
+    "name": "对手侧订单簿前端集中",
     "description": "订单情境与行为证据相互作用，组件为 x26_relative_book_frontloaded；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x26_relative_book_frontloaded 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f84_algo_same_best_thickness": {
-    "name": "高自身队列",
+    "name": "相对最优档深度",
     "description": "订单情境与行为证据相互作用，组件为 x27_relative_best_depth；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x27_relative_best_depth 构造方向贡献；使用全部有效去重新委托数分母。"
   },
   "f85_algo_opponent_best_thickness": {
-    "name": "订单时序情境",
+    "name": "绝对最优档深度",
     "description": "订单情境与行为证据相互作用，组件为 x28_absolute_best_depth；身份和方向遵循冻结注册表。",
     "formula": "按冻结组件 x28_absolute_best_depth 构造方向贡献；使用全部有效去重新委托数分母。"
   },
@@ -780,7 +780,22 @@
   },
   "f54_algo_union_strength": {
     "name": "多证据联合强度",
-    "description": "生命周期、重挂、订单链和盘口响应证据的联合强度，按冻结的可观测嵌套最大值定义构造。",
-    "formula": "Σ 方向内联合证据强度 / N"
+    "description": "按冻结定义 raw_observable_nested_max_63 聚合可观测证据族。",
+    "formula": "Σ 方向内 cons_union 贡献 / N"
+  },
+  "f55_algo_family_breadth": {
+    "name": "证据族均值",
+    "description": "按冻结定义 raw_observable_family_mean 聚合可观测证据族。",
+    "formula": "Σ 方向内 cons_breadth 贡献 / N"
+  },
+  "f56_algo_second_strongest_family": {
+    "name": "第二强证据族",
+    "description": "按冻结定义 raw_second_family 聚合可观测证据族。",
+    "formula": "Σ 方向内 cons_top2 贡献 / N"
+  },
+  "f57_algo_third_strongest_family": {
+    "name": "第三强证据族",
+    "description": "按冻结定义 raw_third_family 聚合可观测证据族。",
+    "formula": "Σ 方向内 cons_top3 贡献 / N"
   }
 }
