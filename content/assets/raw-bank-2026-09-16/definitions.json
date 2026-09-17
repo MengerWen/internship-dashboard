@@ -1,0 +1,786 @@
+{
+  "f03_curg_hybrid_c": {
+    "name": "连续衰减的撤单紧迫度 · curg_hybrid_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "cancel_urgency",
+    "formula": "Σ 方向内来源评分 / N（遵循 f03_hybrid_v2）"
+  },
+  "f04_fastcancel_1s_c": {
+    "name": "物理上极短延迟撤单 · fastcancel_1s_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "subhuman_latency_cancel",
+    "formula": "Σ 方向内来源评分 / N（遵循 f04_1s_v2）"
+  },
+  "f05_fleet_c": {
+    "name": "短命且基本未成交 · fleet_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "fleeting_unfilled",
+    "formula": "Σ 方向内来源评分 / N（遵循 f05_default_v2）"
+  },
+  "f06_touchfleet_c": {
+    "name": "盘口附近的短命未成交单 · touchfleet_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "near_touch_fleeting",
+    "formula": "Σ 方向内来源评分 / N（遵循 f06_default_v2）"
+  },
+  "f07_pfexit_c": {
+    "name": "部分成交后快速撤掉剩余量 · pfexit_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "partial_fill_exit",
+    "formula": "Σ 方向内来源评分 / N（遵循 f07_default_v2）"
+  },
+  "f10_repost_cf_c": {
+    "name": "软重挂参与占比 · repost_cf_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "soft_repost",
+    "formula": "Σ 方向内来源评分 / N（遵循 f10_cancel_first_v2）"
+  },
+  "f10_repost_rf_c": {
+    "name": "软重挂参与占比 · repost_rf_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "soft_repost",
+    "formula": "Σ 方向内来源评分 / N（遵循 f10_replace_first_v2）"
+  },
+  "f10_repost_both_c": {
+    "name": "软重挂参与占比 · repost_both_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "soft_repost",
+    "formula": "Σ 方向内来源评分 / N（遵循 f10_both_v2）"
+  },
+  "f11_urgentrep_c": {
+    "name": "急迫重挂 · urgentrep_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "urgent_repost",
+    "formula": "Σ 方向内来源评分 / N（遵循 f11_default_v2）"
+  },
+  "f12_residrep_c": {
+    "name": "按剩余量重挂 · residrep_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "residual_size_repost",
+    "formula": "Σ 方向内来源评分 / N（遵循 f12_default_v2）"
+  },
+  "f13_refresh_c": {
+    "name": "同价刷新 · refresh_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "same_level_refresh",
+    "formula": "Σ 方向内来源评分 / N（遵循 f13_default_v2）"
+  },
+  "f14_pricesave_c": {
+    "name": "向更省钱方向退价 · pricesave_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "price_saving_repost",
+    "formula": "Σ 方向内来源评分 / N（遵循 f14_default_v2）"
+  },
+  "f15_aggrep_c": {
+    "name": "向更易成交方向追价 · aggrep_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "aggressive_repost",
+    "formula": "Σ 方向内来源评分 / N（遵循 f15_default_v2）"
+  },
+  "f16_queueimp_same_c": {
+    "name": "排队位置改善 · queueimp_same_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "queue_priority_component",
+    "formula": "Σ 方向内来源评分 / N（遵循 f16_queueimp_same_v2）"
+  },
+  "f16_priceprio_c": {
+    "name": "排队位置改善 · priceprio_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "queue_priority_component",
+    "formula": "Σ 方向内来源评分 / N（遵循 f16_priceprio_v2）"
+  },
+  "f16_frontkeep_c": {
+    "name": "排队位置改善 · frontkeep_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "queue_priority_component",
+    "formula": "Σ 方向内来源评分 / N（遵循 f16_frontkeep_v2）"
+  },
+  "f16_priorityworse_c": {
+    "name": "排队位置改善 · priorityworse_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "queue_priority_component",
+    "formula": "Σ 方向内来源评分 / N（遵循 f16_priorityworse_v2）"
+  },
+  "f19_c2mkt_c": {
+    "name": "撤被动单后改为主动成交 · c2mkt_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "cancel_to_marketable",
+    "formula": "Σ 方向内来源评分 / N（遵循 f19_default_v2）"
+  },
+  "f51_revcycle_c": {
+    "name": "完整主动改挂闭环 · revcycle_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "active_revision_cycle",
+    "formula": "Σ 方向内来源评分 / N（遵循 f51_default_v1）"
+  },
+  "f26_aggburst_c": {
+    "name": "同方向主动成交簇 · aggburst_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "aggressive_burst",
+    "formula": "Σ 方向内来源评分 / N（遵循 f26_default_v1）"
+  },
+  "f27_childseq_c": {
+    "name": "同方向子单执行序列 · childseq_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "child_execution_sequence",
+    "formula": "Σ 方向内来源评分 / N（遵循 f27_default_v1）"
+  },
+  "f28_liqswitch_c": {
+    "name": "挂单与吃单方式切换 · liqswitch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "liquidity_switching_cycle",
+    "formula": "Σ 方向内来源评分 / N（遵循 f28_default_v1）"
+  },
+  "f29_softrun_c": {
+    "name": "软订单链参与度 · softrun_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "soft_run_membership",
+    "formula": "Σ 方向内来源评分 / N（遵循 f29_default_v1）"
+  },
+  "f30_longrun_c": {
+    "name": "长链饱和分数 · longrun_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "long_run_saturation",
+    "formula": "Σ 方向内来源评分 / N（遵循 f30_default_v2）"
+  },
+  "f31_hcrun_c": {
+    "name": "最弱环节约束的高置信链 · hcrun_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "high_confidence_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f31_default_v2）"
+  },
+  "f32_reprice_c": {
+    "name": "连续改价链 · reprice_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "repricing_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f32_default_v1）"
+  },
+  "f33_bbofollow_c": {
+    "name": "跟随最优报价的改挂链 · bbofollow_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "bbo_following_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f33_default_v1）"
+  },
+  "f34_queueopt_c": {
+    "name": "连续队列优化链 · queueopt_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "queue_optimizing_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f34_default_v1）"
+  },
+  "f35_costsave_c": {
+    "name": "连续价格节省链 · costsave_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "cost_saving_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f35_default_v1）"
+  },
+  "f36_escalate_c": {
+    "name": "逐步提高成交紧迫度 · escalate_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "aggressive_escalation_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f36_default_v1）"
+  },
+  "f37_complete_c": {
+    "name": "任务量逐步完成 · complete_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "execution_completing_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f37_default_v1）"
+  },
+  "f38_adaptive_c": {
+    "name": "状态自适应订单链 · adaptive_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "state_adaptive_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f38_default_v1）"
+  },
+  "f40_iceberg_c": {
+    "name": "成交后同价补量 · iceberg_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "iceberg_like_replenishment",
+    "formula": "Σ 方向内来源评分 / N（遵循 f40_default_v2）"
+  },
+  "f41_reactive_c": {
+    "name": "事件驱动而非时钟驱动 · reactive_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "reactive_nonperiodic_run",
+    "formula": "Σ 方向内来源评分 / N（遵循 f41_default_v1）"
+  },
+  "f42_bq_own_c": {
+    "name": "最优报价变化响应 · bq_own_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "best_quote_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f42_own_bbo_v2）"
+  },
+  "f42_bq_opp_c": {
+    "name": "最优报价变化响应 · bq_opp_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "best_quote_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f42_opposite_bbo_v2）"
+  },
+  "f42_bq_own_eventmatch_c": {
+    "name": "最优报价变化响应 · bq_own_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f42_bq_own_eventmatch_v1）"
+  },
+  "f42_bq_opp_eventmatch_c": {
+    "name": "最优报价变化响应 · bq_opp_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f42_bq_opp_eventmatch_v1）"
+  },
+  "f42_bq_own_targetrepair_c": {
+    "name": "最优报价变化响应 · bq_own_targetrepair_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f42_bq_own_targetrepair_v1）"
+  },
+  "f42_bq_opp_targetrepair_c": {
+    "name": "最优报价变化响应 · bq_opp_targetrepair_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f42_bq_opp_targetrepair_v1）"
+  },
+  "f43_qdformal_c": {
+    "name": "排队被稀释后的调整 · qdformal_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "queue_dilution_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f43_formal_v2）"
+  },
+  "f43_qdformal_eventmatch_c": {
+    "name": "排队被稀释后的调整 · qdformal_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f43_qdformal_eventmatch_v1）"
+  },
+  "f44_deplete_c": {
+    "name": "深度消耗或大成交响应 · deplete_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "depletion_or_large_trade_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f44_default_v1）"
+  },
+  "f44_deplete_eventmatch_c": {
+    "name": "深度消耗或大成交响应 · deplete_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f44_deplete_eventmatch_v1）"
+  },
+  "f45_spread_nar_c": {
+    "name": "价差变化响应 · spread_nar_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "spread_regime_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f45_narrowing_v1）"
+  },
+  "f45_spread_wid_c": {
+    "name": "价差变化响应 · spread_wid_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "spread_regime_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f45_widening_v1）"
+  },
+  "f45_spread_nar_eventmatch_c": {
+    "name": "价差变化响应 · spread_nar_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f45_spread_nar_eventmatch_v1）"
+  },
+  "f45_spread_wid_eventmatch_c": {
+    "name": "价差变化响应 · spread_wid_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f45_spread_wid_eventmatch_v1）"
+  },
+  "f46_imbflip_c": {
+    "name": "盘口不平衡翻转响应 · imbflip_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "imbalance_flip_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f46_default_v1）"
+  },
+  "f46_imbflip_eventmatch_c": {
+    "name": "盘口不平衡翻转响应 · imbflip_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f46_imbflip_eventmatch_v1）"
+  },
+  "f47_voljump_c": {
+    "name": "短时波动上升响应 · voljump_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "volatility_jump_response",
+    "formula": "Σ 方向内来源评分 / N（遵循 f47_default_v1）"
+  },
+  "f47_voljump_eventmatch_c": {
+    "name": "短时波动上升响应 · voljump_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f47_voljump_eventmatch_v1）"
+  },
+  "f81_algo_recent_jump_eventmatch_c": {
+    "name": "成交强度 · algo_recent_jump_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f81_algo_recent_jump_eventmatch_v1）"
+  },
+  "f66_algo_ofi8_align_eventmatch_c": {
+    "name": "顺 OFI8 · algo_ofi8_align_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f66_algo_ofi8_align_eventmatch_v1）"
+  },
+  "f67_algo_ofi8_oppose_eventmatch_c": {
+    "name": "逆 OFI8 · algo_ofi8_oppose_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f67_algo_ofi8_oppose_eventmatch_v1）"
+  },
+  "f68_algo_ofi32_align_eventmatch_c": {
+    "name": "顺 OFI32 · algo_ofi32_align_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f68_algo_ofi32_align_eventmatch_v1）"
+  },
+  "f69_algo_ofi32_oppose_eventmatch_c": {
+    "name": "逆 OFI32 · algo_ofi32_oppose_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f69_algo_ofi32_oppose_eventmatch_v1）"
+  },
+  "f70_algo_tradeflow8_align_eventmatch_c": {
+    "name": "顺成交流8 · algo_tradeflow8_align_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f70_algo_tradeflow8_align_eventmatch_v1）"
+  },
+  "f71_algo_tradeflow8_oppose_eventmatch_c": {
+    "name": "逆成交流8 · algo_tradeflow8_oppose_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f71_algo_tradeflow8_oppose_eventmatch_v1）"
+  },
+  "f76_algo_trend8_align_eventmatch_c": {
+    "name": "顺短趋势8 · algo_trend8_align_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f76_algo_trend8_align_eventmatch_v1）"
+  },
+  "f77_algo_trend8_oppose_eventmatch_c": {
+    "name": "逆短趋势8 · algo_trend8_oppose_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f77_algo_trend8_oppose_eventmatch_v1）"
+  },
+  "f78_algo_trend32_align_eventmatch_c": {
+    "name": "顺短趋势32 · algo_trend32_align_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f78_algo_trend32_align_eventmatch_v1）"
+  },
+  "f79_algo_trend32_oppose_eventmatch_c": {
+    "name": "逆短趋势32 · algo_trend32_oppose_eventmatch_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "response_template",
+    "formula": "Σ 方向内来源评分 / N（遵循 f79_algo_trend32_oppose_eventmatch_v1）"
+  },
+  "f02_cfrac_c": {
+    "name": "撤单比例 · cfrac_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "cancel_fraction",
+    "formula": "Σ 方向内来源评分 / N（遵循 f02_default_v1）"
+  },
+  "f04_fastcancel_3s_c": {
+    "name": "物理上极短延迟撤单 · fastcancel_3s_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "subhuman_latency_cancel",
+    "formula": "Σ 方向内来源评分 / N（遵循 f04_3s_v2）"
+  },
+  "f22_mktfill_c": {
+    "name": "可成交且快速成交 · mktfill_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "marketable_fill",
+    "formula": "Σ 方向内来源评分 / N（遵循 f22_default_v1）"
+  },
+  "f23_instfill_c": {
+    "name": "成交比例—速度联合分数 · instfill_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "instant_fill_fraction",
+    "formula": "Σ 方向内来源评分 / N（遵循 f23_default_v1）"
+  },
+  "f24_depth_c": {
+    "name": "消耗对手盘深度 · depth_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "depth_consuming",
+    "formula": "Σ 方向内来源评分 / N（遵循 f24_default_v1）"
+  },
+  "f25_sweep_c": {
+    "name": "跨价位扫单 · sweep_c",
+    "description": "从订单级评分汇总该方向的行为贡献；使用全部有效去重新委托数作为分母。",
+    "base_logic": "multi_level_sweep",
+    "formula": "Σ 方向内来源评分 / N（遵循 f25_default_v1）"
+  },
+  "f58_algo_spread_wide": {
+    "name": "宽价差",
+    "description": "订单情境与行为证据相互作用，组件为 x01_spread_wide；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x01_spread_wide 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f59_algo_queue_crowded": {
+    "name": "拥挤队列",
+    "description": "订单情境与行为证据相互作用，组件为 x02_queue_crowded；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x02_queue_crowded 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f60_algo_opponent_thin": {
+    "name": "对手盘薄弱",
+    "description": "订单情境与行为证据相互作用，组件为 x03_opponent_thin；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x03_opponent_thin 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f61_algo_book_align": {
+    "name": "有符号盘口不平衡",
+    "description": "订单情境与行为证据相互作用，组件为 x04_signed_book_imbalance；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x04_signed_book_imbalance 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f62_algo_book_oppose": {
+    "name": "盘口不平衡幅度",
+    "description": "订单情境与行为证据相互作用，组件为 x05_absolute_book_imbalance；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x05_absolute_book_imbalance 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f63_algo_passive_neartouch": {
+    "name": "被动近盘口委托",
+    "description": "订单情境与行为证据相互作用，组件为 x06_passive_neartouch；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x06_passive_neartouch 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f64_algo_stale_quote_250ms": {
+    "name": "旧报价 250ms",
+    "description": "订单情境与行为证据相互作用，组件为 x07_stale_quote_250ms；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x07_stale_quote_250ms 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f65_algo_stale_quote_1000ms": {
+    "name": "旧报价 1000ms",
+    "description": "订单情境与行为证据相互作用，组件为 x08_stale_quote_1000ms；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x08_stale_quote_1000ms 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f66_algo_ofi8_align": {
+    "name": "顺 OFI8",
+    "description": "订单情境与行为证据相互作用，组件为 x09_ofi8_align；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x09_ofi8_align 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f67_algo_ofi8_oppose": {
+    "name": "逆 OFI8",
+    "description": "订单情境与行为证据相互作用，组件为 x10_ofi8_oppose；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x10_ofi8_oppose 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f68_algo_ofi32_align": {
+    "name": "顺 OFI32",
+    "description": "订单情境与行为证据相互作用，组件为 x11_ofi32_align；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x11_ofi32_align 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f69_algo_ofi32_oppose": {
+    "name": "逆 OFI32",
+    "description": "订单情境与行为证据相互作用，组件为 x12_ofi32_oppose；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x12_ofi32_oppose 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f70_algo_tradeflow8_align": {
+    "name": "顺成交流8",
+    "description": "订单情境与行为证据相互作用，组件为 x13_tradeflow8_align；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x13_tradeflow8_align 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f71_algo_tradeflow8_oppose": {
+    "name": "逆成交流8",
+    "description": "订单情境与行为证据相互作用，组件为 x14_tradeflow8_oppose；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x14_tradeflow8_oppose 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f72_algo_aggressive": {
+    "name": "深度匹配委托量",
+    "description": "订单情境与行为证据相互作用，组件为 x15_aggressive；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x15_aggressive 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f73_algo_depth_consuming": {
+    "name": "深度消耗",
+    "description": "订单情境与行为证据相互作用，组件为 x16_depth_consuming；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x16_depth_consuming 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f74_algo_multilevel_sweep": {
+    "name": "跨档扫单",
+    "description": "订单情境与行为证据相互作用，组件为 x17_multilevel_sweep；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x17_multilevel_sweep 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f75_algo_instant_fill": {
+    "name": "撤单流",
+    "description": "订单情境与行为证据相互作用，组件为 x18_instant_fill；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x18_instant_fill 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f76_algo_trend8_align": {
+    "name": "顺短趋势8",
+    "description": "订单情境与行为证据相互作用，组件为 x19_trend8_align；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x19_trend8_align 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f77_algo_trend8_oppose": {
+    "name": "逆短趋势8",
+    "description": "订单情境与行为证据相互作用，组件为 x20_trend8_oppose；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x20_trend8_oppose 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f78_algo_trend32_align": {
+    "name": "顺短趋势32",
+    "description": "订单情境与行为证据相互作用，组件为 x21_trend32_align；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x21_trend32_align 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f79_algo_trend32_oppose": {
+    "name": "逆短趋势32",
+    "description": "订单情境与行为证据相互作用，组件为 x22_trend32_oppose；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x22_trend32_oppose 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f80_algo_short_volatility": {
+    "name": "近期价格跳跃",
+    "description": "订单情境与行为证据相互作用，组件为 x23_short_volatility；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x23_short_volatility 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f81_algo_recent_jump": {
+    "name": "成交强度",
+    "description": "订单情境与行为证据相互作用，组件为 x24_recent_jump；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x24_recent_jump 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f82_algo_same_book_frontloaded": {
+    "name": "撤单强度",
+    "description": "订单情境与行为证据相互作用，组件为 x25_common_book_frontloaded；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x25_common_book_frontloaded 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f83_algo_opponent_book_frontloaded": {
+    "name": "低对手深度",
+    "description": "订单情境与行为证据相互作用，组件为 x26_relative_book_frontloaded；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x26_relative_book_frontloaded 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f84_algo_same_best_thickness": {
+    "name": "高自身队列",
+    "description": "订单情境与行为证据相互作用，组件为 x27_relative_best_depth；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x27_relative_best_depth 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f85_algo_opponent_best_thickness": {
+    "name": "订单时序情境",
+    "description": "订单情境与行为证据相互作用，组件为 x28_absolute_best_depth；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 x28_absolute_best_depth 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f87_algo_return_excess_kurtosis": {
+    "name": "收益超额峰度",
+    "description": "窗口状态与行为证据相互作用，组件为 z02_return_excess_kurtosis；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z02_return_excess_kurtosis 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f88_algo_realized_semivariance_balance": {
+    "name": "上下行半方差平衡",
+    "description": "窗口状态与行为证据相互作用，组件为 z03_realized_semivariance_balance；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z03_realized_semivariance_balance 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f89_algo_contiguous_path_efficiency": {
+    "name": "连续价格路径效率",
+    "description": "窗口状态与行为证据相互作用，组件为 z04_contiguous_path_efficiency；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z04_contiguous_path_efficiency 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f90_algo_max_drawdown_strength": {
+    "name": "最大回撤强度",
+    "description": "窗口状态与行为证据相互作用，组件为 z05_max_drawdown_strength；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z05_max_drawdown_strength 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f135_algo_max_runup_strength": {
+    "name": "最大上涨强度",
+    "description": "窗口状态与行为证据相互作用，组件为 z05b_max_runup_strength；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z05b_max_runup_strength 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f91_algo_trade_price_concentration": {
+    "name": "成交价格集中度",
+    "description": "窗口状态与行为证据相互作用，组件为 z06_trade_price_concentration；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z06_trade_price_concentration 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f92_algo_trade_direction_price_change_alignment": {
+    "name": "成交方向与价格变化一致性",
+    "description": "窗口状态与行为证据相互作用，组件为 z07_trade_direction_price_change_alignment；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z07_trade_direction_price_change_alignment 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f93_algo_spread_normalized_realized_volatility": {
+    "name": "价差归一化波动",
+    "description": "窗口状态与行为证据相互作用，组件为 z08_spread_normalized_realized_volatility；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z08_spread_normalized_realized_volatility 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f94_algo_detected_jump_path_share": {
+    "name": "检测跳跃路径占比",
+    "description": "窗口状态与行为证据相互作用，组件为 z09_detected_jump_path_share；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z09_detected_jump_path_share 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f95_algo_trade_count_impact_illiquidity": {
+    "name": "成交笔数冲击非流动性",
+    "description": "窗口状态与行为证据相互作用，组件为 z10_trade_count_impact_illiquidity；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z10_trade_count_impact_illiquidity 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f96_algo_time_weighted_spread_wide": {
+    "name": "时间加权宽价差",
+    "description": "窗口状态与行为证据相互作用，组件为 z11_time_weighted_spread_wide；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z11_time_weighted_spread_wide 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f97_algo_time_weighted_two_sided_depth_thinness": {
+    "name": "时间加权双边深度薄弱",
+    "description": "窗口状态与行为证据相互作用，组件为 z12_time_weighted_two_sided_depth_thinness；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 z12_time_weighted_two_sided_depth_thinness 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f98_maker_wide_spread": {
+    "name": "宽价差做市",
+    "description": "用途与流动性机制代理，组件为 p01_maker_wide_spread；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p01_maker_wide_spread 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f99_maker_refresh": {
+    "name": "报价刷新",
+    "description": "用途与流动性机制代理，组件为 p02_maker_refresh；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p02_maker_refresh 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f100_maker_depletion_refill": {
+    "name": "深度耗尽后补量",
+    "description": "用途与流动性机制代理，组件为 p03_maker_depletion_refill；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p03_maker_depletion_refill 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f101_maker_against_book": {
+    "name": "逆盘口做市",
+    "description": "用途与流动性机制代理，组件为 p04_maker_against_book；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p04_maker_against_book 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f103_maker_balanced_sides": {
+    "name": "双侧做市平衡",
+    "description": "用途与流动性机制代理，组件为 p06_maker_balanced_sides；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p06_maker_balanced_sides 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f104_stale_quote_refresh": {
+    "name": "旧报价刷新",
+    "description": "用途与流动性机制代理，组件为 p07_stale_quote_refresh；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p07_stale_quote_refresh 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f105_queue_competition": {
+    "name": "队列竞争",
+    "description": "用途与流动性机制代理，组件为 p08_queue_competition；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p08_queue_competition 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f106_taker_aggressive": {
+    "name": "主动获取流动性",
+    "description": "用途与流动性机制代理，组件为 p09_taker_aggressive；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p09_taker_aggressive 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f107_taker_depth_consuming": {
+    "name": "主动深度消耗",
+    "description": "用途与流动性机制代理，组件为 p10_taker_depth_consuming；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p10_taker_depth_consuming 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f108_taker_multilevel_sweep": {
+    "name": "主动跨档扫单",
+    "description": "用途与流动性机制代理，组件为 p11_taker_multilevel_sweep；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p11_taker_multilevel_sweep 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f109_taker_child_execution": {
+    "name": "子单执行",
+    "description": "用途与流动性机制代理，组件为 p12_taker_child_execution；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p12_taker_child_execution 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f110_taker_buy_pressure": {
+    "name": "买入压力",
+    "description": "用途与流动性机制代理，组件为 p13_taker_buy_pressure；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p13_taker_buy_pressure 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f111_taker_sell_pressure": {
+    "name": "卖出压力",
+    "description": "用途与流动性机制代理，组件为 p14_taker_sell_pressure；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p14_taker_sell_pressure 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f112_trend_execution_buy": {
+    "name": "顺势买入执行",
+    "description": "用途与流动性机制代理，组件为 p15_trend_execution_buy；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p15_trend_execution_buy 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f113_trend_execution_sell": {
+    "name": "顺势卖出执行",
+    "description": "用途与流动性机制代理，组件为 p16_trend_execution_sell；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p16_trend_execution_sell 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f114_counterflow_buy_liquidity": {
+    "name": "逆向买入流动性",
+    "description": "用途与流动性机制代理，组件为 p17_counterflow_buy_liquidity；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p17_counterflow_buy_liquidity 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f115_counterflow_sell_liquidity": {
+    "name": "逆向卖出流动性",
+    "description": "用途与流动性机制代理，组件为 p18_counterflow_sell_liquidity；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p18_counterflow_sell_liquidity 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f118_withdraw_spread_widening": {
+    "name": "价差扩大时撤退",
+    "description": "用途与流动性机制代理，组件为 p21_withdraw_spread_widening；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p21_withdraw_spread_widening 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f119_withdraw_volatility_jump": {
+    "name": "波动上升时撤退",
+    "description": "用途与流动性机制代理，组件为 p22_withdraw_volatility_jump；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p22_withdraw_volatility_jump 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f120_withdraw_imbalance_flip": {
+    "name": "盘口翻转时撤退",
+    "description": "用途与流动性机制代理，组件为 p23_withdraw_imbalance_flip；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p23_withdraw_imbalance_flip 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f121_cancel_impact_signed_250ms": {
+    "name": "250ms 撤单有符号冲击",
+    "description": "用途与流动性机制代理，组件为 p24_cancel_impact_signed_250ms；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p24_cancel_impact_signed_250ms 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f122_cancel_impact_abs_250ms": {
+    "name": "250ms 撤单绝对冲击",
+    "description": "用途与流动性机制代理，组件为 p25_cancel_impact_abs_250ms；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p25_cancel_impact_abs_250ms 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f123_algo_refill_100ms": {
+    "name": "100ms 算法补量",
+    "description": "用途与流动性机制代理，组件为 p26_algo_refill_100ms；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p26_algo_refill_100ms 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f124_algo_refill_500ms": {
+    "name": "500ms 算法补量",
+    "description": "用途与流动性机制代理，组件为 p27_algo_refill_500ms；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p27_algo_refill_500ms 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f125_algo_refill_1000ms": {
+    "name": "1000ms 算法补量",
+    "description": "用途与流动性机制代理，组件为 p28_algo_refill_1000ms；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p28_algo_refill_1000ms 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f126_algo_shock_withdrawal": {
+    "name": "冲击时算法撤退",
+    "description": "用途与流动性机制代理，组件为 p29_algo_shock_withdrawal；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p29_algo_shock_withdrawal 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f127_algo_herding_follow": {
+    "name": "算法顺向跟随",
+    "description": "用途与流动性机制代理，组件为 p30_algo_herding_follow；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p30_algo_herding_follow 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f128_algo_herding_contrarian": {
+    "name": "算法逆向跟随",
+    "description": "用途与流动性机制代理，组件为 p31_algo_herding_contrarian；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p31_algo_herding_contrarian 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f129_high_algo_illiquid": {
+    "name": "高算法强度与非流动性",
+    "description": "用途与流动性机制代理，组件为 p32_high_algo_illiquid；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p32_high_algo_illiquid 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f130_low_algo_illiquid": {
+    "name": "低算法强度与非流动性",
+    "description": "用途与流动性机制代理，组件为 p33_low_algo_illiquid；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p33_low_algo_illiquid 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f131_maker_minus_taker": {
+    "name": "做市减主动执行",
+    "description": "用途与流动性机制代理，组件为 p34_maker_minus_taker；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p34_maker_minus_taker 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f132_refill_minus_withdrawal": {
+    "name": "补量减撤退",
+    "description": "用途与流动性机制代理，组件为 p35_refill_minus_withdrawal；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p35_refill_minus_withdrawal 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f133_directional_taker_net": {
+    "name": "主动方向净额",
+    "description": "用途与流动性机制代理，组件为 p36_directional_taker_net；身份和方向遵循冻结注册表。",
+    "formula": "按冻结组件 p36_directional_taker_net 构造方向贡献；使用全部有效去重新委托数分母。"
+  },
+  "f54_algo_union_strength": {
+    "name": "多证据联合强度",
+    "description": "生命周期、重挂、订单链和盘口响应证据的联合强度，按冻结的可观测嵌套最大值定义构造。",
+    "formula": "Σ 方向内联合证据强度 / N"
+  }
+}

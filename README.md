@@ -67,6 +67,8 @@ title: "当日成果展示"
 
 完全定制写法使用 `.show.html`,会通过 iframe `srcdoc` 隔离运行,脚本可以执行。定制页应自包含,不要依赖 `<head>` 中的外部引用,也不要引用外部 CDN。模板在 `templates/show-html-starter.html`。
 
+较大的本地评价数据可放在 `content/assets/`，按需加载。展示版提供文件下载时，在主日报 frontmatter 中设置 `show_allow_downloads: true`；构建后该页允许下载，仍使用不授予同源权限的脚本沙箱。
+
 ## 更新正式成果页
 
 正式成果放在 `content/showcase/`。每个文件的 frontmatter 至少包含:

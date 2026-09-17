@@ -1,0 +1,38 @@
+const { chromium }=require('@playwright/test');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..');
+(async()=>{
+ const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.route('https://dashboard.test/**',route=>{const pathname=new URL(route.request().url()).pathname;const asset=path.join(root,'dist',pathname.slice(1));if(route.request().isNavigationRequest()&&pathname==='/')return route.fulfill({contentType:'text/html',body:'<div id="report"></div><style>iframe{width:100%;height:940px;border:0}</style>'});if(fs.existsSync(asset)&&fs.statSync(asset).isFile())return route.fulfill({path:asset,contentType:pathname.endsWith('.js')?'text/javascript':undefined});return route.fulfill({status:404,body:'missing asset'})});
+ await page.goto('https://dashboard.test/#/daily/2026-09-16/show');
+ await page.evaluate(fs.readFileSync(path.join(root,'site/js/router.js'),'utf8'));
+ await page.evaluate(fs.readFileSync(path.join(root,'site/js/daily.js'),'utf8'));
+ const manifest=JSON.parse(fs.readFileSync(path.join(root,'dist/manifest.json'),'utf8')),item=manifest.daily.find(r=>r.date==='2026-09-16');
+ await page.evaluate(async item=>{window.DailyView.showEl=document.querySelector('#report');window.DailyView.app=window.DashboardApp;await window.DailyView.renderShow(item)},item);
+ assert.equal(await page.locator('iframe').getAttribute('sandbox'),'allow-scripts allow-downloads');
+ const frame=page.frames().find(f=>f.parentFrame());await frame.waitForSelector('body[data-detail-ready="true"]',{timeout:60000});
+ assert.equal(await frame.locator('#factor-list .factor-item').count(),288);assert.equal(await frame.locator('#all-results tbody tr').count(),284);
+ assert.match(await frame.locator('#factor-title').innerText(),/深度耗尽后补量/);
+ await frame.selectOption('#side-filter','sell');assert.equal(await frame.locator('#factor-list .factor-item').count(),142);
+ await frame.selectOption('#side-filter','total');assert.equal(await frame.locator('#factor-list .factor-item').count(),4);
+ await frame.locator('#factor-list .factor-item').last().click();await frame.waitForFunction(()=>document.querySelector('#factor-title').textContent.includes('诊断指标'));
+ await frame.selectOption('#side-filter','all');await frame.selectOption('#layer-filter','L5');assert.equal(await frame.locator('#factor-list .factor-item').count(),66);
+ await frame.locator('#factor-list .factor-item').first().click();await frame.waitForFunction(()=>!document.querySelector('#factor-title').textContent.startsWith('正在加载'));
+ await frame.selectOption('#detail-period','43');await frame.locator('[data-tab="groups"]').click();assert.equal(await frame.locator('#pane-groups svg').count(),4);
+ await frame.locator('[data-tab="periods"]').click();assert.equal(await frame.locator('#pane-periods tbody tr').count(),44);
+ await frame.locator('[data-tab="shape"]').click();assert.equal(await frame.locator('#pane-shape svg').count(),2);
+ await frame.selectOption('#result-scope','diagnostic');assert.equal(await frame.locator('#all-results tbody tr').count(),4);
+ await frame.selectOption('#global-period','1');await frame.selectOption('#result-scope','all');assert.equal(await frame.locator('#all-results tbody tr').count(),288);
+ for(const id of ['definition','contract','results','factors','evidence']){await frame.locator('nav a[href="#'+id+'"]').click();assert.equal(frame.url(),'about:srcdoc#'+id)}
+ await frame.selectOption('#layer-filter','all');await frame.selectOption('#result-scope','formal');await frame.locator('nav a[href="#factors"]').click();
+ await frame.locator('[data-tab="groups"]').click();
+ await frame.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';document.querySelector('#factors').scrollIntoView({behavior:'instant'})});
+ const downloadEvent=page.waitForEvent('download');await frame.locator('#download-factor').click();const download=await downloadEvent;assert.match(download.suggestedFilename(),/evaluation\.json$/);const downloaded=JSON.parse(fs.readFileSync(await download.path(),'utf8'));assert.equal(downloaded.dates.length,601);assert.equal(downloaded.factor.periods.length,44);assert.equal(downloaded.factor.periods[0].groups.length,50);
+ await page.screenshot({path:process.argv[2]||path.join(root,'rawbank-report-desktop.png'),fullPage:false});
+ await page.setViewportSize({width:390,height:844});await frame.evaluate(()=>{document.querySelector('#factors').scrollIntoView()});
+ const overflow=await frame.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);assert.equal(overflow,false);
+ assert.deepEqual(errors,[]);assert.equal(page.url(),'https://dashboard.test/#/daily/2026-09-16/show');
+ await page.evaluate(async()=>{window.DailyView.app={loadFragment:async()=>'<p>Report</p>',prepareIsolatedHtml:html=>html};await window.DailyView.renderShow({date:'default',title:'Default',show_type:'html',show_path:'unused'})});assert.equal(await page.locator('iframe').getAttribute('sandbox'),'allow-scripts');
+ console.log('PASS: 288 columns, 44 periods, lazy assets, 10/40 groups, diagnostics, navigation and mobile layout');await browser.close();
+})().catch(e=>{console.error(e);process.exitCode=1});

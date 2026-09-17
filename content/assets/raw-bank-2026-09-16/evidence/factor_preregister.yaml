@@ -1,0 +1,3935 @@
+schema_version: factor_preregister_v1
+registry_version: open5m_raw_bank_v5_20260908
+mutation_policy: versioned_frozen_contract
+research_scope:
+  market: mkt_szse
+  universe: all_szse
+  research_start: '2024-01-02'
+  research_end: '2026-06-30'
+  event_window: win_0930_0935
+dataset_splits:
+  calibration:
+    selection: open5m_calibration_dates_l1_regime_2024_2026q2_v1.txt
+    date_count: 200
+    labels_read: false
+  evaluation:
+    start: '2024-01-02'
+    end: '2026-06-30'
+    date_count: 601
+    kind: full_period_observational_evaluation
+reference_data_provenance:
+  primary_provider: DorisL1
+  fallback_provider: RQData
+  cache_root: anchors/raw/reference/
+  access_stage: reference_data_fetch_only
+  l1_access_policy: select_only
+  l2_gateway: lv2_snapshot_workspace/src/snapshot/io.py
+  naming_invariant: true
+defaults:
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  score_version: score_v1
+  applicability_rule: PLAN §1.2 requires explicit *_na when a dimension is not applicable
+dimension_values:
+  clock:
+  - clock_na
+  - clock_wall
+  - clock_event
+  - clock_hybrid
+  - clock_activity
+  historical_calibration:
+  - calib_histmed_stock
+  - calib_histmed_liqfallback
+notebook_layout:
+  root: 因子/algobench/research/新factors
+  layers:
+    layer1: 第一层*单订单生命周期
+    layer2: 第二层*撤单重挂配对
+    layer3: 第三层_主动成交与流动性获取
+    layer4: 第四层*订单链与motif
+    layer5: 第五层*盘口事件响应
+    layer6: 第六层_非随机校准与闭环
+allowed_dependencies:
+- lifecycle
+- prestate
+- pairing
+- fifo_queue
+- chain
+- market_impact
+- hist_baseline
+allowed_statuses:
+- preregistered
+- blocked
+- running
+- retained
+- rejected
+- unsupported
+unsupported_base_factor_ids:
+- f39
+- f48
+- f49
+- f50
+- f53
+unsupported_reason: historical definitions whose placebo, stage2, or random-control producer is absent from the
+  active formal research schema
+artifact_registry:
+  fifo_queue:
+    artifact_version: fifo_queue_v1
+    producer: 因子/algobench/src/algobench/event_prestate.py
+    status: ready
+  chain:
+    artifact_version: chain_v1
+    producer: 因子/algobench/src/algobench/formal_chains.py
+    status: ready
+  market_impact:
+    artifact_version: market_impact_v1
+    producer: 因子/algobench/src/algobench/formal_impacts.py
+    status: ready
+calibration_protocols:
+  calibration_protocol_v1:
+    lambda_cross_day_history: train_period_only_strict_dprime_lt_d
+    intraday_bucket: fixed_60s_from_0930
+    fallback_rule: stock_condition_min_history_else_same_liquidity_group_condition
+    fallback_calibration: calib_histmed_liqfallback
+    baseline_schema_version: hist_baseline_v1
+    sufficiency_thresholds: written_per_run_in_date_manifest
+parameter_sets:
+  params_set02:
+    formula_source: PLAN §4, factor 2
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set03a:
+    formula_source: PLAN §4, factor 3
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set03b:
+    formula_source: PLAN §4, factor 3
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set03c:
+    formula_source: PLAN §4, factor 3
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set04a:
+    formula_source: PLAN §4, factor 4
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    registered_scale: 20ms
+    contract_version: 2
+  params_set04b:
+    formula_source: PLAN §4, factor 4
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    registered_scale: 1s
+    contract_version: 2
+  params_set04c:
+    formula_source: PLAN §4, factor 4
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    registered_scale: 3s
+    contract_version: 2
+  params_set05:
+    formula_source: PLAN §4, factor 5
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set06:
+    formula_source: PLAN §4, factor 6
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set07:
+    formula_source: PLAN §4, factor 7
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set08:
+    formula_source: PLAN §4, factor 8
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set09:
+    formula_source: PLAN §4, factor 9
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set10:
+    formula_source: PLAN §4, factor 10
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set11:
+    formula_source: PLAN §4, factor 11
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set12:
+    formula_source: PLAN §4, factor 12
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set13:
+    formula_source: PLAN §4, factor 13
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set14:
+    formula_source: PLAN §4, factor 14
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set15:
+    formula_source: PLAN §4, factor 15
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set16:
+    formula_source: PLAN §4, factor 16
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set17:
+    formula_source: PLAN §4, factor 17
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set18:
+    formula_source: PLAN §4, factor 18
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set19:
+    formula_source: PLAN §4, factor 19
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set20:
+    formula_source: PLAN §4, factor 20
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set21:
+    formula_source: PLAN §4, factor 21
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set22:
+    formula_source: PLAN §4, factor 22
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set23:
+    formula_source: PLAN §4, factor 23
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set24:
+    formula_source: PLAN §4, factor 24
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set25:
+    formula_source: PLAN §4, factor 25
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set26:
+    formula_source: PLAN §4, factor 26
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set27:
+    formula_source: PLAN §4, factor 27
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set28:
+    formula_source: PLAN §4, factor 28
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set29:
+    formula_source: PLAN §4, factor 29
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set30:
+    formula_source: PLAN §4, factor 30
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set31:
+    formula_source: PLAN §4, factor 31
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set32:
+    formula_source: PLAN §4, factor 32
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set33:
+    formula_source: PLAN §4, factor 33
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set34:
+    formula_source: PLAN §4, factor 34
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set35:
+    formula_source: PLAN §4, factor 35
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set36:
+    formula_source: PLAN §4, factor 36
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set37:
+    formula_source: PLAN §4, factor 37
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set38:
+    formula_source: PLAN §4, factor 38
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set39:
+    formula_source: PLAN §4, factor 39
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set40:
+    formula_source: PLAN §4, factor 40
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set41:
+    formula_source: PLAN §4, factor 41
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set42:
+    formula_source: PLAN §4, factor 42
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set43:
+    formula_source: PLAN §4, factor 43
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    shock_normalization_version: queue_ahead_increase_fraction_v1
+    contract_version: 2
+  params_set44:
+    formula_source: PLAN §4, factor 44
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set45:
+    formula_source: PLAN §4, factor 45
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set46:
+    formula_source: PLAN §4, factor 46
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set47:
+    formula_source: PLAN §4, factor 47
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set48:
+    formula_source: PLAN §4, factor 48
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set49:
+    formula_source: PLAN §4, factor 49
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set50:
+    formula_source: PLAN §4, factor 50
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set51:
+    formula_source: PLAN §4, factor 51
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set52:
+    formula_source: PLAN §4, factor 52
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set53:
+    formula_source: PLAN §4, factor 53
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set54:
+    formula_source: PLAN §5.1
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set55:
+    formula_source: PLAN §5.2
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set56:
+    formula_source: PLAN §5.3
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set57:
+    formula_source: PLAN §5.4
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set58:
+    formula_source: PLAN §5.5
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    contract_version: 2
+  params_set58_simple:
+    formula_source: PLAN §5.5; simplified wide-window no-later-same-side scorer
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    criterion_version: wide_window_no_later_same_side_v1
+    implementation_note: interim scorer; pairing upgrade must append a new record version
+    contract_version: 2
+  params_set58_pairing:
+    formula_source: PLAN §5.5; pairing-based random-cancel control
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    criterion_version: one_minus_local_best_pair_link_v1
+    implementation_note: C_i * (1 - max_j L_ij); resolved only by params_set01_frozen.yaml
+    contract_version: 2
+  params_set43_formal_v2:
+    formula_source: PLAN §3.11 and §4, factor 43; unified market-impact response
+    theta_time: pending_calibration
+    theta_qty: pending_calibration
+    theta_price: pending_calibration
+    theta_other: pending_calibration
+    shock_normalization_version: market_impact_v1
+    contract_version: 2
+expected_inventory:
+  main_base_factors: 52
+  ctrl_base_factors: 5
+  specification_variants: 71
+  formal_columns: 213
+records:
+- record_id: f02_default_v1_count
+  record_version: v1
+  base_factor_id: f02
+  specification_id: f02_default_v1
+  formal_column: cancel_fraction__mkt_szse__win_0930_0935__clock_na__scale_na__seq_na__match_na__calib_na__decomp_raw__params_set02__score_v1__count
+  short_alias: f02_cfrac_c
+  plan_layer: layer1
+  notebook: 因子/algobench/research/新factors/第一层*单订单生命周期/f02_cfrac_c.ipynb
+  base_logic: cancel_fraction
+  formula_source: PLAN §4, factor 2
+  logic: cancel_fraction
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_na
+  scale: scale_na
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set02
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f03_hybrid_v2_count
+  record_version: v2
+  base_factor_id: f03
+  specification_id: f03_hybrid_v2
+  formal_column: cancel_urgency__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set03c__score_v2__count
+  short_alias: f03_curg_hybrid_c
+  plan_layer: layer1
+  notebook: 因子/algobench/research/新factors/第一层*单订单生命周期/f03_curg_hybrid_c.ipynb
+  base_logic: cancel_urgency
+  formula_source: PLAN §4, factor 3
+  logic: cancel_urgency
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set03c
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f04_1s_v2_count
+  record_version: v2
+  base_factor_id: f04
+  specification_id: f04_1s_v2
+  formal_column: subhuman_latency_cancel__mkt_szse__win_0930_0935__clock_wall__scale_1s__seq_na__match_na__calib_na__decomp_raw__params_set04b__score_v2__count
+  short_alias: f04_fastcancel_1s_c
+  plan_layer: layer1
+  notebook: 因子/algobench/research/新factors/第一层*单订单生命周期/f04_fastcancel_1s_c.ipynb
+  base_logic: subhuman_latency_cancel
+  formula_source: PLAN §4, factor 4
+  logic: subhuman_latency_cancel
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_wall
+  scale: scale_1s
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set04b
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f04_3s_v2_count
+  record_version: v2
+  base_factor_id: f04
+  specification_id: f04_3s_v2
+  formal_column: subhuman_latency_cancel__mkt_szse__win_0930_0935__clock_wall__scale_3s__seq_na__match_na__calib_na__decomp_raw__params_set04c__score_v2__count
+  short_alias: f04_fastcancel_3s_c
+  plan_layer: layer1
+  notebook: 因子/algobench/research/新factors/第一层*单订单生命周期/f04_fastcancel_3s_c.ipynb
+  base_logic: subhuman_latency_cancel
+  formula_source: PLAN §4, factor 4
+  logic: subhuman_latency_cancel
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_wall
+  scale: scale_3s
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set04c
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f05_default_v2_count
+  record_version: v2
+  base_factor_id: f05
+  specification_id: f05_default_v2
+  formal_column: fleeting_unfilled__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set05__score_v2__count
+  short_alias: f05_fleet_c
+  plan_layer: layer1
+  notebook: 因子/algobench/research/新factors/第一层*单订单生命周期/f05_fleet_c.ipynb
+  base_logic: fleeting_unfilled
+  formula_source: PLAN §4, factor 5
+  logic: fleeting_unfilled
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set05
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f06_default_v2_count
+  record_version: v2
+  base_factor_id: f06
+  specification_id: f06_default_v2
+  formal_column: near_touch_fleeting__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set06__score_v2__count
+  short_alias: f06_touchfleet_c
+  plan_layer: layer1
+  notebook: 因子/algobench/research/新factors/第一层*单订单生命周期/f06_touchfleet_c.ipynb
+  base_logic: near_touch_fleeting
+  formula_source: PLAN §4, factor 6
+  logic: near_touch_fleeting
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set06
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f07_default_v2_count
+  record_version: v2
+  base_factor_id: f07
+  specification_id: f07_default_v2
+  formal_column: partial_fill_exit__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set07__score_v2__count
+  short_alias: f07_pfexit_c
+  plan_layer: layer1
+  notebook: 因子/algobench/research/新factors/第一层*单订单生命周期/f07_pfexit_c.ipynb
+  base_logic: partial_fill_exit
+  formula_source: PLAN §4, factor 7
+  logic: partial_fill_exit
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set07
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f10_cancel_first_v2_count
+  record_version: v2
+  base_factor_id: f10
+  specification_id: f10_cancel_first_v2
+  formal_column: soft_repost__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_cancel_first__match_local_best__calib_na__decomp_raw__params_set10__score_v2__count
+  short_alias: f10_repost_cf_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f10_repost_cf_c.ipynb
+  base_logic: soft_repost
+  formula_source: PLAN §4, factor 10
+  logic: soft_repost
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_cancel_first
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set10
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f10_replace_first_v2_count
+  record_version: v2
+  base_factor_id: f10
+  specification_id: f10_replace_first_v2
+  formal_column: soft_repost__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_replace_first__match_local_best__calib_na__decomp_raw__params_set10__score_v2__count
+  short_alias: f10_repost_rf_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f10_repost_rf_c.ipynb
+  base_logic: soft_repost
+  formula_source: PLAN §4, factor 10
+  logic: soft_repost
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_replace_first
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set10
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f10_both_v2_count
+  record_version: v2
+  base_factor_id: f10
+  specification_id: f10_both_v2
+  formal_column: soft_repost__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set10__score_v2__count
+  short_alias: f10_repost_both_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f10_repost_both_c.ipynb
+  base_logic: soft_repost
+  formula_source: PLAN §4, factor 10
+  logic: soft_repost
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set10
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f11_default_v2_count
+  record_version: v2
+  base_factor_id: f11
+  specification_id: f11_default_v2
+  formal_column: urgent_repost__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set11__score_v2__count
+  short_alias: f11_urgentrep_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f11_urgentrep_c.ipynb
+  base_logic: urgent_repost
+  formula_source: PLAN §4, factor 11
+  logic: urgent_repost
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set11
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f12_default_v2_count
+  record_version: v2
+  base_factor_id: f12
+  specification_id: f12_default_v2
+  formal_column: residual_size_repost__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set12__score_v2__count
+  short_alias: f12_residrep_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f12_residrep_c.ipynb
+  base_logic: residual_size_repost
+  formula_source: PLAN §4, factor 12
+  logic: residual_size_repost
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set12
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f13_default_v2_count
+  record_version: v2
+  base_factor_id: f13
+  specification_id: f13_default_v2
+  formal_column: same_level_refresh__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set13__score_v2__count
+  short_alias: f13_refresh_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f13_refresh_c.ipynb
+  base_logic: same_level_refresh
+  formula_source: PLAN §4, factor 13
+  logic: same_level_refresh
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set13
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f14_default_v2_count
+  record_version: v2
+  base_factor_id: f14
+  specification_id: f14_default_v2
+  formal_column: price_saving_repost__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set14__score_v2__count
+  short_alias: f14_pricesave_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f14_pricesave_c.ipynb
+  base_logic: price_saving_repost
+  formula_source: PLAN §4, factor 14
+  logic: price_saving_repost
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set14
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f15_default_v2_count
+  record_version: v2
+  base_factor_id: f15
+  specification_id: f15_default_v2
+  formal_column: aggressive_repost__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set15__score_v2__count
+  short_alias: f15_aggrep_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f15_aggrep_c.ipynb
+  base_logic: aggressive_repost
+  formula_source: PLAN §4, factor 15
+  logic: aggressive_repost
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set15
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f19_default_v2_count
+  record_version: v2
+  base_factor_id: f19
+  specification_id: f19_default_v2
+  formal_column: cancel_to_marketable__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_cancel_first__match_local_best__calib_na__decomp_raw__params_set19__score_v2__count
+  short_alias: f19_c2mkt_c
+  plan_layer: layer2
+  notebook: 因子/algobench/research/新factors/第二层*撤单重挂配对/f19_c2mkt_c.ipynb
+  base_logic: cancel_to_marketable
+  formula_source: PLAN §4, factor 19
+  logic: cancel_to_marketable
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_cancel_first
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set19
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f22_default_v1_count
+  record_version: v1
+  base_factor_id: f22
+  specification_id: f22_default_v1
+  formal_column: marketable_fill__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set22__score_v1__count
+  short_alias: f22_mktfill_c
+  plan_layer: layer3
+  notebook: 因子/algobench/research/新factors/第三层_主动成交与流动性获取/f22_mktfill_c.ipynb
+  base_logic: marketable_fill
+  formula_source: PLAN §4, factor 22
+  logic: marketable_fill
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set22
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f23_default_v1_count
+  record_version: v1
+  base_factor_id: f23
+  specification_id: f23_default_v1
+  formal_column: instant_fill_fraction__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set23__score_v1__count
+  short_alias: f23_instfill_c
+  plan_layer: layer3
+  notebook: 因子/algobench/research/新factors/第三层_主动成交与流动性获取/f23_instfill_c.ipynb
+  base_logic: instant_fill_fraction
+  formula_source: PLAN §4, factor 23
+  logic: instant_fill_fraction
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set23
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f24_default_v1_count
+  record_version: v1
+  base_factor_id: f24
+  specification_id: f24_default_v1
+  formal_column: depth_consuming__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set24__score_v1__count
+  short_alias: f24_depth_c
+  plan_layer: layer3
+  notebook: 因子/algobench/research/新factors/第三层_主动成交与流动性获取/f24_depth_c.ipynb
+  base_logic: depth_consuming
+  formula_source: PLAN §4, factor 24
+  logic: depth_consuming
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set24
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f25_default_v1_count
+  record_version: v1
+  base_factor_id: f25
+  specification_id: f25_default_v1
+  formal_column: multi_level_sweep__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set25__score_v1__count
+  short_alias: f25_sweep_c
+  plan_layer: layer3
+  notebook: 因子/algobench/research/新factors/第三层_主动成交与流动性获取/f25_sweep_c.ipynb
+  base_logic: multi_level_sweep
+  formula_source: PLAN §4, factor 25
+  logic: multi_level_sweep
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set25
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f26_default_v1_count
+  record_version: v1
+  base_factor_id: f26
+  specification_id: f26_default_v1
+  formal_column: aggressive_burst__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_na__match_na__calib_na__decomp_raw__params_set26__score_v1__count
+  short_alias: f26_aggburst_c
+  plan_layer: layer3
+  notebook: 因子/algobench/research/新factors/第三层_主动成交与流动性获取/f26_aggburst_c.ipynb
+  base_logic: aggressive_burst
+  formula_source: PLAN §4, factor 26
+  logic: aggressive_burst
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_na
+  matching: match_na
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set26
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f27_default_v1_count
+  record_version: v1
+  base_factor_id: f27
+  specification_id: f27_default_v1
+  formal_column: child_execution_sequence__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set27__score_v1__count
+  short_alias: f27_childseq_c
+  plan_layer: layer3
+  notebook: 因子/algobench/research/新factors/第三层_主动成交与流动性获取/f27_childseq_c.ipynb
+  base_logic: child_execution_sequence
+  formula_source: PLAN §4, factor 27
+  logic: child_execution_sequence
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set27
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f28_default_v1_count
+  record_version: v1
+  base_factor_id: f28
+  specification_id: f28_default_v1
+  formal_column: liquidity_switching_cycle__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set28__score_v1__count
+  short_alias: f28_liqswitch_c
+  plan_layer: layer3
+  notebook: 因子/algobench/research/新factors/第三层_主动成交与流动性获取/f28_liqswitch_c.ipynb
+  base_logic: liquidity_switching_cycle
+  formula_source: PLAN §4, factor 28
+  logic: liquidity_switching_cycle
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set28
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f29_default_v1_count
+  record_version: v1
+  base_factor_id: f29
+  specification_id: f29_default_v1
+  formal_column: soft_run_membership__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set29__score_v1__count
+  short_alias: f29_softrun_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f29_softrun_c.ipynb
+  base_logic: soft_run_membership
+  formula_source: PLAN §4, factor 29
+  logic: soft_run_membership
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set29
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f30_default_v2_count
+  record_version: v2
+  base_factor_id: f30
+  specification_id: f30_default_v2
+  formal_column: long_run_saturation__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set30__score_v2__count
+  short_alias: f30_longrun_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f30_longrun_c.ipynb
+  base_logic: long_run_saturation
+  formula_source: PLAN §4, factor 30
+  logic: long_run_saturation
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set30
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f31_default_v2_count
+  record_version: v2
+  base_factor_id: f31
+  specification_id: f31_default_v2
+  formal_column: high_confidence_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set31__score_v2__count
+  short_alias: f31_hcrun_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f31_hcrun_c.ipynb
+  base_logic: high_confidence_run
+  formula_source: PLAN §4, factor 31
+  logic: high_confidence_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set31
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f32_default_v1_count
+  record_version: v1
+  base_factor_id: f32
+  specification_id: f32_default_v1
+  formal_column: repricing_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set32__score_v1__count
+  short_alias: f32_reprice_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f32_reprice_c.ipynb
+  base_logic: repricing_run
+  formula_source: PLAN §4, factor 32
+  logic: repricing_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set32
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f33_default_v1_count
+  record_version: v1
+  base_factor_id: f33
+  specification_id: f33_default_v1
+  formal_column: bbo_following_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set33__score_v1__count
+  short_alias: f33_bbofollow_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f33_bbofollow_c.ipynb
+  base_logic: bbo_following_run
+  formula_source: PLAN §4, factor 33
+  logic: bbo_following_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set33
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f34_default_v1_count
+  record_version: v1
+  base_factor_id: f34
+  specification_id: f34_default_v1
+  formal_column: queue_optimizing_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set34__score_v1__count
+  short_alias: f34_queueopt_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f34_queueopt_c.ipynb
+  base_logic: queue_optimizing_run
+  formula_source: PLAN §4, factor 34
+  logic: queue_optimizing_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set34
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - chain
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f35_default_v1_count
+  record_version: v1
+  base_factor_id: f35
+  specification_id: f35_default_v1
+  formal_column: cost_saving_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set35__score_v1__count
+  short_alias: f35_costsave_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f35_costsave_c.ipynb
+  base_logic: cost_saving_run
+  formula_source: PLAN §4, factor 35
+  logic: cost_saving_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set35
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f36_default_v1_count
+  record_version: v1
+  base_factor_id: f36
+  specification_id: f36_default_v1
+  formal_column: aggressive_escalation_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set36__score_v1__count
+  short_alias: f36_escalate_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f36_escalate_c.ipynb
+  base_logic: aggressive_escalation_run
+  formula_source: PLAN §4, factor 36
+  logic: aggressive_escalation_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set36
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f37_default_v1_count
+  record_version: v1
+  base_factor_id: f37
+  specification_id: f37_default_v1
+  formal_column: execution_completing_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set37__score_v1__count
+  short_alias: f37_complete_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f37_complete_c.ipynb
+  base_logic: execution_completing_run
+  formula_source: PLAN §4, factor 37
+  logic: execution_completing_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set37
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f38_default_v1_count
+  record_version: v1
+  base_factor_id: f38
+  specification_id: f38_default_v1
+  formal_column: state_adaptive_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set38__score_v1__count
+  short_alias: f38_adaptive_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f38_adaptive_c.ipynb
+  base_logic: state_adaptive_run
+  formula_source: PLAN §4, factor 38
+  logic: state_adaptive_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set38
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f40_default_v2_count
+  record_version: v2
+  base_factor_id: f40
+  specification_id: f40_default_v2
+  formal_column: iceberg_like_replenishment__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set40__score_v2__count
+  short_alias: f40_iceberg_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f40_iceberg_c.ipynb
+  base_logic: iceberg_like_replenishment
+  formula_source: PLAN §4, factor 40
+  logic: iceberg_like_replenishment
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set40
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f41_default_v1_count
+  record_version: v1
+  base_factor_id: f41
+  specification_id: f41_default_v1
+  formal_column: reactive_nonperiodic_run__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set41__score_v1__count
+  short_alias: f41_reactive_c
+  plan_layer: layer4
+  notebook: 因子/algobench/research/新factors/第四层*订单链与motif/f41_reactive_c.ipynb
+  base_logic: reactive_nonperiodic_run
+  formula_source: PLAN §4, factor 41
+  logic: reactive_nonperiodic_run
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set41
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f42_own_bbo_v2_count
+  record_version: v2
+  base_factor_id: f42
+  specification_id: f42_own_bbo_v2
+  formal_column: best_quote_response_own_bbo__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v2__count
+  short_alias: f42_bq_own_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f42_bq_own_c.ipynb
+  base_logic: best_quote_response
+  formula_source: PLAN §4, factor 42
+  logic: best_quote_response_own_bbo
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f42_opposite_bbo_v2_count
+  record_version: v2
+  base_factor_id: f42
+  specification_id: f42_opposite_bbo_v2
+  formal_column: best_quote_response_opposite_bbo__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v2__count
+  short_alias: f42_bq_opp_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f42_bq_opp_c.ipynb
+  base_logic: best_quote_response
+  formula_source: PLAN §4, factor 42
+  logic: best_quote_response_opposite_bbo
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f44_default_v1_count
+  record_version: v1
+  base_factor_id: f44
+  specification_id: f44_default_v1
+  formal_column: depletion_or_large_trade_response__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_histmed_stock__decomp_raw__params_set44__score_v1__count
+  short_alias: f44_deplete_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f44_deplete_c.ipynb
+  base_logic: depletion_or_large_trade_response
+  formula_source: PLAN §4, factor 44
+  logic: depletion_or_large_trade_response
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_histmed_stock
+  decomposition: decomp_raw
+  params_set_id: params_set44
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - hist_baseline
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f45_narrowing_v1_count
+  record_version: v1
+  base_factor_id: f45
+  specification_id: f45_narrowing_v1
+  formal_column: spread_narrowing_response__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set45__score_v1__count
+  short_alias: f45_spread_nar_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f45_spread_nar_c.ipynb
+  base_logic: spread_regime_response
+  formula_source: PLAN §4, factor 45
+  logic: spread_narrowing_response
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set45
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f45_widening_v1_count
+  record_version: v1
+  base_factor_id: f45
+  specification_id: f45_widening_v1
+  formal_column: spread_widening_response__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set45__score_v1__count
+  short_alias: f45_spread_wid_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f45_spread_wid_c.ipynb
+  base_logic: spread_regime_response
+  formula_source: PLAN §4, factor 45
+  logic: spread_widening_response
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set45
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f46_default_v1_count
+  record_version: v1
+  base_factor_id: f46
+  specification_id: f46_default_v1
+  formal_column: imbalance_flip_response__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_histmed_liqfallback__decomp_raw__params_set46__score_v1__count
+  short_alias: f46_imbflip_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f46_imbflip_c.ipynb
+  base_logic: imbalance_flip_response
+  formula_source: PLAN §4, factor 46
+  logic: imbalance_flip_response
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_histmed_liqfallback
+  decomposition: decomp_raw
+  params_set_id: params_set46
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - hist_baseline
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f47_default_v1_count
+  record_version: v1
+  base_factor_id: f47
+  specification_id: f47_default_v1
+  formal_column: volatility_jump_response__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_histmed_liqfallback__decomp_raw__params_set47__score_v1__count
+  short_alias: f47_voljump_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f47_voljump_c.ipynb
+  base_logic: volatility_jump_response
+  formula_source: PLAN §4, factor 47
+  logic: volatility_jump_response
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_histmed_liqfallback
+  decomposition: decomp_raw
+  params_set_id: params_set47
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - hist_baseline
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f51_default_v1_count
+  record_version: v1
+  base_factor_id: f51
+  specification_id: f51_default_v1
+  formal_column: active_revision_cycle__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_histmed_liqfallback__decomp_raw__params_set51__score_v1__count
+  short_alias: f51_revcycle_c
+  plan_layer: layer6
+  notebook: 因子/algobench/research/新factors/第六层_非随机校准与闭环/f51_revcycle_c.ipynb
+  base_logic: active_revision_cycle
+  formula_source: PLAN §4, factor 51
+  logic: active_revision_cycle
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_histmed_liqfallback
+  decomposition: decomp_raw
+  params_set_id: params_set51
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - hist_baseline
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: null
+  supersedes_record_id: null
+- record_id: f43_formal_v2_count
+  record_version: v2
+  base_factor_id: f43
+  specification_id: f43_formal_v2
+  formal_column: queue_dilution_response_formal__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set43_formal_v2__score_v1__count
+  short_alias: f43_qdformal_c
+  plan_layer: layer5
+  notebook: 因子/algobench/research/新factors/第五层*盘口事件响应/f43_qdformal_c.ipynb
+  base_logic: queue_dilution_response
+  formula_source: PLAN §3.11 and §4, factor 43; unified market-impact response
+  logic: queue_dilution_response_formal
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set43_formal_v2
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  - qty
+  - amount
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  train_period:
+    start: '2020-01-02'
+    end: '2022-12-31'
+  validation_period:
+    start: '2023-01-01'
+    end: '2024-12-31'
+  holdout_period:
+    start: '2025-01-01'
+    end: '2026-07-01'
+  decomposition_pair_id: null
+  paired_formal_column: null
+  status: preregistered
+  status_reason: market_impact_v1 formal scorer ready; theta remains pending calibration
+  supersedes_record_id: f43_default_v1_count
+- record_version: v2
+  base_factor_id: f16
+  plan_layer: layer2
+  notebook: ''
+  base_logic: queue_priority_component
+  formula_source: 2026-08-28 old-factor revision section 13
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set16
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  status: preregistered
+  status_reason: null
+  record_id: f16_queueimp_same_v2_count
+  specification_id: f16_queueimp_same_v2
+  formal_column: queue_priority_same__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set16__score_v2__count
+  short_alias: f16_queueimp_same_c
+  logic: queueimp_same
+- record_version: v2
+  base_factor_id: f16
+  plan_layer: layer2
+  notebook: ''
+  base_logic: queue_priority_component
+  formula_source: 2026-08-28 old-factor revision section 13
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set16
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  status: preregistered
+  status_reason: null
+  record_id: f16_priceprio_v2_count
+  specification_id: f16_priceprio_v2
+  formal_column: queue_price_priority__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set16__score_v2__count
+  short_alias: f16_priceprio_c
+  logic: priceprio
+- record_version: v2
+  base_factor_id: f16
+  plan_layer: layer2
+  notebook: ''
+  base_logic: queue_priority_component
+  formula_source: 2026-08-28 old-factor revision section 13
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set16
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  status: preregistered
+  status_reason: null
+  record_id: f16_frontkeep_v2_count
+  specification_id: f16_frontkeep_v2
+  formal_column: queue_front_keep__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set16__score_v2__count
+  short_alias: f16_frontkeep_c
+  logic: frontkeep
+- record_version: v2
+  base_factor_id: f16
+  plan_layer: layer2
+  notebook: ''
+  base_logic: queue_priority_component
+  formula_source: 2026-08-28 old-factor revision section 13
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set16
+  score_version: score_v2
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  status: preregistered
+  status_reason: null
+  record_id: f16_priorityworse_v2_count
+  specification_id: f16_priorityworse_v2
+  formal_column: queue_priority_worse__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set16__score_v2__count
+  short_alias: f16_priorityworse_c
+  logic: priorityworse
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f42_bq_own_eventmatch_v1_count
+  base_factor_id: f42
+  specification_id: f42_bq_own_eventmatch_v1
+  formal_column: response_f42_bq_own_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f42_bq_own_eventmatch_c
+  logic: f42_bq_own_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f42_bq_opp_eventmatch_v1_count
+  base_factor_id: f42
+  specification_id: f42_bq_opp_eventmatch_v1
+  formal_column: response_f42_bq_opp_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f42_bq_opp_eventmatch_c
+  logic: f42_bq_opp_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f42_bq_own_targetrepair_v1_count
+  base_factor_id: f42
+  specification_id: f42_bq_own_targetrepair_v1
+  formal_column: response_f42_bq_own_targetrepair__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f42_bq_own_targetrepair_c
+  logic: f42_bq_own_targetrepair
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f42_bq_opp_targetrepair_v1_count
+  base_factor_id: f42
+  specification_id: f42_bq_opp_targetrepair_v1
+  formal_column: response_f42_bq_opp_targetrepair__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f42_bq_opp_targetrepair_c
+  logic: f42_bq_opp_targetrepair
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f43_qdformal_eventmatch_v1_count
+  base_factor_id: f43
+  specification_id: f43_qdformal_eventmatch_v1
+  formal_column: response_f43_qdformal_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f43_qdformal_eventmatch_c
+  logic: f43_qdformal_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f44_deplete_eventmatch_v1_count
+  base_factor_id: f44
+  specification_id: f44_deplete_eventmatch_v1
+  formal_column: response_f44_deplete_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f44_deplete_eventmatch_c
+  logic: f44_deplete_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f45_spread_nar_eventmatch_v1_count
+  base_factor_id: f45
+  specification_id: f45_spread_nar_eventmatch_v1
+  formal_column: response_f45_spread_nar_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f45_spread_nar_eventmatch_c
+  logic: f45_spread_nar_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f45_spread_wid_eventmatch_v1_count
+  base_factor_id: f45
+  specification_id: f45_spread_wid_eventmatch_v1
+  formal_column: response_f45_spread_wid_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f45_spread_wid_eventmatch_c
+  logic: f45_spread_wid_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f46_imbflip_eventmatch_v1_count
+  base_factor_id: f46
+  specification_id: f46_imbflip_eventmatch_v1
+  formal_column: response_f46_imbflip_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f46_imbflip_eventmatch_c
+  logic: f46_imbflip_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f47_voljump_eventmatch_v1_count
+  base_factor_id: f47
+  specification_id: f47_voljump_eventmatch_v1
+  formal_column: response_f47_voljump_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f47_voljump_eventmatch_c
+  logic: f47_voljump_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f81_algo_recent_jump_eventmatch_v1_count
+  base_factor_id: f81
+  specification_id: f81_algo_recent_jump_eventmatch_v1
+  formal_column: response_f81_algo_recent_jump_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f81_algo_recent_jump_eventmatch_c
+  logic: f81_algo_recent_jump_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f66_algo_ofi8_align_eventmatch_v1_count
+  base_factor_id: f66
+  specification_id: f66_algo_ofi8_align_eventmatch_v1
+  formal_column: response_f66_algo_ofi8_align_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f66_algo_ofi8_align_eventmatch_c
+  logic: f66_algo_ofi8_align_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f67_algo_ofi8_oppose_eventmatch_v1_count
+  base_factor_id: f67
+  specification_id: f67_algo_ofi8_oppose_eventmatch_v1
+  formal_column: response_f67_algo_ofi8_oppose_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f67_algo_ofi8_oppose_eventmatch_c
+  logic: f67_algo_ofi8_oppose_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f68_algo_ofi32_align_eventmatch_v1_count
+  base_factor_id: f68
+  specification_id: f68_algo_ofi32_align_eventmatch_v1
+  formal_column: response_f68_algo_ofi32_align_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f68_algo_ofi32_align_eventmatch_c
+  logic: f68_algo_ofi32_align_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f69_algo_ofi32_oppose_eventmatch_v1_count
+  base_factor_id: f69
+  specification_id: f69_algo_ofi32_oppose_eventmatch_v1
+  formal_column: response_f69_algo_ofi32_oppose_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f69_algo_ofi32_oppose_eventmatch_c
+  logic: f69_algo_ofi32_oppose_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f70_algo_tradeflow8_align_eventmatch_v1_count
+  base_factor_id: f70
+  specification_id: f70_algo_tradeflow8_align_eventmatch_v1
+  formal_column: response_f70_algo_tradeflow8_align_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f70_algo_tradeflow8_align_eventmatch_c
+  logic: f70_algo_tradeflow8_align_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f71_algo_tradeflow8_oppose_eventmatch_v1_count
+  base_factor_id: f71
+  specification_id: f71_algo_tradeflow8_oppose_eventmatch_v1
+  formal_column: response_f71_algo_tradeflow8_oppose_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f71_algo_tradeflow8_oppose_eventmatch_c
+  logic: f71_algo_tradeflow8_oppose_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f76_algo_trend8_align_eventmatch_v1_count
+  base_factor_id: f76
+  specification_id: f76_algo_trend8_align_eventmatch_v1
+  formal_column: response_f76_algo_trend8_align_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f76_algo_trend8_align_eventmatch_c
+  logic: f76_algo_trend8_align_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f77_algo_trend8_oppose_eventmatch_v1_count
+  base_factor_id: f77
+  specification_id: f77_algo_trend8_oppose_eventmatch_v1
+  formal_column: response_f77_algo_trend8_oppose_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f77_algo_trend8_oppose_eventmatch_c
+  logic: f77_algo_trend8_oppose_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f78_algo_trend32_align_eventmatch_v1_count
+  base_factor_id: f78
+  specification_id: f78_algo_trend32_align_eventmatch_v1
+  formal_column: response_f78_algo_trend32_align_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f78_algo_trend32_align_eventmatch_c
+  logic: f78_algo_trend32_align_eventmatch
+- record_version: v1
+  plan_layer: layer5
+  notebook: ''
+  base_logic: response_template
+  formula_source: 2026-08-28 old-factor revision section 27
+  market: mkt_szse
+  window: win_0930_0935
+  clock: clock_hybrid
+  scale: scale_mid
+  sequence: seq_both
+  matching: match_local_best
+  calibration: calib_na
+  decomposition: decomp_raw
+  params_set_id: params_set42
+  score_version: score_v1
+  aggregation: count
+  aggregation_family:
+  - count
+  calibration_protocol_id: calibration_protocol_v1
+  dependencies:
+  - lifecycle
+  - prestate
+  - pairing
+  - fifo_queue
+  - market_impact
+  status: preregistered
+  status_reason: null
+  record_id: f79_algo_trend32_oppose_eventmatch_v1_count
+  base_factor_id: f79
+  specification_id: f79_algo_trend32_oppose_eventmatch_v1
+  formal_column: response_f79_algo_trend32_oppose_eventmatch__mkt_szse__win_0930_0935__clock_hybrid__scale_mid__seq_both__match_local_best__calib_na__decomp_raw__params_set42__score_v1__count
+  short_alias: f79_algo_trend32_oppose_eventmatch_c
+  logic: f79_algo_trend32_oppose_eventmatch
+periods:
+  calibration:
+    start: '2026-03-23'
+    end: '2026-03-27'
+  evaluation:
+    start: '2026-04-01'
+    end: '2026-06-30'
+  historical_evaluation:
+    start: '2025-01-02'
+    end: '2026-06-30'
+study:
+  schema_version: formal-preregister-study-overlay-v1
+  study_id: formal_logic_intraday_open5m_2025_2026h1_v1
+  calibration_start: '2026-03-23'
+  calibration_end: '2026-03-27'
+  evaluation_start: '2026-04-01'
+  evaluation_end: '2026-06-30'
+  historical_start: '2025-01-02'
+  historical_end: '2026-06-30'
+  price_margin_end: '2026-06-30'
+  automatic_retain_reject: false
+  return_labels_read_during_calibration: false
+study_scope:
+  evaluation_ids:
+  - intraday_open5m_vwap0944_0945_v1
+  factor_window_ids:
+  - open5m_v1
+  factor_window_tokens:
+  - win_0930_0935
+  scope_change_reason: versioned_open5m_history_2025_2026h1
+  calibration_execution_scope: open5m_recalibration_required
+  formal_result_scope: intraday_only
+candidate_edge_scope:
+  quantity_gate_fraction: 0.1
+  quantity_gate_applies_before_factor_grouping: true
+  split_merge_group_sum_bypass: false
+  each_edge_must_pass_independently: true
+  ordinary_price_hard_gate: false
+  ordinary_price_distance_retained_for_continuous_score: true
+liquidity_turnover_reconstruction:
+  approval: user_instruction_2026-07-23
+  calibration_dates:
+  - '2026-03-23'
+  - '2026-03-24'
+  - '2026-03-25'
+  - '2026-03-26'
+  - '2026-03-27'
+  source_database: l1
+  source_tables:
+  - daily_bar
+  - share_structure
+  join_keys:
+  - order_book_id
+  - date
+  numerator: daily_bar.volume
+  denominator: share_structure.circulation_a
+  formula: daily_bar.volume / share_structure.circulation_a
+  unit: fraction
+  free_circulation_allowed: false
+  total_turnover_allowed: false
+  q2_backfill_allowed: false
+  semantic_validation: official_turnover_rate_example_rounding_match
+formal_calibration:
+  parameter_semantics: 因子/algobench/configs/formal_parameter_semantics_intraday_open5m_2025_2026h1_v1.yaml
+  return_labels_read: false
+  candidate_policy_search: false
+  kernel_scale_calibration: true
+  window_ids:
+  - open5m_v1
+aggregation_scope:
+- count
+denominator: all_valid_deduplicated_new_orders
+count_proxy_registry:
+  schema_version: open5m-count-proxy-registry-v5
+  identity:
+    factor_window_id: open5m_v1
+    factor_window_token: win_0930_0935
+    label_family_id: intraday_vwap_0944_0945_from_0935_v1
+    evaluation_id: intraday_open5m_vwap0944_0945_v1
+    return_column: ret_intraday_vwap_0944_0945_from_d1_0935_last
+  projections:
+  - buy
+  - sell
+  factor_layers:
+    L1: inherited_scorer_projection_no_new_number
+    L2: multi_evidence_consensus
+    L3: order_microstructure_context
+    L4: stock_day_window_state
+    L5: algorithm_purpose_and_liquidity_mechanism
+  consensus:
+  - id: cons_union
+    factor_id: f54_algo_union_strength
+    layer: L2
+    definition: raw_observable_nested_max_63
+    value_range:
+    - 0.0
+    - 1.0
+  - id: cons_breadth
+    factor_id: f55_algo_family_breadth
+    layer: L2
+    definition: raw_observable_family_mean
+    value_range:
+    - 0.0
+    - 1.0
+  - id: cons_top2
+    factor_id: f56_algo_second_strongest_family
+    layer: L2
+    definition: raw_second_family
+    value_range:
+    - 0.0
+    - 1.0
+  - id: cons_top3
+    factor_id: f57_algo_third_strongest_family
+    layer: L2
+    definition: raw_third_family
+    value_range:
+    - 0.0
+    - 1.0
+  source_records:
+    f03_curg_hybrid_c: f03_hybrid_v2_count
+    f04_fastcancel_1s_c: f04_1s_v2_count
+    f05_fleet_c: f05_default_v2_count
+    f06_touchfleet_c: f06_default_v2_count
+    f07_pfexit_c: f07_default_v2_count
+    f10_repost_cf_c: f10_cancel_first_v2_count
+    f10_repost_rf_c: f10_replace_first_v2_count
+    f10_repost_both_c: f10_both_v2_count
+    f11_urgentrep_c: f11_default_v2_count
+    f12_residrep_c: f12_default_v2_count
+    f13_refresh_c: f13_default_v2_count
+    f14_pricesave_c: f14_default_v2_count
+    f15_aggrep_c: f15_default_v2_count
+    f16_queueimp_same_c: f16_queueimp_same_v2_count
+    f16_priceprio_c: f16_priceprio_v2_count
+    f16_frontkeep_c: f16_frontkeep_v2_count
+    f16_priorityworse_c: f16_priorityworse_v2_count
+    f19_c2mkt_c: f19_default_v2_count
+    f51_revcycle_c: f51_default_v1_count
+    f26_aggburst_c: f26_default_v1_count
+    f27_childseq_c: f27_default_v1_count
+    f28_liqswitch_c: f28_default_v1_count
+    f29_softrun_c: f29_default_v1_count
+    f30_longrun_c: f30_default_v2_count
+    f31_hcrun_c: f31_default_v2_count
+    f32_reprice_c: f32_default_v1_count
+    f33_bbofollow_c: f33_default_v1_count
+    f34_queueopt_c: f34_default_v1_count
+    f35_costsave_c: f35_default_v1_count
+    f36_escalate_c: f36_default_v1_count
+    f37_complete_c: f37_default_v1_count
+    f38_adaptive_c: f38_default_v1_count
+    f40_iceberg_c: f40_default_v2_count
+    f41_reactive_c: f41_default_v1_count
+    f42_bq_own_c: f42_own_bbo_v2_count
+    f42_bq_opp_c: f42_opposite_bbo_v2_count
+    f42_bq_own_eventmatch_c: f42_bq_own_eventmatch_v1_count
+    f42_bq_opp_eventmatch_c: f42_bq_opp_eventmatch_v1_count
+    f42_bq_own_targetrepair_c: f42_bq_own_targetrepair_v1_count
+    f42_bq_opp_targetrepair_c: f42_bq_opp_targetrepair_v1_count
+    f43_qdformal_c: f43_formal_v2_count
+    f43_qdformal_eventmatch_c: f43_qdformal_eventmatch_v1_count
+    f44_deplete_c: f44_default_v1_count
+    f44_deplete_eventmatch_c: f44_deplete_eventmatch_v1_count
+    f45_spread_nar_c: f45_narrowing_v1_count
+    f45_spread_wid_c: f45_widening_v1_count
+    f45_spread_nar_eventmatch_c: f45_spread_nar_eventmatch_v1_count
+    f45_spread_wid_eventmatch_c: f45_spread_wid_eventmatch_v1_count
+    f46_imbflip_c: f46_default_v1_count
+    f46_imbflip_eventmatch_c: f46_imbflip_eventmatch_v1_count
+    f47_voljump_c: f47_default_v1_count
+    f47_voljump_eventmatch_c: f47_voljump_eventmatch_v1_count
+    f81_algo_recent_jump_eventmatch_c: f81_algo_recent_jump_eventmatch_v1_count
+    f66_algo_ofi8_align_eventmatch_c: f66_algo_ofi8_align_eventmatch_v1_count
+    f67_algo_ofi8_oppose_eventmatch_c: f67_algo_ofi8_oppose_eventmatch_v1_count
+    f68_algo_ofi32_align_eventmatch_c: f68_algo_ofi32_align_eventmatch_v1_count
+    f69_algo_ofi32_oppose_eventmatch_c: f69_algo_ofi32_oppose_eventmatch_v1_count
+    f70_algo_tradeflow8_align_eventmatch_c: f70_algo_tradeflow8_align_eventmatch_v1_count
+    f71_algo_tradeflow8_oppose_eventmatch_c: f71_algo_tradeflow8_oppose_eventmatch_v1_count
+    f76_algo_trend8_align_eventmatch_c: f76_algo_trend8_align_eventmatch_v1_count
+    f77_algo_trend8_oppose_eventmatch_c: f77_algo_trend8_oppose_eventmatch_v1_count
+    f78_algo_trend32_align_eventmatch_c: f78_algo_trend32_align_eventmatch_v1_count
+    f79_algo_trend32_oppose_eventmatch_c: f79_algo_trend32_oppose_eventmatch_v1_count
+    f02_cfrac_c: f02_default_v1_count
+    f04_fastcancel_3s_c: f04_3s_v2_count
+  diagnostic_source_records:
+    f22_mktfill_c: f22_default_v1_count
+    f23_instfill_c: f23_default_v1_count
+    f24_depth_c: f24_default_v1_count
+    f25_sweep_c: f25_default_v1_count
+  contexts:
+  - id: x01_spread_wide
+    factor_id: f58_algo_spread_wide
+    layer: L3
+    formula: x01_spread_wide
+    0)/max(spread_ticks: null
+    1): null
+    signed: false
+  - id: x02_queue_crowded
+    factor_id: f59_algo_queue_crowded
+    layer: L3
+    formula: x02_queue_crowded
+    signed: false
+  - id: x03_opponent_thin
+    factor_id: f60_algo_opponent_thin
+    layer: L3
+    formula: x03_opponent_thin
+    signed: false
+  - id: x04_signed_book_imbalance
+    factor_id: f61_algo_book_align
+    layer: L3
+    formula: x04_signed_book_imbalance
+    0): null
+    signed: true
+  - id: x05_absolute_book_imbalance
+    factor_id: f62_algo_book_oppose
+    layer: L3
+    formula: x05_absolute_book_imbalance
+    0): null
+    signed: false
+  - id: x06_passive_neartouch
+    factor_id: f63_algo_passive_neartouch
+    layer: L3
+    formula: x06_passive_neartouch
+    signed: false
+    specification_id: f63_algo_passive_neartouch_score_v2
+    score_version: score_v2
+    marketability_scale_binding: theta_marketability_ticks
+    scale_comparison:
+      reference_specification_id: f63_algo_passive_neartouch_score_v2_marketability_1tick
+      reference_scale_ticks: 1.0
+      effective_price: {L: submit_price, U: same_side_bbo_before_submit, M: not_applicable}
+      marketability: exp_minus_positive_opponent_gap_over_frozen_scale
+      near_touch: absolute_effective_price_minus_same_bbo_at_most_one_tick
+      coverage: L_U_require_valid_effective_price_and_bbo_M_is_observed_zero
+      purpose: same_input_same_algorithm_evidence_scale_comparison_only
+  - id: x07_stale_quote_250ms
+    factor_id: f64_algo_stale_quote_250ms
+    layer: L3
+    formula: x07_stale_quote_250ms
+    signed: false
+  - id: x08_stale_quote_1000ms
+    factor_id: f65_algo_stale_quote_1000ms
+    layer: L3
+    formula: x08_stale_quote_1000ms
+    signed: false
+  - id: x09_ofi8_align
+    factor_id: f66_algo_ofi8_align
+    layer: L3
+    formula: x09_ofi8_align
+    0): null
+    signed: false
+  - id: x10_ofi8_oppose
+    factor_id: f67_algo_ofi8_oppose
+    layer: L3
+    formula: x10_ofi8_oppose
+    0): null
+    signed: false
+  - id: x11_ofi32_align
+    factor_id: f68_algo_ofi32_align
+    layer: L3
+    formula: x11_ofi32_align
+    0): null
+    signed: false
+  - id: x12_ofi32_oppose
+    factor_id: f69_algo_ofi32_oppose
+    layer: L3
+    formula: x12_ofi32_oppose
+    0): null
+    signed: false
+  - id: x13_tradeflow8_align
+    factor_id: f70_algo_tradeflow8_align
+    layer: L3
+    formula: x13_tradeflow8_align
+    0): null
+    signed: false
+  - id: x14_tradeflow8_oppose
+    factor_id: f71_algo_tradeflow8_oppose
+    layer: L3
+    formula: x14_tradeflow8_oppose
+    0): null
+    signed: false
+  - id: x15_aggressive
+    factor_id: f72_algo_aggressive
+    layer: L3
+    formula: x15_aggressive
+    signed: false
+  - id: x16_depth_consuming
+    factor_id: f73_algo_depth_consuming
+    layer: L3
+    formula: x16_depth_consuming
+    signed: false
+  - id: x17_multilevel_sweep
+    factor_id: f74_algo_multilevel_sweep
+    layer: L3
+    formula: x17_multilevel_sweep
+    signed: false
+  - id: x18_instant_fill
+    factor_id: f75_algo_instant_fill
+    layer: L3
+    formula: x18_instant_fill
+    signed: false
+  - id: x19_trend8_align
+    factor_id: f76_algo_trend8_align
+    layer: L3
+    formula: x19_trend8_align
+    0): null
+    signed: false
+  - id: x20_trend8_oppose
+    factor_id: f77_algo_trend8_oppose
+    layer: L3
+    formula: x20_trend8_oppose
+    0): null
+    signed: false
+  - id: x21_trend32_align
+    factor_id: f78_algo_trend32_align
+    layer: L3
+    formula: x21_trend32_align
+    0): null
+    signed: false
+  - id: x22_trend32_oppose
+    factor_id: f79_algo_trend32_oppose
+    layer: L3
+    formula: x22_trend32_oppose
+    0): null
+    signed: false
+  - id: x23_short_volatility
+    factor_id: f80_algo_short_volatility
+    layer: L3
+    formula: x23_short_volatility
+    signed: false
+  - id: x24_recent_jump
+    factor_id: f81_algo_recent_jump
+    layer: L3
+    formula: x24_recent_jump
+    signed: false
+  - id: x25_common_book_frontloaded
+    factor_id: f82_algo_same_book_frontloaded
+    layer: L3
+    formula: x25_common_book_frontloaded
+    signed: false
+  - id: x26_relative_book_frontloaded
+    factor_id: f83_algo_opponent_book_frontloaded
+    layer: L3
+    formula: x26_relative_book_frontloaded
+    signed: true
+  - id: x27_relative_best_depth
+    factor_id: f84_algo_same_best_thickness
+    layer: L3
+    formula: x27_relative_best_depth
+    signed: true
+  - id: x28_absolute_best_depth
+    factor_id: f85_algo_opponent_best_thickness
+    layer: L3
+    formula: x28_absolute_best_depth
+    signed: false
+  window_states:
+  - id: z02_return_excess_kurtosis
+    factor_id: f87_algo_return_excess_kurtosis
+    layer: L4
+    signed: true
+  - id: z03_realized_semivariance_balance
+    factor_id: f88_algo_realized_semivariance_balance
+    layer: L4
+    signed: true
+  - id: z04_contiguous_path_efficiency
+    factor_id: f89_algo_contiguous_path_efficiency
+    layer: L4
+    signed: false
+  - id: z05_max_drawdown_strength
+    factor_id: f90_algo_max_drawdown_strength
+    layer: L4
+    signed: false
+  - factor_id: f135_algo_max_runup_strength
+    layer: L4
+    id: z05b_max_runup_strength
+    signed: false
+  - id: z06_trade_price_concentration
+    factor_id: f91_algo_trade_price_concentration
+    layer: L4
+    signed: false
+  - id: z07_trade_direction_price_change_alignment
+    factor_id: f92_algo_trade_direction_price_change_alignment
+    layer: L4
+    signed: true
+  - id: z08_spread_normalized_realized_volatility
+    factor_id: f93_algo_spread_normalized_realized_volatility
+    layer: L4
+    signed: false
+  - id: z09_detected_jump_path_share
+    factor_id: f94_algo_detected_jump_path_share
+    layer: L4
+    signed: false
+  - id: z10_trade_count_impact_illiquidity
+    factor_id: f95_algo_trade_count_impact_illiquidity
+    layer: L4
+    signed: false
+  - id: z11_time_weighted_spread_wide
+    factor_id: f96_algo_time_weighted_spread_wide
+    layer: L4
+    signed: false
+  - id: z12_time_weighted_two_sided_depth_thinness
+    factor_id: f97_algo_time_weighted_two_sided_depth_thinness
+    layer: L4
+    signed: false
+  purposes:
+  - id: p01_maker_wide_spread
+    factor_id: f98_maker_wide_spread
+    layer: L5
+    family: maker
+  - id: p02_maker_refresh
+    factor_id: f99_maker_refresh
+    layer: L5
+    family: maker
+  - id: p03_maker_depletion_refill
+    factor_id: f100_maker_depletion_refill
+    layer: L5
+    family: maker
+  - id: p04_maker_against_book
+    factor_id: f101_maker_against_book
+    layer: L5
+    family: maker
+  - id: p06_maker_balanced_sides
+    factor_id: f103_maker_balanced_sides
+    layer: L5
+    family: maker
+  - id: p07_stale_quote_refresh
+    factor_id: f104_stale_quote_refresh
+    layer: L5
+    family: maker
+  - id: p08_queue_competition
+    factor_id: f105_queue_competition
+    layer: L5
+    family: maker
+  - id: p09_taker_aggressive
+    factor_id: f106_taker_aggressive
+    layer: L5
+    family: taker
+  - id: p10_taker_depth_consuming
+    factor_id: f107_taker_depth_consuming
+    layer: L5
+    family: taker
+  - id: p11_taker_multilevel_sweep
+    factor_id: f108_taker_multilevel_sweep
+    layer: L5
+    family: taker
+  - id: p12_taker_child_execution
+    factor_id: f109_taker_child_execution
+    layer: L5
+    family: taker
+  - id: p13_taker_buy_pressure
+    factor_id: f110_taker_buy_pressure
+    layer: L5
+    family: taker
+  - id: p14_taker_sell_pressure
+    factor_id: f111_taker_sell_pressure
+    layer: L5
+    family: taker
+  - id: p15_trend_execution_buy
+    factor_id: f112_trend_execution_buy
+    layer: L5
+    family: taker
+  - id: p16_trend_execution_sell
+    factor_id: f113_trend_execution_sell
+    layer: L5
+    family: taker
+  - id: p17_counterflow_buy_liquidity
+    factor_id: f114_counterflow_buy_liquidity
+    layer: L5
+    family: absorption
+  - id: p18_counterflow_sell_liquidity
+    factor_id: f115_counterflow_sell_liquidity
+    layer: L5
+    family: absorption
+  - id: p21_withdraw_spread_widening
+    factor_id: f118_withdraw_spread_widening
+    layer: L5
+    family: withdrawal
+  - id: p22_withdraw_volatility_jump
+    factor_id: f119_withdraw_volatility_jump
+    layer: L5
+    family: withdrawal
+  - id: p23_withdraw_imbalance_flip
+    factor_id: f120_withdraw_imbalance_flip
+    layer: L5
+    family: withdrawal
+  - id: p24_cancel_impact_signed_250ms
+    factor_id: f121_cancel_impact_signed_250ms
+    layer: L5
+    family: withdrawal
+  - id: p25_cancel_impact_abs_250ms
+    factor_id: f122_cancel_impact_abs_250ms
+    layer: L5
+    family: withdrawal
+  - id: p26_algo_refill_100ms
+    factor_id: f123_algo_refill_100ms
+    layer: L5
+    family: resilience
+  - id: p27_algo_refill_500ms
+    factor_id: f124_algo_refill_500ms
+    layer: L5
+    family: resilience
+  - id: p28_algo_refill_1000ms
+    factor_id: f125_algo_refill_1000ms
+    layer: L5
+    family: resilience
+  - id: p29_algo_shock_withdrawal
+    factor_id: f126_algo_shock_withdrawal
+    layer: L5
+    family: withdrawal
+  - id: p30_algo_herding_follow
+    factor_id: f127_algo_herding_follow
+    layer: L5
+    family: herding
+  - id: p31_algo_herding_contrarian
+    factor_id: f128_algo_herding_contrarian
+    layer: L5
+    family: herding
+  - id: p32_high_algo_illiquid
+    factor_id: f129_high_algo_illiquid
+    layer: L5
+    family: attention
+  - id: p33_low_algo_illiquid
+    factor_id: f130_low_algo_illiquid
+    layer: L5
+    family: attention
+  - id: p34_maker_minus_taker
+    factor_id: f131_maker_minus_taker
+    layer: L5
+    family: contrast
+  - id: p35_refill_minus_withdrawal
+    factor_id: f132_refill_minus_withdrawal
+    layer: L5
+    family: contrast
+  - id: p36_directional_taker_net
+    factor_id: f133_directional_taker_net
+    layer: L5
+    family: contrast
+  output_contract: {}
+  source_projections: {}
+record_templates:
+  f16_common:
+    record_version: v2
+    base_factor_id: f16
+    plan_layer: layer2
+    notebook: ''
+    base_logic: queue_priority_component
+    formula_source: 2026-08-28 old-factor revision section 13
+    market: mkt_szse
+    window: win_0930_1030
+    clock: clock_hybrid
+    scale: scale_mid
+    sequence: seq_both
+    matching: match_local_best
+    calibration: calib_na
+    decomposition: decomp_raw
+    params_set_id: params_set16
+    score_version: score_v1
+    aggregation: count
+    aggregation_family:
+    - count
+    calibration_protocol_id: calibration_protocol_v1
+    dependencies:
+    - lifecycle
+    - prestate
+    - pairing
+    - fifo_queue
+    status: preregistered
+    status_reason: null
+  response_common:
+    record_version: v1
+    plan_layer: layer5
+    notebook: ''
+    base_logic: response_template
+    formula_source: 2026-08-28 old-factor revision section 27
+    market: mkt_szse
+    window: win_0930_1030
+    clock: clock_hybrid
+    scale: scale_mid
+    sequence: seq_both
+    matching: match_local_best
+    calibration: calib_na
+    decomposition: decomp_raw
+    params_set_id: params_set42
+    score_version: score_v1
+    aggregation: count
+    aggregation_family:
+    - count
+    calibration_protocol_id: calibration_protocol_v1
+    dependencies:
+    - lifecycle
+    - prestate
+    - pairing
+    - fifo_queue
+    - market_impact
+    status: preregistered
+    status_reason: null

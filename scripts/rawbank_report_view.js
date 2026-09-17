@@ -1,0 +1,76 @@
+'use strict';
+(async()=>{
+const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const encoded=atob($('report-gzip').textContent.trim()),bytes=Uint8Array.from(encoded,c=>c.charCodeAt(0));
+const unpacked=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+const D=JSON.parse(unpacked),P=JSON.parse($('proof-data').textContent),F=D.factors,defs=D.definitions;
+const waiting=new Map(),loaded=new Map(),assetBase=new URL(location.protocol==='about:'?'assets/raw-bank-2026-09-16/factors/':'../assets/raw-bank-2026-09-16/factors/',document.baseURI);
+window.rawbankFactorLoaded=async(key,encoded)=>{try{const bytes=Uint8Array.from(atob(encoded),c=>c.charCodeAt(0));const result=JSON.parse(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text());loaded.set(key,result);waiting.get(key)?.resolve(result)}catch(error){waiting.get(key)?.reject(error)}};
+async function loadFactor(i){const f=F[i],key=alias(f)+'__'+f.metadata.projection;if(loaded.has(key))return loaded.get(key);if(!waiting.has(key)){let resolve,reject;const promise=new Promise((ok,fail)=>{resolve=ok;reject=fail});waiting.set(key,{promise,resolve,reject});const script=document.createElement('script');script.src=new URL(key+'.js',assetBase);script.onerror=()=>reject(new Error('因子数据无法加载：'+key));document.head.append(script)}return waiting.get(key).promise}
+window.rawbankReport={data:D,proof:P};
+const fmt=(v,n=5)=>v===null||v===undefined||!Number.isFinite(v)?'—':Number(v).toFixed(n),comma=v=>Number(v).toLocaleString('en-US');
+const layers={L1:'基础评分投影',L2:'多证据共识',L3:'微观结构情境',L4:'窗口状态',L5:'用途与流动性机制',L1_diagnostic:'市场行为诊断'},sides={buy:'买侧',sell:'卖侧',total:'总量诊断'};
+const alias=f=>f.metadata.factor_id.split('__')[0],definition=f=>defs[alias(f)]||{},name=f=>definition(f).name||alias(f),searchText=f=>[name(f),...Object.values(f.metadata)].join(' ').toLowerCase();
+const title=f=>name(f)+' · '+(sides[f.metadata.projection]||f.metadata.projection),periodName=p=>p.id==='full'?'全部 601 日':p.id;
+let current=F.map((_,i)=>i).filter(i=>!F[i].diagnostic).sort((a,b)=>Math.abs(F[b].periods[0].ic[1][0]||0)-Math.abs(F[a].periods[0].ic[1][0]||0))[0],detailPeriod=0,tab='ic';
+function csv(rows){return '\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\r\n')}
+function save(text,filename,type){const url=URL.createObjectURL(new Blob([text],{type:type||'application/json;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000)}
+function table(head,rows){return '<table><thead><tr>'+head.map(v=>'<th>'+v+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('')+'</tbody></table>'}
+function options(el,values){el.innerHTML=values.map(([v,t])=>'<option value="'+esc(v)+'">'+esc(t)+'</option>').join('')}
+for(const id of ['global-period','detail-period'])options($(id),D.periods.map((p,i)=>[i,periodName(p)]));
+for(const key of Object.keys(layers))$('layer-filter').insertAdjacentHTML('beforeend','<option value="'+key+'">'+key+' '+layers[key]+'</option>');
+function rowsForResults(){const p=+$('global-period').value,q=$('result-search').value.toLowerCase(),scope=$('result-scope').value,sort=$('result-sort').value;
+ const indexes=F.map((_,i)=>i).filter(i=>(scope==='all'||(scope==='diagnostic')===F[i].diagnostic)&&searchText(F[i]).includes(q));
+ const value=i=>{const s=F[i].periods[p];return sort==='rank'?s.ic[1][0]:sort==='t'?s.ic[1][3]:s.spread[0][0]};
+ if(sort!=='id')indexes.sort((a,b)=>(value(b)===null?-1:Math.abs(value(b)))-(value(a)===null?-1:Math.abs(value(a))));return indexes;}
+function renderResults(){const indexes=rowsForResults(),p=+$('global-period').value;
+ $('result-note').textContent=periodName(D.periods[p])+' · '+indexes.length+' 列。t 值未经多重比较调整；G10−G1 保留原始方向。';
+ $('all-results').innerHTML=table(['因子 / 方向','层次','日均 IC','日均 Rank IC','Rank IC NW t','有效 IC 日','G10−G1 (bp)','全期成对股票日','查看'],indexes.map(i=>{const f=F[i],s=f.periods[p];return ['<code>'+esc(alias(f))+'</code><br>'+esc(title(f))+(f.diagnostic?' <span class="status">诊断</span>':''),esc(f.metadata.layer),fmt(s.ic[0][0]),fmt(s.ic[1][0]),fmt(s.ic[1][3],2),s.ic[1][4],fmt(s.spread[0][0]===null?null:s.spread[0][0]*1e4,3),comma(f.distribution.pairs),'<button data-open="'+i+'">详情</button>']}));
+ $('all-results').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{current=+b.dataset.open;detailPeriod=p;$('detail-period').value=p;renderDetail();$('factors').scrollIntoView();renderList()});}
+function renderList(){const layer=$('layer-filter').value,side=$('side-filter').value,q=$('factor-search').value.toLowerCase(),indexes=F.map((_,i)=>i).filter(i=>(layer==='all'||F[i].metadata.layer===layer)&&(side==='all'||F[i].metadata.projection===side)&&searchText(F[i]).includes(q));
+ $('factor-count').textContent=indexes.length+' / 288 列 · 左侧指标为全期日均 Rank IC';
+ $('factor-list').innerHTML=indexes.map(i=>{const f=F[i];return '<button class="factor-item '+(i===current?'active':'')+'" data-index="'+i+'"><span class="item-id">'+esc(alias(f))+'</span>'+esc(title(f))+'<small>'+esc(f.metadata.layer)+' '+esc(layers[f.metadata.layer])+' · Rank IC '+fmt(f.periods[0].ic[1][0])+(f.diagnostic?' · 诊断':'')+'</small></button>'}).join('');
+ $('factor-list').querySelectorAll('button').forEach(b=>b.onclick=()=>{current=+b.dataset.index;renderList();renderDetail()});}
+function linePlot(series,{label='',unit='',dates=[],bars=false,intervals=null}={}){
+ const width=780,height=250,left=65,right=18,top=22,bottom=45,n=Math.max(...series.map(s=>s.values.length),1);
+ const all=series.flatMap(s=>s.values).filter(Number.isFinite);if(intervals)all.push(...intervals.flat().filter(Number.isFinite));
+ if(!all.length)return '<p class="empty">该区间没有可绘制的有效观察。</p>';
+ let lo=Math.min(0,...all),hi=Math.max(0,...all);if(lo===hi){lo-=.01;hi+=.01}const pad=(hi-lo)*.1;lo-=pad;hi+=pad;
+ const sx=i=>left+(width-left-right)*(i+.5)/n,sy=y=>top+(height-top-bottom)*(hi-y)/(hi-lo);
+ let result='<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+esc(label)+'"><rect width="780" height="250" fill="white"/>';
+ for(let j=0;j<5;j++){const v=lo+(hi-lo)*j/4,y=sy(v);result+='<line x1="'+left+'" x2="'+(width-right)+'" y1="'+y+'" y2="'+y+'" stroke="#e2e6df"/><text x="'+(left-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="#61716f">'+fmt(v,unit==='bp'?2:3)+'</text>'}
+ result+='<line x1="'+left+'" x2="'+(width-right)+'" y1="'+sy(0)+'" y2="'+sy(0)+'" stroke="#a6b5ae"/>';
+ series.forEach(s=>{let path='',pen=false;s.values.forEach((v,i)=>{if(!Number.isFinite(v)){pen=false;return}const x=sx(i),y=sy(v);if(bars){result+='<rect x="'+(x-(width-left-right)/n*.4)+'" y="'+Math.min(y,sy(0))+'" width="'+(width-left-right)/n*.8+'" height="'+Math.max(.3,Math.abs(y-sy(0)))+'" fill="'+s.color+'"><title>'+esc(s.name)+' '+(i+1)+': '+fmt(v,6)+'</title></rect>'}else{path+=(pen?'L':'M')+x.toFixed(2)+','+y.toFixed(2);pen=true}
+ if(intervals&&Number.isFinite(intervals[i][0])&&Number.isFinite(intervals[i][1])){result+='<line x1="'+x+'" x2="'+x+'" y1="'+sy(intervals[i][0])+'" y2="'+sy(intervals[i][1])+'" stroke="'+s.color+'"/>';result+='<circle cx="'+x+'" cy="'+y+'" r="3" fill="'+s.color+'"><title>G'+(i+1)+': '+fmt(v,5)+' '+unit+'</title></circle>'}});if(!bars)result+='<path d="'+path+'" fill="none" stroke="'+s.color+'" stroke-width="1.4"/>'});
+ for(const i of [...new Set([0,Math.floor((n-1)/2),n-1])])result+='<text x="'+sx(i)+'" y="'+(height-14)+'" text-anchor="middle" font-size="11" fill="#61716f">'+esc(dates[i]??i+1)+'</text>';
+ return result+'<text x="'+left+'" y="14" font-size="11" fill="#61716f">'+esc(label)+(unit?' / '+unit:'')+'</text></svg><div class="legend">'+series.map(s=>'<span><i class="dot" style="background:'+s.color+'"></i>'+esc(s.name)+'</span>').join('')+'</div>';}
+function chart(title,content){return '<div class="plot-card"><h4>'+title+'</h4>'+content+'</div>'}
+function selectedDates(){const p=D.periods[detailPeriod];return D.dates.map((d,i)=>i).filter(i=>D.dates[i]>=p.start&&D.dates[i]<=p.end)}
+let detailVersion=0;
+async function renderDetail(){const version=++detailVersion,index=current;$('factor-title').textContent='正在加载 '+title(F[index])+'…';let f;try{f=await loadFactor(index)}catch(error){$('factor-title').textContent=error.message;return}if(version!==detailVersion)return;F[index]=f;const m=f.metadata,s=f.periods[detailPeriod],dist=f.distribution,indices=selectedDates(),dates=indices.map(i=>D.dates[i]),def=definition(f);
+ $('factor-title').textContent=title(f)+(f.diagnostic?'（诊断指标）':'');$('factor-identity').innerHTML='<code>'+esc(m.factor_id)+'</code>';
+ const metrics=[['日均 IC',fmt(s.ic[0][0])],['日均 Rank IC',fmt(s.ic[1][0])],['Rank IC NW t (lag 1)',fmt(s.ic[1][3],2)],['有效 IC 日',s.ic[1][4]],['G10−G1 毛收益 (bp)',fmt(s.spread[0][0]===null?null:s.spread[0][0]*1e4,3)],['全期有限值覆盖',fmt(dist.finite/dist.rows*100,2)+'%']];
+ $('detail-metrics').innerHTML=metrics.map(([k,v])=>'<div class="metric"><b>'+v+'</b><span>'+k+'</span></div>').join('');
+ const colors=['#087b78','#b24f35'],names=['IC','Rank IC'];
+ const series=transform=>names.map((name,j)=>({name,color:colors[j],values:transform(f.daily_ic.map(r=>r[j])).filter((_,i)=>indices.includes(i))}));
+ const rolling=v=>v.map((_,i)=>{const a=v.slice(Math.max(0,i-19),i+1).filter(Number.isFinite);return a.length>=10?a.reduce((s,x)=>s+x,0)/a.length:null});
+ const cumulative=v=>{let sum=0;return v.map(x=>Number.isFinite(x)?sum+=x:null)};
+ $('pane-ic').innerHTML='<div class="plot-grid">'+chart('每日横截面相关',linePlot(series(v=>v),{label:'日度 IC',dates}))+chart('20 日滚动均值',linePlot(series(rolling),{label:'20 日滚动 IC',dates}))+chart('全样本起点累计 IC',linePlot(series(cumulative),{label:'累计 IC',dates}))+chart('每日成对股票数',linePlot([{name:'成对股票数',color:colors[0],values:indices.map(i=>f.daily_health[i][3])}],{label:'样本数量',dates}))+'</div><p class="chart-note">累计曲线是日度 IC 的累加，滚动均值至少需要 10 个有效日。切换区间只截取曲线显示范围，累计起点仍为 2024-01-02；累计 IC 不是净值或累计交易收益。</p>';
+ let groupCharts='';for(const [k,offset] of [[10,0],[40,10]])for(const [kind,j] of [['毛收益',0],['超额收益',1]]){const g=s.groups.slice(offset,offset+k).map(r=>r[j]),values=g.map(r=>r[0]===null?null:r[0]*1e4),intervals=g.map(r=>r[0]===null||r[1]===null?[null,null]:[(r[0]-2*r[1])*1e4,(r[0]+2*r[1])*1e4]);groupCharts+=chart(k+' 组 · '+kind,linePlot([{name:kind,color:j?colors[1]:colors[0],values}],{label:'日度等权均值 ± 2 普通日度 SE',unit:'bp',intervals}))}
+ $('pane-groups').innerHTML='<div class="plot-grid">'+groupCharts+'</div><p class="chart-note">组内收益先按当日股票等权，再按有效日等权。误差线表示均值 ± 2 倍普通日度标准误；表中 NW t 另用 lag 1 标准误。平均秩保持并列值，空组显示缺失，不填零。</p><div class="table-scroll">'+table(['组','毛收益 bp','超额收益 bp','毛收益有效日','毛收益 NW t'],s.groups.slice(0,10).map((g,i)=>['G'+(i+1),fmt(g[0][0]===null?null:g[0][0]*1e4,3),fmt(g[1][0]===null?null:g[1][0]*1e4,3),g[0][4],fmt(g[0][3],2)]))+'</div><p>40 组 G40−G1：'+fmt(s.spread[1][0]===null?null:s.spread[1][0]*1e4,3)+' bp；最高 20%−最低 20%：'+fmt(s.spread[2][0]===null?null:s.spread[2][0]*1e4,3)+' bp。端点为空时，该日差值不进入均值。</p>';
+ $('pane-periods').innerHTML='<p>全期、年度、季度和月度属于嵌套区间，不能把这些行当成独立样本。</p><div class="table-scroll">'+table(['区间','日均 IC','日均 Rank IC','Rank IC NW t','ICIR','有效日','G10−G1 bp'],D.periods.map((p,i)=>{const r=f.periods[i];return [esc(periodName(p)),fmt(r.ic[0][0]),fmt(r.ic[1][0]),fmt(r.ic[1][3],2),fmt(r.ic[1][5],3),r.ic[1][4],fmt(r.spread[0][0]===null?null:r.spread[0][0]*1e4,3)]}))+'</div><p class="chart-note">ICIR = 日均 IC / 日度 IC 样本标准差，未年化；NW t 采用 Bartlett lag 1，对有效日期序列计算。</p>';
+ const domain=m.domain,binDates=f.shape.map((_,i)=>fmt(domain[0]+(i+.5)*(domain[1]-domain[0])/100,2));
+ $('pane-shape').innerHTML='<p>以下为全期固定定义域的 100 个等宽箱，便于比较稀疏程度及收益形状。不同箱的收益可能来自不同股票与日期。</p>'+chart('全部有限因子值分布',linePlot([{name:'股票日计数',color:colors[0],values:f.shape.map(b=>b.count)}],{label:'固定定义域分箱',dates:binDates,bars:true}))+chart('分箱收益 · 全期日度等权',linePlot([{name:'毛收益',color:colors[0],values:f.shape.map(b=>b.raw[0]===null?null:b.raw[0]*1e4)},{name:'超额收益',color:colors[1],values:f.shape.map(b=>b.excess[0]===null?null:b.excess[0]*1e4)}],{label:'因子值分箱中心',unit:'bp',dates:binDates}))+'<p class="chart-note">定义域 ['+domain.join(', ')+']；下溢 '+comma(dist.under)+'、上溢 '+comma(dist.over)+'，未裁剪。没有有效收益日的箱留空，低覆盖箱的曲线需谨慎解读。</p>';
+ const records=[['层次',m.layer+' · '+layers[m.layer]],['注册身份',m.kind],['逻辑编号',m.logical_factor_id],['来源评分',m.source_scorer],['评分规格',m.source_specification_id||'—'],['情境 / 组件',m.context||m.component_id||'—'],['方向',sides[m.projection]||m.projection],['分母',m.denominator],['全期股票日',comma(dist.rows)],['有限因子股票日',comma(dist.finite)+' ('+fmt(dist.finite/dist.rows*100,2)+'%)'],['零值股票日 / 全部股票日',comma(dist.zero)+' ('+fmt(dist.zero/dist.rows*100,2)+'%)'],['成对有效股票日',comma(dist.pairs)],['成对样本不同取值不超过 1 的天数',dist.constant_days]];
+ $('pane-definition').innerHTML='<h4>'+esc(def.name||alias(f))+'</h4><p>'+esc(def.description||'按冻结注册表与来源评分规格构造；其身份字段与原始方向列在下表。')+'</p>'+(def.base_logic?'<p>来源逻辑：<code>'+esc(def.base_logic)+'</code></p>':'')+'<div class="formula">'+esc(def.formula||'股票日内方向贡献按冻结定义聚合；分母为全部有效去重新委托数。')+'</div><div class="table-scroll">'+table(['字段','身份 / 覆盖'],records.map(r=>r.map(esc)))+'</div>'+(f.diagnostic?'<p class="status">本列是市场行为诊断指标，未计入正式 284 列。</p>':'');
+ applyTab();document.body.dataset.detailReady='true';}
+function applyTab(){document.querySelectorAll('[data-tab]').forEach(b=>{const active=b.dataset.tab===tab;b.setAttribute('aria-selected',String(active));$('pane-'+b.dataset.tab).hidden=!active})}
+for(const id of ['global-period','result-scope','result-sort'])$(id).onchange=renderResults;$('result-search').oninput=renderResults;
+for(const id of ['layer-filter','side-filter'])$(id).onchange=renderList;$('factor-search').oninput=renderList;
+$('detail-period').onchange=()=>{detailPeriod=+$('detail-period').value;renderDetail()};document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;applyTab()});
+$('download-factor').onclick=async()=>save(JSON.stringify({dates:D.dates,period_definitions:D.periods,statistics_schema:D.statistics_schema,label:D.label,factor:await loadFactor(current)},null,2),alias(F[current])+'.evaluation.json');
+$('download-summary').onclick=()=>{const p=+$('global-period').value;save(csv([['factor_id','name','diagnostic','period','mean_ic','mean_rank_ic','rank_ic_nw_t_lag1','rank_ic_valid_days','g10_minus_g1_return','full_period_valid_pair_stock_days'],...rowsForResults().map(i=>{const f=F[i],s=f.periods[p];return [f.metadata.factor_id,title(f),f.diagnostic,D.periods[p].id,s.ic[0][0],s.ic[1][0],s.ic[1][3],s.ic[1][4],s.spread[0][0],f.distribution.pairs]})]),'rawbank-'+D.periods[p].id+'.csv','text/csv;charset=utf-8')};
+$('download-proof').onclick=()=>save(JSON.stringify(P,null,2),'rawbank-evaluation-result.json');
+$('download-alignment').onclick=()=>save(csv([['date','stock_days','valid_label_stock_days'],...D.label_alignment.map(r=>[r.date,r.rows,r.valid_labels])]),'rawbank-label-alignment.csv','text/csv;charset=utf-8');
+renderResults();renderList();renderDetail();document.body.dataset.ready='true';
+})().catch(error=>{document.getElementById('result-note').textContent='评价数据加载失败：'+error.message;console.error(error)});

@@ -362,7 +362,8 @@
         const html = inline
           ? JSON.parse(inline.textContent)
           : await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
-        this.showEl.innerHTML = `<iframe class="daily-show-frame" sandbox="allow-scripts" title="${escapeHtml(item.title)} 展示版"></iframe>`;
+        const sandbox = item.show_allow_downloads === true ? "allow-scripts allow-downloads" : "allow-scripts";
+        this.showEl.innerHTML = `<iframe class="daily-show-frame" sandbox="${sandbox}" title="${escapeHtml(item.title)} 展示版"></iframe>`;
         this.showEl.querySelector("iframe").srcdoc = this.app.prepareIsolatedHtml(html);
         return;
       }
