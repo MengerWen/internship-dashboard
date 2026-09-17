@@ -1,0 +1,21 @@
+<section id="factors">
+<div class="section-head"><span class="num">04</span><div><div class="eyebrow">FACTOR ATLAS · 288 SERIES</div><h2>逐因子查看：定义、图形与诊断</h2><p class="subtle">按层次浏览研究逻辑，也可混排比较。点击方向查看一列，点击定义或层次标题查看该组；箭头只控制展开。</p></div></div>
+<div class="controls" id="factor-controls">
+<label>检索中文或正式列名<input type="search" id="factor-search" placeholder="例如：补量 / f100 / maker"></label>
+<label>研究逻辑<select id="layer-filter"><option value="all">全部 6 个层次</option></select></label>
+<label>定义<select id="family-filter"><option value="all">全部定义</option></select></label>
+<label>结果范围<select id="factor-scope"><option value="all">全部 288 列</option><option value="formal">284 列正式因子</option><option value="diagnostic">4 列诊断指标</option></select></label>
+<label>查看方式<select id="view-mode"><option value="all">全部查看</option><option value="separate">分别查看</option></select></label>
+<label id="side-control">订单方向<select id="side-filter"><option value="all">全部方向</option><option value="buy">Buy · 买侧</option><option value="sell">Sell · 卖侧</option><option value="total">总量诊断</option></select></label>
+<label>评价区间<select id="detail-period"></select></label>
+<label>排列方式<select id="factor-arrangement"><option value="grouped">保留因子分组</option><option value="flat">不分组 · 全部混排</option></select></label>
+<label>排序依据<select id="factor-sort"><option value="id">正式定义顺序</option><option value="ic">IC 数值降序</option><option value="ic_abs">|IC| 降序</option><option value="rank_value">Rank IC 数值降序</option><option value="rank">|Rank IC| 降序</option><option value="t">|Rank NW t| 降序</option><option value="spread">|G10−G1| 降序</option><option value="spread_value">G10−G1 数值降序</option></select></label>
+<button id="reset-filters">清空筛选</button><span id="factor-count" class="small" aria-live="polite"></span>
+</div>
+<div class="ranking-head"><h3>筛选与排序结果</h3><button id="download-explorer">下载当前表 CSV</button></div><p id="ranking-note" class="small"></p><div id="ranking-table" class="table-scroll scroll-table"></div>
+<div class="inventory"><aside class="factor-navigation"><p id="navigation-description" class="small"></p><div class="tree-controls"><button id="expand-tree">全部展开</button><button id="collapse-tree">收起分组</button></div><div class="nav-metric-header"><span>定义 / 方向</span><span>IC</span><span>Rank IC</span></div><div id="factor-list" class="factor-list" aria-label="分层因子导航"></div></aside><div class="detail-stack"><div id="scope-summary" class="comparison-summary" aria-live="polite"></div><div id="detail-cards"></div></div></div>
+<template id="detail-template"><article class="detail"><div class="eyebrow" data-key="factor-identity"></div><h3 data-key="factor-title" class="selected-name">正在加载…</h3><p data-key="detail-period-label" class="period-badge"></p><button data-key="download-factor">下载该因子完整评价 JSON</button><div data-key="detail-metrics" class="detail-metrics"></div><p data-key="detail-coverage" class="small"></p>
+<div class="detail-tabs" role="tablist"><button role="tab" data-tab="ic">日度与累计</button><button role="tab" data-tab="monthly">月度相关</button><button role="tab" data-tab="groups">分组与诊断</button><button role="tab" data-tab="scatter">散点与 OLS</button><button role="tab" data-tab="shape">原值分布</button><button role="tab" data-tab="periods">分期表现</button><button role="tab" data-tab="definition">定义与口径</button></div>
+<div data-key="pane-ic" class="detail-pane"></div><div data-key="pane-monthly" class="detail-pane" hidden></div><div data-key="pane-groups" class="detail-pane" hidden></div><div data-key="pane-scatter" class="detail-pane" hidden></div><div data-key="pane-shape" class="detail-pane" hidden></div><div data-key="pane-periods" class="detail-pane" hidden></div><div data-key="pane-definition" class="detail-pane" hidden></div></article></template>
+<dialog id="figure-dialog"><div class="dialog-head"><span id="figure-title"></span><a id="figure-download" download>下载 SVG</a><button id="figure-close" aria-label="关闭放大图">关闭</button></div><img id="figure-image" alt="放大图表"></dialog>
+</section>

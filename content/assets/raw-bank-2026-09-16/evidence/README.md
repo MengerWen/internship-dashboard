@@ -13,3 +13,9 @@
 每列完整精度的数据放在相邻 `factors/` 目录，报告按需加载，并提供 JSON 下载。统计数组的顺序是：`mean, ordinary_se, nw_se_lag1, nw_t, valid_days, icir, positive_fraction`。`periods` 包含全期、年度、季度、月度共 44 个区间；`groups` 前 10 项是 G1—G10，后 40 项是 G1—G40，每组依次保存毛收益与超额收益统计。`daily_health` 的顺序为全部股票数、有限因子数、零值数、成对股票数、成对因子不同取值数。`daily_spread` 依次为 G10−G1、G40−G1、最高 20%−最低 20%。
 
 本评价为历史样本内观测结果。多个定义共享证据，未做多重比较调整；毛收益未扣交易成本，未构成独立样本外验证或可执行策略回测。
+
+`details-result.json`、`details-guard.json` 和 `evaluate_details.py` 记录完整样本补充统计。全部 601 日、288 列的十分组计数和均值逐日对照原评价；收益百分位、中位数、每日成对收益 P1/P99 缩尾均值、尾部贡献、正收益比例和典型组内标准差按日计算，再按所选区间有效日等权。收益分组使用原评价的非空组口径，未引入 IC 的 30 样本门槛。
+
+每列 JSON 的 `details` 包含 `ols`、`distribution`、`scatter` 和 44 个区间的 `group_diagnostics`。OLS 使用全部有限因子与收益成对股票日，包含截距，不抽样或截尾；常数因子保留不可识别状态。全范围散点密度使用全部成对样本的 128 × 96 网格，计数逐列守恒；P1/P99 放大仅改变坐标范围，框外数量明确保留，拟合仍使用全样本。原值分位数从全部有限因子值精确计算。
+
+复建页面：`python scripts/build_rawbank_daily.py <report-data.json.gz> <details.json.gz>`，随后运行 `python build.py`。两个源文件以证据中的 SHA256 识别；完整精度逐列数据已随页面提交，线上浏览不依赖服务器即时计算。
