@@ -139,6 +139,40 @@ def test_figures_are_typeset_not_hand_drawn(report):
     assert '>-0.0</text>' not in page
 
 
+def test_explanation_is_split_into_navigable_chapters(report):
+    """The RankIC/Sharpe explanation is four chapters, each reachable from the nav."""
+    page, _ = report
+    order = re.findall(r'<section id="([a-z-]+)"><div class="section-head"><span class="num">(\d\d)', page)
+    assert [sid for sid, _ in order] == [
+        'setup', 'validation', 'test', 'explain', 'deciles-view',
+        'rankic', 'portfolio', 'audit', 'performance', 'evidence',
+    ]
+    assert [num for _, num in order] == [f'{i:02d}' for i in range(1, 11)]
+    nav = re.search(r'<nav class="nav"[^>]*>(.*?)</nav>', page, re.S).group(1)
+    assert re.findall(r'href="#([a-z-]+)"', nav) == [sid for sid, _ in order]
+    # No chapter may swallow the page again: cap the figures any one of them holds.
+    bodies = re.split(r'<section id="[a-z-]+">', page)[1:]
+    assert max(body.count('<figure id=') for body in bodies) <= 6
+
+
+def test_nav_tracks_the_section_being_read(report):
+    """Every daily page ships the shared scrollspy; this one styles its active tab."""
+    page, _ = report
+    assert page.count('<script data-nav-scrollspy>') == 1
+    assert '<style data-nav-scrollspy>' in page
+    assert '.nav a.active' in page
+    assert "classList.toggle('active'" in page
+
+
+def test_charts_sit_on_the_page_not_on_a_white_card(report):
+    """Figures share the page background instead of being framed like pasted images."""
+    page, _ = report
+    assert '.chart-scroll{overflow-x:auto}' in page
+    assert 'background:#fff;border:1px solid #e1e5dd' not in page
+    # matplotlib paints a figure patch only when the canvas is opaque.
+    assert 'fill: #ffffff' not in page
+
+
 def test_audit_limits_and_label_checks_are_visible(report):
     page, data = report
     assert '这里不能写成“已经证明没有未来数据”' in page

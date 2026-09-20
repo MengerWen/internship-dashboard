@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import sys
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,6 +83,12 @@ def publish(data, copied, source_result_sha256, raw=None):
     figures = {p.relative_to(ASSETS).as_posix(): base64.b64encode(p.read_bytes()).decode() for p in shown}
     offline = OUT.with_name('2026-09-07.html')
     offline.write_text(page.replace('/* FIGURE_DATA */', json.dumps(figures, separators=(',', ':'))), encoding='utf-8', newline='\n')
+    # The nav scrollspy is part of the published page, so it is applied before
+    # the audit records a hash, otherwise that hash would not cover it.
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    import add_nav_scrollspy
+    for path in (OUT, offline):
+        add_nav_scrollspy.patch(path, add_nav_scrollspy.PAGES[OUT.name])
     audit = {'status':'complete','source_status':'accepted','source_result_sha256':source_result_sha256,'source_seal':data['seal'],'reference_sha256':digest(reference),'html_sha256':digest(OUT),'offline_html_sha256':digest(offline),'data_sha256':hashlib.sha256(raw.encode()).hexdigest(),'template_sha256':digest(template_path),'script_sha256':digest(script_path),'copied_files':copied,'factor_count':24,'factor_days':14424,'figures':120,'periods':len(set(x['period'] for x in data['period_summary'])),'rendered_figures':{p.relative_to(ASSETS).as_posix():digest(p) for p in sorted((ASSETS / 'figures').glob('*'))},'method':'Presentation of sealed evaluation; no factor or return recalculation.'}
     (ASSETS/'2026-09-07-report-build-audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2),encoding='utf-8',newline='\n')
     package()

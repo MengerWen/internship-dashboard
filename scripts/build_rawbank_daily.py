@@ -53,6 +53,9 @@ finding='<div class="note"><p>全期 |Rank IC| 排名靠前的卖侧深度耗尽
 output=output.replace('<p id="result-note"',finding+'<p id="result-note"')
 target=ROOT/'content/daily/2026-09-16.show.html'
 target.write_text(output,encoding='utf-8')
+sys.path.insert(0,str(ROOT/'scripts'))
+import add_nav_scrollspy
+add_nav_scrollspy.patch(target,add_nav_scrollspy.PAGES[target.name])
 assert target.stat().st_size<25*1024**2, 'Cloudflare asset exceeds 25 MiB'
 assert all(path.stat().st_size<25*1024**2 for path in factor_dir.glob('*.js'))
 print('HTML bytes',target.stat().st_size)

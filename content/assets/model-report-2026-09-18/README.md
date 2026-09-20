@@ -18,7 +18,7 @@ python build.py
 
 在仓库根目录启动 `python -m http.server 8019 --bind 127.0.0.1`，再运行 `node scripts/verify_model_report_20260918.cjs`。使用本机 Chrome 无头模式，检查 1440px / 390px 视口、图表数量、放大、因子检索、下载、控制台及横向溢出。截图写入忽略的 `test-results/`。
 
-图表编号由模板中 `@@key@@` 的出现顺序自动推导，移动图表位置即可，不需手工维护编号。图表样式集中在 `scripts/report_charts.py`：刻度使用 nice-number 分档，内存、核数、耗时等非负量的坐标轴从 0 起；每张内联 SVG 的元素 id 加图表前缀，避免同一页面内冲突。
+图表编号由模板中 `@@key@@` 的出现顺序自动推导，移动图表位置即可，不需手工维护编号。正文分为 10 个章节：`setup / validation / test / explain / deciles-view / rankic / portfolio / audit / performance / evidence`，导航链接与章节顺序必须一一对应，单个章节最多 6 张图（由 `tests/test_model_report_20260918.py` 约束）。图表使用透明画布，直接落在页面纸色上，不再套白底边框；导出到 `figures/` 的 PNG 会补上纸色。图表样式集中在 `scripts/report_charts.py`：刻度使用 nice-number 分档，内存、核数、耗时等非负量的坐标轴从 0 起；每张内联 SVG 的元素 id 加图表前缀，避免同一页面内冲突。
 
 ## 统计定义
 

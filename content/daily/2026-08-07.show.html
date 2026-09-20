@@ -96,7 +96,67 @@ function closeLightbox(){const box=$('#image-lightbox');if(!box.classList.contai
 function stepLightbox(delta){if(!lightboxImages.length)return;lightboxIndex=(lightboxIndex+delta+lightboxImages.length)%lightboxImages.length;updateLightbox()}
 function clearLongPress(){if(longPressTimer!==null)clearTimeout(longPressTimer);longPressTimer=null;longPressOrigin=null;if(suppressLightboxClick)setTimeout(()=>{suppressLightboxClick=false},500)}
 function setupLightbox(){$('#lightbox-close').onclick=closeLightbox;$('#lightbox-prev').onclick=()=>stepLightbox(-1);$('#lightbox-next').onclick=()=>stepLightbox(1);$('#lightbox-stage').addEventListener('click',e=>{if(e.target.id==='lightbox-stage'||e.target.classList.contains('lightbox-canvas'))closeLightbox()});document.addEventListener('click',e=>{const image=e.target.closest('.figure-card img');if(!image)return;if(suppressLightboxClick){suppressLightboxClick=false;e.preventDefault();return}openLightbox(image)});document.addEventListener('pointerdown',e=>{const image=e.target.closest('.figure-card img');if(!image||e.button!==0)return;clearLongPress();longPressOrigin={x:e.clientX,y:e.clientY};longPressTimer=setTimeout(()=>{suppressLightboxClick=true;openLightbox(image);longPressTimer=null},450)});document.addEventListener('pointermove',e=>{if(longPressOrigin&&Math.hypot(e.clientX-longPressOrigin.x,e.clientY-longPressOrigin.y)>12)clearLongPress()});document.addEventListener('pointerup',clearLongPress);document.addEventListener('pointercancel',clearLongPress);document.addEventListener('contextmenu',e=>{if(e.target.closest('.figure-card img'))e.preventDefault()});document.addEventListener('keydown',e=>{const box=$('#image-lightbox'),image=e.target.closest?.('.figure-card img');if(image&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openLightbox(image);return}if(!box.classList.contains('is-open'))return;if(e.key==='Escape'){e.preventDefault();closeLightbox()}else if(e.key==='ArrowLeft'){e.preventDefault();stepLightbox(-1)}else if(e.key==='ArrowRight'){e.preventDefault();stepLightbox(1)}})}
-function setup(){renderHead();renderLayers();renderMetricStats();renderRanking();renderPerformance();renderCatalog();populateFilters();renderInventory();renderAudit();renderMath();setupLightbox();$$('.rank-tabs button').forEach(b=>b.onclick=()=>{$$('.rank-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderRanking(b.dataset.metric)});['#factor-search','#layer-filter','#projection-filter','#sort-filter'].forEach(sel=>$(sel).addEventListener('input',renderInventory));$('#diagnostic-toggle').onclick=e=>{includeDiagnostics=!includeDiagnostics;e.currentTarget.classList.toggle('active',includeDiagnostics);renderInventory()};document.addEventListener('click',e=>{const link=e.target.closest('[data-factor]');if(!link)return;const id=link.dataset.factor;if(recMap.has(id)){e.preventDefault();openFactor(id,{scroll:!link.closest('#inventory-body')})}});const hash=decodeURIComponent(location.hash.replace(/^#factor-/,''));if(recMap.has(hash))openFactor(hash);else openFactor(R.rankings.rank_ic.top[0]);const sections=$$('section[id]'),links=$$('.nav a');const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${entry.target.id}`))}}),{rootMargin:'-30% 0px -60% 0px'});sections.forEach(s=>observer.observe(s))}
+function setup(){renderHead();renderLayers();renderMetricStats();renderRanking();renderPerformance();renderCatalog();populateFilters();renderInventory();renderAudit();renderMath();setupLightbox();$$('.rank-tabs button').forEach(b=>b.onclick=()=>{$$('.rank-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderRanking(b.dataset.metric)});['#factor-search','#layer-filter','#projection-filter','#sort-filter'].forEach(sel=>$(sel).addEventListener('input',renderInventory));$('#diagnostic-toggle').onclick=e=>{includeDiagnostics=!includeDiagnostics;e.currentTarget.classList.toggle('active',includeDiagnostics);renderInventory()};document.addEventListener('click',e=>{const link=e.target.closest('[data-factor]');if(!link)return;const id=link.dataset.factor;if(recMap.has(id)){e.preventDefault();openFactor(id,{scroll:!link.closest('#inventory-body')})}});const hash=decodeURIComponent(location.hash.replace(/^#factor-/,''));if(recMap.has(hash))openFactor(hash);else openFactor(R.rankings.rank_ic.top[0]);}
 setup();
+</script>
+<script data-nav-scrollspy>
+(()=>{'use strict';
+const nav=document.querySelector('nav.nav,nav.chapter-nav,nav');
+if(!nav)return;
+const links=[...nav.querySelectorAll('a[href^="#"]')];
+if(links.length<2)return;
+const targets=links.map(a=>{try{return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)))}catch(e){return null}});
+if(targets.filter(Boolean).length<2)return;
+let scroller=links[0].parentElement;
+while(scroller&&scroller!==document.body&&scroller.scrollWidth-scroller.clientWidth<=4)scroller=scroller.parentElement;
+if(!scroller||scroller===document.body)scroller=null;
+let active=-1;
+const apply=i=>{
+ if(i===active)return;
+ active=i;
+ links.forEach((a,k)=>{
+  const on=k===i;
+  a.classList.toggle('active',on);
+  if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');
+ });
+ if(scroller&&i>=0){
+  const a=links[i],left=a.offsetLeft,right=left+a.offsetWidth;
+  if(left<scroller.scrollLeft)scroller.scrollTo({left:Math.max(0,left-16),behavior:'smooth'});
+  else if(right>scroller.scrollLeft+scroller.clientWidth)scroller.scrollTo({left:right-scroller.clientWidth+16,behavior:'smooth'});
+ }
+};
+const px=v=>{const n=parseFloat(v);return Number.isFinite(n)?n:0};
+// A section lands under the sticky nav, and scroll-padding / scroll-margin push
+// it further down, so the band has to clear whichever offset is largest.
+let offsets=[];
+const measure=()=>{
+ const pad=px(getComputedStyle(document.documentElement).scrollPaddingTop);
+ offsets=targets.map(t=>t?Math.max(pad,px(getComputedStyle(t).scrollMarginTop)):0);
+};
+const pick=()=>{
+ const navBottom=Math.max(0,nav.getBoundingClientRect().bottom);
+ let i=-1,best=-1,bestArea=0;
+ targets.forEach((t,k)=>{
+  if(!t)return;
+  const box=t.getBoundingClientRect();
+  if(box.top<=Math.max(navBottom,offsets[k])+12)i=k;
+  const area=Math.min(box.bottom,innerHeight)-Math.max(box.top,navBottom);
+  if(area>bestArea){bestArea=area;best=k}
+ });
+ // At the very foot of the page the last tab always wins, otherwise a short
+ // final section could never be reached. Elsewhere, when no section has cleared
+ // the band yet, fall back to whichever one fills most of the screen.
+ if(Math.ceil(innerHeight+scrollY)>=document.documentElement.scrollHeight-2)
+  for(let k=targets.length-1;k>=0;k--)if(targets[k]){i=k;break}
+ apply(i>=0?i:(best>=0?best:targets.findIndex(Boolean)));
+};
+measure();
+let queued=false;
+const schedule=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;pick()})};
+addEventListener('scroll',schedule,{passive:true});
+addEventListener('resize',()=>{measure();schedule()});
+addEventListener('hashchange',schedule);
+pick();
+})();
 </script>
 </body></html>

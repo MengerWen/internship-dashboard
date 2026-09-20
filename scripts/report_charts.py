@@ -18,7 +18,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.ticker import MaxNLocator  # noqa: E402
 
 TEAL, RUST, BLUE, GRAY = '#087b78', '#b24f35', '#446994', '#78837a'
-INK, GRID, SPINE, SAND = '#243648', '#e4e8e2', '#b7c1bf', '#c8a27a'
+INK, GRID, SPINE, SAND = '#243648', '#d8ded3', '#a9b5b1', '#c8a27a'
+PAPER = '#f5f3eb'
 
 plt.rcParams.update({
     'svg.fonttype': 'none',
@@ -31,9 +32,10 @@ plt.rcParams.update({
     'xtick.labelsize': 11,
     'ytick.labelsize': 11,
     'legend.fontsize': 11,
-    'figure.facecolor': 'white',
-    'axes.facecolor': 'white',
-    'savefig.facecolor': 'white',
+    'figure.facecolor': 'none',
+    'axes.facecolor': 'none',
+    'savefig.facecolor': 'none',
+    'savefig.transparent': True,
     'text.color': INK,
     'axes.labelcolor': INK,
     'axes.edgecolor': SPINE,
@@ -81,7 +83,10 @@ def render(fig, title, key=None, png_path=None):
     try:
         fig.savefig(buffer, format='svg', bbox_inches='tight', pad_inches=0.12)
         if png_path is not None:
-            fig.savefig(png_path, format='png', dpi=150, bbox_inches='tight', pad_inches=0.12)
+            # The inline SVG is transparent so the page shows through; the standalone
+            # PNG needs the paper colour painted in to stay readable on its own.
+            fig.savefig(png_path, format='png', dpi=150, bbox_inches='tight', pad_inches=0.12,
+                        facecolor=PAPER, transparent=False)
     finally:
         plt.close(fig)
     svg = buffer.getvalue()

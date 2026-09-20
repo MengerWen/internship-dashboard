@@ -54,6 +54,7 @@ details[open]>summary .tree-toggle span{transform:rotate(90deg)}
 .formula{overflow-x:auto;overflow-wrap:normal}.family{min-width:0}.math-line{display:block;max-width:100%;overflow-x:auto;padding:10px 0}.math-line math{width:max-content}.math-inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;padding:4px 2px}math{font-family:"Cambria Math","STIX Two Math",math;font-size:1.08em;line-height:normal}.formula math{margin:4px 0}.formula .math-line:last-child{margin-bottom:0}
 .atlas-results{margin:24px 0 38px}.atlas-results-head{display:flex;align-items:center;justify-content:space-between;gap:16px}.atlas-results-head h3{margin:0}.ranking-scroll{max-height:510px;overflow:auto}.ranking-scroll thead th{position:sticky;top:0;z-index:1}.ranking-group th{background:#e4eeea;color:var(--teal);font-weight:600}.factor-list.flat .side-label{white-space:normal}.factor-list.flat .factor-item{align-items:start}.factor-list.flat .side-label small{font-size:10px;line-height:1.5}.atlas-results .small{margin-bottom:8px}
 </style>
+<style data-nav-scrollspy>.nav a.active{color:var(--teal);font-weight:600;box-shadow:inset 0 -2px 0 var(--teal)}</style>
 </head>
 <body>
 <header><div class="wrap">
@@ -503,5 +504,65 @@ $('download-audit').onclick=()=>save(JSON.stringify(viewMode==='all'?Object.from
 $('download-report-data').onclick=()=>save(JSON.stringify(viewMode==='all'?BUNDLE:DATA),'2026-09-06-cancel-phase-report-data.json','application/json',viewMode==='all'?'all':direction);
 refreshPage();hashSelect();
 
+</script>
+<script data-nav-scrollspy>
+(()=>{'use strict';
+const nav=document.querySelector('nav.nav,nav.chapter-nav,nav');
+if(!nav)return;
+const links=[...nav.querySelectorAll('a[href^="#"]')];
+if(links.length<2)return;
+const targets=links.map(a=>{try{return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)))}catch(e){return null}});
+if(targets.filter(Boolean).length<2)return;
+let scroller=links[0].parentElement;
+while(scroller&&scroller!==document.body&&scroller.scrollWidth-scroller.clientWidth<=4)scroller=scroller.parentElement;
+if(!scroller||scroller===document.body)scroller=null;
+let active=-1;
+const apply=i=>{
+ if(i===active)return;
+ active=i;
+ links.forEach((a,k)=>{
+  const on=k===i;
+  a.classList.toggle('active',on);
+  if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');
+ });
+ if(scroller&&i>=0){
+  const a=links[i],left=a.offsetLeft,right=left+a.offsetWidth;
+  if(left<scroller.scrollLeft)scroller.scrollTo({left:Math.max(0,left-16),behavior:'smooth'});
+  else if(right>scroller.scrollLeft+scroller.clientWidth)scroller.scrollTo({left:right-scroller.clientWidth+16,behavior:'smooth'});
+ }
+};
+const px=v=>{const n=parseFloat(v);return Number.isFinite(n)?n:0};
+// A section lands under the sticky nav, and scroll-padding / scroll-margin push
+// it further down, so the band has to clear whichever offset is largest.
+let offsets=[];
+const measure=()=>{
+ const pad=px(getComputedStyle(document.documentElement).scrollPaddingTop);
+ offsets=targets.map(t=>t?Math.max(pad,px(getComputedStyle(t).scrollMarginTop)):0);
+};
+const pick=()=>{
+ const navBottom=Math.max(0,nav.getBoundingClientRect().bottom);
+ let i=-1,best=-1,bestArea=0;
+ targets.forEach((t,k)=>{
+  if(!t)return;
+  const box=t.getBoundingClientRect();
+  if(box.top<=Math.max(navBottom,offsets[k])+12)i=k;
+  const area=Math.min(box.bottom,innerHeight)-Math.max(box.top,navBottom);
+  if(area>bestArea){bestArea=area;best=k}
+ });
+ // At the very foot of the page the last tab always wins, otherwise a short
+ // final section could never be reached. Elsewhere, when no section has cleared
+ // the band yet, fall back to whichever one fills most of the screen.
+ if(Math.ceil(innerHeight+scrollY)>=document.documentElement.scrollHeight-2)
+  for(let k=targets.length-1;k>=0;k--)if(targets[k]){i=k;break}
+ apply(i>=0?i:(best>=0?best:targets.findIndex(Boolean)));
+};
+measure();
+let queued=false;
+const schedule=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;pick()})};
+addEventListener('scroll',schedule,{passive:true});
+addEventListener('resize',()=>{measure();schedule()});
+addEventListener('hashchange',schedule);
+pick();
+})();
 </script>
 </body></html>

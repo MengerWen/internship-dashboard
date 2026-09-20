@@ -53,7 +53,8 @@ details[open]>summary .tree-toggle span{transform:rotate(90deg)}
 .heatmap td{padding:5px;font-size:10px;text-align:center}.heatmap th{padding:5px;font-size:10px}.daily-table{max-height:430px;overflow:auto}.daily-table th{position:sticky;top:0}.file-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.file-grid a{overflow-wrap:anywhere;font-size:12px}.detail-tabs{position:static}.overview-plot svg{width:100%;height:auto}.groups-wrap{cursor:zoom-in}.detail .two:has(.groups-wrap){grid-template-columns:1fr;gap:26px}.detail .groups-wrap svg{max-height:430px}.figure-button img{image-rendering:auto}.family code{display:block;margin-top:10px}.wide-note{font-size:13px}.date-controls{margin-top:10px}@media(max-width:700px){.file-grid{grid-template-columns:1fr}.hero-note{flex-wrap:wrap}.heatmap{min-width:900px}}
 .overview-plot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.overview-plot.single{grid-template-columns:1fr}.overview-plot figure{margin:0;min-width:0}.overview-plot h3{margin:0 0 10px;color:var(--teal)}.overview-plot svg{display:block}.side-control[hidden]{display:none!important}.factor-list .factor-item{display:grid;grid-template-columns:minmax(0,1fr) 78px 86px;gap:7px;align-items:center}.factor-item .metric-value{font:12px Consolas,monospace;text-align:right;white-space:nowrap}.factor-item .side-label{white-space:normal}.factor-item .side-label small{font-size:10px;line-height:1.5}.nav-metric-header{display:grid;grid-template-columns:minmax(0,1fr) 78px 86px;gap:7px}.nav-metric-header span:not(:first-child){text-align:right}.detail-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:24px}.detail-pair.single{grid-template-columns:1fr}.detail-pair .detail{padding:18px;min-width:0}.detail-pair .detail h3{font-size:20px}.detail-pair .detail-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-pair .metric b{font-size:20px}.detail-pair .detail-tabs{display:flex;flex-wrap:wrap}.detail-tabs button{font-size:12px;padding:5px 8px}.detail-tabs{margin:16px 0}.scope-badge{display:inline-block;background:#e7eee8;color:var(--teal);padding:3px 8px;font-size:12px;margin-bottom:8px}.detail .formula{padding:12px;font-size:15px}.family .formula{font-size:16px}.detail-pane table{font-size:11px}.detail-pane th,.detail-pane td{padding:8px}.definition-symbols{font-size:13px}.date-controls input{min-width:0}.formula{overflow-x:auto}.detail-pane[hidden]{display:none!important}.atlas-results-head button:disabled{opacity:.5;cursor:default}@media(max-width:1100px){.inventory{grid-template-columns:310px minmax(0,1fr)}.detail-pair{grid-template-columns:1fr}}@media(max-width:700px){.inventory{grid-template-columns:1fr}.overview-plot{grid-template-columns:repeat(2,minmax(320px,1fr));overflow-x:auto}.overview-plot.single{grid-template-columns:minmax(320px,1fr)}.heatmap{min-width:0}.heatmap table{min-width:900px}.atlas-results-head{align-items:start}.atlas-results-head h3{font-size:21px}}
 .tree-title small{display:block;font-size:11px;font-weight:400;color:var(--muted)}
-</style></head><body>
+</style><style data-nav-scrollspy>.nav a.active{color:var(--teal);font-weight:600;box-shadow:inset 0 -2px 0 var(--teal)}</style>
+</head><body>
 <header><div class="wrap"><div class="mast"><span>思瑞投资 · 微观结构研究</span><span>汇报日期 2026.09.07 · 完整结果</span></div><div class="hero"><div><div class="eyebrow">DEPTH MATCH / RESEARCH NOTE 07</div><h1>委托量是否贴着<br><em>盘口深度？</em></h1><p class="subtitle">12 类定义 × 买卖两侧，24 列因子的 601 日检验</p><p class="lead">以提交前可见的对手盘为参照，观察订单数量是否匹配一档或两档深度，以及这种匹配是否随盘口变化、近期交易和撤余量行为出现。全期结果中，近期匹配卖侧的负 Rank IC 最突出；多种基础定义高度相关，仍需分期检验其稳定性。</p></div><aside class="hero-note"><div><strong id="hero-rank"></strong><small>24 列中最大的 |日均 Rank IC|</small></div><div><strong id="hero-t"></strong><small>最大的 |Rank IC 的 NW t| · lag 1</small></div></aside></div><div class="stats"><span><b>601</b>交易日</span><span><b>24</b>因子列 / 12 类定义</span><span><b>171.96 万</b>股票日</span><span>2024.01.02 — 2026.06.30 · 深市 A 股</span></div></div></header>
 <nav class="nav" aria-label="报告目录"><div class="wrap"><a href="#inspiration">01 研究动机</a><a href="#definition">02 深度与定义</a><a href="#contract">03 收益与样本</a><a href="#results">04 全区间结果</a><a href="#factors">05 逐因子查看</a><a href="#evidence">06 证据与边界</a><span class="toc-info">图表可放大下载</span></div></nav>
 <main class="wrap"><noscript><p class="no-js">交互图表与结果表需要 JavaScript；定义、样本说明和验收正文可以直接阅读。</p></noscript>
@@ -248,4 +249,64 @@ for(const [id,prefix] of [['evaluation-files','evaluation/'],['notebook-files','
 $('seal-info').textContent='RUN_ROOT: /home/wangly/hdd-store/outputs/sirui/published/open5m-depth-match/20260908T100452Z-full-history-i01-147ab55\n'+JSON.stringify(D.seal,null,2);
 refresh();
 
-</script></body></html>
+</script><script data-nav-scrollspy>
+(()=>{'use strict';
+const nav=document.querySelector('nav.nav,nav.chapter-nav,nav');
+if(!nav)return;
+const links=[...nav.querySelectorAll('a[href^="#"]')];
+if(links.length<2)return;
+const targets=links.map(a=>{try{return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)))}catch(e){return null}});
+if(targets.filter(Boolean).length<2)return;
+let scroller=links[0].parentElement;
+while(scroller&&scroller!==document.body&&scroller.scrollWidth-scroller.clientWidth<=4)scroller=scroller.parentElement;
+if(!scroller||scroller===document.body)scroller=null;
+let active=-1;
+const apply=i=>{
+ if(i===active)return;
+ active=i;
+ links.forEach((a,k)=>{
+  const on=k===i;
+  a.classList.toggle('active',on);
+  if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');
+ });
+ if(scroller&&i>=0){
+  const a=links[i],left=a.offsetLeft,right=left+a.offsetWidth;
+  if(left<scroller.scrollLeft)scroller.scrollTo({left:Math.max(0,left-16),behavior:'smooth'});
+  else if(right>scroller.scrollLeft+scroller.clientWidth)scroller.scrollTo({left:right-scroller.clientWidth+16,behavior:'smooth'});
+ }
+};
+const px=v=>{const n=parseFloat(v);return Number.isFinite(n)?n:0};
+// A section lands under the sticky nav, and scroll-padding / scroll-margin push
+// it further down, so the band has to clear whichever offset is largest.
+let offsets=[];
+const measure=()=>{
+ const pad=px(getComputedStyle(document.documentElement).scrollPaddingTop);
+ offsets=targets.map(t=>t?Math.max(pad,px(getComputedStyle(t).scrollMarginTop)):0);
+};
+const pick=()=>{
+ const navBottom=Math.max(0,nav.getBoundingClientRect().bottom);
+ let i=-1,best=-1,bestArea=0;
+ targets.forEach((t,k)=>{
+  if(!t)return;
+  const box=t.getBoundingClientRect();
+  if(box.top<=Math.max(navBottom,offsets[k])+12)i=k;
+  const area=Math.min(box.bottom,innerHeight)-Math.max(box.top,navBottom);
+  if(area>bestArea){bestArea=area;best=k}
+ });
+ // At the very foot of the page the last tab always wins, otherwise a short
+ // final section could never be reached. Elsewhere, when no section has cleared
+ // the band yet, fall back to whichever one fills most of the screen.
+ if(Math.ceil(innerHeight+scrollY)>=document.documentElement.scrollHeight-2)
+  for(let k=targets.length-1;k>=0;k--)if(targets[k]){i=k;break}
+ apply(i>=0?i:(best>=0?best:targets.findIndex(Boolean)));
+};
+measure();
+let queued=false;
+const schedule=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;pick()})};
+addEventListener('scroll',schedule,{passive:true});
+addEventListener('resize',()=>{measure();schedule()});
+addEventListener('hashchange',schedule);
+pick();
+})();
+</script>
+</body></html>

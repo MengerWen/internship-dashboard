@@ -16,6 +16,7 @@ from matplotlib.patches import Patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import add_nav_scrollspy  # noqa: E402
 import report_charts as rc  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,7 +69,11 @@ def table(headers, rows):
 
 
 def figure(chart_id, title, svg, caption):
-    return f'<figure id="{chart_id}"><div class="figure-top"><h3>{title}</h3><button class="enlarge" type="button" aria-label="放大：{title}">放大图表</button></div><div class="chart-scroll">{svg}</div><figcaption>{caption}</figcaption></figure>'
+    number, name = title.split(' · ', 1)
+    return (f'<figure id="{chart_id}"><div class="figure-top">'
+            f'<h3><b>{number}</b> {name}</h3>'
+            f'<button class="enlarge" type="button" aria-label="放大：{title}">放大</button></div>'
+            f'<div class="chart-scroll">{svg}</div><figcaption>{caption}</figcaption></figure>')
 
 
 def legend_patch(color, label):
@@ -1093,7 +1098,9 @@ def main():
     for key, value in replacement.items():
         report = report.replace('@@' + key + '@@', value)
     assert '@@' not in report, 'unfilled report token'
-    (ROOT / 'content/daily/2026-09-18.show.html').write_text(report, encoding='utf-8')
+    page = ROOT / 'content/daily/2026-09-18.show.html'
+    page.write_text(report, encoding='utf-8')
+    add_nav_scrollspy.patch(page, add_nav_scrollspy.PAGES[page.name])
     print(json.dumps(extra, indent=2, ensure_ascii=False))
     print('report_bytes', len(report.encode('utf-8')), 'chart_count', len(plots))
 

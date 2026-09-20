@@ -64,7 +64,8 @@ details[open]>summary .tree-toggle span{transform:rotate(90deg)}
 @media(max-width:1100px){.detail-pair{grid-template-columns:1fr}}
 @media(max-width:1000px){.inventory{grid-template-columns:300px minmax(0,1fr)}.factor-navigation .factor-list .factor-item{grid-template-columns:1fr 64px 64px}.nav-metric-header{grid-template-columns:1fr 64px 64px}.plot-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.inventory{grid-template-columns:1fr}.detail-pair{grid-template-columns:1fr}.factor-list{max-height:350px}.ranking-head{align-items:start}.ranking-head h3{font-size:20px}.ranking-head button{font-size:12px}.controls{flex-wrap:wrap}}
-</style></head><body>
+</style><style data-nav-scrollspy>.nav a.active{color:var(--teal);font-weight:600;box-shadow:inset 0 -2px 0 var(--teal)}</style>
+</head><body>
 <header><div class="wrap"><div class="mast"><span>思瑞投资 · 量化研究</span><span>研究归档 2026.09.16 · 评价完成 2026.09.17</span></div><div class="hero"><div><div class="eyebrow">OPEN5M / FULL FACTOR BANK</div><h1>开盘五分钟，<br><em>订单行为与后续收益</em></h1><p class="subtitle">全部因子的 601 日完整评价</p><p class="lead">从撤单、重挂、订单链到盘口响应，把原始行为证据投影到买卖两侧，再观察它们与同日短窗口收益的关系。每一列都保留覆盖率、日度 IC、分期统计和分组形状。</p></div><aside class="hero-note"><div><strong>284 + 4</strong><small>正式因子列 + 诊断指标列</small></div><div><strong>601</strong><small>2024.01.02 — 2026.06.30</small></div></aside></div><div class="stats"><span><b>1,719,612</b>股票日</span><span><b>44</b>评价区间</span><span><b>10 / 40</b>等秩分组</span><span><b>100</b>固定定义域分箱</span></div></div></header>
 <nav class="nav"><div class="wrap"><a href="#definition">01 因子构造</a><a href="#contract">02 收益与样本</a><a href="#results">03 全部结果</a><a href="#factors">04 因子浏览</a><a href="#evidence">05 证据与下载</a></div></nav><main class="wrap">
 <section id="definition"><div class="section-head"><span class="num">01</span><div><h2>从行为证据到股票日因子</h2><p class="subtle">因子描述 L2 可观测行为，不能据此确认交易者身份或真实交易目的。</p></div></div><div class="table-scroll"><table><thead><tr><th>层次</th><th>构造与观察问题</th><th>结果含义</th></tr></thead><tbody><tr><td>L1 基础评分投影</td><td>撤单、重挂、订单链及盘口响应等已有评分，分别汇总买侧和卖侧。</td><td>某类行为在全部有效新委托中的强度。</td></tr><tr><td>L2 多证据共识</td><td>整合生命周期、重挂、订单链、事件响应证据，保留并集与交集等定义。</td><td>不同证据的共同出现和综合强度。</td></tr><tr><td>L3 微观结构情境</td><td>行为证据与价差、队列、深度、订单流、趋势等提交时情境相互作用。</td><td>某种盘口情境下的行为强度。</td></tr><tr><td>L4 股票日窗口状态</td><td>行为证据与前五分钟的价格路径、成交、价差、深度状态结合。</td><td>特定市场状态下的行为强度。</td></tr><tr><td>L5 用途与流动性机制</td><td>做市、主动执行、逆向吸收、撤退、补充等机制代理及组合。</td><td>与某类用途一致的观测代理。</td></tr><tr><td>诊断指标</td><td>4 列市场行为指标，保留总量投影。</td><td>辅助理解样本，不计入 284 列正式因子。</td></tr></tbody></table></div><div class="formula">F<sub>s,d</sub> = Σ（方向内的订单贡献） / N<sub>d</sub><small>N 为股票日窗口内全部有效、去重的新委托数。买卖侧共用分母；具体贡献、窗口状态和特殊组合遵循冻结注册表。浏览器内展示每列的注册身份与来源。</small></div><div class="note"><p>本批因子沿用冻结的 R19 参数，不使用收益标签重新定标。未知证据与真正的零值分开处理；浏览结果时需同时看有限值覆盖率、零值占比和常数截面天数。</p></div></section>
@@ -196,4 +197,64 @@ $('download-proof').onclick=()=>save(JSON.stringify(P,null,2),'rawbank-evaluatio
 $('figure-close').onclick=()=>$('figure-dialog').close();$('figure-dialog').addEventListener('click',e=>{if(e.target===$('figure-dialog'))$('figure-dialog').close()});
 renderResults();refresh();document.body.dataset.ready='true';
 })().catch(error=>{document.getElementById('result-note').textContent='评价数据加载失败：'+error.message;console.error(error)});
-</script></body></html>
+</script><script data-nav-scrollspy>
+(()=>{'use strict';
+const nav=document.querySelector('nav.nav,nav.chapter-nav,nav');
+if(!nav)return;
+const links=[...nav.querySelectorAll('a[href^="#"]')];
+if(links.length<2)return;
+const targets=links.map(a=>{try{return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)))}catch(e){return null}});
+if(targets.filter(Boolean).length<2)return;
+let scroller=links[0].parentElement;
+while(scroller&&scroller!==document.body&&scroller.scrollWidth-scroller.clientWidth<=4)scroller=scroller.parentElement;
+if(!scroller||scroller===document.body)scroller=null;
+let active=-1;
+const apply=i=>{
+ if(i===active)return;
+ active=i;
+ links.forEach((a,k)=>{
+  const on=k===i;
+  a.classList.toggle('active',on);
+  if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');
+ });
+ if(scroller&&i>=0){
+  const a=links[i],left=a.offsetLeft,right=left+a.offsetWidth;
+  if(left<scroller.scrollLeft)scroller.scrollTo({left:Math.max(0,left-16),behavior:'smooth'});
+  else if(right>scroller.scrollLeft+scroller.clientWidth)scroller.scrollTo({left:right-scroller.clientWidth+16,behavior:'smooth'});
+ }
+};
+const px=v=>{const n=parseFloat(v);return Number.isFinite(n)?n:0};
+// A section lands under the sticky nav, and scroll-padding / scroll-margin push
+// it further down, so the band has to clear whichever offset is largest.
+let offsets=[];
+const measure=()=>{
+ const pad=px(getComputedStyle(document.documentElement).scrollPaddingTop);
+ offsets=targets.map(t=>t?Math.max(pad,px(getComputedStyle(t).scrollMarginTop)):0);
+};
+const pick=()=>{
+ const navBottom=Math.max(0,nav.getBoundingClientRect().bottom);
+ let i=-1,best=-1,bestArea=0;
+ targets.forEach((t,k)=>{
+  if(!t)return;
+  const box=t.getBoundingClientRect();
+  if(box.top<=Math.max(navBottom,offsets[k])+12)i=k;
+  const area=Math.min(box.bottom,innerHeight)-Math.max(box.top,navBottom);
+  if(area>bestArea){bestArea=area;best=k}
+ });
+ // At the very foot of the page the last tab always wins, otherwise a short
+ // final section could never be reached. Elsewhere, when no section has cleared
+ // the band yet, fall back to whichever one fills most of the screen.
+ if(Math.ceil(innerHeight+scrollY)>=document.documentElement.scrollHeight-2)
+  for(let k=targets.length-1;k>=0;k--)if(targets[k]){i=k;break}
+ apply(i>=0?i:(best>=0?best:targets.findIndex(Boolean)));
+};
+measure();
+let queued=false;
+const schedule=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;pick()})};
+addEventListener('scroll',schedule,{passive:true});
+addEventListener('resize',()=>{measure();schedule()});
+addEventListener('hashchange',schedule);
+pick();
+})();
+</script>
+</body></html>

@@ -69,6 +69,22 @@ title: "当日成果展示"
 
 较大的本地评价数据可放在 `content/assets/`，按需加载。展示版提供文件下载时，在主日报 frontmatter 中设置 `show_allow_downloads: true`；构建后该页允许下载，仍使用不授予同源权限的脚本沙箱。
 
+
+### 导航高亮
+
+带页内导航的展示版共用一份 scrollspy：滚动时导航里对应的 tab 会加深并加下划线，窄屏下还会把选中的 tab 自动滚进可视范围。它由 `scripts/add_nav_scrollspy.py` 注入，幂等，可反复执行：
+
+```powershell
+python scripts/add_nav_scrollspy.py          # 注入或修复
+python scripts/add_nav_scrollspy.py --check  # 只检查，落后时返回非零
+```
+
+页面由别的仓库或生成脚本重建后，重新跑一次即可；`2026-09-07` 与 `2026-09-18` 的生成器已经在写盘后自动调用它，因此构建产物的哈希与审计记录保持一致。新增带页内导航的展示版时，要把文件名加进 `add_nav_scrollspy.PAGES`，否则 `tests/test_nav_scrollspy.py` 会失败。浏览器验收：
+
+```powershell
+node scripts/verify_nav_scrollspy.cjs
+```
+
 ## 更新正式成果页
 
 正式成果放在 `content/showcase/`。每个文件的 frontmatter 至少包含:
