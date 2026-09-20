@@ -20,7 +20,7 @@ def test_daily_registration_and_self_contained_charts(report):
     page, data = report
     assert (ROOT / "content/daily/2026-09-18.md").exists()
     assert 'show_allow_downloads: true' in (ROOT / "content/daily/2026-09-18.md").read_text(encoding="utf-8")
-    assert len(re.findall(r'<figure id=', page)) == 18
+    assert len(re.findall(r'<figure id=', page)) == 21
     assert '@@' not in page
     assert not re.search(r'<(?:script|link)[^>]+(?:src|href)="https?://', page)
     assert len(page.encode('utf-8')) < 25 * 1024**2
@@ -56,6 +56,55 @@ def test_statistics_recalculate_from_published_daily_series(report):
     gross100 = math.prod(1 + value / 2 for value in values) - 1
     assert gross100 == pytest.approx(0.12105576246879757)
     assert data['extra_analysis']['long_excess_sharpe'] == pytest.approx(5.954786105002072)
+
+
+def test_expanding_split_is_declared_not_replaced(report):
+    """The run is fold 15 of the frozen 15-fold plan, and the page must say so."""
+    page, data = report
+    folds = data['expanding_folds']
+    assert len(folds) == 15
+    assert [f['fold'] for f in folds] == list(range(1, 16))
+    assert folds[0]['month'] == '2024-07' and folds[-1]['month'] == '2025-09'
+    assert sum(f['validation_days'] for f in folds) == 308
+    assert folds[-1]['train_days'] == len(data['dataset']['train_dates']) == 403
+    assert all(f['train_days'] < folds[i + 1]['train_days'] for i, f in enumerate(folds[:-1]))
+    assert '15 折扩张验证' in page
+    assert '前 14 折没有运行' in page
+
+
+def test_rank_ic_decomposes_across_deciles(report):
+    """The ten decile contributions must reconstruct the published RankIC exactly."""
+    _, data = report
+    deciles = data['deciles']
+    assert [row['decile'] for row in deciles] == list(range(1, 11))
+    total = sum(row['rank_ic_contribution'] for row in deciles)
+    assert total == pytest.approx(0.022039952480479963, abs=1e-12)
+    assert deciles[0]['inner_rank_ic'] == pytest.approx(data['extra_analysis']['mean_bottom_ic'], abs=1e-12)
+    # The traded ends carry most of the signal; the untraded middle dilutes the average.
+    assert data['extra_analysis']['middle_decile_ic_share'] < 0.2
+    assert data['extra_analysis']['extreme_decile_ic_share'] > 0.6
+    rows = len(data['decile_rank_ic_daily'])
+    assert rows == 176
+
+
+def test_decile_view_reconstructs_the_official_portfolios(report):
+    """Deciles and the formal legs must agree up to the direction gate."""
+    _, data = report
+    reconstructed = data['extra_analysis']['decile_reconstructed_sharpe']
+    overall = data['test_summary']['overall_metrics']
+    assert reconstructed['pure_long'] == pytest.approx(overall['pure_long_sharpe'], abs=.05)
+    assert reconstructed['pure_short'] == pytest.approx(overall['pure_short_sharpe'], abs=.05)
+    assert reconstructed['long_short'] == pytest.approx(overall['long_short_sharpe'], abs=.1)
+
+
+def test_figures_are_typeset_not_hand_drawn(report):
+    """Charts come from matplotlib and equations from MathML, with readable ticks."""
+    page, _ = report
+    assert page.count('<math ') >= 5
+    assert page.count('-figure_1"') == 21
+    assert '<sub>' not in page
+    # The old hand-rolled renderer printed every RankIC tick as "0.0".
+    assert '>-0.0</text>' not in page
 
 
 def test_audit_limits_and_label_checks_are_visible(report):
