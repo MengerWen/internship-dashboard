@@ -163,6 +163,7 @@ def rank_ic_breakdown(predictions):
 
 
 TEMPLATE = ROOT / 'templates/model-report-20260918.html'
+STOCK_CONTEXT = ROOT / 'scripts/model_report_20260918_stock_context.json'
 # Figure numbers follow the order the template places them, so moving a figure in
 # the page is enough — no hand-maintained numbering to drift.
 FIGURE_ORDER = re.findall(r'@@([a-z][a-z-]*)@@', TEMPLATE.read_text(encoding='utf-8'))
@@ -170,6 +171,53 @@ FIGURE_ORDER = re.findall(r'@@([a-z][a-z-]*)@@', TEMPLATE.read_text(encoding='ut
 
 def title_of(key, name):
     return f'{FIGURE_ORDER.index(key) + 1:02d} · {name}'
+
+
+def rank_between_within(predictions):
+    """Decompose full-cross-section Spearman into between- and within-decile terms."""
+    rows = []
+    for date, full in predictions.groupby('date', sort=True):
+        base = full[full.rank_base & full.raw_return.notna()].copy()
+        base['score_rank'] = base.score.rank(method='average')
+        base['return_rank'] = base.raw_return.rank(method='average')
+        base['decile'] = np.minimum(10, np.ceil(base.score.rank(method='average', pct=True) * 10)).astype(int)
+        score_centered = base.score_rank - base.score_rank.mean()
+        return_centered = base.return_rank - base.return_rank.mean()
+        denominator = math.sqrt(float(score_centered @ score_centered) * float(return_centered @ return_centered))
+        between = 0.0
+        within = 0.0
+        for _, group in base.groupby('decile'):
+            between += (len(group) * (group.score_rank.mean() - base.score_rank.mean())
+                        * (group.return_rank.mean() - base.return_rank.mean()))
+            within += float(((group.score_rank - group.score_rank.mean())
+                             * (group.return_rank - group.return_rank.mean())).sum())
+        total = float(score_centered @ return_centered) / denominator
+        rows.append({'date': date, 'total': total, 'between': between / denominator,
+                     'within': within / denominator})
+    result = pd.DataFrame(rows)
+    assert np.max(np.abs(result.total - result.between - result.within)) < 1e-12
+    return result
+
+
+def moving_block_bootstrap(values, *, block=5, draws=10_000, seed=20260920):
+    """Circular moving-block intervals for the daily mean and annualized Sharpe."""
+    values = np.asarray(values, dtype=float)
+    count = len(values)
+    blocks = math.ceil(count / block)
+    rng = np.random.default_rng(seed)
+    means = np.empty(draws)
+    sharpes = np.empty(draws)
+    for i in range(draws):
+        starts = rng.integers(0, count, size=blocks)
+        indices = np.concatenate([(np.arange(start, start + block) % count) for start in starts])[:count]
+        sample = values[indices]
+        means[i] = sample.mean()
+        sharpes[i] = np.sqrt(252) * sample.mean() / sample.std(ddof=1)
+    return {
+        'method': 'circular_moving_block', 'block_days': block, 'draws': draws, 'seed': seed,
+        'mean_return_quantiles': dict(zip(['p025', 'p500', 'p975'], np.quantile(means, [.025, .5, .975]))),
+        'sharpe_quantiles': dict(zip(['p025', 'p500', 'p975'], np.quantile(sharpes, [.025, .5, .975]))),
+    }
 
 
 def main():
@@ -192,6 +240,7 @@ def main():
     dataset = load('dataset_summary.json')
     dist = audit('distribution_audit.json')
     independent = audit('independent_audit_summary.json')
+    stock_context = json.loads(STOCK_CONTEXT.read_text(encoding='utf-8'))
     assert len(predictions) == 507460 and not predictions.duplicated(['date', 'code']).any()
     assert int(curve.loc[curve.long_short_sharpe.idxmax(), 'iteration']) == 659
     assert digest(p / 'per_round_metrics.parquet') == selection['curve_sha256']
@@ -202,7 +251,7 @@ def main():
     assert folds[-1]['train_days'] == len(dataset['train_dates'])
     oof_days = sum(f['validation_days'] for f in folds)
 
-    dates, rows, groups = [], [], []
+    dates, rows, groups, breadth_rows, stockday_rows = [], [], [], [], []
     for date, full in predictions.groupby('date', sort=True):
         dates.append(date)
         valid = full[np.isfinite(full.raw_return)]
@@ -214,14 +263,32 @@ def main():
             threshold = base.score.nlargest(k).iloc[-1] if highest else base.score.nsmallest(k).iloc[-1]
             selected = base[base.score.ge(threshold) if highest else base.score.le(threshold)]
             selected = selected[~selected.no_long] if highest else selected[~selected.no_short]
-            values = selected.raw_return.dropna()
-            return (float(values.mean()) if len(values) else 0.0), len(values)
+            selected = selected.dropna(subset=['raw_return']).copy()
+            return (float(selected.raw_return.mean()) if len(selected) else 0.0), len(selected), selected
 
-        l20, nl20 = leg(.2, True)
-        s20, ns20 = leg(.2, False)
-        l10, nl10 = leg(.1, True)
-        s10, ns10 = leg(.1, False)
+        l20, nl20, _ = leg(.2, True)
+        s20, ns20, _ = leg(.2, False)
+        l10, nl10, long10_selected = leg(.1, True)
+        s10, ns10, short10_selected = leg(.1, False)
         ls = l10 - s10 if nl10 and ns10 else 0.0
+        for q in (.05, .10, .20, .30):
+            long_return, long_count, _ = leg(q, True)
+            short_return, short_count, _ = leg(q, False)
+            breadth_rows.append({
+                'date': date, 'tail_fraction': q, 'long_return': long_return,
+                'short_underlying_return': short_return,
+                'long_short_return': long_return - short_return,
+                'mean_leg_count': (long_count + short_count) / 2,
+            })
+        for selected, leg_name, sign in ((long10_selected, 'long', 1.0),
+                                         (short10_selected, 'short', -1.0)):
+            denominator = len(selected)
+            for record in selected[['code', 'score', 'raw_return']].to_dict('records'):
+                stockday_rows.append({
+                    'date': date, 'code': record['code'], 'leg': leg_name,
+                    'score': record['score'], 'raw_return': record['raw_return'],
+                    'contribution': sign * record['raw_return'] / denominator,
+                })
         market = float(base.raw_return.mean())
         percentile = base.score.rank(method='average', pct=True)
         base['decile'] = np.minimum(10, np.ceil(percentile * 10)).astype(int)
@@ -236,6 +303,8 @@ def main():
             groups.append(dict(date=date, decile=int(decile), mean=float(v.mean()), median=float(v.median()), std=float(v.std(ddof=1)), excess=float(v.mean() - market), count=len(v)))
     daily = pd.DataFrame(rows)
     groupdaily = pd.DataFrame(groups)
+    breadth_daily = pd.DataFrame(breadth_rows)
+    stockdays = pd.DataFrame(stockday_rows)
     groupstats = groupdaily.groupby('decile')[['mean', 'median', 'std', 'count']].mean()
     groupstats['excess_sharpe'] = groupdaily.groupby('decile').excess.apply(sharpe)
     groupstats['own_sharpe'] = groupdaily.groupby('decile')['mean'].apply(sharpe)
@@ -282,9 +351,174 @@ def main():
         'long_short': sharpe(wide[10] - wide[1]),
     }
 
+    rank_decomposition_daily = rank_between_within(predictions)
+    rank_decomposition = {
+        'total': float(rank_decomposition_daily.total.mean()),
+        'between_deciles': float(rank_decomposition_daily.between.mean()),
+        'within_deciles': float(rank_decomposition_daily.within.mean()),
+    }
+    rank_decomposition['between_share'] = rank_decomposition['between_deciles'] / rank_decomposition['total']
+    rank_decomposition['within_share'] = rank_decomposition['within_deciles'] / rank_decomposition['total']
+
+    short_underlying = -daily.short10
+    long_variance = float(daily.long10.var(ddof=1))
+    short_variance = float(short_underlying.var(ddof=1))
+    covariance = float(daily.long10.cov(short_underlying))
+    long_short_variance = float(daily.long_short_return.var(ddof=1))
+    covariance_offset = 2 * covariance
+    variance_decomposition = {
+        'long_mean_bp': float(daily.long10.mean() * 1e4),
+        'short_underlying_mean_bp': float(short_underlying.mean() * 1e4),
+        'long_short_mean_bp': float(daily.long_short_return.mean() * 1e4),
+        'long_std_bp': float(daily.long10.std(ddof=1) * 1e4),
+        'short_underlying_std_bp': float(short_underlying.std(ddof=1) * 1e4),
+        'long_short_std_bp': float(daily.long_short_return.std(ddof=1) * 1e4),
+        'long_variance_bp2': long_variance * 1e8,
+        'short_variance_bp2': short_variance * 1e8,
+        'minus_two_covariance_bp2': -covariance_offset * 1e8,
+        'long_short_variance_bp2': long_short_variance * 1e8,
+        'underlying_leg_correlation': float(daily.long10.corr(short_underlying)),
+        'variance_offset_share': covariance_offset / (long_variance + short_variance),
+        'zero_covariance_std_bp': math.sqrt(long_variance + short_variance) * 1e4,
+        'zero_covariance_sharpe': float(np.sqrt(252) * daily.long_short_return.mean()
+                                         / math.sqrt(long_variance + short_variance)),
+    }
+    assert abs(long_variance + short_variance - covariance_offset - long_short_variance) < 1e-15
+
+    breadth = []
+    for fraction, group in breadth_daily.groupby('tail_fraction', sort=True):
+        series = group.long_short_return
+        breadth.append({
+            'tail_fraction': float(fraction), 'mean_return_bp': float(series.mean() * 1e4),
+            'std_return_bp': float(series.std(ddof=1) * 1e4), 'sharpe': sharpe(series),
+            'mean_leg_count': float(group.mean_leg_count.mean()),
+        })
+
+    quadrants = []
+    for ic_positive, return_positive, label in [
+            (True, True, 'RankIC≥0，组合盈利'), (False, True, 'RankIC<0，组合盈利'),
+            (True, False, 'RankIC≥0，组合亏损'), (False, False, 'RankIC<0，组合亏损')]:
+        selected = daily[(daily.rank_ic.ge(0) == ic_positive)
+                         & (daily.long_short_return.ge(0) == return_positive)]
+        quadrants.append({
+            'label': label, 'days': len(selected), 'mean_rank_ic': float(selected.rank_ic.mean()),
+            'mean_return_bp': float(selected.long_short_return.mean() * 1e4),
+            'cumulative_return_sum': float(selected.long_short_return.sum()),
+        })
+
+    bootstrap = moving_block_bootstrap(daily.long_short_return)
+    monthly_stability = []
+    daily_with_month = daily.assign(month=daily.date.str[:7])
+    total_return_sum = float(daily.long_short_return.sum())
+    for month, group in daily_with_month.groupby('month', sort=True):
+        remaining = daily_with_month[daily_with_month.month != month].long_short_return
+        monthly_stability.append({
+            'month': month, 'days': len(group),
+            'return_sum_share': float(group.long_short_return.sum() / total_return_sum),
+            'mean_return_bp': float(group.long_short_return.mean() * 1e4),
+            'leave_one_month_out_sharpe': sharpe(remaining),
+        })
+
+    names = stock_context['stock_names']
+    published_codes = set(names)
+    top_positive = stockdays.nlargest(10, 'contribution').copy()
+    top_negative = stockdays.nsmallest(10, 'contribution').copy()
+    assert set(top_positive.code) | set(top_negative.code) <= published_codes
+    for frame in (top_positive, top_negative):
+        frame['name'] = frame.code.map(names)
+    aggregate = stockdays.groupby('code').agg(
+        cumulative_contribution=('contribution', 'sum'), selected_days=('date', 'size'),
+        long_days=('leg', lambda values: int((values == 'long').sum())),
+        short_days=('leg', lambda values: int((values == 'short').sum())),
+    ).reset_index()
+    aggregate['name'] = aggregate.code.map(names)
+    aggregate_positive = aggregate.nlargest(5, 'cumulative_contribution').copy()
+    aggregate_negative = aggregate.nsmallest(5, 'cumulative_contribution').copy()
+    assert aggregate_positive.name.notna().all() and aggregate_negative.name.notna().all()
+    positive_contributions = stockdays.loc[stockdays.contribution > 0, 'contribution'].sort_values(ascending=False)
+    concentration = []
+    for count in (1, 5, 10, 20, 50, 100):
+        concentration.append({
+            'top_positive_stockdays': count,
+            'share_of_net_cumulative_return': float(positive_contributions.head(count).sum() / total_return_sum),
+        })
+    concentration_summary = {
+        'net_cumulative_return_sum': total_return_sum,
+        'selected_stockdays': len(stockdays), 'unique_stocks': int(stockdays.code.nunique()),
+        'largest_positive_stockday_share': concentration[0]['share_of_net_cumulative_return'],
+        'top_10_positive_stockdays_share': concentration[2]['share_of_net_cumulative_return'],
+        'largest_positive_stock_share': float(aggregate_positive.iloc[0].cumulative_contribution / total_return_sum),
+    }
+
+    cases = []
+    for case in stock_context['cases']:
+        match = stockdays[(stockdays.date == case['date']) & (stockdays.code == case['code'])
+                          & (stockdays.leg == case['leg'])]
+        assert len(match) == 1, case
+        observed = match.iloc[0]
+        cases.append({
+            **case, 'score': float(observed.score), 'raw_return': float(observed.raw_return),
+            'contribution': float(observed.contribution),
+        })
+
     extra = dict(rank_ic_positive_fraction=float((daily.rank_ic > 0).mean()), mean_middle_ic=float(daily.middle_ic.mean()), mean_bottom_ic=float(daily.bottom_ic.mean()), mean_rank_base=float(daily.rank_base_count.mean()), ic_ir=sharpe(daily.rank_ic), daily_ic_ls_corr=float(daily.rank_ic.corr(daily.long_short_return)), long_excess_sharpe=sharpe(daily.long_excess), short_excess_sharpe=sharpe(daily.short_excess), market_sharpe=sharpe(daily.market), mean_pearson_ic=float(daily.pearson_ic.mean()), traded_decile_ic_share=traded_share, middle_decile_ic_share=middle_share, extreme_decile_ic_share=tail_share, decile_reconstructed_sharpe=reconstructed)
 
-    evidence = {'test_daily': daily.to_dict('records'), 'deciles': groupstats.reset_index().to_dict('records'), 'decile_daily': groupdaily.to_dict('records'), 'decile_rank_ic_daily': [{'date': d, **{f'contribution_D{k}': float(contribution[k].iloc[i]) for k in range(1, 11)}, **{f'inner_ic_D{k}': (float(inner_ic[k].iloc[i]) if np.isfinite(inner_ic[k].iloc[i]) else None) for k in range(1, 11)}, **{f'pool_{key}': (float(pool_ic[key].iloc[i]) if np.isfinite(pool_ic[key].iloc[i]) else None) for key, _, _ in POOLS}} for i, d in enumerate(dates)], 'rank_ic_pools': pools, 'expanding_folds': folds, 'extra_analysis': extra, 'test_summary': summary, 'training_summary': timing, 'effective_parameters': params, 'environment': load('environment.json'), 'dataset': dataset, 'selection': selection, 'model_identity': load('frozen_model_identity.json'), 'code_identity': load('code_identity.json'), 'feature_mapping': load('feature_mapping_330.json'), 'audit': {name: audit(name) for name in ['all_test_label_audit.json', 'audit_raw_summary.json', 'provenance_audit.json', 'distribution_audit.json', 'independent_audit_summary.json']}, 'validation_curve': curve.to_dict('records'), 'resource_samples': resources.to_dict('records')}
+    diagnostics = {
+        'rank_between_within': rank_decomposition,
+        'rank_between_within_daily': rank_decomposition_daily.to_dict('records'),
+        'variance_decomposition': variance_decomposition,
+        'tail_breadth': breadth,
+        'rankic_return_quadrants': quadrants,
+        'moving_block_bootstrap': bootstrap,
+        'monthly_stability': monthly_stability,
+        'stockday_concentration': concentration,
+        'stockday_concentration_summary': concentration_summary,
+        'top_positive_stockdays': top_positive.to_dict('records'),
+        'top_negative_stockdays': top_negative.to_dict('records'),
+        'top_aggregate_positive_stocks': aggregate_positive.to_dict('records'),
+        'top_aggregate_negative_stocks': aggregate_negative.to_dict('records'),
+        'real_world_cases': cases,
+        'stock_name_snapshot_as_of': stock_context['name_snapshot_as_of'],
+        'publication_scope': 'selected attribution only; complete per-stock predictions are not published',
+    }
+    rank_ic_daily_records = [
+        {
+            'date': date,
+            **{f'contribution_D{k}': float(contribution[k].iloc[i]) for k in range(1, 11)},
+            **{f'inner_ic_D{k}': (float(inner_ic[k].iloc[i])
+                                  if np.isfinite(inner_ic[k].iloc[i]) else None)
+               for k in range(1, 11)},
+            **{f'pool_{key}': (float(pool_ic[key].iloc[i])
+                               if np.isfinite(pool_ic[key].iloc[i]) else None)
+               for key, _, _ in POOLS},
+        }
+        for i, date in enumerate(dates)
+    ]
+    evidence = {
+        'test_daily': daily.to_dict('records'),
+        'deciles': groupstats.reset_index().to_dict('records'),
+        'decile_daily': groupdaily.to_dict('records'),
+        'decile_rank_ic_daily': rank_ic_daily_records,
+        'rank_ic_pools': pools,
+        'expanding_folds': folds,
+        'extra_analysis': extra,
+        'diagnostics': diagnostics,
+        'test_summary': summary,
+        'training_summary': timing,
+        'effective_parameters': params,
+        'environment': load('environment.json'),
+        'dataset': dataset,
+        'selection': selection,
+        'model_identity': load('frozen_model_identity.json'),
+        'code_identity': load('code_identity.json'),
+        'feature_mapping': load('feature_mapping_330.json'),
+        'audit': {name: audit(name) for name in [
+            'all_test_label_audit.json', 'audit_raw_summary.json', 'provenance_audit.json',
+            'distribution_audit.json', 'independent_audit_summary.json',
+        ]},
+        'validation_curve': curve.to_dict('records'),
+        'resource_samples': resources.to_dict('records'),
+    }
     mapping_records = evidence['feature_mapping']
     evidence['feature_mapping'] = [r for r in mapping_records if 'model_column' in r]
     evidence['feature_exclusions'] = [r for r in mapping_records if 'excluded_old_columns' in r]
@@ -416,6 +650,24 @@ def main():
     publish('ic-scatter', '同一天的 RankIC 与多空收益', fig,
             f'逐日相关系数 {extra["daily_ic_ls_corr"]:.3f}。相关性强不等于二者成固定比例；收益截距、波动和尾部形状仍会改变 Sharpe。')
 
+    fig, ax = rc.figure((11.4, 4.5))
+    quadrant_values = [row['cumulative_return_sum'] * 1e4 for row in quadrants]
+    quadrant_labels = [row['label'] + f"\n{row['days']} 天" for row in quadrants]
+    bars = ax.bar(np.arange(4), quadrant_values,
+                  color=[TEAL if value >= 0 else RUST for value in quadrant_values], width=.64)
+    for bar, value in zip(bars, quadrant_values):
+        ax.annotate(f'{value:,.0f}bp', xy=(bar.get_x() + bar.get_width() / 2, value),
+                    xytext=(0, 6 if value >= 0 else -15), textcoords='offset points',
+                    ha='center', fontsize=10.5)
+    ax.set_xticks(np.arange(4))
+    ax.set_xticklabels(quadrant_labels)
+    ax.set_ylabel('该类日期的多空日收益之和 bp')
+    rc.style_axes(ax, zero_line=True)
+    rc.nice_ticks(ax)
+    publish('quadrants', 'RankIC 正负与组合盈亏的四种日期', fig,
+            '105 天同时出现 RankIC≥0、组合盈利，贡献 2,850bp；RankIC<0 但组合盈利的 22 天贡献 213bp。'
+            '该图使用日收益直接求和，只用于归因，不是复利账户收益。')
+
     fig, ax = rc.figure((5.6, 4.2))
     ax.bar(x, daily.rank_ic, width=1.0, color=GRAY, alpha=.5)
     ax.plot(x, daily.rank_ic.rolling(20).mean(), color=TEAL, linewidth=1.8, label='20 日滚动均值')
@@ -514,6 +766,27 @@ def main():
     publish('ic-contribution', '每一组贡献了多少 RankIC', fig,
             f'把每天的 Spearman 相关按分数分组拆开：十组之和精确等于当天 RankIC，再对日期等权。最低与最高两组合计占 {tail_share:.0%}，策略从不碰的中间六组（D3–D8，占股票数 60%）只占 {middle_share:.0%}，却按全体约 2,875 只股票摊薄了平均值。这是已打开 test 后的分解，不是模型改动依据。')
 
+    fig, ax = rc.figure((11.4, 4.3))
+    rank_parts = [rank_decomposition['between_deciles'], rank_decomposition['within_deciles']]
+    rank_labels = ['十分组之间', '十分组内部']
+    bars = ax.bar(np.arange(2), rank_parts, color=[TEAL, BLUE], width=.58)
+    for bar, value in zip(bars, rank_parts):
+        ax.annotate(f'{value:.5f}\n{value / rank_decomposition["total"]:.1%}',
+                    xy=(bar.get_x() + bar.get_width() / 2, value), xytext=(0, 6),
+                    textcoords='offset points', ha='center', fontsize=10.5)
+    ax.axhline(rank_decomposition['total'], color=RUST, linewidth=1.2, linestyle=(0, (4, 3)),
+               label=f'全体 RankIC {rank_decomposition["total"]:.5f}')
+    ax.set_xticks(np.arange(2))
+    ax.set_xticklabels(rank_labels)
+    ax.set_ylabel('对全体日均 RankIC 的贡献')
+    rc.style_axes(ax)
+    rc.nice_ticks(ax, from_zero=True)
+    ax.legend(loc='upper right')
+    publish('rank-decomposition', '全体 RankIC：组间位置与组内细排的严格分解', fig,
+            f'保持全体股票的原始秩不变，用协方差恒等式逐日分解。组间贡献 '
+            f'{rank_decomposition["between_share"]:.1%}，组内贡献 {rank_decomposition["within_share"]:.1%}；'
+            '两项每天精确加总为当日 RankIC。')
+
     fig, ax = rc.figure((11.4, 4.4))
     inner_values = groupstats['inner_rank_ic']
     ax.bar(d, inner_values, color=[RUST if v < 0 else TEAL for v in inner_values], width=.66)
@@ -539,6 +812,74 @@ def main():
     ax.legend(loc='upper left')
     publish('legs', '多空相减抵消部分共同波动', fig,
             '两篮子原始收益的相关系数为 0.7354。相减后波动为 28.29bp；空头一行已将标的收益取负。该图多空按每腿 100% 的原定义展示。')
+
+    fig, ax = rc.figure((11.4, 4.4))
+    variance_values = [
+        variance_decomposition['long_variance_bp2'],
+        variance_decomposition['short_variance_bp2'],
+        variance_decomposition['minus_two_covariance_bp2'],
+        variance_decomposition['long_short_variance_bp2'],
+    ]
+    variance_labels = ['多头方差', '空头标的方差', '−2 × 协方差', '多空方差']
+    bars = ax.bar(np.arange(4), variance_values, color=[TEAL, BLUE, RUST, SAND], width=.64)
+    for bar, value in zip(bars, variance_values):
+        ax.annotate(f'{value:,.0f}', xy=(bar.get_x() + bar.get_width() / 2, value),
+                    xytext=(0, 6 if value >= 0 else -15), textcoords='offset points',
+                    ha='center', fontsize=10.5)
+    ax.set_xticks(np.arange(4))
+    ax.set_xticklabels(variance_labels)
+    ax.set_ylabel('日收益方差 bp²')
+    rc.style_axes(ax, zero_line=True)
+    rc.nice_ticks(ax)
+    publish('variance-decomposition', '28.29bp 日波动是怎样形成的', fig,
+            f'两腿标的收益相关 {variance_decomposition["underlying_leg_correlation"]:.3f}；协方差项抵消了两腿方差和的 '
+            f'{variance_decomposition["variance_offset_share"]:.1%}。若只作“协方差为零”的算术对照，日波动为 '
+            f'{variance_decomposition["zero_covariance_std_bp"]:.2f}bp、Sharpe 为 {variance_decomposition["zero_covariance_sharpe"]:.2f}；'
+            '这不是可实现的替代策略。')
+
+    fig, ax = rc.figure((11.4, 4.6))
+    fractions = np.array([row['tail_fraction'] * 100 for row in breadth])
+    width = 1.7
+    ax.bar(fractions - width / 2, [row['mean_return_bp'] for row in breadth], width=width,
+           color=TEAL, label='日均多空收益 bp')
+    ax.bar(fractions + width / 2, [row['std_return_bp'] for row in breadth], width=width,
+           color=BLUE, label='日波动 bp')
+    ax2 = ax.twinx()
+    ax2.plot(fractions, [row['sharpe'] for row in breadth], color=RUST, marker='o',
+             linewidth=1.7, label='年化毛 Sharpe')
+    ax.set_xticks(fractions)
+    ax.set_xticklabels([f'两端各 {value:.0f}%' for value in fractions])
+    ax.set_ylabel('bp')
+    ax2.set_ylabel('Sharpe')
+    rc.style_axes(ax)
+    ax2.spines['top'].set_visible(False)
+    ax2.spines['left'].set_visible(False)
+    rc.nice_ticks(ax, from_zero=True)
+    rc.nice_ticks(ax2, from_zero=True)
+    handles1, labels1 = ax.get_legend_handles_labels()
+    handles2, labels2 = ax2.get_legend_handles_labels()
+    ax.legend(handles1 + handles2, labels1 + labels2, ncol=3, loc='upper right')
+    publish('tail-breadth', '两端持仓从 5% 扩到 30%，结果是否消失', fig,
+            '固定当前模型和 test，不重新选比例。两端各 5% / 10% / 20% / 30% 的毛 Sharpe 分别为 '
+            + ' / '.join(f'{row["sharpe"]:.2f}' for row in breadth)
+            + '。5% 到 30% 都为正，说明结果不只依赖一个很窄的切点；这仍是 test 打开后的敏感性诊断。')
+
+    fig, ax = rc.figure((11.4, 4.4))
+    concentration_counts = [row['top_positive_stockdays'] for row in concentration]
+    concentration_shares = [row['share_of_net_cumulative_return'] * 100 for row in concentration]
+    bars = ax.bar(np.arange(len(concentration)), concentration_shares, color=TEAL, width=.64)
+    for bar, value in zip(bars, concentration_shares):
+        ax.annotate(f'{value:.2f}%', xy=(bar.get_x() + bar.get_width() / 2, value),
+                    xytext=(0, 5), textcoords='offset points', ha='center', fontsize=10.5)
+    ax.set_xticks(np.arange(len(concentration)))
+    ax.set_xticklabels([f'前 {count}' for count in concentration_counts])
+    ax.set_ylabel('占 176 日多空收益日度和的比例')
+    rc.style_axes(ax)
+    rc.nice_ticks(ax, from_zero=True)
+    publish('stock-concentration', '最大的股票日有没有撑起全部结果', fig,
+            f'最大单一正贡献股票日占 {concentration_summary["largest_positive_stockday_share"]:.2%}，'
+            f'前 10 个合计占 {concentration_summary["top_10_positive_stockdays_share"]:.2%}。'
+            '分母是 176 日多空日收益之和；这里只累计正贡献，因此不是可加总到 100% 的归因瀑布图。')
 
     fig, ax = rc.figure((11.4, 5.0))
     ax.bar(d - .17, groupstats['own_sharpe'], width=.32, color=SAND, label='该组自身收益年化 Sharpe')
@@ -644,6 +985,43 @@ def main():
     rendered = {key: figure(key, title_of(key, name), svg, caption)
                 for key, (name, svg, caption) in plots.items()}
     assert set(rendered) == set(FIGURE_ORDER), 'figure set must match the template'
+
+    case_cards = []
+    for case in cases:
+        source_items = ''.join(
+            f'<li><a href="{html.escape(source["url"], quote=True)}" target="_blank" rel="noopener noreferrer">'
+            f'{html.escape(source["label"])}</a></li>'
+            for source in case['sources']
+        )
+        contribution_class = ' loss' if case['contribution'] < 0 else ''
+        leg_label = '多头' if case['leg'] == 'long' else '空头'
+        case_cards.append(
+            f'<article class="case{contribution_class}"><h3>{html.escape(case["name_at_event"])} '
+            f'<span class="small">{case["code"]} · {case["date"]}</span></h3>'
+            f'<div class="metric">{leg_label}贡献 {case["contribution"] * 1e4:+.2f}bp</div>'
+            f'<p>模型分数 {case["score"]:.4f}；09:35—09:45 原始收益 {case["raw_return"]:+.2%}。</p>'
+            f'<p><strong>已核对的背景：</strong>{html.escape(case["observed_context"])}</p>'
+            f'<p><strong>本页解释：</strong>{html.escape(case["interpretation"])}</p>'
+            f'<ul>{source_items}</ul></article>'
+        )
+    case_studies_html = '<div class="case-grid">' + ''.join(case_cards) + '</div>'
+
+    top_stockday_rows = []
+    for direction, frame in (('正贡献', top_positive.head(6)), ('负贡献', top_negative.head(6))):
+        for _, row in frame.iterrows():
+            top_stockday_rows.append([
+                direction, row.date, f'{row["name"]}（{row.code}）',
+                '多头' if row.leg == 'long' else '空头', f'{row.raw_return:+.2%}',
+                f'{row.contribution * 1e4:+.2f}', f'{row.score:.4f}',
+            ])
+    aggregate_stock_rows = []
+    for direction, frame in (('累计正贡献', aggregate_positive), ('累计负贡献', aggregate_negative)):
+        for _, row in frame.iterrows():
+            aggregate_stock_rows.append([
+                direction, f'{row["name"]}（{row.code}）', f'{row.cumulative_contribution * 1e4:+.2f}',
+                int(row.selected_days), int(row.long_days), int(row.short_days),
+            ])
+
     replacement = {
         **rendered,
         'DATA': data.replace('</', '<\\/'),
@@ -653,6 +1031,9 @@ def main():
         'TRADED_SHARE': f'{traded_share:.0%}',
         'MIDDLE_SHARE': f'{middle_share:.0%}',
         'TAIL_SHARE': f'{tail_share:.0%}',
+        'BETWEEN_SHARE': f'{rank_decomposition["between_share"]:.1%}',
+        'WITHIN_SHARE': f'{rank_decomposition["within_share"]:.1%}',
+        'TOP_STOCK_SHARE': f'{concentration_summary["largest_positive_stock_share"]:.2%}',
         'POOL_ALL': f'{pool_by_key["all"]["mean_rank_ic"]:.5f}',
         'POOL_LS': f'{pool_by_key["long_short"]["mean_rank_ic"]:.5f}',
         'POOL_LS_IR': f'{pool_by_key["long_short"]["ic_ir"]:.2f}',
@@ -675,6 +1056,36 @@ def main():
                               '已运行' if f['fold'] == 15 else '未运行'] for f in folds]),
         'CONTRIBUTION_TABLE': table(['组', '日均收益 bp', '±95% NW bp', '对 RankIC 的贡献', '占比', '组内 RankIC', '组自身 Sharpe', '超额 Sharpe'],
                                     [[f'D{i}', f'{r["mean"] * 1e4:.2f}', f'{1.96 * r["nw_se_bp"]:.2f}', f'{r["rank_ic_contribution"]:.5f}', f'{r["rank_ic_contribution"] / total_ic:.1%}', f'{r["inner_rank_ic"]:.5f}', f'{r["own_sharpe"]:.2f}', f'{r["excess_sharpe"]:.2f}'] for i, r in groupstats.iterrows()]),
+        'QUADRANT_TABLE': table(
+            ['日期类别', '天数', '日均 RankIC', '日均多空收益 bp', '该类日收益之和 bp'],
+            [[row['label'], row['days'], f'{row["mean_rank_ic"]:.5f}', f'{row["mean_return_bp"]:.2f}',
+              f'{row["cumulative_return_sum"] * 1e4:,.0f}'] for row in quadrants],
+        ),
+        'TOP_STOCKDAY_TABLE': table(
+            ['类型', '日期', '股票', '方向', '个股原始收益', '贡献 bp', '模型分数'], top_stockday_rows,
+        ),
+        'AGGREGATE_STOCK_TABLE': table(
+            ['类型', '股票', '累计贡献 bp', '入选天数', '多头天数', '空头天数'], aggregate_stock_rows,
+        ),
+        'CASE_STUDIES': case_studies_html,
+        'BOOTSTRAP_TABLE': table(
+            ['统计量', '点估计', '移动块 2.5%', '移动块中位数', '移动块 97.5%'],
+            [
+                ['日均多空毛收益 bp', f'{daily.long_short_return.mean() * 1e4:.2f}',
+                 f'{bootstrap["mean_return_quantiles"]["p025"] * 1e4:.2f}',
+                 f'{bootstrap["mean_return_quantiles"]["p500"] * 1e4:.2f}',
+                 f'{bootstrap["mean_return_quantiles"]["p975"] * 1e4:.2f}'],
+                ['年化毛 Sharpe', f'{sharpe(daily.long_short_return):.2f}',
+                 f'{bootstrap["sharpe_quantiles"]["p025"]:.2f}',
+                 f'{bootstrap["sharpe_quantiles"]["p500"]:.2f}',
+                 f'{bootstrap["sharpe_quantiles"]["p975"]:.2f}'],
+            ],
+        ),
+        'MONTH_STABILITY_TABLE': table(
+            ['排除月份', '该月天数', '该月占收益日度和', '该月日均收益 bp', '排除后 Sharpe'],
+            [[row['month'], row['days'], f'{row["return_sum_share"]:.1%}', f'{row["mean_return_bp"]:.2f}',
+              f'{row["leave_one_month_out_sharpe"]:.2f}'] for row in monthly_stability],
+        ),
         'EXTRA': table(['指标', 'test 结果'], [['RankIC 均值 / 日标准差', f'{daily.rank_ic.mean():.5f} / {daily.rank_ic.std():.5f}'], ['RankIC 正值日', f'{(daily.rank_ic > 0).sum()} / 176（{extra["rank_ic_positive_fraction"]:.1%}）'], ['年化 ICIR', f'{extra["ic_ir"]:.3f}'], ['日均 Pearson IC', f'{extra["mean_pearson_ic"]:.5f}'], ['每日平均进场可选股票', f'{extra["mean_rank_base"]:,.1f}'], ['交易到的四组对 RankIC 的贡献占比', f'{traded_share:.1%}'], ['未交易的中间六组占比', f'{middle_share:.1%}'], ['纯多 20% 相对基准 Sharpe', f'{extra["long_excess_sharpe"]:.3f}'], ['纯空 20% 相对基准 Sharpe', f'{extra["short_excess_sharpe"]:.3f}']]),
         'MONTHLY_TABLE': table(['月份', '天数', 'RankIC', '多空 Sharpe', '纯多 Sharpe', '纯空 Sharpe'], [[m['month'], m['date_count'], f'{m["mean_daily_rank_ic"]:.4f}', f'{m["long_short_sharpe"]:.2f}', f'{m["pure_long_sharpe"]:.2f}', f'{m["pure_short_sharpe"]:.2f}'] for m in summary['monthly_metrics']]),
         'DECILE_TABLE': table(['组', '日均组平均收益 bp', '日均组中位收益 bp', '组内截面标准差 bp', '日均只数'], [[f'D{i}', f'{r["mean"] * 1e4:.2f}', f'{r["median"] * 1e4:.2f}', f'{r["std"] * 1e4:.2f}', f'{r["count"]:,.1f}'] for i, r in groupstats.iterrows()]),

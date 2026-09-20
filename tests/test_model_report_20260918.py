@@ -20,7 +20,7 @@ def test_daily_registration_and_self_contained_charts(report):
     page, data = report
     assert (ROOT / "content/daily/2026-09-18.md").exists()
     assert 'show_allow_downloads: true' in (ROOT / "content/daily/2026-09-18.md").read_text(encoding="utf-8")
-    assert len(re.findall(r'<figure id=', page)) == 22
+    assert len(re.findall(r'<figure id=', page)) == 27
     assert '@@' not in page
     assert not re.search(r'<(?:script|link)[^>]+(?:src|href)="https?://', page)
     assert len(page.encode('utf-8')) < 25 * 1024**2
@@ -110,10 +110,11 @@ def test_every_decile_rank_ic_is_a_readable_number(report):
     for row in data['deciles']:
         assert row['inner_rank_ic'] is not None
         assert row['inner_rank_ic_ir'] is not None
-    # D9's inner ordering is noise; the page states it rather than rounding it away.
+    # D9's estimate stays visible, while the page avoids treating a near-zero point estimate as proof.
     d9 = next(r for r in data['deciles'] if r['decile'] == 9)
     assert d9['inner_rank_ic'] < 0
     assert '−0.00364' in page or '-0.00364' in page
+    assert '不能据此证明真实组内能力为负' in page
     assert page.count('组内日均 RankIC') == 1
     assert page.count('日均 RankIC') >= 2
 
@@ -132,7 +133,7 @@ def test_figures_are_typeset_not_hand_drawn(report):
     """Charts come from matplotlib and equations from MathML, with readable ticks."""
     page, _ = report
     assert page.count('<math ') >= 5
-    assert page.count('-figure_1"') == 22
+    assert page.count('-figure_1"') == 27
     assert '<sub>' not in page
     # The old hand-rolled renderer printed every RankIC tick as "0.0".
     assert '>-0.0</text>' not in page
@@ -148,4 +149,48 @@ def test_audit_limits_and_label_checks_are_visible(report):
     assert checks['rows'] == 507460
     assert checks['valid'] == 505403
     assert max(checks['counts'].values()) == 0
+
+
+def test_new_diagnostics_explain_rankic_sharpe_gap(report):
+    page, data = report
+    diagnostics = data['diagnostics']
+    rank = diagnostics['rank_between_within']
+    assert rank['between_deciles'] + rank['within_deciles'] == pytest.approx(rank['total'], abs=1e-12)
+    assert rank['between_share'] == pytest.approx(0.9683911731605613)
+    assert rank['within_share'] == pytest.approx(0.03160882683943884)
+    variance = diagnostics['variance_decomposition']
+    assert variance['underlying_leg_correlation'] == pytest.approx(0.7354066913557537)
+    assert variance['variance_offset_share'] == pytest.approx(0.7341976004856114)
+    assert variance['long_short_std_bp'] == pytest.approx(28.288075250845683)
+    assert variance['zero_covariance_std_bp'] == pytest.approx(54.86860896227923)
+    assert '96.8%' in page and '73.4%' in page
+
+
+def test_tail_breadth_and_uncertainty_are_published(report):
+    _, data = report
+    diagnostics = data['diagnostics']
+    breadth = diagnostics['tail_breadth']
+    assert [row['tail_fraction'] for row in breadth] == [.05, .1, .2, .3]
+    assert all(row['sharpe'] > 6 for row in breadth)
+    bootstrap = diagnostics['moving_block_bootstrap']
+    assert bootstrap['block_days'] == 5 and bootstrap['draws'] == 10_000
+    assert bootstrap['sharpe_quantiles']['p025'] == pytest.approx(4.5043488285449)
+    assert bootstrap['sharpe_quantiles']['p975'] == pytest.approx(11.06356935148117)
+
+
+def test_selected_stock_attribution_and_real_world_cases(report):
+    page, data = report
+    diagnostics = data['diagnostics']
+    assert diagnostics['publication_scope'].startswith('selected attribution only')
+    concentration = diagnostics['stockday_concentration_summary']
+    assert concentration['selected_stockdays'] == 100865
+    assert concentration['unique_stocks'] == 2900
+    assert concentration['largest_positive_stockday_share'] == pytest.approx(0.0033646840916486988)
+    assert concentration['top_10_positive_stockdays_share'] == pytest.approx(0.022698709160944346)
+    cases = {(row['date'], row['code']): row for row in diagnostics['real_world_cases']}
+    assert cases['2026-05-20', '301139']['contribution'] == pytest.approx(0.000770398405830061)
+    assert cases['2025-12-22', '002188']['contribution'] == pytest.approx(0.00046616797043302454)
+    assert cases['2026-04-27', '001234']['contribution'] == pytest.approx(-0.0004913376586624712)
+    assert '*ST元道' in page and '中天服务' in page and '泰慕士' in page
+    assert '不能证明公告导致' in page
 
