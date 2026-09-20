@@ -6,6 +6,7 @@ import hashlib
 import html
 import json
 import math
+import re
 import sys
 from pathlib import Path
 
@@ -49,6 +50,19 @@ def json_safe(value):
     return value
 
 
+def decile_span(deciles):
+    """Compact a decile list: consecutive runs become D3–D8."""
+    parts, run = [], [deciles[0]]
+    for d in deciles[1:]:
+        if d == run[-1] + 1:
+            run.append(d)
+        else:
+            parts.append(run)
+            run = [d]
+    parts.append(run)
+    return '、'.join(f'D{r[0]}–D{r[-1]}' if len(r) > 2 else '、'.join(f'D{x}' for x in r) for r in parts)
+
+
 def table(headers, rows):
     return '<div class="table-scroll"><table><thead><tr>' + ''.join(f'<th>{h}</th>' for h in headers) + '</tr></thead><tbody>' + ''.join('<tr>' + ''.join(f'<td>{c}</td>' for c in row) + '</tr>' for row in rows) + '</tbody></table></div>'
 
@@ -83,14 +97,39 @@ def expanding_folds(development_dates):
     return seed, folds
 
 
-def decile_rank_ic(predictions):
-    """Split each day's RankIC into the ten score deciles.
+# The pools each portfolio actually ranks within, plus the untraded middle and
+# the whole cross-section the headline RankIC is averaged over.
+POOLS = [
+    ('all', '全体 10 组', tuple(range(1, 11))),
+    ('middle', '中段 D3–D8（从不交易）', (3, 4, 5, 6, 7, 8)),
+    ('short', '纯空池 D1∪D2', (1, 2)),
+    ('long', '纯多池 D9∪D10', (9, 10)),
+    ('traded', '三组合合计 D1,D2,D9,D10', (1, 2, 9, 10)),
+    ('long_short', '多空池 D1∪D10', (1, 10)),
+    ('spaced_control', '对照：等间隔 D1∪D5∪D10', (1, 5, 10)),
+]
 
-    `contribution` is the decile's additive share of that day's Spearman
-    correlation, so the ten values sum exactly to the day's RankIC.
-    `inner_ic` re-ranks inside one decile alone.
+
+def spearman(x, y):
+    if len(x) < 3:
+        return np.nan
+    rx = pd.Series(x).rank(method='average').to_numpy()
+    ry = pd.Series(y).rank(method='average').to_numpy()
+    ax, ay = rx - rx.mean(), ry - ry.mean()
+    denominator = math.sqrt(float(ax @ ax) * float(ay @ ay))
+    return float((ax @ ay) / denominator) if denominator > 0 else np.nan
+
+
+def rank_ic_breakdown(predictions):
+    """Three readings of the same day's RankIC, all on the correlation scale.
+
+    `contribution` is each decile's additive share of the whole cross-section's
+    Spearman, so the ten values sum exactly to the day's RankIC.
+    `inner` re-ranks inside one decile alone.
+    `pool` restricts the cross-section to the deciles a portfolio actually ranks
+    within, then re-ranks — this is the number comparable to the headline 0.0220.
     """
-    contributions, inner = [], []
+    contributions, inner, pools, counts = [], [], [], []
     for _, full in predictions.groupby('date', sort=True):
         base = full[full.rank_base]
         percentile = base.score.rank(method='average', pct=True)
@@ -104,24 +143,37 @@ def decile_rank_ic(predictions):
         if denominator <= 0:
             continue
         share = (ax * ay) / denominator
-        row, local = {}, {}
+        row, local, count = {}, {}, {}
         for k in range(1, 11):
             sel = group == k
             row[k] = float(share[sel].sum())
-            if sel.sum() >= 3:
-                sx = pd.Series(score[sel]).rank(method='average').to_numpy()
-                sy = pd.Series(ret[sel]).rank(method='average').to_numpy()
-                cx, cy = sx - sx.mean(), sy - sy.mean()
-                d = math.sqrt(float(cx @ cx) * float(cy @ cy))
-                local[k] = float((cx @ cy) / d) if d > 0 else np.nan
-            else:
-                local[k] = np.nan
+            count[k] = int(sel.sum())
+            local[k] = spearman(score[sel], ret[sel]) if sel.sum() >= 3 else np.nan
+        pool = {}
+        for key, _, members in POOLS:
+            sel = np.isin(group, members)
+            pool[key] = spearman(score[sel], ret[sel])
+            pool[key + '__count'] = int(sel.sum())
         contributions.append(row)
         inner.append(local)
-    return pd.DataFrame(contributions), pd.DataFrame(inner)
+        pools.append(pool)
+        counts.append(count)
+    return (pd.DataFrame(contributions), pd.DataFrame(inner),
+            pd.DataFrame(pools), pd.DataFrame(counts))
+
+
+TEMPLATE = ROOT / 'templates/model-report-20260918.html'
+# Figure numbers follow the order the template places them, so moving a figure in
+# the page is enough — no hand-maintained numbering to drift.
+FIGURE_ORDER = re.findall(r'@@([a-z][a-z-]*)@@', TEMPLATE.read_text(encoding='utf-8'))
+
+
+def title_of(key, name):
+    return f'{FIGURE_ORDER.index(key) + 1:02d} · {name}'
 
 
 def main():
+    report = TEMPLATE.read_text(encoding='utf-8')
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=Path, required=True)
     parser.add_argument('--audit', type=Path, required=True)
@@ -190,14 +242,36 @@ def main():
     wide = groupdaily.pivot(index='date', columns='decile', values='mean')
     groupstats['nw_se_bp'] = [rc.newey_west_se(wide[k]) * 1e4 for k in range(1, 11)]
 
-    contribution, inner_ic = decile_rank_ic(predictions)
+    contribution, inner_ic, pool_ic, decile_counts = rank_ic_breakdown(predictions)
     mean_contribution, mean_inner = contribution.mean(), inner_ic.mean()
     total_ic = float(daily.rank_ic.mean())
-    # The decomposition is exact, and D1's inner value reproduces the published bottom IC.
+    # The decomposition is exact; the whole-universe pool and D1's inner value
+    # both reproduce numbers the page already published.
     assert abs(float(mean_contribution.sum()) - total_ic) < 1e-12
     assert abs(float(mean_inner[1]) - float(daily.bottom_ic.mean())) < 1e-12
+    assert abs(float(pool_ic['all'].mean()) - total_ic) < 1e-12
+    assert abs(float(pool_ic['middle'].mean()) - float(daily.middle_ic.mean())) < 1e-12
     groupstats['rank_ic_contribution'] = [float(mean_contribution[k]) for k in range(1, 11)]
     groupstats['inner_rank_ic'] = [float(mean_inner[k]) for k in range(1, 11)]
+    groupstats['inner_rank_ic_std'] = [float(inner_ic[k].std(ddof=1)) for k in range(1, 11)]
+    groupstats['inner_rank_ic_ir'] = [sharpe(inner_ic[k]) for k in range(1, 11)]
+    groupstats['inner_rank_ic_positive'] = [float((inner_ic[k] > 0).mean()) for k in range(1, 11)]
+
+    pools = []
+    for key, label, members in POOLS:
+        series = pool_ic[key]
+        pools.append({
+            'key': key,
+            'label': label,
+            'deciles': list(members),
+            'mean_rank_ic': float(series.mean()),
+            'std_rank_ic': float(series.std(ddof=1)),
+            'positive_fraction': float((series > 0).mean()),
+            'ic_ir': sharpe(series),
+            'nw_se': rc.newey_west_se(series),
+            'mean_count': float(pool_ic[key + '__count'].mean()),
+        })
+    pool_by_key = {row['key']: row for row in pools}
 
     traded_share = float(mean_contribution[[1, 2, 9, 10]].sum() / total_ic)
     middle_share = float(mean_contribution[[3, 4, 5, 6, 7, 8]].sum() / total_ic)
@@ -210,7 +284,7 @@ def main():
 
     extra = dict(rank_ic_positive_fraction=float((daily.rank_ic > 0).mean()), mean_middle_ic=float(daily.middle_ic.mean()), mean_bottom_ic=float(daily.bottom_ic.mean()), mean_rank_base=float(daily.rank_base_count.mean()), ic_ir=sharpe(daily.rank_ic), daily_ic_ls_corr=float(daily.rank_ic.corr(daily.long_short_return)), long_excess_sharpe=sharpe(daily.long_excess), short_excess_sharpe=sharpe(daily.short_excess), market_sharpe=sharpe(daily.market), mean_pearson_ic=float(daily.pearson_ic.mean()), traded_decile_ic_share=traded_share, middle_decile_ic_share=middle_share, extreme_decile_ic_share=tail_share, decile_reconstructed_sharpe=reconstructed)
 
-    evidence = {'test_daily': daily.to_dict('records'), 'deciles': groupstats.reset_index().to_dict('records'), 'decile_daily': groupdaily.to_dict('records'), 'decile_rank_ic_daily': [{'date': d, **{f'contribution_D{k}': float(contribution[k].iloc[i]) for k in range(1, 11)}, **{f'inner_ic_D{k}': (float(inner_ic[k].iloc[i]) if np.isfinite(inner_ic[k].iloc[i]) else None) for k in range(1, 11)}} for i, d in enumerate(dates)], 'expanding_folds': folds, 'extra_analysis': extra, 'test_summary': summary, 'training_summary': timing, 'effective_parameters': params, 'environment': load('environment.json'), 'dataset': dataset, 'selection': selection, 'model_identity': load('frozen_model_identity.json'), 'code_identity': load('code_identity.json'), 'feature_mapping': load('feature_mapping_330.json'), 'audit': {name: audit(name) for name in ['all_test_label_audit.json', 'audit_raw_summary.json', 'provenance_audit.json', 'distribution_audit.json', 'independent_audit_summary.json']}, 'validation_curve': curve.to_dict('records'), 'resource_samples': resources.to_dict('records')}
+    evidence = {'test_daily': daily.to_dict('records'), 'deciles': groupstats.reset_index().to_dict('records'), 'decile_daily': groupdaily.to_dict('records'), 'decile_rank_ic_daily': [{'date': d, **{f'contribution_D{k}': float(contribution[k].iloc[i]) for k in range(1, 11)}, **{f'inner_ic_D{k}': (float(inner_ic[k].iloc[i]) if np.isfinite(inner_ic[k].iloc[i]) else None) for k in range(1, 11)}, **{f'pool_{key}': (float(pool_ic[key].iloc[i]) if np.isfinite(pool_ic[key].iloc[i]) else None) for key, _, _ in POOLS}} for i, d in enumerate(dates)], 'rank_ic_pools': pools, 'expanding_folds': folds, 'extra_analysis': extra, 'test_summary': summary, 'training_summary': timing, 'effective_parameters': params, 'environment': load('environment.json'), 'dataset': dataset, 'selection': selection, 'model_identity': load('frozen_model_identity.json'), 'code_identity': load('code_identity.json'), 'feature_mapping': load('feature_mapping_330.json'), 'audit': {name: audit(name) for name in ['all_test_label_audit.json', 'audit_raw_summary.json', 'provenance_audit.json', 'distribution_audit.json', 'independent_audit_summary.json']}, 'validation_curve': curve.to_dict('records'), 'resource_samples': resources.to_dict('records')}
     mapping_records = evidence['feature_mapping']
     evidence['feature_mapping'] = [r for r in mapping_records if 'model_column' in r]
     evidence['feature_exclusions'] = [r for r in mapping_records if 'excluded_old_columns' in r]
@@ -225,11 +299,10 @@ def main():
 
     plots = {}
 
-    def publish(key, number, name, fig, caption):
-        title = f'{number:02d} · {name}'
-        svg = rc.render(fig, title, key, png_path=out / 'figures' / f'{key}.png')
+    def publish(key, name, fig, caption):
+        svg = rc.render(fig, title_of(key, name), key, png_path=out / 'figures' / f'{key}.png')
         (out / 'figures' / f'{key}.svg').write_text(svg, encoding='utf-8')
-        plots[key] = figure(key, title, svg, caption)
+        plots[key] = (name, svg, caption)
 
     # 01 — the frozen split, showing the fourteen folds this timing run never touched.
     fig, ax = rc.figure((11.4, 5.6))
@@ -256,7 +329,7 @@ def main():
     ax.legend(handles=[legend_patch(TEAL, '本次已跑：训练'), legend_patch(RUST, '本次已跑：validation'),
                        legend_patch('#cfdcd7', '尚未运行的 14 折'), legend_patch(BLUE, 'test（一次性）')],
               ncol=4, loc='lower center', bbox_to_anchor=(.5, -.26))
-    publish('split', 1, '15 折扩张验证：本次只跑了第 15 折', fig,
+    publish('split', '15 折扩张验证：本次只跑了第 15 折', fig,
             f'冻结的研究日历：2024H1 的 {len(seed_dates)} 日作为起始训练，其后逐自然月扩张验证，2024-07 — 2025-09 共 15 折、{oof_days} 个 validation 交易日；test 为 2025-10-09 — 2026-06-30 的 176 日，425 : 176 即约 7 : 3。本次计时试验按要求只运行最后一折，前 14 折没有运行。')
 
     iterations = curve.iteration.to_numpy()
@@ -273,7 +346,7 @@ def main():
     rc.nice_ticks(ax)
     rc.nice_ticks(ax, 'x')
     ax.legend(ncol=3, loc='lower center', bbox_to_anchor=(.5, 1.0))
-    publish('validation-sharpe', 2, 'validation：按多空 Sharpe 选择 659 轮', fig,
+    publish('validation-sharpe', 'validation：按多空 Sharpe 选择 659 轮', fig,
             '完整训练 1000 轮，无 early stopping。竖线只由 validation 多空 Sharpe 确定；不在 test 上选轮。这条曲线只来自第 15 折的 22 个交易日，却要在 1000 个候选轮次中取峰值。')
 
     fig, ax = rc.figure((5.6, 4.0))
@@ -285,7 +358,7 @@ def main():
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
     rc.nice_ticks(ax, 'x', count=5)
-    publish('validation-ic', 3, 'validation：RankIC 的训练路径', fig,
+    publish('validation-ic', 'validation：RankIC 的训练路径', fig,
             '第 659 轮为 0.016604；第 1000 轮为 0.014269。单月路径不构成最终参数选择的充分证据。')
 
     fig, ax = rc.figure((5.6, 4.0))
@@ -297,7 +370,7 @@ def main():
     rc.style_axes(ax)
     rc.nice_ticks(ax)
     rc.nice_ticks(ax, 'x', count=5)
-    publish('validation-mse', 4, 'validation：标准化目标的 MSE', fig,
+    publish('validation-mse', 'validation：标准化目标的 MSE', fig,
             'L2 是训练目标；选轮指标为组合 Sharpe。二者不必在同一轮达到最优。MSE 不以 bp 为单位。')
 
     x = np.arange(len(dates))
@@ -313,7 +386,7 @@ def main():
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
     ax.legend(ncol=3, loc='upper left')
-    publish('test-cumulative', 5, 'test：统一总名义敞口后的机械累计收益', fig,
+    publish('test-cumulative', 'test：统一总名义敞口后的机械累计收益', fig,
             '多空每日收益先除以 2，再连乘；纯多、纯空按单腿 100%。这是毛收益序列的机械复合，不含现金、保证金、费用及可成交约束，不是账户净值。')
 
     monthly = pd.DataFrame(summary['monthly_metrics'])
@@ -327,7 +400,7 @@ def main():
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
     ax.legend(ncol=3, loc='upper right')
-    publish('monthly', 6, 'test：月度 Sharpe 并不均匀', fig,
+    publish('monthly', 'test：月度 Sharpe 并不均匀', fig,
             '各月只有 14–23 个交易日，短样本年化数值不稳定；2025-11 的高值不代表全年可持续。')
 
     fig, ax = rc.figure((5.6, 4.2))
@@ -340,7 +413,7 @@ def main():
     rc.style_axes(ax, grid='both', zero_line=True)
     rc.nice_ticks(ax)
     rc.nice_ticks(ax, 'x', count=5)
-    publish('ic-scatter', 7, '同一天的 RankIC 与多空收益', fig,
+    publish('ic-scatter', '同一天的 RankIC 与多空收益', fig,
             f'逐日相关系数 {extra["daily_ic_ls_corr"]:.3f}。相关性强不等于二者成固定比例；收益截距、波动和尾部形状仍会改变 Sharpe。')
 
     fig, ax = rc.figure((5.6, 4.2))
@@ -354,7 +427,7 @@ def main():
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
     ax.legend(loc='upper left')
-    publish('daily-ic', 8, 'RankIC 每天有多稳定', fig,
+    publish('daily-ic', 'RankIC 每天有多稳定', fig,
             f'日均 0.02204，日标准差 0.07229；正值日占 {extra["rank_ic_positive_fraction"]:.1%}。年化 ICIR 为 {extra["ic_ir"]:.2f}，不是组合 Sharpe。')
 
     d = np.arange(1, 11)
@@ -371,7 +444,7 @@ def main():
     rc.nice_ticks(ax)
     ax.legend(ncol=2, loc='upper left')
     rc.annotate_traded(ax, rc.TRADED_ROWS)
-    publish('deciles', 9, '十分组的日均收益与 95% 区间', fig,
+    publish('deciles', '十分组的日均收益与 95% 区间', fig,
             '每日在 rank_base 内按分数平均秩分十组，同分同组；先算每组均值/中位数，再对日期等权。误差棒是日均收益的 Newey-West 标准误（Bartlett 核，lag 4）乘 1.96，衡量均值估计精度，不是个股收益范围。本图不做封板过滤，故 D10 与正式多头 10% 的 10.79bp 略有不同。')
 
     fig, ax = rc.figure((5.6, 4.2))
@@ -381,7 +454,7 @@ def main():
     ax.set_ylabel('个股收益截面标准差 bp')
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
-    publish('dispersion', 10, '两端的个股收益分布更宽', fig,
+    publish('dispersion', '两端的个股收益分布更宽', fig,
             '这里是组内个股收益的截面标准差，再对日期取平均；不是组组合每日收益的时间序列波动。二者不可混用。')
 
     fig, ax = rc.figure((5.6, 4.2))
@@ -391,8 +464,33 @@ def main():
     ax.set_ylabel('超额收益年化 Sharpe')
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
-    publish('decile-excess', 11, '分组相对全体等权的收益', fig,
+    publish('decile-excess', '分组相对全体等权的收益', fig,
             '全体等权基准使用同一天 rank_base 内有有效标签的股票。D1 负值表示跑输基准；不等于裸空 D1 的收益。')
+
+    shown = sorted((pool_by_key[k] for k in ['all', 'middle', 'short', 'long', 'traded', 'long_short']),
+                   key=lambda row: row['mean_rank_ic'])
+    palette = {'all': GRAY, 'middle': '#cfdcd7', 'short': BLUE, 'long': TEAL, 'traded': SAND, 'long_short': RUST}
+    fig, ax = rc.figure((11.4, 4.6))
+    pos = np.arange(len(shown))
+    ax.barh(pos, [row['mean_rank_ic'] for row in shown], height=.62,
+            color=[palette[row['key']] for row in shown],
+            xerr=[1.96 * row['nw_se'] for row in shown], capsize=5,
+            error_kw=dict(elinewidth=1.3, ecolor=rc.INK))
+    for i, row in enumerate(shown):
+        ax.annotate(f'{row["mean_rank_ic"]:.5f}　ICIR {row["ic_ir"]:.2f}',
+                    xy=(row['mean_rank_ic'] + 1.96 * row['nw_se'], i), xytext=(8, 0),
+                    textcoords='offset points', va='center', fontsize=10.5)
+    ax.axvline(total_ic, color=rc.INK, linewidth=1.2, linestyle=(0, (4, 3)))
+    ax.set_yticks(pos)
+    ax.set_yticklabels([f"{row['label']}　{row['mean_count']:,.0f} 只" for row in shown])
+    ax.set_xlabel('日均 RankIC')
+    ax.set_xlim(0, max(row['mean_rank_ic'] + 1.96 * row['nw_se'] for row in shown) * 1.45)
+    rc.style_axes(ax, grid='x')
+    rc.nice_ticks(ax, 'x')
+    publish('subset-ic', '只看真正交易的那几组，RankIC 是多少', fig,
+            f'把横截面限制到该组合实际排序的分组，再重新排名算 Spearman，口径与全体那个 {total_ic:.4f} 完全一致；虚线是全体 10 组的水平。'
+            f'多空实际交易的 D1∪D10 为 {pool_by_key["long_short"]["mean_rank_ic"]:.5f}，年化 ICIR {pool_by_key["long_short"]["ic_ir"]:.2f}。'
+            '误差棒为日均值的 Newey-West 标准误乘 1.96。去掉中段会把分数范围拉开，本身就会抬高秩相关，这一层机械效应未排除。')
 
     fig, ax = rc.figure((11.4, 5.0))
     share = groupstats['rank_ic_contribution']
@@ -413,10 +511,10 @@ def main():
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
     rc.annotate_traded(ax, rc.TRADED_ROWS)
-    publish('ic-contribution', 12, '每一组贡献了多少 RankIC', fig,
+    publish('ic-contribution', '每一组贡献了多少 RankIC', fig,
             f'把每天的 Spearman 相关按分数分组拆开：十组之和精确等于当天 RankIC，再对日期等权。最低与最高两组合计占 {tail_share:.0%}，策略从不碰的中间六组（D3–D8，占股票数 60%）只占 {middle_share:.0%}，却按全体约 2,875 只股票摊薄了平均值。这是已打开 test 后的分解，不是模型改动依据。')
 
-    fig, ax = rc.figure((5.6, 4.2))
+    fig, ax = rc.figure((11.4, 4.4))
     inner_values = groupstats['inner_rank_ic']
     ax.bar(d, inner_values, color=[RUST if v < 0 else TEAL for v in inner_values], width=.66)
     ax.axhline(total_ic, color=rc.INK, linewidth=1.2, linestyle=(0, (4, 3)))
@@ -426,10 +524,10 @@ def main():
     ax.set_ylabel('组内 RankIC')
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
-    publish('inner-ic', 13, '每一组内部还剩多少排序信息', fig,
+    publish('inner-ic', '每一组内部还剩多少排序信息', fig,
             '只在该组内部重新排名再算相关。D9 为负，说明模型在这一组内部的细分顺序已经是噪声；D10 有用靠的是整组相对其他组的位置，不是组内谁更靠前。范围收窄本身也会降低相关，不能据此断言中间股票完全没有信息。')
 
-    fig, ax = rc.figure((5.6, 4.2))
+    fig, ax = rc.figure((11.4, 4.4))
     pos = np.arange(3)
     ax.bar(pos - .18, [daily.long10.mean() * 1e4, daily.short10.mean() * 1e4, daily.long_short_return.mean() * 1e4], width=.34, color=TEAL, label='日均收益 bp')
     ax.bar(pos + .18, [daily.long10.std() * 1e4, daily.short10.std() * 1e4, daily.long_short_return.std() * 1e4], width=.34, color=RUST, label='每日收益标准差 bp')
@@ -439,7 +537,7 @@ def main():
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
     ax.legend(loc='upper left')
-    publish('legs', 14, '多空相减抵消部分共同波动', fig,
+    publish('legs', '多空相减抵消部分共同波动', fig,
             '两篮子原始收益的相关系数为 0.7354。相减后波动为 28.29bp；空头一行已将标的收益取负。该图多空按每腿 100% 的原定义展示。')
 
     fig, ax = rc.figure((11.4, 5.0))
@@ -454,7 +552,7 @@ def main():
     rc.nice_ticks(ax)
     ax.legend(ncol=2, loc='upper left')
     rc.annotate_traded(ax, rc.TRADED_ROWS)
-    publish('decile-sharpe', 15, '每一组的年化 Sharpe，与策略实际交易的组', fig,
+    publish('decile-sharpe', '每一组的年化 Sharpe，与策略实际交易的组', fig,
             f'组自身 Sharpe 用该组每日等权收益的时间序列计算。三个正式组合都只碰两端：纯多买 D9–D10、纯空卖 D1–D2、多空买 D10 卖 D1。用这十组反推为 {reconstructed["pure_long"]:.2f} / {reconstructed["pure_short"]:.2f} / {reconstructed["long_short"]:.2f}，与正式口径的 3.01 / 0.58 / 7.30 只差方向封板过滤。')
 
     stress_labels = ['原始结果', '取消封板过滤', '缺失标签按 0 计', '个股收益压到 ±1%', '剔除每腿极端 1%', '移除最好 10 个交易日']
@@ -470,7 +568,7 @@ def main():
     rc.style_axes(ax, grid='x')
     rc.nice_ticks(ax, 'x')
     ax.set_xlim(0, max(stress) * 1.18)
-    publish('sensitivity', 16, '排查封板、缺失标签和尾部贡献', fig,
+    publish('sensitivity', '排查封板、缺失标签和尾部贡献', fig,
             '同一组已保存预测的事后敏感性分析，不是新模型或可交易选股规则；最后一项显示保留证据中的四舍五入值。')
 
     fig, ax = rc.figure((5.8, 4.4))
@@ -483,7 +581,7 @@ def main():
     ax.set_ylabel('年化毛 Sharpe')
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
-    publish('market', 17, '相对全体等权后，仍有收益差', fig,
+    publish('market', '相对全体等权后，仍有收益差', fig,
             '这是相对基准诊断，不是 beta 中性化。第三项是空头相对基准的超额收益，不能当作纯空本身的 0.576 Sharpe。')
 
     times = timing['timings_seconds']
@@ -500,7 +598,7 @@ def main():
     rc.style_axes(ax, grid='x')
     rc.nice_ticks(ax, 'x')
     ax.set_xlim(0, max(stage_values) * 1.14)
-    publish('timing', 18, '耗时主要在输入与标签准备', fig,
+    publish('timing', '耗时主要在输入与标签准备', fig,
             '训练剩余 52.47 秒仍包含框架开销，不叫纯算法时间。阶段和整体之间还含少量初始化、调度及统计开销。')
 
     elapsed = (resources.monotonic_seconds - resources.monotonic_seconds.iloc[0]).to_numpy()
@@ -513,7 +611,7 @@ def main():
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
     ax.legend(loc='upper left')
-    publish('memory', 19, '全流程内存轨迹', fig,
+    publish('memory', '全流程内存轨迹', fig,
             'cgroup 峰值 13.14GiB；RSS 与 cgroup 内存不是同一口径，不能相加。任务上限 60GiB，high=52GiB，swap=0；无新增 OOM 或内存 high 事件。')
 
     cores = (resources.task_cpu_usage_usec.diff() / resources.monotonic_seconds.diff() / 1e6).to_numpy()
@@ -527,7 +625,7 @@ def main():
     ax.set_xlim(0, elapsed.max())
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
-    publish('cpu', 20, 'CPU 使用集中在训练阶段', fig,
+    publish('cpu', 'CPU 使用集中在训练阶段', fig,
             '约每 1 秒采样；训练阶段平均 7.00 核，全流程平均 1.17 核。累计 CPU 配额限流 0.144 秒；一次观察不能证明最优线程数。')
 
     roundcost = timing['per_100_round_wall_seconds']
@@ -540,12 +638,14 @@ def main():
     ax.set_ylabel('每 100 轮墙钟秒')
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
-    publish('round-speed', 21, '每 100 轮的墙钟耗时', fig,
+    publish('round-speed', '每 100 轮的墙钟耗时', fig,
             '首 100 轮 7.61 秒，后续约 6.23–6.78 秒；没有观察到随轮数不断增加的重复预测开销。')
 
-    report = (ROOT / 'templates/model-report-20260918.html').read_text(encoding='utf-8')
+    rendered = {key: figure(key, title_of(key, name), svg, caption)
+                for key, (name, svg, caption) in plots.items()}
+    assert set(rendered) == set(FIGURE_ORDER), 'figure set must match the template'
     replacement = {
-        **plots,
+        **rendered,
         'DATA': data.replace('</', '<\\/'),
         'PARAMETERS': html.escape(json.dumps(params, ensure_ascii=False, indent=2)),
         'SEED_DAYS': str(len(seed_dates)),
@@ -553,6 +653,20 @@ def main():
         'TRADED_SHARE': f'{traded_share:.0%}',
         'MIDDLE_SHARE': f'{middle_share:.0%}',
         'TAIL_SHARE': f'{tail_share:.0%}',
+        'POOL_ALL': f'{pool_by_key["all"]["mean_rank_ic"]:.5f}',
+        'POOL_LS': f'{pool_by_key["long_short"]["mean_rank_ic"]:.5f}',
+        'POOL_LS_IR': f'{pool_by_key["long_short"]["ic_ir"]:.2f}',
+        'POOL_MIDDLE': f'{pool_by_key["middle"]["mean_rank_ic"]:.5f}',
+        'POOL_CONTROL': f'{pool_by_key["spaced_control"]["mean_rank_ic"]:.5f}',
+        'POOL_TABLE': table(['池子', '包含的分组', '日均 RankIC', '日标准差', '正值日', '年化 ICIR', '日均只数'],
+                            [[row['label'], decile_span(row['deciles']),
+                              f'{row["mean_rank_ic"]:.5f}', f'{row["std_rank_ic"]:.5f}',
+                              f'{row["positive_fraction"]:.1%}', f'{row["ic_ir"]:.2f}',
+                              f'{row["mean_count"]:,.0f}'] for row in pools]),
+        'INNER_TABLE': table(['组', '组内日均 RankIC', '日标准差', '正值日', '年化 ICIR', '日均只数'],
+                             [[f'D{i}', f'{r["inner_rank_ic"]:.5f}', f'{r["inner_rank_ic_std"]:.5f}',
+                               f'{r["inner_rank_ic_positive"]:.1%}', f'{r["inner_rank_ic_ir"]:.2f}',
+                               f'{r["count"]:,.1f}'] for i, r in groupstats.iterrows()]),
         'RECON_LONG': f'{reconstructed["pure_long"]:.2f}',
         'RECON_SHORT': f'{reconstructed["pure_short"]:.2f}',
         'RECON_LS': f'{reconstructed["long_short"]:.2f}',

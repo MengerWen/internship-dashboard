@@ -12,7 +12,7 @@
 @media print{.nav,.enlarge,.downloads,.mapping-controls,dialog{display:none!important}.wrap{max-width:none;padding:0 15px}body{background:white}figure{break-inside:avoid}.chart-scroll{overflow:visible}.chart-scroll svg{min-width:0}section{padding:25px 0}details{break-inside:avoid}}
 </style></head>
 <body>
-<header class="hero"><div class="wrap"><div class="mast"><span>思瑞投资 · 量化实习成果看板</span><span>研究日期 2026.09.18<br>结果整理 2026.09.19</span></div><div class="hero-grid"><div><div class="eyebrow">FIRST MODEL TRIAL / CPU LIGHTGBM</div><h1>从 330 个因子，<br>到一个<em>收益回归模型</em></h1><p class="lead">这是 15 折扩张验证里<strong>第 15 折</strong>的一次计时试验：用一套固定参数跑通真实数据训练，冻结 validation 选出的第 659 轮，再看 176 日 test。这里记录设置、效果和检查结果，不把它当作正式模型验收。</p></div><aside class="hero-note"><div class="big">7.30</div><p>test 多空毛收益 Sharpe<br>日均 RankIC 只有 0.0220。本页把 RankIC 按十分组拆开，说明两者为什么能同时成立。</p></aside></div><div class="stats"><span><strong>330</strong>输入因子</span><span><strong>1,141,334</strong>训练行</span><span><strong>659 / 1000</strong>选用 / 已训练轮数</span><span><strong>176</strong>test 交易日</span></div></div></header>
+<header class="hero"><div class="wrap"><div class="mast"><span>思瑞投资 · 量化实习成果看板</span><span>研究日期 2026.09.18<br>结果整理 2026.09.19</span></div><div class="hero-grid"><div><div class="eyebrow">FIRST MODEL TRIAL / CPU LIGHTGBM</div><h1>从 330 个因子，<br>到一个<em>收益回归模型</em></h1><p class="lead">这是 15 折扩张验证里<strong>第 15 折</strong>的一次计时试验：用一套固定参数跑通真实数据训练，冻结 validation 选出的第 659 轮，再看 176 日 test。这里记录设置、效果和检查结果，不把它当作正式模型验收。</p></div><aside class="hero-note"><div class="big">7.30</div><p>test 多空毛收益 Sharpe<br>日均 RankIC 只有 0.0220。换成多空真正交易的 D1∪D10 池子，同一口径下是 0.0448。本页把 RankIC 按分组和池子拆开，说明两者为什么能同时成立。</p></aside></div><div class="stats"><span><strong>330</strong>输入因子</span><span><strong>1,141,334</strong>训练行</span><span><strong>659 / 1000</strong>选用 / 已训练轮数</span><span><strong>176</strong>test 交易日</span></div></div></header>
 <nav class="nav" aria-label="章节"><div class="wrap"><a href="#setup">01 划分与设置</a><a href="#validation">02 validation</a><a href="#test">03 test</a><a href="#explain">04 低 IC / 高 Sharpe</a><a href="#audit">05 核查</a><a href="#performance">06 耗时资源</a><a href="#evidence">07 参数与证据</a></div></nav>
 <main class="wrap"><noscript><p class="no-js">图表和正文可直接阅读；因子检索、下载和放大需要启用 JavaScript。</p></noscript>
 <section id="setup"><div class="section-head"><span class="num">01</span><div><h2>跑的是哪一折，输入、目标和损失函数是什么</h2><p class="subtle">一个 CPU LightGBM 回归模型；一套参数、一个随机种子、一次训练。未开展网格搜索，也没有 GPU 对照。</p></div></div>
@@ -62,15 +62,26 @@
 <h3>最高分组最突出，中间段的排序关系较弱</h3>@@deciles@@<div class="two">@@dispersion@@@@decile-excess@@</div><details><summary>展开十分组的均值、中位数与截面波动</summary>@@DECILE_TABLE@@</details>
 <p>分组均值大体随分数上升，D9 约 3.9bp，D10 约 10.6bp；最高分一组的增幅明显更大。模型的收益区分在最高分 10% 最突出，但“能力几乎全部集中于这里”仍偏强：中间分组之间有收益梯度，最低组相对全体也有差异。</p>
 <p>两端的个股收益分布更宽，均值与中位数也明显不同。RankIC 只看名次，不区分涨 1% 与涨 10%；本次原始收益的日均 Pearson IC 为 0.0417，高于 RankIC 0.0220，支持收益幅度会影响两端价差。它不单独证明尾部来源、因果关系或可交易性。</p>
-<h3>RankIC 被没有交易的中间段摊薄了</h3>
-<p>把每天的 Spearman 相关按分数拆开看：每只股票对当天 RankIC 的贡献，是它的分数秩偏差乘以收益秩偏差，再除以同一个归一化分母。按十分组求和，十组之和<strong>精确等于</strong>当天的 RankIC；对 176 天等权平均后，这十个数加起来仍然正好是 0.022040。</p>
-<p>拆开的结果是：最低与最高两组合计占 @@TAIL_SHARE@@；三个组合实际会碰到的四组（D1、D2、D9、D10）合计占 @@TRADED_SHARE@@；中间六组占了股票数的 60%，却只贡献 @@MIDDLE_SHARE@@。RankIC 是按全体约 2,875 只股票取的平均，这 60% 把它压低了，而三个组合都不交易这一段。这就是低 RankIC 与高组合 Sharpe 能同时成立的主要来源。</p>
+<h3>换成你真正交易的那个池子，RankIC 是多少</h3>
+<p>报告里那个 0.0220，是在<strong>全体约 2,875 只股票</strong>上算的。可三个组合都只碰两端：纯多买 D9–D10，纯空卖 D1–D2，多空买 D10、卖 D1。把横截面限制到组合实际排序的那几组，用<strong>完全相同的口径</strong>重新排名再算 Spearman：</p>
+@@subset-ic@@
+@@POOL_TABLE@@
+<p class="small">口径与全体那一行完全一致：同一天、同一批有效标签、同样的平均秩 Spearman，只是参与排名的股票范围不同。“全体 10 组”一行必然等于正文里的 @@POOL_ALL@@；“中段 D3–D8”一行等于前面提到的 @@POOL_MIDDLE@@。</p>
+<p>多空真正交易的 D1∪D10 池子里，RankIC 是 <strong>@@POOL_LS@@</strong>，是全体那个 @@POOL_ALL@@ 的两倍；年化 ICIR 从 4.84 升到 <strong>@@POOL_LS_IR@@</strong>，已经接近多空 Sharpe 7.30。低 RankIC 与高 Sharpe 之所以能同时成立，主要就是这个范围差：指标在一个比实际交易范围大约五倍的池子里取平均。</p>
+<div class="note warm"><p><strong>这里有一层没有排除：</strong>去掉中间段会把分数的取值范围拉开，而秩相关本身就会随范围扩大而升高，与模型能力无关。等间隔对照 D1∪D5∪D10 为 @@POOL_CONTROL@@，说明升高中确实有一部分是机械的。本次没有做“在全体中随机抽同样只数、保留完整分数范围”的对照，因此不能把 @@POOL_LS@@ 全部算作模型能力。</p></div>
+<h3>全体那个数是怎么被摊薄的</h3>
+<p>把每天的 Spearman 按分数分组拆开：每只股票的贡献是它的分数秩偏差乘以收益秩偏差，再除以同一个归一化分母。按十分组求和，十组之和<strong>精确等于</strong>当天的 RankIC；对 176 天等权平均后，这十个数加起来仍然正好是 0.022040。</p>
+<p>最低与最高两组合计占 @@TAIL_SHARE@@；三个组合会碰到的四组合计占 @@TRADED_SHARE@@；中间六组占了股票数的 60%，却只贡献 @@MIDDLE_SHARE@@。</p>
 @@ic-contribution@@
-<p>再看组内部：只在一组内部重新排名再算相关，D9 是负的，说明模型在这一组里谁排前面已经是噪声；D10 的价值来自整组相对其他组的位置，不是组内顺序。需要注意范围收窄本身也会降低相关，因此这只说明“组内顺序不可用”，不说明这些股票完全没有信息。</p>
-<div class="two">@@inner-ic@@@@legs@@</div>
+<h3>那组内部还剩多少排序信息</h3>
+<p>只在一组内部重新排名再算相关，得到的就是字面意义上“每个分组各自的 RankIC”：</p>
+@@inner-ic@@
+@@INNER_TABLE@@
+<p>十个数都很小，D9 还是负的（−0.00364，正值日只有 46.0%）。也就是说模型的能力在“把股票分到哪一组”这一层，不在“组内部谁更靠前”这一层——D10 有用，靠的是整组相对其他组的位置。这里同样要注意范围收窄本身会降低相关，所以它只说明组内顺序不可直接使用，不说明这些股票完全没有信息。</p>
 <h3>三个组合实际交易哪几组</h3>
 <p>纯多买最高 20%，即 D9 与 D10；纯空卖最低 20%，即 D1 与 D2；多空买 D10、卖 D1。用十分组的每日收益直接反推，这三种组合的年化毛 Sharpe 分别是 @@RECON_LONG@@、@@RECON_SHORT@@、@@RECON_LS@@，与正式口径的 3.01 / 0.58 / 7.30 只差方向封板过滤。分组诊断与正式组合口径可以对上，下面这张图因此能直接当作组合来源的说明。</p>
 @@decile-sharpe@@
+@@legs@@
 <details><summary>展开十分组的收益、RankIC 贡献、组内相关与 Sharpe</summary>@@CONTRIBUTION_TABLE@@<p class="small">“对 RankIC 的贡献”十行相加等于日均 RankIC 0.022040。“组内 RankIC”只在该组内部重新排名计算，与贡献不是同一个量，不能相加。组自身 Sharpe 用该组每日等权收益的时间序列计算，超额 Sharpe 先减去同日全体等权收益。</p></details>
 <div class="formula"><div class="math-line"><math xmlns="http://www.w3.org/1998/Math/MathML" displaystyle="true" data-equation="SHARPE"><mrow><msub><mtext>Sharpe</mtext><mtext>LS</mtext></msub><mo>=</mo><msqrt><mn>252</mn></msqrt><mo>×</mo><mfrac><mn>13.0094</mn><mn>28.2881</mn></mfrac><mo>=</mo><mn>7.3005</mn></mrow></math></div><small>多头 10% 日均 10.7879bp，空头 10% 日均盈利 2.2215bp。两篮子原始收益相关为 0.7354，相减后日波动低于两条单腿。纯多、纯空 20% 不能直接作为这个 10% / 10% 多空组合的单腿拆解。</small></div>
 <p>入选个股绝对收益超过 1% 的部分贡献约 11.50bp，占多空日均收益约 88.4%；超过 5% 的部分贡献约 2.97bp。尾部收益贡献大，但事后压缩尾部后 Sharpe 仍为正且较高，详见下一节。</p>
@@ -105,7 +116,7 @@ cancel-phase 买卖侧：cancel-phase-bs-63e21702470e-20260909T033315Z / {buy,se
 depth-match：20260908T100452Z-full-history-i01-147ab55 / panel</pre><p class="small">因子身份来自发布清单；本页未重新定标或重算因子。原始文件保留在服务器已有结果目录，图表从这些既有结果派生。</p></details>
 <div class="note"><p>当前结论：这套固定设置在该 test 样本上的毛收益统计可复现，最高分组最突出，多空抵消了部分共同波动。已检查的标签、预测与评价环节未发现造成 Sharpe 虚高的实现错误；上游完整因果性及实际可交易性仍未验收。</p></div>
 </section></main>
-<footer class="foot wrap">2026-09-18 · 扩张验证第 15 折的 CPU LightGBM 计时试验 · 结果整理于 2026-09-19<br>21 张数据图；所有统计基于现有训练及 test 结果。图表可放大，手机可在图内横向滚动。</footer>
+<footer class="foot wrap">2026-09-18 · 扩张验证第 15 折的 CPU LightGBM 计时试验 · 结果整理于 2026-09-19<br>22 张数据图；所有统计基于现有训练及 test 结果。图表可放大，手机可在图内横向滚动。</footer>
 <dialog id="chart-dialog"><div class="dialog-head"><h3 id="dialog-title"></h3><button id="close-dialog" type="button">关闭</button></div><div id="dialog-chart" class="chart-scroll"></div><p id="dialog-caption" class="small"></p></dialog>
 <script id="report-data" type="application/json">@@DATA@@</script>
 <script>

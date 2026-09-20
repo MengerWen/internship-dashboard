@@ -20,7 +20,7 @@ def test_daily_registration_and_self_contained_charts(report):
     page, data = report
     assert (ROOT / "content/daily/2026-09-18.md").exists()
     assert 'show_allow_downloads: true' in (ROOT / "content/daily/2026-09-18.md").read_text(encoding="utf-8")
-    assert len(re.findall(r'<figure id=', page)) == 21
+    assert len(re.findall(r'<figure id=', page)) == 22
     assert '@@' not in page
     assert not re.search(r'<(?:script|link)[^>]+(?:src|href)="https?://', page)
     assert len(page.encode('utf-8')) < 25 * 1024**2
@@ -87,6 +87,37 @@ def test_rank_ic_decomposes_across_deciles(report):
     assert rows == 176
 
 
+def test_pool_rank_ic_uses_the_published_scale(report):
+    """Restricting the cross-section must reuse the headline RankIC definition."""
+    page, data = report
+    pools = {row['key']: row for row in data['rank_ic_pools']}
+    # Whole-universe and middle pools must reproduce numbers already published.
+    assert pools['all']['mean_rank_ic'] == pytest.approx(0.022039952480479963, abs=1e-12)
+    assert pools['middle']['mean_rank_ic'] == pytest.approx(data['extra_analysis']['mean_middle_ic'], abs=1e-12)
+    assert pools['all']['deciles'] == list(range(1, 11))
+    # The traded long-short pool carries a visibly higher correlation and ICIR.
+    assert pools['long_short']['mean_rank_ic'] > 2 * pools['middle']['mean_rank_ic']
+    assert pools['long_short']['ic_ir'] > pools['all']['ic_ir']
+    assert pools['long_short']['mean_count'] < pools['all']['mean_count'] / 4
+    # The mechanical part of that lift is disclosed, not hidden.
+    assert 'spaced_control' in pools
+    assert '机械效应未排除' in page and '机械的' in page
+
+
+def test_every_decile_rank_ic_is_a_readable_number(report):
+    """The per-decile RankIC must be legible as figures, not only as a chart."""
+    page, data = report
+    for row in data['deciles']:
+        assert row['inner_rank_ic'] is not None
+        assert row['inner_rank_ic_ir'] is not None
+    # D9's inner ordering is noise; the page states it rather than rounding it away.
+    d9 = next(r for r in data['deciles'] if r['decile'] == 9)
+    assert d9['inner_rank_ic'] < 0
+    assert '−0.00364' in page or '-0.00364' in page
+    assert page.count('组内日均 RankIC') == 1
+    assert page.count('日均 RankIC') >= 2
+
+
 def test_decile_view_reconstructs_the_official_portfolios(report):
     """Deciles and the formal legs must agree up to the direction gate."""
     _, data = report
@@ -101,7 +132,7 @@ def test_figures_are_typeset_not_hand_drawn(report):
     """Charts come from matplotlib and equations from MathML, with readable ticks."""
     page, _ = report
     assert page.count('<math ') >= 5
-    assert page.count('-figure_1"') == 21
+    assert page.count('-figure_1"') == 22
     assert '<sub>' not in page
     # The old hand-rolled renderer printed every RankIC tick as "0.0".
     assert '>-0.0</text>' not in page
