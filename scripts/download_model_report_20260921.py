@@ -14,11 +14,13 @@ TEST = f"{BASE}/ml-causal-328-20260921-r03-test"
 BASELINE = "/home/wenjie/hdd-store/outputs/sirui/ml-single-fit-test/ml-single-fit-cpu-l2-test-lssharpe-i0659-20260918-r01"
 TRAIN_FILES = (
     "timing_resource_summary.json", "dataset_summary.json", "effective_parameters.json",
-    "feature_mapping_328.json", "per_round_metrics.parquet",
+    "feature_mapping_328.json", "per_round_metrics.parquet", "resource_samples.parquet",
+    "environment.json", "code_identity.json", "trade_vwap_consistency.json",
 )
 TEST_FILES = (
     "test_summary.json", "validation_selection_receipt.json", "frozen_model_identity.json",
     "test_daily_metrics.parquet", "test_monthly_metrics.parquet", "test_positions.parquet",
+    "test_predictions.parquet", "test_daily_input_audit.parquet", "trade_vwap_consistency.json",
 )
 
 

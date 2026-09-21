@@ -17,6 +17,7 @@ from matplotlib.patches import Patch
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import add_nav_scrollspy  # noqa: E402
+import model_report_copy_20260918  # noqa: E402
 import report_charts as rc  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -272,26 +273,28 @@ def main():
     report = TEMPLATE.read_text(encoding='utf-8')
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=Path, required=True)
-    parser.add_argument('--audit', type=Path, required=True)
+    parser.add_argument('--preview-root', type=Path)
     args = parser.parse_args()
     p = args.input
-    load = lambda name: json.loads((p / name).read_text(encoding='utf-8'))
-    audit = lambda name: json.loads((args.audit / name).read_text(encoding='utf-8'))
-    predictions = pd.read_parquet(p / 'test_predictions.parquet')
-    saved = pd.read_parquet(p / 'test_daily_metrics.parquet').set_index('date')
-    curve = pd.read_parquet(p / 'per_round_metrics.parquet')
-    resources = pd.read_parquet(p / 'resource_samples.parquet')
-    summary = audit('test_summary.json')
+    train, test = p / 'train', p / 'test'
+    def load(name):
+        path = next(path for path in (test / name, train / name) if path.is_file())
+        return json.loads(path.read_text(encoding='utf-8'))
+    predictions = pd.read_parquet(test / 'test_predictions.parquet')
+    positions = pd.read_parquet(test / 'test_positions.parquet')
+    saved = pd.read_parquet(test / 'test_daily_metrics.parquet').set_index('date')
+    curve = pd.read_parquet(train / 'per_round_metrics.parquet')
+    resources = pd.read_parquet(train / 'resource_samples.parquet')
+    summary = load('test_summary.json')
     timing = load('timing_resource_summary.json')
     params = load('effective_parameters.json')
     selection = load('validation_selection_receipt.json')
     dataset = load('dataset_summary.json')
-    dist = audit('distribution_audit.json')
-    independent = audit('independent_audit_summary.json')
     stock_context = json.loads(STOCK_CONTEXT.read_text(encoding='utf-8'))
     assert len(predictions) == 507460 and not predictions.duplicated(['date', 'code']).any()
-    assert int(curve.loc[curve.long_short_sharpe.idxmax(), 'iteration']) == 659
-    assert digest(p / 'per_round_metrics.parquet') == selection['curve_sha256']
+    selected_iteration = int(selection['selected_iteration'])
+    assert int(curve.loc[curve.long_short_sharpe.idxmax(), 'iteration']) == selected_iteration
+    assert digest(train / 'per_round_metrics.parquet') == selection['curve_sha256']
 
     seed_dates, folds = expanding_folds(dataset['train_dates'] + dataset['validation_dates'])
     assert len(folds) == 15
@@ -299,26 +302,50 @@ def main():
     assert folds[-1]['train_days'] == len(dataset['train_dates'])
     oof_days = sum(f['validation_days'] for f in folds)
 
-    dates, rows, groups, breadth_rows, stockday_rows = [], [], [], [], []
+    dates, rows, groups, breadth_rows = [], [], [], []
+    stress_rows = []
     for date, full in predictions.groupby('date', sort=True):
         dates.append(date)
         valid = full[np.isfinite(full.raw_return)]
-        base = full[full.rank_base].copy()
+        base = full[full.rank_base & np.isfinite(full.score)].copy()
         n = len(base)
 
-        def leg(q, highest):
+        def leg(q, highest, *, gate=True, missing_zero=False, winsor=None, trim=False):
             k = math.ceil(q * n)
             threshold = base.score.nlargest(k).iloc[-1] if highest else base.score.nsmallest(k).iloc[-1]
-            selected = base[base.score.ge(threshold) if highest else base.score.le(threshold)]
-            selected = selected[~selected.no_long] if highest else selected[~selected.no_short]
-            selected = selected.dropna(subset=['raw_return']).copy()
-            return (float(selected.raw_return.mean()) if len(selected) else 0.0), len(selected), selected
+            selected = base[base.score.ge(threshold) if highest else base.score.le(threshold)].copy()
+            direction_gate = selected.no_long if highest else selected.no_short
+            filled = selected.entry_valid & (~direction_gate if gate else True)
+            marked = selected.mark_return.fillna(0.0) if missing_zero else selected.mark_return
+            values = selected.raw_return.where(selected.raw_return.notna(), marked)
+            if filled.any() and not np.isfinite(values[filled]).all():
+                raise RuntimeError(f'missing mark for an entered selected stock on {date}')
+            if winsor is not None:
+                values = values.clip(-winsor, winsor)
+            if trim and filled.any():
+                cutoff = float(values[filled].abs().quantile(.99))
+                values = values.where(values.abs() < cutoff, 0.0)
+            values = values.where(filled, 0.0)
+            selected['effective_return'] = values
+            return float(values.sum() / len(selected)), int(filled.sum()), selected
 
         l20, nl20, _ = leg(.2, True)
         s20, ns20, _ = leg(.2, False)
         l10, nl10, long10_selected = leg(.1, True)
         s10, ns10, short10_selected = leg(.1, False)
-        ls = l10 - s10 if nl10 and ns10 else 0.0
+        ls = l10 - s10
+        ungated_long, _, _ = leg(.1, True, gate=False)
+        ungated_short, _, _ = leg(.1, False, gate=False)
+        zero_long, _, _ = leg(.1, True, missing_zero=True)
+        zero_short, _, _ = leg(.1, False, missing_zero=True)
+        winsor_long, _, _ = leg(.1, True, winsor=.01)
+        winsor_short, _, _ = leg(.1, False, winsor=.01)
+        trim_long, _, _ = leg(.1, True, trim=True)
+        trim_short, _, _ = leg(.1, False, trim=True)
+        stress_rows.append({'date': date, 'ungated': ungated_long - ungated_short,
+                            'missing_zero': zero_long - zero_short,
+                            'winsor_1pct': winsor_long - winsor_short,
+                            'trim_1pct': trim_long - trim_short})
         for q in (.05, .10, .20, .30):
             long_return, long_count, _ = leg(q, True)
             short_return, short_count, _ = leg(q, False)
@@ -328,15 +355,6 @@ def main():
                 'long_short_return': long_return - short_return,
                 'mean_leg_count': (long_count + short_count) / 2,
             })
-        for selected, leg_name, sign in ((long10_selected, 'long', 1.0),
-                                         (short10_selected, 'short', -1.0)):
-            denominator = len(selected)
-            for record in selected[['code', 'score', 'raw_return']].to_dict('records'):
-                stockday_rows.append({
-                    'date': date, 'code': record['code'], 'leg': leg_name,
-                    'score': record['score'], 'raw_return': record['raw_return'],
-                    'contribution': sign * record['raw_return'] / denominator,
-                })
         market = float(base.raw_return.mean())
         percentile = base.score.rank(method='average', pct=True)
         base['decile'] = np.minimum(10, np.ceil(percentile * 10)).astype(int)
@@ -352,7 +370,11 @@ def main():
     daily = pd.DataFrame(rows)
     groupdaily = pd.DataFrame(groups)
     breadth_daily = pd.DataFrame(breadth_rows)
-    stockdays = pd.DataFrame(stockday_rows)
+    stockdays = positions.loc[positions.portfolio.isin(['long_short_long', 'long_short_short'])].copy()
+    stockdays['leg'] = stockdays.portfolio.map({'long_short_long': 'long', 'long_short_short': 'short'})
+    stockdays['raw_return'] = stockdays.underlying_return
+    stockdays['contribution'] = stockdays.portfolio_contribution
+    stress_daily = pd.DataFrame(stress_rows)
     groupstats = groupdaily.groupby('decile')[['mean', 'median', 'std', 'count']].mean()
     groupstats['excess_sharpe'] = groupdaily.groupby('decile').excess.apply(sharpe)
     groupstats['own_sharpe'] = groupdaily.groupby('decile')['mean'].apply(sharpe)
@@ -471,15 +493,14 @@ def main():
     published_codes = set(names)
     top_positive = stockdays.nlargest(10, 'contribution').copy()
     top_negative = stockdays.nsmallest(10, 'contribution').copy()
-    assert set(top_positive.code) | set(top_negative.code) <= published_codes
     for frame in (top_positive, top_negative):
-        frame['name'] = frame.code.map(names)
+        frame['name'] = frame.code.map(names).fillna('名称未核验')
     aggregate = stockdays.groupby('code').agg(
         cumulative_contribution=('contribution', 'sum'), selected_days=('date', 'size'),
         long_days=('leg', lambda values: int((values == 'long').sum())),
         short_days=('leg', lambda values: int((values == 'short').sum())),
     ).reset_index()
-    aggregate['name'] = aggregate.code.map(names)
+    aggregate['name'] = aggregate.code.map(names).fillna('名称未核验')
     aggregate_positive = aggregate.nlargest(5, 'cumulative_contribution').copy()
     aggregate_negative = aggregate.nsmallest(5, 'cumulative_contribution').copy()
     assert aggregate_positive.name.notna().all() and aggregate_negative.name.notna().all()
@@ -542,6 +563,15 @@ def main():
         }
         for i, date in enumerate(dates)
     ]
+    audit_evidence = {
+        'selected_iteration': selected_iteration,
+        'model_feature_count': 328,
+        'position_status_counts': positions.status.value_counts().to_dict(),
+        'entry_unfilled_contribution_max_abs': float(positions.loc[positions.status.eq('entry_unfilled'), 'portfolio_contribution'].abs().max()),
+        'ledger_daily_reconciliation_max_abs': float(np.max(np.abs(daily.long_short_return.to_numpy() -
+            positions.loc[positions.portfolio.isin(['long_short_long', 'long_short_short'])].groupby('date').portfolio_contribution.sum().reindex(daily.date, fill_value=0).to_numpy()))),
+        'sample_trade_vwap_consistency': load('trade_vwap_consistency.json'),
+    }
     evidence = {
         'test_daily': daily.to_dict('records'),
         'deciles': groupstats.reset_index().to_dict('records'),
@@ -559,22 +589,22 @@ def main():
         'selection': selection,
         'model_identity': load('frozen_model_identity.json'),
         'code_identity': load('code_identity.json'),
-        'feature_mapping': load('feature_mapping_330.json'),
-        'audit': {name: audit(name) for name in [
-            'all_test_label_audit.json', 'audit_raw_summary.json', 'provenance_audit.json',
-            'distribution_audit.json', 'independent_audit_summary.json',
-        ]},
+        'feature_mapping': load('feature_mapping_328.json'),
+        'audit': audit_evidence,
         'validation_curve': curve.to_dict('records'),
         'resource_samples': resources.to_dict('records'),
     }
     mapping_records = evidence['feature_mapping']
     evidence['feature_mapping'] = [r for r in mapping_records if 'model_column' in r]
     evidence['feature_exclusions'] = [r for r in mapping_records if 'excluded_old_columns' in r]
-    assert len(evidence['feature_mapping']) == 330
-    assert [r['index'] for r in evidence['feature_mapping']] == list(range(330))
-    sources = [p / name for name in ['test_predictions.parquet', 'test_daily_metrics.parquet', 'per_round_metrics.parquet', 'resource_samples.parquet', 'effective_parameters.json', 'feature_mapping_330.json', 'timing_resource_summary.json']]
+    assert len(evidence['feature_mapping']) == 328
+    assert [r['index'] for r in evidence['feature_mapping']] == list(range(328))
+    assert not any('f97' in r['model_column'].lower() for r in evidence['feature_mapping'])
+    sources = [test / 'test_predictions.parquet', test / 'test_positions.parquet', test / 'test_daily_metrics.parquet',
+               train / 'per_round_metrics.parquet', train / 'resource_samples.parquet', train / 'effective_parameters.json',
+               train / 'feature_mapping_328.json', train / 'timing_resource_summary.json']
     evidence['source_files'] = [{'name': v.name, 'bytes': v.stat().st_size, 'sha256': digest(v)} for v in sources]
-    out = ROOT / 'content/assets/model-report-2026-09-18'
+    out = (args.preview_root / 'assets') if args.preview_root else ROOT / 'content/assets/model-report-2026-09-18'
     (out / 'figures').mkdir(parents=True, exist_ok=True)
     data = json.dumps(json_safe(evidence), ensure_ascii=False, separators=(',', ':'), allow_nan=False)
     (out / 'report-data.json').write_text(data, encoding='utf-8')
@@ -650,8 +680,8 @@ def main():
     fig, ax = rc.figure((11.4, 4.6))
     for values, color, name in [(curve.long_short_sharpe, TEAL, '多空各 10%'), (curve.pure_long_sharpe, RUST, '纯多 20%'), (curve.pure_short_sharpe, BLUE, '纯空 20%')]:
         ax.plot(iterations, values, color=color, linewidth=1.5, label=name)
-    ax.axvline(659, color=rc.INK, linewidth=1, linestyle=(0, (4, 3)))
-    ax.annotate('第 659 轮', xy=(659, 1), xytext=(6, -6), xycoords=('data', 'axes fraction'),
+    ax.axvline(selected_iteration, color=rc.INK, linewidth=1, linestyle=(0, (4, 3)))
+    ax.annotate(f'第 {selected_iteration} 轮', xy=(selected_iteration, 1), xytext=(6, -6), xycoords=('data', 'axes fraction'),
                 textcoords='offset points', ha='left', va='top', fontsize=10.5, color=rc.INK)
     ax.set_xlabel('训练轮数')
     ax.set_ylabel('validation 年化毛 Sharpe')
@@ -660,7 +690,7 @@ def main():
     rc.nice_ticks(ax)
     rc.nice_ticks(ax, 'x')
     ax.legend(ncol=3, loc='lower center', bbox_to_anchor=(.5, 1.0))
-    publish('validation-sharpe', 'validation：按多空 Sharpe 选择 659 轮', fig,
+    publish('validation-sharpe', f'validation：按多空 Sharpe 选择 {selected_iteration} 轮', fig,
             '完整训练 1000 轮，无 early stopping。竖线只由 validation 多空 Sharpe 确定；不在 test 上选轮。这条曲线只来自第 15 折的 22 个交易日，却要在 1000 个候选轮次中取峰值。')
     round_heads = [f'第 {int(v)} 轮' for v in iterations]
     readout('validation-sharpe', readout_x(iterations, round_heads, [
@@ -672,7 +702,7 @@ def main():
 
     fig, ax = rc.figure((5.6, 4.0))
     ax.plot(iterations, curve.validation_mean_rank_ic, color=TEAL, linewidth=1.5)
-    ax.axvline(659, color=rc.INK, linewidth=1, linestyle=(0, (4, 3)))
+    ax.axvline(selected_iteration, color=rc.INK, linewidth=1, linestyle=(0, (4, 3)))
     ax.set_xlabel('训练轮数')
     ax.set_ylabel('validation 日均 RankIC')
     ax.set_xlim(0, 1000)
@@ -680,14 +710,14 @@ def main():
     rc.nice_ticks(ax)
     rc.nice_ticks(ax, 'x', count=5)
     publish('validation-ic', 'validation：RankIC 的训练路径', fig,
-            '第 659 轮为 0.016604；第 1000 轮为 0.014269。单月路径不构成最终参数选择的充分证据。')
+            f'第 {selected_iteration} 轮为 {curve.loc[curve.iteration.eq(selected_iteration), "validation_mean_rank_ic"].iloc[0]:.6f}；第 1000 轮为 {curve.validation_mean_rank_ic.iloc[-1]:.6f}。单月路径不构成最终参数选择的充分证据。')
     readout('validation-ic', readout_x(iterations, round_heads, [
         readout_line('validation 日均 RankIC', TEAL, curve.validation_mean_rank_ic,
                      [f'{v:+.6f}' for v in curve.validation_mean_rank_ic])]))
 
     fig, ax = rc.figure((5.6, 4.0))
     ax.plot(iterations, curve.validation_daily_equal_mse, color=BLUE, linewidth=1.5)
-    ax.axvline(659, color=rc.INK, linewidth=1, linestyle=(0, (4, 3)))
+    ax.axvline(selected_iteration, color=rc.INK, linewidth=1, linestyle=(0, (4, 3)))
     ax.set_xlabel('训练轮数')
     ax.set_ylabel('标准化目标按日等权 MSE')
     ax.set_xlim(0, 1000)
@@ -714,7 +744,7 @@ def main():
     rc.nice_ticks(ax)
     ax.legend(ncol=3, loc='upper left')
     publish('test-cumulative', 'test：统一总名义敞口后的机械累计收益', fig,
-            '多空每日收益先除以 2，再连乘；纯多、纯空按单腿 100%。这是毛收益序列的机械复合，不含现金、保证金、费用及可成交约束，不是账户净值。')
+            '多空每日收益先除以 2，再连乘；纯多、纯空按单腿 100%。未进场预算留现金，未退出持仓保留估值。曲线仍未计保证金、费用及执行约束，不是账户净值。')
     day_heads = [f'{d}（第 {i + 1} 个交易日）' for i, d in enumerate(dates)]
     cumulative_legs = [(name, color, mult, daily[key], (np.cumprod(1 + daily[key] * mult) - 1) * 100)
                        for key, name, color, mult in
@@ -787,7 +817,8 @@ def main():
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
     publish('quadrants', 'RankIC 正负与组合盈亏的四种日期', fig,
-            '105 天同时出现 RankIC≥0、组合盈利，贡献 2,850bp；RankIC<0 但组合盈利的 22 天贡献 213bp。'
+            f'{quadrants[0]["days"]} 天同时出现 RankIC≥0、组合盈利，贡献 {quadrants[0]["cumulative_return_sum"] * 1e4:,.0f}bp；'
+            f'RankIC<0 但组合盈利的 {quadrants[1]["days"]} 天贡献 {quadrants[1]["cumulative_return_sum"] * 1e4:,.0f}bp。'
             '该图使用日收益直接求和，只用于归因，不是复利账户收益。')
     readout('quadrants', readout_bands([
         band(i - .5, i + .5, row['label'], [
@@ -813,7 +844,7 @@ def main():
     rc.nice_ticks(ax)
     ax.legend(loc='upper left')
     publish('daily-ic', 'RankIC 每天有多稳定', fig,
-            f'日均 0.02204，日标准差 0.07229；正值日占 {extra["rank_ic_positive_fraction"]:.1%}。年化 ICIR 为 {extra["ic_ir"]:.2f}，不是组合 Sharpe。')
+            f'日均 {total_ic:.5f}，日标准差 {daily.rank_ic.std(ddof=1):.5f}；正值日占 {extra["rank_ic_positive_fraction"]:.1%}。年化 ICIR 为 {extra["ic_ir"]:.2f}，不是组合 Sharpe。')
     rolling_ic = daily.rank_ic.rolling(20).mean()
     readout('daily-ic', readout_x(x, day_heads, [
         readout_line('当日 RankIC', GRAY, daily.rank_ic, [f'{v:+.5f}' for v in daily.rank_ic]),
@@ -837,7 +868,7 @@ def main():
     ax.legend(ncol=2, loc='upper left')
     rc.annotate_traded(ax, rc.TRADED_ROWS)
     publish('deciles', '十分组的日均收益与 95% 区间', fig,
-            '每日在 rank_base 内按分数平均秩分十组，同分同组；先算每组均值/中位数，再对日期等权。误差棒是日均收益的 Newey-West 标准误（Bartlett 核，lag 4）乘 1.96，衡量均值估计精度，不是个股收益范围。本图不做封板过滤，故 D10 与正式多头 10% 的 10.79bp 略有不同。')
+            f'每日在 rank_base 内按分数平均秩分十组，同分同组；先算每组均值/中位数，再对日期等权。误差棒是日均收益的 Newey-West 标准误（Bartlett 核，lag 4）乘 1.96，衡量均值估计精度，不是个股收益范围。本图不做进场封板和失败过滤，故 D10 的 {groupstats.loc[10, "mean"] * 1e4:.2f}bp 与正式多头 10% 不同。')
     readout('deciles', readout_bands(decile_bands(
         lambda i, r: [['日均组平均收益', f"{r['mean'] * 1e4:+.2f}bp", TEAL],
                       ['95% NW 区间', f"±{1.96 * r['nw_se_bp']:.2f}bp"],
@@ -932,7 +963,7 @@ def main():
     rc.nice_ticks(ax)
     rc.annotate_traded(ax, rc.TRADED_ROWS)
     publish('ic-contribution', '每一组贡献了多少 RankIC', fig,
-            f'把每天的 Spearman 相关按分数分组拆开：十组之和精确等于当天 RankIC，再对日期等权。最低与最高两组合计占 {tail_share:.0%}，策略从不碰的中间六组（D3–D8，占股票数 60%）只占 {middle_share:.0%}，却按全体约 2,875 只股票摊薄了平均值。这是已打开 test 后的分解，不是模型改动依据。')
+            f'把每天的 Spearman 相关按分数分组拆开：十组之和精确等于当天 RankIC，再对日期等权。最低与最高两组合计占 {tail_share:.0%}，策略从不碰的中间六组（D3–D8，占股票数 60%）只占 {middle_share:.0%}，却按日均约 {pool_by_key["all"]["mean_count"]:,.0f} 只有标签股票摊薄了平均值。这是已打开 test 后的分解，不是模型改动依据。')
     readout('ic-contribution', readout_bands(decile_bands(
         lambda i, r: [['对日均 RankIC 的贡献', f"{r['rank_ic_contribution']:.5f}",
                        BLUE if i <= 2 else TEAL if i >= 9 else '#cfdcd7'],
@@ -1005,7 +1036,7 @@ def main():
     rc.nice_ticks(ax, from_zero=True)
     ax.legend(loc='upper left')
     publish('legs', '多空相减抵消部分共同波动', fig,
-            '两篮子原始收益的相关系数为 0.7354。相减后波动为 28.29bp；空头一行已将标的收益取负。该图多空按每腿 100% 的原定义展示。')
+            f'两篮子原始收益的相关系数为 {variance_decomposition["underlying_leg_correlation"]:.4f}。相减后波动为 {variance_decomposition["long_short_std_bp"]:.2f}bp；空头一行已将标的收益取负。该图多空按每腿 100% 的原定义展示。')
     readout('legs', readout_bands([
         band(i - .5, i + .5, label, [
             ['日均收益', f'{series.mean() * 1e4:+.2f}bp', TEAL],
@@ -1035,7 +1066,7 @@ def main():
     ax.set_ylabel('日收益方差 bp²')
     rc.style_axes(ax, zero_line=True)
     rc.nice_ticks(ax)
-    publish('variance-decomposition', '28.29bp 日波动是怎样形成的', fig,
+    publish('variance-decomposition', f'{variance_decomposition["long_short_std_bp"]:.2f}bp 日波动是怎样形成的', fig,
             f'两腿标的收益相关 {variance_decomposition["underlying_leg_correlation"]:.3f}；协方差项抵消了两腿方差和的 '
             f'{variance_decomposition["variance_offset_share"]:.1%}。若只作“协方差为零”的算术对照，日波动为 '
             f'{variance_decomposition["zero_covariance_std_bp"]:.2f}bp、Sharpe 为 {variance_decomposition["zero_covariance_sharpe"]:.2f}；'
@@ -1130,7 +1161,7 @@ def main():
     ax.legend(ncol=2, loc='upper left')
     rc.annotate_traded(ax, rc.TRADED_ROWS)
     publish('decile-sharpe', '每一组的年化 Sharpe，与策略实际交易的组', fig,
-            f'组自身 Sharpe 用该组每日等权收益的时间序列计算。三个正式组合都只碰两端：纯多买 D9–D10、纯空卖 D1–D2、多空买 D10 卖 D1。用这十组反推为 {reconstructed["pure_long"]:.2f} / {reconstructed["pure_short"]:.2f} / {reconstructed["long_short"]:.2f}，与正式口径的 3.01 / 0.58 / 7.30 只差方向封板过滤。')
+            f'组自身 Sharpe 用该组每日有效标签等权收益的时间序列计算。三个正式组合都只碰两端：纯多买 D9–D10、纯空卖 D1–D2、多空买 D10 卖 D1。用这十组反推为 {reconstructed["pure_long"]:.2f} / {reconstructed["pure_short"]:.2f} / {reconstructed["long_short"]:.2f}；与正式口径的 {summary["overall_metrics"]["pure_long_sharpe"]:.2f} / {summary["overall_metrics"]["pure_short_sharpe"]:.2f} / {summary["overall_metrics"]["long_short_sharpe"]:.2f} 还隔着进场未成交、封板和未退出估值。')
     traded_by = {1: '纯空 D1–D2、多空卖 D1', 2: '纯空 D1–D2', 9: '纯多 D9–D10',
                  10: '纯多 D9–D10、多空买 D10'}
     readout('decile-sharpe', readout_bands(decile_bands(
@@ -1140,8 +1171,11 @@ def main():
                       ['正式组合是否交易', traded_by.get(i, '否，三个组合都不碰')]],
         lambda i, r: [(i - .17, r['own_sharpe'], SAND), (i + .17, r['excess_sharpe'], TEAL)])))
 
-    stress_labels = ['原始结果', '取消封板过滤', '缺失标签按 0 计', '个股收益压到 ±1%', '剔除每腿极端 1%', '移除最好 10 个交易日']
-    stress = [7.300545039, independent['return_series']['ls_ungated']['sharpe'], dist['diagnostics']['zero_missing_ls']['sharpe'], independent['return_series']['ls_winsor100bp']['sharpe'], dist['diagnostics']['trim_abs_1pct_ls']['sharpe'], 6.21575]
+    stress_labels = ['修正后结果', '取消封板过滤', '未退出持仓按 0 计', '个股收益压到 ±1%', '剔除每腿极端 1%', '移除最好 10 个交易日']
+    stress = [sharpe(daily.long_short_return), sharpe(stress_daily.ungated),
+              sharpe(stress_daily.missing_zero), sharpe(stress_daily.winsor_1pct),
+              sharpe(stress_daily.trim_1pct),
+              sharpe(daily.long_short_return.drop(daily.long_short_return.nlargest(10).index))]
     fig, ax = rc.figure((5.8, 4.4))
     y = np.arange(len(stress))[::-1]
     ax.barh(y, stress, color=[TEAL] + [BLUE] * 5, height=.6)
@@ -1153,8 +1187,8 @@ def main():
     rc.style_axes(ax, grid='x')
     rc.nice_ticks(ax, 'x')
     ax.set_xlim(0, max(stress) * 1.18)
-    publish('sensitivity', '排查封板、缺失标签和尾部贡献', fig,
-            '同一组已保存预测的事后敏感性分析，不是新模型或可交易选股规则；最后一项显示保留证据中的四舍五入值。')
+    publish('sensitivity', '排查封板、未退出估值和尾部贡献', fig,
+            '同一组已保存预测的事后敏感性分析，不是新模型或可交易选股规则；未退出持仓按 0 计仅作对照。')
     readout('sensitivity', readout_bands([
         band(row - .5, row + .5, label, [
             ['多空年化毛 Sharpe', f'{value:.2f}', TEAL if row == len(stress) - 1 else BLUE],
@@ -1174,7 +1208,7 @@ def main():
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
     publish('market', '相对全体等权后，仍有收益差', fig,
-            '这是相对基准诊断，不是 beta 中性化。第三项是空头相对基准的超额收益，不能当作纯空本身的 0.576 Sharpe。')
+            f'这是相对基准诊断，不是 beta 中性化。第三项是空头相对基准的超额收益，不能当作纯空本身的 {summary["overall_metrics"]["pure_short_sharpe"]:.3f} Sharpe。')
     readout('market', readout_bands([
         band(i - .5, i + .5, label, [['年化毛 Sharpe', f'{value:+.2f}', color]],
              marks=[(i, value, color)])
@@ -1197,7 +1231,7 @@ def main():
     rc.nice_ticks(ax, 'x')
     ax.set_xlim(0, max(stage_values) * 1.14)
     publish('timing', '耗时主要在输入与标签准备', fig,
-            '训练剩余 52.47 秒仍包含框架开销，不叫纯算法时间。阶段和整体之间还含少量初始化、调度及统计开销。')
+            f'训练剩余 {times["train_call_minus_evaluation_including_framework_overhead"]:.2f} 秒仍包含框架开销，不叫纯算法时间。阶段和整体之间还含少量初始化、调度及统计开销。')
     readout('timing', readout_bands([
         band(row - .5, row + .5, label, [
             ['墙钟秒', f'{value:,.2f}s', TEAL if row == len(stage_values) - 1 else BLUE],
@@ -1217,7 +1251,7 @@ def main():
     rc.nice_ticks(ax, from_zero=True)
     ax.legend(loc='upper left')
     publish('memory', '全流程内存轨迹', fig,
-            'cgroup 峰值 13.14GiB；RSS 与 cgroup 内存不是同一口径，不能相加。任务上限 60GiB，high=52GiB，swap=0；无新增 OOM 或内存 high 事件。')
+            f'cgroup 峰值 {timing["resources"]["whole_flow_memory_peak_cgroup_bytes"] / 2 ** 30:.2f}GiB；RSS 与 cgroup 内存不是同一口径，不能相加。任务上限 100GiB，high=32GiB，swap=0；无新增 OOM 或内存 high 事件。')
     sample_heads = [f'{t:,.1f}s　{stage}' for t, stage in zip(elapsed, resources.stage)]
     readout('memory', readout_x(elapsed, sample_heads, [
         readout_line(name, color, resources[column] / 2 ** 30,
@@ -1239,7 +1273,7 @@ def main():
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
     publish('cpu', 'CPU 使用集中在训练阶段', fig,
-            '约每 1 秒采样；训练阶段平均 7.00 核，全流程平均 1.17 核。累计 CPU 配额限流 0.144 秒；一次观察不能证明最优线程数。')
+            f'约每 1 秒采样；训练阶段平均 {timing["resources"]["train_average_equivalent_cores"]:.2f} 核，全流程平均 {timing["resources"]["whole_flow_average_equivalent_cores"]:.2f} 核。累计 CPU 配额限流 {timing["resources"]["cpu_event_delta"]["throttled_usec"] / 1e6:.3f} 秒；一次观察不能证明最优线程数。')
     readout('cpu', readout_x(elapsed, sample_heads, [
         readout_line('采样间隔等效核数', TEAL, cores,
                      ['—' if not np.isfinite(v) else f'{v:.2f} 核' for v in cores]),
@@ -1257,7 +1291,7 @@ def main():
     rc.style_axes(ax)
     rc.nice_ticks(ax, from_zero=True)
     publish('round-speed', '每 100 轮的墙钟耗时', fig,
-            '首 100 轮 7.61 秒，后续约 6.23–6.78 秒；没有观察到随轮数不断增加的重复预测开销。')
+            f'首 100 轮 {values[0]:.2f} 秒，后续约 {min(values[1:]):.2f}–{max(values[1:]):.2f} 秒；没有观察到随轮数不断增加的重复预测开销。')
     readout('round-speed', readout_bands([
         band(i - .5, i + .5, f"第 {r['round_start']}—{r['round_end']} 轮", [
             ['这 100 轮墙钟秒', f"{r['wall_seconds']:.2f}s", TEAL],
@@ -1379,8 +1413,9 @@ def main():
     }
     for key, value in replacement.items():
         report = report.replace('@@' + key + '@@', value)
+    report = model_report_copy_20260918.refresh(report, evidence, positions)
     assert '@@' not in report, 'unfilled report token'
-    page = ROOT / 'content/daily/2026-09-18.show.html'
+    page = (args.preview_root / '2026-09-18.show.html') if args.preview_root else ROOT / 'content/daily/2026-09-18.show.html'
     page.write_text(report, encoding='utf-8')
     add_nav_scrollspy.patch(page, add_nav_scrollspy.PAGES[page.name])
     print(json.dumps(extra, indent=2, ensure_ascii=False))
