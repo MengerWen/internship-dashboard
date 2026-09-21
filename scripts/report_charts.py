@@ -76,6 +76,11 @@ def render(fig, title, key=None, png_path=None):
 
     Several figures share one HTML document, so every id matplotlib emits is
     namespaced and its `#id` references rewritten to match.
+
+    Returns `(svg, axes)`; `axes` carries each Axes' data limits in the order the
+    SVG lists them, which is what the page's hover readout needs to map a cursor
+    position back to a data value. Limits are read after the draw so autoscaled
+    figures report the values the viewer actually sees.
     """
     _rendered[0] += 1
     prefix = f'{key or "f"}{_rendered[0]:02d}'
@@ -87,6 +92,8 @@ def render(fig, title, key=None, png_path=None):
             # PNG needs the paper colour painted in to stay readable on its own.
             fig.savefig(png_path, format='png', dpi=150, bbox_inches='tight', pad_inches=0.12,
                         facecolor=PAPER, transparent=False)
+        axes = [{'xlim': [float(v) for v in ax.get_xlim()],
+                 'ylim': [float(v) for v in ax.get_ylim()]} for ax in fig.axes]
     finally:
         plt.close(fig)
     svg = buffer.getvalue()
@@ -108,7 +115,7 @@ def render(fig, title, key=None, png_path=None):
                .replace('"', '&quot;'))
     svg = svg.replace('<svg ', f'<svg role="img" aria-label="{escaped}" ', 1)
     svg = svg.replace('>', f'><title>{escaped}</title>', 1)
-    return svg
+    return svg, axes
 
 
 def figure(size=(11.0, 4.6)):

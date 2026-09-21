@@ -3,19 +3,19 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="330 因子 CPU LightGBM：15 折扩张验证中已运行的第 15 折、第 659 轮的选择过程、176 日 test 结果，以及按十分组拆解的 RankIC 与 Sharpe。"><title>从 330 个因子到一个回归模型｜2026-09-18</title>
 <style>
 :root{--paper:#f5f3eb;--ink:#243648;--teal:#087b78;--rust:#b24f35;--muted:#596965;--rule:#ced3c9;--white:#fff;--serif:"Source Han Serif SC","Noto Serif CJK SC","Songti SC","SimSun",serif;--sans:"Microsoft YaHei","PingFang SC",sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 var(--sans)}a{color:var(--teal);text-underline-offset:4px}button,input{font:inherit}button{border:1px solid var(--rule);background:white;color:var(--teal);padding:7px 12px;cursor:pointer;border-radius:2px}button:hover{border-color:var(--teal)}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--rust);outline-offset:3px}.wrap{max-width:1320px;margin:auto;padding:0 40px}.mast{display:flex;justify-content:space-between;gap:22px;padding-bottom:18px;border-bottom:1px solid var(--rule);font-size:12px;letter-spacing:.08em}.hero{padding:32px 0 46px;border-bottom:1px solid var(--ink)}.hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:60px;padding-top:48px;align-items:end}.eyebrow{font-size:12px;color:var(--teal);letter-spacing:.14em}h1{font:normal clamp(36px,4.2vw,59px)/1.3 var(--serif);margin:15px 0 22px;letter-spacing:-.035em}h1 em{font-style:normal;color:var(--teal)}.lead{font-size:18px;max-width:770px}.hero-note{border-top:3px solid var(--teal);padding-top:20px}.hero-note .big{font:62px/1.1 Georgia,serif;color:var(--teal)}.hero-note p{font-size:14px}.stats{display:flex;gap:36px;flex-wrap:wrap;padding-top:24px}.stats strong{font:29px Georgia,serif;margin-right:8px}.stats span{font-size:13px}.nav{position:sticky;top:0;z-index:10;background:rgba(245,243,235,.98);border-bottom:1px solid var(--rule)}.nav .wrap{display:flex;gap:24px;overflow-x:auto;padding-block:13px;white-space:nowrap}.nav a{font-size:13px;text-decoration:none;color:var(--ink)}section{padding:60px 0;border-bottom:1px solid var(--rule)}.section-head{display:grid;grid-template-columns:60px 1fr;gap:15px;margin-bottom:25px}.num{font:39px Georgia,serif;color:var(--teal)}h2{font:normal 31px/1.4 var(--serif);margin:0 0 12px}h3{font:normal 22px/1.5 var(--serif);margin:26px 0 12px}p{margin:10px 0 18px;text-wrap:pretty}.subtle,figcaption,.small{color:var(--muted)}.small,figcaption{font-size:13px}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}.note{padding:20px 24px;background:#e7eee8;margin:24px 0}.note.warm{background:#efe5d9}.note p:last-child{margin-bottom:0}.formula{background:#fff;padding:22px 26px;font:18px/2 Georgia,var(--serif);border-left:3px solid var(--teal);overflow-x:auto;overflow-wrap:normal}.formula small{display:block;font:13px/1.8 var(--sans);color:var(--muted);margin-top:10px}math{font-family:"Cambria Math","STIX Two Math",math;font-size:1.08em;line-height:normal}.math-line{display:block;max-width:100%;overflow-x:auto;padding:10px 0}.math-line math{width:max-content}.math-inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;padding:4px 2px}.formula math{margin:4px 0}.formula .math-line:last-child{padding-bottom:0}.table-scroll{overflow:auto;max-width:100%;border-block:1px solid var(--rule);margin:20px 0}table{border-collapse:collapse;width:100%;font-size:14px}th{text-align:left;background:#eaece4;white-space:nowrap}td,th{padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top;font-variant-numeric:tabular-nums}tr:last-child td{border-bottom:0}code{font:13px/1.7 Consolas,monospace;overflow-wrap:anywhere}pre{font:13px/1.8 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;padding:20px;background:#ebede6;max-height:650px;overflow:auto}details{padding:15px 0;margin:18px 0;border-block:1px solid var(--rule)}summary{cursor:pointer;font-weight:600}.inputs{display:flex;gap:3px;margin:22px 0}.inputs>div{min-width:100px;padding:18px;background:#e7eee8;font-size:13px}.inputs b{display:block;font:30px Georgia,serif;color:var(--teal)}.input-old{flex:258}.input-new{flex:24}.chart-scroll{overflow-x:auto}.chart-scroll svg{display:block;width:100%;height:auto;max-height:720px}figure{margin:34px 0 42px;min-width:0}.figure-top{display:flex;justify-content:space-between;align-items:baseline;gap:15px;padding-bottom:9px;border-bottom:1px solid var(--rule);margin-bottom:4px}.figure-top h3{margin:0;font:normal 19px/1.5 var(--serif)}.figure-top h3 b{font:400 12px/1 Georgia,serif;color:var(--teal);letter-spacing:.1em;margin-right:9px;vertical-align:1px}.figure-top button{border:0;background:none;color:var(--muted);padding:2px 0;font-size:12px;white-space:nowrap}.figure-top button:hover{color:var(--teal);border:0}.figure-top+div{clear:both}figcaption{margin-top:10px;line-height:1.85;max-width:980px}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin:30px 0}.result-grid>div{border-top:2px solid var(--rule);padding-top:16px}.result-grid b{display:block;font:43px/1.4 Georgia,serif;color:var(--teal)}.result-grid small{color:var(--muted)}.narrative{max-width:1020px}.downloads{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}.mapping-controls{display:flex;gap:15px;align-items:center;flex-wrap:wrap}.mapping-controls input{padding:10px;border:1px solid var(--rule);min-width:260px;background:white}.mapping-table{max-height:460px}.mapping-table td{font-size:12px}.mapping-table code{font-size:12px;word-break:break-all}.badge{display:inline-block;font-size:12px;color:var(--teal);border:1px solid var(--rule);padding:3px 9px;margin:3px 5px 3px 0}.limits li{margin:10px 0}.foot{padding:35px 0 50px;font-size:13px;color:var(--muted)}dialog{width:min(1300px,96vw);max-height:95vh;border:1px solid var(--rule);padding:24px;background:var(--paper);color:var(--ink)}dialog::backdrop{background:#14212ae6}.dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:20px}.dialog-head h3{margin:0}dialog .chart-scroll svg{max-height:none}dialog .chart-scroll{max-height:76vh;overflow:auto}.no-js{padding:20px;background:#efe5d9}.mono{overflow-wrap:anywhere;font-family:Consolas,monospace;font-size:12px}.muted-label{font-size:12px;color:var(--muted)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 var(--sans)}a{color:var(--teal);text-underline-offset:4px}button,input{font:inherit}button{border:1px solid var(--rule);background:white;color:var(--teal);padding:7px 12px;cursor:pointer;border-radius:2px}button:hover{border-color:var(--teal)}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--rust);outline-offset:3px}.wrap{max-width:1320px;margin:auto;padding:0 40px}.mast{display:flex;justify-content:space-between;gap:22px;padding-bottom:18px;border-bottom:1px solid var(--rule);font-size:12px;letter-spacing:.08em}.hero{padding:32px 0 46px;border-bottom:1px solid var(--ink)}.hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:60px;padding-top:48px;align-items:end}.eyebrow{font-size:12px;color:var(--teal);letter-spacing:.14em}h1{font:normal clamp(36px,4.2vw,59px)/1.3 var(--serif);margin:15px 0 22px;letter-spacing:-.035em}h1 em{font-style:normal;color:var(--teal)}.lead{font-size:18px;max-width:770px}.hero-note{border-top:3px solid var(--teal);padding-top:20px}.hero-note .big{font:62px/1.1 Georgia,serif;color:var(--teal)}.hero-note p{font-size:14px}.stats{display:flex;gap:36px;flex-wrap:wrap;padding-top:24px}.stats strong{font:29px Georgia,serif;margin-right:8px}.stats span{font-size:13px}.nav{position:sticky;top:0;z-index:10;background:rgba(245,243,235,.98);border-bottom:1px solid var(--rule)}.nav .wrap{display:flex;gap:24px;overflow-x:auto;padding-block:13px;white-space:nowrap}.nav a{font-size:13px;text-decoration:none;color:var(--ink)}section{padding:60px 0;border-bottom:1px solid var(--rule)}.section-head{display:grid;grid-template-columns:60px 1fr;gap:15px;margin-bottom:25px}.num{font:39px Georgia,serif;color:var(--teal)}h2{font:normal 31px/1.4 var(--serif);margin:0 0 12px}h3{font:normal 22px/1.5 var(--serif);margin:26px 0 12px}p{margin:10px 0 18px;text-wrap:pretty}.subtle,figcaption,.small{color:var(--muted)}.small,figcaption{font-size:13px}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}.note{padding:20px 24px;background:#e7eee8;margin:24px 0}.note.warm{background:#efe5d9}.note p:last-child{margin-bottom:0}.formula{background:#fff;padding:22px 26px;font:18px/2 Georgia,var(--serif);border-left:3px solid var(--teal);overflow-x:auto;overflow-wrap:normal}.formula small{display:block;font:13px/1.8 var(--sans);color:var(--muted);margin-top:10px}math{font-family:"Cambria Math","STIX Two Math",math;font-size:1.08em;line-height:normal}.math-line{display:block;max-width:100%;overflow-x:auto;padding:10px 0}.math-line math{width:max-content}.math-inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;padding:4px 2px}.formula math{margin:4px 0}.formula .math-line:last-child{padding-bottom:0}.table-scroll{overflow:auto;max-width:100%;border-block:1px solid var(--rule);margin:20px 0}table{border-collapse:collapse;width:100%;font-size:14px}th{text-align:left;background:#eaece4;white-space:nowrap}td,th{padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top;font-variant-numeric:tabular-nums}tr:last-child td{border-bottom:0}code{font:13px/1.7 Consolas,monospace;overflow-wrap:anywhere}pre{font:13px/1.8 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;padding:20px;background:#ebede6;max-height:650px;overflow:auto}details{padding:15px 0;margin:18px 0;border-block:1px solid var(--rule)}summary{cursor:pointer;font-weight:600}.inputs{display:flex;gap:3px;margin:22px 0}.inputs>div{min-width:100px;padding:18px;background:#e7eee8;font-size:13px}.inputs b{display:block;font:30px Georgia,serif;color:var(--teal)}.input-old{flex:258}.input-new{flex:24}.chart-scroll{overflow-x:auto}.chart-scroll svg{display:block;width:100%;height:auto;max-height:720px}figure{margin:34px 0 42px;min-width:0}.figure-top{display:flex;justify-content:space-between;align-items:baseline;gap:15px;padding-bottom:9px;border-bottom:1px solid var(--rule);margin-bottom:4px}.figure-top h3{margin:0;font:normal 19px/1.5 var(--serif)}.figure-top h3 b{font:400 12px/1 Georgia,serif;color:var(--teal);letter-spacing:.1em;margin-right:9px;vertical-align:1px}.figure-top button{border:0;background:none;color:var(--muted);padding:2px 0;font-size:12px;white-space:nowrap}.figure-top button:hover{color:var(--teal);border:0}.figure-top+div{clear:both}figcaption{margin-top:10px;line-height:1.85;max-width:980px}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin:30px 0}.result-grid>div{border-top:2px solid var(--rule);padding-top:16px}.result-grid b{display:block;font:43px/1.4 Georgia,serif;color:var(--teal)}.result-grid small{color:var(--muted)}.narrative{max-width:1020px}.downloads{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}.mapping-controls{display:flex;gap:15px;align-items:center;flex-wrap:wrap}.mapping-controls input{padding:10px;border:1px solid var(--rule);min-width:260px;background:white}.mapping-table{max-height:460px}.mapping-table td{font-size:12px}.mapping-table code{font-size:12px;word-break:break-all}.badge{display:inline-block;font-size:12px;color:var(--teal);border:1px solid var(--rule);padding:3px 9px;margin:3px 5px 3px 0}.limits li{margin:10px 0}.foot{padding:35px 0 50px;font-size:13px;color:var(--muted)}dialog{width:min(1300px,96vw);max-height:95vh;border:1px solid var(--rule);padding:24px;background:var(--paper);color:var(--ink)}dialog::backdrop{background:#14212ae6}.dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:20px}.dialog-head h3{margin:0}dialog .chart-scroll svg{max-height:none}dialog .chart-scroll{max-height:76vh;overflow:auto}.no-js{padding:20px;background:#efe5d9}.mono{overflow-wrap:anywhere;font-family:Consolas,monospace;font-size:12px}.muted-label{font-size:12px;color:var(--muted)}.chart-scroll{position:relative}.figure-tools{display:flex;gap:16px;align-items:baseline;white-space:nowrap}.figure-tools .hint{font-size:12px;color:var(--muted)}.readout{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .09s linear}.readout.on{opacity:1}.readout .band{position:absolute;background:#2436480f;border-inline:1px solid #2436481f}.readout .cross{position:absolute;background:var(--ink);opacity:.5}.readout .dot{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;border:2px solid var(--paper);box-shadow:0 0 0 1px #24364855}.readout .tip{position:absolute;min-width:190px;max-width:340px;background:var(--ink);color:#f2f0e8;padding:9px 12px;font:12px/1.65 var(--sans);font-variant-numeric:tabular-nums;box-shadow:0 8px 22px #24364845}.readout .tip b{display:block;font-size:12px;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid #ffffff2e}.readout .tip p{display:flex;justify-content:space-between;gap:16px;margin:0}.readout .tip span{color:#c3d0cb}.readout .tip em{font-style:normal;text-align:right}.readout .tip i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px}@media(hover:none){.figure-tools .hint{display:none}}
 
 .case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:24px 0}.case{background:#fff;border-top:3px solid var(--teal);padding:20px}.case.loss{border-color:var(--rust)}.case h3{font-size:19px;margin:0 0 8px}.case .metric{font:28px/1.35 Georgia,serif;color:var(--teal);margin:8px 0}.case.loss .metric{color:var(--rust)}.case ul{padding-left:20px}.case li{margin:7px 0}.case a{overflow-wrap:anywhere}
 @media(min-width:1450px){.wrap{max-width:1440px}}
 @media(max-width:900px){.wrap{padding-inline:24px}.hero-grid{gap:30px}.two,.case-grid{grid-template-columns:1fr;gap:0}.case-grid{gap:16px}.inputs{flex-wrap:wrap}.input-old{flex-basis:100%}.input-new{flex:1}.result-grid{gap:16px}.result-grid b{font-size:34px}}
 @media(max-width:600px){body{font-size:15px}.wrap{padding-inline:18px}.hero-grid{grid-template-columns:1fr;padding-top:30px;gap:15px}.hero-note{display:grid;grid-template-columns:110px 1fr;gap:15px;align-items:center}.hero-note .big{font-size:48px}.hero-note p{margin:0}h1{font-size:37px}.lead{font-size:16px}.stats{gap:16px}.stats strong{font-size:23px}.nav .wrap{gap:20px}.section-head{grid-template-columns:33px 1fr;gap:10px}.num{font-size:28px}h2{font-size:27px}section{padding:42px 0}.figure-top h3{font-size:19px}.result-grid{grid-template-columns:1fr}.result-grid>div{display:grid;grid-template-columns:1fr 100px;gap:10px;align-items:center}.result-grid b{grid-column:2;grid-row:1/3;font-size:38px;text-align:right}.result-grid small{grid-column:1}.formula{font-size:15px;padding:14px}.note{padding:16px}.mast span:last-child{text-align:right}.chart-scroll svg{min-width:560px}dialog{padding:16px}.mapping-controls input{min-width:0;width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-@media print{.nav,.enlarge,.downloads,.mapping-controls,dialog{display:none!important}.wrap{max-width:none;padding:0 15px}body{background:white}figure{break-inside:avoid}.chart-scroll{overflow:visible}section{padding:25px 0}details{break-inside:avoid}}
+@media print{.nav,.enlarge,.figure-tools .hint,.readout,.downloads,.mapping-controls,dialog{display:none!important}.wrap{max-width:none;padding:0 15px}body{background:white}figure{break-inside:avoid}.chart-scroll{overflow:visible}section{padding:25px 0}details{break-inside:avoid}}
 </style></head>
 <body>
 <header class="hero"><div class="wrap"><div class="mast"><span>思瑞投资 · 量化实习成果看板</span><span>研究日期 2026.09.18<br>结果整理 2026.09.19</span></div><div class="hero-grid"><div><div class="eyebrow">FIRST MODEL TRIAL / CPU LIGHTGBM</div><h1>从 330 个因子，<br>到一个<em>收益回归模型</em></h1><p class="lead">这是 15 折扩张验证里<strong>第 15 折</strong>的一次计时试验：用一套固定参数跑通真实数据训练，冻结 validation 选出的第 659 轮，再看 176 日 test。这里记录设置、效果和检查结果，不把它当作正式模型验收。</p></div><aside class="hero-note"><div class="big">7.30</div><p>test 多空毛收益 Sharpe<br>日均 RankIC 只有 0.0220。换成多空真正交易的 D1∪D10 池子，同一口径下是 0.0448。本页把 RankIC 按分组和池子拆开，说明两者为什么能同时成立。</p></aside></div><div class="stats"><span><strong>330</strong>输入因子</span><span><strong>1,141,334</strong>训练行</span><span><strong>659 / 1000</strong>选用 / 已训练轮数</span><span><strong>176</strong>test 交易日</span></div></div></header>
 <nav class="nav" aria-label="章节"><div class="wrap"><a href="#setup">01 划分与设置</a><a href="#validation">02 validation</a><a href="#test">03 test</a><a href="#explain">04 指标为何不一致</a><a href="#deciles-view">05 十分组</a><a href="#rankic">06 RankIC 去哪了</a><a href="#portfolio">07 组合怎么拼</a><a href="#audit">08 核查</a><a href="#performance">09 耗时资源</a><a href="#evidence">10 参数与证据</a></div></nav>
-<main class="wrap"><noscript><p class="no-js">图表和正文可直接阅读；因子检索、下载和放大需要启用 JavaScript。</p></noscript>
+<main class="wrap"><noscript><p class="no-js">图表和正文可直接阅读；悬停读数、因子检索、下载和放大需要启用 JavaScript。</p></noscript>
 <section id="setup"><div class="section-head"><span class="num">01</span><div><h2>跑的是哪一折，输入、目标和损失函数是什么</h2><p class="subtle">一个 CPU LightGBM 回归模型；一套参数、一个随机种子、一次训练。未开展网格搜索，也没有 GPU 对照。</p></div></div>
 <h3>时间划分：扩张验证的第 15 折</h3>
 <div class="note warm"><p><strong>先说清楚这次跑的是什么。</strong>研究日历沿用 2026-08-24 冻结的方案：2024H1 的 @@SEED_DAYS@@ 个交易日作为起始训练期，其后<strong>逐自然月扩张验证</strong>，2024-07 到 2025-09 共 15 折、@@OOF_DAYS@@ 个 validation 交易日；test 是 2025-10-09 — 2026-06-30 的 176 日，425 : 176 约为 7 : 3。</p><p>本次是一次<strong>计时试验</strong>，任务书限定只跑“一个训练窗口及紧接着的一个 validation 月”，因此只运行了第 15 折：训练 2024-01-02 — 2025-08-29 共 403 日，validation 为 2025 年 9 月的 22 日。前 14 折没有运行，下图里那条明显的分界是这一折的边界，不是把扩张验证换成了一次性切分。</p></div>
@@ -137,6 +137,182 @@ depth-match：20260908T100452Z-full-history-i01-147ab55 / panel</pre><p class="s
 <footer class="foot wrap">2026-09-18 · 扩张验证第 15 折的 CPU LightGBM 计时试验 · 结果整理于 2026-09-20<br>27 张数据图；所有统计基于现有训练及 test 结果。图表可放大，手机可在图内横向滚动。</footer>
 <dialog id="chart-dialog"><div class="dialog-head"><h3 id="dialog-title"></h3><button id="close-dialog" type="button">关闭</button></div><div id="dialog-chart" class="chart-scroll"></div><p id="dialog-caption" class="small"></p></dialog>
 <script id="report-data" type="application/json">@@DATA@@</script>
+<script id="readout-data" type="application/json">@@READOUTS@@</script>
 <script>
 (()=>{'use strict';const data=JSON.parse(document.getElementById('report-data').textContent);const dialog=document.getElementById('chart-dialog');document.querySelectorAll('.enlarge').forEach(button=>button.addEventListener('click',()=>{const figure=button.closest('figure');document.getElementById('dialog-title').textContent=figure.querySelector('h3').textContent;document.getElementById('dialog-chart').replaceChildren(figure.querySelector('svg').cloneNode(true));document.getElementById('dialog-caption').textContent=figure.querySelector('figcaption').textContent;dialog.showModal()}));document.getElementById('close-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}});const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function mapping(){const q=document.getElementById('factor-search').value.toLowerCase();const rows=data.feature_mapping.filter(r=>(r.model_column+' '+r.original_column+' '+r.source).toLowerCase().includes(q));document.getElementById('mapping-count').textContent=rows.length+' / 330 列';document.getElementById('mapping').innerHTML='<table><thead><tr><th>序号</th><th>来源</th><th>模型列名</th><th>原列名</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r.index+'</td><td>'+escape(r.source)+'</td><td><code>'+escape(r.model_column)+'</code></td><td><code>'+escape(r.original_column)+'</code></td></tr>').join('')+'</tbody></table>'}document.getElementById('factor-search').addEventListener('input',mapping);mapping();function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}document.getElementById('download-mapping').addEventListener('click',()=>download('2026-09-18-feature-mapping-330.json',JSON.stringify(data.feature_mapping,null,2),'application/json'));document.getElementById('download-evidence').addEventListener('click',()=>download('2026-09-18-model-report-data.json',JSON.stringify(data,null,2),'application/json'));document.getElementById('download-daily').addEventListener('click',()=>{const keys=Object.keys(data.test_daily[0]);const csv=[keys.join(','),...data.test_daily.map(r=>keys.map(k=>r[k]??'').join(','))].join('\n');download('2026-09-18-test-daily.csv','\ufeff'+csv,'text/csv;charset=utf-8')});window.__modelReportReady=true;})();
-</script></body></html>
+</script>
+<script>
+(() => {
+  'use strict';
+  const specs = JSON.parse(document.getElementById('readout-data').textContent);
+  const esc = value => String(value).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+
+  // Matplotlib draws each Axes' background rectangle first inside that Axes'
+  // own group, so measuring that path gives the plot area on screen. Reading it
+  // live means the readout follows the SVG through resizes and the enlarge
+  // dialog without anything in the spec having to know about pixels.
+  function plotRect(svg) {
+    const axes = svg && svg.querySelector('g[id$="-axes_1"]');
+    const patch = axes && axes.querySelector('g[id*="-patch_"] > path');
+    if (!patch) return null;
+    const rect = patch.getBoundingClientRect();
+    return rect.width > 8 && rect.height > 8 ? rect : null;
+  }
+
+  function attach(container, getSpec) {
+    let layer = null;
+    let deco = null;
+    let tip = null;
+
+    function surface() {
+      if (layer && layer.isConnected) return layer;
+      layer = document.createElement('div');
+      layer.className = 'readout';
+      layer.setAttribute('aria-hidden', 'true');
+      deco = document.createElement('div');
+      tip = document.createElement('div');
+      tip.className = 'tip';
+      layer.append(deco, tip);
+      container.append(layer);
+      return layer;
+    }
+
+    function hide() {
+      if (layer) layer.classList.remove('on');
+    }
+
+    // Data coordinates in, client coordinates out.
+    function frame(spec, event) {
+      const svg = container.querySelector('svg');
+      const rect = plotRect(svg);
+      if (!rect) return null;
+      const first = spec.axes[0];
+      const span = (limits, value) => (value - limits[0]) / (limits[1] - limits[0]);
+      return {
+        rect,
+        px: event.clientX,
+        py: event.clientY,
+        inside: event.clientX >= rect.left - 2 && event.clientX <= rect.right + 2
+          && event.clientY >= rect.top - 2 && event.clientY <= rect.bottom + 2,
+        xd: first.xlim[0] + (event.clientX - rect.left) / rect.width * (first.xlim[1] - first.xlim[0]),
+        yd: first.ylim[0] + (rect.bottom - event.clientY) / rect.height * (first.ylim[1] - first.ylim[0]),
+        x: value => rect.left + span(first.xlim, value) * rect.width,
+        y: (value, axis) => rect.bottom - span((spec.axes[axis] || first).ylim, value) * rect.height,
+      };
+    }
+
+    function pick(spec, at) {
+      if (spec.mode === 'x') {
+        let best = 0;
+        for (let i = 1; i < spec.x.length; i++) {
+          if (Math.abs(spec.x[i] - at.xd) < Math.abs(spec.x[best] - at.xd)) best = i;
+        }
+        const drawn = spec.series.filter(series => series.y[best] !== null);
+        return {
+          head: spec.head[best],
+          rows: spec.series.map(series => [series.label, series.text[best], series.color]),
+          marks: drawn.map(series => [spec.x[best], series.y[best], series.color, series.axis]),
+          cross: spec.x[best],
+        };
+      }
+      if (spec.mode === 'point') {
+        let best = null;
+        let nearest = 30;
+        for (const item of spec.items) {
+          const distance = Math.hypot(at.x(item.x) - at.px, at.y(item.y, 0) - at.py);
+          if (distance < nearest) {
+            nearest = distance;
+            best = item;
+          }
+        }
+        return best && {head: best.head, rows: best.rows, marks: [[best.x, best.y, best.color, 0]]};
+      }
+      const along = spec.mode === 'bandy' ? at.yd : at.xd;
+      const item = spec.items.find(band => along >= band.low && along < band.high);
+      return item && {head: item.head, rows: item.rows, marks: item.marks, band: item};
+    }
+
+    function place(node, left, top, width, height, origin) {
+      node.style.left = (left - origin.left) + 'px';
+      node.style.top = (top - origin.top) + 'px';
+      if (width !== null) node.style.width = width + 'px';
+      if (height !== null) node.style.height = height + 'px';
+    }
+
+    function draw(spec, hit, at) {
+      const origin = layer.getBoundingClientRect();
+      const rect = at.rect;
+      deco.replaceChildren();
+      const add = className => {
+        const node = document.createElement('div');
+        node.className = className;
+        deco.append(node);
+        return node;
+      };
+      if (hit.band) {
+        const vertical = spec.mode === 'bandy';
+        const a = vertical ? at.y(hit.band.high, 0) : at.x(hit.band.low);
+        const b = vertical ? at.y(hit.band.low, 0) : at.x(hit.band.high);
+        const low = Math.max(Math.min(a, b), vertical ? rect.top : rect.left);
+        const high = Math.min(Math.max(a, b), vertical ? rect.bottom : rect.right);
+        if (high > low) {
+          if (vertical) place(add('band'), rect.left, low, rect.width, high - low, origin);
+          else place(add('band'), low, rect.top, high - low, rect.height, origin);
+        }
+      }
+      if (hit.cross !== undefined) {
+        place(add('cross'), at.x(hit.cross), rect.top, 1, rect.height, origin);
+      }
+      for (const [x, y, color, axis] of hit.marks || []) {
+        const dot = add('dot');
+        dot.style.background = color;
+        place(dot, at.x(x), at.y(y, axis), null, null, origin);
+      }
+      tip.innerHTML = '<b>' + esc(hit.head) + '</b>' + hit.rows.map(([label, value, color]) =>
+        '<p><span>' + (color ? '<i style="background:' + esc(color) + '"></i>' : '')
+        + esc(label) + '</span><em>' + esc(value) + '</em></p>').join('');
+      const size = tip.getBoundingClientRect();
+      const right = at.px + 18 + size.width > rect.right;
+      const below = at.py + 18 + size.height > rect.bottom;
+      place(tip,
+        Math.max(rect.left, right ? at.px - 18 - size.width : at.px + 18),
+        Math.max(rect.top, below ? at.py - 18 - size.height : at.py + 18),
+        null, null, origin);
+    }
+
+    function move(event) {
+      const spec = getSpec();
+      if (!spec) return hide();
+      surface();
+      const at = frame(spec, event);
+      if (!at || !at.inside) return hide();
+      const hit = pick(spec, at);
+      if (!hit) return hide();
+      draw(spec, hit, at);
+      layer.classList.add('on');
+    }
+
+    container.addEventListener('pointermove', move);
+    container.addEventListener('pointerdown', move);
+    container.addEventListener('pointerleave', hide);
+    container.addEventListener('scroll', hide, {passive: true});
+  }
+
+  for (const figure of document.querySelectorAll('figure[data-figure]')) {
+    const spec = specs[figure.dataset.figure];
+    const scroll = figure.querySelector('.chart-scroll');
+    if (spec && scroll) attach(scroll, () => spec);
+  }
+
+  // The enlarge dialog holds a clone of whichever figure was opened last.
+  let enlarged = null;
+  for (const button of document.querySelectorAll('.enlarge')) {
+    button.addEventListener('click', () => {
+      enlarged = specs[button.closest('figure').dataset.figure] || null;
+    });
+  }
+  attach(document.getElementById('dialog-chart'), () => enlarged);
+  window.__readoutReady = true;
+})();
+</script>
+</body></html>

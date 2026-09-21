@@ -70,10 +70,47 @@ def table(headers, rows):
 
 def figure(chart_id, title, svg, caption):
     number, name = title.split(' · ', 1)
-    return (f'<figure id="{chart_id}"><div class="figure-top">'
-            f'<h3><b>{number}</b> {name}</h3>'
-            f'<button class="enlarge" type="button" aria-label="放大：{title}">放大</button></div>'
+    return (f'<figure id="{chart_id}" data-figure="{chart_id}"><div class="figure-top">'
+            f'<h3><b>{number}</b> {name}</h3><div class="figure-tools">'
+            f'<span class="hint">悬停查看数值</span>'
+            f'<button class="enlarge" type="button" aria-label="放大：{title}">放大</button></div></div>'
             f'<div class="chart-scroll">{svg}</div><figcaption>{caption}</figcaption></figure>')
+
+
+def readout_x(x, head, series):
+    """Cursor readout for line charts: one crosshair per x, all series read at once."""
+    return {'mode': 'x', 'x': [round(float(v), 8) for v in x], 'head': list(head), 'series': series}
+
+
+def readout_line(label, color, values, text, axis=0):
+    """One series inside a `readout_x` spec; a non-finite value hides that marker."""
+    numbers = [float(v) for v in values]
+    return {'label': label, 'color': color, 'axis': axis,
+            'y': [round(v, 8) if math.isfinite(v) else None for v in numbers],
+            'text': list(text)}
+
+
+def readout_bands(items, along='x'):
+    """Cursor readout for bar charts: the band under the pointer names its category."""
+    return {'mode': 'band' + along, 'items': items}
+
+
+def readout_points(items):
+    """Cursor readout for scatter charts: the nearest dot wins."""
+    return {'mode': 'point', 'items': items}
+
+
+def band(low, high, head, rows, marks=()):
+    return {'low': round(float(low), 8), 'high': round(float(high), 8), 'head': head, 'rows': rows,
+            'marks': [mark(*m) for m in marks]}
+
+
+def mark(x, y, color, axis=0):
+    return [round(float(x), 8), round(float(y), 8), color, axis]
+
+
+def point(x, y, color, head, rows):
+    return {'x': round(float(x), 8), 'y': round(float(y), 8), 'color': color, 'head': head, 'rows': rows}
 
 
 def legend_patch(color, label):
@@ -113,6 +150,12 @@ POOLS = [
     ('long_short', '多空池 D1∪D10', (1, 10)),
     ('spaced_control', '对照：等间隔 D1∪D5∪D10', (1, 5, 10)),
 ]
+
+
+# The subset-RankIC figure and its readout must agree on order and colour.
+POOL_SHOWN = ['all', 'middle', 'short', 'long', 'traded', 'long_short']
+POOL_COLORS = {'all': GRAY, 'middle': '#cfdcd7', 'short': BLUE, 'long': TEAL, 'traded': SAND,
+               'long_short': RUST}
 
 
 def spearman(x, y):
@@ -537,11 +580,30 @@ def main():
     (out / 'report-data.json').write_text(data, encoding='utf-8')
 
     plots = {}
+    readouts = {}
+    axes_of = {}
 
     def publish(key, name, fig, caption):
-        svg = rc.render(fig, title_of(key, name), key, png_path=out / 'figures' / f'{key}.png')
+        svg, axes = rc.render(fig, title_of(key, name), key, png_path=out / 'figures' / f'{key}.png')
         (out / 'figures' / f'{key}.svg').write_text(svg, encoding='utf-8')
         plots[key] = (name, svg, caption)
+        axes_of[key] = axes
+
+    def readout(key, spec):
+        """Attach the cursor readout for the figure publish() just rendered.
+
+        The page maps a pointer position back to data with the axis limits the
+        figure was drawn at, so the spec carries data coordinates only — no
+        pixel maths that a re-render could invalidate.
+        """
+        spec['axes'] = axes_of[key]
+        readouts[key] = spec
+
+    def decile_bands(rows_of, marks_of):
+        """One hover band per score decile, for the many figures drawn over D1-D10."""
+        return [band(i - .5, i + .5, f'D{i}　模型分数由低到高第 {i} 组',
+                     rows_of(i, groupstats.loc[i]), marks=marks_of(i, groupstats.loc[i]))
+                for i in range(1, 11)]
 
     # 01 — the frozen split, showing the fourteen folds this timing run never touched.
     fig, ax = rc.figure((11.4, 5.6))
@@ -570,6 +632,19 @@ def main():
               ncol=4, loc='lower center', bbox_to_anchor=(.5, -.26))
     publish('split', '15 折扩张验证：本次只跑了第 15 折', fig,
             f'冻结的研究日历：2024H1 的 {len(seed_dates)} 日作为起始训练，其后逐自然月扩张验证，2024-07 — 2025-09 共 15 折、{oof_days} 个 validation 交易日；test 为 2025-10-09 — 2026-06-30 的 176 日，425 : 176 即约 7 : 3。本次计时试验按要求只运行最后一折，前 14 折没有运行。')
+    readout('split', readout_bands([
+        band(15.5 - f['fold'], 16.5 - f['fold'], f"折 {f['fold']}　validation {f['month']}", [
+            ['train 日数', f"{f['train_days']:,}", TEAL if f['fold'] == 15 else '#cfdcd7'],
+            ['train 区间', f"{f['train_start']} — {f['train_end']}"],
+            ['validation 日数', f"{f['validation_days']}", RUST if f['fold'] == 15 else '#e3cdc2'],
+            ['validation 区间', f"{f['validation_start']} — {f['validation_end']}"],
+            ['本次计时试验', '已运行' if f['fold'] == 15 else '未运行'],
+        ]) for f in folds
+    ] + [band(-.5, .5, 'test（一次性）', [
+        ['区间', '2025-10-09 — 2026-06-30'],
+        ['交易日', '176', BLUE],
+        ['起点累计交易日', '425'],
+    ])], 'y'))
 
     iterations = curve.iteration.to_numpy()
     fig, ax = rc.figure((11.4, 4.6))
@@ -587,6 +662,13 @@ def main():
     ax.legend(ncol=3, loc='lower center', bbox_to_anchor=(.5, 1.0))
     publish('validation-sharpe', 'validation：按多空 Sharpe 选择 659 轮', fig,
             '完整训练 1000 轮，无 early stopping。竖线只由 validation 多空 Sharpe 确定；不在 test 上选轮。这条曲线只来自第 15 折的 22 个交易日，却要在 1000 个候选轮次中取峰值。')
+    round_heads = [f'第 {int(v)} 轮' for v in iterations]
+    readout('validation-sharpe', readout_x(iterations, round_heads, [
+        readout_line(name, color, values, [f'{v:+.3f}' for v in values])
+        for values, color, name in [(curve.long_short_sharpe, TEAL, '多空各 10%'),
+                                    (curve.pure_long_sharpe, RUST, '纯多 20%'),
+                                    (curve.pure_short_sharpe, BLUE, '纯空 20%')]
+    ]))
 
     fig, ax = rc.figure((5.6, 4.0))
     ax.plot(iterations, curve.validation_mean_rank_ic, color=TEAL, linewidth=1.5)
@@ -599,6 +681,9 @@ def main():
     rc.nice_ticks(ax, 'x', count=5)
     publish('validation-ic', 'validation：RankIC 的训练路径', fig,
             '第 659 轮为 0.016604；第 1000 轮为 0.014269。单月路径不构成最终参数选择的充分证据。')
+    readout('validation-ic', readout_x(iterations, round_heads, [
+        readout_line('validation 日均 RankIC', TEAL, curve.validation_mean_rank_ic,
+                     [f'{v:+.6f}' for v in curve.validation_mean_rank_ic])]))
 
     fig, ax = rc.figure((5.6, 4.0))
     ax.plot(iterations, curve.validation_daily_equal_mse, color=BLUE, linewidth=1.5)
@@ -611,6 +696,9 @@ def main():
     rc.nice_ticks(ax, 'x', count=5)
     publish('validation-mse', 'validation：标准化目标的 MSE', fig,
             'L2 是训练目标；选轮指标为组合 Sharpe。二者不必在同一轮达到最优。MSE 不以 bp 为单位。')
+    readout('validation-mse', readout_x(iterations, round_heads, [
+        readout_line('按日等权 MSE', BLUE, curve.validation_daily_equal_mse,
+                     [f'{v:.6f}' for v in curve.validation_daily_equal_mse])]))
 
     x = np.arange(len(dates))
     ticks = [i for i, d in enumerate(dates) if i == 0 or dates[i - 1][:7] != d[:7]]
@@ -627,6 +715,17 @@ def main():
     ax.legend(ncol=3, loc='upper left')
     publish('test-cumulative', 'test：统一总名义敞口后的机械累计收益', fig,
             '多空每日收益先除以 2，再连乘；纯多、纯空按单腿 100%。这是毛收益序列的机械复合，不含现金、保证金、费用及可成交约束，不是账户净值。')
+    day_heads = [f'{d}（第 {i + 1} 个交易日）' for i, d in enumerate(dates)]
+    cumulative_legs = [(name, color, mult, daily[key], (np.cumprod(1 + daily[key] * mult) - 1) * 100)
+                       for key, name, color, mult in
+                       [('long_short_return', '多空：每腿 50%', TEAL, .5),
+                        ('pure_long_return', '纯多 20%', RUST, 1),
+                        ('pure_short_return', '纯空 20%', BLUE, 1)]]
+    readout('test-cumulative', readout_x(x, day_heads, [
+        readout_line(name, color, cumulative,
+                     [f'{c:+.2f}%　当日 {r * mult * 1e4:+.2f}bp' for c, r in zip(cumulative, returns)])
+        for name, color, mult, returns, cumulative in cumulative_legs
+    ]))
 
     monthly = pd.DataFrame(summary['monthly_metrics'])
     fig, ax = rc.figure((11.4, 4.6))
@@ -641,6 +740,17 @@ def main():
     ax.legend(ncol=3, loc='upper right')
     publish('monthly', 'test：月度 Sharpe 并不均匀', fig,
             '各月只有 14–23 个交易日，短样本年化数值不稳定；2025-11 的高值不代表全年可持续。')
+    readout('monthly', readout_bands([
+        band(i - .5, i + .5, f"{m['month']}　{m['date_count']} 个交易日", [
+            ['多空各 10% Sharpe', f"{m['long_short_sharpe']:+.2f}", TEAL],
+            ['纯多 20% Sharpe', f"{m['pure_long_sharpe']:+.2f}", RUST],
+            ['纯空 20% Sharpe', f"{m['pure_short_sharpe']:+.2f}", BLUE],
+            ['月内日均 RankIC', f"{m['mean_daily_rank_ic']:+.5f}"],
+            ['多空日均收益', f"{m['long_short_mean_daily_return'] * 1e4:+.2f}bp"],
+        ], marks=[(i - .27, m['long_short_sharpe'], TEAL), (i, m['pure_long_sharpe'], RUST),
+                  (i + .27, m['pure_short_sharpe'], BLUE)])
+        for i, m in enumerate(summary['monthly_metrics'])
+    ]))
 
     fig, ax = rc.figure((5.6, 4.2))
     ax.scatter(daily.rank_ic, daily.long_short_return * 1e4, s=20, color=TEAL, alpha=.55, edgecolors='none')
@@ -654,6 +764,13 @@ def main():
     rc.nice_ticks(ax, 'x', count=5)
     publish('ic-scatter', '同一天的 RankIC 与多空收益', fig,
             f'逐日相关系数 {extra["daily_ic_ls_corr"]:.3f}。相关性强不等于二者成固定比例；收益截距、波动和尾部形状仍会改变 Sharpe。')
+    readout('ic-scatter', readout_points([
+        point(r.rank_ic, r.long_short_return * 1e4, TEAL, r.date, [
+            ['当日 RankIC', f'{r.rank_ic:+.5f}'],
+            ['当日多空收益', f'{r.long_short_return * 1e4:+.2f}bp'],
+            ['进场可选股票', f'{int(r.rank_base_count):,}'],
+        ]) for r in daily.itertuples()
+    ]))
 
     fig, ax = rc.figure((11.4, 4.5))
     quadrant_values = [row['cumulative_return_sum'] * 1e4 for row in quadrants]
@@ -672,6 +789,17 @@ def main():
     publish('quadrants', 'RankIC 正负与组合盈亏的四种日期', fig,
             '105 天同时出现 RankIC≥0、组合盈利，贡献 2,850bp；RankIC<0 但组合盈利的 22 天贡献 213bp。'
             '该图使用日收益直接求和，只用于归因，不是复利账户收益。')
+    readout('quadrants', readout_bands([
+        band(i - .5, i + .5, row['label'], [
+            ['天数', f"{row['days']}"],
+            ['日均 RankIC', f"{row['mean_rank_ic']:+.5f}"],
+            ['日均多空收益', f"{row['mean_return_bp']:+.2f}bp"],
+            ['该类日收益之和', f"{row['cumulative_return_sum'] * 1e4:+,.0f}bp",
+             TEAL if row['cumulative_return_sum'] >= 0 else RUST],
+        ], marks=[(i, row['cumulative_return_sum'] * 1e4,
+                   TEAL if row['cumulative_return_sum'] >= 0 else RUST)])
+        for i, row in enumerate(quadrants)
+    ]))
 
     fig, ax = rc.figure((5.6, 4.2))
     ax.bar(x, daily.rank_ic, width=1.0, color=GRAY, alpha=.5)
@@ -686,6 +814,13 @@ def main():
     ax.legend(loc='upper left')
     publish('daily-ic', 'RankIC 每天有多稳定', fig,
             f'日均 0.02204，日标准差 0.07229；正值日占 {extra["rank_ic_positive_fraction"]:.1%}。年化 ICIR 为 {extra["ic_ir"]:.2f}，不是组合 Sharpe。')
+    rolling_ic = daily.rank_ic.rolling(20).mean()
+    readout('daily-ic', readout_x(x, day_heads, [
+        readout_line('当日 RankIC', GRAY, daily.rank_ic, [f'{v:+.5f}' for v in daily.rank_ic]),
+        readout_line('20 日滚动均值', TEAL, rolling_ic,
+                     ['—' if not np.isfinite(v) else f'{v:+.5f}' for v in rolling_ic]),
+        readout_line('全期日均', RUST, [total_ic] * len(dates), [f'{total_ic:+.5f}'] * len(dates)),
+    ]))
 
     d = np.arange(1, 11)
     fig, ax = rc.figure((11.4, 5.0))
@@ -703,6 +838,12 @@ def main():
     rc.annotate_traded(ax, rc.TRADED_ROWS)
     publish('deciles', '十分组的日均收益与 95% 区间', fig,
             '每日在 rank_base 内按分数平均秩分十组，同分同组；先算每组均值/中位数，再对日期等权。误差棒是日均收益的 Newey-West 标准误（Bartlett 核，lag 4）乘 1.96，衡量均值估计精度，不是个股收益范围。本图不做封板过滤，故 D10 与正式多头 10% 的 10.79bp 略有不同。')
+    readout('deciles', readout_bands(decile_bands(
+        lambda i, r: [['日均组平均收益', f"{r['mean'] * 1e4:+.2f}bp", TEAL],
+                      ['95% NW 区间', f"±{1.96 * r['nw_se_bp']:.2f}bp"],
+                      ['日均组中位收益', f"{r['median'] * 1e4:+.2f}bp", RUST],
+                      ['日均只数', f"{r['count']:,.1f}"]],
+        lambda i, r: [(i, r['mean'] * 1e4, TEAL), (i, r['median'] * 1e4, RUST)])))
 
     fig, ax = rc.figure((5.6, 4.2))
     ax.bar(d, groupstats['std'] * 1e4, color=BLUE, width=.66)
@@ -713,6 +854,11 @@ def main():
     rc.nice_ticks(ax, from_zero=True)
     publish('dispersion', '两端的个股收益分布更宽', fig,
             '这里是组内个股收益的截面标准差，再对日期取平均；不是组组合每日收益的时间序列波动。二者不可混用。')
+    readout('dispersion', readout_bands(decile_bands(
+        lambda i, r: [['个股收益截面标准差', f"{r['std'] * 1e4:,.2f}bp", BLUE],
+                      ['日均组平均收益', f"{r['mean'] * 1e4:+.2f}bp"],
+                      ['日均只数', f"{r['count']:,.1f}"]],
+        lambda i, r: [(i, r['std'] * 1e4, BLUE)])))
 
     fig, ax = rc.figure((5.6, 4.2))
     ax.bar(d, groupstats['excess_sharpe'], color=[RUST if v < 0 else TEAL for v in groupstats['excess_sharpe']], width=.66)
@@ -723,10 +869,15 @@ def main():
     rc.nice_ticks(ax)
     publish('decile-excess', '分组相对全体等权的收益', fig,
             '全体等权基准使用同一天 rank_base 内有有效标签的股票。D1 负值表示跑输基准；不等于裸空 D1 的收益。')
+    readout('decile-excess', readout_bands(decile_bands(
+        lambda i, r: [['相对全体等权的超额 Sharpe', f"{r['excess_sharpe']:+.2f}",
+                       RUST if r['excess_sharpe'] < 0 else TEAL],
+                      ['该组自身年化 Sharpe', f"{r['own_sharpe']:+.2f}"],
+                      ['日均组平均收益', f"{r['mean'] * 1e4:+.2f}bp"]],
+        lambda i, r: [(i, r['excess_sharpe'], RUST if r['excess_sharpe'] < 0 else TEAL)])))
 
-    shown = sorted((pool_by_key[k] for k in ['all', 'middle', 'short', 'long', 'traded', 'long_short']),
-                   key=lambda row: row['mean_rank_ic'])
-    palette = {'all': GRAY, 'middle': '#cfdcd7', 'short': BLUE, 'long': TEAL, 'traded': SAND, 'long_short': RUST}
+    shown = sorted((pool_by_key[k] for k in POOL_SHOWN), key=lambda row: row['mean_rank_ic'])
+    palette = POOL_COLORS
     fig, ax = rc.figure((11.4, 4.6))
     pos = np.arange(len(shown))
     ax.barh(pos, [row['mean_rank_ic'] for row in shown], height=.62,
@@ -748,6 +899,18 @@ def main():
             f'把横截面限制到该组合实际排序的分组，再重新排名算 Spearman，口径与全体那个 {total_ic:.4f} 完全一致；虚线是全体 10 组的水平。'
             f'多空实际交易的 D1∪D10 为 {pool_by_key["long_short"]["mean_rank_ic"]:.5f}，年化 ICIR {pool_by_key["long_short"]["ic_ir"]:.2f}。'
             '误差棒为日均值的 Newey-West 标准误乘 1.96。去掉中段会把分数范围拉开，本身就会抬高秩相关，这一层机械效应未排除。')
+    readout('subset-ic', readout_bands([
+        band(i - .5, i + .5, f"{row['label']}　日均 {row['mean_count']:,.0f} 只", [
+            ['日均 RankIC', f"{row['mean_rank_ic']:.5f}", palette[row['key']]],
+            ['95% NW 区间', f"±{1.96 * row['nw_se']:.5f}"],
+            ['日标准差', f"{row['std_rank_ic']:.5f}"],
+            ['年化 ICIR', f"{row['ic_ir']:.2f}"],
+            ['正值日', f"{row['positive_fraction']:.1%}"],
+            ['包含分组', decile_span(row['deciles'])],
+            ['全体 10 组水平', f'{total_ic:.5f}'],
+        ], marks=[(row['mean_rank_ic'], i, palette[row['key']])])
+        for i, row in enumerate(shown)
+    ], 'y'))
 
     fig, ax = rc.figure((11.4, 5.0))
     share = groupstats['rank_ic_contribution']
@@ -770,6 +933,14 @@ def main():
     rc.annotate_traded(ax, rc.TRADED_ROWS)
     publish('ic-contribution', '每一组贡献了多少 RankIC', fig,
             f'把每天的 Spearman 相关按分数分组拆开：十组之和精确等于当天 RankIC，再对日期等权。最低与最高两组合计占 {tail_share:.0%}，策略从不碰的中间六组（D3–D8，占股票数 60%）只占 {middle_share:.0%}，却按全体约 2,875 只股票摊薄了平均值。这是已打开 test 后的分解，不是模型改动依据。')
+    readout('ic-contribution', readout_bands(decile_bands(
+        lambda i, r: [['对日均 RankIC 的贡献', f"{r['rank_ic_contribution']:.5f}",
+                       BLUE if i <= 2 else TEAL if i >= 9 else '#cfdcd7'],
+                      ['占全体的比例', f"{r['rank_ic_contribution'] / total_ic:.1%}"],
+                      ['十组均摊的水平', f'{total_ic / 10:.5f}', RUST],
+                      ['日均只数', f"{r['count']:,.1f}"]],
+        lambda i, r: [(i, r['rank_ic_contribution'],
+                       BLUE if i <= 2 else TEAL if i >= 9 else '#cfdcd7')])))
 
     fig, ax = rc.figure((11.4, 4.3))
     rank_parts = [rank_decomposition['between_deciles'], rank_decomposition['within_deciles']]
@@ -791,6 +962,16 @@ def main():
             f'保持全体股票的原始秩不变，用协方差恒等式逐日分解。组间贡献 '
             f'{rank_decomposition["between_share"]:.1%}，组内贡献 {rank_decomposition["within_share"]:.1%}；'
             '两项每天精确加总为当日 RankIC。')
+    readout('rank-decomposition', readout_bands([
+        band(i - .5, i + .5, label, [
+            ['对全体日均 RankIC 的贡献', f'{value:.5f}', color],
+            ['占全体的比例', f"{value / rank_decomposition['total']:.1%}"],
+            ['全体日均 RankIC', f"{rank_decomposition['total']:.5f}", RUST],
+        ], marks=[(i, value, color)])
+        for i, (label, value, color) in enumerate(
+            [('十分组之间', rank_decomposition['between_deciles'], TEAL),
+             ('十分组内部', rank_decomposition['within_deciles'], BLUE)])
+    ]))
 
     fig, ax = rc.figure((11.4, 4.4))
     inner_values = groupstats['inner_rank_ic']
@@ -804,6 +985,14 @@ def main():
     rc.nice_ticks(ax)
     publish('inner-ic', '每一组内部还剩多少排序信息', fig,
             '只在该组内部重新排名再算相关。D9 为负，说明模型在这一组内部的细分顺序已经是噪声；D10 有用靠的是整组相对其他组的位置，不是组内谁更靠前。范围收窄本身也会降低相关，不能据此断言中间股票完全没有信息。')
+    readout('inner-ic', readout_bands(decile_bands(
+        lambda i, r: [['组内 RankIC', f"{r['inner_rank_ic']:+.5f}",
+                       RUST if r['inner_rank_ic'] < 0 else TEAL],
+                      ['日标准差', f"{r['inner_rank_ic_std']:.5f}"],
+                      ['年化 ICIR', f"{r['inner_rank_ic_ir']:+.2f}"],
+                      ['正值日', f"{r['inner_rank_ic_positive']:.1%}"],
+                      ['全体 RankIC', f'{total_ic:.5f}']],
+        lambda i, r: [(i, r['inner_rank_ic'], RUST if r['inner_rank_ic'] < 0 else TEAL)])))
 
     fig, ax = rc.figure((11.4, 4.4))
     pos = np.arange(3)
@@ -817,6 +1006,16 @@ def main():
     ax.legend(loc='upper left')
     publish('legs', '多空相减抵消部分共同波动', fig,
             '两篮子原始收益的相关系数为 0.7354。相减后波动为 28.29bp；空头一行已将标的收益取负。该图多空按每腿 100% 的原定义展示。')
+    readout('legs', readout_bands([
+        band(i - .5, i + .5, label, [
+            ['日均收益', f'{series.mean() * 1e4:+.2f}bp', TEAL],
+            ['每日收益标准差', f'{series.std() * 1e4:.2f}bp', RUST],
+            ['年化毛 Sharpe', f'{sharpe(series):+.2f}'],
+        ], marks=[(i - .18, series.mean() * 1e4, TEAL), (i + .18, series.std() * 1e4, RUST)])
+        for i, (label, series) in enumerate([('多头最高 10%', daily.long10),
+                                             ('空头最低 10%', daily.short10),
+                                             ('多空各 10%', daily.long_short_return)])
+    ]))
 
     fig, ax = rc.figure((11.4, 4.4))
     variance_values = [
@@ -841,6 +1040,18 @@ def main():
             f'{variance_decomposition["variance_offset_share"]:.1%}。若只作“协方差为零”的算术对照，日波动为 '
             f'{variance_decomposition["zero_covariance_std_bp"]:.2f}bp、Sharpe 为 {variance_decomposition["zero_covariance_sharpe"]:.2f}；'
             '这不是可实现的替代策略。')
+    readout('variance-decomposition', readout_bands([
+        band(i - .5, i + .5, label, [
+            ['日收益方差', f'{variance_decomposition[key]:+,.0f}bp²', color],
+            ['相对多空方差',
+             f"{variance_decomposition[key] / variance_decomposition['long_short_variance_bp2']:+.2f}×"],
+            ['两腿标的相关', f"{variance_decomposition['underlying_leg_correlation']:.3f}"],
+        ], marks=[(i, variance_decomposition[key], color)])
+        for i, (label, key, color) in enumerate(
+            [('多头方差', 'long_variance_bp2', TEAL), ('空头标的方差', 'short_variance_bp2', BLUE),
+             ('−2 × 协方差', 'minus_two_covariance_bp2', RUST),
+             ('多空方差', 'long_short_variance_bp2', SAND)])
+    ]))
 
     fig, ax = rc.figure((11.4, 4.6))
     fractions = np.array([row['tail_fraction'] * 100 for row in breadth])
@@ -868,6 +1079,20 @@ def main():
             '固定当前模型和 test，不重新选比例。两端各 5% / 10% / 20% / 30% 的毛 Sharpe 分别为 '
             + ' / '.join(f'{row["sharpe"]:.2f}' for row in breadth)
             + '。5% 到 30% 都为正，说明结果不只依赖一个很窄的切点；这仍是 test 打开后的敏感性诊断。')
+    breadth_edges = ([fractions[0] - (fractions[1] - fractions[0]) / 2]
+                     + [(a + b) / 2 for a, b in zip(fractions, fractions[1:])]
+                     + [fractions[-1] + (fractions[-1] - fractions[-2]) / 2])
+    readout('tail-breadth', readout_bands([
+        band(breadth_edges[i], breadth_edges[i + 1],
+             f"两端各 {row['tail_fraction']:.0%}　每腿日均 {row['mean_leg_count']:,.0f} 只", [
+                 ['日均多空收益', f"{row['mean_return_bp']:+.2f}bp", TEAL],
+                 ['日波动', f"{row['std_return_bp']:.2f}bp", BLUE],
+                 ['年化毛 Sharpe', f"{row['sharpe']:+.2f}", RUST],
+             ], marks=[(fractions[i] - width / 2, row['mean_return_bp'], TEAL),
+                       (fractions[i] + width / 2, row['std_return_bp'], BLUE),
+                       (fractions[i], row['sharpe'], RUST, 1)])
+        for i, row in enumerate(breadth)
+    ]))
 
     fig, ax = rc.figure((11.4, 4.4))
     concentration_counts = [row['top_positive_stockdays'] for row in concentration]
@@ -885,6 +1110,12 @@ def main():
             f'最大单一正贡献股票日占 {concentration_summary["largest_positive_stockday_share"]:.2%}，'
             f'前 10 个合计占 {concentration_summary["top_10_positive_stockdays_share"]:.2%}。'
             '分母是 176 日多空日收益之和；这里只累计正贡献，因此不是可加总到 100% 的归因瀑布图。')
+    readout('stock-concentration', readout_bands([
+        band(i - .5, i + .5, f"正贡献最大的前 {row['top_positive_stockdays']} 个股票日", [
+            ['占 176 日多空收益日度和', f"{row['share_of_net_cumulative_return']:.2%}", TEAL],
+        ], marks=[(i, row['share_of_net_cumulative_return'] * 100, TEAL)])
+        for i, row in enumerate(concentration)
+    ]))
 
     fig, ax = rc.figure((11.4, 5.0))
     ax.bar(d - .17, groupstats['own_sharpe'], width=.32, color=SAND, label='该组自身收益年化 Sharpe')
@@ -900,6 +1131,14 @@ def main():
     rc.annotate_traded(ax, rc.TRADED_ROWS)
     publish('decile-sharpe', '每一组的年化 Sharpe，与策略实际交易的组', fig,
             f'组自身 Sharpe 用该组每日等权收益的时间序列计算。三个正式组合都只碰两端：纯多买 D9–D10、纯空卖 D1–D2、多空买 D10 卖 D1。用这十组反推为 {reconstructed["pure_long"]:.2f} / {reconstructed["pure_short"]:.2f} / {reconstructed["long_short"]:.2f}，与正式口径的 3.01 / 0.58 / 7.30 只差方向封板过滤。')
+    traded_by = {1: '纯空 D1–D2、多空卖 D1', 2: '纯空 D1–D2', 9: '纯多 D9–D10',
+                 10: '纯多 D9–D10、多空买 D10'}
+    readout('decile-sharpe', readout_bands(decile_bands(
+        lambda i, r: [['该组自身收益年化 Sharpe', f"{r['own_sharpe']:+.2f}", SAND],
+                      ['相对全体等权的超额 Sharpe', f"{r['excess_sharpe']:+.2f}", TEAL],
+                      ['日均组平均收益', f"{r['mean'] * 1e4:+.2f}bp"],
+                      ['正式组合是否交易', traded_by.get(i, '否，三个组合都不碰')]],
+        lambda i, r: [(i - .17, r['own_sharpe'], SAND), (i + .17, r['excess_sharpe'], TEAL)])))
 
     stress_labels = ['原始结果', '取消封板过滤', '缺失标签按 0 计', '个股收益压到 ±1%', '剔除每腿极端 1%', '移除最好 10 个交易日']
     stress = [7.300545039, independent['return_series']['ls_ungated']['sharpe'], dist['diagnostics']['zero_missing_ls']['sharpe'], independent['return_series']['ls_winsor100bp']['sharpe'], dist['diagnostics']['trim_abs_1pct_ls']['sharpe'], 6.21575]
@@ -916,6 +1155,13 @@ def main():
     ax.set_xlim(0, max(stress) * 1.18)
     publish('sensitivity', '排查封板、缺失标签和尾部贡献', fig,
             '同一组已保存预测的事后敏感性分析，不是新模型或可交易选股规则；最后一项显示保留证据中的四舍五入值。')
+    readout('sensitivity', readout_bands([
+        band(row - .5, row + .5, label, [
+            ['多空年化毛 Sharpe', f'{value:.2f}', TEAL if row == len(stress) - 1 else BLUE],
+            ['与原始结果之差', f'{value - stress[0]:+.2f}'],
+        ], marks=[(value, row, TEAL if row == len(stress) - 1 else BLUE)])
+        for row, label, value in zip(y, stress_labels, stress)
+    ], 'y'))
 
     fig, ax = rc.figure((5.8, 4.4))
     values = [extra['market_sharpe'], extra['long_excess_sharpe'], extra['short_excess_sharpe']]
@@ -929,6 +1175,12 @@ def main():
     rc.nice_ticks(ax, from_zero=True)
     publish('market', '相对全体等权后，仍有收益差', fig,
             '这是相对基准诊断，不是 beta 中性化。第三项是空头相对基准的超额收益，不能当作纯空本身的 0.576 Sharpe。')
+    readout('market', readout_bands([
+        band(i - .5, i + .5, label, [['年化毛 Sharpe', f'{value:+.2f}', color]],
+             marks=[(i, value, color)])
+        for i, (label, value, color) in enumerate(zip(
+            ['全体等权', '纯多 20% − 全体', '全体 − 最低 20%'], values, [GRAY, TEAL, BLUE]))
+    ]))
 
     times = timing['timings_seconds']
     stage_labels = ['读取因子与准备标签', '对齐、标准化、矩阵', 'Dataset 构建与分箱', '训练剩余（含框架）', '逐轮评价回调', '预测核对与保存', '绘图与报告']
@@ -946,6 +1198,13 @@ def main():
     ax.set_xlim(0, max(stage_values) * 1.14)
     publish('timing', '耗时主要在输入与标签准备', fig,
             '训练剩余 52.47 秒仍包含框架开销，不叫纯算法时间。阶段和整体之间还含少量初始化、调度及统计开销。')
+    readout('timing', readout_bands([
+        band(row - .5, row + .5, label, [
+            ['墙钟秒', f'{value:,.2f}s', TEAL if row == len(stage_values) - 1 else BLUE],
+            ['占七个阶段合计', f'{value / sum(stage_values):.1%}'],
+        ], marks=[(value, row, TEAL if row == len(stage_values) - 1 else BLUE)])
+        for row, label, value in zip(y, stage_labels, stage_values)
+    ], 'y'))
 
     elapsed = (resources.monotonic_seconds - resources.monotonic_seconds.iloc[0]).to_numpy()
     fig, ax = rc.figure((5.6, 4.2))
@@ -959,6 +1218,14 @@ def main():
     ax.legend(loc='upper left')
     publish('memory', '全流程内存轨迹', fig,
             'cgroup 峰值 13.14GiB；RSS 与 cgroup 内存不是同一口径，不能相加。任务上限 60GiB，high=52GiB，swap=0；无新增 OOM 或内存 high 事件。')
+    sample_heads = [f'{t:,.1f}s　{stage}' for t, stage in zip(elapsed, resources.stage)]
+    readout('memory', readout_x(elapsed, sample_heads, [
+        readout_line(name, color, resources[column] / 2 ** 30,
+                     [f'{v / 2 ** 30:.2f}GiB' for v in resources[column]])
+        for column, name, color in [('task_memory_current', '任务 cgroup', TEAL),
+                                    ('process_tree_rss', '进程树 RSS', RUST),
+                                    ('task_memory_file', '文件缓存', BLUE)]
+    ]))
 
     cores = (resources.task_cpu_usage_usec.diff() / resources.monotonic_seconds.diff() / 1e6).to_numpy()
     fig, ax = rc.figure((5.6, 4.2))
@@ -973,6 +1240,11 @@ def main():
     rc.nice_ticks(ax, from_zero=True)
     publish('cpu', 'CPU 使用集中在训练阶段', fig,
             '约每 1 秒采样；训练阶段平均 7.00 核，全流程平均 1.17 核。累计 CPU 配额限流 0.144 秒；一次观察不能证明最优线程数。')
+    readout('cpu', readout_x(elapsed, sample_heads, [
+        readout_line('采样间隔等效核数', TEAL, cores,
+                     ['—' if not np.isfinite(v) else f'{v:.2f} 核' for v in cores]),
+        readout_line('num_threads 上限', RUST, [8] * len(cores), ['8'] * len(cores)),
+    ]))
 
     roundcost = timing['per_100_round_wall_seconds']
     fig, ax = rc.figure((11.4, 4.2))
@@ -986,10 +1258,18 @@ def main():
     rc.nice_ticks(ax, from_zero=True)
     publish('round-speed', '每 100 轮的墙钟耗时', fig,
             '首 100 轮 7.61 秒，后续约 6.23–6.78 秒；没有观察到随轮数不断增加的重复预测开销。')
+    readout('round-speed', readout_bands([
+        band(i - .5, i + .5, f"第 {r['round_start']}—{r['round_end']} 轮", [
+            ['这 100 轮墙钟秒', f"{r['wall_seconds']:.2f}s", TEAL],
+            ['相对首 100 轮', f"{r['wall_seconds'] - roundcost[0]['wall_seconds']:+.2f}s"],
+        ], marks=[(i, r['wall_seconds'], TEAL)])
+        for i, r in enumerate(roundcost)
+    ]))
 
     rendered = {key: figure(key, title_of(key, name), svg, caption)
                 for key, (name, svg, caption) in plots.items()}
     assert set(rendered) == set(FIGURE_ORDER), 'figure set must match the template'
+    assert set(readouts) == set(FIGURE_ORDER), 'every figure needs a cursor readout'
 
     case_cards = []
     for case in cases:
@@ -1030,6 +1310,8 @@ def main():
     replacement = {
         **rendered,
         'DATA': data.replace('</', '<\\/'),
+        'READOUTS': json.dumps(json_safe(readouts), ensure_ascii=False, separators=(',', ':'),
+                               allow_nan=False).replace('</', '<\\/'),
         'PARAMETERS': html.escape(json.dumps(params, ensure_ascii=False, indent=2)),
         'SEED_DAYS': str(len(seed_dates)),
         'OOF_DAYS': str(oof_days),
