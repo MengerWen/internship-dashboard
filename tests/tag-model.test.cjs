@@ -52,7 +52,7 @@ test('suggestions explain literal keyword matches and never auto-assign', () => 
   const s = M.clone(seed);
   assert(M.suggest(items[0],s).some(r=>r.id==='speed' && r.hits.includes('提速')));
   assert(M.suggest(items[0],s).some(r=>r.id==='precheck'));
-  assert.deepEqual(s.assignments,{});
+  assert.deepEqual(s.assignments,seed.assignments);
   assert(!M.suggest(items[0],M.assign(s,['a'],['speed'],'add')).some(r=>r.id==='speed'));
 });
 test('import unifies equal names without losing existing assignments or duplicating tags', () => {
@@ -60,5 +60,5 @@ test('import unifies equal names without losing existing assignments or duplicat
   const incoming = {schemaVersion:1,tags:[{id:'new-speed',name:'提速',color:'#123456',keywords:[]}],assignments:{b:['new-speed']}};
   const merged = M.mergeImport(a,incoming);
   assert.equal(merged.tags.length,seed.tags.length);
-  assert.deepEqual(merged.assignments,{a:['speed'],b:['speed']});
+  assert.deepEqual(merged.assignments,{...seed.assignments,a:['speed'],b:['speed']});
 });

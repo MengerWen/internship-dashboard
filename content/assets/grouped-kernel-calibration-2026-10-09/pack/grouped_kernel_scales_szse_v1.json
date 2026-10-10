@@ -1,0 +1,552 @@
+{
+  "schema_version": "grouped_kernel_calibration_szse_v1",
+  "parameter_pack": "grouped_kernel_scales_szse_v1",
+  "canary": false,
+  "execution_revision": "5e1b5cf9f0587597522adfb58eb07a9ff5f0e220",
+  "science_revision": "01c7e85b812f94605ccfca32a641f56ad6354008",
+  "config_sha256": "52f3ca20631928afcc6df3915b08a98903b9af65718335ec09531f39b8d79c27",
+  "panel_sha256": "1c1700c32d440c5c2b18387ac20143242254ae866bd3ae774759474a2b96ee9e",
+  "input": {
+    "account": "wangly",
+    "precheck_run_root": "/home/wangly/hdd-store/outputs/sirui/published/grouped-calibration-precheck/szse-601d-01c7e85b-p8-20261008T174326Z",
+    "panel": "panel/precheck_panel.parquet",
+    "panel_sha256": "1c1700c32d440c5c2b18387ac20143242254ae866bd3ae774759474a2b96ee9e",
+    "stock_days": 1719612,
+    "dates": {
+      "path": "因子/algobench/configs/open5m_calibration_dates_full_2024_2026q2_v1.txt",
+      "sha256": "1f270570e942e41441d6182a68bb0122703fbffcf6052255e440f90c8c1a68b1",
+      "count": 601
+    },
+    "science_revision": "01c7e85b812f94605ccfca32a641f56ad6354008",
+    "precheck_config": {
+      "path": "因子/algobench/configs/grouped_calibration_precheck_szse_601_v1.yaml",
+      "sha256": "7aaf8b6ed4471ebecd104b91792bd12f55f9613059387f5300a3c1fd81bcaa43"
+    },
+    "precheck_tables": {
+      "group_support": "tables/group_support.parquet",
+      "coefficients": "tables/coefficients.parquet"
+    }
+  },
+  "feature_definitions": {
+    "market_layer": {
+      "feature": "log_trades_t1",
+      "definition": "log of t-1 total num_trades over XSHE ordinary A shares (code [03]\\d{5}) in l1.daily_bar, taken from the precheck panel",
+      "boundary": "day_equal_inverted_cdf",
+      "equal_to_edge": "lower_bucket"
+    },
+    "spec_path": "reports/2026-10/2026-10-09-grouped-kernel-calibration-spec.md",
+    "spec_sha256": "3e873e1f80c85d2f278996080c5deb81209bfe3db5c34ccbab326bbf3d4ce813",
+    "definitions": "全部特征直接取自预检面板，定义如下（t 为计算日，t−1 为前一交易日）：\n\n| 特征 | 定义 |\n|---|---|\n| `log_prev_close` | log(第 t 日 `l1.daily_bar.prev_close`) |\n| `log_price_above_5` | max(`log_prev_close` − log 5, 0) |\n| `log_specific_risk` | log(t−1 米筐 v2trd `get_specific_risk(horizon='daily')`)，单位未确认，只作相对比较 |\n| `rq_size` | t−1 米筐 v2trd `size` 风格暴露，申万 2021 行业口径 |\n| `rq_one_month_share_turnover`、`rq_daily_standard_deviation` | t−1 米筐 v2trd 同名描述子 |\n| `log_trades_20d` | t−1 往前 20 个交易日 log(`num_trades`) 的均值，有效日少于 10 天时缺失 |\n| `log_lots_per_trade_20d` | 同一窗口内 log(`volume`/`num_trades`/100) 的均值，有效日少于 10 天时缺失 |\n| `log_trades_t1` | log(t−1 日深市普通 A 股，代码 `[03]\\d{5}`，`num_trades` 合计) |\n\n面板缺失：米筐三项及特异风险各 109 个股票日，20 日特征 3,184 个（多为上市不足的新股），前收盘价 54 个，`log_trades_t1` 无缺失。"
+  },
+  "models": {
+    "activity_slim": {
+      "features": [
+        "rq_size",
+        "rq_one_month_share_turnover",
+        "rq_daily_standard_deviation",
+        "log_prev_close"
+      ],
+      "target": "y_theta_wall_seconds",
+      "intercept": 0.18955564553972293,
+      "coefficients": [
+        0.0045462349588194185,
+        0.033573845579972166,
+        -0.01699712678932066,
+        0.03237143453623188
+      ],
+      "standardized_coefficients": [
+        0.004141103405432168,
+        0.0324293897349754,
+        -0.01780079457055336,
+        0.02942154660964978
+      ],
+      "standardized_intercept": 0.2899389323361246,
+      "train_mean": [
+        -1.8229854779449577,
+        1.1033719022355166,
+        0.6856136477504469,
+        2.572639505636094
+      ],
+      "train_std": [
+        0.9108863582597463,
+        0.9659122800731691,
+        1.047282566706371,
+        0.9088737348577979
+      ],
+      "train_stock_days": 1708396,
+      "train_stocks": 2945,
+      "fit_seconds": 922.2780908923596,
+      "peak_rss_bytes": 6271000576
+    },
+    "price_slim": {
+      "features": [
+        "log_prev_close",
+        "log_price_above_5",
+        "log_specific_risk",
+        "rq_daily_standard_deviation",
+        "rq_one_month_share_turnover"
+      ],
+      "target": "y_theta_price_ticks",
+      "intercept": 0.6129134013721103,
+      "coefficients": [
+        0.13378449571650622,
+        0.6398038102340018,
+        0.3362378589421591,
+        0.04166494040480261,
+        0.07540786594124634
+      ],
+      "standardized_coefficients": [
+        0.12140157772324742,
+        0.5224095246761675,
+        0.1447325677373835,
+        0.04361493304155076,
+        0.07278688383186656
+      ],
+      "standardized_intercept": 1.34614028071718,
+      "train_mean": [
+        2.5751491480208752,
+        1.0244951522550585,
+        -1.1256638915203485,
+        0.6843589510436849,
+        1.1035054238328863
+      ],
+      "train_std": [
+        0.9074413075525686,
+        0.8165151821854602,
+        0.4304469704652769,
+        1.0468017622922934,
+        0.9652425900578874
+      ],
+      "train_stock_days": 1703147,
+      "train_stocks": 2945,
+      "fit_seconds": 366.75249998271465,
+      "peak_rss_bytes": 6771068928
+    },
+    "bbo_slim": {
+      "features": [
+        "log_prev_close",
+        "log_price_above_5",
+        "log_specific_risk",
+        "rq_daily_standard_deviation",
+        "rq_one_month_share_turnover"
+      ],
+      "target": "y_theta_bbo_ticks",
+      "intercept": 0.42716159429414646,
+      "coefficients": [
+        -0.09266912009101191,
+        1.0139273335427779,
+        0.19985134404143287,
+        0.093282591848762,
+        -0.04894244556734808
+      ],
+      "standardized_coefficients": [
+        -0.0841379591954056,
+        0.8279682733794202,
+        0.08601789853964817,
+        0.09764668709475195,
+        -0.04725088210177889
+      ],
+      "standardized_intercept": 1.0116895961365726,
+      "train_mean": [
+        2.574311082462165,
+        1.0239307421986208,
+        -1.1255485313394427,
+        0.6841402683262126,
+        1.1029324851868594
+      ],
+      "train_std": [
+        0.9079395500116143,
+        0.8165952785653825,
+        0.4304094073133432,
+        1.0467835976627387,
+        0.9654377004262796
+      ],
+      "train_stock_days": 1704242,
+      "train_stocks": 2945,
+      "fit_seconds": 706.0616686297581,
+      "peak_rss_bytes": 6802587648
+    }
+  },
+  "model_fit": {
+    "estimator": "sklearn.linear_model.QuantileRegressor",
+    "quantile": 0.5,
+    "alpha": 0,
+    "solver": "highs-ipm",
+    "sample": "all_stock_days_with_finite_target_and_features",
+    "subsample": "none",
+    "sample_weight": "one_over_stock_days_in_training_sample",
+    "standardize": "full_training_sample_mean_std",
+    "stored_coefficients": "raw_scale",
+    "excluded_features": "market_layer"
+  },
+  "kernels": {
+    "theta_wall_seconds": {
+      "stock_layer": {
+        "feature": "model.activity_slim",
+        "mode": "equal_frequency",
+        "k": 3
+      },
+      "market_layer": {
+        "k": 4
+      }
+    },
+    "theta_events": {
+      "stock_layer": {
+        "feature": "log_trades_20d",
+        "mode": "equal_frequency",
+        "k": 3
+      },
+      "market_layer": {
+        "k": 4
+      }
+    },
+    "theta_qty": {
+      "stock_layer": {
+        "feature": "log_lots_per_trade_20d",
+        "mode": "equal_frequency",
+        "k": 6
+      },
+      "market_layer": null
+    },
+    "theta_price_ticks": {
+      "stock_layer": {
+        "feature": "model.price_slim",
+        "mode": "prediction_equal_width",
+        "k": 12
+      },
+      "market_layer": {
+        "k": 3
+      }
+    },
+    "theta_bbo_ticks": {
+      "stock_layer": {
+        "feature": "model.bbo_slim",
+        "mode": "prediction_equal_width",
+        "k": 12
+      },
+      "market_layer": {
+        "k": 2
+      }
+    },
+    "theta_marketability_ticks": {
+      "stock_layer": {
+        "feature": "log_prev_close",
+        "mode": "equal_frequency",
+        "k": 4
+      },
+      "market_layer": null
+    }
+  },
+  "boundaries": {
+    "theta_wall_seconds": {
+      "stock_edges": [
+        0.2738019457005042,
+        0.3059074034557363
+      ],
+      "stock_requested_k": 3,
+      "stock_actual_k": 3,
+      "market_edges": [
+        17.767339912719663,
+        18.047118508991982,
+        18.224087968018154
+      ],
+      "market_actual_k": 4,
+      "has_market_layer": true
+    },
+    "theta_events": {
+      "stock_edges": [
+        9.134450130524463,
+        9.868094695679817
+      ],
+      "stock_requested_k": 3,
+      "stock_actual_k": 3,
+      "market_edges": [
+        17.767339912719663,
+        18.047118508991982,
+        18.224087968018154
+      ],
+      "market_actual_k": 4,
+      "has_market_layer": true
+    },
+    "theta_qty": {
+      "stock_edges": [
+        1.2636314916833675,
+        1.5660962494558752,
+        1.8570909893215084,
+        2.1721913868724543,
+        2.6177983050339986
+      ],
+      "stock_requested_k": 6,
+      "stock_actual_k": 6,
+      "market_edges": [],
+      "market_actual_k": 1,
+      "has_market_layer": false
+    },
+    "theta_price_ticks": {
+      "stock_edges": [
+        0.3586356576405324,
+        0.6248999905254141,
+        0.8911643234102958,
+        1.1574286562951777,
+        1.4236929891800592,
+        1.689957322064941,
+        1.9562216549498226,
+        2.2224859878347045,
+        2.4887503207195865,
+        2.755014653604468,
+        3.0212789864893494
+      ],
+      "stock_requested_k": 12,
+      "stock_actual_k": 12,
+      "market_edges": [
+        17.855621384127357,
+        18.160280877790512
+      ],
+      "market_actual_k": 3,
+      "has_market_layer": true
+    },
+    "theta_bbo_ticks": {
+      "stock_edges": [
+        0.12366576902947074,
+        0.40690192514075585,
+        0.690138081252041,
+        0.9733742373633261,
+        1.2566103934746111,
+        1.5398465495858964,
+        1.8230827056971814,
+        2.1063188618084663,
+        2.3895550179197516,
+        2.672791174031037,
+        2.956027330142322
+      ],
+      "stock_requested_k": 12,
+      "stock_actual_k": 12,
+      "market_edges": [
+        18.047118508991982
+      ],
+      "market_actual_k": 2,
+      "has_market_layer": true
+    },
+    "theta_marketability_ticks": {
+      "stock_edges": [
+        1.9035989509835904,
+        2.565718292524414,
+        3.2100368762009963
+      ],
+      "stock_requested_k": 4,
+      "stock_actual_k": 4,
+      "market_edges": [],
+      "market_actual_k": 1,
+      "has_market_layer": false
+    }
+  },
+  "market_boundaries": {
+    "2": [
+      18.047118508991982
+    ],
+    "3": [
+      17.855621384127357,
+      18.160280877790512
+    ],
+    "4": [
+      17.767339912719663,
+      18.047118508991982,
+      18.224087968018154
+    ]
+  },
+  "boundary_rules": {
+    "equal_frequency": "stock_equal_weighted_inverted_cdf",
+    "prediction_equal_width": {
+      "lower_quantile": 0.01,
+      "upper_quantile": 0.99,
+      "weights": "stock_equal",
+      "open_ends": true
+    },
+    "stock_weight": "one_over_finite_feature_days",
+    "equal_to_edge": "lower_bucket",
+    "duplicate_edges": "merge"
+  },
+  "estimator": {
+    "levels": [
+      "stock_day_positive_median",
+      "cell_day_median",
+      "cell_period_median"
+    ],
+    "positive_distance_only": true,
+    "median_rule": "exact_sample_median_even_mean",
+    "theta": "m_over_ln2",
+    "minimum_support": "none"
+  },
+  "fallback": {
+    "levels": [
+      "cell",
+      "stock_only",
+      "market_only",
+      "shared"
+    ],
+    "missing_stock_feature": "market_only",
+    "missing_market_feature": "stock_only",
+    "missing_both": "shared",
+    "empty_cell": [
+      "market_only",
+      "shared"
+    ],
+    "empty_stock_only": [
+      "shared"
+    ],
+    "empty_market_only": [
+      "shared"
+    ]
+  },
+  "fallback_usage": [
+    {
+      "level": "cell",
+      "reason": "cell",
+      "stock_days": 1719449,
+      "kernel": "theta_wall_seconds"
+    },
+    {
+      "level": "market_only",
+      "reason": "missing_stock_feature",
+      "stock_days": 163,
+      "kernel": "theta_wall_seconds"
+    },
+    {
+      "level": "stock_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_wall_seconds"
+    },
+    {
+      "level": "shared",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_wall_seconds"
+    },
+    {
+      "level": "cell",
+      "reason": "cell",
+      "stock_days": 1716428,
+      "kernel": "theta_events"
+    },
+    {
+      "level": "market_only",
+      "reason": "missing_stock_feature",
+      "stock_days": 3184,
+      "kernel": "theta_events"
+    },
+    {
+      "level": "stock_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_events"
+    },
+    {
+      "level": "shared",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_events"
+    },
+    {
+      "level": "cell",
+      "reason": "cell",
+      "stock_days": 1716428,
+      "kernel": "theta_qty"
+    },
+    {
+      "level": "shared",
+      "reason": "missing_stock_feature",
+      "stock_days": 3184,
+      "kernel": "theta_qty"
+    },
+    {
+      "level": "stock_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_qty"
+    },
+    {
+      "level": "market_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_qty"
+    },
+    {
+      "level": "cell",
+      "reason": "cell",
+      "stock_days": 1719449,
+      "kernel": "theta_price_ticks"
+    },
+    {
+      "level": "market_only",
+      "reason": "missing_stock_feature",
+      "stock_days": 163,
+      "kernel": "theta_price_ticks"
+    },
+    {
+      "level": "stock_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_price_ticks"
+    },
+    {
+      "level": "shared",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_price_ticks"
+    },
+    {
+      "level": "cell",
+      "reason": "cell",
+      "stock_days": 1719449,
+      "kernel": "theta_bbo_ticks"
+    },
+    {
+      "level": "market_only",
+      "reason": "missing_stock_feature",
+      "stock_days": 163,
+      "kernel": "theta_bbo_ticks"
+    },
+    {
+      "level": "stock_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_bbo_ticks"
+    },
+    {
+      "level": "shared",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_bbo_ticks"
+    },
+    {
+      "level": "cell",
+      "reason": "cell",
+      "stock_days": 1719558,
+      "kernel": "theta_marketability_ticks"
+    },
+    {
+      "level": "shared",
+      "reason": "missing_stock_feature",
+      "stock_days": 54,
+      "kernel": "theta_marketability_ticks"
+    },
+    {
+      "level": "stock_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_marketability_ticks"
+    },
+    {
+      "level": "market_only",
+      "reason": "not_used",
+      "stock_days": 0,
+      "kernel": "theta_marketability_ticks"
+    }
+  ],
+  "files": {
+    "cells.parquet": "7b50692875ccab4ad3df792d612bc505c9162c3d86f49731a1d833a7ac432d62",
+    "cells.csv": "856e1e0a9ed3e97674a5ebfb0d2ae2c74091c6b048edadc87969814405d256d5",
+    "fallback_usage.csv": "3015a088540d7f98085fd4b2c222c765fa8806a307923d9576e16118981ec95b"
+  }
+}

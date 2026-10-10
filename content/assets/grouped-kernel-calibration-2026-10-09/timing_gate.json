@@ -1,0 +1,468 @@
+{
+  "status": "passed",
+  "execution_revision": "5e1b5cf9f0587597522adfb58eb07a9ff5f0e220",
+  "config_sha256": "52f3ca20631928afcc6df3915b08a98903b9af65718335ec09531f39b8d79c27",
+  "full_stock_days": 1719612,
+  "canary_stock_days": {
+    "2d": 5711,
+    "61d": 174541
+  },
+  "same_runtime_defaults": {
+    "fit_workers": 3,
+    "internal_threads": 1,
+    "rss_sample_interval_seconds": 0.1,
+    "zero_std_scale": 1.0,
+    "canary_scientific_acceptance": "report_only_A2_A3",
+    "market_boundary_nesting_canary": "required"
+  },
+  "checks": {
+    "total_wall_le_60_minutes": true,
+    "each_model_le_40_minutes": true,
+    "peak_memory_le_60_gib": true
+  },
+  "model_extrapolations": {
+    "activity_slim": {
+      "small_sample": {
+        "fit_seconds": 0.2505018590018153,
+        "peak_rss_bytes": 204767232,
+        "train_stock_days": 5684,
+        "train_stocks": 2862
+      },
+      "large_sample": {
+        "fit_seconds": 15.134928109124303,
+        "peak_rss_bytes": 841977856,
+        "train_stock_days": 173388,
+        "train_stocks": 2945
+      },
+      "full_sample_upper_bound": 1719612,
+      "power_exponent": 1.1999538171540796,
+      "power_seconds": 237.48055830635707,
+      "linear_seconds": 150.10383645689126,
+      "selected_seconds": 237.48055830635707
+    },
+    "price_slim": {
+      "small_sample": {
+        "fit_seconds": 0.2483127936720848,
+        "peak_rss_bytes": 209186816,
+        "train_stock_days": 5664,
+        "train_stocks": 2860
+      },
+      "large_sample": {
+        "fit_seconds": 10.724933788180351,
+        "peak_rss_bytes": 858423296,
+        "train_stock_days": 172845,
+        "train_stocks": 2945
+      },
+      "full_sample_upper_bound": 1719612,
+      "power_exponent": 1.1016224555757799,
+      "power_seconds": 134.7610772206104,
+      "linear_seconds": 106.70094501640423,
+      "selected_seconds": 134.7610772206104
+    },
+    "bbo_slim": {
+      "small_sample": {
+        "fit_seconds": 0.2749329172074795,
+        "peak_rss_bytes": 217419776,
+        "train_stock_days": 5668,
+        "train_stocks": 2861
+      },
+      "large_sample": {
+        "fit_seconds": 12.521914789453149,
+        "peak_rss_bytes": 865972224,
+        "train_stock_days": 172956,
+        "train_stocks": 2945
+      },
+      "full_sample_upper_bound": 1719612,
+      "power_exponent": 1.1171691035713553,
+      "power_seconds": 162.9450433415068,
+      "linear_seconds": 124.498918423883,
+      "selected_seconds": 162.9450433415068
+    }
+  },
+  "linear_stage_seconds": {
+    "read_and_validate": 39.60854986247076,
+    "boundaries_and_assignment": 4.756482267238844,
+    "level_and_annual_centers": 15.054468195265054,
+    "resolve_and_tracking": 9.930715077564903,
+    "write_outputs": 17.667770769337235
+  },
+  "parallel_model_seconds": 237.48055830635707,
+  "fit_pool_overhead_linear_seconds": 56.59664295027572,
+  "guard_startup_shutdown_overhead_linear_seconds": 118.29714140961102,
+  "predicted_total_wall_seconds": 499.3923288381206,
+  "predicted_peak_memory_bytes": 33433173724.63043,
+  "method": "Mechanical extrapolation. Non-model stages, pool overhead and guard overhead scale by full/61d stock-days. Models fit t=C*n^p using both canaries and also scale linearly; choose the larger estimate, then take the maximum of three concurrent fits. Full finite model samples use panel row count as a conservative upper bound. Memory scales the larger of 61d scope peak and sampled tree RSS by full/61d stock-days.",
+  "performance_optimization": "none",
+  "samples": [
+    {
+      "label": "canary-2d",
+      "manifest": {
+        "execution_revision": "5e1b5cf9f0587597522adfb58eb07a9ff5f0e220",
+        "science_revision": "01c7e85b812f94605ccfca32a641f56ad6354008",
+        "config_sha256": "52f3ca20631928afcc6df3915b08a98903b9af65718335ec09531f39b8d79c27",
+        "command": [
+          "scripts/run_grouped_kernel_calibration.py",
+          "--config",
+          "鍥犲瓙/algobench/configs/grouped_kernel_calibration_szse_v1.yaml",
+          "--precheck-run-root",
+          "/home/wangly/hdd-store/outputs/sirui/published/grouped-calibration-precheck/szse-601d-01c7e85b-p8-20261008T174326Z",
+          "--output-root",
+          "/home/wangly/hdd-store/outputs/sirui/published/grouped-kernel-calibration/szse-v1-5e1b5cf9-20261009T160920Z/canary-2d",
+          "--expected-revision",
+          "5e1b5cf9f0587597522adfb58eb07a9ff5f0e220",
+          "--progress-path",
+          "/home/wangly/hdd-store/outputs/sirui/published/grouped-kernel-calibration/szse-v1-5e1b5cf9-20261009T160920Z/canary-2d/progress.json",
+          "--dates",
+          "2024-12-30",
+          "2025-04-02"
+        ],
+        "started_at_utc": "2026-10-09T16:10:04.966021+00:00",
+        "stages": {
+          "read_and_validate": {
+            "wall_seconds": 12.05060647893697,
+            "peak_tree_rss_bytes": 1246752768
+          },
+          "fit_models": {
+            "wall_seconds": 5.808341615833342,
+            "peak_tree_rss_bytes": 1342808064
+          },
+          "boundaries_and_assignment": {
+            "wall_seconds": 0.23995220195502043,
+            "peak_tree_rss_bytes": 704532480
+          },
+          "level_and_annual_centers": {
+            "wall_seconds": 0.5434211008250713,
+            "peak_tree_rss_bytes": 706191360
+          },
+          "resolve_and_tracking": {
+            "wall_seconds": 0.37543408013880253,
+            "peak_tree_rss_bytes": 709029888
+          },
+          "write_outputs": {
+            "wall_seconds": 0.8545489041134715,
+            "peak_tree_rss_bytes": 389824512
+          }
+        },
+        "defaults": {
+          "fit_workers": 3,
+          "internal_threads": 1,
+          "rss_sample_interval_seconds": 0.1,
+          "zero_std_scale": 1.0,
+          "canary_scientific_acceptance": "report_only_A2_A3",
+          "market_boundary_nesting_canary": "required"
+        },
+        "scratch": {
+          "path": "/home/wangly/hdd-store/scratch/sirui/grouped-kernel-calibration/szse-v1-5e1b5cf9-20261009T160920Z/canary-2d",
+          "purpose": "Python bytecode and task-local temporary files",
+          "retention": "retain through sealing and hash-verified evidence return"
+        },
+        "panel_sha256": "1c1700c32d440c5c2b18387ac20143242254ae866bd3ae774759474a2b96ee9e",
+        "panel_path": "/home/wangly/hdd-store/outputs/sirui/published/grouped-calibration-precheck/szse-601d-01c7e85b-p8-20261008T174326Z/panel/precheck_panel.parquet",
+        "full_stock_days": 1719612,
+        "dates_sha256": "1f270570e942e41441d6182a68bb0122703fbffcf6052255e440f90c8c1a68b1",
+        "precheck_config_sha256": "7aaf8b6ed4471ebecd104b91792bd12f55f9613059387f5300a3c1fd81bcaa43",
+        "input_seal_sha256": "db2aef683474eef7f82a59d9820884798de7570860ee9166b7cfe52b4d8ec72e",
+        "stock_days": 5711,
+        "dates": [
+          "2024-12-30",
+          "2025-04-02"
+        ],
+        "canary": true,
+        "precheck_table_sha256": {
+          "group_support": "e39467352effdd69d8a938fdc40b28acc892146c1107d415dfed478f2e7d07b7",
+          "coefficients": "3b776326f474ff60a33d37500c7b6ffdc336c73ab987cf2cd6fc42cf9fb36a7c"
+        },
+        "model_fits": {
+          "activity_slim": {
+            "fit_seconds": 0.2505018590018153,
+            "peak_rss_bytes": 204767232,
+            "train_stock_days": 5684,
+            "train_stocks": 2862
+          },
+          "price_slim": {
+            "fit_seconds": 0.2483127936720848,
+            "peak_rss_bytes": 209186816,
+            "train_stock_days": 5664,
+            "train_stocks": 2860
+          },
+          "bbo_slim": {
+            "fit_seconds": 0.2749329172074795,
+            "peak_rss_bytes": 217419776,
+            "train_stock_days": 5668,
+            "train_stocks": 2861
+          }
+        },
+        "finished_at_utc": "2026-10-09T16:10:27.861945+00:00",
+        "guard_acceptance": {
+          "exit_code": 0,
+          "scope_memory_peak_bytes": 1496707072,
+          "scope_events_delta": {
+            "high": 0,
+            "low": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_group_kill": 0,
+            "oom_kill": 0,
+            "sock_throttled": 0
+          },
+          "parent_events_delta": {
+            "high": 0,
+            "low": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_group_kill": 0,
+            "oom_kill": 0,
+            "sock_throttled": 0
+          },
+          "process_references": [],
+          "processes_checked": true
+        }
+      },
+      "guard_wall_seconds": 29.598647
+    },
+    {
+      "label": "canary-61d",
+      "manifest": {
+        "execution_revision": "5e1b5cf9f0587597522adfb58eb07a9ff5f0e220",
+        "science_revision": "01c7e85b812f94605ccfca32a641f56ad6354008",
+        "config_sha256": "52f3ca20631928afcc6df3915b08a98903b9af65718335ec09531f39b8d79c27",
+        "command": [
+          "scripts/run_grouped_kernel_calibration.py",
+          "--config",
+          "鍥犲瓙/algobench/configs/grouped_kernel_calibration_szse_v1.yaml",
+          "--precheck-run-root",
+          "/home/wangly/hdd-store/outputs/sirui/published/grouped-calibration-precheck/szse-601d-01c7e85b-p8-20261008T174326Z",
+          "--output-root",
+          "/home/wangly/hdd-store/outputs/sirui/published/grouped-kernel-calibration/szse-v1-5e1b5cf9-20261009T160920Z/canary-61d",
+          "--expected-revision",
+          "5e1b5cf9f0587597522adfb58eb07a9ff5f0e220",
+          "--progress-path",
+          "/home/wangly/hdd-store/outputs/sirui/published/grouped-kernel-calibration/szse-v1-5e1b5cf9-20261009T160920Z/canary-61d/progress.json",
+          "--dates",
+          "2024-01-02",
+          "2024-01-16",
+          "2024-01-30",
+          "2024-02-21",
+          "2024-03-06",
+          "2024-03-20",
+          "2024-04-03",
+          "2024-04-19",
+          "2024-05-08",
+          "2024-05-22",
+          "2024-06-05",
+          "2024-06-20",
+          "2024-07-04",
+          "2024-07-18",
+          "2024-08-01",
+          "2024-08-15",
+          "2024-08-29",
+          "2024-09-12",
+          "2024-09-30",
+          "2024-10-21",
+          "2024-11-04",
+          "2024-11-18",
+          "2024-12-02",
+          "2024-12-16",
+          "2024-12-30",
+          "2025-01-14",
+          "2025-02-05",
+          "2025-02-19",
+          "2025-03-05",
+          "2025-03-19",
+          "2025-04-02",
+          "2025-04-17",
+          "2025-05-06",
+          "2025-05-20",
+          "2025-06-04",
+          "2025-06-18",
+          "2025-07-02",
+          "2025-07-16",
+          "2025-07-30",
+          "2025-08-13",
+          "2025-08-27",
+          "2025-09-10",
+          "2025-09-24",
+          "2025-10-16",
+          "2025-10-30",
+          "2025-11-13",
+          "2025-11-27",
+          "2025-12-11",
+          "2025-12-25",
+          "2026-01-12",
+          "2026-01-26",
+          "2026-02-09",
+          "2026-03-03",
+          "2026-03-17",
+          "2026-03-31",
+          "2026-04-15",
+          "2026-04-29",
+          "2026-05-18",
+          "2026-06-01",
+          "2026-06-15",
+          "2026-06-30"
+        ],
+        "started_at_utc": "2026-10-09T16:11:11.850414+00:00",
+        "stages": {
+          "read_and_validate": {
+            "wall_seconds": 4.020276609808207,
+            "peak_tree_rss_bytes": 1292390400
+          },
+          "fit_models": {
+            "wall_seconds": 20.879499941132963,
+            "peak_tree_rss_bytes": 3304480768
+          },
+          "boundaries_and_assignment": {
+            "wall_seconds": 0.4827840067446232,
+            "peak_tree_rss_bytes": 773914624
+          },
+          "level_and_annual_centers": {
+            "wall_seconds": 1.5280318660661578,
+            "peak_tree_rss_bytes": 804896768
+          },
+          "resolve_and_tracking": {
+            "wall_seconds": 1.007969786413014,
+            "peak_tree_rss_bytes": 841216000
+          },
+          "write_outputs": {
+            "wall_seconds": 1.7932826578617096,
+            "peak_tree_rss_bytes": 525266944
+          }
+        },
+        "defaults": {
+          "fit_workers": 3,
+          "internal_threads": 1,
+          "rss_sample_interval_seconds": 0.1,
+          "zero_std_scale": 1.0,
+          "canary_scientific_acceptance": "report_only_A2_A3",
+          "market_boundary_nesting_canary": "required"
+        },
+        "scratch": {
+          "path": "/home/wangly/hdd-store/scratch/sirui/grouped-kernel-calibration/szse-v1-5e1b5cf9-20261009T160920Z/canary-61d",
+          "purpose": "Python bytecode and task-local temporary files",
+          "retention": "retain through sealing and hash-verified evidence return"
+        },
+        "panel_sha256": "1c1700c32d440c5c2b18387ac20143242254ae866bd3ae774759474a2b96ee9e",
+        "panel_path": "/home/wangly/hdd-store/outputs/sirui/published/grouped-calibration-precheck/szse-601d-01c7e85b-p8-20261008T174326Z/panel/precheck_panel.parquet",
+        "full_stock_days": 1719612,
+        "dates_sha256": "1f270570e942e41441d6182a68bb0122703fbffcf6052255e440f90c8c1a68b1",
+        "precheck_config_sha256": "7aaf8b6ed4471ebecd104b91792bd12f55f9613059387f5300a3c1fd81bcaa43",
+        "input_seal_sha256": "db2aef683474eef7f82a59d9820884798de7570860ee9166b7cfe52b4d8ec72e",
+        "stock_days": 174541,
+        "dates": [
+          "2024-01-02",
+          "2024-01-16",
+          "2024-01-30",
+          "2024-02-21",
+          "2024-03-06",
+          "2024-03-20",
+          "2024-04-03",
+          "2024-04-19",
+          "2024-05-08",
+          "2024-05-22",
+          "2024-06-05",
+          "2024-06-20",
+          "2024-07-04",
+          "2024-07-18",
+          "2024-08-01",
+          "2024-08-15",
+          "2024-08-29",
+          "2024-09-12",
+          "2024-09-30",
+          "2024-10-21",
+          "2024-11-04",
+          "2024-11-18",
+          "2024-12-02",
+          "2024-12-16",
+          "2024-12-30",
+          "2025-01-14",
+          "2025-02-05",
+          "2025-02-19",
+          "2025-03-05",
+          "2025-03-19",
+          "2025-04-02",
+          "2025-04-17",
+          "2025-05-06",
+          "2025-05-20",
+          "2025-06-04",
+          "2025-06-18",
+          "2025-07-02",
+          "2025-07-16",
+          "2025-07-30",
+          "2025-08-13",
+          "2025-08-27",
+          "2025-09-10",
+          "2025-09-24",
+          "2025-10-16",
+          "2025-10-30",
+          "2025-11-13",
+          "2025-11-27",
+          "2025-12-11",
+          "2025-12-25",
+          "2026-01-12",
+          "2026-01-26",
+          "2026-02-09",
+          "2026-03-03",
+          "2026-03-17",
+          "2026-03-31",
+          "2026-04-15",
+          "2026-04-29",
+          "2026-05-18",
+          "2026-06-01",
+          "2026-06-15",
+          "2026-06-30"
+        ],
+        "canary": true,
+        "precheck_table_sha256": {
+          "group_support": "e39467352effdd69d8a938fdc40b28acc892146c1107d415dfed478f2e7d07b7",
+          "coefficients": "3b776326f474ff60a33d37500c7b6ffdc336c73ab987cf2cd6fc42cf9fb36a7c"
+        },
+        "model_fits": {
+          "activity_slim": {
+            "fit_seconds": 15.134928109124303,
+            "peak_rss_bytes": 841977856,
+            "train_stock_days": 173388,
+            "train_stocks": 2945
+          },
+          "price_slim": {
+            "fit_seconds": 10.724933788180351,
+            "peak_rss_bytes": 858423296,
+            "train_stock_days": 172845,
+            "train_stocks": 2945
+          },
+          "bbo_slim": {
+            "fit_seconds": 12.521914789453149,
+            "peak_rss_bytes": 865972224,
+            "train_stock_days": 172956,
+            "train_stocks": 2945
+          }
+        },
+        "finished_at_utc": "2026-10-09T16:11:45.697191+00:00",
+        "guard_acceptance": {
+          "exit_code": 0,
+          "scope_memory_peak_bytes": 3393474560,
+          "scope_events_delta": {
+            "high": 0,
+            "low": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_group_kill": 0,
+            "oom_kill": 0,
+            "sock_throttled": 0
+          },
+          "parent_events_delta": {
+            "high": 0,
+            "low": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_group_kill": 0,
+            "oom_kill": 0,
+            "sock_throttled": 0
+          },
+          "process_references": [],
+          "processes_checked": true
+        }
+      },
+      "guard_wall_seconds": 41.719031
+    }
+  ]
+}
