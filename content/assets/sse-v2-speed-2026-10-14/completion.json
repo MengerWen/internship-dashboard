@@ -1,0 +1,435 @@
+{
+  "collected_at": "2026-10-14T15:50:48.868705+08:00",
+  "final_status": {
+    "revision": "3d7a795f3a5989f40b4fd657a0759ac5232f317e",
+    "current_stage": "complete",
+    "stages": [
+      {
+        "stage": "final-evidence",
+        "exit_code": 0,
+        "argv": [
+          "/usr/bin/python3.14",
+          "-I",
+          "scripts/run_guarded.py",
+          "--name",
+          "sse-v2-final-evidence-20261014",
+          "--memory-max",
+          "100G",
+          "--cpu-quota",
+          "1600%",
+          "--manifest-out",
+          "/tmp/wenjie-sse-v2-performance-20261014/final-evidence.pointer",
+          "--log",
+          "/tmp/wenjie-sse-v2-performance-20261014/final-evidence.log",
+          "--watchdog-timeout",
+          "600",
+          "--watchdog-cpu-progress",
+          "--watchdog-path",
+          "/tmp/wenjie-sse-original-v2-20261013",
+          "--",
+          "/usr/bin/python3.14",
+          "-u",
+          "scripts/sse_original_v2_evidence.py"
+        ]
+      }
+    ],
+    "time": "2026-10-14T15:48:28.658223+08:00"
+  },
+  "guards": {
+    "takeover-forward": {
+      "manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-takeover-forward-20261014_20261014T072040Z_c60330043a5b49f9810bb725146988d4.json",
+      "sha256": "8e3788b3cff791181ab744bab90d17f388a551768f7f68cc8d3584e1b02f0fc9",
+      "exit_code": 0,
+      "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+      "scope_unit": "guard-sse-v2-takeover-forward-20261014-8ec38906.scope",
+      "scope_memory_peak_bytes": 25523150848,
+      "resource_usage": {
+        "average_effective_cores": 10.883485625039793,
+        "cpu_system_seconds": 116.843752,
+        "cpu_throttled_seconds": 1.664316,
+        "cpu_usage_seconds": 2583.665961,
+        "cpu_user_seconds": 2466.822209,
+        "io_read_bytes": 98304,
+        "io_read_operations": 216349,
+        "io_write_bytes": 7452126,
+        "io_write_operations": 54021,
+        "memory_current_end_bytes": 16713732096,
+        "memory_peak_bytes": 25523150848,
+        "swap_peak_bytes": 0,
+        "wall_seconds": 237.3932442246005
+      },
+      "resource_evidence": {
+        "average_effective_cores": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_system_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_throttled_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_usage_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_user_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "io_read_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_read_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "memory_current_end_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "memory_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "swap_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "wall_seconds": {
+          "source": "guard_monotonic_clock",
+          "status": "observed"
+        }
+      },
+      "business_command_timing": {
+        "active_wall_seconds": 237.3489338075742,
+        "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+        "command": [
+          "/usr/bin/python3.14",
+          "-u",
+          "scripts/sse_original_v2_forward.py",
+          "--workers",
+          "16"
+        ],
+        "end_epoch": 1791962678.9927137,
+        "exit_code": 0,
+        "raw_wall_seconds": 237.34891462605447,
+        "schema_version": "guard-business-command-timing-v1",
+        "start_epoch": 1791962441.6437972
+      },
+      "termination_reason": null,
+      "scope": {
+        "events_delta": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_end": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_source": "memory.events",
+        "events_start": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        }
+      }
+    },
+    "final-evidence": {
+      "manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-final-evidence-20261014_20261014T074554Z_b18c30151b654c60ab11a21c2c025522.json",
+      "sha256": "1f84d6b1e2aee42d6ac09b155d776d7f7c3c4aaf9482da68377b370f31b30ba5",
+      "exit_code": 0,
+      "git_revision": "3d7a795f3a5989f40b4fd657a0759ac5232f317e",
+      "scope_unit": "guard-sse-v2-final-evidence-20261014-86f4cc2b.scope",
+      "scope_memory_peak_bytes": 11163332608,
+      "resource_usage": {
+        "average_effective_cores": 0.6836766703022429,
+        "cpu_system_seconds": 49.33672,
+        "cpu_throttled_seconds": 0.0,
+        "cpu_usage_seconds": 102.241158,
+        "cpu_user_seconds": 52.904438,
+        "io_read_bytes": 704512,
+        "io_read_operations": 341662,
+        "io_write_bytes": 15752384,
+        "io_write_operations": 176,
+        "memory_current_end_bytes": 10207141888,
+        "memory_peak_bytes": 11163332608,
+        "swap_peak_bytes": 0,
+        "wall_seconds": 149.5460682529956
+      },
+      "resource_evidence": {
+        "average_effective_cores": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_system_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_throttled_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_usage_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_user_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "io_read_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_read_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "memory_current_end_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "memory_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "swap_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "wall_seconds": {
+          "source": "guard_monotonic_clock",
+          "status": "observed"
+        }
+      },
+      "business_command_timing": {
+        "active_wall_seconds": 149.3073924612254,
+        "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+        "command": [
+          "/usr/bin/python3.14",
+          "-u",
+          "scripts/sse_original_v2_evidence.py"
+        ],
+        "end_epoch": 1791964104.9457557,
+        "exit_code": 0,
+        "raw_wall_seconds": 149.30737424083054,
+        "schema_version": "guard-business-command-timing-v1",
+        "start_epoch": 1791963955.6383798
+      },
+      "termination_reason": null,
+      "scope": {
+        "events_delta": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_end": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_source": "memory.events",
+        "events_start": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        }
+      }
+    }
+  },
+  "forward_execution": [
+    {
+      "scientific_identity": "ae6fc1f3e073fe5160abed9dad0a6ce4f94132ce26f805861a6ddb382dfa191b",
+      "compatible_identities": [
+        "ae6fc1f3e073fe5160abed9dad0a6ce4f94132ce26f805861a6ddb382dfa191b",
+        "febf3492ece79af9447f461d234bcd42ec9cfa2b2d54010699ef08cb8c795f28"
+      ],
+      "reused_stocks": 1534,
+      "computed_stocks": 767,
+      "preparation": {
+        "seconds": 9.387720046564937,
+        "pages": 55,
+        "reused_pages": 0,
+        "shared_bytes": 2341374486,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 40417050624,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 22.942838937975466,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 37953167360,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 5950262840,
+        "parent_wait_seconds": 22.787114722654223,
+        "worker_cpu_seconds": 364.620220575,
+        "worker_decode_seconds": 1.9165301024913788,
+        "worker_matching_and_receipt_seconds": 363.2243479602039
+      },
+      "date": "2026-04-01"
+    },
+    {
+      "scientific_identity": "9673ab39eeae3d7bb845f389597fac37d6924eac18eb46970ea8dcd093f2ed1a",
+      "compatible_identities": [
+        "9673ab39eeae3d7bb845f389597fac37d6924eac18eb46970ea8dcd093f2ed1a",
+        "c926121727f1777db7c5f2b168ab6b1f15d82a2207b68b1530b4debbb110a233"
+      ],
+      "reused_stocks": 0,
+      "computed_stocks": 2297,
+      "preparation": {
+        "seconds": 9.645561751909554,
+        "pages": 323,
+        "reused_pages": 0,
+        "shared_bytes": 13451551422,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 37270126592,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 130.40950293280184,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 23764946944,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 17158537472,
+        "parent_wait_seconds": 130.13462118897587,
+        "worker_cpu_seconds": 2079.42231048,
+        "worker_decode_seconds": 8.491548700258136,
+        "worker_matching_and_receipt_seconds": 2075.4266997762024
+      },
+      "date": "2026-06-30"
+    }
+  ],
+  "repository": {
+    "path": "/home/wenjie/src/sirui-quant-research",
+    "head": "3d7a795f3a5989f40b4fd657a0759ac5232f317e"
+  },
+  "archived_recovery": [
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/takeover-forward-8e3788b3cff791181ab744bab90d17f388a551768f7f68cc8d3584e1b02f0fc9.json",
+      "bytes": 6214,
+      "sha256": "8e3788b3cff791181ab744bab90d17f388a551768f7f68cc8d3584e1b02f0fc9"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/takeover-forward-89bd176b7457eb9de8e9d6d0154c6ef8b518dc1b99dc4da69992f848af654173.log",
+      "bytes": 2233,
+      "sha256": "89bd176b7457eb9de8e9d6d0154c6ef8b518dc1b99dc4da69992f848af654173"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/final-evidence-1f84d6b1e2aee42d6ac09b155d776d7f7c3c4aaf9482da68377b370f31b30ba5.json",
+      "bytes": 6126,
+      "sha256": "1f84d6b1e2aee42d6ac09b155d776d7f7c3c4aaf9482da68377b370f31b30ba5"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/final-evidence-97df3d4f1ac353392ff71fc9ad9140e924c689b95493c67c62f78b0d692f95c1.log",
+      "bytes": 3717,
+      "sha256": "97df3d4f1ac353392ff71fc9ad9140e924c689b95493c67c62f78b0d692f95c1"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/contracts-45215935d5477602824f0a72fccf4429b54d1912d601e03f01845cb2867b7be7.json",
+      "bytes": 24538,
+      "sha256": "45215935d5477602824f0a72fccf4429b54d1912d601e03f01845cb2867b7be7"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/582a561598c3fb4353512b0297aa1dbb8d21a9e722cc158daa49c0da3c6f748f-takeover-evidence.log",
+      "bytes": 4554,
+      "sha256": "582a561598c3fb4353512b0297aa1dbb8d21a9e722cc158daa49c0da3c6f748f"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/e6a5c6377cb6b8031ac87e86fd2f24699f6009a8ad3a960fe6ff65b3da069229-takeover-resume-launch.json",
+      "bytes": 164,
+      "sha256": "e6a5c6377cb6b8031ac87e86fd2f24699f6009a8ad3a960fe6ff65b3da069229"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/9dfbfcd18b5a5f5f764656149af6f6c536833ff123893bdad24cb5ca3b61af4d-final-resume-launch.json",
+      "bytes": 161,
+      "sha256": "9dfbfcd18b5a5f5f764656149af6f6c536833ff123893bdad24cb5ca3b61af4d"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/dbf539481c7d49a4a847ff409cc3fa4468a412c802a0be6e3cf41d8a8e278c62-resume-forward-takeover.py",
+      "bytes": 1770,
+      "sha256": "dbf539481c7d49a4a847ff409cc3fa4468a412c802a0be6e3cf41d8a8e278c62"
+    },
+    {
+      "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/e23960ca93d626b2f04a0b950916e3ca1f2cd08a0aa0248290430676d5a567d5-resume-final-evidence.py",
+      "bytes": 1162,
+      "sha256": "e23960ca93d626b2f04a0b950916e3ca1f2cd08a0aa0248290430676d5a567d5"
+    }
+  ],
+  "private_snapshot": {
+    "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/evidence/run-completion/completion-f6e47cc9bab9dfbf432365a5a88066937721b4d5dda511356bd3ca4c217da8bb.json",
+    "bytes": 13325,
+    "sha256": "f6e47cc9bab9dfbf432365a5a88066937721b4d5dda511356bd3ca4c217da8bb"
+  },
+  "registered_payload_bytes": 27584034148,
+  "known_metadata_bytes": 3035329
+}

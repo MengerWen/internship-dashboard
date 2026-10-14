@@ -1,0 +1,641 @@
+{
+  "date": "2026-10-14",
+  "category": "提速",
+  "research_revision": "5753f48b81388cb1feae71a4b62c2a57f364c254",
+  "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+  "forward_benchmarks": [
+    {
+      "backend": "reference",
+      "workers": 16,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 182.2938345838338,
+      "cpu_seconds": 294.924672,
+      "effective_cores": 1.6178532459602697,
+      "scope_peak_bytes": 4714778624,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "preparation_seconds": null,
+      "compute_seconds": null
+    },
+    {
+      "backend": "shared-arrow",
+      "workers": 1,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 124.82455073203892,
+      "cpu_seconds": 121.297957,
+      "effective_cores": 0.9717475952338137,
+      "scope_peak_bytes": 2185654272,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "preparation_seconds": 9.187084012664855,
+      "compute_seconds": 110.72389714606106,
+      "computation": {
+        "seconds": 110.72389714606106,
+        "workers": 1,
+        "resource_admission": [
+          {
+            "requested": 1,
+            "admitted": 1,
+            "available_bytes": 48379740160,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 1848937384,
+        "parent_wait_seconds": 110.66121582034975,
+        "worker_cpu_seconds": 110.58847965499993,
+        "worker_decode_seconds": 0.3198122661560774,
+        "worker_matching_and_receipt_seconds": 110.29815533477813,
+        "actual_effective_cores": 0.9987769804482,
+        "max_stock_cpu_seconds": 23.358617457999998,
+        "max_stock_matching_seconds": 23.336982280947268,
+        "stock_count": 128
+      }
+    },
+    {
+      "backend": "shared-arrow",
+      "workers": 4,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 37.0985419806093,
+      "cpu_seconds": 129.383132,
+      "effective_cores": 3.487553016709554,
+      "scope_peak_bytes": 5188218880,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "preparation_seconds": 4.298883255571127,
+      "compute_seconds": 28.150931533426046,
+      "computation": {
+        "seconds": 28.150931533426046,
+        "workers": 4,
+        "resource_admission": [
+          {
+            "requested": 4,
+            "admitted": 4,
+            "available_bytes": 49117507584,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 3420834528,
+        "parent_wait_seconds": 28.095189290121198,
+        "worker_cpu_seconds": 112.27151470199999,
+        "worker_decode_seconds": 0.34328331518918276,
+        "worker_matching_and_receipt_seconds": 111.98001489322633,
+        "actual_effective_cores": 3.9881989186997338,
+        "max_stock_cpu_seconds": 24.492400579999998,
+        "max_stock_matching_seconds": 24.470700880512595,
+        "stock_count": 128
+      }
+    },
+    {
+      "backend": "shared-arrow",
+      "workers": 8,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 32.76627740263939,
+      "cpu_seconds": 138.780934,
+      "effective_cores": 4.235480652703652,
+      "scope_peak_bytes": 7079997440,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "preparation_seconds": 5.013218483887613,
+      "compute_seconds": 23.58234203606844,
+      "computation": {
+        "seconds": 23.58234203606844,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 49869357056,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 4298005144,
+        "parent_wait_seconds": 23.517355741001666,
+        "worker_cpu_seconds": 112.02313467500001,
+        "worker_decode_seconds": 0.5360790500417352,
+        "worker_matching_and_receipt_seconds": 111.55813062563539,
+        "actual_effective_cores": 4.750297256466903,
+        "max_stock_cpu_seconds": 23.536239289,
+        "max_stock_matching_seconds": 23.508073675446212,
+        "stock_count": 128
+      }
+    },
+    {
+      "backend": "shared-arrow",
+      "workers": 16,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 37.25695919059217,
+      "cpu_seconds": 155.062884,
+      "effective_cores": 4.161984428379094,
+      "scope_peak_bytes": 7362641920,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "preparation_seconds": 6.51530656311661,
+      "compute_seconds": 23.472159093245864,
+      "computation": {
+        "seconds": 23.472159093245864,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 50641412096,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 5608832424,
+        "parent_wait_seconds": 23.373904403299093,
+        "worker_cpu_seconds": 115.056800973,
+        "worker_decode_seconds": 0.5167831592261791,
+        "worker_matching_and_receipt_seconds": 114.63131305575371,
+        "actual_effective_cores": 4.901841390726927,
+        "max_stock_cpu_seconds": 23.402993186,
+        "max_stock_matching_seconds": 23.387533572502434,
+        "stock_count": 128
+      }
+    },
+    {
+      "backend": "shared-arrow",
+      "workers": 4,
+      "profile_enabled": false,
+      "stocks": 512,
+      "selected_codes_sha256": "29bf30d3f8ac1ea7883dba022dac37c9fefb0b1d8e4072536b666c6d744e2956",
+      "source_results_sha256": "0d269bf36345cb9b58de9f3df217d16332c37e6658acff9da8940f8266bb356d",
+      "exact_equal": true,
+      "seconds": 109.9670698530972,
+      "cpu_seconds": 422.134153,
+      "effective_cores": 3.8387323911050877,
+      "scope_peak_bytes": 6142509056,
+      "orders": {
+        "sse_only": 2038975,
+        "szse_tail_reference": 2038975
+      },
+      "preparation_seconds": 10.967201489023864,
+      "compute_seconds": 95.07861420419067,
+      "computation": {
+        "seconds": 95.07861420419067,
+        "workers": 4,
+        "resource_admission": [
+          {
+            "requested": 4,
+            "admitted": 4,
+            "available_bytes": 45753049088,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 4498163520,
+        "parent_wait_seconds": 94.94791781529784,
+        "worker_cpu_seconds": 379.6336588950001,
+        "worker_decode_seconds": 1.329897278919816,
+        "worker_matching_and_receipt_seconds": 378.4497319897637,
+        "actual_effective_cores": 3.9928396314201584,
+        "max_stock_cpu_seconds": 27.644272314000002,
+        "max_stock_matching_seconds": 27.487671475857496,
+        "stock_count": 512
+      }
+    },
+    {
+      "backend": "shared-arrow",
+      "workers": 8,
+      "profile_enabled": false,
+      "stocks": 512,
+      "selected_codes_sha256": "29bf30d3f8ac1ea7883dba022dac37c9fefb0b1d8e4072536b666c6d744e2956",
+      "source_results_sha256": "0d269bf36345cb9b58de9f3df217d16332c37e6658acff9da8940f8266bb356d",
+      "exact_equal": true,
+      "seconds": 67.65903887338936,
+      "cpu_seconds": 500.89002000000005,
+      "effective_cores": 7.403150094066775,
+      "scope_peak_bytes": 8739807232,
+      "orders": {
+        "sse_only": 2038975,
+        "szse_tail_reference": 2038975
+      },
+      "preparation_seconds": 16.34687194507569,
+      "compute_seconds": 47.753177526406944,
+      "computation": {
+        "seconds": 47.753177526406944,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 43142578176,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 6578510120,
+        "parent_wait_seconds": 47.62759828567505,
+        "worker_cpu_seconds": 380.7836241629999,
+        "worker_decode_seconds": 1.6196280028671026,
+        "worker_matching_and_receipt_seconds": 379.37907689623535,
+        "actual_effective_cores": 7.9739955305054,
+        "max_stock_cpu_seconds": 27.561950463000002,
+        "max_stock_matching_seconds": 27.52517430111766,
+        "stock_count": 512
+      }
+    },
+    {
+      "backend": "shared-arrow",
+      "workers": 16,
+      "profile_enabled": false,
+      "stocks": 512,
+      "selected_codes_sha256": "29bf30d3f8ac1ea7883dba022dac37c9fefb0b1d8e4072536b666c6d744e2956",
+      "source_results_sha256": "0d269bf36345cb9b58de9f3df217d16332c37e6658acff9da8940f8266bb356d",
+      "exact_equal": true,
+      "seconds": 37.988324493169785,
+      "cpu_seconds": 446.971008,
+      "effective_cores": 11.766010056073002,
+      "scope_peak_bytes": 10037088256,
+      "orders": {
+        "sse_only": 2038975,
+        "szse_tail_reference": 2038975
+      },
+      "preparation_seconds": 6.661394763737917,
+      "compute_seconds": 28.663847050629556,
+      "computation": {
+        "seconds": 28.663847050629556,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 40503873536,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 9585610696,
+        "parent_wait_seconds": 28.523971589282155,
+        "worker_cpu_seconds": 400.99543716600004,
+        "worker_decode_seconds": 2.365472880192101,
+        "worker_matching_and_receipt_seconds": 399.2921942761168,
+        "actual_effective_cores": 13.989588922160845,
+        "max_stock_cpu_seconds": 28.559012849000002,
+        "max_stock_matching_seconds": 28.494443631730974,
+        "stock_count": 512
+      }
+    }
+  ],
+  "forward_execution": [
+    {
+      "scientific_identity": "ae6fc1f3e073fe5160abed9dad0a6ce4f94132ce26f805861a6ddb382dfa191b",
+      "compatible_identities": [
+        "ae6fc1f3e073fe5160abed9dad0a6ce4f94132ce26f805861a6ddb382dfa191b",
+        "febf3492ece79af9447f461d234bcd42ec9cfa2b2d54010699ef08cb8c795f28"
+      ],
+      "reused_stocks": 1534,
+      "computed_stocks": 767,
+      "preparation": {
+        "seconds": 9.387720046564937,
+        "pages": 55,
+        "reused_pages": 0,
+        "shared_bytes": 2341374486,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 40417050624,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 22.942838937975466,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 37953167360,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 5950262840,
+        "parent_wait_seconds": 22.787114722654223,
+        "worker_cpu_seconds": 364.620220575,
+        "worker_decode_seconds": 1.9165301024913788,
+        "worker_matching_and_receipt_seconds": 363.2243479602039
+      },
+      "date": "2026-04-01"
+    },
+    {
+      "scientific_identity": "9673ab39eeae3d7bb845f389597fac37d6924eac18eb46970ea8dcd093f2ed1a",
+      "compatible_identities": [
+        "9673ab39eeae3d7bb845f389597fac37d6924eac18eb46970ea8dcd093f2ed1a",
+        "c926121727f1777db7c5f2b168ab6b1f15d82a2207b68b1530b4debbb110a233"
+      ],
+      "reused_stocks": 0,
+      "computed_stocks": 2297,
+      "preparation": {
+        "seconds": 9.645561751909554,
+        "pages": 323,
+        "reused_pages": 0,
+        "shared_bytes": 13451551422,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 37270126592,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 130.40950293280184,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 23764946944,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 17158537472,
+        "parent_wait_seconds": 130.13462118897587,
+        "worker_cpu_seconds": 2079.42231048,
+        "worker_decode_seconds": 8.491548700258136,
+        "worker_matching_and_receipt_seconds": 2075.4266997762024
+      },
+      "date": "2026-06-30"
+    }
+  ],
+  "guards": {
+    "takeover-forward": {
+      "manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-takeover-forward-20261014_20261014T072040Z_c60330043a5b49f9810bb725146988d4.json",
+      "sha256": "8e3788b3cff791181ab744bab90d17f388a551768f7f68cc8d3584e1b02f0fc9",
+      "exit_code": 0,
+      "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+      "scope_unit": "guard-sse-v2-takeover-forward-20261014-8ec38906.scope",
+      "scope_memory_peak_bytes": 25523150848,
+      "resource_usage": {
+        "average_effective_cores": 10.883485625039793,
+        "cpu_system_seconds": 116.843752,
+        "cpu_throttled_seconds": 1.664316,
+        "cpu_usage_seconds": 2583.665961,
+        "cpu_user_seconds": 2466.822209,
+        "io_read_bytes": 98304,
+        "io_read_operations": 216349,
+        "io_write_bytes": 7452126,
+        "io_write_operations": 54021,
+        "memory_current_end_bytes": 16713732096,
+        "memory_peak_bytes": 25523150848,
+        "swap_peak_bytes": 0,
+        "wall_seconds": 237.3932442246005
+      },
+      "resource_evidence": {
+        "average_effective_cores": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_system_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_throttled_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_usage_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_user_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "io_read_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_read_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "memory_current_end_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "memory_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "swap_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "wall_seconds": {
+          "source": "guard_monotonic_clock",
+          "status": "observed"
+        }
+      },
+      "business_command_timing": {
+        "active_wall_seconds": 237.3489338075742,
+        "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+        "command": [
+          "/usr/bin/python3.14",
+          "-u",
+          "scripts/sse_original_v2_forward.py",
+          "--workers",
+          "16"
+        ],
+        "end_epoch": 1791962678.9927137,
+        "exit_code": 0,
+        "raw_wall_seconds": 237.34891462605447,
+        "schema_version": "guard-business-command-timing-v1",
+        "start_epoch": 1791962441.6437972
+      },
+      "termination_reason": null,
+      "scope": {
+        "events_delta": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_end": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_source": "memory.events",
+        "events_start": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        }
+      }
+    },
+    "final-evidence": {
+      "manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-final-evidence-20261014_20261014T074554Z_b18c30151b654c60ab11a21c2c025522.json",
+      "sha256": "1f84d6b1e2aee42d6ac09b155d776d7f7c3c4aaf9482da68377b370f31b30ba5",
+      "exit_code": 0,
+      "git_revision": "3d7a795f3a5989f40b4fd657a0759ac5232f317e",
+      "scope_unit": "guard-sse-v2-final-evidence-20261014-86f4cc2b.scope",
+      "scope_memory_peak_bytes": 11163332608,
+      "resource_usage": {
+        "average_effective_cores": 0.6836766703022429,
+        "cpu_system_seconds": 49.33672,
+        "cpu_throttled_seconds": 0.0,
+        "cpu_usage_seconds": 102.241158,
+        "cpu_user_seconds": 52.904438,
+        "io_read_bytes": 704512,
+        "io_read_operations": 341662,
+        "io_write_bytes": 15752384,
+        "io_write_operations": 176,
+        "memory_current_end_bytes": 10207141888,
+        "memory_peak_bytes": 11163332608,
+        "swap_peak_bytes": 0,
+        "wall_seconds": 149.5460682529956
+      },
+      "resource_evidence": {
+        "average_effective_cores": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_system_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_throttled_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_usage_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "cpu_user_seconds": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "io_read_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_read_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_bytes": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "io_write_operations": {
+          "source": "procfs_cgroup_processes",
+          "status": "observed"
+        },
+        "memory_current_end_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "memory_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "swap_peak_bytes": {
+          "source": "cgroup_v2",
+          "status": "observed"
+        },
+        "wall_seconds": {
+          "source": "guard_monotonic_clock",
+          "status": "observed"
+        }
+      },
+      "business_command_timing": {
+        "active_wall_seconds": 149.3073924612254,
+        "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+        "command": [
+          "/usr/bin/python3.14",
+          "-u",
+          "scripts/sse_original_v2_evidence.py"
+        ],
+        "end_epoch": 1791964104.9457557,
+        "exit_code": 0,
+        "raw_wall_seconds": 149.30737424083054,
+        "schema_version": "guard-business-command-timing-v1",
+        "start_epoch": 1791963955.6383798
+      },
+      "termination_reason": null,
+      "scope": {
+        "events_delta": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_end": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "events_source": "memory.events",
+        "events_start": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        }
+      }
+    }
+  }
+}

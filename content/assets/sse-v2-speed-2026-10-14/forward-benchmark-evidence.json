@@ -1,0 +1,1292 @@
+{
+  "schema": "sse-original-v2-forward-performance-acceptance-v1",
+  "collected_at": "2026-10-14T15:21:34.907357+08:00",
+  "business_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+  "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+  "records": [
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-reference-16-r2.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "reference",
+      "workers": 16,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 182.2938345838338,
+      "cpu_seconds": 294.924672,
+      "effective_cores": 1.6178532459602697,
+      "scope_peak_bytes": 4714778624,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "computed_stocks": 128,
+      "preparation_seconds": null,
+      "compute_seconds": null,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-reference-16-r2/2026-01-05/details.jsonl.gz",
+        "bytes": 73824,
+        "sha256": "cb9fc787997931fdac4668cdaf7fbcdffa89295aad71c0d6b4933ac265737916"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "60fe949df6e3e5dcca0a4c44ba6c6584b17f37a64f28f5d2c35142bee563fbff",
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "1d5bf478116d6986d8ae0b47b98932d30d08b1d9",
+        "scope_unit": "guard-sse-v2-forward-reference-16-r2-20261014-eb421b5a.scope",
+        "resource_usage": {
+          "average_effective_cores": 1.6136054811633427,
+          "cpu_system_seconds": 6.279647,
+          "cpu_throttled_seconds": 0.0,
+          "cpu_usage_seconds": 296.015211,
+          "cpu_user_seconds": 289.735563,
+          "io_read_bytes": 32768,
+          "io_read_operations": 49693,
+          "io_write_bytes": 1232670,
+          "io_write_operations": 1717,
+          "memory_current_end_bytes": 16834560,
+          "memory_peak_bytes": 4714778624,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 183.44955719076097
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 4714778624,
+        "business_command_timing": {
+          "active_wall_seconds": 183.25057937949896,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "reference",
+            "--workers",
+            "16",
+            "--stocks",
+            "128",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-reference-16-r2.json"
+          ],
+          "end_epoch": 1791961008.7178473,
+          "exit_code": 0,
+          "raw_wall_seconds": 183.25056472886354,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791960825.467281
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-reference-16-r2-20261014_20261014T065345Z_aec59e26413c4ee4b56cfbadd06b5ad2.json"
+    },
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-1-r3.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "shared-arrow",
+      "workers": 1,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 124.82455073203892,
+      "cpu_seconds": 121.297957,
+      "effective_cores": 0.9717475952338137,
+      "scope_peak_bytes": 2185654272,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "computed_stocks": 128,
+      "preparation_seconds": 9.187084012664855,
+      "compute_seconds": 110.72389714606106,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-shared-arrow-1-r3/2026-01-05/details.jsonl.gz",
+        "bytes": 73334,
+        "sha256": "4a3f328a38db3b90c424fb8d61b8903e1b2339ad903d88c5e51fa08e8076bc45"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "56779c24b0aa0cbf69ef21016cfde39ebf68fdfba71808bc2ffda3c5fb20c688",
+      "preparation": {
+        "seconds": 9.187084012664855,
+        "pages": 68,
+        "reused_pages": 0,
+        "shared_bytes": 750158888,
+        "workers": 1,
+        "resource_admission": [
+          {
+            "requested": 1,
+            "admitted": 1,
+            "available_bytes": 49239576576,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 110.72389714606106,
+        "workers": 1,
+        "resource_admission": [
+          {
+            "requested": 1,
+            "admitted": 1,
+            "available_bytes": 48379740160,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 1848937384,
+        "parent_wait_seconds": 110.66121582034975,
+        "worker_cpu_seconds": 110.58847965499993,
+        "worker_decode_seconds": 0.3198122661560774,
+        "worker_matching_and_receipt_seconds": 110.29815533477813,
+        "actual_effective_cores": 0.9987769804482,
+        "max_stock_cpu_seconds": 23.358617457999998,
+        "max_stock_matching_seconds": 23.336982280947268,
+        "stock_count": 128
+      },
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+        "scope_unit": "guard-sse-v2-forward-shared-arrow-1-r3-20261014-0da01453.scope",
+        "resource_usage": {
+          "average_effective_cores": 0.97184387961022,
+          "cpu_system_seconds": 1.957089,
+          "cpu_throttled_seconds": 0.0,
+          "cpu_usage_seconds": 122.199184,
+          "cpu_user_seconds": 120.242094,
+          "io_read_bytes": 0,
+          "io_read_operations": 35232,
+          "io_write_bytes": 1236190,
+          "io_write_operations": 7102,
+          "memory_current_end_bytes": 870604800,
+          "memory_peak_bytes": 2185654272,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 125.73952109366655
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 2185654272,
+        "business_command_timing": {
+          "active_wall_seconds": 125.72155429329723,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "shared-arrow",
+            "--workers",
+            "1",
+            "--stocks",
+            "128",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-1-r3.json"
+          ],
+          "end_epoch": 1791961734.0904336,
+          "exit_code": 0,
+          "raw_wall_seconds": 125.72154054231942,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791961608.3688903
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-shared-arrow-1-r3-20261014_20261014T070648Z_d7f61aa4d4e14da98d25e4bd2698367f.json"
+    },
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-4-r3.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "shared-arrow",
+      "workers": 4,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 37.0985419806093,
+      "cpu_seconds": 129.383132,
+      "effective_cores": 3.487553016709554,
+      "scope_peak_bytes": 5188218880,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "computed_stocks": 128,
+      "preparation_seconds": 4.298883255571127,
+      "compute_seconds": 28.150931533426046,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-shared-arrow-4-r3/2026-01-05/details.jsonl.gz",
+        "bytes": 73354,
+        "sha256": "e0850e82536d526fa4042eab93352911f0c12993607c68443e30b5e773f58e28"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "56779c24b0aa0cbf69ef21016cfde39ebf68fdfba71808bc2ffda3c5fb20c688",
+      "preparation": {
+        "seconds": 4.298883255571127,
+        "pages": 68,
+        "reused_pages": 0,
+        "shared_bytes": 750158888,
+        "workers": 4,
+        "resource_admission": [
+          {
+            "requested": 4,
+            "admitted": 4,
+            "available_bytes": 49982853120,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 28.150931533426046,
+        "workers": 4,
+        "resource_admission": [
+          {
+            "requested": 4,
+            "admitted": 4,
+            "available_bytes": 49117507584,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 3420834528,
+        "parent_wait_seconds": 28.095189290121198,
+        "worker_cpu_seconds": 112.27151470199999,
+        "worker_decode_seconds": 0.34328331518918276,
+        "worker_matching_and_receipt_seconds": 111.98001489322633,
+        "actual_effective_cores": 3.9881989186997338,
+        "max_stock_cpu_seconds": 24.492400579999998,
+        "max_stock_matching_seconds": 24.470700880512595,
+        "stock_count": 128
+      },
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+        "scope_unit": "guard-sse-v2-forward-shared-arrow-4-r3-20261014-8ebc5e12.scope",
+        "resource_usage": {
+          "average_effective_cores": 3.422068094004173,
+          "cpu_system_seconds": 8.587251,
+          "cpu_throttled_seconds": 0.0,
+          "cpu_usage_seconds": 130.312391,
+          "cpu_user_seconds": 121.725141,
+          "io_read_bytes": 8192,
+          "io_read_operations": 35295,
+          "io_write_bytes": 1235668,
+          "io_write_operations": 6912,
+          "memory_current_end_bytes": 769708032,
+          "memory_peak_bytes": 5188218880,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 38.08001109864563
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 5188218880,
+        "business_command_timing": {
+          "active_wall_seconds": 37.91327546816319,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "shared-arrow",
+            "--workers",
+            "4",
+            "--stocks",
+            "128",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-4-r3.json"
+          ],
+          "end_epoch": 1791961607.432104,
+          "exit_code": 0,
+          "raw_wall_seconds": 37.913264878094196,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791961569.5188377
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-shared-arrow-4-r3-20261014_20261014T070609Z_87087e2f28a14238bebc3825336e00b8.json"
+    },
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-8-r3.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "shared-arrow",
+      "workers": 8,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 32.76627740263939,
+      "cpu_seconds": 138.780934,
+      "effective_cores": 4.235480652703652,
+      "scope_peak_bytes": 7079997440,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "computed_stocks": 128,
+      "preparation_seconds": 5.013218483887613,
+      "compute_seconds": 23.58234203606844,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-shared-arrow-8-r3/2026-01-05/details.jsonl.gz",
+        "bytes": 73341,
+        "sha256": "8c4eb9a8e17a69ba40edfe75ac48ce230e48ab945f86f51a6c2cb551b1cf81b8"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "56779c24b0aa0cbf69ef21016cfde39ebf68fdfba71808bc2ffda3c5fb20c688",
+      "preparation": {
+        "seconds": 5.013218483887613,
+        "pages": 68,
+        "reused_pages": 0,
+        "shared_bytes": 750158888,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 50741108736,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 23.58234203606844,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 49869357056,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 4298005144,
+        "parent_wait_seconds": 23.517355741001666,
+        "worker_cpu_seconds": 112.02313467500001,
+        "worker_decode_seconds": 0.5360790500417352,
+        "worker_matching_and_receipt_seconds": 111.55813062563539,
+        "actual_effective_cores": 4.750297256466903,
+        "max_stock_cpu_seconds": 23.536239289,
+        "max_stock_matching_seconds": 23.508073675446212,
+        "stock_count": 128
+      },
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+        "scope_unit": "guard-sse-v2-forward-shared-arrow-8-r3-20261014-428058e0.scope",
+        "resource_usage": {
+          "average_effective_cores": 4.099858636946494,
+          "cpu_system_seconds": 18.665066,
+          "cpu_throttled_seconds": 0.0,
+          "cpu_usage_seconds": 139.720758,
+          "cpu_user_seconds": 121.055692,
+          "io_read_bytes": 16384,
+          "io_read_operations": 37502,
+          "io_write_bytes": 1235080,
+          "io_write_operations": 7520,
+          "memory_current_end_bytes": 769331200,
+          "memory_peak_bytes": 7079997440,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 34.079408675432205
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 7079997440,
+        "business_command_timing": {
+          "active_wall_seconds": 33.58752405643463,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "shared-arrow",
+            "--workers",
+            "8",
+            "--stocks",
+            "128",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-8-r3.json"
+          ],
+          "end_epoch": 1791961567.9755843,
+          "exit_code": 0,
+          "raw_wall_seconds": 33.58751256484538,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791961534.3880696
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-shared-arrow-8-r3-20261014_20261014T070534Z_9c29bbdb215645d1bc5a2ef2a42f92e3.json"
+    },
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-16-r3.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "shared-arrow",
+      "workers": 16,
+      "profile_enabled": false,
+      "stocks": 128,
+      "selected_codes_sha256": "8dfa0a096ec93eff4d927b443f6d3c9d25bba5546e15b4c5c4923712e72226df",
+      "source_results_sha256": "d7ededbbdd5ffae2219011924aafba5cd467636fac0fd5b63c2f05eb79694789",
+      "exact_equal": true,
+      "seconds": 37.25695919059217,
+      "cpu_seconds": 155.062884,
+      "effective_cores": 4.161984428379094,
+      "scope_peak_bytes": 7362641920,
+      "orders": {
+        "sse_only": 587486,
+        "szse_tail_reference": 587486
+      },
+      "computed_stocks": 128,
+      "preparation_seconds": 6.51530656311661,
+      "compute_seconds": 23.472159093245864,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-shared-arrow-16-r3/2026-01-05/details.jsonl.gz",
+        "bytes": 73336,
+        "sha256": "f410642b1b2d0530263f264107a5b1ea83462db6cac33828a6b4075855781ed9"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "56779c24b0aa0cbf69ef21016cfde39ebf68fdfba71808bc2ffda3c5fb20c688",
+      "preparation": {
+        "seconds": 6.51530656311661,
+        "pages": 68,
+        "reused_pages": 0,
+        "shared_bytes": 750158888,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 51503779840,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 23.472159093245864,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 50641412096,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 5608832424,
+        "parent_wait_seconds": 23.373904403299093,
+        "worker_cpu_seconds": 115.056800973,
+        "worker_decode_seconds": 0.5167831592261791,
+        "worker_matching_and_receipt_seconds": 114.63131305575371,
+        "actual_effective_cores": 4.901841390726927,
+        "max_stock_cpu_seconds": 23.402993186,
+        "max_stock_matching_seconds": 23.387533572502434,
+        "stock_count": 128
+      },
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+        "scope_unit": "guard-sse-v2-forward-shared-arrow-16-r3-20261014-8f32c08e.scope",
+        "resource_usage": {
+          "average_effective_cores": 4.043243714280321,
+          "cpu_system_seconds": 32.010947,
+          "cpu_throttled_seconds": 0.068772,
+          "cpu_usage_seconds": 156.050368,
+          "cpu_user_seconds": 124.039421,
+          "io_read_bytes": 16384,
+          "io_read_operations": 38285,
+          "io_write_bytes": 1234508,
+          "io_write_operations": 7691,
+          "memory_current_end_bytes": 770711552,
+          "memory_peak_bytes": 7362641920,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 38.59534053038806
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 7362641920,
+        "business_command_timing": {
+          "active_wall_seconds": 38.11780617386103,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "shared-arrow",
+            "--workers",
+            "16",
+            "--stocks",
+            "128",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-16-r3.json"
+          ],
+          "end_epoch": 1791961530.454573,
+          "exit_code": 0,
+          "raw_wall_seconds": 38.11779569461942,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791961492.336775
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-shared-arrow-16-r3-20261014_20261014T070452Z_fa69a01975fc4aa4950ff921b8cb7398.json"
+    },
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-4-512-takeover.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "shared-arrow",
+      "workers": 4,
+      "profile_enabled": false,
+      "stocks": 512,
+      "selected_codes_sha256": "29bf30d3f8ac1ea7883dba022dac37c9fefb0b1d8e4072536b666c6d744e2956",
+      "source_results_sha256": "0d269bf36345cb9b58de9f3df217d16332c37e6658acff9da8940f8266bb356d",
+      "exact_equal": true,
+      "seconds": 109.9670698530972,
+      "cpu_seconds": 422.134153,
+      "effective_cores": 3.8387323911050877,
+      "scope_peak_bytes": 6142509056,
+      "orders": {
+        "sse_only": 2038975,
+        "szse_tail_reference": 2038975
+      },
+      "computed_stocks": 512,
+      "preparation_seconds": 10.967201489023864,
+      "compute_seconds": 95.07861420419067,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-shared-arrow-4-512-takeover/2026-01-05/details.jsonl.gz",
+        "bytes": 291828,
+        "sha256": "11561519c1624ae72a3afec928b61a0cd354d410412011e47b7400ff5dd947be"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "56779c24b0aa0cbf69ef21016cfde39ebf68fdfba71808bc2ffda3c5fb20c688",
+      "preparation": {
+        "seconds": 10.967201489023864,
+        "pages": 68,
+        "reused_pages": 0,
+        "shared_bytes": 2601572952,
+        "workers": 4,
+        "resource_admission": [
+          {
+            "requested": 4,
+            "admitted": 4,
+            "available_bytes": 48471277568,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 95.07861420419067,
+        "workers": 4,
+        "resource_admission": [
+          {
+            "requested": 4,
+            "admitted": 4,
+            "available_bytes": 45753049088,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 4498163520,
+        "parent_wait_seconds": 94.94791781529784,
+        "worker_cpu_seconds": 379.6336588950001,
+        "worker_decode_seconds": 1.329897278919816,
+        "worker_matching_and_receipt_seconds": 378.4497319897637,
+        "actual_effective_cores": 3.9928396314201584,
+        "max_stock_cpu_seconds": 27.644272314000002,
+        "max_stock_matching_seconds": 27.487671475857496,
+        "stock_count": 512
+      },
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+        "scope_unit": "guard-sse-v2-forward-shared-arrow-4-512-takeover-20261014-1aa47086.scope",
+        "resource_usage": {
+          "average_effective_cores": 3.8049040333668636,
+          "cpu_system_seconds": 33.456951,
+          "cpu_throttled_seconds": 0.0,
+          "cpu_usage_seconds": 423.115442,
+          "cpu_user_seconds": 389.658492,
+          "io_read_bytes": 0,
+          "io_read_operations": 55818,
+          "io_write_bytes": 1673762,
+          "io_write_operations": 10247,
+          "memory_current_end_bytes": 2634874880,
+          "memory_peak_bytes": 6142509056,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 111.20265801437199
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 6142509056,
+        "business_command_timing": {
+          "active_wall_seconds": 110.82370524760336,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "shared-arrow",
+            "--workers",
+            "4",
+            "--stocks",
+            "512",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-4-512-takeover.json"
+          ],
+          "end_epoch": 1791962203.3756542,
+          "exit_code": 0,
+          "raw_wall_seconds": 110.82368546817452,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791962092.5519674
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-shared-arrow-4-512-takeover-20261014_20261014T071452Z_63946ca434f14bb8ad41795b30a81d42.json"
+    },
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-8-512-takeover.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "shared-arrow",
+      "workers": 8,
+      "profile_enabled": false,
+      "stocks": 512,
+      "selected_codes_sha256": "29bf30d3f8ac1ea7883dba022dac37c9fefb0b1d8e4072536b666c6d744e2956",
+      "source_results_sha256": "0d269bf36345cb9b58de9f3df217d16332c37e6658acff9da8940f8266bb356d",
+      "exact_equal": true,
+      "seconds": 67.65903887338936,
+      "cpu_seconds": 500.89002000000005,
+      "effective_cores": 7.403150094066775,
+      "scope_peak_bytes": 8739807232,
+      "orders": {
+        "sse_only": 2038975,
+        "szse_tail_reference": 2038975
+      },
+      "computed_stocks": 512,
+      "preparation_seconds": 16.34687194507569,
+      "compute_seconds": 47.753177526406944,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-shared-arrow-8-512-takeover/2026-01-05/details.jsonl.gz",
+        "bytes": 291809,
+        "sha256": "61387d19217cd0a12d5aa2ad6b1cbb1dc6de15d0425bea56cd445982df199fa8"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "56779c24b0aa0cbf69ef21016cfde39ebf68fdfba71808bc2ffda3c5fb20c688",
+      "preparation": {
+        "seconds": 16.34687194507569,
+        "pages": 68,
+        "reused_pages": 0,
+        "shared_bytes": 2601572952,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 45862973440,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 47.753177526406944,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 43142578176,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 6578510120,
+        "parent_wait_seconds": 47.62759828567505,
+        "worker_cpu_seconds": 380.7836241629999,
+        "worker_decode_seconds": 1.6196280028671026,
+        "worker_matching_and_receipt_seconds": 379.37907689623535,
+        "actual_effective_cores": 7.9739955305054,
+        "max_stock_cpu_seconds": 27.561950463000002,
+        "max_stock_matching_seconds": 27.52517430111766,
+        "stock_count": 512
+      },
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+        "scope_unit": "guard-sse-v2-forward-shared-arrow-8-512-takeover-20261014-2f199856.scope",
+        "resource_usage": {
+          "average_effective_cores": 7.309458702762297,
+          "cpu_system_seconds": 111.519015,
+          "cpu_throttled_seconds": 0.0,
+          "cpu_usage_seconds": 501.866416,
+          "cpu_user_seconds": 390.3474,
+          "io_read_bytes": 131072,
+          "io_read_operations": 54943,
+          "io_write_bytes": 1674308,
+          "io_write_operations": 10322,
+          "memory_current_end_bytes": 2638774272,
+          "memory_peak_bytes": 8739807232,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 68.6598606556654
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 8739807232,
+        "business_command_timing": {
+          "active_wall_seconds": 68.51199442055076,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "shared-arrow",
+            "--workers",
+            "8",
+            "--stocks",
+            "512",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-8-512-takeover.json"
+          ],
+          "end_epoch": 1791962272.8807342,
+          "exit_code": 0,
+          "raw_wall_seconds": 68.51197217032313,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791962204.3687599
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-shared-arrow-8-512-takeover-20261014_20261014T071644Z_385a383fef844c4387336f18632fcf42.json"
+    },
+    {
+      "source": "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-16-512-takeover.json",
+      "schema": "sse-forward-full-pipeline-benchmark-v1",
+      "date": "2026-01-05",
+      "backend": "shared-arrow",
+      "workers": 16,
+      "profile_enabled": false,
+      "stocks": 512,
+      "selected_codes_sha256": "29bf30d3f8ac1ea7883dba022dac37c9fefb0b1d8e4072536b666c6d744e2956",
+      "source_results_sha256": "0d269bf36345cb9b58de9f3df217d16332c37e6658acff9da8940f8266bb356d",
+      "exact_equal": true,
+      "seconds": 37.988324493169785,
+      "cpu_seconds": 446.971008,
+      "effective_cores": 11.766010056073002,
+      "scope_peak_bytes": 10037088256,
+      "orders": {
+        "sse_only": 2038975,
+        "szse_tail_reference": 2038975
+      },
+      "computed_stocks": 512,
+      "preparation_seconds": 6.661394763737917,
+      "compute_seconds": 28.663847050629556,
+      "durable_detail": {
+        "path": "/home/wenjie/hdd-store/outputs/sirui/sse-original-v2-20261013/forward-performance-benchmark/forward-shared-arrow-16-512-takeover/2026-01-05/details.jsonl.gz",
+        "bytes": 291816,
+        "sha256": "e8b0f8ab176a823368bc755fbba1cf0c4f08403d39f47685978d5c1d8dd5e3d6"
+      },
+      "reference_revision": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "runner_sha256": "56779c24b0aa0cbf69ef21016cfde39ebf68fdfba71808bc2ffda3c5fb20c688",
+      "preparation": {
+        "seconds": 6.661394763737917,
+        "pages": 68,
+        "reused_pages": 0,
+        "shared_bytes": 2601572952,
+        "workers": 8,
+        "resource_admission": [
+          {
+            "requested": 8,
+            "admitted": 8,
+            "available_bytes": 43227140096,
+            "effective_cpu_cores": 16.0
+          }
+        ]
+      },
+      "computation": {
+        "seconds": 28.663847050629556,
+        "workers": 16,
+        "resource_admission": [
+          {
+            "requested": 16,
+            "admitted": 16,
+            "available_bytes": 40503873536,
+            "effective_cpu_cores": 16.0
+          }
+        ],
+        "reserved_queue_peak_bytes": 9585610696,
+        "parent_wait_seconds": 28.523971589282155,
+        "worker_cpu_seconds": 400.99543716600004,
+        "worker_decode_seconds": 2.365472880192101,
+        "worker_matching_and_receipt_seconds": 399.2921942761168,
+        "actual_effective_cores": 13.989588922160845,
+        "max_stock_cpu_seconds": 28.559012849000002,
+        "max_stock_matching_seconds": 28.494443631730974,
+        "stock_count": 512
+      },
+      "guard": {
+        "exit_code": 0,
+        "git_revision": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+        "scope_unit": "guard-sse-v2-forward-shared-arrow-16-512-takeover-20261014-6c54ffd0.scope",
+        "resource_usage": {
+          "average_effective_cores": 11.45504875635257,
+          "cpu_system_seconds": 38.942747,
+          "cpu_throttled_seconds": 0.340476,
+          "cpu_usage_seconds": 448.00441,
+          "cpu_user_seconds": 409.061662,
+          "io_read_bytes": 0,
+          "io_read_operations": 56130,
+          "io_write_bytes": 1674908,
+          "io_write_operations": 10592,
+          "memory_current_end_bytes": 2637324288,
+          "memory_peak_bytes": 10037088256,
+          "swap_peak_bytes": 0,
+          "wall_seconds": 39.109777664765716
+        },
+        "resource_evidence": {
+          "average_effective_cores": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_system_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_throttled_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_usage_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "cpu_user_seconds": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "io_read_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_read_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_bytes": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "io_write_operations": {
+            "source": "procfs_cgroup_processes",
+            "status": "observed"
+          },
+          "memory_current_end_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "memory_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "swap_peak_bytes": {
+            "source": "cgroup_v2",
+            "status": "observed"
+          },
+          "wall_seconds": {
+            "source": "guard_monotonic_clock",
+            "status": "observed"
+          }
+        },
+        "scope_memory_peak_bytes": 10037088256,
+        "business_command_timing": {
+          "active_wall_seconds": 38.88760411646217,
+          "boundary": "before child process creation through command exit; active clock excludes confirmed trading freezes",
+          "command": [
+            "/usr/bin/python3.14",
+            "-u",
+            "scripts/benchmark_sse_original_v2_forward.py",
+            "--backend",
+            "shared-arrow",
+            "--workers",
+            "16",
+            "--stocks",
+            "512",
+            "--output",
+            "/tmp/wenjie-sse-v2-performance-20261014/forward-shared-arrow-16-512-takeover.json"
+          ],
+          "end_epoch": 1791962312.4220579,
+          "exit_code": 0,
+          "raw_wall_seconds": 38.887568324804306,
+          "schema_version": "guard-business-command-timing-v1",
+          "start_epoch": 1791962273.5344877
+        },
+        "termination_reason": null
+      },
+      "guard_manifest": "/home/wenjie/hdd-store/outputs/sirui/algobench/reports/guard/sse-v2-forward-shared-arrow-16-512-takeover-20261014_20261014T071753Z_3024dc67c27c4dcf95ed894b9886a8d1.json"
+    }
+  ]
+}
