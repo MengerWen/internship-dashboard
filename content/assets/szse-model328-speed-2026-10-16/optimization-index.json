@@ -1,0 +1,453 @@
+{
+  "schema_version": "optimization-code-index-v1",
+  "report_date": "2026-10-16",
+  "repository": "https://github.com/MengerWen/sirui-quant-research",
+  "selected_revision": "af7a83e8d225986b57f99b66c92398ffa66ea20a",
+  "note": "Representative retained implementation commits, mapped to article items. Entries after the fastest revision are not attributed to its 337.622-second sample. The list is a navigation index, not an independent effect estimate for every commit.",
+  "changes": [
+    {
+      "commit": "bb09717e1abc1eef31833cec2e618731a4af1caa",
+      "subject": "Pass thresholded worker memory reclamation to model328 scoring",
+      "report_items": [
+        1
+      ],
+      "entry_points": [
+        "ModelSources.old",
+        "formal_worker_memory"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    {
+      "commit": "0da3fc24ae62301c12eb45b3a7dd8b3917ea0eeb",
+      "subject": "Expand streaming compute capacity after extraction completes",
+      "report_items": [
+        2
+      ],
+      "entry_points": [
+        "DailyScheduler"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "commit": "ad58387476f4fa5adc574808d59ea04133fb93ee",
+      "subject": "Compute model328 auxiliary sources on the existing shared factor stream",
+      "report_items": [
+        3
+      ],
+      "entry_points": [
+        "ModelSources.old",
+        "source_adapters"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_cancel_source.py",
+        "因子/algobench/src/algobench/formal_depth_source.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    {
+      "commit": "c8f4b959a341e884e72f8d9cb2c110f8cd1be245",
+      "subject": "Reuse bounded native integer-array hashing for persisted exactness audits",
+      "report_items": [
+        5
+      ],
+      "entry_points": [
+        "int64_ragged_array_hashes"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/tests/test_formal_numeric_cell_hash.py"
+      ]
+    },
+    {
+      "commit": "6266e27060830665afa1e753b1e5cc9632be0e0a",
+      "subject": "Finalize shared factor sources while daily task payloads remain live",
+      "report_items": [
+        3
+      ],
+      "entry_points": [
+        "finalize_direction_day",
+        "finalize_depth_day"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    {
+      "commit": "6a08d795876482b33c731cd510b960a9720f99ad",
+      "subject": "复用可配置日桶布局减少深市因子发布对象数",
+      "report_items": [
+        19
+      ],
+      "entry_points": [
+        "merge_day_fragments"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    {
+      "commit": "3d6ae8dbc9dd3c3f97491b2e92108b8dbfba6f80",
+      "subject": "通过对象接口提交日桶并独立核验持久订单证据",
+      "report_items": [
+        21
+      ],
+      "entry_points": [
+        "ObjectPublication",
+        "ArtifactGeneration.commit"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "decisions/2026-10-14-object-publication-namespace.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/src/algobench/formal_artifact_commit.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    {
+      "commit": "663267cfc3f51338e530446d06e9f279b93f63ae",
+      "subject": "在BBO区间图中复用精确范围索引和跨批次边归并",
+      "report_items": [
+        8
+      ],
+      "entry_points": [
+        "BboRangeIndex.query",
+        "BboIntervalAccumulator.append_indexed_event_ranges"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/src/algobench/formal_bbo_interval.py",
+        "因子/algobench/tests/test_formal_bbo_interval.py"
+      ]
+    },
+    {
+      "commit": "f783cfa8ee8ef5bb05beafc495d5236f107a3580",
+      "subject": "缩减列式配对归约的序列投影字段",
+      "report_items": [
+        7
+      ],
+      "entry_points": [
+        "PairReducerSink._project_view_sequence"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "commit": "f9039fe042cd929839fab507efaadc8eb55c2b42",
+      "subject": "按赢家索引收集完整配对科学证据",
+      "report_items": [
+        7
+      ],
+      "entry_points": [
+        "PairReducerSink.consume_view"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "commit": "4f73a83385520f5442f89745166df20d9d7d573f",
+      "subject": "以非零核后继表精确查询单调BBO区间上界",
+      "report_items": [
+        9
+      ],
+      "entry_points": [
+        "BboRangeIndex.query"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_bbo_range_index.py",
+        "因子/algobench/tests/test_formal_bbo_range_index.py"
+      ]
+    },
+    {
+      "commit": "0a00cf319d0d89a1098fc8c9260ae59d624163b1",
+      "subject": "用直接寻址区间累计完整BBO候选图",
+      "report_items": [
+        8
+      ],
+      "entry_points": [
+        "BboIntervalAccumulator"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/src/algobench/formal_bbo_interval.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_bbo_interval.py"
+      ]
+    },
+    {
+      "commit": "9bcab4fcf21dcc2791c74d2eca061cba3a0f26ca",
+      "subject": "按Arrow股票行段执行完整订单验收",
+      "report_items": [
+        13
+      ],
+      "entry_points": [
+        "_verify_order_audit_component",
+        "_stock_audit_tables"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_raw_bank_diagnostics.py"
+      ]
+    },
+    {
+      "commit": "dc2747a81e0f5cc7e5aeaec381a51e1592bf8dad",
+      "subject": "审计暂存与日桶合并复用 Arrow 字典缓冲",
+      "report_items": [
+        14
+      ],
+      "entry_points": [
+        "write_derived_fragment",
+        "read_derived_fragment",
+        "merge_day_fragments"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_derived_fragments.py",
+        "因子/algobench/tests/test_formal_audit_fragments.py"
+      ]
+    },
+    {
+      "commit": "8884e8c353b8041943963898dcb46b1e6abb91fa",
+      "subject": "日遥测按内容身份复用科学结构头与冻结清单",
+      "report_items": [
+        17
+      ],
+      "entry_points": [
+        "resolve_day_manifest"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "因子/algobench/src/algobench/formal_day_manifest_codec.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_day_manifest_codec.py"
+      ]
+    },
+    {
+      "commit": "d8ae027eb718af8c4ac09bc53b404b2c6f0163d7",
+      "subject": "冻结清单结构池保留浮点符号身份",
+      "report_items": [
+        17
+      ],
+      "entry_points": [
+        "日清单内容池规范值编码"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "因子/algobench/src/algobench/formal_day_manifest_codec.py",
+        "因子/algobench/tests/test_formal_day_manifest_codec.py"
+      ]
+    },
+    {
+      "commit": "a57993552fb99ad20090e6304b35ae1c6c739a6b",
+      "subject": "复用目录描述符降低暂存监控扫描成本",
+      "report_items": [
+        27
+      ],
+      "entry_points": [
+        "派生暂存目录描述符监控"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/src/algobench/formal_factor_resources.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "commit": "dd6807441bc8ee28d0ba6c7b2be9ba68ab31fa16",
+      "subject": "为深市完整因子计算配置普通页分配",
+      "report_items": [
+        25
+      ],
+      "entry_points": [
+        "run_szse_model328_factor_recompute.build_run_identity"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/tests/test_szse_model328_factor_recompute.py"
+      ]
+    },
+    {
+      "commit": "06d8b28f36fc59b42ebcae0c5ace34a68aa6dca4",
+      "subject": "通过对象接口发布并完整回读正式因子块",
+      "report_items": [
+        21
+      ],
+      "entry_points": [
+        "write_factor_block_generation",
+        "ArtifactGeneration.commit"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-16-szse-model328-four-minute-continuation.md",
+        "因子/algobench/src/algobench/formal_artifact_commit.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py"
+      ]
+    },
+    {
+      "commit": "af7a83e8d225986b57f99b66c92398ffa66ea20a",
+      "subject": "深市正式计算在原生导入前关闭mimalloc透明大页",
+      "report_items": [
+        26
+      ],
+      "entry_points": [
+        "formal_raw_bank_startup"
+      ],
+      "included_in_fastest_revision": true,
+      "files": [
+        "PLAN/2026-10-16-szse-model328-four-minute-continuation.md",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_szse_model328_factor_recompute.py"
+      ]
+    },
+    {
+      "commit": "c603a7168385ee1bf2b6cd2540fb9445bab6fc70",
+      "subject": "对有界派生对象使用单次PUT并保留完整回读",
+      "report_items": [
+        23
+      ],
+      "entry_points": [
+        "ObjectPublication.upload"
+      ],
+      "included_in_fastest_revision": false,
+      "files": [
+        "PLAN/2026-10-16-szse-model328-four-minute-continuation.md",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py"
+      ]
+    },
+    {
+      "commit": "d433021d06a4eb6eb4218f5e00af4b759eb536d9",
+      "subject": "复用已验证日清单解析并重叠独立订单验收",
+      "report_items": [
+        18
+      ],
+      "entry_points": [
+        "resolve_day_manifest",
+        "validate_factor_statuses",
+        "factor_diagnostics_identity"
+      ],
+      "included_in_fastest_revision": false,
+      "files": [
+        "PLAN/2026-10-16-szse-model328-four-minute-continuation.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "commit": "afc348001c97781a593437f77a48f851a167aab4",
+      "subject": "股票结果按冻结哈希传递特征作用域并共享只读回读定义",
+      "report_items": [
+        18
+      ],
+      "entry_points": [
+        "dependency_inventory",
+        "scoped_registry"
+      ],
+      "included_in_fastest_revision": false,
+      "files": [
+        "PLAN/2026-10-16-szse-model328-four-minute-continuation.md",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_day_manifest_codec.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_feature_scope.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_day_manifest_codec.py",
+        "因子/algobench/tests/test_formal_feature_scope.py"
+      ]
+    },
+    {
+      "commit": "6a3c90421064f67288612e41fb7479d8f50f54ea",
+      "subject": "使原生控制读取覆盖发布器绑定的输入命名空间",
+      "report_items": [
+        23
+      ],
+      "entry_points": [
+        "ObjectPublication.target",
+        "ObjectPublication.read_json"
+      ],
+      "included_in_fastest_revision": false,
+      "files": [
+        "PLAN/2026-10-16-szse-model328-four-minute-continuation.md",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py"
+      ]
+    },
+    {
+      "commit": "5d004f8f7681a4b14a956c02eb9c82f9179b91e4",
+      "subject": "按实际提取状态验证股票完成通知",
+      "report_items": [
+        24
+      ],
+      "entry_points": [
+        "DailyScheduler",
+        "DayBucketPipeline"
+      ],
+      "included_in_fastest_revision": false,
+      "files": [
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    }
+  ]
+}
