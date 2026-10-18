@@ -100,6 +100,7 @@ PAGES = {
     '2026-09-07.show.html': PAPER,
     '2026-09-16.show.html': PAPER,
     '2026-09-18.show.html': PAPER,
+    '2026-10-18.show.html': PAPER,
 }
 
 # 2026-08-07 shipped its own observer. Its band never lights the last section and

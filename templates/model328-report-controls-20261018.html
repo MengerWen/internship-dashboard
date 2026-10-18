@@ -1,0 +1,31 @@
+<!--RESULTS-->
+<h3>全部结果放在一起看</h3><p class="small">按当前区间的股票日计数汇总。总表、因子导航与CSV共用筛选及排序；百分数显示四舍五入，下载保留完整精度。</p>
+<div class="controls" id="results-controls">
+<label>覆盖区间<select data-filter="period" id="global-period"></select></label>
+<label>来源<select data-filter="source" id="result-source"><option value="all">全部四来源</option></select></label>
+<label>方向<select data-filter="side" id="result-side"><option value="all">买卖全部</option><option value="buy">Buy · 买侧</option><option value="sell">Sell · 卖侧</option></select></label>
+<label>排序<select data-filter="sort" id="result-sort"><option value="coverage_asc">覆盖率从低到高</option><option value="coverage_desc">覆盖率从高到低</option><option value="index">冻结模型列序</option></select></label>
+<label>检索定义或正式列名<input type="search" data-filter="q" id="result-search" autocomplete="off" placeholder="例如：f96、跨订单、深度"></label>
+</div><p id="result-count" class="status-text" aria-live="polite">正在解压本报告的验收汇总…</p><div class="table-scroll ranking-scroll" id="all-results" aria-label="全部因子覆盖结果"></div><div class="download-row"><button type="button" id="download-results">下载当前筛选CSV</button><button type="button" data-reset>清空筛选</button></div>
+<!--/RESULTS-->
+<!--ATLAS-->
+<div class="controls" id="atlas-controls">
+<label>覆盖区间<select data-filter="period" id="detail-period"></select></label>
+<label>来源<select data-filter="source" id="source-filter"><option value="all">全部四来源</option></select></label>
+<label>研究逻辑<select data-filter="layer" id="layer-filter"><option value="all">全部层次与机制</option></select></label>
+<label>定义<select data-filter="family" id="family-filter"><option value="all">全部定义</option></select></label>
+<label>订单方向<select data-filter="side" id="side-filter"><option value="all">买卖全部</option><option value="buy">Buy · 买侧</option><option value="sell">Sell · 卖侧</option></select></label>
+<label>检索<input type="search" data-filter="q" id="factor-search" autocomplete="off" placeholder="中文名称或模型列名"></label>
+<label>排列方式<select data-filter="arrangement" id="factor-arrangement"><option value="grouped">保留因子分组</option><option value="flat">不分组 · 全部混排</option></select></label>
+<label>排序<select data-filter="sort" id="factor-sort"><option value="coverage_asc">覆盖率从低到高</option><option value="coverage_desc">覆盖率从高到低</option><option value="index">冻结模型列序</option></select></label>
+<label>查看方式<select data-filter="mode" id="view-mode"><option value="all">全部查看</option><option value="tabs">分别查看</option></select></label>
+<button type="button" data-reset>清空筛选</button></div>
+<p class="small">研究逻辑 → 具体定义 → Buy / Sell。点击定义对照买卖，点击方向查看单列；箭头只展开或收起。日期范围在当前查看的列之间同步。</p>
+<div class="inventory"><aside class="factor-navigation" aria-label="因子目录"><p id="factor-count" class="status-text" aria-live="polite"></p><div class="tree-controls"><button type="button" id="expand-factors">全部展开</button><button type="button" id="collapse-factors">收起分组</button></div><div id="factor-list" class="factor-list"></div></aside><div class="detail-stack" id="detail-cards"><p class="status-text">正在读取逐列定义和覆盖情况…</p></div></div>
+<!--/ATLAS-->
+<!--TIMING-->
+<h3>逐日计时记录</h3><p class="small">默认只列本次完整四来源新日期。切换到全部601日时包含较早配置的历史日期，不能据此合并成同一配置的性能分布。恢复日保留“不完整计时”标记。</p><div class="controls"><label>日期范围<select id="timing-scope"><option value="fresh">本次完整四来源328日</option><option value="new">本次补齐330日（含恢复）</option><option value="all">全部601日（配置不同）</option></select></label><label>排序<select id="timing-sort"><option value="date">数据日期</option><option value="seconds">耗时从高到低</option></select></label></div><p id="timing-note" class="status-text" aria-live="polite"></p><div id="timing-table" class="table-scroll daily-table"></div><div class="download-row"><button type="button" id="download-timing">下载当前计时CSV</button></div>
+<!--/TIMING-->
+<!--DOWNLOADS-->
+<h3>报告下载</h3><div class="download-row"><button type="button" id="download-markdown">下载Markdown全文</button><button type="button" id="download-proof">下载完整汇总JSON</button><button type="button" id="download-all-factors">下载328列覆盖CSV</button><button type="button" id="download-all-days">下载601日汇总CSV</button></div><p class="small">JSON包含328列注册信息、601日缺失计数、来源文件SHA、计时与发布凭证。CSV/JSON不包含原始行情、逐股票日参数、模型内容或逐股票日因子数值；服务器路径是结果定位说明。</p><p id="report-load-status" class="status-text" aria-live="polite"></p>
+<!--/DOWNLOADS-->
