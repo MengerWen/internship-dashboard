@@ -85,12 +85,13 @@
       <div class="journal-controls">
         <div class="journal-segment" aria-label="显示方式"><button type="button" data-journal-view="atlas">图谱</button><button type="button" data-journal-view="list">清单</button></div>
         <label>时间窗 <select id="journal-window"><option value="all">全部</option><option value="3m">近 3 个月</option><option value="1m">近 1 个月</option></select></label>
+        <label class="journal-density-control">密度 <select id="journal-density"><option value="7">紧凑</option><option value="11" selected>标准</option><option value="17">宽松</option></select></label>
         <label>链条 <select id="journal-chain"><option value="">全部链条</option></select></label>
-        <button id="journal-clear" type="button" hidden>取消聚焦</button>
+        <button id="journal-clear" type="button" hidden>取消选中</button>
         <label class="journal-find">查找 <input id="journal-find" type="search" placeholder="日期、一句话、链名"></label>
         <span id="journal-count" role="status" aria-live="polite"></span>
       </div>
-      <figure id="journal-figure" class="journal-figure" hidden><div class="journal-scroller"></div><div class="journal-readout" role="tooltip" hidden></div><figcaption></figcaption></figure>
+      <figure id="journal-figure" class="journal-figure" hidden><div class="journal-atlas-header"><div class="journal-head-scroller"></div></div><div class="journal-scroller"></div><figcaption></figcaption></figure>
       <div id="journal-list" class="journal-list"></div>
       <div id="journal-detail" class="journal-detail" aria-live="polite"></div>
     </section>

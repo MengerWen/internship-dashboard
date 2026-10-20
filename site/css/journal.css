@@ -36,37 +36,69 @@
 .journal-day-card h2 { font: 700 24px/1.6 var(--font-serif); margin: 12px 0; overflow-wrap: anywhere; }
 .journal-empty { padding: 40px 0; color: var(--text); }
 .journal-figure { margin: 16px 0 0; position: relative; }
+.journal-atlas-header { position: sticky; top: var(--topbar-h); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.journal-head-scroller { overflow: hidden; scrollbar-color: var(--line-soft) var(--bg); }
+.journal-header-inner { position: relative; height: 116px; }
 .journal-scroller { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-color: var(--line-soft) var(--bg); }
-.journal-atlas { display: block; width: 100%; min-width: 1120px; }
+.journal-canvas { position: relative; }
+.journal-atlas { display: block; max-width: none; }
 .journal-atlas text { font-family: var(--font-body); fill: var(--text); }
-.journal-track-label { font-size: 13px; }
+.journal-header-inner .journal-track-label { position: absolute; top: 0; text-align: center; white-space: nowrap; border-bottom: 1px solid var(--line); padding-bottom: 5px; font-size: 12px; line-height: 20px; }
+.journal-date-heading { position: absolute; top: 5px; left: 0; font-size: 12px; }
+.journal-head-separator { position: absolute; top: 24px; bottom: 0; border-left: 1px solid var(--line-soft); }
+.journal-view .journal-chain-label { position: absolute; top: 27px; width: 32px; height: 88px; min-height: 0; transform: translateX(-50%); border: 0; border-radius: 0; background: none; padding: 0; font-size: 12.5px; line-height: 1.15; text-align: left; transition: opacity 120ms cubic-bezier(.23, 1, .32, 1), color 120ms cubic-bezier(.23, 1, .32, 1); }
+.journal-chain-name { position: absolute; top: 2px; left: 50%; transform: translateX(-50%); writing-mode: vertical-rl; text-orientation: mixed; white-space: nowrap; }
+.journal-chain-label.is-dropped .journal-chain-name { text-decoration: line-through; }
+.journal-view .journal-chain-label.is-selected { color: var(--focus); font-weight: 700; }
+.journal-chain-label.is-dimmed { opacity: .2; }
+.journal-chain-label .journal-fate-badge { position: absolute; bottom: 1px; left: 0; font-size: 10px; padding: 1px; white-space: nowrap; }
 .journal-atlas .journal-axis-label { font-size: 12px; fill: var(--muted); }
-.journal-weekend { fill: var(--bg-deep); opacity: .3; }
+.journal-date-label { font-size: 12px; }
+.journal-atlas .journal-date-label.is-selected { fill: var(--focus); font-weight: 700; }
+.journal-weekend { fill: var(--bg-deep); opacity: .28; }
 .journal-rule, .journal-month-rule { stroke: var(--line-soft); stroke-width: 1; }
 .journal-chain-line { stroke: var(--text); stroke-width: 1.7; fill: none; }
 .journal-pause { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; fill: none; }
-.journal-handoff-path { stroke: var(--text); stroke-width: 1; fill: none; opacity: .26; }
+.journal-dropped-line { stroke: var(--muted); stroke-width: 1.4; stroke-dasharray: 1 3; fill: none; }
+.journal-column-guide { stroke: var(--line-soft); stroke-width: 1; fill: none; }
+.journal-halo { stroke: var(--bg); stroke-width: 5; fill: none; }
+.journal-dot-halo { fill: var(--bg); stroke: none; }
+.journal-handoff-path { stroke: var(--text); stroke-width: 1; fill: none; opacity: .3; }
 .journal-dot { fill: var(--bg); stroke: var(--text); stroke-width: 1.6; }
 .journal-dot.has-report, .journal-seal { fill: var(--text); }
+.journal-cross { fill: none; stroke-width: 2; stroke-linecap: round; }
+.journal-seal { stroke: var(--text); stroke-width: 1.4; }
+.journal-seal.is-parked { fill: var(--bg); }
 .journal-report-tick { stroke: var(--text); stroke-width: 2; }
-.journal-atlas .journal-chain-label { font-size: 12px; fill: var(--muted); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
-.journal-selection-band { fill: var(--focus); opacity: .16; pointer-events: none; }
 .journal-selection-line { stroke: var(--focus); stroke-width: 1.2; pointer-events: none; }
-.journal-unit { transition: opacity 120ms cubic-bezier(.23, 1, .32, 1); cursor: pointer; }
-.journal-unit.is-dimmed { opacity: .1; }
+.journal-selection-ring { fill: none; stroke: var(--focus); stroke-width: 2; }
+.journal-selection-overlay { pointer-events: none; }
+.journal-unit { transition: opacity 120ms cubic-bezier(.23, 1, .32, 1); }
+.journal-unit, .journal-date-label, .journal-weekend, .journal-rule, .journal-month-rule, .journal-axis-label, .journal-report-tick { pointer-events: none; }
+.journal-unit.is-dimmed { opacity: .13; }
 .journal-unit.is-focused .journal-chain-line, .journal-unit.is-focused .journal-dot, .journal-unit.is-focused .journal-handoff-path { stroke: var(--focus); }
+.journal-unit.is-focused .journal-chain-line { stroke-width: 3; }
 .journal-unit.is-focused .journal-seal, .journal-unit.is-focused .journal-dot.has-report { fill: var(--focus); }
 .journal-unit.is-focused .journal-handoff-path { opacity: 1; }
-.journal-day-hit { fill: transparent; cursor: pointer; }
+.journal-day-hit, .journal-point-hit { fill: transparent; cursor: pointer; }
+.journal-day-hit:focus-visible { fill: var(--surface); stroke: var(--focus); stroke-width: 1.5; outline: none; }
+.journal-point-hit:focus-visible { stroke: var(--focus); stroke-width: 2; }
 .journal-figure figcaption { color: var(--muted); font-size: 12px; margin: 8px 0 24px; line-height: 1.7; }
 .journal-figure figcaption p { margin: 0 0 8px; }
 .journal-handoff-legend { display: flex; flex-wrap: wrap; gap: 10px 20px; }
 .journal-handoff-legend span { display: inline-flex; gap: 7px; align-items: center; }
 .journal-handoff-legend svg { width: 34px; height: 8px; stroke: var(--text); stroke-width: 1.4; }
-.journal-hover-line { stroke: var(--muted); stroke-width: 1; pointer-events: none; }
-.journal-readout { position: absolute; z-index: 3; pointer-events: none; width: max-content; max-width: min(290px, 100%); padding: 10px 14px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); font-size: 13px; line-height: 1.6; }
-.journal-readout p { margin: 5px 0; }
-.journal-readout small { color: var(--muted); }
+.journal-annotations { position: absolute; inset: 0; pointer-events: none; }
+.journal-annotation { position: absolute; box-sizing: border-box; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); font-size: 13px; line-height: 1.6; pointer-events: auto; overflow-wrap: anywhere; }
+.journal-annotation p { margin: 0 0 4px; }
+.journal-annotation strong { display: block; font-weight: 400; }
+.journal-annotation small { display: block; margin-top: 4px; font-size: 12px; }
+.journal-chain-annotation { border: 0; padding: 3px 8px; background: var(--bg); font-size: 12px; line-height: 1.45; }
+.journal-chain-annotation p { font-size: 12px; margin: 0 0 2px; }
+.journal-chain-annotation strong { font-size: 13px; }
+.journal-annotation.is-dropped strong { color: var(--muted); }
+.journal-annotation-leader { fill: none; stroke: var(--focus); stroke-width: 1; opacity: .75; }
+.journal-fate-badge { display: inline-block; margin: 3px 0 0 5px; padding: 0 3px; border: 1px solid currentColor; font-size: 12px; font-weight: 400; line-height: 1.5; }
 .journal-day-nav, .journal-chain-neighbors { display: flex; gap: 12px; }
 .journal-day-nav button { flex: 1; min-width: 0; text-align: left; padding: 12px; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-bottom: 0; }
 .journal-day-nav button:last-child { text-align: right; }
@@ -105,9 +137,9 @@
 .journal-view .journal-heading p, .journal-view #journal-count,
 .journal-view .journal-list th, .journal-view .journal-list small,
 .journal-view .journal-chain-link small, .journal-view .journal-figure figcaption,
-.journal-view .journal-readout small, .journal-view .journal-evidence small,
+.journal-view .journal-evidence small,
 .journal-view .journal-repo > p, .journal-view .journal-chain-days small { color: var(--text); }
-.journal-atlas .journal-axis-label, .journal-atlas .journal-chain-label { fill: var(--text); font-size: 12.5px; }
+.journal-atlas .journal-axis-label { fill: var(--text); font-size: 12px; }
 .journal-view input::placeholder { color: var(--text); opacity: 1; }
 @media (max-width: 859px) {
   .journal-view { padding: 20px 16px 60px; }

@@ -5,187 +5,281 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8029/dist/';
-const output = path.resolve('artifacts/journal-column');
+const output = path.resolve('artifacts/journal-column-v2');
 const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
 
-async function settleAtTop(page) {
+async function settled(page) {
   await page.evaluate(async () => {
     await document.fonts.ready;
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     await Promise.all(document.getAnimations().filter(a => a.effect?.getTiming().iterations !== Infinity).map(a => a.finished.catch(() => {})));
-    document.documentElement.style.scrollBehavior = 'auto';
-    document.documentElement.style.overflowAnchor = 'none';
-    document.body.style.scrollBehavior = 'auto';
-    document.body.style.overflowAnchor = 'none';
-    scrollTo({top: 0, left: 0, behavior: 'instant'});
   });
-  await page.waitForFunction(() => scrollY === 0);
-  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 }
 
-async function capturePage(page, name, width) {
-  await settleAtTop(page);
-  const height = await page.evaluate(() => document.documentElement.scrollHeight);
-  if (height <= 16000) return page.screenshot({path: path.join(output, name + '.png'), fullPage: true});
-  // Chrome 超长图在16384px回卷；分段保留原始像素，主图保留首屏。
-  await page.screenshot({path: path.join(output, name + '.png')});
-  const segments = [];
-  for (let y = 0; y < height; y += 12000) {
-    const file = `${name}-full-${1 + y / 12000}.png`;
-    const size = Math.min(12000, height - y);
-    await page.screenshot({path: path.join(output, file), fullPage: true, clip: {x: 0, y, width, height: size}});
-    segments.push({file, y, width, height: size});
+async function atTop(page) {
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.documentElement.style.overflowAnchor = 'none';
+    scrollTo({top: 0, behavior: 'instant'});
+  });
+  await settled(page);
+}
+
+async function containedAnnotations(page, vertical = false) {
+  const boxes = await page.locator('.journal-annotation').evaluateAll(nodes => nodes.map(n => {
+    const r = n.getBoundingClientRect(), parent = n.closest('.journal-canvas').getBoundingClientRect();
+    return {left: r.left - parent.left, top: r.top - parent.top, right: r.right - parent.left, bottom: r.bottom - parent.top, width: parent.width, height: parent.height};
+  }));
+  boxes.forEach(b => {
+    assert(b.left >= -.1 && b.right <= b.width + .1, JSON.stringify(b));
+    assert(b.top >= -.1 && b.bottom <= b.height + .1, JSON.stringify(b));
+  });
+  for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) {
+    const a = boxes[i], b = boxes[j];
+    assert(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top, '注解不能互相重叠');
+    if (vertical) assert(a.bottom <= b.top, '纵向注解按日期向下排列');
   }
-  await fs.writeFile(path.join(output, name + '-capture.json'), JSON.stringify({height, segments}, null, 2));
+}
+
+async function capture(page, name, fullPage = false) {
+  if (fullPage) await atTop(page);
+  await settled(page);
+  await page.screenshot({path: path.join(output, name + '.png'), fullPage});
 }
 
 (async () => {
   await fs.mkdir(output, {recursive: true});
+  const manifest = JSON.parse(await fs.readFile('dist/manifest.json', 'utf8'));
+  const tags = JSON.parse(await fs.readFile('content/report-tags.json', 'utf8'));
+  const days = manifest.journal;
+  assert.equal(days.length, 88);
+  assert.equal(manifest.chains.chains.length, 28);
+  assert.equal(days.reduce((n, d) => n + Object.keys(d.chain_notes).length, 0), 140);
+  assert(days.every(d => d.chains.every(cid => d.chain_notes[cid].note.length > 0 && d.chain_notes[cid].note.length <= 24)));
+  const dropped = days.flatMap(d => d.chains.filter(cid => d.chain_notes[cid].outcome === 'dropped').map(cid => ({date: d.date, cid})));
+  assert.equal(dropped.length, 4);
   const browser = await chromium.launch({headless: true, channel: 'chrome'});
   const results = [];
   try {
-    for (const width of [1440, 390]) {
-      const page = await browser.newPage({viewport: {width, height: 900}});
-      const errors = [];
-      // Python 静态预览没有既有标签 API；仅为该接口提供仓库快照。
-      const tags = JSON.parse(await fs.readFile(path.resolve('content/report-tags.json'), 'utf8'));
-      await page.route('**/api/report-tags', route => route.fulfill({json: {data: tags, revision: 0, canEdit: false}}));
+    for (const width of [1440, 768, 390]) {
+      const context = await browser.newContext({viewport: {width, height: 900}});
+      // 静态预览没有标签 API；只对既有接口提供只读快照。
+      await context.route('**/api/report-tags', route => route.fulfill({json: {data: tags, revision: 0, canEdit: false}}));
+      const page = await context.newPage(), errors = [];
       page.on('pageerror', e => errors.push(e.message));
       page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });
-      await page.goto(base + '#/journal?view=list');
-      await page.waitForSelector('#journal-list tbody tr');
-      assert.equal(await page.locator('#journal-list tbody tr').count(), 88);
-      assert.equal(await page.locator('#tab-journal.is-active').count(), 1);
-      assert(await page.locator('#journal-list a[href="#/daily/2026-10-14"]').count());
-      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
-      assert.equal(overflow, false, `page overflow at ${width}`);
-      await page.screenshot({path: path.join(output, `p1-list-${width}.png`)});
+      await page.goto(base + '#/journal');
+      await page.waitForSelector('#view-journal.is-active');
+      assert.equal(await page.locator('#journal-list').isVisible(), width < 860);
+      await page.locator('[data-journal-view="list"]').click();
+      assert.equal(await page.locator('#journal-list tbody tr').count(), days.length);
       await page.locator('#journal-find').fill('2026-10-14');
       assert.equal(await page.locator('#journal-list tbody tr').count(), 1);
-      await page.locator('#journal-find').fill('没有这个关键词');
+      await page.locator('#journal-find').fill('不存在的关键词');
       assert(await page.locator('.journal-empty').isVisible());
       await page.locator('#journal-find').fill('');
-      assert.equal(await page.locator('#journal-list tbody tr').count(), 88);
-      await page.goto(base + '#/journal');
-      await page.waitForSelector('.journal-atlas', {state: 'attached'});
-      assert.equal(await page.locator('#journal-list').isVisible(), width < 860);
+      await capture(page, `list-${width}`);
       await page.locator('[data-journal-view="atlas"]').click();
-      assert.equal(await page.locator('.journal-atlas').getAttribute('data-days'), '88');
-      assert.equal(await page.locator('.journal-day-hit').count(), 88);
-      assert(await page.locator('.journal-pause').count());
-      const types = await page.locator('.journal-handoff').evaluateAll(nodes => [...new Set(nodes.map(n => n.dataset.type))].sort());
-      assert.deepEqual(types, ['依赖解除', '延续', '收口', '派生'].sort());
+      await settled(page);
+      assert.equal(await page.locator('.journal-chain-label').count(), 28);
+      assert.equal(await page.locator('.journal-chain-unit').count(), 28);
+      assert.equal(await page.locator('.journal-day-hit').count(), days.length);
+      assert.equal(await page.locator('.journal-point-hit').count(), 140);
+      assert.equal(await page.locator('.journal-annotation').count(), 0);
       assert.equal(await page.locator('.journal-handoff[data-chains="ml-330 model-report"]').getAttribute('data-date'), '2026-09-21');
-      const ys = await page.locator('[data-chain-y]').evaluateAll(nodes => nodes.map(n => n.dataset.chainY));
-      assert.equal(new Set(ys).size, 28);
+      assert.deepEqual(await page.locator('.journal-handoff').evaluateAll(nodes => [...new Set(nodes.map(n => n.dataset.type))].sort()), ['依赖解除', '延续', '收口', '派生'].sort());
+      const columns = await page.locator('.journal-chain-unit').evaluateAll(nodes => nodes.map(n => Number(n.dataset.chainX)).sort((a, b) => a - b));
+      assert.equal(new Set(columns).size, 28);
+      const minimumGap = Math.min(...columns.slice(1).map((v, i) => v - columns[i]));
+      if (width === 1440) assert(minimumGap >= 35, `最小列距 ${minimumGap}`);
+      const labels = await page.locator('.journal-chain-label').evaluateAll(nodes => nodes.map(n => {
+        const r = n.getBoundingClientRect(); return {left: r.left, right: r.right, top: r.top, bottom: r.bottom};
+      }));
+      for (let i = 0; i < labels.length; i++) for (let j = i + 1; j < labels.length; j++) {
+        assert(labels[i].right <= labels[j].left || labels[j].right <= labels[i].left, '列头名字不能重叠');
+      }
       const ratios = await page.locator('.journal-day-hit').evaluateAll(nodes => {
-        const x = d => Number(nodes.find(n => n.dataset.journalDay === d).getAttribute('x'));
-        return (x('2026-10-07') - x('2026-09-23')) / (x('2026-10-08') - x('2026-10-07'));
+        const y = d => Number(nodes.find(n => n.dataset.journalDay === d).getAttribute('y'));
+        return (y('2026-10-07') - y('2026-09-23')) / (y('2026-10-08') - y('2026-10-07'));
       });
-      assert(Math.abs(ratios - 14) < .0001, 'date gaps must retain real width');
-      if (width === 1440) {
-        await page.locator('.journal-day-hit[data-journal-day="2026-10-14"]').hover();
-        assert(await page.locator('.journal-readout').isVisible());
-        assert((await page.locator('.journal-readout').textContent()).includes('2026-10-14'));
-        const box = await page.locator('.journal-readout').boundingBox();
-        assert(box.x >= 0 && box.x + box.width <= width);
+      assert(Math.abs(ratios - 14) < .0001, '时间空档保持真实日期间距');
+      assert.equal(await page.locator('.journal-report-tick').count(), days.filter(d => d.reports_published.length).length);
+      for (const entry of dropped) {
+        assert.equal(await page.locator(`path.journal-cross[data-date="${entry.date}"][data-chain="${entry.cid}"]`).count(), 1);
+        assert.equal(await page.locator(`circle.journal-dot[data-date="${entry.date}"][data-chain="${entry.cid}"]`).count(), 0);
       }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+      await atTop(page);
+      await capture(page, `atlas-standard-${width}`, true);
+      const hoverBefore = await page.locator('#journal-figure').innerHTML();
+      await page.locator('.journal-day-hit[data-journal-day="2026-07-08"]').hover({position: {x: 30, y: 5}});
+      await page.mouse.move(150, 200);
+      assert.equal(await page.locator('#journal-figure').innerHTML(), hoverBefore, '鼠标移动不改变图或说明');
+      const date = '2026-07-08', day = days.find(d => d.date === date);
+      await page.locator(`.journal-day-hit[data-journal-day="${date}"]`).click({position: {x: 30, y: 5}});
+      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), date);
+      assert.equal(await page.locator('.journal-annotation').count(), day.chains.length);
+      assert.equal(await page.locator('.journal-selection-ring').count(), day.chains.length);
+      const line = await page.locator('.journal-selection-line').getAttribute('d');
+      assert(line.startsWith('M86,'));
+      await containedAnnotations(page);
+      await capture(page, `day-${width}`);
       if (width === 1440) {
-        const indexed = await page.evaluate(async () => {
-          const search = await import('./pagefind/pagefind.js');
-          const hits = await search.search('回测');
-          const data = await Promise.all(hits.results.map(hit => hit.data()));
-          return data.some(hit => hit.meta.type === 'journal' && hit.url.includes('journal-'));
-        });
-        assert(indexed, 'Pagefind must search journal content');
+        const initialWidth = Number(await page.locator('.journal-atlas').getAttribute('width'));
+        await page.setViewportSize({width: 1280, height: 900});
+        await page.waitForFunction(w => Number(document.querySelector('.journal-atlas').getAttribute('width')) < w, initialWidth);
+        assert.equal(await page.locator('.journal-chain-label').first().evaluate(n => getComputedStyle(n).fontSize), '12.5px');
+        assert.equal(await page.locator('.journal-selection-ring').count(), day.chains.length);
+        await containedAnnotations(page);
+        await page.setViewportSize({width, height: 900});
+        await page.waitForFunction(w => Number(document.querySelector('.journal-atlas').getAttribute('width')) === w, initialWidth);
+        await page.evaluate(() => scrollTo({top: 800, behavior: 'instant'}));
+        await settled(page);
+        assert(Math.abs((await page.locator('.journal-atlas-header').boundingBox()).y - 126) < 2, '列头应在固定刊头下吸顶');
+        await capture(page, 'sticky-header-1440');
+        await atTop(page);
       }
-      await page.screenshot({path: path.join(output, `p2-atlas-${width}.png`)});
-      for (const route of ['#/journal', '#/journal/2026-10-14', '#/journal?chain=szse-model328', '#/journal?view=list']) {
-        await page.goto(base + route);
-        await page.waitForSelector('#view-journal.is-active');
-        if (route.includes('/2026-10-14')) assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-14');
-        if (route.includes('chain=')) assert(await page.locator('.journal-chain-card').isVisible());
+      for (const density of ['7', '17', '11']) {
+        await page.locator('#journal-density').selectOption(density);
+        assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), date);
+        assert.equal(await page.locator('.journal-selection-ring').count(), day.chains.length);
+        await containedAnnotations(page);
       }
+      await page.locator('#journal-clear').click();
+      await page.locator(`.journal-point-hit[data-date="${date}"][data-journal-point="algobench"]`).click();
+      assert.equal(await page.locator('.journal-annotation').count(), 1);
+      assert.equal(await page.locator('.journal-selection-ring').count(), 1);
+      assert.equal(await page.locator('.journal-chain-label.is-selected').count(), 1);
+      await containedAnnotations(page);
+      await capture(page, `point-${width}`);
+      await page.reload();
+      await page.waitForSelector('.journal-selection-ring');
+      assert.equal(await page.locator('.journal-annotation').count(), 1, '单点深链刷新后保持选中');
+      const canvasHeight = Number(await page.locator('.journal-atlas').getAttribute('height'));
+      await page.locator('.journal-atlas').click({position: {x: 12, y: canvasHeight - 5}});
+      assert.equal(await page.locator('.journal-annotation').count(), 0, '点击空白取消选中');
+      await page.locator('.journal-chain-label[data-journal-chain="open5m"]').click();
+      await settled(page);
+      assert(await page.locator('.journal-chain-card').isVisible());
+      assert.equal(await page.locator('.journal-chain-annotation').count(), days.filter(d => d.chains.includes('open5m')).length);
+      const opacity = await page.locator('.journal-chain-label').evaluateAll(nodes => nodes.map(n => ({id: n.dataset.journalChain, opacity: Number(getComputedStyle(n).opacity)})));
+      assert.equal(opacity.find(v => v.id === 'open5m').opacity, 1);
+      assert(opacity.filter(v => v.id !== 'open5m').every(v => v.opacity <= .3));
+      assert(await page.locator('.journal-chain-unit.is-dimmed').evaluateAll(nodes => nodes.every(n => Number(getComputedStyle(n).opacity) <= .2)));
+      await containedAnnotations(page, true);
+      if (width === 390) assert(await page.locator('.journal-chain-annotation').evaluateAll(nodes => nodes.every(n => {
+        const r = n.getBoundingClientRect(), viewport = n.closest('.journal-scroller').getBoundingClientRect();
+        return r.left >= viewport.left && r.right <= viewport.right;
+      })), '窄屏选中链条后，注解应直接出现在可见范围');
+      await capture(page, `chain-${width}`, true);
+      await page.locator('.journal-chain-label[data-journal-chain="open5m"]').press('Escape');
+      assert.equal(await page.locator('.journal-annotation').count(), 0);
+      await page.locator(`.journal-day-hit[data-journal-day="${date}"]`).press('Enter');
+      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), date);
+      await page.locator(`.journal-day-hit[data-journal-day="${date}"]`).press('ArrowDown');
+      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-07-09');
+      await page.locator('.journal-day-hit[data-journal-day="2026-07-08"]').press('ArrowUp');
+      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), date);
+      await page.locator(`.journal-day-hit[data-journal-day="${date}"]`).press('ArrowRight');
+      assert.equal(await page.locator('.journal-selection-ring').count(), 1);
+      await page.locator('.journal-atlas').press('Escape');
+      await page.locator('#journal-density').selectOption('7');
+      await atTop(page);
+      const compactHeight = await page.locator('.journal-atlas').evaluate(n => n.getBoundingClientRect().height + document.querySelector('.journal-atlas-header').getBoundingClientRect().height);
+      assert(compactHeight <= 1000, `紧凑整图高度 ${compactHeight}`);
+      await capture(page, `atlas-compact-${width}`, true);
+      await page.locator('#journal-density').selectOption('17');
+      await capture(page, `atlas-relaxed-${width}`, true);
+      await page.locator('#journal-window').selectOption('1m');
+      await page.locator('.journal-chain-label[data-journal-chain="onboarding"]').click();
+      assert((await page.locator('#journal-count').textContent()).startsWith('0 天'));
+      assert(await page.locator('.journal-chain-card .journal-window-empty').isVisible());
+      assert.equal(await page.locator('.journal-selection-line').count(), 0);
+      await page.locator('#journal-clear').click();
+      await page.locator('#journal-density').selectOption('7');
+      const fresh = await context.newPage();
+      await fresh.goto(base + '#/journal');
+      await fresh.waitForSelector('#view-journal.is-active');
+      await fresh.locator('[data-journal-view="atlas"]').click();
+      assert.equal(await fresh.locator('#journal-density').inputValue(), '7');
+      assert.equal(await fresh.locator('#journal-window').inputValue(), '1m');
+      await fresh.close();
+      await page.locator('#journal-window').selectOption('all');
       await page.goto(base + '#/journal/2026-10-14?view=atlas');
       await page.waitForSelector('[data-selected-date="2026-10-14"]');
       const evidenceRequests = [];
       page.on('request', r => { if (r.url().includes('/journal/_evidence/')) evidenceRequests.push(r.url()); });
       assert.equal(evidenceRequests.length, 0);
-      assert(!(await page.locator('#journal-highlights').textContent()).includes('展开右侧'));
       await page.locator('.journal-evidence > summary').click();
       await page.waitForSelector('.journal-repo');
       assert.equal(evidenceRequests.length, 1);
-      assert.equal(await page.locator('.journal-repo[open]').count(), 0);
       await page.locator('.journal-repo > summary').first().click();
       assert(await page.locator('.journal-repo a[href^="https://github.com/"]').count());
-      await settleAtTop(page);
-      await page.screenshot({path: path.join(output, `day-evidence-${width}.png`), fullPage: true});
-      await page.locator('.journal-day-nav [data-journal-nav="后一天"]').focus();
-      await page.keyboard.press('Enter');
+      await capture(page, `evidence-${width}`);
+      await page.locator('.journal-day-nav [data-journal-nav="后一天"]').press('Enter');
       assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-15');
       assert.equal(await page.evaluate(() => document.activeElement?.dataset.journalNav), '后一天');
-      await page.keyboard.press('Enter');
-      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-16');
-      await page.locator('.journal-day-nav [data-journal-nav="前一天"]').focus();
-      await page.keyboard.press('Enter');
-      await page.keyboard.press('Enter');
-      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-14');
-      await page.locator('.journal-atlas').focus();
-      await page.keyboard.press('ArrowRight');
-      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-15');
-      assert(await page.locator('.journal-atlas').evaluate(n => n === document.activeElement));
-      assert.notEqual(await page.locator('.journal-atlas').evaluate(n => getComputedStyle(n).outlineStyle), 'none');
-      await page.keyboard.press('ArrowLeft');
-      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-14');
-      await page.locator('#journal-chain').selectOption('szse-model328');
-      assert(await page.locator('.journal-chain-card').isVisible());
-      assert(await page.locator('.journal-unit.is-dimmed').count());
-      assert(await page.locator('.journal-unit.is-focused').count());
-      await page.locator('#journal-detail').scrollIntoViewIfNeeded();
-      await page.screenshot({path: path.join(output, `chain-${width}.png`)});
-      await page.locator('.journal-atlas').focus();
-      await page.keyboard.press('Escape');
-      assert.equal(await page.locator('#journal-chain').inputValue(), '');
-      await page.locator('#journal-window').selectOption('1m');
-      const windowCount = Number(await page.locator('.journal-atlas').getAttribute('data-days'));
-      assert(windowCount < 88 && windowCount > 0);
-      await page.locator('#journal-chain').selectOption('onboarding');
-      assert((await page.locator('#journal-count').textContent()).startsWith('0 天'));
-      assert.equal(await page.locator('.journal-selection-band').count(), 0);
-      assert(await page.locator('#journal-figure .journal-window-empty').isVisible());
-      assert(await page.locator('.journal-chain-card .journal-window-empty').isVisible());
-      await page.locator('[data-journal-view="list"]').click();
-      assert(await page.locator('.journal-chain-card .journal-window-empty').isVisible());
-      await page.locator('#journal-clear').click();
-      await page.locator('[data-journal-view="list"]').click();
-      assert.equal(await page.locator('#journal-list tbody tr').count(), windowCount);
-      await page.locator('#journal-window').selectOption('all');
-      await page.locator('#journal-list a[data-journal-day="2026-10-14"]').first().click();
-      assert(await page.locator('#journal-figure').isVisible());
-      assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-14');
-      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-      await page.goto(base + '#/journal');
-      await page.waitForSelector('#view-journal.is-active');
-      await capturePage(page, width === 1440 ? 'desktop' : 'mobile', width);
-      await page.screenshot({path: path.join(output, `first-viewport-${width}.png`)});
+      await page.goto(base + '#/journal/2026-08-07?view=atlas');
+      await page.waitForSelector('[data-selected-date="2026-08-07"]');
+      await page.locator('.journal-evidence > summary').click();
+      await page.waitForSelector('.journal-repo');
+      assert((await page.locator('#journal-evidence-content').textContent()).includes('本日回滚'));
+      if (width === 1440) {
+        const indexed = await page.evaluate(async () => {
+          const search = await import('./pagefind/pagefind.js');
+          const hits = await search.search('三参数');
+          const data = await Promise.all(hits.results.map(hit => hit.data()));
+          return data.some(hit => hit.meta.type === 'journal');
+        });
+        assert(indexed, '搜索应包含逐点注解');
+      }
+      for (const route of ['#/daily/2026-10-18/show', '#/showcase/factor', '#/journal?view=list']) {
+        await page.goto(base + route);
+        await settled(page);
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+      }
       assert.deepEqual(errors, []);
-      results.push({width, days: 88, overflow, errors});
-      await page.close();
+      results.push({width, days: days.length, chains: 28, notes: 140, minimumGap, compactHeight, errors});
+      await context.close();
     }
+    const context = await browser.newContext({viewport: {width: 1440, height: 900}, reducedMotion: 'reduce'});
+    const fixture = structuredClone(manifest);
+    fixture.chains.chains.find(c => c.id === 'onboarding').fate = 'dropped';
+    fixture.chains.chains.find(c => c.id === 'doris-migration').fate = 'parked';
+    fixture.journal.filter(d => d.chains.includes('onboarding')).forEach(d => { d.chain_notes.onboarding.outcome = 'dropped'; });
+    await context.route('**/manifest.json', route => route.fulfill({json: fixture}));
+    await context.route('**/api/report-tags', route => route.fulfill({json: {data: tags, revision: 0, canEdit: false}}));
+    const synthetic = await context.newPage();
+    await synthetic.goto(base + '#/journal?view=atlas&window=all');
+    await synthetic.waitForSelector('.journal-chain-label.is-dropped');
+    assert((await synthetic.locator('.journal-chain-label[data-journal-chain="onboarding"] .journal-chain-name').evaluate(n => getComputedStyle(n).textDecorationLine)).includes('line-through'));
+    assert.equal(await synthetic.locator('.journal-chain-unit[data-chains="onboarding"] circle.journal-dot').count(), 0);
+    assert.equal(await synthetic.locator('.journal-chain-unit[data-chains="onboarding"] path.journal-cross').count(), 2);
+    assert.equal(await synthetic.locator('.journal-chain-unit[data-chains="doris-migration"] .journal-seal.is-parked').count(), 1);
+    assert(await synthetic.locator('.journal-seal.is-parked').evaluate(n => getComputedStyle(n).fill !== getComputedStyle(n).stroke));
+    await capture(synthetic, 'synthetic-dropped-parked', true);
+    await synthetic.locator('.journal-day-hit[data-journal-day="2026-07-15"]').click({position: {x: 30, y: 5}});
+    const reduced = await synthetic.locator('.journal-day-card').evaluate(n => ({name: getComputedStyle(n).animationName, transform: getComputedStyle(n).transform}));
+    assert(['none', 'journal-opacity'].includes(reduced.name), JSON.stringify(reduced));
+    assert.equal(reduced.transform, 'none');
+    results.push({synthetic: true, droppedHeader: true, parkedSeal: true, reducedMotion: true});
+    await context.close();
     const offline = await browser.newPage();
     const offlineRequests = [], offlineErrors = [];
     offline.on('request', r => { if (/^https?:/.test(r.url())) offlineRequests.push(r.url()); });
     offline.on('pageerror', e => offlineErrors.push(e.message));
-    await offline.goto(pathToFileURL(path.resolve(offlineDir, 'index.html')).href + '#/journal/2026-10-14');
+    await offline.goto(pathToFileURL(path.resolve(offlineDir, 'index.html')).href + '#/journal/2026-10-14?view=atlas');
     await offline.waitForSelector('.journal-evidence');
     await offline.locator('.journal-evidence > summary').click();
     await offline.waitForSelector('.journal-repo');
+    assert.equal(await offline.locator('.journal-chain-label').count(), 28);
+    assert.equal(await offline.locator('.journal-annotation').count(), days.find(d => d.date === '2026-10-14').chains.length);
     assert.deepEqual(offlineRequests, []);
     assert.deepEqual(offlineErrors, []);
     results.push({offline: true, requests: offlineRequests, errors: offlineErrors});
     await offline.close();
-    await fs.writeFile(path.join(output, 'verification.json'), JSON.stringify(results, null, 2));
-    console.log(JSON.stringify(results));
+    await fs.writeFile(path.join(output, 'verification.json'), JSON.stringify(results, null, 2) + '\n');
+    console.log(JSON.stringify(results, null, 2));
   } finally {
     await browser.close();
   }
