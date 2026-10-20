@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T06:59:25Z",
+  "title": "Design System: 量化实习成果看板",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "暖纸底"
+      },
+      "bg-deep": {
+        "role": "neutral",
+        "displayName": "深纸底"
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "浅纸面"
+      },
+      "surface-2": {
+        "role": "neutral",
+        "displayName": "次层纸面"
+      },
+      "surface-3": {
+        "role": "neutral",
+        "displayName": "深墨面"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "主版线"
+      },
+      "line-soft": {
+        "role": "neutral",
+        "displayName": "浅版线"
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "正文墨色"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "次级灰墨"
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "当前焦点珊瑚色"
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "警告色"
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "长文链接色"
+      },
+      "stage-0": {
+        "role": "secondary",
+        "displayName": "阶段 0"
+      },
+      "stage-1": {
+        "role": "secondary",
+        "displayName": "阶段 1"
+      },
+      "stage-2": {
+        "role": "secondary",
+        "displayName": "阶段 2"
+      },
+      "stage-3": {
+        "role": "secondary",
+        "displayName": "阶段 3"
+      },
+      "stage-4": {
+        "role": "secondary",
+        "displayName": "阶段 4"
+      },
+      "stage-5": {
+        "role": "secondary",
+        "displayName": "阶段 5"
+      }
+    },
+    "typographyMeta": {
+      "font-serif": {
+        "displayName": "标题与阅读衬线",
+        "purpose": "保留 Libre Baskerville 与 Noto Serif SC 的既有搭配。"
+      },
+      "font-body": {
+        "displayName": "系统正文",
+        "purpose": "控件、索引、日志普通清单与图表标签。"
+      },
+      "font-mono": {
+        "displayName": "代码与档案索引",
+        "purpose": "既有刊头索引、时间与代码。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "--shadow",
+        "value": "0 12px 34px rgb(21 33 43 / 0.1)",
+        "purpose": "tokens.css 的既有阴影，日志悬停读数复用。"
+      },
+      {
+        "name": ".search-dialog box-shadow",
+        "value": "18px 18px 0 rgb(21 33 43 / 0.16)",
+        "purpose": "base.css 的既有搜索对话框硬投影，日卡不使用。"
+      }
+    ],
+    "motion": [
+      {
+        "name": ".icon-button/.text-button/.small-button transition",
+        "value": "background-color 150ms ease, color 150ms ease, transform 150ms ease",
+        "purpose": "base.css 的既有按钮状态变化。"
+      },
+      {
+        "name": ".journal-unit transition",
+        "value": "opacity 120ms cubic-bezier(.23, 1, .32, 1)",
+        "purpose": "journal.css 的链条明暗变化，键盘模式关闭。"
+      },
+      {
+        "name": ".journal-day-card animation",
+        "value": "journal-reveal 220ms cubic-bezier(.23, 1, .32, 1)",
+        "purpose": "journal.css 的日卡轻微显现，位移 3px、透明度 .7 至 1；键盘模式关闭。"
+      },
+      {
+        "name": "prefers-reduced-motion",
+        "value": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important",
+        "purpose": "base.css 的全局减少动态效果规则；journal.css 另将日卡改为仅透明度关键帧。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "base.css max-width",
+        "value": "800px"
+      },
+      {
+        "name": "journal.css max-width",
+        "value": "859px"
+      },
+      {
+        "name": "journal.js atlas default min-width",
+        "value": "860px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "通用文字按钮",
+      "kind": "button",
+      "refersTo": "text-button",
+      "description": "已有上一篇、下一篇等通用文字操作；源码为 base.css 的 text-button。",
+      "html": "<button type=\"button\" class=\"ds-text-button\">下一篇</button>",
+      "css": ".ds-text-button{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:8px 12px;gap:8px;border:1px solid var(--line);border-radius:var(--radius);background:transparent;color:var(--muted);font-family:var(--font-body);cursor:pointer;transition:background-color 150ms ease,color 150ms ease,transform 150ms ease}.ds-text-button:hover{background:var(--surface-3);color:var(--surface);transform:translateY(-1px)}.ds-text-button:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}.ds-text-button:disabled{cursor:not-allowed;opacity:.42}"
+    },
+    {
+      "name": "日志查找框",
+      "kind": "input",
+      "refersTo": "journal-control",
+      "description": "日志清单中的日期、一句话与链名查找；源码为 journal.css 的控件及输入规则。",
+      "html": "<label class=\"ds-journal-find\">查找 <input class=\"ds-journal-input\" type=\"search\" placeholder=\"日期、一句话、链名\"></label>",
+      "css": ".ds-journal-find{display:flex;align-items:center;gap:8px;min-width:0;white-space:nowrap;color:var(--text);font:13px var(--font-body)}.ds-journal-input{max-width:185px;width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line-soft);border-radius:var(--radius);padding:7px 10px}.ds-journal-input::placeholder{color:var(--text);opacity:1}.ds-journal-input:hover{border-color:var(--line-soft)}.ds-journal-input:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}@media(max-width:859px){.ds-journal-input{font-size:16px;max-width:100%;min-width:0}}"
+    },
+    {
+      "name": "主视图导航",
+      "kind": "nav",
+      "refersTo": "tab-active",
+      "description": "正式成果、每日汇报、研究日志共用的主导航；源码为 base.css 的 tabs 与 tab。",
+      "html": "<nav class=\"ds-tabs\" aria-label=\"主视图\"><a class=\"ds-tab\" href=\"#/showcase\">正式成果</a><a class=\"ds-tab\" href=\"#/daily\">每日汇报</a><a class=\"ds-tab ds-tab-active\" href=\"#/journal\" aria-current=\"page\">研究日志</a></nav>",
+      "css": ".ds-tabs{display:flex;align-items:stretch;height:44px;font-family:var(--font-body)}.ds-tab{display:grid;min-width:118px;place-items:center;padding:0 18px;border-right:1px solid var(--line-soft);color:var(--muted);text-align:center;text-decoration:none;font-size:12px}.ds-tab:first-child{border-left:1px solid var(--line-soft)}.ds-tab-active{background:var(--surface-3);color:var(--surface)}.ds-tab:hover{text-decoration:none}.ds-tab:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}@media(max-width:800px){.ds-tabs{width:100%}.ds-tab{flex:1;min-width:0;padding-inline:8px}}"
+    },
+    {
+      "name": "图谱与清单切换",
+      "kind": "button",
+      "refersTo": "journal-segment-selected",
+      "description": "用按下状态表达当前视图；源码为 journal.css 的 journal-segment。",
+      "html": "<div class=\"ds-journal-segment\" aria-label=\"显示方式\"><button type=\"button\" aria-pressed=\"true\">图谱</button><button type=\"button\" aria-pressed=\"false\">清单</button></div>",
+      "css": ".ds-journal-segment{display:inline-flex;font:13px var(--font-body)}.ds-journal-segment button{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line-soft);border-radius:0;padding:7px 10px;cursor:pointer}.ds-journal-segment button+button{border-left:0}.ds-journal-segment button[aria-pressed=true]{background:var(--line);color:var(--bg)}.ds-journal-segment button:hover{border-color:var(--line-soft)}.ds-journal-segment button:active:not(:disabled){background:var(--surface-2)}.ds-journal-segment button:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}@media(max-width:859px){.ds-journal-segment button{min-height:44px}}"
+    },
+    {
+      "name": "日报元信息片",
+      "kind": "chip",
+      "refersTo": "meta-chip",
+      "description": "既有日报的日期等元信息分隔片；源码为 daily.css 的 meta-chip，不是日志新造组件。",
+      "html": "<div class=\"ds-meta-row\"><span class=\"ds-meta-chip\">2026-10-20</span><span class=\"ds-meta-chip\">因子构建</span></div>",
+      "css": ".ds-meta-row{display:flex;flex-wrap:wrap;font:11px var(--font-body);color:var(--muted)}.ds-meta-chip{display:inline-flex;align-items:center;min-height:28px;padding:4px 10px;border:0;border-right:1px solid var(--line-soft);border-radius:0;background:transparent}.ds-meta-chip:first-child{padding-left:0;font-family:var(--font-mono)}"
+    },
+    {
+      "name": "日志日卡",
+      "kind": "card",
+      "refersTo": "journal-day-card",
+      "description": "选中日期后展示一句话、脉络和证据；源码为 journal.css 的 journal-day-card。",
+      "html": "<article class=\"ds-journal-day-card\"><div class=\"ds-journal-day-top\"><p><time>2026-10-20</time>　周二</p></div><h2>研究日志</h2><p>每天做了什么，接住了什么，交给了谁。</p></article>",
+      "css": ".ds-journal-day-card{padding:24px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-family:var(--font-body)}.ds-journal-day-card h2{font:700 24px/1.6 var(--font-serif);margin:12px 0;overflow-wrap:anywhere}.ds-journal-day-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px}.ds-journal-day-top p{margin:0;font-size:14px}.ds-journal-day-top time{font:400 26px/1.3 var(--font-serif)}@media(max-width:859px){.ds-journal-day-card{padding:18px}.ds-journal-day-card h2{font-size:20px}.ds-journal-day-top time{font-size:22px}}"
+    },
+    {
+      "name": "日志链名入口",
+      "kind": "button",
+      "description": "日卡与清单中的链条文字按钮；源码为 journal.css 的 journal-chain-link。",
+      "html": "<button type=\"button\" class=\"ds-journal-chain-link\">LV2 快照 <small>待核</small></button>",
+      "css": ".ds-journal-chain-link{border:0;padding:5px 0;background:none;text-align:left;text-decoration:underline;text-decoration-color:var(--line-soft);text-underline-offset:4px;color:var(--text);font:13px var(--font-body);cursor:pointer}.ds-journal-chain-link small{font-size:12px;color:var(--text)}.ds-journal-chain-link:hover{text-decoration-color:var(--line-soft)}.ds-journal-chain-link:active:not(:disabled){background:var(--surface-2)}.ds-journal-chain-link:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}@media(max-width:859px){.ds-journal-chain-link{min-height:44px}}"
+    },
+    {
+      "name": "证据折叠入口",
+      "kind": "custom",
+      "description": "日卡内按需展开的提交、计划与汇报入口；源码为 journal.css 与 journal.js 的 journal-evidence。",
+      "html": "<details class=\"ds-journal-evidence\"><summary>提交、计划与汇报 <small>7 次提交</small></summary><p>正在读取证据…</p></details>",
+      "css": ".ds-journal-evidence{font:14px var(--font-body);color:var(--text);overflow-wrap:anywhere}.ds-journal-evidence summary{cursor:pointer;line-height:1.8;padding:8px 0}.ds-journal-evidence small{color:var(--text);font-size:12px}.ds-journal-evidence summary:hover{color:var(--text)}.ds-journal-evidence summary:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "研究编辑台",
+    "overview": "暖纸底、深墨文字、清楚的版线和衬线标题构成现有站点的出版物语言。材料密度较高，标题、正文、索引和证据各有位置；层级主要由字号、字体、边界与留白建立。\n\n本文件从现有代码提取，保存已批准的方向 B。研究日志是同一站点的扩展；其方向三「推进图谱」属于栏目方案，不替换全站身份。纸底网格、刊头、细分隔线与编号已有用户选择依据；它们不因通用风格检测的提示而在本次扩展中改写。",
+    "keyCharacteristics": [
+      "纸色背景与墨色正文承担阅读层级。",
+      "自托管的两种衬线字体用于刊头、标题和长文，系统无衬线体用于控件与索引。",
+      "近方角、细线和反白选中态组织密集信息。",
+      "日志用位置、线型、空实和文字编码数据，珊瑚色标记当前选中或聚焦。"
+    ],
+    "rules": [
+      {
+        "name": "The Journal Focus Rule",
+        "body": "日志内的珊瑚色只表示当前选中或聚焦；有无汇报与链条身份使用其他编码。此约束不回写为全站旧组件已经完全遵守的事实。",
+        "section": "colors"
+      },
+      {
+        "name": "The Small Text Rule",
+        "body": "新日志中的说明、计数、表头、证据小字、占位文字和图谱标签使用 `text`；不以透明度削弱这些文字。",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "**Do** 从 `site/css/tokens.css` 复用现有名称与值，修改规范前先核对源码。",
+      "**Do** 让日志图谱、清单、日卡使用同一套日期和链条信息，并保留文字证据入口。",
+      "**Do** 用纸面、边界和字体共同区分有汇报的日子，用文字标明推断归属。",
+      "**Do** 为新增日志小字使用 `text`，保留键盘焦点与窄屏控件尺寸。"
+    ],
+    "donts": [
+      "**Don't** 将六个阶段色改作日志链条色，或把珊瑚色用于日志的汇报分类。",
+      "**Don't** 把日志的「推进图谱」构图升级为全站必须使用的页面布局。",
+      "**Don't** 为普通日卡添加浮起阴影、装饰图，或另起一套字体与颜色。",
+      "**Don't** 把旧刊头的小字和低对比规格当作新增界面的可读性依据。"
+    ]
+  }
+}

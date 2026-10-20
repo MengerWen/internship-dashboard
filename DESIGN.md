@@ -1,0 +1,191 @@
+---
+name: 量化实习成果看板
+description: 研究编辑台的纸墨档案体系
+colors:
+  bg: "#f2eee4"
+  bg-deep: "#e5ded0"
+  surface: "#f8f4eb"
+  surface-2: "#e9e2d5"
+  surface-3: "#15212b"
+  line: "#1e2a31"
+  line-soft: "#c8c1b4"
+  text: "#15212b"
+  muted: "#68716f"
+  focus: "#d9654f"
+  danger: "#ad4339"
+  blue: "#345f79"
+  stage-0: "#7c8581"
+  stage-1: "#4d7c8b"
+  stage-2: "#477d75"
+  stage-3: "#d9654f"
+  stage-4: "#9a705d"
+  stage-5: "#aa8439"
+typography:
+  font-serif:
+    fontFamily: '"Libre Baskerville", "Noto Serif SC", serif'
+  font-body:
+    fontFamily: '"Microsoft YaHei UI", "PingFang SC", sans-serif'
+  font-mono:
+    fontFamily: '"Cascadia Mono", Consolas, monospace'
+rounded:
+  radius: "2px"
+components:
+  text-button:
+    backgroundColor: transparent
+    textColor: "{colors.muted}"
+    rounded: "{rounded.radius}"
+    padding: "8px 12px"
+  text-button-hover:
+    backgroundColor: "{colors.surface-3}"
+    textColor: "{colors.surface}"
+  tab:
+    textColor: "{colors.muted}"
+    padding: "0 18px"
+  tab-active:
+    backgroundColor: "{colors.surface-3}"
+    textColor: "{colors.surface}"
+  journal-control:
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.radius}"
+    padding: "7px 10px"
+  journal-segment-selected:
+    backgroundColor: "{colors.line}"
+    textColor: "{colors.bg}"
+  journal-day-card:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    padding: "24px"
+  meta-chip:
+    backgroundColor: transparent
+    textColor: "{colors.muted}"
+    padding: "4px 10px"
+---
+
+# Design System: 量化实习成果看板
+
+## Overview
+
+**Creative North Star: "研究编辑台"**
+
+暖纸底、深墨文字、清楚的版线和衬线标题构成现有站点的出版物语言。材料密度较高，标题、正文、索引和证据各有位置；层级主要由字号、字体、边界与留白建立。
+
+本文件从现有代码提取，保存已批准的方向 B。研究日志是同一站点的扩展；其方向三「推进图谱」属于栏目方案，不替换全站身份。纸底网格、刊头、细分隔线与编号已有用户选择依据；它们不因通用风格检测的提示而在本次扩展中改写。
+
+**Key Characteristics:**
+
+- 纸色背景与墨色正文承担阅读层级。
+- 自托管的两种衬线字体用于刊头、标题和长文，系统无衬线体用于控件与索引。
+- 近方角、细线和反白选中态组织密集信息。
+- 日志用位置、线型、空实和文字编码数据，珊瑚色标记当前选中或聚焦。
+
+## Colors
+
+颜色值及名称逐项对应 `site/css/tokens.css`；前置 YAML 记录当前值，后续若有冲突，以该源码为准，不另设命名体系。
+
+### Primary
+
+- **当前焦点珊瑚色**（`focus`）：用于焦点轮廓；日志中用于选中日期的竖线、淡带和聚焦链条。
+
+### Neutral
+
+- **暖纸底**（`bg`）和**深纸底**（`bg-deep`）：页面底色与图谱周末底纹。
+- **浅纸面**（`surface`）和**次层纸面**（`surface-2`）：有汇报的记录、日卡、悬停读数与按下状态。
+- **深墨面**（`surface-3`）、**正文墨色**（`text`）和**主版线**（`line`）：正文、主边界及选中导航的反白底。
+- **浅版线**（`line-soft`）：表格行、次级边界、月份和轨道分隔。
+- **次级灰墨**（`muted`）：既有壳层元信息、图谱空档线等。它在页面纸底上的旧小字对比度存在问题，不作为新增日志小字的默认色。
+
+### Existing Semantic Colors
+
+`danger` 保留警告用途，`blue` 保留 Markdown 链接用途。`stage-0` 至 `stage-5` 保留既有阶段标识；这些色值不是日志链条的分类色。
+
+**The Journal Focus Rule.** 日志内的珊瑚色只表示当前选中或聚焦；有无汇报与链条身份使用其他编码。此约束不回写为全站旧组件已经完全遵守的事实。
+
+**The Small Text Rule.** 新日志中的说明、计数、表头、证据小字、占位文字和图谱标签使用 `text`；不以透明度削弱这些文字。
+
+## Typography
+
+**Display Font:** `font-serif`。其中 Libre Baskerville 和 Noto Serif SC 均自托管，提供常规与粗体（400、700）。
+
+**Body Font:** 控件、导航与日志清单使用 `font-body`；Markdown 长文直接使用 Noto Serif SC 与 serif 回退。
+
+**Label/Mono Font:** `font-mono` 用于既有刊头索引、时间与代码。日志数字使用等宽数字特性，不另加字体。
+
+### Hierarchy
+
+- **长文主标题**：响应式字号（`clamp(30px, 3vw, 44px)`），行高（1.35）。
+- **日志栏目标题**：衬线粗体（700，30px／1.3）；窄屏为（26px）。
+- **日志日卡标题**：衬线粗体（700，24px／1.6）；窄屏为（20px）。
+- **长文正文**：常规衬线（16px／1.9）；既有壳层在窄屏降为（15px）。
+- **日志清单正文**：常规系统无衬线（14px）；窄屏的一句话标题为（16px／1.6）。有汇报的行改用衬线标题。
+- **日志控件与图谱标签**：控件（13px），轨道标签（13px），轴与链名标签（12.5px）。这些是当前组件尺寸，不扩成新的全站字号令牌。
+
+旧刊头的英文小字仍有桌面（9px）、窄屏（8px）规格；此处记录现状，不将它纳入新增功能的可读性标准。相关漂移见 `docs/journal-review/design-system-audit.md`。
+
+## Layout
+
+全站保留固定双层刊头。`topbar-h` 在令牌源码中为（126px）；既有壳层在（800px）及以下改为（104px），隐藏刊头两侧辅助信息，三个主导航等分一行。页面内容从刊头下方开始。
+
+日志容器居中，最大宽度（1360px），桌面内边距（28px 24px 80px）。标题与控件允许换行。日志在（860px）及以上默认打开图谱，以下默认打开清单；显式切换或链接参数可选择另一个视图。图谱最小宽度（1120px），较窄容器在图内横向滚动，页面本身不扩宽。
+
+图谱横轴按真实日期排布，六条轨道按链条数量分配高度；清单与下方日卡提供相同信息的文字入口。日卡桌面为两列，列间距（40px）。日志在（859px）及以下改用窄屏排版：容器内边距（20px 16px 60px），清单每行变为纵向网格，日卡及链条日期列表改为单列，按钮最小高度（44px）。
+
+源码没有命名的间距刻度；前置 YAML 不凭组件测量另造 `spacing` 令牌。
+
+## Elevation & Depth
+
+常规页面、清单、日卡均以平面、边界和纸色差建立层级，不依赖浮起阴影。日志的悬停读数使用现有 `shadow`（`0 12px 34px rgb(21 33 43 / 0.1)`）；搜索对话框另有既存硬投影（`18px 18px 0 rgb(21 33 43 / 0.16)`）。日卡自身没有外投影。
+
+图谱聚焦通过降低无关线条不透明度、改变相关数据的墨色及珊瑚色建立层级。线条变暗不代替清单或证据中的文字关系。
+
+## Shapes
+
+现有 `radius` 是近方角（2px），普通按钮与输入框复用它。主导航、分段切换、表格和正文容器多为直角；刊头搜索图标是既有圆形例外。主版线与浅版线通常为（1px）。
+
+日志的圆点、收口方块、弧线和竖向刻度都是 SVG 数据标记。空心与实心表达有无汇报，方块表达收口；它们不作为界面装饰或另立的品牌图形。
+
+## Components
+
+### Buttons
+
+通用文字按钮为细墨边、透明底、近方角；内边距见前置 YAML。悬停改为深墨面反白，过渡（150ms ease）并上移（1px）。日志控件使用纸底与浅版线；按下改为次层纸面，禁用降低不透明度并改变指针。窄屏日志按钮提供（44px）最小高度。
+
+所有可聚焦控件沿用珊瑚色轮廓（2px）及外偏移（3px）。日志链名按钮表现为带浅色下划线的文字入口，待核状态另以文字标明。
+
+### Inputs / Fields
+
+日志查找框与下拉选择共享纸底、正文墨色、浅边线和近方角；查找框桌面最大宽度（185px）。窄屏输入字号为（16px），占位文字保持正文墨色。证据读取失败时显示文字错误及重试按钮。
+
+### Navigation
+
+三个主视图使用既有横排标签，当前页深墨面反白。日志的「图谱／清单」分段按钮用同样的墨面反白表达 `aria-pressed` 选中态；时间窗、链条筛选不靠颜色单独传达值。
+
+### Chips
+
+既有日报元信息片以直角、透明底、浅色右边线分隔，不是圆胶囊。日志链名采用文字按钮，不借阶段色制造标签分类。
+
+### Cards / Containers
+
+日卡及链条卡共用浅纸面和主版线边框；桌面内边距见前置 YAML，窄屏改为（18px）。有汇报的清单行同时使用浅纸面、左侧墨色实边（3px）与衬线标题，普通行只用浅版线分隔。
+
+### Research Atlas
+
+链条位置与文字标识身份；空档使用虚线，四类交接保留不同线型与文字图例。悬停读数是小纸卡，点击日期更新下方日卡；键盘左右键换日，Esc 取消聚焦。链条卡始终提供上下游、相关汇报及链上日期的文字入口。
+
+图谱单元的不透明度过渡为（120ms）并使用 `cubic-bezier(.23, 1, .32, 1)`。日卡出现采用（220ms）的轻微位移与淡入；键盘操作关闭这两类效果。源码还为减少动态效果设置了全局极短时长，并将日卡的位移改为仅透明度变化。这些是当前行为，不是新增动效令牌。
+
+## Do's and Don'ts
+
+### Do:
+
+- **Do** 从 `site/css/tokens.css` 复用现有名称与值，修改规范前先核对源码。
+- **Do** 让日志图谱、清单、日卡使用同一套日期和链条信息，并保留文字证据入口。
+- **Do** 用纸面、边界和字体共同区分有汇报的日子，用文字标明推断归属。
+- **Do** 为新增日志小字使用 `text`，保留键盘焦点与窄屏控件尺寸。
+
+### Don't:
+
+- **Don't** 将六个阶段色改作日志链条色，或把珊瑚色用于日志的汇报分类。
+- **Don't** 把日志的「推进图谱」构图升级为全站必须使用的页面布局。
+- **Don't** 为普通日卡添加浮起阴影、装饰图，或另起一套字体与颜色。
+- **Don't** 把旧刊头的小字和低对比规格当作新增界面的可读性依据。
