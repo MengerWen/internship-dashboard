@@ -156,7 +156,7 @@
         const source = from.filter(d => d.date <= target).at(-1)?.date || from[0].date;
         const x1 = x(source), x2 = x(target), y1 = positions.get(edge.from), y2 = positions.get(edge.to);
         const dash = edge.type === "派生" ? "4 3" : edge.type === "依赖解除" ? "1 3" : edge.type === "收口" ? "7 2 1 2" : (edge.confidence === "inferred" ? "2 5" : "");
-        parts.push(`<g class="journal-unit journal-handoff" data-chains="${esc(edge.from)} ${esc(edge.to)}" data-type="${esc(edge.type)}"><path class="journal-handoff-path${edge.confidence === "inferred" ? " is-inferred" : ""}" stroke-dasharray="${dash}" d="M${x1},${y1} C${x1 + 30},${y1} ${x2 - 30},${y2} ${x2},${y2}"/><title>${esc(this.chains.get(edge.from).short)} → ${esc(this.chains.get(edge.to).short)}：${esc(edge.type)}${edge.confidence === "inferred" ? "（推断）" : ""}</title></g>`);
+        parts.push(`<g class="journal-unit journal-handoff" data-chains="${esc(edge.from)} ${esc(edge.to)}" data-type="${esc(edge.type)}" data-date="${target}"><path class="journal-handoff-path${edge.confidence === "inferred" ? " is-inferred" : ""}" stroke-dasharray="${dash}" d="M${x1},${y1} C${x1 + 30},${y1} ${x2 - 30},${y2} ${x2},${y2}"/><title>${esc(this.chains.get(edge.from).short)} → ${esc(this.chains.get(edge.to).short)}：${esc(edge.type)}${edge.confidence === "inferred" ? "（推断）" : ""}</title></g>`);
       });
       rows.forEach(({chains}) => {
         let previousLabel = -Infinity;

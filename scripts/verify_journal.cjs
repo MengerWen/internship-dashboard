@@ -6,6 +6,7 @@ const path = require('node:path');
 const {pathToFileURL} = require('node:url');
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8029/dist/';
 const output = path.resolve('artifacts/journal-column');
+const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
 
 (async () => {
   await fs.mkdir(output, {recursive: true});
@@ -43,6 +44,7 @@ const output = path.resolve('artifacts/journal-column');
       assert(await page.locator('.journal-pause').count());
       const types = await page.locator('.journal-handoff').evaluateAll(nodes => [...new Set(nodes.map(n => n.dataset.type))].sort());
       assert.deepEqual(types, ['依赖解除', '延续', '收口', '派生'].sort());
+      assert.equal(await page.locator('.journal-handoff[data-chains="ml-330 model-report"]').getAttribute('data-date'), '2026-09-21');
       const ys = await page.locator('[data-chain-y]').evaluateAll(nodes => nodes.map(n => n.dataset.chainY));
       assert.equal(new Set(ys).size, 28);
       const ratios = await page.locator('.journal-day-hit').evaluateAll(nodes => {
@@ -50,6 +52,13 @@ const output = path.resolve('artifacts/journal-column');
         return (x('2026-10-07') - x('2026-09-23')) / (x('2026-10-08') - x('2026-10-07'));
       });
       assert(Math.abs(ratios - 14) < .0001, 'date gaps must retain real width');
+      if (width === 1440) {
+        await page.locator('.journal-day-hit[data-journal-day="2026-10-14"]').hover();
+        assert(await page.locator('.journal-readout').isVisible());
+        assert((await page.locator('.journal-readout').textContent()).includes('2026-10-14'));
+        const box = await page.locator('.journal-readout').boundingBox();
+        assert(box.x >= 0 && box.x + box.width <= width);
+      }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
       if (width === 1440) {
         const indexed = await page.evaluate(async () => {
@@ -106,6 +115,11 @@ const output = path.resolve('artifacts/journal-column');
       assert(await page.locator('#journal-figure').isVisible());
       assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), '2026-10-14');
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+      await page.goto(base + '#/journal');
+      await page.waitForSelector('#view-journal.is-active');
+      await page.evaluate(() => scrollTo(0, 0));
+      await page.screenshot({path: path.join(output, width === 1440 ? 'desktop.png' : 'mobile.png'), fullPage: true});
+      await page.screenshot({path: path.join(output, `first-viewport-${width}.png`)});
       assert.deepEqual(errors, []);
       results.push({width, days: 88, overflow, errors});
       await page.close();
@@ -114,7 +128,7 @@ const output = path.resolve('artifacts/journal-column');
     const offlineRequests = [], offlineErrors = [];
     offline.on('request', r => { if (/^https?:/.test(r.url())) offlineRequests.push(r.url()); });
     offline.on('pageerror', e => offlineErrors.push(e.message));
-    await offline.goto(pathToFileURL(path.resolve('dist-offline/index.html')).href + '#/journal/2026-10-14');
+    await offline.goto(pathToFileURL(path.resolve(offlineDir, 'index.html')).href + '#/journal/2026-10-14');
     await offline.waitForSelector('.journal-evidence');
     await offline.locator('.journal-evidence > summary').click();
     await offline.waitForSelector('.journal-repo');
