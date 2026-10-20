@@ -33,3 +33,27 @@
 ## 2026-10-18 深市328列成果报告
 
 用户要求“详细参照这份之前的报告”，确认交付“看板展示页＋Markdown”，并补充“看板展示页请尽量参照以前的展示页的实现方式和细节”。本篇沿用2026-09-16展示页及研究编辑台的既定方向，复用导航、筛选、逐列查看、放大、下载与响应式约定。新结果使用本次328列验收汇总，不沿用旧报告的收益统计。
+
+## 2026-10-20 新栏目「研究日志」
+
+就新栏目做了三个方向的真实原型（同一份 92 天真实数据，`design-demos/journal-prototype/`）：
+
+- 方向一「研究台历」
+  - 原型：`design-demos/journal-prototype/direction-1-ledger.html`
+  - 截图：`design-demos/screenshots/journal-1-ledger*.png`
+- 方向二「链轨」
+  - 原型：`design-demos/journal-prototype/direction-2-chain-rail.html`
+  - 截图：`design-demos/screenshots/journal-2-chain-rail*.png`
+- 方向三「推进图谱」
+  - 原型：`design-demos/journal-prototype/direction-3-atlas.html`
+  - 截图：`design-demos/screenshots/journal-3-atlas*.png`
+
+用户选择原话：
+
+> 我想在方向三的基础上推进。但方向三本身还是否能再polish？再细化设计
+
+结论：新栏目采用方向三「推进图谱」。视觉仍在研究编辑台体系内，不新增颜色令牌。
+同日按该选择做了第二轮细化（横轴改真实日期、时间窗、直接标注、每日汇报刻度行、
+链条聚焦、清单孪生视图、键盘换日），原型即 `direction-3-atlas.html` 当前版本，
+设计说明见 `docs/plans/2026-10-20-journal-column-design.md` 与
+`design-demos/journal-prototype/README.md`。
