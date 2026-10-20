@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向三 · 推进图谱｜研究日志原型 v2</title>
+<link rel="stylesheet" href="proto.css">
+<style>
+.wrap { max-width: 1280px; margin: 0 auto; padding-bottom: 96px; }
+
+/* ── 控制条：一行，管下面所有东西 ───────────────────────── */
+.controls {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 0 24px 12px; border-bottom: 1px solid var(--line);
+}
+.seg { display: flex; border: 1px solid var(--line); }
+.seg button {
+  font: inherit; font-size: 12px; padding: 4px 14px; background: none; border: 0;
+  cursor: pointer; color: var(--muted); border-right: 1px solid var(--line-soft);
+}
+.seg button:last-child { border-right: 0; }
+.seg button.is-on { background: var(--line); color: var(--bg); }
+.ctrlnote { font-size: 12px; color: var(--muted); margin-left: auto; }
+.ctrlnote b { color: var(--text); font-weight: 400; }
+.chainpick { font: inherit; font-size: 12px; padding: 3px 6px; background: var(--bg); border: 1px solid var(--line-soft); color: var(--text); max-width: 230px; }
+.clearbtn { font: inherit; font-size: 12px; background: none; border: 1px solid var(--line-soft); padding: 3px 9px; cursor: pointer; color: var(--text); }
+.find { font: inherit; font-size: 12px; padding: 3px 8px; background: var(--bg); border: 1px solid var(--line-soft); color: var(--text); width: 170px; }
+
+/* ── 图谱 ────────────────────────────────────────────── */
+.figure { position: relative; padding: 16px 24px 0; }
+.scroller { overflow-x: auto; overflow-y: hidden; }
+svg.atlas { display: block; min-width: 1120px; width: 100%; }
+.atlas text { font-family: var(--font-body); }
+.atlas .tracklab { font-size: 11.5px; fill: var(--text); }
+.atlas .tracknum { font-size: 10px; fill: var(--muted); }
+.atlas .rule { stroke: var(--line-soft); stroke-width: 1; }
+.atlas .weekend { fill: var(--bg-deep); opacity: 0.3; }
+.atlas .mlab { font-size: 11px; fill: var(--muted); }
+.atlas .cline { stroke: var(--text); stroke-width: 1.7; fill: none; }
+.atlas .cpause { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; fill: none; opacity: 0.8; }
+.atlas .hand { stroke: var(--text); stroke-width: 1; fill: none; opacity: 0.26; }
+.atlas g.unit.lit .hand { opacity: 1; stroke: var(--focus); stroke-width: 1.4; }
+.atlas .clab {
+  font-size: 10px; fill: var(--muted);
+  paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round;
+}
+.atlas .dot { fill: var(--bg); stroke: var(--text); stroke-width: 1.6; }
+.atlas .dot.rep { fill: var(--text); }
+.atlas .seal { fill: var(--text); }
+.atlas .reptick { stroke: var(--text); stroke-width: 2; }
+.atlas .lanelab { font-size: 10.5px; fill: var(--muted); }
+.atlas g.unit { transition: opacity 120ms var(--ease); }
+.atlas .selband { fill: var(--focus); opacity: 0.16; }
+.atlas .selline { stroke: var(--focus); stroke-width: 1.2; }
+.atlas .hoverline { stroke: var(--muted); stroke-width: 1; pointer-events: none; }
+.atlas .hit { fill: transparent; cursor: pointer; }
+.atlas .focusline { stroke: var(--focus) !important; }
+.atlas .focusdot { stroke: var(--focus) !important; }
+.atlas .focusdot.rep { fill: var(--focus) !important; }
+svg.atlas:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.readout {
+  position: absolute; pointer-events: none; z-index: 5;
+  background: var(--surface); border: 1px solid var(--line); padding: 8px 11px 9px;
+  font-size: 12px; max-width: 290px; box-shadow: 0 6px 18px rgb(21 33 43 / 0.12);
+  opacity: 0; transition: opacity 100ms var(--ease);
+}
+.readout.on { opacity: 1; }
+.readout .rd { font-family: var(--font-serif); font-size: 14px; }
+.readout .rw { color: var(--muted); font-size: 11px; margin-left: 6px; }
+.readout .rh { margin-top: 3px; line-height: 1.45; }
+.readout .rc { margin-top: 4px; color: var(--muted); font-size: 11px; }
+
+.axisnote { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); padding: 6px 24px 0; }
+
+/* ── 日卡 ────────────────────────────────────────────── */
+.cardwrap { padding: 0 24px; }
+.daynav { display: flex; gap: 0; border: 1px solid var(--line); border-bottom: 0; margin-top: 26px; }
+.daynav button {
+  flex: 1; font: inherit; font-size: 12px; background: var(--bg-deep); border: 0; cursor: pointer;
+  padding: 7px 12px; text-align: left; color: var(--muted); border-right: 1px solid var(--line-soft);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.daynav button:last-child { border-right: 0; text-align: right; }
+.daynav button:hover { background: var(--surface-2); color: var(--text); }
+.daynav button:disabled { opacity: 0.4; cursor: default; }
+
+.card { border: 1px solid var(--line); background: var(--surface); padding: 22px 24px 26px; }
+.card .top { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.card .pd { font-family: var(--font-serif); font-size: 27px; line-height: 1; }
+.card .pw { font-size: 12px; color: var(--muted); }
+.card .ph { font-family: var(--font-serif); font-size: 17px; flex: 1 1 340px; line-height: 1.5; }
+.card .ph.draft { color: var(--muted); font-family: var(--font-body); font-size: 15px; }
+.card .ph.draft::after { content: "待写"; font-size: 10px; border: 1px solid var(--line-soft); padding: 0 4px; margin-left: 7px; vertical-align: 2px; }
+.card .replink { color: var(--text); font-size: 12px; white-space: nowrap; border-bottom: 1px solid var(--line); }
+.chips { margin-top: 10px; }
+.chip { font-size: 11px; border: 1px solid var(--line-soft); padding: 0 6px; margin-right: 5px; color: var(--muted); background: none; font-family: inherit; cursor: pointer; }
+.chip:hover { color: var(--text); border-color: var(--line); }
+.chip.inferred { border-style: dashed; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; margin-top: 6px; }
+.card h4 { font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: 0.04em; margin: 20px 0 7px; border-bottom: 1px solid var(--line-soft); padding-bottom: 4px; }
+.card ul { margin: 0; padding-left: 18px; font-size: 13px; }
+.card li { margin-bottom: 4px; }
+.flow div { margin-bottom: 5px; font-size: 13px; }
+.flow .arrow { font-family: var(--font-mono); color: var(--muted); margin-right: 7px; }
+.flow .kind { font-size: 11px; color: var(--muted); margin-left: 6px; }
+.flow button { font: inherit; font-size: 13px; background: none; border: 0; border-bottom: 1px solid var(--line-soft); padding: 0; cursor: pointer; color: inherit; }
+.flow button:hover { border-color: var(--focus); }
+.card details { margin-bottom: 8px; }
+.card summary { cursor: pointer; font-size: 12px; }
+.card table.ev { border-collapse: collapse; width: 100%; font-size: 12px; margin-top: 6px; }
+.card table.ev td { border-bottom: 1px solid var(--line-soft); padding: 3px 8px 3px 0; vertical-align: top; }
+.card td.sha { font-family: var(--font-mono); font-size: 11px; color: var(--blue); white-space: nowrap; }
+.card .pathline { font-size: 11px; color: var(--muted); margin: 4px 0 0; }
+.card .plan { font-family: var(--font-mono); font-size: 11px; }
+
+/* 链条卡 */
+.card.chaincard .pd { font-size: 22px; }
+.chaindays { columns: 2; column-gap: 32px; font-size: 13px; margin-top: 4px; }
+.chaindays button { font: inherit; background: none; border: 0; padding: 1px 0; cursor: pointer; text-align: left; display: block; width: 100%; color: inherit; }
+.chaindays button:hover { color: var(--focus); }
+.chaindays .dt { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin-right: 7px; }
+
+/* ── 清单（图表的表格孪生体，也是窄屏默认） ──────────────── */
+.listview { padding: 0 24px; }
+table.days { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.days th {
+  text-align: left; font-weight: 400; font-size: 11px; color: var(--muted);
+  border-bottom: 1px solid var(--line); padding: 7px 10px 5px 0; position: sticky; top: 0; background: var(--bg);
+}
+table.days td { border-bottom: 1px solid var(--line-soft); padding: 7px 10px 7px 0; vertical-align: top; }
+table.days tr.rep td { background: var(--surface); }
+table.days tr.rep td:first-child { box-shadow: inset 3px 0 0 0 var(--line); padding-left: 9px; }
+table.days tr.sel td { background: var(--surface-2); }
+table.days tr:hover td { background: var(--surface); cursor: pointer; }
+td.dt { font-family: var(--font-serif); white-space: nowrap; }
+td.dt small { display: block; font-family: var(--font-body); font-size: 10px; color: var(--muted); }
+td.hl { width: 46%; }
+td.hl .draft { color: var(--muted); }
+td.n { text-align: right; color: var(--muted); font-size: 12px; white-space: nowrap; }
+td.rp { color: var(--text); font-size: 12px; white-space: nowrap; }
+
+.sectionlab { font-size: 11px; color: var(--muted); padding: 24px 24px 8px; border-bottom: 1px solid var(--line-soft); margin-bottom: 14px; }
+
+@media (max-width: 860px) {
+  .cols { grid-template-columns: 1fr; }
+  .chaindays { columns: 1; }
+  .figure, .cardwrap, .listview, .controls, .axisnote, .sectionlab { padding-left: 14px; padding-right: 14px; }
+  .viewhead h1 { font-size: 23px; }
+  .ctrlnote { margin-left: 0; width: 100%; }
+  td.hl { width: auto; }
+  table.days td.n, table.days th.n { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="proto-note">设计原型 · <b>方向三「推进图谱」v2</b>　横轴是真实日期（含停下来的日子），纵轴是研究线，点的大小是当天提交量，折线是链条，虚线段表示那几天这条链停着。数据为本机三仓库 88 天真实提交／PLAN／日报；每日汇报按<b>实际做事的日子</b>归位，不按汇报的名义日期。链条与交接仍是<b>草案</b>。</div>
+
+<header class="masthead">
+  <div class="masthead-row">
+    <div class="edition">Research edition no. 06<br>Shanghai · 2026</div>
+    <div class="brand">量化实习成果看板<small>QUANT RESEARCH ARCHIVE</small></div>
+    <div class="edition" style="text-align:right">原型 · 不是线上页面</div>
+  </div>
+  <nav class="tabs">
+    <a class="tab" href="#">正式成果</a>
+    <a class="tab" href="#">每日汇报</a>
+    <a class="tab is-active" href="#">研究日志</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="viewhead">
+    <div><h1>研究日志</h1><p>每天做了什么，接住了什么，交给了谁</p></div>
+    <div class="stat" id="stat"></div>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="tablist" aria-label="视图">
+      <button id="v-atlas" class="is-on" role="tab" aria-selected="true">图谱</button>
+      <button id="v-list" role="tab" aria-selected="false">清单</button>
+    </div>
+    <div class="seg" role="group" aria-label="时间窗">
+      <button class="is-on" data-range="all">全部</button>
+      <button data-range="90">近 3 个月</button>
+      <button data-range="30">近 1 个月</button>
+    </div>
+    <label class="sr" for="chainpick">聚焦一条链条</label>
+    <select class="chainpick" id="chainpick"><option value="">聚焦一条链条…</option></select>
+    <button class="clearbtn" id="clearfocus" hidden>取消聚焦</button>
+    <label class="sr" for="find">在清单里查找</label>
+    <input class="find" id="find" type="search" placeholder="查找日期或关键词" hidden>
+    <div class="ctrlnote" id="ctrlnote"></div>
+  </div>
+
+  <section class="figure" id="figure">
+    <div class="scroller">
+      <svg class="atlas" id="atlas" tabindex="0" role="application"
+           aria-label="推进图谱：横轴日期，纵轴六条研究线。用左右方向键切换日期。"></svg>
+    </div>
+    <div class="readout" id="readout" aria-hidden="true"></div>
+    <div class="axisnote">
+      <span id="axfrom">2026-06-04</span>
+      <span>点的大小＝当天提交数　实心＝当天发布了汇报　虚线段＝这条链停着　■＝链条收口</span>
+      <span id="axto">2026-10-20</span>
+    </div>
+  </section>
+
+  <div class="sectionlab" id="cardlab">选中的一天</div>
+  <div class="cardwrap" id="cardwrap">
+    <div class="daynav" id="daynav"></div>
+    <div class="card" id="card"></div>
+  </div>
+
+  <section class="listview" id="listview" hidden>
+    <table class="days" id="daytable">
+      <thead><tr><th>日期</th><th>这天做了什么</th><th>链条</th><th class="n">提交</th><th>汇报</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  const D = window.JOURNAL_DATA;
+  const chains = new Map(D.chains.map((c) => [c.id, c]));
+  const days = D.days;
+  const byDate = new Map(days.map((d) => [d.date, d]));
+  const dates = days.map((d) => d.date);
+  const REPO_SHORT = { "sirui-quant-research": "研究主仓", "Quant_Research-Trading": "父仓", "internship-dashboard": "看板仓" };
+
+  const active = new Map();
+  days.forEach((d) => d.chains.forEach((c) => {
+    if (!active.has(c)) active.set(c, []);
+    active.get(c).push(d.date);
+  }));
+  const used = D.chains.filter((c) => active.has(c.id));
+  const pub = (d) => !!(d.reports_published && d.reports_published.length);
+  const repIndex = new Map();
+  days.forEach((d) => { if (d.report) repIndex.set(d.report.date, d.report); });
+  const repTitle = (date) => (repIndex.get(date) || {}).title || date;
+  const sealed = new Set(D.handoffs.filter((h) => h.type === "收口").map((h) => h.from));
+
+  const D0 = dateNum(dates[0]), D1 = dateNum(dates[dates.length - 1]);
+  const SPAN = (D1 - D0) / 86400000;
+
+  document.getElementById("stat").innerHTML =
+    "<b>" + days.length + "</b> 天有记录　<b>" + days.filter(pub).length + "</b> 天发布过汇报<br>"
+    + used.length + " 条链条 · " + dates[0] + " → " + dates[dates.length - 1] + " 共 " + (SPAN + 1) + " 天";
+
+  // ── 几何 ────────────────────────────────────────────
+  const W = 1240, L = 112, R = 30, TOP = 36;
+  // 轨道高度随它承载的链条数增长，链多的轨道不被挤扁
+  const bh = D.tracks.map((t) => 36 + used.filter((c) => c.track === t.id).length * 9);
+  const top = [];
+  bh.reduce((acc, h, i) => { top[i] = acc; return acc + h; }, TOP);
+  const PLOT = TOP + bh.reduce((a, b) => a + b, 0);
+  const LANE = PLOT + 30;            // 每日汇报刻度行
+  const H = LANE + 28;
+  let RF = D0, RT = D1, RSPAN = SPAN, cw = 0;   // 当前时间窗
+  const x = (dt) => L + ((dateNum(dt) - RF) / 86400000 / RSPAN) * (W - L - R);
+  const inR = (dt) => dateNum(dt) >= RF && dateNum(dt) <= RT;
+  const sub = new Map();
+  D.tracks.forEach((t) => {
+    const arr = used.filter((c) => c.track === t.id);
+    arr.forEach((c, i) => sub.set(c.id, arr.length === 1 ? 0 : (i / (arr.length - 1) - 0.5) * 2));
+  });
+  const y = (cid) => {
+    const i = D.tracks.findIndex((v) => v.id === chains.get(cid).track);
+    return top[i] + bh[i] / 2 + sub.get(cid) * (bh[i] / 2 - 11);
+  };
+  const rr = (n) => Math.max(2.1, Math.min(7, 2.1 + Math.sqrt(n || 0) * 0.46));
+
+  const svg = document.getElementById("atlas");
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.setAttribute("height", H);
+
+  function drawChart() {
+  const P = [];
+  // 周末底纹 + 月分隔（实线细线，不用虚线）
+  for (let i = 0; i <= RSPAN; i++) {
+    const dt = isoAt(RF, i), wd = new Date(dt + "T00:00:00Z").getUTCDay();
+    if (wd === 0 || wd === 6) {
+      P.push('<rect class="weekend" x="' + (x(dt) - (W - L - R) / RSPAN / 2) + '" y="' + TOP
+        + '" width="' + ((W - L - R) / RSPAN) + '" height="' + (PLOT - TOP) + '"/>');
+    }
+    if (dt.slice(8) === "01" || i === 0) {
+      if (i > 0) P.push('<line class="rule" x1="' + x(dt) + '" y1="' + (TOP - 8) + '" x2="' + x(dt) + '" y2="' + PLOT + '"/>');
+      P.push('<text class="mlab" x="' + (x(dt) + (i === 0 ? 0 : 5)) + '" y="' + (TOP - 12) + '">'
+        + Number(dt.slice(5, 7)) + " 月</text>");
+    }
+  }
+  // 轨道
+  D.tracks.forEach((t, i) => {
+    const yy = top[i];
+    P.push('<line class="rule" x1="' + L + '" y1="' + yy + '" x2="' + (W - R) + '" y2="' + yy + '"/>');
+    const n = used.filter((c) => c.track === t.id).length;
+    P.push('<text class="tracklab" x="' + (L - 12) + '" y="' + (yy + bh[i] / 2 + 1) + '" text-anchor="end">' + t.label + "</text>");
+    P.push('<text class="tracknum" x="' + (L - 12) + '" y="' + (yy + bh[i] / 2 + 14) + '" text-anchor="end">' + n + " 条链</text>");
+  });
+  P.push('<line class="rule" x1="' + L + '" y1="' + PLOT + '" x2="' + (W - R) + '" y2="' + PLOT + '"/>');
+
+  // 交接
+  D.handoffs.forEach((h) => {
+    if (!active.has(h.from) || !active.has(h.to)) return;
+    if (!inR(active.get(h.from).slice(-1)[0]) && !inR(active.get(h.to)[0])) return;
+    const x1 = x(active.get(h.from).slice(-1)[0]), y1 = y(h.from);
+    const x2 = x(active.get(h.to)[0]), y2 = y(h.to);
+    const dash = h.type === "派生" ? ' stroke-dasharray="4 3"' : h.type === "依赖解除" ? ' stroke-dasharray="1 3"' : "";
+    P.push('<g class="unit" data-chain="' + h.from + " " + h.to + '"><path class="hand" d="M' + x1 + "," + y1
+      + " C" + ((x1 + x2) / 2) + "," + y1 + " " + ((x1 + x2) / 2) + "," + y2 + " " + x2 + "," + y2 + '"' + dash
+      + "><title>" + h.type + "：" + chains.get(h.from).label + " → " + chains.get(h.to).label + "</title></path></g>");
+  });
+
+  // 链条：连续段实线，中断段虚线；点；收口方块；直接标注
+  const placed = [];
+  used.forEach((c) => {
+    const a = active.get(c.id).filter(inR), yy = y(c.id);
+    if (!a.length) return;
+    P.push('<g class="unit" data-chain="' + c.id + '">');
+    for (let i = 1; i < a.length; i++) {
+      const gapDays = (dateNum(a[i]) - dateNum(a[i - 1])) / 86400000;
+      P.push('<line class="' + (gapDays <= 1 ? "cline" : "cpause") + '" x1="' + x(a[i - 1]) + '" y1="' + yy
+        + '" x2="' + x(a[i]) + '" y2="' + yy + '"/>');
+    }
+    a.forEach((dt) => {
+      const d = byDate.get(dt);
+      P.push('<circle class="dot' + (pub(d) ? " rep" : "") + '" cx="' + x(dt) + '" cy="' + yy
+        + '" r="' + rr(d.total_commits) + '"/>');
+    });
+    if (sealed.has(c.id) && inR(active.get(c.id).slice(-1)[0])) {
+      P.push('<rect class="seal" x="' + (x(a.slice(-1)[0]) - 3.5) + '" y="' + (yy - 3.5) + '" width="7" height="7"/>');
+    }
+    if (a.length >= 3) {
+      let ly = yy - 9;
+      const lx = x(a[0]);
+      while (placed.some((p) => Math.abs(p.x - lx) < 76 && Math.abs(p.y - ly) < 10)) ly -= 10;
+      placed.push({ x: lx, y: ly });
+      P.push('<text class="clab" x="' + (lx + 1) + '" y="' + ly + '">' + esc(c.short) + "</text>");
+    }
+    P.push("</g>");
+  });
+
+  // 每日汇报刻度行
+  P.push('<text class="lanelab" x="' + (L - 12) + '" y="' + (LANE + 4) + '" text-anchor="end">发布每日汇报 '
+    + days.filter((d) => pub(d) && inR(d.date)).reduce((n, d) => n + d.reports_published.length, 0)
+    + " 篇</text>");
+  P.push('<line class="rule" x1="' + L + '" y1="' + (LANE + 9) + '" x2="' + (W - R) + '" y2="' + (LANE + 9) + '"/>');
+  days.filter((d) => pub(d) && inR(d.date)).forEach((d) => {
+    P.push('<line class="reptick" x1="' + x(d.date) + '" y1="' + (LANE - 6) + '" x2="' + x(d.date)
+      + '" y2="' + (LANE + 9) + '"><title>' + d.date + " 发布：" + esc(d.reports_published.join("、"))
+      + "</title></line>");
+  });
+
+  // 选中标记 + 命中层（整列可点，不用对准小圆点）
+  P.push('<rect class="selband" id="selband" x="0" y="' + TOP + '" width="0" height="' + (LANE + 9 - TOP) + '"/>');
+  P.push('<line class="selline" id="selline" x1="0" y1="' + (TOP - 8) + '" x2="0" y2="' + (LANE + 9) + '" style="display:none"/>');
+  P.push('<line class="hoverline" id="hoverline" x1="0" y1="' + (TOP - 8) + '" x2="0" y2="' + (LANE + 9) + '" style="display:none"/>');
+  cw = Math.max(7, (W - L - R) / RSPAN);
+  days.filter((d) => inR(d.date)).forEach((d) => {
+    P.push('<rect class="hit" data-date="' + d.date + '" x="' + (x(d.date) - cw / 2) + '" y="' + (TOP - 8)
+      + '" width="' + cw + '" height="' + (LANE + 9 - TOP + 8) + '"/>');
+  });
+  svg.innerHTML = P.join("");
+  document.getElementById("axfrom").textContent = isoAt(RF, 0);
+  document.getElementById("axto").textContent = isoAt(RT, 0);
+  }
+  drawChart();
+
+  // ── 链条下拉 ────────────────────────────────────────
+  const pick = document.getElementById("chainpick");
+  D.tracks.forEach((t) => {
+    const arr = used.filter((c) => c.track === t.id);
+    if (!arr.length) return;
+    const g = document.createElement("optgroup");
+    g.label = t.label;
+    arr.forEach((c) => {
+      const o = document.createElement("option");
+      o.value = c.id;
+      o.textContent = c.short + "　" + active.get(c.id).length + " 天";
+      g.appendChild(o);
+    });
+    pick.appendChild(g);
+  });
+
+  // ── 状态 ───────────────────────────────────────────
+  let sel = "2026-10-14", focus = null, view = "atlas";
+
+  function setFocus(id) {
+    focus = id || null;
+    pick.value = focus || "";
+    document.getElementById("clearfocus").hidden = !focus;
+    svg.querySelectorAll("g.unit").forEach((g) => {
+      const own = (g.dataset.chain || "").split(" ");
+      const on = !focus || own.includes(focus);
+      g.style.opacity = on ? 1 : 0.1;
+      g.classList.toggle("lit", !!focus && own.length === 2 && own.includes(focus));
+      g.querySelectorAll(".cline, .dot").forEach((n) => {
+        n.classList.toggle("focusline", !!focus && own.includes(focus) && n.classList.contains("cline"));
+        n.classList.toggle("focusdot", !!focus && own.includes(focus) && n.classList.contains("dot"));
+      });
+    });
+    note();
+    if (focus) renderChainCard(focus); else renderDay(sel);
+    renderTable();
+  }
+
+  function note() {
+    const el = document.getElementById("ctrlnote");
+    if (focus) {
+      const a = active.get(focus);
+      el.innerHTML = "正在看 <b>" + esc(chains.get(focus).label) + "</b>　" + a[0] + " → " + a.slice(-1)[0] + "　" + a.length + " 天";
+    } else {
+      el.innerHTML = "最多同时 <b>5</b> 条链在跑（2026-09-07），月均 2 条";
+    }
+  }
+
+  function setSel(dt, fromChart) {
+    if (!byDate.has(dt)) return;
+    sel = dt;
+    const band = document.getElementById("selband"), line = document.getElementById("selline");
+    if (inR(dt)) {
+      band.setAttribute("x", x(dt) - cw / 2); band.setAttribute("width", cw);
+      line.setAttribute("x1", x(dt)); line.setAttribute("x2", x(dt)); line.style.display = "";
+    } else {
+      band.setAttribute("width", 0); line.style.display = "none";
+    }
+    if (focus && !(byDate.get(dt).chains.includes(focus))) setFocus(null);
+    else renderDay(dt);
+    renderTable();
+    if (!fromChart && view === "atlas") {
+      const sc = document.querySelector(".scroller");
+      const px = (x(dt) / W) * sc.scrollWidth;
+      if (px < sc.scrollLeft + 60 || px > sc.scrollLeft + sc.clientWidth - 60) sc.scrollLeft = px - sc.clientWidth / 2;
+    }
+  }
+
+  // ── 悬停读数 ────────────────────────────────────────
+  const readout = document.getElementById("readout");
+  svg.addEventListener("mousemove", (e) => {
+    const hit = e.target.closest(".hit");
+    const hl = document.getElementById("hoverline");
+    if (!hit) { readout.classList.remove("on"); hl.style.display = "none"; return; }
+    const d = byDate.get(hit.dataset.date);
+    hl.setAttribute("x1", x(d.date)); hl.setAttribute("x2", x(d.date)); hl.style.display = "";
+    readout.innerHTML = '<span class="rd">' + d.date + '</span><span class="rw">' + d.weekday
+      + (pub(d) ? " · 发布了汇报" : "") + '</span><div class="rh">' + esc(d.headline) + '</div>'
+      + '<div class="rc">' + (d.chains.map((c) => chains.get(c) ? chains.get(c).short : c).join("、") || "未归类")
+      + "　·　" + (d.total_commits || 0) + " 次提交</div>";
+    const fig = document.getElementById("figure").getBoundingClientRect();
+    let lx = e.clientX - fig.left + 14;
+    if (lx > fig.width - 300) lx = e.clientX - fig.left - 304;
+    readout.style.left = Math.max(8, lx) + "px";
+    readout.style.top = (e.clientY - fig.top + 16) + "px";
+    readout.classList.add("on");
+  });
+  svg.addEventListener("mouseleave", () => {
+    readout.classList.remove("on");
+    document.getElementById("hoverline").style.display = "none";
+  });
+  svg.addEventListener("click", (e) => {
+    const hit = e.target.closest(".hit");
+    if (hit) { setSel(hit.dataset.date, true); return; }
+    const g = e.target.closest("g.unit");
+    if (g && g.dataset.chain && !g.dataset.chain.includes(" ")) setFocus(g.dataset.chain);
+  });
+  svg.addEventListener("keydown", (e) => {
+    const i = dates.indexOf(sel);
+    if (e.key === "ArrowRight" && i < dates.length - 1) { setSel(dates[i + 1]); e.preventDefault(); }
+    if (e.key === "ArrowLeft" && i > 0) { setSel(dates[i - 1]); e.preventDefault(); }
+    if (e.key === "Escape") setFocus(null);
+  });
+  // 时间窗：四个半月够看，一年之后必须能收窄，否则每天只剩 3px
+  document.querySelectorAll("[data-range]").forEach((b) => b.onclick = () => {
+    document.querySelectorAll("[data-range]").forEach((o) => o.classList.toggle("is-on", o === b));
+    if (b.dataset.range === "all") { RF = D0; RT = D1; }
+    else { RT = D1; RF = Math.max(D0, D1 - Number(b.dataset.range) * 86400000); }
+    RSPAN = (RT - RF) / 86400000;
+    drawChart();
+    const keep = inR(sel) ? sel : dates.filter(inR)[0];
+    setFocus(focus);
+    setSel(keep, true);
+  });
+  pick.addEventListener("change", () => setFocus(pick.value));
+  document.getElementById("clearfocus").onclick = () => setFocus(null);
+
+  // ── 视图切换 ────────────────────────────────────────
+  function setView(v) {
+    view = v;
+    document.getElementById("v-atlas").classList.toggle("is-on", v === "atlas");
+    document.getElementById("v-list").classList.toggle("is-on", v === "list");
+    document.getElementById("v-atlas").setAttribute("aria-selected", v === "atlas");
+    document.getElementById("v-list").setAttribute("aria-selected", v === "list");
+    document.getElementById("figure").hidden = v !== "atlas";
+    document.getElementById("listview").hidden = v !== "list";
+    document.getElementById("find").hidden = v !== "list";
+    document.getElementById("cardlab").hidden = v !== "atlas";
+    document.getElementById("cardwrap").hidden = v !== "atlas";
+  }
+  document.getElementById("v-atlas").onclick = () => setView("atlas");
+  document.getElementById("v-list").onclick = () => setView("list");
+
+  // ── 日卡 ───────────────────────────────────────────
+  function renderDay(dt) {
+    const d = byDate.get(dt);
+    document.getElementById("cardlab").textContent = "选中的一天　·　左右方向键可以换一天";
+    const i = dates.indexOf(dt);
+    const nav = document.getElementById("daynav");
+    const prev = i > 0 ? byDate.get(dates[i - 1]) : null, next = i < dates.length - 1 ? byDate.get(dates[i + 1]) : null;
+    nav.innerHTML =
+      '<button id="np" ' + (prev ? 'data-date="' + prev.date + '"' : "disabled") + ">← 前一天"
+      + (prev ? "　" + prev.date.slice(5) + "　" + esc(cut(prev.headline, 28)) : "") + "</button>"
+      + '<button id="nn" ' + (next ? 'data-date="' + next.date + '"' : "disabled") + ">"
+      + (next ? esc(cut(next.headline, 28)) + "　" + next.date.slice(5) + "　" : "") + "后一天 →</button>";
+    nav.querySelectorAll("button[data-date]").forEach((b) => b.onclick = () => setSel(b.dataset.date));
+
+    const draft = d.headline_source === "commit" || d.headline_source === "none";
+    const o = [];
+    o.push('<div class="top"><span class="pd">' + d.date + '</span><span class="pw">' + d.weekday + "　"
+      + (d.total_commits || 0) + ' 次提交</span><span class="ph' + (draft ? " draft" : "") + '">' + esc(d.headline)
+      + "</span>" + (pub(d) ? '<span class="replink">发布了 ' + d.reports_published.length
+        + ' 篇汇报 ↗</span>' : "") + "</div>");
+    o.push('<div class="chips">' + (d.chains.length
+      ? d.chains.map((c) => '<button class="chip ' + (d.chain_confidence[c] || "") + '" data-chain="' + c + '">'
+        + esc(chains.get(c) ? chains.get(c).short : c) + "</button>").join("")
+      : '<span class="chip inferred">未归类</span>') + "</div>");
+
+    o.push('<div class="cols"><div>');
+    o.push("<h4>做了什么</h4><ul>");
+    const bl = (d.highlights && d.highlights.length) ? d.highlights.map(esc)
+      : d.plans.length ? d.plans.map((p) => esc(p.title))
+      : Object.values(d.items).flat().slice(0, 4).map((it) => esc(it.subject));
+    o.push((bl.length ? bl : ["（这天没有计划文件，只有提交）"]).map((b) => "<li>" + b + "</li>").join("") + "</ul>");
+    o.push('<h4>脉络</h4><div class="flow">' + flowHtml(d) + "</div>");
+    o.push("</div><div>");
+    o.push("<h4>根据</h4>" + evidenceHtml(d));
+    o.push("</div></div>");
+
+    const card = document.getElementById("card");
+    card.className = "card";
+    card.innerHTML = o.join("");
+    card.querySelectorAll(".chip[data-chain]").forEach((b) => b.onclick = () => setFocus(b.dataset.chain));
+    card.querySelectorAll("button[data-goto]").forEach((b) => b.onclick = () => setSel(b.dataset.goto));
+  }
+
+  function flowHtml(d) {
+    const fl = [];
+    D.handoffs.forEach((h) => {
+      if (d.chains.includes(h.to) && (active.get(h.to) || [])[0] === d.date && active.has(h.from)) {
+        fl.push('<div><span class="arrow">←</span>承接　<button data-goto="' + active.get(h.from).slice(-1)[0] + '">'
+          + esc(chains.get(h.from).label) + '</button><span class="kind">' + h.type + "</span></div>");
+      }
+      if (d.chains.includes(h.from) && (active.get(h.from) || []).slice(-1)[0] === d.date && active.has(h.to)) {
+        fl.push('<div><span class="arrow">→</span>交给　<button data-goto="' + active.get(h.to)[0] + '">'
+          + esc(chains.get(h.to).label) + '</button><span class="kind">' + h.type + "</span></div>");
+      }
+    });
+    d.chains.forEach((c) => {
+      const a = active.get(c) || [], i = a.indexOf(d.date);
+      if (i > 0) fl.push('<div><span class="arrow">↑</span>' + esc(chains.get(c).short)
+        + ' 上一天　<button data-goto="' + a[i - 1] + '">' + a[i - 1] + "</button></div>");
+      if (i >= 0 && i < a.length - 1) fl.push('<div><span class="arrow">↓</span>' + esc(chains.get(c).short)
+        + ' 下一天　<button data-goto="' + a[i + 1] + '">' + a[i + 1] + "</button></div>");
+    });
+    return fl.join("") || "<div>这天还没有确认的上下游。</div>";
+  }
+
+  function evidenceHtml(d) {
+    const o = [];
+    Object.entries(d.items).forEach(([repo, items]) => {
+      const n = d.commits[repo];
+      o.push("<details><summary>提交　" + (REPO_SHORT[repo] || repo) + "　" + n + " 次"
+        + (n > items.length ? "（前 " + items.length + " 条）" : "") + "</summary>"
+        + '<p class="pathline">触及：' + esc((d.paths[repo] || []).map((p) => p[0] + " " + p[1]).join("　")) + "</p>"
+        + '<table class="ev">' + items.map((i) => '<tr><td class="sha">' + i.sha + "</td><td>" + esc(i.subject)
+          + "</td></tr>").join("") + "</table></details>");
+    });
+    if (d.plans.length) {
+      o.push("<details open><summary>计划　" + d.plans.length + " 个</summary>"
+        + d.plans.map((p) => '<div class="plan">' + esc(p.file) + "</div>").join("") + "</details>");
+    }
+    if (d.reports_published.length) {
+      o.push("<details open><summary>这天发布的汇报　" + d.reports_published.length + " 篇</summary>"
+        + d.reports_published.map((r) => "<div style='font-size:13px;margin-bottom:6px'><b>"
+          + esc(repTitle(r)) + "</b><br><span class='pathline'>归档日期 " + r + "</span></div>").join("")
+        + "</details>");
+    }
+    if (d.reports_covering.length) {
+      o.push("<details open><summary>这天的工作写进了</summary>"
+        + d.reports_covering.map((r) => "<div style='font-size:13px;margin-bottom:6px'><b>"
+          + esc(repTitle(r)) + "</b><br><span class='pathline'>归档日期 " + r
+          + (r === d.date ? "" : "　·　这篇汇报的日期不是做事的日期，已按实际工作日恢复")
+          + "</span></div>").join("") + "</details>");
+    }
+    return o.join("") || "<p class='pathline'>这天没有采集到提交。</p>";
+  }
+
+  function renderChainCard(id) {
+    const c = chains.get(id), a = active.get(id);
+    const tr = D.tracks.find((t) => t.id === c.track);
+    const inb = D.handoffs.filter((h) => h.to === id && active.has(h.from));
+    const out = D.handoffs.filter((h) => h.from === id && active.has(h.to));
+    document.getElementById("cardlab").textContent = "聚焦的链条　·　点任意一天回到日视图";
+    document.getElementById("daynav").innerHTML = "";
+    const o = [];
+    o.push('<div class="top"><span class="pd">' + esc(c.label) + '</span><span class="pw">' + tr.label
+      + "　" + a[0] + " → " + a.slice(-1)[0] + "　" + a.length + " 天</span></div>");
+    o.push('<div class="cols"><div>');
+    o.push("<h4>上下游</h4><div class='flow'>"
+      + (inb.map((h) => '<div><span class="arrow">←</span>承接　' + esc(chains.get(h.from).label)
+        + '<span class="kind">' + h.type + "</span></div>").join("")
+        + out.map((h) => '<div><span class="arrow">→</span>交给　' + esc(chains.get(h.to).label)
+          + '<span class="kind">' + h.type + "</span></div>").join("")
+        || "<div>还没有确认的上下游。</div>") + "</div>");
+    const reps = a.filter((dt) => byDate.get(dt).report);
+    o.push("<h4>落成了什么</h4><div class='flow'>" + (reps.length
+      ? reps.map((dt) => '<div><span class="arrow">▸</span><button data-goto="' + dt + '">' + dt + "　"
+        + esc(byDate.get(dt).report.title) + "</button></div>").join("")
+      : "<div>这条链还没有落成每日汇报。</div>") + "</div>");
+    o.push("</div><div>");
+    o.push("<h4>这条链上的 " + a.length + " 天</h4><div class='chaindays'>"
+      + a.map((dt) => '<button data-goto="' + dt + '"><span class="dt">' + dt.slice(5) + "</span>"
+        + esc(cut(byDate.get(dt).headline, 26)) + "</button>").join("") + "</div>");
+    o.push("</div></div>");
+    const card = document.getElementById("card");
+    card.className = "card chaincard";
+    card.innerHTML = o.join("");
+    card.querySelectorAll("button[data-goto]").forEach((b) => b.onclick = () => {
+      setFocus(null); setSel(b.dataset.goto);
+    });
+  }
+
+  // ── 清单 ───────────────────────────────────────────
+  const tbody = document.querySelector("#daytable tbody");
+  const findEl = document.getElementById("find");
+  findEl.addEventListener("input", renderTable);
+  function renderTable() {
+    const q = findEl.value.trim().toLowerCase();
+    const rows = days.filter((d) => {
+      if (focus && !d.chains.includes(focus)) return false;
+      if (!q) return true;
+      return (d.date + " " + d.headline + " " + d.chains.map((c) => chains.get(c) ? chains.get(c).short : c).join(" "))
+        .toLowerCase().includes(q);
+    });
+    tbody.innerHTML = rows.map((d) => {
+      const draft = d.headline_source === "commit" || d.headline_source === "none";
+      return '<tr class="' + (pub(d) ? "rep " : "") + (d.date === sel ? "sel" : "") + '" data-date="' + d.date + '">'
+        + '<td class="dt">' + d.date.slice(5) + "<small>" + d.date.slice(0, 4) + " " + d.weekday + "</small></td>"
+        + '<td class="hl"><span class="' + (draft ? "draft" : "") + '">' + esc(d.headline) + "</span></td>"
+        + "<td>" + (d.chains.map((c) => '<span class="chip ' + (d.chain_confidence[c] || "") + '">'
+          + esc(chains.get(c) ? chains.get(c).short : c) + "</span>").join("") || '<span class="chip inferred">未归类</span>') + "</td>"
+        + '<td class="n">' + (d.total_commits || "") + "</td>"
+        + '<td class="rp">' + (pub(d) ? "发布 " + d.reports_published.length + " 篇" : "")
+        + (d.reports_covering.length ? (pub(d) ? "　" : "") + "写进 " + d.reports_covering.join("、") : "")
+        + "</td></tr>";
+    }).join("");
+    tbody.querySelectorAll("tr").forEach((tr) => tr.onclick = () => { setView("atlas"); setSel(tr.dataset.date); });
+  }
+
+  // ── 工具 ───────────────────────────────────────────
+  function dateNum(s) { return new Date(s + "T00:00:00Z").getTime(); }
+  function isoAt(base, i) { return new Date(base + i * 86400000).toISOString().slice(0, 10); }
+  function cut(s, n) { return String(s).length > n ? String(s).slice(0, n) + "…" : s; }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  }
+
+  if (window.matchMedia("(max-width: 860px)").matches) setView("list");
+  note();
+  setSel(sel, true);
+  renderTable();
+})();
+</script>
+</body>
+</html>

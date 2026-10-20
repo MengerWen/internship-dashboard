@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向二 · 链轨｜研究日志原型</title>
+<link rel="stylesheet" href="proto.css">
+<style>
+.wrap { max-width: 1080px; margin: 0 auto; }
+
+/* 顶部链条总览，兼做筛选器 */
+.overview { padding: 0 24px 22px; }
+.overview h2 {
+  font-family: var(--font-serif); font-size: 13px; margin: 0 0 10px;
+  font-weight: 400; color: var(--muted);
+}
+.ovgrid { display: grid; grid-template-columns: 112px 1fr; gap: 2px 10px; align-items: center; }
+.ovtrack { font-size: 12px; color: var(--muted); text-align: right; }
+.ovlane { position: relative; height: 20px; }
+.ovbar {
+  position: absolute; top: 7px; height: 5px;
+  background: var(--line); cursor: pointer;
+  transition: opacity 120ms var(--ease), background 120ms var(--ease);
+}
+.ovbar::after {
+  content: attr(data-short); position: absolute; left: 0; top: -15px;
+  font-size: 10px; color: var(--muted); white-space: nowrap; opacity: 0;
+  transition: opacity 120ms var(--ease);
+}
+.ovbar:hover::after, .ovbar.is-on::after { opacity: 1; }
+.ovbar.is-on { background: var(--focus); }
+.ovmonths {
+  grid-column: 2; display: flex; font-size: 10px; color: var(--muted);
+  border-top: 1px solid var(--line-soft); margin-top: 6px; padding-top: 4px;
+}
+.ovmonths span { flex: 1; }
+.filterbar { padding: 0 24px 16px; font-size: 12px; color: var(--muted); min-height: 20px; }
+.filterbar button {
+  font: inherit; background: none; border: 1px solid var(--line-soft);
+  padding: 2px 8px; cursor: pointer; margin-left: 8px; color: var(--text);
+}
+
+/* 日流 + 轨区 */
+.stream { position: relative; display: grid; grid-template-columns: 128px 1fr; padding: 0 24px 80px; }
+.railsvg { position: absolute; left: 24px; top: 0; width: 128px; height: 100%; overflow: visible; }
+.rows { grid-column: 2; }
+
+.month {
+  font-family: var(--font-serif); font-size: 15px; font-weight: 700;
+  padding: 26px 0 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px;
+  position: sticky; top: 0; background: var(--bg); z-index: 3;
+}
+.month span { font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 10px; font-family: var(--font-body); }
+
+.row { border-bottom: 1px solid var(--line-soft); }
+.daybtn {
+  width: 100%; text-align: left; background: none; border: 0; font: inherit; color: inherit;
+  display: grid; grid-template-columns: 62px 1fr auto; gap: 0 14px;
+  padding: 11px 12px 11px 14px; cursor: pointer; align-items: baseline;
+  transition: background 120ms var(--ease), transform 120ms var(--ease);
+}
+.daybtn:hover { background: var(--surface); }
+.daybtn:active { transform: scale(0.998); }
+.daybtn:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.d { font-family: var(--font-serif); font-size: 15px; letter-spacing: -0.01em; }
+.wd { font-size: 10px; color: var(--muted); display: block; margin-top: 1px; }
+.head { font-size: 14px; line-height: 1.5; }
+.head.draft { color: var(--muted); }
+.head.draft::after {
+  content: "待写"; font-size: 10px; border: 1px solid var(--line-soft);
+  padding: 0 4px; margin-left: 7px; vertical-align: 2px; white-space: nowrap;
+}
+.chips { display: block; margin-top: 4px; font-size: 11px; color: var(--muted); }
+.chip { border: 1px solid var(--line-soft); padding: 0 5px; margin-right: 5px; white-space: nowrap; }
+.chip.inferred { border-style: dashed; }
+.marks { font-size: 11px; color: var(--muted); white-space: nowrap; text-align: right; }
+.marks .rep { color: var(--focus); }
+
+/* 有每日汇报的日子：换材质、换字体、左侧墨边 */
+.row.has-report { background: var(--surface); border-left: 3px solid var(--line); }
+.row.has-report .head { font-family: var(--font-serif); font-size: 15px; }
+.row.has-report .daybtn { padding-left: 11px; }
+.row.is-weekend .d { color: var(--muted); }
+.row.dim { opacity: 0.22; }
+
+.gap {
+  font-size: 11px; color: var(--muted); padding: 7px 14px;
+  border-bottom: 1px solid var(--line-soft); background:
+    repeating-linear-gradient(90deg, var(--line-soft) 0 3px, transparent 3px 7px) left center/100% 1px no-repeat;
+  background-color: transparent;
+}
+
+/* 展开层 */
+.detail { padding: 2px 14px 20px; font-size: 13px; }
+.detail h3 {
+  font-size: 11px; color: var(--muted); font-weight: 400; margin: 16px 0 6px;
+  letter-spacing: 0.04em; border-bottom: 1px solid var(--line-soft); padding-bottom: 3px;
+}
+.detail ul { margin: 0; padding-left: 18px; }
+.detail li { margin-bottom: 3px; }
+.flow div { margin-bottom: 4px; }
+.flow .arrow { font-family: var(--font-mono); color: var(--muted); margin-right: 6px; }
+.flow .kind { font-size: 11px; color: var(--muted); margin-left: 6px; }
+.ev { margin-bottom: 8px; }
+.ev > summary { cursor: pointer; font-size: 12px; }
+.ev > summary::marker { color: var(--muted); }
+.ev table { border-collapse: collapse; margin: 6px 0 0; font-size: 12px; width: 100%; }
+.ev td { border-bottom: 1px solid var(--line-soft); padding: 3px 8px 3px 0; vertical-align: top; }
+.ev td.sha { font-family: var(--font-mono); font-size: 11px; color: var(--blue); white-space: nowrap; }
+.pathline { font-size: 11px; color: var(--muted); margin: 4px 0 0; }
+.plan { font-family: var(--font-mono); font-size: 11px; }
+.repline { font-size: 12px; }
+
+@media (max-width: 860px) {
+  .stream { grid-template-columns: 34px 1fr; padding: 0 16px 60px; }
+  .railsvg { left: 16px; width: 34px; }
+  .daybtn { grid-template-columns: 54px 1fr; padding-right: 0; }
+  .marks { grid-column: 2; text-align: left; margin-top: 4px; }
+  .ovgrid { grid-template-columns: 70px 1fr; }
+  .viewhead h1 { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+<div class="proto-note">设计原型 · <b>方向二「链轨」</b>　一天一个框，左侧墨色链轨承担链条与交接。数据为本机三仓库 92 天真实提交／PLAN／日报；链条与交接为<b>草案</b>，每日一句话为自动草拟，正式实施时由人确认。</div>
+
+<header class="masthead">
+  <div class="masthead-row">
+    <div class="edition">Research edition no. 06<br>Shanghai · 2026</div>
+    <div class="brand">量化实习成果看板<small>QUANT RESEARCH ARCHIVE</small></div>
+    <div class="edition" style="text-align:right">原型 · 不是线上页面</div>
+  </div>
+  <nav class="tabs">
+    <a class="tab" href="#">正式成果</a>
+    <a class="tab" href="#">每日汇报</a>
+    <a class="tab is-active" href="#">研究日志</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="viewhead">
+    <div>
+      <h1>研究日志</h1>
+      <p>每天做了什么，接住了什么，交给了谁</p>
+    </div>
+    <div class="stat" id="stat"></div>
+  </div>
+
+  <section class="overview">
+    <h2>链条总览　点一条链，下方只高亮这条链的日子</h2>
+    <div class="ovgrid" id="ovgrid"></div>
+  </section>
+  <div class="filterbar" id="filterbar"></div>
+
+  <div class="legend">
+    <i><svg width="26" height="10"><line x1="0" y1="5" x2="26" y2="5" stroke="#1e2a31" stroke-width="2"/></svg> 延续</i>
+    <i><svg width="26" height="10"><line x1="0" y1="5" x2="26" y2="5" stroke="#1e2a31" stroke-width="2" stroke-dasharray="4 3"/></svg> 派生</i>
+    <i><svg width="26" height="10"><line x1="0" y1="5" x2="26" y2="5" stroke="#1e2a31" stroke-width="2" stroke-dasharray="1 3"/></svg> 依赖解除</i>
+    <i><svg width="14" height="10"><rect x="3" y="2" width="7" height="7" fill="#1e2a31"/></svg> 收口（落成汇报或正式成果）</i>
+    <i><span style="border-left:3px solid #1e2a31;background:#f8f4eb;padding:1px 7px">有每日汇报</span></i>
+    <i><span style="border:1px dashed #c8c1b4;padding:0 5px">虚线链名 = 推断，未确认</span></i>
+  </div>
+
+  <div class="stream">
+    <svg class="railsvg" id="rail" aria-hidden="true"></svg>
+    <div class="rows" id="rows"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  const D = window.JOURNAL_DATA;
+  const chains = new Map(D.chains.map((c) => [c.id, c]));
+  const days = D.days;
+  const LANE_W = 22, LANE_X0 = 16;
+  const REPO_SHORT = {
+    "sirui-quant-research": "研究主仓",
+    "Quant_Research-Trading": "父仓",
+    "internship-dashboard": "看板仓",
+  };
+
+  // 每条链的活跃日（有归属的那些天）
+  const active = new Map();
+  days.forEach((d) => d.chains.forEach((c) => {
+    if (!active.has(c)) active.set(c, []);
+    active.get(c).push(d.date);
+  }));
+
+  // 泳道分配：按首次活跃日排序，取最低空闲道；链结束后回收
+  const order = [...active.keys()].sort((a, b) => active.get(a)[0].localeCompare(active.get(b)[0]));
+  const lane = new Map();
+  const laneFreeAfter = [];
+  order.forEach((id) => {
+    const first = active.get(id)[0], last = active.get(id).slice(-1)[0];
+    let L = laneFreeAfter.findIndex((end) => end === undefined || end < first);
+    if (L === -1) L = laneFreeAfter.length;
+    laneFreeAfter[L] = last;
+    lane.set(id, L);
+  });
+  const laneCount = laneFreeAfter.length;
+
+  document.getElementById("stat").innerHTML =
+    "<b>" + days.length + "</b> 天有记录　<b>" + days.filter((d) => d.report).length + "</b> 天有每日汇报<br>"
+    + order.length + " 条链条 · 最宽处 " + laneCount + " 条并行 · 2026-06-04 起";
+
+  // 总览
+  const ov = document.getElementById("ovgrid");
+  const t0 = new Date(days[0].date).getTime();
+  const t1 = new Date(days[days.length - 1].date).getTime();
+  const pos = (s) => ((new Date(s).getTime() - t0) / (t1 - t0)) * 100;
+  D.tracks.forEach((tr) => {
+    const label = document.createElement("div");
+    label.className = "ovtrack";
+    label.textContent = tr.label;
+    const laneEl = document.createElement("div");
+    laneEl.className = "ovlane";
+    D.chains.filter((c) => c.track === tr.id && active.has(c.id)).forEach((c) => {
+      const a = active.get(c.id);
+      const bar = document.createElement("div");
+      bar.className = "ovbar";
+      bar.dataset.chain = c.id;
+      bar.dataset.short = c.short;
+      bar.title = c.label + "（" + a[0] + " → " + a.slice(-1)[0] + "，" + a.length + " 天）";
+      bar.style.left = pos(a[0]) + "%";
+      bar.style.width = Math.max(1.2, pos(a.slice(-1)[0]) - pos(a[0])) + "%";
+      laneEl.appendChild(bar);
+    });
+    ov.appendChild(label);
+    ov.appendChild(laneEl);
+  });
+  const months = document.createElement("div");
+  months.className = "ovmonths";
+  months.innerHTML = ["6月", "7月", "8月", "9月", "10月"].map((m) => "<span>" + m + "</span>").join("");
+  ov.appendChild(months);
+
+  // 日流
+  const rowsEl = document.getElementById("rows");
+  let lastMonth = "", prev = null;
+  const rowOf = new Map();
+  days.forEach((d) => {
+    const m = d.date.slice(0, 7);
+    if (m !== lastMonth) {
+      lastMonth = m;
+      const h = document.createElement("div");
+      h.className = "month";
+      const n = days.filter((x) => x.date.slice(0, 7) === m).length;
+      h.innerHTML = m.replace("-", " 年 ") + " 月<span>" + n + " 天有记录</span>";
+      rowsEl.appendChild(h);
+      prev = null;
+    }
+    if (prev) {
+      const skip = (new Date(d.date) - new Date(prev)) / 86400000 - 1;
+      if (skip >= 1) {
+        const g = document.createElement("div");
+        g.className = "gap";
+        const a = new Date(new Date(prev).getTime() + 86400000).toISOString().slice(5, 10);
+        const b = new Date(new Date(d.date).getTime() - 86400000).toISOString().slice(5, 10);
+        g.textContent = (skip === 1 ? a : a + " — " + b) + "　无记录";
+        rowsEl.appendChild(g);
+      }
+    }
+    prev = d.date;
+
+    const row = document.createElement("article");
+    row.className = "row" + (d.report ? " has-report" : "") + (d.is_weekend ? " is-weekend" : "");
+    row.dataset.date = d.date;
+    row.dataset.chains = d.chains.join(" ");
+    const chipHtml = d.chains.length
+      ? d.chains.map((c) => '<span class="chip ' + (d.chain_confidence[c] || "") + '">'
+          + (chains.get(c) ? chains.get(c).short : c) + "</span>").join("")
+      : '<span class="chip inferred">未归类</span>';
+    const marks = [];
+    if (d.report) marks.push('<span class="rep">每日汇报 ↗</span>');
+    if (d.total_commits) marks.push(d.total_commits + " 次提交");
+    row.innerHTML =
+      '<button class="daybtn" aria-expanded="false">'
+      + '<span><span class="d">' + d.date.slice(5) + '</span><span class="wd">' + d.weekday + "</span></span>"
+      + '<span><span class="head' + (d.headline_source === "commit" || d.headline_source === "none" ? " draft" : "")
+      + '">' + esc(d.headline) + '</span><span class="chips">' + chipHtml + "</span></span>"
+      + '<span class="marks">' + marks.join("<br>") + "</span></button>"
+      + '<div class="detail" hidden></div>';
+    rowsEl.appendChild(row);
+    rowOf.set(d.date, row);
+  });
+
+  // 轨区
+  const svg = document.getElementById("rail");
+  const streamEl = document.querySelector(".stream");
+  function y(date) {
+    const r = rowOf.get(date);
+    if (!r) return 0;
+    const b = r.querySelector(".daybtn").getBoundingClientRect();
+    const s = streamEl.getBoundingClientRect();
+    return b.top - s.top + b.height / 2;
+  }
+  function x(id) { return LANE_X0 + lane.get(id) * LANE_W; }
+
+  function drawRail() {
+    const narrow = window.innerWidth <= 860;
+    const parts = [];
+    order.forEach((id) => {
+      const a = active.get(id);
+      const yA = y(a[0]), yB = y(a.slice(-1)[0]), X = narrow ? LANE_X0 : x(id);
+      parts.push('<line class="cl" data-chain="' + id + '" x1="' + X + '" y1="' + yA + '" x2="' + X
+        + '" y2="' + yB + '" stroke="var(--line)" stroke-width="2"/>');
+      a.forEach((dt) => {
+        const dd = days.find((z) => z.date === dt);
+        parts.push('<circle class="cl" data-chain="' + id + '" cx="' + X + '" cy="' + y(dt) + '" r="'
+          + (dd.report ? 4 : 3) + '" fill="' + (dd.report ? "var(--line)" : "var(--bg)")
+          + '" stroke="var(--line)" stroke-width="2"/>');
+        parts.push('<line class="cl" data-chain="' + id + '" x1="' + X + '" y1="' + y(dt) + '" x2="'
+          + (narrow ? LANE_X0 + 10 : 128) + '" y2="' + y(dt)
+          + '" stroke="var(--line-soft)" stroke-width="1"/>');
+      });
+    });
+    if (!narrow) {
+      D.handoffs.forEach((h) => {
+        if (!active.has(h.from) || !active.has(h.to)) return;
+        const xa = x(h.from), xb = x(h.to);
+        const ya = y(active.get(h.from).slice(-1)[0]), yb = y(active.get(h.to)[0]);
+        const dash = h.type === "派生" ? ' stroke-dasharray="4 3"'
+          : h.type === "依赖解除" ? ' stroke-dasharray="1 3"' : "";
+        const my = (ya + yb) / 2;
+        parts.push('<path class="cl" data-chain="' + h.from + " " + h.to + '" d="M' + xa + "," + ya
+          + " L" + xa + "," + (my - 6) + " Q" + xa + "," + my + " " + (xa + Math.sign(xb - xa) * 6) + "," + my
+          + " L" + (xb - Math.sign(xb - xa) * 6) + "," + my + " Q" + xb + "," + my + " " + xb + "," + (my + 6)
+          + " L" + xb + "," + yb + '" fill="none" stroke="var(--line)" stroke-width="1.5"'
+          + dash + '><title>' + h.type + "：" + chains.get(h.from).label + " → "
+          + chains.get(h.to).label + "</title></path>");
+        if (h.type === "收口") {
+          parts.push('<rect x="' + (xb - 4) + '" y="' + (yb - 4) + '" width="8" height="8" fill="var(--line)"/>');
+        }
+      });
+    }
+    svg.style.height = streamEl.scrollHeight + "px";
+    svg.innerHTML = parts.join("");
+  }
+
+  // 高亮与筛选
+  let filter = null, scrollOnFilter = false;
+  function applyHighlight(set) {
+    svg.querySelectorAll(".cl").forEach((n) => {
+      const own = (n.dataset.chain || "").split(" ");
+      n.style.opacity = !set || own.some((o) => set.has(o)) ? 1 : 0.18;
+      if (set && own.some((o) => set.has(o)) && n.tagName !== "circle") n.setAttribute("stroke", "var(--focus)");
+      else if (n.tagName !== "circle") n.setAttribute("stroke", n.getAttribute("stroke-width") === "1" ? "var(--line-soft)" : "var(--line)");
+    });
+  }
+  function applyFilter() {
+    const bar = document.getElementById("filterbar");
+    document.querySelectorAll(".ovbar").forEach((b) => b.classList.toggle("is-on", b.dataset.chain === filter));
+    document.querySelectorAll(".row").forEach((r) => {
+      r.classList.toggle("dim", !!filter && !r.dataset.chains.split(" ").includes(filter));
+    });
+    if (filter) {
+      const c = chains.get(filter), a = active.get(filter);
+      bar.innerHTML = "正在看　<b>" + esc(c.label) + "</b>　" + a[0] + " → " + a.slice(-1)[0]
+        + "，" + a.length + " 天<button id='clear'>看全部</button>";
+      document.getElementById("clear").onclick = () => { filter = null; applyFilter(); };
+      applyHighlight(new Set([filter]));
+      const first = rowOf.get(a[0]);
+      if (first && scrollOnFilter) first.scrollIntoView({ block: "center", behavior: "auto" });
+    } else {
+      bar.innerHTML = "92 天全部显示。点上方任一条链只看那条链。";
+      applyHighlight(null);
+    }
+  }
+  document.getElementById("ovgrid").addEventListener("click", (e) => {
+    const b = e.target.closest(".ovbar");
+    if (!b) return;
+    filter = filter === b.dataset.chain ? null : b.dataset.chain;
+    scrollOnFilter = true; applyFilter(); scrollOnFilter = false;
+  });
+
+  rowsEl.addEventListener("mouseover", (e) => {
+    const r = e.target.closest(".row");
+    if (!r || filter) return;
+    applyHighlight(new Set(r.dataset.chains.split(" ")));
+  });
+  rowsEl.addEventListener("mouseleave", () => { if (!filter) applyHighlight(null); });
+
+  rowsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".daybtn");
+    if (!btn) return;
+    const row = btn.closest(".row");
+    const box = row.querySelector(".detail");
+    const open = !box.hidden;
+    if (open) { box.hidden = true; btn.setAttribute("aria-expanded", "false"); drawRail(); applyFilter(); return; }
+    box.innerHTML = detailHtml(days.find((d) => d.date === row.dataset.date));
+    box.hidden = false;
+    btn.setAttribute("aria-expanded", "true");
+    drawRail(); applyFilter();
+  });
+
+  function detailHtml(d) {
+    const out = [];
+    out.push("<h3>做了什么</h3><ul>");
+    const bullets = d.plans.length
+      ? d.plans.map((p) => esc(p.title))
+      : Object.entries(d.items).flatMap(([r, it]) => it.slice(0, 3).map((i) => esc(i.subject)));
+    out.push((bullets.length ? bullets : ["（这天没有计划文件，只有提交）"]).map((b) => "<li>" + b + "</li>").join(""));
+    out.push("</ul>");
+
+    const fl = [];
+    D.handoffs.forEach((h) => {
+      if (d.chains.includes(h.to) && active.get(h.to) && active.get(h.to)[0] === d.date) {
+        fl.push('<div><span class="arrow">←</span>承接　' + esc(chains.get(h.from).label)
+          + '<span class="kind">' + h.type + "</span></div>");
+      }
+      if (d.chains.includes(h.from) && active.get(h.from) && active.get(h.from).slice(-1)[0] === d.date) {
+        fl.push('<div><span class="arrow">→</span>交给　' + esc(chains.get(h.to).label)
+          + '<span class="kind">' + h.type + "</span></div>");
+      }
+    });
+    d.chains.forEach((c) => {
+      const a = active.get(c) || [];
+      const i = a.indexOf(d.date);
+      if (i > 0) fl.push('<div><span class="arrow">↑</span>同一条链上一天　' + a[i - 1] + "　" + esc(chains.get(c).short) + "</div>");
+      if (i >= 0 && i < a.length - 1) fl.push('<div><span class="arrow">↓</span>同一条链下一天　' + a[i + 1] + "　" + esc(chains.get(c).short) + "</div>");
+    });
+    out.push('<h3>脉络</h3><div class="flow">' + (fl.join("") || "<div>这天还没有确认的上下游。</div>") + "</div>");
+
+    out.push("<h3>根据</h3>");
+    Object.entries(d.items).forEach(([repo, items]) => {
+      const n = d.commits[repo], paths = (d.paths[repo] || []).map((p) => p[0] + " " + p[1]).join("　");
+      out.push('<details class="ev"><summary>提交　' + (REPO_SHORT[repo] || repo) + "　" + n
+        + " 次　" + (n > items.length ? "（列出前 " + items.length + " 条）" : "") + "</summary>"
+        + '<p class="pathline">触及：' + esc(paths) + "</p><table>"
+        + items.map((i) => '<tr><td class="sha">' + i.sha + "</td><td>" + esc(i.subject) + "</td></tr>").join("")
+        + "</table></details>");
+    });
+    if (d.plans.length) {
+      out.push('<details class="ev" open><summary>计划　' + d.plans.length + " 个</summary>"
+        + d.plans.map((p) => '<div class="plan">' + esc(p.file) + "</div>").join("") + "</details>");
+    }
+    if (d.report) {
+      out.push('<details class="ev" open><summary>每日汇报</summary><div class="repline"><b>'
+        + esc(d.report.title) + "</b><br>" + esc(d.report.summary) + "</div></details>");
+    }
+    return out.join("");
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  }
+
+  document.fonts.ready.then(() => { drawRail(); applyFilter(); });
+  drawRail(); applyFilter();
+  let tid;
+  window.addEventListener("resize", () => { clearTimeout(tid); tid = setTimeout(() => { drawRail(); applyFilter(); }, 120); });
+})();
+</script>
+</body>
+</html>
