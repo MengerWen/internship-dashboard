@@ -17,7 +17,7 @@ const output = path.resolve('artifacts/journal-column');
       const errors = [];
       // Python 静态预览没有既有标签 API；仅为该接口提供仓库快照。
       const tags = JSON.parse(await fs.readFile(path.resolve('content/report-tags.json'), 'utf8'));
-      await page.route('**/api/report-tags', route => route.fulfill({json: {...tags, can_edit: false}}));
+      await page.route('**/api/report-tags', route => route.fulfill({json: {data: tags, revision: 0, canEdit: false}}));
       page.on('pageerror', e => errors.push(e.message));
       page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });
       await page.goto(base + '#/journal?view=list');

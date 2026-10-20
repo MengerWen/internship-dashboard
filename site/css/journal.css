@@ -101,6 +101,14 @@
 @media (prefers-reduced-motion: reduce) { .journal-day-card { animation: journal-opacity 220ms cubic-bezier(.23, 1, .32, 1); } }
 @keyframes journal-opacity { from { opacity: .7; } to { opacity: 1; } }
 .journal-view [hidden] { display: none !important; }
+/* 沿用令牌；小字使用墨色，避免纸底上的 --muted 仅有 4.3:1 对比度。 */
+.journal-view .journal-heading p, .journal-view #journal-count,
+.journal-view .journal-list th, .journal-view .journal-list small,
+.journal-view .journal-chain-link small, .journal-view .journal-figure figcaption,
+.journal-view .journal-readout small, .journal-view .journal-evidence small,
+.journal-view .journal-repo > p, .journal-view .journal-chain-days small { color: var(--text); }
+.journal-atlas .journal-axis-label, .journal-atlas .journal-chain-label { fill: var(--text); font-size: 12.5px; }
+.journal-view input::placeholder { color: var(--text); opacity: 1; }
 @media (max-width: 859px) {
   .journal-view { padding: 20px 16px 60px; }
   .journal-heading { gap: 8px; margin-bottom: 20px; }
