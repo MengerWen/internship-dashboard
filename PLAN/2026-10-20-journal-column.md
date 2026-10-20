@@ -342,9 +342,16 @@ node design-demos/journal-prototype/shots.cjs   # 原型基线，比对用
 
 ## 7. 完成验收（实施者填写）
 
-- [ ] P0–P4 各期验收项逐条记录结果，未通过的明确写出来，不以「应该没问题」代替实测。
-- [ ] 每个完整改动单独 commit 并 push：契约与采集脚本、构建接入、清单视图、图谱、交互、回填内容分开，不积攒到最后一次提交。
-- [ ] 只暂存本项改动涉及的文件，保留仓库里其它未提交材料（当前工作区有 `2026-10-10-沪市开盘空窗原因与G4核查.md`、`artifacts/grouped-kernel-report-2026-10-09/`、`content/daily/2026-10-10.md`、`exports/` 等未跟踪内容，不要顺带提交）。
-- [ ] 推送后核对 GitHub 已含目标 commit，再核对 Cloudflare 构建与线上版本；三者分别记录，推送成功不等于线上已更新。
-- [ ] 采集脚本确认只在本地运行过，构建日志中没有访问其它仓库的痕迹。
-- [ ] `design-demos/journal-prototype/` 是一次性原型，正式版上线并验收后可以整目录删除；删除前确认 `content/chains.json` 已经承接了链条草案。
+- [x] P0–P4 各期验收项逐条记录结果，未通过的明确写出来，不以「应该没问题」代替实测。
+- [x] 每个完整改动单独 commit 并 push：契约与采集脚本、构建接入、清单视图、图谱、交互、回填内容分开，不积攒到最后一次提交。
+- [x] 只暂存本项改动涉及的文件，保留仓库里其它未提交材料（当前工作区有 `2026-10-10-沪市开盘空窗原因与G4核查.md`、`artifacts/grouped-kernel-report-2026-10-09/`、`content/daily/2026-10-10.md`、`exports/` 等未跟踪内容，不要顺带提交）。
+- [x] 推送后核对 GitHub 已含目标 commit，再核对 Cloudflare 构建与线上版本；三者分别记录，推送成功不等于线上已更新。
+- [x] 采集脚本确认只在本地运行过，构建日志中没有访问其它仓库的痕迹。
+- [x] `design-demos/journal-prototype/` 是一次性原型，正式版上线并验收后可以整目录删除；删除前确认 `content/chains.json` 已经承接了链条草案。
+
+
+实施结果：见 [P0–P4验收记录](../docs/journal-review/acceptance-2026-10-20.md)。原P0的“redact命中0”未原样达到：源文件名命中1处，已隐去，输出残留0；其余必要验收通过。
+
+发布源码 `777bfa4`，Cloudflare版本 `ca4b52d2-ca24-446a-a7de-2e2f8d475d9a`；线上四种深链及证据展开已核对。追加线上空窗组合因浏览器通道超时未取得返回，相同状态在本地1440/390均通过。
+
+原型保留作设计对照，`content/chains.json`已承接正式注册表，正式站点不依赖原型。临时detached工作树 `D:/MG/！Internship/BUILD/汇报-journal-validation-20261020` 已检查无未提交修改、无main以外提交；离线副本已保存后通过 `git worktree remove` 清理，本任务未创建临时分支。

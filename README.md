@@ -106,6 +106,22 @@ flowchart LR
 ```
 ````
 
+## 维护研究日志
+
+日志保存在 `content/journal/YYYY-MM-DD.md`，任务链和交接保存在 `content/chains.json`。一句话、链条归属与汇报覆盖关系以这些文件为准。构建只读取已入库的证据，不采集外部仓库。
+
+本地核对证据：
+
+```powershell
+python scripts/collect_journal_evidence.py --check
+```
+
+需要刷新时，先在 `scripts/journal_repos.json` 中更新本地路径与固定 `revision`，运行不带 `--check` 的采集命令，再逐日核对日志和推断归属。采集器只改 `_evidence/*.json`，不会自动改写一句话或确认链条。父仓库只统计白名单子目录。
+
+正式版的 `#/journal` 在宽屏默认图谱、窄屏默认清单；日期、链条和视图均可用深链打开。证据第一次展开才请求，离线版使用内联数据。浏览器验收使用 `node scripts/verify_journal.cjs`；可通过 `JOURNAL_BASE_URL` 和 `JOURNAL_OFFLINE_DIR` 指定隔离构建。
+
+本次实施与发布结果见 [2026-10-20 验收记录](docs/journal-review/acceptance-2026-10-20.md)。
+
 ## 发布流程
 
 ```powershell
