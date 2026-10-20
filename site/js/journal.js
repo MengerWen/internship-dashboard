@@ -26,7 +26,7 @@
         this.mode = button.dataset.journalView; this.render(); this.writeHash();
       }));
       $("view-journal").addEventListener("click", e => {
-        $("view-journal").classList.remove("is-keyboard");
+        $("view-journal").classList.toggle("is-keyboard", e.detail === 0);
         const retry = e.target.closest("[data-journal-evidence]");
         if (retry) this.loadEvidence(retry.dataset.journalEvidence, true);
         const day = e.target.closest("[data-journal-day]");
@@ -103,6 +103,7 @@
     },
     render() {
       const wasFocused = document.activeElement?.classList.contains("journal-atlas");
+      const focusedNav = document.activeElement?.dataset.journalNav;
       this.visible = this.visibleDays();
       if (!this.visible.some(d => d.date === this.selected)) this.selected = this.visible[0]?.date;
       $("journal-window").value = this.window;
@@ -118,6 +119,11 @@
       this.renderList();
       this.renderDetail();
       if (wasFocused) document.querySelector(".journal-atlas")?.focus({preventScroll: true});
+      if (focusedNav) {
+        const buttons = [...document.querySelectorAll("[data-journal-nav]")];
+        const next = buttons.find(b => b.dataset.journalNav === focusedNav && !b.disabled) || buttons.find(b => !b.disabled);
+        next?.focus({preventScroll: true});
+      }
     },
     renderAtlas() {
       const days = this.visibleDays(true);
@@ -144,7 +150,7 @@
         if ([0, 6].includes(weekday)) parts.push(`<rect class="journal-weekend" x="${x(date) - 3}" y="32" width="${Math.max(6, 1060 / Math.max(1, last - first))}" height="${bottom - 32}"/>`);
         if (date.endsWith("-01")) parts.push(`<path class="journal-month-rule" d="M${x(date)},30 V${bottom + 24}"/><text class="journal-axis-label" x="${x(date) + 5}" y="19">${Number(date.slice(5, 7))}月</text>`);
       }
-      parts.push(`<rect class="journal-selection-band" x="${x(this.selected || days[0].date) - 4}" y="30" width="8" height="${bottom - 6}"/><path class="journal-selection-line" d="M${x(this.selected || days[0].date)},30 V${bottom + 24}"/>`);
+      if (this.selected) parts.push(`<rect class="journal-selection-band" x="${x(this.selected) - 4}" y="30" width="8" height="${bottom - 6}"/><path class="journal-selection-line" d="M${x(this.selected)},30 V${bottom + 24}"/>`);
       rows.forEach(({track, y, height: bh, chains}) => {
         parts.push(`<path class="journal-rule" d="M0,${y + bh} H1224"/><text class="journal-track-label" x="0" y="${y + bh / 2 - 3}">${esc(track.label)}</text><text class="journal-axis-label" x="0" y="${y + bh / 2 + 15}">${chains.length} 条链</text>`);
       });
@@ -201,6 +207,7 @@
       });
       document.querySelector("#journal-figure figcaption").innerHTML = '<p>横轴按真实日期展开；实心点有汇报，空心点无汇报；虚线跨过没有记录的空档，方块表示收口。</p><div class="journal-handoff-legend" aria-label="交接线型">' + [["延续", ""], ["派生", "4 3"], ["依赖解除", "1 3"], ["收口", "7 2 1 2"]].map(([label, dash]) => `<span><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</span>`).join("") + '<span>推断关系在脉络中标明</span></div>';
       this.atlas = {x, positions, days, height};
+      if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
     },
     hideReadout() {
@@ -251,7 +258,7 @@
       return `<button type="button" class="journal-chain-link" data-journal-chain="${esc(cid)}">${esc(this.chains.get(cid)?.short || cid)}</button>`;
     },
     navButton(day, label) {
-      return `<button type="button" ${day ? `data-journal-day="${day.date}"` : "disabled"}>${label}${day ? ` ${day.date} ${esc(day.headline.slice(0, 28))}${day.headline.length > 28 ? "…" : ""}` : ""}</button>`;
+      return `<button type="button" data-journal-nav="${esc(label)}" ${day ? `data-journal-day="${day.date}"` : "disabled"}>${label}${day ? ` ${day.date} ${esc(day.headline.slice(0, 28))}${day.headline.length > 28 ? "…" : ""}` : ""}</button>`;
     },
     renderDetail() {
       this.hideReadout();
@@ -263,7 +270,7 @@
         const dates = this.days.filter(d => d.chains.includes(cid)), i = dates.indexOf(day);
         return `<p>${this.chainButton(cid)} 的相邻记录</p><div class="journal-chain-neighbors">${this.navButton(dates[i - 1], "上一天")}${this.navButton(dates[i + 1], "下一天")}</div>`;
       }).join("");
-      $("journal-detail").innerHTML = `<nav class="journal-day-nav" aria-label="相邻工作日">${this.navButton(all[index - 1], "前一天")}${this.navButton(all[index + 1], "后一天")}</nav><article class="journal-day-card" data-selected-date="${day.date}"><div class="journal-day-top"><p><time>${day.date}</time>　${esc(day.weekday)}　${day.total_commits} 次提交</p>${day.report ? `<a href="#/daily/${day.report}">每日汇报 ↗</a>` : ""}</div><h2 class="${day.headline_source === "commit" ? "journal-draft" : ""}">${esc(day.headline)}${day.headline_source === "commit" ? " <small>待写</small>" : ""}</h2><p>${this.chainButtons(day)}</p><div class="journal-card-columns"><div><section><h3>做了什么</h3><ul id="journal-highlights">${day.highlights.map(h => `<li>${esc(h)}</li>`).join("") || '<li>展开右侧根据，查看当天计划与提交。</li>'}</ul></section><section><h3>脉络</h3>${this.flowHtml(day.chains) || '<p>未归类</p>'}${lineage}</section><div id="journal-body" class="markdown-body"></div></div><section><h3>根据</h3><details class="journal-evidence" data-evidence-date="${day.date}"><summary>提交、计划与汇报 <small>${day.total_commits} 次提交</small></summary><div id="journal-evidence-content"><p>正在读取证据…</p></div></details></section></div></article>`;
+      $("journal-detail").innerHTML = `<nav class="journal-day-nav" aria-label="相邻工作日">${this.navButton(all[index - 1], "前一天")}${this.navButton(all[index + 1], "后一天")}</nav><article class="journal-day-card" data-selected-date="${day.date}"><div class="journal-day-top"><p><time>${day.date}</time>　${esc(day.weekday)}　${day.total_commits} 次提交</p>${day.report ? `<a href="#/daily/${day.report}">每日汇报 ↗</a>` : ""}</div><h2 class="${day.headline_source === "commit" ? "journal-draft" : ""}">${esc(day.headline)}${day.headline_source === "commit" ? " <small>待写</small>" : ""}</h2><p>${this.chainButtons(day)}</p><div class="journal-card-columns"><div><section><h3>做了什么</h3><ul id="journal-highlights">${day.highlights.map(h => `<li>${esc(h)}</li>`).join("") || '<li>当天没有可展示的提交或计划。</li>'}</ul></section><section><h3>脉络</h3>${this.flowHtml(day.chains) || '<p>未归类</p>'}${lineage}</section><div id="journal-body" class="markdown-body"></div></div><section><h3>根据</h3><details class="journal-evidence" data-evidence-date="${day.date}"><summary>提交、计划与汇报 <small>${day.total_commits} 次提交</small></summary><div id="journal-evidence-content"><p>正在读取证据…</p></div></details></section></div></article>`;
       document.querySelector(".journal-evidence").addEventListener("toggle", e => {
         if (e.target.open) this.loadEvidence(day.date);
       });

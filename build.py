@@ -629,6 +629,10 @@ class Builder:
             highlights = [str(h) for h in meta.get("highlights", [])]
             if len(highlights) > 3:
                 self.warnings.append(f"日志 {key} highlights 超过 3 条")
+            # 日卡收起证据时也有摘要，完整证据仍按需加载。
+            if not highlights:
+                highlights = ([str(p["title"]) for p in ev.get("plans", [])] or
+                              [str(i["subject"]) for repo in ev.get("repos", []) for i in repo.get("items", [])])[:3]
             picked, confidence = [], {}
             for cid in dict.fromkeys(meta.get("chains", [])):
                 if cid not in by_chain:

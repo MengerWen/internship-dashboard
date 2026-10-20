@@ -19,7 +19,7 @@ class JournalBuildTests(unittest.TestCase):
         for day in ("2026-06-23", "2026-06-24"):
             (content / f"journal/_evidence/{day}.json").write_text(json.dumps({"date": day,
                 "repos": [{"repo": "r", "commits": 123, "items": [{"subject": "</script>证据"}]}],
-                "plans": [], "suggest": {"chains": ["a"]}}), encoding="utf-8")
+                "plans": ([{"title": "当天计划"}] if day == "2026-06-23" else []), "suggest": {"chains": ["a"]}}), encoding="utf-8")
         return content
 
     def test_authoritative_chains_fallback_validation_and_index(self):
@@ -37,6 +37,8 @@ class JournalBuildTests(unittest.TestCase):
             self.assertEqual(missing["chains"], [])  # suggest 不参与构建。
             self.assertEqual(missing["headline_source"], "commit")
             self.assertEqual(missing["total_commits"], 123)
+            self.assertEqual(first["highlights"], ["当天计划"])
+            self.assertEqual(missing["highlights"], ["</script>证据"])
             self.assertTrue(first["has_body"])
             self.assertIsNone(builder.chains["tracks"][0]["stage"])
             self.assertEqual(builder.chains["chains"][0]["start"], "2026-06-23")
