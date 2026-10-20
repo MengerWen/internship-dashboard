@@ -25,6 +25,7 @@
 
       await window.ShowcaseView.init(this.manifest, this);
       await window.DailyView.init(this.manifest, this);
+      window.JournalView.init(this.manifest, this);
       window.SearchView.init();
       window.addEventListener("hashchange", () => this.route());
       this.ready = true;
@@ -107,6 +108,7 @@
       const clean = window.location.hash.replace(/^#\/?/, "").split("?")[0];
       const [view, key, subview] = clean.split("/");
       if (view === "daily") return {view: "daily", key, subview};
+      if (view === "journal") return {view: "journal", key, subview};
       if (view === "showcase") return {view: "showcase", key};
       return {view: "showcase", key: null};
     },
@@ -121,7 +123,11 @@
       document.querySelectorAll(".view").forEach((node) => node.classList.remove("is-active"));
       document.querySelectorAll(".tab").forEach((node) => node.classList.remove("is-active"));
 
-      if (view === "daily") {
+      if (view === "journal") {
+        document.getElementById("view-journal").classList.add("is-active");
+        document.getElementById("tab-journal").classList.add("is-active");
+        window.JournalView.show(key);
+      } else if (view === "daily") {
         document.getElementById("view-daily").classList.add("is-active");
         document.getElementById("tab-daily").classList.add("is-active");
         window.DailyView.show(key, subview);

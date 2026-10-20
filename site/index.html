@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/showcase.css?v=20260811">
   <link rel="stylesheet" href="css/daily.css?v=20260811">
   <link rel="stylesheet" href="css/report-tags.css?v=20260907">
+  <link rel="stylesheet" href="css/journal.css?v=20261020">
 </head>
 <body>
   <!-- INLINE_DATA -->
@@ -35,6 +36,7 @@
       <nav class="tabs" aria-label="主视图">
         <a id="tab-showcase" class="tab" href="#/showcase">正式成果</a>
         <a id="tab-daily" class="tab" href="#/daily">每日汇报</a>
+        <a id="tab-journal" class="tab" href="#/journal">研究日志</a>
       </nav>
       <span class="navigation-caption">从数据工程到策略验证的完整研究档案</span>
       <span class="navigation-index">INDEX / 01—06</span>
@@ -78,6 +80,20 @@
         <div id="daily-timeline" class="daily-timeline"></div>
       </aside>
     </section>
+    <section id="view-journal" class="view journal-view" aria-labelledby="tab-journal">
+      <header class="journal-heading"><h1 id="journal-title"></h1><p>每天做了什么，接住了什么，交给了谁。</p></header>
+      <div class="journal-controls">
+        <div class="journal-segment" aria-label="显示方式"><button type="button" data-journal-view="atlas" hidden>图谱</button><button type="button" data-journal-view="list">清单</button></div>
+        <label>时间窗 <select id="journal-window"><option value="all">全部</option><option value="3m">近 3 个月</option><option value="1m">近 1 个月</option></select></label>
+        <label>链条 <select id="journal-chain"><option value="">全部链条</option></select></label>
+        <button id="journal-clear" type="button" hidden>取消聚焦</button>
+        <label class="journal-find">查找 <input id="journal-find" type="search" placeholder="日期、一句话、链名"></label>
+        <span id="journal-count" role="status" aria-live="polite"></span>
+      </div>
+      <figure id="journal-figure" class="journal-figure" hidden><div class="journal-scroller"></div><div class="journal-readout" role="tooltip" hidden></div><figcaption></figcaption></figure>
+      <div id="journal-list" class="journal-list"></div>
+      <div id="journal-detail" class="journal-detail" aria-live="polite"></div>
+    </section>
   </main>
   <dialog id="tag-manager" class="tag-manager" aria-labelledby="tag-manager-title"></dialog>
 
@@ -110,6 +126,7 @@
   <script src="js/router.js?v=20260907"></script>
   <script src="js/showcase.js?v=20260811"></script>
   <script src="js/daily.js?v=20260907"></script>
+  <script src="js/journal.js?v=20261020"></script>
   <script src="js/search.js?v=20260811"></script>
 </body>
 </html>
