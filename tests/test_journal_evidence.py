@@ -39,6 +39,24 @@ class EvidenceTests(unittest.TestCase):
             git("commit", "-m", "later")
             self.assertEqual(first, collector.collect_commits(repo, pinned, "2000-01-01", "实习/"))
 
+    def test_outcomes_scan_full_day_and_accept_both_chain_formats(self):
+        self.assertEqual(collector.chain_ids({"chains": ["a", {"id": "b", "note": "注解"}]}), ["a", "b"])
+        with tempfile.TemporaryDirectory() as folder:
+            def git(*args):
+                return subprocess.run(["git", "-C", folder, *args], check=True, capture_output=True)
+            git("init")
+            git("config", "user.name", "Fixture")
+            git("config", "user.email", "fixture@example.invalid")
+            for i in range(12):
+                (Path(folder) / "work.txt").write_text(str(i))
+                git("add", ".")
+                git("commit", "-m", f'Revert "尝试 {i}"')
+            entry = next(iter(collector.collect_commits(folder, "HEAD", "2000-01-01").values()))
+            self.assertEqual(len(entry["items"]), 10)
+            self.assertEqual(entry["revert_count"], 12)
+            self.assertEqual(len(entry["outcome_candidates"]), 12)
+            self.assertTrue(all(c["kind"] == "intraday-revert" for c in entry["outcome_candidates"]))
+
     def test_redaction_covers_nested_text_and_keeps_public_links(self):
         counts = Counter()
         result = collector.redact({"items": ["C:\\Users\\private", "a@host", "10.2.3.4", "https://github.com/org/repo"], "top_paths": [("private.jumpserver.pem", 2)]}, ["@", "jumpserver"], counts)

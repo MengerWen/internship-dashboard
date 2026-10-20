@@ -42,7 +42,8 @@ class JournalBuildTests(unittest.TestCase):
             self.assertTrue(first["has_body"])
             self.assertIsNone(builder.chains["tracks"][0]["stage"])
             self.assertEqual(builder.chains["chains"][0]["start"], "2026-06-23")
-            self.assertEqual(len(builder.warnings), 4)
+            self.assertEqual(len(builder.warnings), 5)
+            self.assertEqual(first["chain_notes"]["a"], {"note": "", "outcome": "landed", "outcome_note": ""})
             page = (builder.out_dir / "_index-pages/journal-2026-06-23.html").read_text(encoding="utf-8")
             self.assertIn("正文独有文字", page)
             self.assertIn("../#/journal/2026-06-23", page)
@@ -53,6 +54,25 @@ class JournalBuildTests(unittest.TestCase):
             self.assertIn('id="journal-ev-2026-06-23"', inline)
             self.assertIn("<\\/script>", inline)
             self.assertIn('id="journal-body-2026-06-23"', inline)
+
+    def test_chain_notes_outcome_inheritance_and_search(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            content = self.make_fixture(root)
+            registry = json.loads((content / "chains.json").read_text(encoding="utf-8"))
+            registry["chains"][0].update(fate="dropped", fate_note="被批量方案取代")
+            (content / "chains.json").write_text(json.dumps(registry), encoding="utf-8")
+            (content / "journal/2026-06-23.md").write_text(
+                '---\nheadline: 一句话\nheadline_source: written\nchains:\n- id: a\n  note: 独有逐点注解\n---\n', encoding="utf-8")
+            builder = Builder()
+            builder.out_dir = root / "out"
+            with patch("build.CONTENT_DIR", content):
+                builder.build_journal()
+            self.assertEqual(builder.journal_entries[0]["chain_notes"]["a"],
+                             {"note": "独有逐点注解", "outcome": "dropped", "outcome_note": "被批量方案取代"})
+            self.assertEqual(builder.chains["chains"][0]["lane"], 0)
+            self.assertIn("独有逐点注解", builder.journal_pages[0].html)
+            self.assertFalse(any("缺少注解" in w for w in builder.warnings))
 
 
 if __name__ == "__main__":

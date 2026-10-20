@@ -14,6 +14,11 @@ import frontmatter
 
 ROOT = Path(__file__).resolve().parents[1]
 DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+OUTCOME_WORDS = re.compile(r'\brevert\b|\brollback\b|\bsuperseded\b|回滚|转向|弯路|改方向|取消|取代|废弃', re.I)
+
+
+def chain_ids(meta):
+    return [item.get("id") if isinstance(item, dict) else item for item in meta.get("chains", [])]
 
 
 def git(repo, *args):
@@ -32,7 +37,7 @@ def collect_commits(repo, revision, since, only_under=None):
     # NUL 分隔路径，避免中文转义、空格与特殊文件名破坏解析。
     raw = git(repo, "log", revision, "--date=short", "--since=" + since,
               "--format=%x1e%ad%x00%H%x00%s", "--name-only", "-z")
-    days = defaultdict(lambda: {"commits": 0, "paths": Counter(), "items": []})
+    days = defaultdict(lambda: {"commits": 0, "paths": Counter(), "items": [], "outcome_candidates": [], "revert_count": 0})
     for record in raw.split("\x1e")[1:]:
         day, sha, rest = record.split("\0", 2)
         subject, *paths = rest.split("\0")
@@ -44,6 +49,11 @@ def collect_commits(repo, revision, since, only_under=None):
         entry = days[day]
         entry["commits"] += 1
         entry["paths"].update("/".join(p.split("/")[:2]) for p in paths)
+        if OUTCOME_WORDS.search(subject):
+            entry["outcome_candidates"].append({"sha": sha, "subject": subject,
+                "kind": "intraday-revert" if re.match(r'^Revert\b', subject, re.I) else "direction-review"})
+        if re.match(r'^Revert\b', subject, re.I):
+            entry["revert_count"] += 1
         if len(entry["items"]) < 10:
             entry["items"].append({"sha": sha, "subject": subject})
     return days
@@ -73,7 +83,7 @@ def collect(config, since):
         notes[path.stem] = frontmatter.loads(path.read_text(encoding="utf-8")).metadata
     spans = {}
     for chain in registry["chains"]:
-        active = [d for d, meta in notes.items() if chain["id"] in meta.get("chains", [])]
+        active = [d for d, meta in notes.items() if chain["id"] in chain_ids(meta)]
         if active:
             spans[chain["id"]] = (min(active), max(active))
     reports = {}
@@ -89,7 +99,8 @@ def collect(config, since):
             paths = sorted(entry["paths"].items(), key=lambda x: (-x[1], x[0]))
             days[day]["repos"].append({"repo": source["name"], "commits": entry["commits"],
                                       "commit_url": source["commit_url"], "top_paths": paths[:8],
-                                      "items": entry["items"]})
+                                      "items": entry["items"], "revert_count": entry["revert_count"],
+                                      "outcome_candidates": entry["outcome_candidates"]})
         for folder in source.get("plan_dirs", []):
             paths = git(repo, "ls-tree", "-r", "--name-only", revision, "--", folder).splitlines()
             for name in sorted(paths):
@@ -142,9 +153,17 @@ def collect(config, since):
                 cid = c["id"]
                 if cid in spans and spans[cid][0] <= day <= spans[cid][1] and c["track"] in tracks:
                     how[cid] = "stage"
+        drafts = {}
+        for cid in dict.fromkeys([*chain_ids(notes.get(day, {})), *how]):
+            rule = rules.get(cid, {})
+            tokens = [cid, *rule.get("tokens", [])]
+            sources = [p["title"] for p in ev["plans"] if any(t.casefold() in p["file"].casefold() for t in tokens)]
+            sources += [i["subject"] for r in ev["repos"] for i in r["items"] if any(t.casefold() in i["subject"].casefold() for t in tokens)]
+            drafts[cid] = {"note": sources[0][:24] if sources else "", "source": sources[0] if sources else "", "reviewed": False}
+        candidates = [{"repo": r["repo"], **i} for r in ev["repos"] for i in r.pop("outcome_candidates", [])]
         payloads[day] = {"date": day, "weekday": "周" + "一二三四五六日"[date.fromisoformat(day).weekday()],
                          **ev, "reports_covering": sorted(covers[day]),
-                         "suggest": {"chains": list(how), "how": how}}
+                         "suggest": {"chains": list(how), "how": how, "notes": drafts, "outcome_candidates": candidates}}
     return payloads, notes
 
 

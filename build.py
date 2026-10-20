@@ -571,6 +571,9 @@ class Builder:
         for chain in chains:
             if chain.get("track") not in track_ids:
                 self.warnings.append(f"日志链条 {chain['id']} 轨道不存在")
+            if chain.get("fate", "landed") not in {"landed", "folded", "parked", "dropped"}:
+                self.warnings.append(f"日志链条 {chain['id']} fate 无效，按 landed 处理")
+                chain["fate"] = "landed"
         handoffs = []
         for edge in registry.get("handoffs", []):
             if (edge.get("from") not in chain_ids or edge.get("to") not in chain_ids
@@ -602,7 +605,7 @@ class Builder:
             self.warnings.append(f"日志还有 {missing} 天缺少每日记录，已回落为待写条目")
         by_chain = {c["id"]: c for c in chains}
         daily = {p.key: p for p in self.daily_pages}
-        drafts = long_drafts = 0
+        drafts = long_drafts = missing_chain_notes = 0
         for key in sorted(notes.keys() | evidence.keys()):
             try:
                 if datetime.fromisoformat(key).date().isoformat() != key:
@@ -633,12 +636,28 @@ class Builder:
             if not highlights:
                 highlights = ([str(p["title"]) for p in ev.get("plans", [])] or
                               [str(i["subject"]) for repo in ev.get("repos", []) for i in repo.get("items", [])])[:3]
-            picked, confidence = [], {}
-            for cid in dict.fromkeys(meta.get("chains", [])):
+            picked, confidence, chain_notes = [], {}, {}
+            for item in meta.get("chains", []):
+                item = item if isinstance(item, dict) else {"id": item}
+                cid = item.get("id")
                 if cid not in by_chain:
                     self.warnings.append(f"日志 {key} 引用了不存在的链条 {cid}，已忽略")
                     continue
+                if cid in picked:
+                    self.warnings.append(f"日志 {key} 重复引用链条 {cid}，已忽略")
+                    continue
                 picked.append(cid)
+                note = str(item.get("note") or "").strip()
+                if not note:
+                    missing_chain_notes += 1
+                elif len(note) > 24:
+                    self.warnings.append(f"日志 {key} 链条 {cid} 注解超过 24 字")
+                outcome = item.get("outcome") or by_chain[cid].get("fate", "landed")
+                if outcome not in {"landed", "folded", "parked", "dropped"}:
+                    self.warnings.append(f"日志 {key} 链条 {cid} outcome 无效，继承链条去留")
+                    outcome = by_chain[cid].get("fate", "landed")
+                chain_notes[cid] = {"note": note, "outcome": outcome,
+                                    "outcome_note": str(item.get("outcome_note") or by_chain[cid].get("fate_note") or "")}
                 review = by_chain[cid].get("review", {})
                 pending = key in review.get("unreviewed_days", []) if review else not meta.get("chains_reviewed", False)
                 confidence[cid] = "inferred" if pending else "confirmed"
@@ -653,7 +672,7 @@ class Builder:
             commits = {repo["repo"]: repo["commits"] for repo in ev.get("repos", [])}
             entry = {"date": key, "weekday": "周" + "一二三四五六日"[datetime.fromisoformat(key).weekday()],
                      "headline": headline, "headline_source": source, "chains": picked,
-                     "chain_confidence": confidence, "highlights": highlights, "commits": commits,
+                     "chain_confidence": confidence, "chain_notes": chain_notes, "highlights": highlights, "commits": commits,
                      "total_commits": sum(commits.values()), "report": covering[0] if covering else None,
                      "reports_covering": covering, "reports_published": published,
                      "has_body": bool(body.strip()), "evidence_path": f"journal/_evidence/{key}.json"}
@@ -666,16 +685,21 @@ class Builder:
             self.journal_evidence[key] = ev
             self.write_text(self.out_dir / entry["evidence_path"], json.dumps(ev, ensure_ascii=False, indent=2))
             self.write_text(self.out_dir / "journal" / f"{key}.html", body)
-            words = [headline, *highlights, *[p["title"] for p in ev.get("plans", [])],
+            words = [headline, *highlights, *[n["note"] for n in chain_notes.values()],
+                     *[n["outcome_note"] for n in chain_notes.values()], *[p["title"] for p in ev.get("plans", [])],
                      *[i["subject"] for r in ev.get("repos", []) for i in r.get("items", [])]]
             self.journal_pages.append(RenderedPage(key=key, title=headline,
                 html="\n".join(f"<p>{html_lib.escape(w)}</p>" for w in words) + body,
                 path=f"journal/{key}.html", meta={"date": key, "type": "journal"}))
+        if missing_chain_notes:
+            self.warnings.append(f"日志还有 {missing_chain_notes} 个（日, 链）缺少注解")
         output_chains = []
+        lanes = {c["id"]: i for i, c in enumerate(c for t in tracks for c in chains if c.get("track") == t["id"])}
         for chain in chains:
             active = [d["date"] for d in self.journal_entries if chain["id"] in d["chains"]]
             public = {k: v for k, v in chain.items() if k not in {"review", "start", "end"}}
             public.update(start=min(active) if active else None, end=max(active) if active else None)
+            public.update(fate=chain.get("fate", "landed"), fate_note=chain.get("fate_note", ""), lane=lanes.get(chain["id"]))
             # 未发布的汇报不能生成死链接。保留源注册表供后续回填。
             if public.get("closes_into"):
                 public["closes_into"] = {**public["closes_into"], "daily": [
