@@ -54,6 +54,11 @@ class Builder:
         self.showcase_pages: list[RenderedPage] = []
         self.daily_pages: list[RenderedPage] = []
         self.daily_show_pages: list[RenderedPage] = []
+        self.journal_pages: list[RenderedPage] = []
+        self.journal_entries: list[dict[str, Any]] = []
+        self.journal_evidence: dict[str, Any] = {}
+        self.chains: dict[str, Any] = {"tracks": [], "chains": [], "handoffs": []}
+        self.journal_drafts = (0, 0)
 
     @staticmethod
     def read_json(path: Path) -> dict[str, Any]:
@@ -541,6 +546,133 @@ class Builder:
         self.daily_pages.sort(key=lambda page: page.key, reverse=True)
         return daily_entries
 
+    def build_journal(self) -> None:
+        """只读取本仓文件；采集历史与链条建议均不参与构建。"""
+        journal_dir = CONTENT_DIR / "journal"
+        registry_path = CONTENT_DIR / "chains.json"
+        if not registry_path.exists():
+            return
+        try:
+            registry = self.read_json(registry_path)
+        except (ValueError, OSError) as exc:
+            self.warnings.append(f"chains.json 读取失败: {exc}")
+            return
+        tracks = registry.get("tracks", [])
+        chains = registry.get("chains", [])
+        chain_ids = {c["id"] for c in chains}
+        track_ids = {t["id"] for t in tracks}
+        for track in tracks:
+            if track.get("stage") is not None and track["stage"] not in self.stage_by_id:
+                self.warnings.append(f"日志轨道 {track['id']} stage 无效，按无阶段处理")
+                track["stage"] = None
+            count = sum(c.get("track") == track["id"] for c in chains)
+            if count > 10:
+                self.warnings.append(f"日志轨道 {track['id']} 有 {count} 条链，超过 10 条")
+        for chain in chains:
+            if chain.get("track") not in track_ids:
+                self.warnings.append(f"日志链条 {chain['id']} 轨道不存在")
+        handoffs = []
+        for edge in registry.get("handoffs", []):
+            if (edge.get("from") not in chain_ids or edge.get("to") not in chain_ids
+                    or edge.get("type") not in {"延续", "派生", "依赖解除", "收口"}
+                    or edge.get("confidence") not in {"confirmed", "inferred"}):
+                self.warnings.append(f"日志交接无效，已忽略: {edge}")
+                continue
+            handoffs.append(edge)
+        notes = {p.stem: p for p in journal_dir.glob("????-??-??.md")}
+        evidence = {}
+        for path in sorted((journal_dir / "_evidence").glob("*.json")):
+            try:
+                key = datetime.fromisoformat(path.stem).date().isoformat()
+                ev = self.read_json(path)
+                if key != path.stem or ev.get("date") != key:
+                    raise ValueError("文件名与 date 不符")
+                evidence[key] = ev
+            except (ValueError, OSError) as exc:
+                self.warnings.append(f"日志证据 {path.name} 无效，已忽略: {exc}")
+        missing = len(evidence.keys() - notes.keys())
+        if missing:
+            self.warnings.append(f"日志还有 {missing} 天缺少每日记录，已回落为待写条目")
+        by_chain = {c["id"]: c for c in chains}
+        daily = {p.key: p for p in self.daily_pages}
+        drafts = long_drafts = 0
+        for key in sorted(notes.keys() | evidence.keys()):
+            try:
+                if datetime.fromisoformat(key).date().isoformat() != key:
+                    raise ValueError
+            except ValueError:
+                self.warnings.append(f"日志日期 {key} 无效，已忽略")
+                continue
+            meta, body = {}, ""
+            if key in notes:
+                rendered = self.render_markdown_file(notes[key])
+                if rendered:
+                    meta, body = rendered
+                if str(meta.get("date", key)) != key:
+                    self.warnings.append(f"日志 {key} date 与文件名不符，以文件名为准")
+            ev = evidence.get(key, {"date": key, "repos": [], "plans": [], "reports_published": []})
+            fallback = next((i["subject"] for repo in ev.get("repos", []) for i in repo.get("items", [])), "待写")
+            headline = str(meta.get("headline") or fallback)
+            source = str(meta.get("headline_source") or "commit")
+            if source == "written" and len(headline) > 40:
+                self.warnings.append(f"日志 {key} 的一句话超过 40 字")
+            if source in {"report", "plan"}:
+                drafts += 1
+                long_drafts += len(headline) > 40
+            highlights = [str(h) for h in meta.get("highlights", [])]
+            if len(highlights) > 3:
+                self.warnings.append(f"日志 {key} highlights 超过 3 条")
+            picked, confidence = [], {}
+            for cid in dict.fromkeys(meta.get("chains", [])):
+                if cid not in by_chain:
+                    self.warnings.append(f"日志 {key} 引用了不存在的链条 {cid}，已忽略")
+                    continue
+                picked.append(cid)
+                review = by_chain[cid].get("review", {})
+                pending = key in review.get("unreviewed_days", []) if review else not meta.get("chains_reviewed", False)
+                confidence[cid] = "inferred" if pending else "confirmed"
+            covering = []
+            for rday in meta.get("reports_covering", ev.get("reports_covering", [])):
+                rday = str(rday)
+                if rday not in daily:
+                    self.warnings.append(f"日志 {key} 引用的汇报 {rday} 不存在，已忽略")
+                else:
+                    covering.append(rday)
+            published = [d for d in ev.get("reports_published", []) if d in daily]
+            commits = {repo["repo"]: repo["commits"] for repo in ev.get("repos", [])}
+            entry = {"date": key, "weekday": "周" + "一二三四五六日"[datetime.fromisoformat(key).weekday()],
+                     "headline": headline, "headline_source": source, "chains": picked,
+                     "chain_confidence": confidence, "highlights": highlights, "commits": commits,
+                     "total_commits": sum(commits.values()), "report": covering[0] if covering else None,
+                     "reports_covering": covering, "reports_published": published,
+                     "has_body": bool(body.strip()), "evidence_path": f"journal/_evidence/{key}.json"}
+            self.journal_entries.append(entry)
+            # 标题和摘要来自已有构建结果，不额外复制日报正文。
+            ev = {**ev, "reports": [
+                {"date": d, "title": daily[d].title, "summary": daily[d].meta["summary"]}
+                for d in dict.fromkeys(covering + published)
+            ]}
+            self.journal_evidence[key] = ev
+            self.write_text(self.out_dir / entry["evidence_path"], json.dumps(ev, ensure_ascii=False, indent=2))
+            self.write_text(self.out_dir / "journal" / f"{key}.html", body)
+            words = [headline, *highlights, *[p["title"] for p in ev.get("plans", [])],
+                     *[i["subject"] for r in ev.get("repos", []) for i in r.get("items", [])]]
+            self.journal_pages.append(RenderedPage(key=key, title=headline,
+                html="\n".join(f"<p>{html_lib.escape(w)}</p>" for w in words) + body,
+                path=f"journal/{key}.html", meta={"date": key, "type": "journal"}))
+        output_chains = []
+        for chain in chains:
+            active = [d["date"] for d in self.journal_entries if chain["id"] in d["chains"]]
+            public = {k: v for k, v in chain.items() if k not in {"review", "start", "end"}}
+            public.update(start=min(active) if active else None, end=max(active) if active else None)
+            # 未发布的汇报不能生成死链接。保留源注册表供后续回填。
+            if public.get("closes_into"):
+                public["closes_into"] = {**public["closes_into"], "daily": [
+                    d for d in public["closes_into"].get("daily", []) if d in daily]}
+            output_chains.append(public)
+        self.chains = {"tracks": tracks, "chains": output_chains, "handoffs": handoffs}
+        self.journal_drafts = (drafts, long_drafts)
+
     def manifest(self, stage_entries: list[dict[str, Any]], daily_entries: list[dict[str, Any]]) -> dict[str, Any]:
         report_tags = self.read_json(self.tags_snapshot)
         if report_tags.get("schemaVersion") != 1 or not isinstance(report_tags.get("tags"), list) or not isinstance(report_tags.get("assignments"), dict):
@@ -552,6 +684,8 @@ class Builder:
             "showcase": stage_entries,
             "daily": daily_entries,
             "report_tags": report_tags,
+            "journal": self.journal_entries,
+            "chains": self.chains,
         }
         self.write_text(
             self.out_dir / "manifest.json",
@@ -561,6 +695,9 @@ class Builder:
 
     def build_index_pages(self) -> None:
         index_dir = self.out_dir / "_index-pages"
+        for page in self.journal_pages:
+            self.write_text(index_dir / f"journal-{page.key}.html", self.index_page_html(
+                title=page.title, body=page.html, redirect_hash=f"../#/journal/{page.key}", meta=page.meta))
         for page in self.showcase_pages:
             stage_id = page.meta["stage"]
             self.write_text(
@@ -791,6 +928,13 @@ class Builder:
         index_path = self.out_dir / "index.html"
         html = index_path.read_text(encoding="utf-8")
         templates = []
+        for entry in self.journal_entries:
+            key = entry["date"]
+            evidence = json.dumps(self.journal_evidence[key], ensure_ascii=False).replace("</", "<\\/")
+            templates.append(f'<script type="application/json" id="journal-ev-{key}">{evidence}</script>')
+            if entry["has_body"]:
+                body = (self.out_dir / "journal" / f"{key}.html").read_text(encoding="utf-8")
+                templates.append(f'<template id="journal-body-{key}">{body}</template>')
         for page in self.showcase_pages:
             templates.append(
                 f'<template id="showcase-{page.key}">\n{page.html}\n</template>'
@@ -846,6 +990,7 @@ class Builder:
         self.prepare_output()
         stage_entries = self.build_showcase()
         daily_entries = self.build_daily()
+        self.build_journal()
         manifest = self.manifest(stage_entries, daily_entries)
         self.build_index_pages()
         self.write_security_files()
@@ -860,6 +1005,7 @@ class Builder:
         print(f"构建完成: {target}")
         print(f"日报: {len(daily_entries)} 篇")
         print(f"阶段: {len(stage_entries)} 个")
+        print(f"日志: {len(self.journal_entries)} 天；一句话草稿 {self.journal_drafts[0]} 天，其中 {self.journal_drafts[1]} 天超过 40 字")
         print(
             "展示版: "
             f"md {self.show_stats['md']} 篇 / "
