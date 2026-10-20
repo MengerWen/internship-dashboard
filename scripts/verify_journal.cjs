@@ -8,6 +8,36 @@ const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8029/dist/';
 const output = path.resolve('artifacts/journal-column');
 const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
 
+async function settleAtTop(page) {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all(document.getAnimations().filter(a => a.effect?.getTiming().iterations !== Infinity).map(a => a.finished.catch(() => {})));
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.documentElement.style.overflowAnchor = 'none';
+    document.body.style.scrollBehavior = 'auto';
+    document.body.style.overflowAnchor = 'none';
+    scrollTo({top: 0, left: 0, behavior: 'instant'});
+  });
+  await page.waitForFunction(() => scrollY === 0);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+
+async function capturePage(page, name, width) {
+  await settleAtTop(page);
+  const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  if (height <= 16000) return page.screenshot({path: path.join(output, name + '.png'), fullPage: true});
+  // Chrome 超长图在16384px回卷；分段保留原始像素，主图保留首屏。
+  await page.screenshot({path: path.join(output, name + '.png')});
+  const segments = [];
+  for (let y = 0; y < height; y += 12000) {
+    const file = `${name}-full-${1 + y / 12000}.png`;
+    const size = Math.min(12000, height - y);
+    await page.screenshot({path: path.join(output, file), fullPage: true, clip: {x: 0, y, width, height: size}});
+    segments.push({file, y, width, height: size});
+  }
+  await fs.writeFile(path.join(output, name + '-capture.json'), JSON.stringify({height, segments}, null, 2));
+}
+
 (async () => {
   await fs.mkdir(output, {recursive: true});
   const browser = await chromium.launch({headless: true, channel: 'chrome'});
@@ -88,8 +118,7 @@ const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
       assert.equal(await page.locator('.journal-repo[open]').count(), 0);
       await page.locator('.journal-repo > summary').first().click();
       assert(await page.locator('.journal-repo a[href^="https://github.com/"]').count());
-      await page.evaluate(() => scrollTo(0, 0));
-      await page.waitForTimeout(250);
+      await settleAtTop(page);
       await page.screenshot({path: path.join(output, `day-evidence-${width}.png`), fullPage: true});
       await page.locator('.journal-day-nav [data-journal-nav="后一天"]').focus();
       await page.keyboard.press('Enter');
@@ -123,8 +152,10 @@ const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
       await page.locator('#journal-chain').selectOption('onboarding');
       assert((await page.locator('#journal-count').textContent()).startsWith('0 天'));
       assert.equal(await page.locator('.journal-selection-band').count(), 0);
-      assert(await page.locator('.journal-window-empty').isVisible());
-      assert(await page.locator('.journal-chain-card').isVisible());
+      assert(await page.locator('#journal-figure .journal-window-empty').isVisible());
+      assert(await page.locator('.journal-chain-card .journal-window-empty').isVisible());
+      await page.locator('[data-journal-view="list"]').click();
+      assert(await page.locator('.journal-chain-card .journal-window-empty').isVisible());
       await page.locator('#journal-clear').click();
       await page.locator('[data-journal-view="list"]').click();
       assert.equal(await page.locator('#journal-list tbody tr').count(), windowCount);
@@ -135,9 +166,7 @@ const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
       await page.goto(base + '#/journal');
       await page.waitForSelector('#view-journal.is-active');
-      await page.evaluate(() => scrollTo(0, 0));
-      await page.waitForTimeout(250);
-      await page.screenshot({path: path.join(output, width === 1440 ? 'desktop.png' : 'mobile.png'), fullPage: true});
+      await capturePage(page, width === 1440 ? 'desktop' : 'mobile', width);
       await page.screenshot({path: path.join(output, `first-viewport-${width}.png`)});
       assert.deepEqual(errors, []);
       results.push({width, days: 88, overflow, errors});
