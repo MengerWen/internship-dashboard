@@ -38,14 +38,15 @@ test('all six report sections stay inside the sandboxed preview', async ({ page 
   page.on('pageerror', error => errors.push(error.message));
   const html = fs.readFileSync(path.join(root, 'content/daily/2026-09-06.show.html'), 'utf8');
   const { frame, documentRequests } = await embed(page, html);
-  await expect(frame.locator('#factor-list .factor-item')).toHaveCount(24);
+  // 默认同时展示 Total / Buy / Sell，每个方向保留 24 个因子。
+  await expect(frame.locator('#factor-list .factor-item')).toHaveCount(72);
   for (const id of ['definition', 'contract', 'results', 'factors', 'evidence', 'inspiration']) {
     await frame.locator(`nav a[href="#${id}"]`).click();
     await expect.poll(() => frame.url()).toBe(`about:srcdoc#${id}`);
     await expect(frame.locator(`#${id}`)).toBeInViewport();
   }
   await frame.selectOption('#family-filter', '7');
-  await expect(frame.locator('#factor-list .factor-item')).toHaveCount(2);
+  await expect(frame.locator('#factor-list .factor-item')).toHaveCount(6);
   expect(page.url()).toBe(`${host}#/daily/2026-09-06/show`);
   expect(documentRequests).toHaveLength(1);
   expect(errors).toEqual([]);
