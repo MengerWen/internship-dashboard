@@ -152,7 +152,7 @@
         const from = active.get(edge.from), to = active.get(edge.to);
         if (!from?.length || !to?.length) return;
         // 交接发生在后继首次出现时；前驱可并行继续，不能一律从其最终日期连回去。
-        const target = to[0].date;
+        const target = to.find(d => !edge.date || d.date >= edge.date)?.date || to.at(-1).date;
         const source = from.filter(d => d.date <= target).at(-1)?.date || from[0].date;
         const x1 = x(source), x2 = x(target), y1 = positions.get(edge.from), y2 = positions.get(edge.to);
         const dash = edge.type === "派生" ? "4 3" : edge.type === "依赖解除" ? "1 3" : edge.type === "收口" ? "7 2 1 2" : (edge.confidence === "inferred" ? "2 5" : "");

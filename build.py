@@ -578,6 +578,13 @@ class Builder:
                     or edge.get("confidence") not in {"confirmed", "inferred"}):
                 self.warnings.append(f"日志交接无效，已忽略: {edge}")
                 continue
+            if edge.get("date"):
+                try:
+                    if datetime.fromisoformat(edge["date"]).date().isoformat() != edge["date"]:
+                        raise ValueError
+                except (ValueError, TypeError):
+                    self.warnings.append(f"日志交接日期无效，已忽略: {edge}")
+                    continue
             handoffs.append(edge)
         notes = {p.stem: p for p in journal_dir.glob("????-??-??.md")}
         evidence = {}
