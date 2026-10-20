@@ -41,10 +41,11 @@ class EvidenceTests(unittest.TestCase):
 
     def test_redaction_covers_nested_text_and_keeps_public_links(self):
         counts = Counter()
-        result = collector.redact({"items": ["C:\\Users\\private", "a@host", "10.2.3.4", "https://github.com/org/repo"]}, ["@"], counts)
+        result = collector.redact({"items": ["C:\\Users\\private", "a@host", "10.2.3.4", "https://github.com/org/repo"], "top_paths": [("private.jumpserver.pem", 2)]}, ["@", "jumpserver"], counts)
         self.assertEqual(result["items"][:3], ["<已隐去>"] * 3)
         self.assertEqual(result["items"][3], "https://github.com/org/repo")
-        self.assertEqual(counts["redacted"], 3)
+        self.assertEqual(result["top_paths"], [["<已隐去>", 2]])
+        self.assertEqual(counts["redacted"], 4)
 
 
 if __name__ == "__main__":

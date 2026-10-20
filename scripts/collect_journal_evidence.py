@@ -58,7 +58,7 @@ def redact(value, fragments, counts):
             counts["redacted"] += 1
             return "<已隐去>"
         return value
-    if isinstance(value, list):
+    if isinstance(value, (list, tuple)):
         return [redact(v, fragments, counts) for v in value]
     if isinstance(value, dict):
         return {k: redact(v, fragments, counts) for k, v in value.items()}
@@ -163,7 +163,7 @@ def main():
     target = ROOT / "content/journal/_evidence"
     counts = Counter()
     expected = {f"{d}.json": encode(redact(ev, config["redact"], counts)) for d, ev in payloads.items()}
-    actual = {p.name: p.read_text(encoding="utf-8") for p in target.glob("*.json") if p.stem >= since}
+    actual = {p.name: p.read_bytes().decode("utf-8") for p in target.glob("*.json") if p.stem >= since}
     changed = sorted(k for k in set(actual) | set(expected) if actual.get(k) != expected.get(k))
     if not args.check:
         target.mkdir(parents=True, exist_ok=True)
