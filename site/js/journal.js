@@ -2,7 +2,27 @@
   "use strict";
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const $ = id => document.getElementById(id);
+  // 国办发明电〔2025〕7号：https://www.gov.cn/zhengce/content/202511/content_7047090.htm
+  // 按年维护官方放假调休安排；未收录年份只标周末，不推算农历节日。
+  const mainlandCalendar = {
+    "2026": {
+      holidays: [
+        ["01-01", "01-03", "元旦"], ["02-15", "02-23", "春节"],
+        ["04-04", "04-06", "清明节"], ["05-01", "05-05", "劳动节"],
+        ["06-19", "06-21", "端午节"], ["09-25", "09-27", "中秋节"],
+        ["10-01", "10-07", "国庆节"]
+      ],
+      workingWeekends: ["01-04", "02-14", "02-28", "05-09", "09-20", "10-10"]
+    }
+  };
   const JournalView = {
+    restDayLabel(date) {
+      const calendar = mainlandCalendar[date.slice(0, 4)], day = date.slice(5);
+      if (calendar?.workingWeekends.includes(day)) return "";
+      const holiday = calendar?.holidays.find(([start, end]) => day >= start && day <= end);
+      if (holiday) return holiday[2];
+      return [0, 6].includes(new Date(date + "T00:00:00Z").getUTCDay()) ? "周末" : "";
+    },
     init(manifest, app) {
       this.app = app;
       this.days = manifest.journal || [];
@@ -215,11 +235,11 @@
       });
       ordered.forEach(chain => header.push(`<button type="button" class="journal-chain-label${chain.fate === "dropped" ? " is-dropped" : ""}" data-journal-chain="${esc(chain.id)}" style="left:${positions.get(chain.id)}px;width:${Math.min(32, colWidth - 2)}px" aria-pressed="false" aria-label="${esc(chain.label)}${chain.fate === "dropped" ? "，未采用" : ""}"><span class="journal-chain-name">${esc(chain.short)}</span>${chain.fate === "dropped" ? '<small class="journal-fate-badge">未采用</small>' : ""}</button>`));
       head.innerHTML = header.join("") + "</div>";
-      const parts = [`<div class="journal-canvas" style="width:${width}px"><svg class="journal-atlas" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" tabindex="0" role="group" aria-labelledby="journal-atlas-title journal-atlas-desc" data-days="${days.length}" data-density="${this.density}"><title id="journal-atlas-title">工作日期与任务链条</title><desc id="journal-atlas-desc">日期从上到下，28 条链各占一列，按六个轨道分组。点的大小表示提交数。实心点表示工作写进了汇报，日期旁的短刻度表示当天发布了汇报。叉号表示未采用。点击日期、列头链名或单个点查看说明；上下键换日，左右键换点，Esc 取消。清单与下方说明提供文字入口。</desc>`];
+      const parts = [`<div class="journal-canvas" style="width:${width}px"><svg class="journal-atlas" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" tabindex="0" role="group" aria-labelledby="journal-atlas-title journal-atlas-desc" data-days="${days.length}" data-density="${this.density}"><title id="journal-atlas-title">工作日期与任务链条</title><desc id="journal-atlas-desc">日期从上到下，28 条链各占一列，按六个轨道分组。底纹表示周末和中国大陆公共假期，调休补班日除外。点的大小表示提交数。实心点表示工作写进了汇报，日期旁的短刻度表示当天发布了汇报。叉号表示未采用。点击日期、列头链名或单个点查看说明；上下键换日，左右键换点，Esc 取消。清单与下方说明提供文字入口。</desc>`];
       for (let n = first; n <= last; n++) {
         const date = new Date(n * 86400000).toISOString().slice(0, 10);
-        const weekday = new Date(n * 86400000).getUTCDay();
-        if ([0, 6].includes(weekday)) parts.push(`<rect class="journal-weekend" x="${dateWidth}" y="${y(date) - this.density / 2}" width="${right - dateWidth}" height="${this.density}"/>`);
+        const restDay = this.restDayLabel(date);
+        if (restDay) parts.push(`<rect class="journal-rest-day" data-date="${date}" data-rest-day="${esc(restDay)}" x="${dateWidth}" y="${y(date) - this.density / 2}" width="${right - dateWidth}" height="${this.density}"/>`);
         if (date.endsWith("-01") || n === first) parts.push(`<path class="journal-month-rule" d="M${dateWidth - 8},${y(date)} H${right}"/><text class="journal-axis-label" x="0" y="${y(date) - 5}">${Number(date.slice(5, 7))}月</text>`);
       }
       groups.slice(0, -1).forEach(track => {
@@ -277,7 +297,7 @@
       head.scrollLeft = scroller.scrollLeft;
       scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
-      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。点的大小表示当天各采集仓库的提交总数，不表示单条链的提交数或工时。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" aria-label="任务关系线型">' + [["继续开展", ""], ["扩展研究", "4 3"], ["提供输入", "1 3"], ["汇入报告", "7 2 1 2"]].map(([label, dash]) => `<span><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</span>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
+      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示当天各采集仓库的提交总数，不表示单条链的提交数或工时。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" aria-label="任务关系线型">' + [["继续开展", ""], ["扩展研究", "4 3"], ["提供输入", "1 3"], ["汇入报告", "7 2 1 2"]].map(([label, dash]) => `<span><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</span>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
       this.atlas = {y, positions, days, height, width, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();

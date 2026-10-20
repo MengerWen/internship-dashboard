@@ -47,6 +47,18 @@ async function capture(page, name, fullPage = false) {
   await page.screenshot({path: path.join(output, name + '.png'), fullPage});
 }
 
+async function restDayBands(page) {
+  const bands = await page.locator('.journal-rest-day').evaluateAll(nodes => nodes.map(n => ({date: n.dataset.date, label: n.dataset.restDay, height: Number(n.getAttribute('height')), pointerEvents: getComputedStyle(n).pointerEvents})));
+  assert.equal(new Set(bands.map(b => b.date)).size, bands.length, '每个休息日只着一次底纹');
+  for (const date of ['2026-09-25', '2026-09-26', '2026-09-27']) assert.equal(bands.find(b => b.date === date)?.label, '中秋节', date);
+  for (let day = 1; day <= 7; day++) assert.equal(bands.find(b => b.date === `2026-10-0${day}`)?.label, '国庆节');
+  for (const date of ['2026-09-20', '2026-09-28', '2026-09-30', '2026-10-08', '2026-10-10']) assert(!bands.some(b => b.date === date), date);
+  assert.equal(bands.find(b => b.date === '2026-10-11')?.label, '周末');
+  const density = Number(await page.locator('#journal-density').inputValue());
+  assert(bands.every(b => b.height === density && b.pointerEvents === 'none'), '底纹随密度变化且不拦截点击');
+  return bands.length;
+}
+
 (async () => {
   await fs.mkdir(output, {recursive: true});
   const manifest = JSON.parse(await fs.readFile('dist/manifest.json', 'utf8'));
@@ -90,6 +102,7 @@ async function capture(page, name, fullPage = false) {
       assert.equal(await page.locator('.journal-day-hit').count(), days.length);
       assert.equal(await page.locator('.journal-point-hit').count(), noteCount);
       assert.equal(await page.locator('.journal-annotation').count(), 0);
+      const restDays = await restDayBands(page);
       assert.equal(await page.locator('.journal-handoff[data-chains="ml-330 model-report"]').getAttribute('data-date'), '2026-09-21');
       assert.deepEqual(await page.locator('.journal-handoff').evaluateAll(nodes => [...new Set(nodes.map(n => n.dataset.type))].sort()), ['依赖解除', '延续', '收口', '派生'].sort());
       const columns = await page.locator('.journal-chain-unit').evaluateAll(nodes => nodes.map(n => Number(n.dataset.chainX)).sort((a, b) => a - b));
@@ -168,6 +181,7 @@ async function capture(page, name, fullPage = false) {
       }
       for (const density of ['7', '17', '11']) {
         await page.locator('#journal-density').selectOption(density);
+        await restDayBands(page);
         assert.equal(await page.locator('[data-selected-date]').getAttribute('data-selected-date'), date);
         assert.equal(await page.locator('.journal-selection-ring').count(), day.chains.length);
         await containedAnnotations(page);
@@ -230,6 +244,7 @@ async function capture(page, name, fullPage = false) {
       await fresh.locator('[data-journal-view="atlas"]').click();
       assert.equal(await fresh.locator('#journal-density').inputValue(), '7');
       assert.equal(await fresh.locator('#journal-window').inputValue(), '1m');
+      await restDayBands(fresh);
       await fresh.close();
       await page.locator('#journal-window').selectOption('all');
       await page.goto(base + '#/journal/2026-10-14?view=atlas');
@@ -266,7 +281,7 @@ async function capture(page, name, fullPage = false) {
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
       }
       assert.deepEqual(errors, []);
-      results.push({width, days: days.length, chains: 28, notes: noteCount, minimumGap, compactHeight, errors});
+      results.push({width, days: days.length, chains: 28, notes: noteCount, restDays, minimumGap, compactHeight, errors});
       await context.close();
     }
     const context = await browser.newContext({viewport: {width: 1440, height: 900}, reducedMotion: 'reduce'});
@@ -300,6 +315,7 @@ async function capture(page, name, fullPage = false) {
     await offline.locator('.journal-evidence > summary').click();
     await offline.waitForSelector('.journal-repo');
     assert.equal(await offline.locator('.journal-chain-label').count(), 28);
+    await restDayBands(offline);
     assert.equal(await offline.locator('.journal-annotation').count(), days.find(d => d.date === '2026-10-14').chains.length);
     assert.deepEqual(offlineRequests, []);
     assert.deepEqual(offlineErrors, []);
