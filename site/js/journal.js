@@ -42,7 +42,12 @@
         if (chain) { this.focusChain(chain.dataset.journalChain); return; }
         const row = e.target.closest("tr[data-date]");
         if (row && !e.target.closest("a,button")) this.select(row.dataset.date, true);
-        if (e.target.closest(".journal-canvas, .journal-header-inner") && !e.target.closest(".journal-annotation")) this.clearSelection();
+      });
+      document.addEventListener("click", e => {
+        if (!this.selection || !$("view-journal").classList.contains("is-active") || e.defaultPrevented || e.detail === 0) return;
+        if (e.target.closest("a, button, input, select, textarea, label, summary, details, [role='button'], [contenteditable], .journal-controls, .journal-annotation, #journal-detail, tr[data-date]")) return;
+        if (!window.getSelection()?.isCollapsed) return;
+        this.clearSelection();
       });
       $("view-journal").addEventListener("keydown", e => {
         $("view-journal").classList.add("is-keyboard");
@@ -222,7 +227,7 @@
         parts.push(`<path class="journal-rule" d="M${x},0 V${height}"/>`);
       });
       days.forEach(d => {
-        parts.push(`<rect class="journal-day-hit" data-journal-day="${d.date}" x="0" y="${y(d.date) - this.density / 2}" width="${right}" height="${this.density}" tabindex="0" role="button" aria-label="${d.date} ${esc(d.weekday)}，${esc(d.headline)}" aria-pressed="false"/>`);
+        parts.push(`<rect class="journal-day-hit" data-journal-day="${d.date}" x="0" y="${y(d.date) - this.density / 2}" width="${dateWidth}" height="${this.density}" tabindex="0" role="button" aria-label="${d.date} ${esc(d.weekday)}，${esc(d.headline)}" aria-pressed="false"/>`);
         if (this.density >= 11 || new Date(d.date + "T00:00:00Z").getUTCDay() === 1) parts.push(`<text class="journal-date-label" data-date="${d.date}" x="${dateWidth - 12}" y="${y(d.date) + 4}" text-anchor="end">${d.date.slice(5)}</text>`);
         if (d.reports_published?.length) parts.push(`<path class="journal-report-tick" data-date="${d.date}" d="M${dateWidth - 6},${y(d.date)} h8"/>`);
       });
@@ -271,7 +276,7 @@
       head.scrollLeft = scroller.scrollLeft;
       scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
-      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，28 条链各占一列。点的大小表示当天提交数；实心点表示这天的工作写进了汇报，空心点表示未写入。左侧短刻度表示当天发布了汇报。超过 3 天的空档用虚线；实心方块表示收口，空心方块表示暂搁；叉号与点线表示未采用。</p><p>点击日期看当天各条链，点击列头链名看整条链，点击单个点看该点。上下键换日，左右键切换当天的点，Esc 取消选中。</p><div class="journal-handoff-legend" aria-label="交接线型">' + [["延续", ""], ["派生", "4 3"], ["依赖解除", "1 3"], ["收口", "7 2 1 2"]].map(([label, dash]) => `<span><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</span>`).join("") + '<span>推断关系在脉络中标明</span></div>';
+      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，28 条链各占一列。点的大小表示当天提交数；实心点表示这天的工作写进了汇报，空心点表示未写入。左侧短刻度表示当天发布了汇报。超过 3 天的空档用虚线；实心方块表示收口，空心方块表示暂搁；叉号与点线表示未采用。</p><p>点击日期看当天各条链，点击列头链名看整条链，点击单个点看该点。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" aria-label="交接线型">' + [["延续", ""], ["派生", "4 3"], ["依赖解除", "1 3"], ["收口", "7 2 1 2"]].map(([label, dash]) => `<span><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</span>`).join("") + '<span>推断关系在脉络中标明</span></div>';
       this.atlas = {y, positions, days, height, width, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
