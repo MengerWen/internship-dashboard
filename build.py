@@ -658,7 +658,8 @@ class Builder:
                     outcome = by_chain[cid].get("fate", "landed")
                 chain_notes[cid] = {"note": note, "outcome": outcome,
                                     "outcome_note": str(item.get("outcome_note") or (
-                                        by_chain[cid].get("fate_note") if outcome == by_chain[cid].get("fate", "landed") else "") or "")}
+                                        by_chain[cid].get("fate_note") if outcome in {"dropped", "parked"}
+                                        and outcome == by_chain[cid].get("fate", "landed") else "") or "")}
                 review = by_chain[cid].get("review", {})
                 pending = key in review.get("unreviewed_days", []) if review else not meta.get("chains_reviewed", False)
                 confidence[cid] = "inferred" if pending else "confirmed"

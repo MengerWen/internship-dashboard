@@ -74,6 +74,21 @@ class JournalBuildTests(unittest.TestCase):
             self.assertIn("独有逐点注解", builder.journal_pages[0].html)
             self.assertFalse(any("缺少注解" in w for w in builder.warnings))
 
+    def test_later_chain_summary_is_not_a_daily_outcome(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            content = self.make_fixture(root)
+            registry_path = content / "chains.json"
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            registry["chains"][0].update(fate="folded", fate_note="后续进入另一条研究线")
+            registry_path.write_text(json.dumps(registry), encoding="utf-8")
+            builder = Builder()
+            builder.out_dir = root / "out"
+            with patch("build.CONTENT_DIR", content):
+                builder.build_journal()
+            self.assertEqual(builder.journal_entries[0]["chain_notes"]["a"]["outcome_note"], "")
+            self.assertEqual(builder.chains["chains"][0]["fate_note"], "后续进入另一条研究线")
+
 
 if __name__ == "__main__":
     unittest.main()
