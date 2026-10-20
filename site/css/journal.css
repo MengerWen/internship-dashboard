@@ -35,6 +35,30 @@
 .journal-day-card { padding: 24px; border: 1px solid var(--line); background: var(--surface); }
 .journal-day-card h2 { font: 700 24px/1.6 var(--font-serif); margin: 12px 0; overflow-wrap: anywhere; }
 .journal-empty { padding: 40px 0; color: var(--muted); }
+.journal-figure { margin: 16px 0 0; position: relative; }
+.journal-scroller { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-color: var(--line-soft) var(--bg); }
+.journal-atlas { display: block; width: 100%; min-width: 1120px; }
+.journal-atlas text { font-family: var(--font-body); fill: var(--text); }
+.journal-track-label { font-size: 13px; }
+.journal-atlas .journal-axis-label { font-size: 12px; fill: var(--muted); }
+.journal-weekend { fill: var(--bg-deep); opacity: .3; }
+.journal-rule, .journal-month-rule { stroke: var(--line-soft); stroke-width: 1; }
+.journal-chain-line { stroke: var(--text); stroke-width: 1.7; fill: none; }
+.journal-pause { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; fill: none; }
+.journal-handoff-path { stroke: var(--text); stroke-width: 1; fill: none; opacity: .26; }
+.journal-dot { fill: var(--bg); stroke: var(--text); stroke-width: 1.6; }
+.journal-dot.has-report, .journal-seal { fill: var(--text); }
+.journal-report-tick { stroke: var(--text); stroke-width: 2; }
+.journal-atlas .journal-chain-label { font-size: 12px; fill: var(--muted); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+.journal-selection-band { fill: var(--focus); opacity: .16; pointer-events: none; }
+.journal-selection-line { stroke: var(--focus); stroke-width: 1.2; pointer-events: none; }
+.journal-unit { transition: opacity 120ms cubic-bezier(.23, 1, .32, 1); cursor: pointer; }
+.journal-unit.is-dimmed { opacity: .1; }
+.journal-unit.is-focused .journal-chain-line, .journal-unit.is-focused .journal-dot, .journal-unit.is-focused .journal-handoff-path { stroke: var(--focus); }
+.journal-unit.is-focused .journal-seal, .journal-unit.is-focused .journal-dot.has-report { fill: var(--focus); }
+.journal-unit.is-focused .journal-handoff-path { opacity: 1; }
+.journal-day-hit { fill: transparent; cursor: pointer; }
+.journal-figure figcaption { color: var(--muted); font-size: 12px; margin: 8px 0 24px; line-height: 1.7; }
 .journal-view [hidden] { display: none !important; }
 @media (max-width: 859px) {
   .journal-view { padding: 20px 16px 60px; }
