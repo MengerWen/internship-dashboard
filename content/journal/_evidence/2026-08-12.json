@@ -81,7 +81,8 @@
           "sha": "fb5ed2ec974f4fc2fe96e6e20a4aeaa7e8fdc492",
           "subject": "bench(ml): parameterize AE batch calibration"
         }
-      ]
+      ],
+      "revert_count": 2
     }
   ],
   "plans": [
@@ -104,6 +105,27 @@
     ],
     "how": {
       "ml-exec": "plan-token"
-    }
+    },
+    "notes": {
+      "ml-exec": {
+        "note": "Open5m ML `stop_failed` ",
+        "source": "Open5m ML `stop_failed` 根因与修复审计",
+        "reviewed": false
+      }
+    },
+    "outcome_candidates": [
+      {
+        "repo": "sirui-quant-research",
+        "sha": "26fd0d1e81a5eb8312ccb5155a05fac8568d3c41",
+        "subject": "Revert \"perf(ml): avoid repeated deterministic backend setup\"",
+        "kind": "intraday-revert"
+      },
+      {
+        "repo": "sirui-quant-research",
+        "sha": "658a26271cc8adecc5d20edf1c45cafd7881dc07",
+        "subject": "Revert \"fix(ml): strengthen P-spline scale stabilization\"",
+        "kind": "intraday-revert"
+      }
+    ]
   }
 }

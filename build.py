@@ -657,7 +657,8 @@ class Builder:
                     self.warnings.append(f"日志 {key} 链条 {cid} outcome 无效，继承链条去留")
                     outcome = by_chain[cid].get("fate", "landed")
                 chain_notes[cid] = {"note": note, "outcome": outcome,
-                                    "outcome_note": str(item.get("outcome_note") or by_chain[cid].get("fate_note") or "")}
+                                    "outcome_note": str(item.get("outcome_note") or (
+                                        by_chain[cid].get("fate_note") if outcome == by_chain[cid].get("fate", "landed") else "") or "")}
                 review = by_chain[cid].get("review", {})
                 pending = key in review.get("unreviewed_days", []) if review else not meta.get("chains_reviewed", False)
                 confidence[cid] = "inferred" if pending else "confirmed"
