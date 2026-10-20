@@ -1,0 +1,875 @@
+{
+  "schemaVersion": 1,
+  "note": "链条逻辑的唯一权威。起止不写在这里，由 content/journal/*.md 里引用它的日子推出来。chains[].review 是从草案带过来的审阅状态，unreviewed_days 里的归属还是脚本推断的，逐条看过之后把那一天从列表里删掉；列表清空即这条链已确认。",
+  "tracks": [
+    {
+      "id": "infra",
+      "label": "数据与服务器",
+      "stage": "data-processing"
+    },
+    {
+      "id": "snapshot",
+      "label": "快照与回放",
+      "stage": "lv2-snapshot"
+    },
+    {
+      "id": "footprint",
+      "label": "算法痕迹",
+      "stage": "algo-footprint"
+    },
+    {
+      "id": "factor",
+      "label": "因子与定标",
+      "stage": "factor"
+    },
+    {
+      "id": "model",
+      "label": "模型",
+      "stage": "model"
+    },
+    {
+      "id": "delivery",
+      "label": "看板与交付",
+      "stage": null
+    }
+  ],
+  "chains": [
+    {
+      "id": "onboarding",
+      "track": "infra",
+      "label": "上手：行情环境与交易规则",
+      "short": "上手",
+      "purpose": "接上米筐行情环境，把沪深交易规则和异常交易监控细则整理成可查的材料",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-06-23",
+          "2026-06-24"
+        ],
+        "unreviewed_days": [
+          "2026-06-23",
+          "2026-06-24"
+        ]
+      }
+    },
+    {
+      "id": "doris-migration",
+      "track": "infra",
+      "label": "Doris 访问重构与服务器迁移",
+      "short": "Doris 迁移",
+      "purpose": "把数据访问从本地切到服务器 Doris，并在内存事故后加固 RUNBOOK",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-01"
+        ]
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-07-15",
+          "2026-07-30"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "wangly-env",
+      "track": "infra",
+      "label": "wangly 环境与结果转移",
+      "short": "wangly 环境",
+      "purpose": "在 wangly 上建起可跑的研究环境，并把结果转回 wenjie",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-04"
+        ]
+      },
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-09-04",
+          "2026-09-04"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "doris-efficiency",
+      "track": "infra",
+      "label": "Doris 通用效率",
+      "short": "Doris 效率",
+      "purpose": "压低 Doris 侧通用查询的开销",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-10-09"
+        ]
+      },
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-10-09",
+          "2026-10-09"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "storage-cleanup",
+      "track": "infra",
+      "label": "存储盘点、保留与清理",
+      "short": "存储收尾",
+      "purpose": "盘点对象存储与暂存，按保留策略清理重复副本并留下恢复映射",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-10-14",
+          "2026-10-16"
+        ]
+      },
+      "review": {
+        "days": 3,
+        "span": [
+          "2026-10-14",
+          "2026-10-16"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "lv2-snapshot",
+      "track": "snapshot",
+      "label": "LV2 逐笔重建 100ms 快照",
+      "short": "LV2 快照",
+      "purpose": "把逐笔流水按真实事件顺序回放成 100ms 订单簿快照，并与米筐 3 秒数据逐档对齐",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-06-25",
+          "2026-06-26",
+          "2026-07-08"
+        ]
+      },
+      "review": {
+        "days": 5,
+        "span": [
+          "2026-06-25",
+          "2026-07-08"
+        ],
+        "unreviewed_days": [
+          "2026-06-25",
+          "2026-06-26",
+          "2026-06-29",
+          "2026-06-30",
+          "2026-07-08"
+        ]
+      }
+    },
+    {
+      "id": "replay",
+      "track": "snapshot",
+      "label": "深市回放与基础正确性",
+      "short": "回放核验",
+      "purpose": "核验深市回放规则，迁移原生回放入口，审计基础正确性",
+      "status": "active",
+      "closes_into": {
+        "daily": [
+          "2026-10-18"
+        ]
+      },
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-10-17",
+          "2026-10-20"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "literature",
+      "track": "footprint",
+      "label": "文献复现与因子框架搭建",
+      "short": "文献复现",
+      "purpose": "复现订单流失衡、ClusterLOB 与低延迟交易三条线，搭起 factor_lab 因子框架",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-06-29",
+          "2026-07-03"
+        ],
+        "unreviewed_days": [
+          "2026-06-29",
+          "2026-06-30",
+          "2026-07-01",
+          "2026-07-03"
+        ]
+      }
+    },
+    {
+      "id": "algobench",
+      "track": "footprint",
+      "label": "algobench 台架与注意力面板",
+      "short": "algobench",
+      "purpose": "建起 algobench 台架与全市场注意力面板，确定检测算法痕迹的方向",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-06",
+          "2026-07-07",
+          "2026-07-08",
+          "2026-07-09",
+          "2026-07-13"
+        ]
+      },
+      "review": {
+        "days": 9,
+        "span": [
+          "2026-07-06",
+          "2026-07-14"
+        ],
+        "unreviewed_days": [
+          "2026-07-06",
+          "2026-07-07",
+          "2026-07-08",
+          "2026-07-09",
+          "2026-07-10",
+          "2026-07-11",
+          "2026-07-12",
+          "2026-07-13",
+          "2026-07-14"
+        ]
+      }
+    },
+    {
+      "id": "formal-engine",
+      "track": "footprint",
+      "label": "正式因子引擎与打分器",
+      "short": "因子引擎",
+      "purpose": "做出正式因子引擎：生命周期 schema、配对与打分器、冲击响应与端到端回归",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-22",
+          "2026-07-23"
+        ]
+      },
+      "review": {
+        "days": 10,
+        "span": [
+          "2026-07-16",
+          "2026-07-25"
+        ],
+        "unreviewed_days": [
+          "2026-07-23",
+          "2026-07-25"
+        ]
+      }
+    },
+    {
+      "id": "gates",
+      "track": "footprint",
+      "label": "数量门与价格门定标与区间扩展",
+      "short": "门限定标",
+      "purpose": "定标数量门与价格门，并把正式评价区间扩展到更长样本",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-29",
+          "2026-07-31",
+          "2026-08-01",
+          "2026-08-02"
+        ]
+      },
+      "review": {
+        "days": 6,
+        "span": [
+          "2026-07-27",
+          "2026-08-02"
+        ],
+        "unreviewed_days": [
+          "2026-07-31"
+        ]
+      }
+    },
+    {
+      "id": "fixed-history",
+      "track": "factor",
+      "label": "固定参数历史回补",
+      "short": "历史回补",
+      "purpose": "用固定参数回补历史区间的因子评价",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-05"
+        ]
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-08-03",
+          "2026-08-05"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "open5m",
+      "track": "factor",
+      "label": "open5m 因子表现与核定标",
+      "short": "open5m",
+      "purpose": "把开盘五分钟因子的表现、核定标与九参数定标跑通并提速",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-06",
+          "2026-08-07",
+          "2026-08-24",
+          "2026-09-02",
+          "2026-09-03",
+          "2026-09-04"
+        ]
+      },
+      "review": {
+        "days": 14,
+        "span": [
+          "2026-08-06",
+          "2026-09-04"
+        ],
+        "unreviewed_days": [
+          "2026-08-07",
+          "2026-08-08",
+          "2026-08-09",
+          "2026-08-20",
+          "2026-08-24",
+          "2026-08-28",
+          "2026-08-29"
+        ]
+      }
+    },
+    {
+      "id": "cancel-phase",
+      "track": "factor",
+      "label": "撤单延迟与撤单阶段因子",
+      "short": "撤单阶段",
+      "purpose": "测出撤单延迟分布，做出撤单阶段与机械撤单相关的因子",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-19",
+          "2026-08-24",
+          "2026-09-04",
+          "2026-09-06"
+        ]
+      },
+      "review": {
+        "days": 7,
+        "span": [
+          "2026-08-19",
+          "2026-09-09"
+        ],
+        "unreviewed_days": [
+          "2026-08-20",
+          "2026-08-24",
+          "2026-09-06"
+        ]
+      }
+    },
+    {
+      "id": "depth-match",
+      "track": "factor",
+      "label": "深度匹配与跨股同步预查",
+      "short": "深度匹配",
+      "purpose": "做出盘口深度精确匹配与跨股同步行为的预查因子",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-06"
+        ]
+      },
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-09-05",
+          "2026-09-09"
+        ],
+        "unreviewed_days": [
+          "2026-09-06"
+        ]
+      }
+    },
+    {
+      "id": "old-factor-bank",
+      "track": "factor",
+      "label": "老因子库与 300 秒门",
+      "short": "老因子库",
+      "purpose": "把老因子库重算到 300 秒门内，并启动 601 日全历史计算",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-07",
+          "2026-09-16"
+        ]
+      },
+      "review": {
+        "days": 3,
+        "span": [
+          "2026-09-07",
+          "2026-09-12"
+        ],
+        "unreviewed_days": [
+          "2026-09-12"
+        ]
+      }
+    },
+    {
+      "id": "grouped-calibration",
+      "track": "factor",
+      "label": "分组定标",
+      "short": "分组定标",
+      "purpose": "做分组定标，并把分组定标的分析提速",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-10-07",
+          "2026-10-09"
+        ]
+      },
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-10-07",
+          "2026-10-11"
+        ],
+        "unreviewed_days": [
+          "2026-10-07"
+        ]
+      }
+    },
+    {
+      "id": "szse-model328",
+      "track": "factor",
+      "label": "深市 328 列：重算到签收",
+      "short": "深市 328",
+      "purpose": "把深市 328 列因子在 601 个交易日上算完、验收、封存并评价表现",
+      "status": "active",
+      "closes_into": {
+        "showcase": "factor",
+        "daily": [
+          "2026-10-10",
+          "2026-10-14",
+          "2026-10-16",
+          "2026-10-18"
+        ]
+      },
+      "review": {
+        "days": 5,
+        "span": [
+          "2026-10-10",
+          "2026-10-18"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "sse-v2",
+      "track": "factor",
+      "label": "沪市委托 v2 与可见 G1",
+      "short": "沪市 v2",
+      "purpose": "还原沪市原始委托并做出可见 G1 口径，把全流程提速到可用",
+      "status": "active",
+      "closes_into": {
+        "daily": [
+          "2026-10-07",
+          "2026-10-10",
+          "2026-10-14",
+          "2026-10-16"
+        ]
+      },
+      "review": {
+        "days": 8,
+        "span": [
+          "2026-09-23",
+          "2026-10-17"
+        ],
+        "unreviewed_days": [
+          "2026-09-23",
+          "2026-10-07"
+        ]
+      }
+    },
+    {
+      "id": "ml-count",
+      "track": "model",
+      "label": "51 个 count 因子 ML",
+      "short": "count ML",
+      "purpose": "用 51 个 count 因子做机器学习与结构诊断",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-04",
+          "2026-08-06"
+        ]
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-08-04",
+          "2026-08-06"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "ml-exec",
+      "track": "model",
+      "label": "ML 执行适配与资源合同",
+      "short": "ML 执行",
+      "purpose": "做出各族模型的执行适配与资源合同，去掉 ML 流水线里的重复计算",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-16"
+        ]
+      },
+      "review": {
+        "days": 7,
+        "span": [
+          "2026-08-11",
+          "2026-08-18"
+        ],
+        "unreviewed_days": [
+          "2026-08-14",
+          "2026-08-18"
+        ]
+      }
+    },
+    {
+      "id": "ml-330",
+      "track": "model",
+      "label": "330 候选与因果单次拟合",
+      "short": "330 候选",
+      "purpose": "用 330 个候选做 LightGBM 全量研究与因果单次拟合重算",
+      "status": "done",
+      "closes_into": {
+        "showcase": "model"
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-09-20",
+          "2026-09-21"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "dashboard-build",
+      "track": "delivery",
+      "label": "看板建站",
+      "short": "看板建站",
+      "purpose": "把成果看板从零建起来并部署上线",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-07",
+          "2026-07-08",
+          "2026-07-09",
+          "2026-07-13"
+        ]
+      },
+      "review": {
+        "days": 5,
+        "span": [
+          "2026-07-07",
+          "2026-07-13"
+        ],
+        "unreviewed_days": [
+          "2026-07-07",
+          "2026-07-08",
+          "2026-07-09",
+          "2026-07-10",
+          "2026-07-13"
+        ]
+      }
+    },
+    {
+      "id": "report-publish",
+      "track": "delivery",
+      "label": "日报与报告发布、看板维护",
+      "short": "发布维护",
+      "purpose": "持续把日报与阶段报告发布到看板，并维护展示页",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-23",
+          "2026-07-31",
+          "2026-08-01",
+          "2026-08-24",
+          "2026-09-16",
+          "2026-09-17",
+          "2026-09-18",
+          "2026-10-07"
+        ]
+      },
+      "review": {
+        "days": 10,
+        "span": [
+          "2026-07-23",
+          "2026-10-07"
+        ],
+        "unreviewed_days": [
+          "2026-07-23",
+          "2026-07-31",
+          "2026-08-09",
+          "2026-08-10",
+          "2026-08-20",
+          "2026-08-24",
+          "2026-09-11",
+          "2026-09-17",
+          "2026-09-18",
+          "2026-10-07"
+        ]
+      }
+    },
+    {
+      "id": "visual-b",
+      "track": "delivery",
+      "label": "研究编辑台视觉实施",
+      "short": "视觉实施",
+      "purpose": "把看板实施成「研究编辑台」这套视觉方向",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-08-11",
+          "2026-08-11"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "report-tags",
+      "track": "delivery",
+      "label": "汇报标签与报告页",
+      "short": "汇报标签",
+      "purpose": "给每日汇报做标签体系，支持归类、筛选与在线编辑",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-07"
+        ]
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-09-07",
+          "2026-09-09"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "model-report",
+      "track": "delivery",
+      "label": "模型报告发布",
+      "short": "模型报告",
+      "purpose": "发布模型相关的成果报告页",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-09-19",
+          "2026-09-19"
+        ],
+        "unreviewed_days": []
+      }
+    },
+    {
+      "id": "report328",
+      "track": "delivery",
+      "label": "328 列成果报告发布",
+      "short": "328 报告",
+      "purpose": "发布深市 328 列因子的 601 日成果报告",
+      "status": "active",
+      "closes_into": {
+        "daily": [
+          "2026-10-18"
+        ]
+      },
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-10-18",
+          "2026-10-18"
+        ],
+        "unreviewed_days": []
+      }
+    }
+  ],
+  "handoffs": [
+    {
+      "from": "onboarding",
+      "to": "lv2-snapshot",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "lv2-snapshot",
+      "to": "literature",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "literature",
+      "to": "algobench",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "algobench",
+      "to": "formal-engine",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "doris-migration",
+      "to": "formal-engine",
+      "type": "依赖解除",
+      "confidence": "inferred"
+    },
+    {
+      "from": "formal-engine",
+      "to": "gates",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "gates",
+      "to": "fixed-history",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "fixed-history",
+      "to": "open5m",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "ml-count",
+      "to": "ml-exec",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "open5m",
+      "to": "ml-exec",
+      "type": "依赖解除",
+      "confidence": "inferred"
+    },
+    {
+      "from": "open5m",
+      "to": "cancel-phase",
+      "type": "派生",
+      "confidence": "inferred"
+    },
+    {
+      "from": "cancel-phase",
+      "to": "depth-match",
+      "type": "派生",
+      "confidence": "inferred"
+    },
+    {
+      "from": "wangly-env",
+      "to": "old-factor-bank",
+      "type": "依赖解除",
+      "confidence": "inferred"
+    },
+    {
+      "from": "old-factor-bank",
+      "to": "sse-v2",
+      "type": "派生",
+      "confidence": "inferred"
+    },
+    {
+      "from": "old-factor-bank",
+      "to": "szse-model328",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "depth-match",
+      "to": "grouped-calibration",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "grouped-calibration",
+      "to": "szse-model328",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "szse-model328",
+      "to": "storage-cleanup",
+      "type": "派生",
+      "confidence": "inferred"
+    },
+    {
+      "from": "szse-model328",
+      "to": "report328",
+      "type": "收口",
+      "confidence": "inferred"
+    },
+    {
+      "from": "ml-exec",
+      "to": "ml-330",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "sse-v2",
+      "to": "replay",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "dashboard-build",
+      "to": "report-publish",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "dashboard-build",
+      "to": "visual-b",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "visual-b",
+      "to": "report-tags",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "report-tags",
+      "to": "model-report",
+      "type": "延续",
+      "confidence": "inferred"
+    },
+    {
+      "from": "ml-330",
+      "to": "model-report",
+      "type": "收口",
+      "confidence": "inferred"
+    }
+  ]
+}
