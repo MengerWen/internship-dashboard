@@ -1,22 +1,19 @@
-# 缺少独立写入时间的材料
+# 缺少已确认写入时间的材料
 
-以下材料均已登记研究去向。文件名、正文自述日期和Git入库日期不能单独证明实际写入日；不为此补造日点。相同目标若有原始会话，按会话自身日期入日志。
+严格回执重核后共248项。均保留去向；文件名和Git日期不能单独补造工作日。
 
 - `dashboard:2026-10-14-沪市委托v2全流程提速.md` → sse-v2；材料ID `97c2e48431ed21ffa8f759d7`。
-- `dashboard:2026-10-16-深市328列因子全流程提速与存储收尾.md` → szse-model328；材料ID `05a8c234f98c9e9b3bfae246`。
 - `dashboard:PLAN/2026-10-21-journal-source-rebuild.md` → research-journal；材料ID `6fee79824afbda08363a049f`。
 - `dashboard:PLAN/PLAN-2.md` → report-publish；材料ID `de97c4f8102487ebbd165d20`。
 - `dashboard:PLAN/PLAN-3.md` → report-publish；材料ID `4481c51e7eabe7692b28496d`。
 - `dashboard:PLAN/PLAN.md` → dashboard-build；材料ID `96dfc4f562e12d10544fb7d0`。
 - `dashboard:content/daily/2026-06-25.md` → lv2-snapshot；材料ID `bed9c31bb8b12b0971d061bd`。
-- `dashboard:content/daily/2026-08-24.md` → cancel-phase；材料ID `86709b9c5dc79860920f49eb`。
 - `dashboard:content/daily/2026-09-02.md` → mechanism-precheck；材料ID `0f88aa3cc433210ef93b29e3`。
 - `dashboard:content/daily/2026-10-07.md` → grouped-calibration；材料ID `a3a408672f5d1a32e6ab265e`。
 - `dashboard:content/daily/2026-10-07.show.md` → grouped-calibration；材料ID `71a708cc493203109c21ae46`。
 - `dashboard:content/daily/2026-10-09.md` → grouped-calibration；材料ID `93cd3145ab79074a2e15b68b`。
 - `dashboard:content/daily/2026-10-09.show.md` → grouped-calibration；材料ID `727a9735d3de41caccad408f`。
 - `dashboard:content/daily/2026-10-10.md` → sse-v2；材料ID `78ee550a294f18cbf733c1be`。
-- `dashboard:content/daily/2026-10-16.md` → szse-model328；材料ID `0e0dff48e3469ad5cf11f868`。
 - `dashboard:content/daily/2026-10-18.md` → report328；材料ID `0a11a481f1615fd37761549a`。
 - `notes:因子/AI综述/明确/Claude_一份在匿名消息级限价订单簿数据中检测算法交易足迹的方法工具箱.md` → literature；材料ID `bab6a242b995dd201fdacec6`。
 - `notes:因子/AI综述/明确/GPT_在限价订单簿事件流中检测算法交易足迹.md` → literature；材料ID `cf6bc0adf4fc101f9a934871`。
@@ -144,8 +141,6 @@
 - `research:PLAN/2026-08-16-ml-no-rf-contract.md` → ml-exec；材料ID `7176a73c46286e509b397d0a`。
 - `research:PLAN/2026-08-17-open5m-no-rf-performance-v2-design.md` → ml-exec；材料ID `e1e1e5caad59aaf96b7bae8c`。
 - `research:PLAN/2026-08-17-open5m-no-rf-performance-v2.md` → ml-exec；材料ID `e4721ba418f945d1b2e0d89f`。
-- `research:PLAN/2026-08-27-open5m-kernel-calibration-local-hot-path-design.md` → open5m；材料ID `a7ba687a45ad0d6a5248a25f`。
-- `research:PLAN/2026-09-04-wangly-to-wenjie-result-transfer.md` → wangly-env；材料ID `989fac32e8f8022bb9afa614`。
 - `research:PLAN/2026-09-07-report-tags.md` → report-tags；材料ID `d548cc44c6e91799cb91d89b`。
 - `research:PLAN/2026-09-09-cancel-phase-buy-sell-completion.md` → cancel-phase；材料ID `3efacf8f4c4c7d35c7c9020b`。
 - `research:PLAN/2026-10-09-general-doris-efficiency.md` → doris-efficiency；材料ID `87d76acd56348634f01a1cae`。
@@ -155,13 +150,11 @@
 - `research:PLAN/2026-10-10-szse-old-factor-recompute-preparation.md` → grouped-calibration；材料ID `fdf95fc51a07055816dc95f3`。
 - `research:PLAN/2026-10-11-f40-remaining-stage-optimization.md` → grouped-calibration；材料ID `39c67d71285c7a950f1bbbe8`。
 - `research:decisions/2026-08-27-fast-cancel-scales.md` → open5m；材料ID `25adc5391e4e28c98cc147e2`。
-- `research:decisions/2026-09-04-wangly-result-transfer.md` → wangly-env；材料ID `dc95f5b7f0d3fee27fec5f30`。
 - `research:decisions/2026-10-10-sse-opening-gap-clock.md` → sse-v2；材料ID `dc3fae8b7f2f7a313dea9a9f`。
 - `research:decisions/2026-10-10-structural-day-publication.md` → grouped-calibration；材料ID `8a4bdb6a33461a389d0ae74a`。
 - `research:decisions/2026-10-11-exact-date-quantile-reduction.md` → grouped-calibration；材料ID `8b8b45dc641e0a8164e52fa7`。
 - `research:docs/evidence/2026-08-14-boosting-checkpoint-repair/CONTRACT_DECISION.md` → ml-exec；材料ID `cc423b26adce5fd220325b31`。
 - `research:docs/evidence/2026-08-14-boosting-checkpoint-repair/ROOT_CAUSE.md` → ml-exec；材料ID `3fb8bffc6781183b89f479a6`。
-- `research:docs/plans/2026-10-14-wangly-storage-cleanup-design.md` → storage-cleanup；材料ID `4af32777890581c4cdc14814`。
 - `research:reports/2026-08/2026-08-27-continuous-kernel-factor-calibration-research.md` → open5m；材料ID `483ff4db34e2355351ef3f57`。
 - `research:reports/2026-08/2026-08-27-l2-three-second-gate-real-data-findings.md` → open5m；材料ID `38594579f67b71f4878ccafc`。
 - `research:reports/2026-08/2026-08-27-three-second-candidate-gate-research.md` → open5m；材料ID `1b117b78cd860f7e05de66c4`。
@@ -169,13 +162,9 @@
 - `research:reports/2026-08/2026-08-28-旧因子跨期反转与流动性折价假设诊断.md` → old-factor-bank；材料ID `66e86e0436af209f76738f34`。
 - `research:reports/2026-08/2026-08-29-五种方向投影计算与精简审计.md` → old-factor-bank；材料ID `24dc1fa49bcf388390ceb108`。
 - `research:reports/2026-08/ALL_ORDER_DENOMINATOR_RESEARCH_REPORT.md` → open5m；材料ID `2f966ee3b48b1e9109a3540f`。
-- `research:reports/2026-09/2026-09-01-f54-consensus-calibration-methods-research.md` → old-factor-bank；材料ID `2900d74e666988630d1022f0`。
-- `research:reports/2026-09/2026-09-03-D2-D7-primary-source-review.md` → behavior-design；材料ID `3eff2e882acc2df0e5f73931`。
-- `research:reports/2026-09/2026-09-04-wangly-result-transfer-acceptance.md` → wangly-env；材料ID `6c9fc0ffbe597f64c69d3507`。
 - `research:reports/2026-09/2026-09-05-cancel-phase-30s-acceptance.md` → cancel-phase；材料ID `2e3855bc8930877e24953651`。
 - `research:reports/2026-09/2026-09-05-cancel-phase-single-day-acceptance.md` → cancel-phase；材料ID `144507f4837ba7423f687323`。
 - `research:reports/2026-09/2026-09-05-open5m-selected-200-calibration-completion.md` → open5m；材料ID `f0055005b6d071955629c212`。
-- `research:reports/2026-09/2026-09-06-cancel-phase-601d-completion.md` → cancel-phase；材料ID `abe629af1fef809e615d1c2a`。
 - `research:reports/2026-09/2026-09-07-old-factor-contract-and-design-review.md` → old-factor-bank；材料ID `db1fc73810ee29701f2cfd0e`。
 - `research:reports/2026-09/2026-09-08-depth-match-full-history-completion.md` → depth-match；材料ID `7f15c0c6e29c058c3fd39f73`。
 - `research:reports/2026-09/2026-09-08-depth-match-single-day-acceptance.md` → depth-match；材料ID `8a084d05d2f957f4d7fe228c`。
@@ -183,7 +172,6 @@
 - `research:reports/2026-09/2026-09-10-mechanical-cancel-history-launch.md` → cancel-phase；材料ID `849f81ffae73ae8f1aedbac4`。
 - `research:reports/2026-09/2026-09-10-mechanical-cancel-prescreen-review.md` → cancel-phase；材料ID `f67a908257d7e5f6e7784a8e`。
 - `research:reports/2026-09/2026-09-11-c33-reuse-inventory.md` → cross-stock-sync；材料ID `40f8acd4fd95c70eeb551b22`。
-- `research:reports/2026-09/2026-09-12-old-factor-code-performance-review.md` → old-factor-bank；材料ID `dba0e7830074b01f940b9b7e`。
 - `research:reports/2026-09/2026-09-21-audit-source-coverage.md` → model-report；材料ID `2a9bba3526189f4872f5c50f`。
 - `research:reports/2026-09/2026-09-21-independent-strategy-index-selection.md` → strategy-research；材料ID `0ca44ccf815f33c79c6ce6a7`。
 - `research:reports/2026-09/2026-09-22-sse-szse-official-evidence.md` → sse-v2；材料ID `b6fcf1df6730a769f3db8fb4`。
@@ -237,18 +225,11 @@
 - `research:reports/2026-10/2026-10-12-calibration-storage-cleanup.md` → storage-cleanup；材料ID `caf0994564b09b4ef6f275ce`。
 - `research:reports/2026-10/2026-10-12-old-factor-recompute-preparation.md` → grouped-calibration；材料ID `b5caaaeb2b2dea3e1b5ee453`。
 - `research:reports/2026-10/2026-10-13-exact-match-hft-price-strata-review.md` → szse-model328；材料ID `26b15fa9b5432a231212936e`。
-- `research:reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md` → szse-model328；材料ID `96363eb83b015f9d14d08249`。
 - `research:reports/2026-10/2026-10-14-sse-original-order-number-complete-audit.md` → sse-v2；材料ID `89c026378534ded0ad5f81ec`。
 - `research:reports/2026-10/2026-10-14-sse-original-order-v2-feasible-sets.md` → sse-v2；材料ID `9af5e51b7b962cae08bd283f`。
 - `research:reports/2026-10/2026-10-14-sse-original-order-v2-models.md` → sse-v2；材料ID `b76c77e5d3fc8aee6ab03286`。
 - `research:reports/2026-10/2026-10-14-sse-original-order-v2-snapshot-audit.md` → sse-v2；材料ID `f1de947d4d7bf7f164d433a9`。
 - `research:reports/2026-10/2026-10-14-sse-v2-cleanup.md` → storage-cleanup；材料ID `193e9989dce2cc74a4915b99`。
-- `research:reports/2026-10/2026-10-14-szse-model328-daily-timing-review.md` → szse-model328；材料ID `181c2858a812fbf4856c7a08`。
-- `research:reports/2026-10/2026-10-14-szse-model328-daily-timings.md` → szse-model328；材料ID `b1687e9eb12c06d62ade2c02`。
-- `research:reports/2026-10/2026-10-14-szse-model328-factor-recompute-paused.md` → szse-model328；材料ID `569d35a5290df911ea41676c`。
-- `research:reports/2026-10/2026-10-14-szse-model328-typical-date-selection.md` → szse-model328；材料ID `486654e5d856c437daa46752`。
-- `research:reports/2026-10/2026-10-14-wangly-storage-audit.md` → storage-cleanup；材料ID `16706822e8b70c9283de0f71`。
-- `research:reports/2026-10/2026-10-14-wangly-storage-cleanup.md` → storage-cleanup；材料ID `ea18774c472120a95dea859a`。
 - `research:reports/2026-10/2026-10-15-f40-uncertainty-retention-second-audit.md` → storage-cleanup；材料ID `d94a7d3e5e39f88e43e9bb72`。
 - `research:reports/2026-10/2026-10-15-wangly-additional-retention-second-audit.md` → storage-cleanup；材料ID `da3fa6b1a5474cf1719ff078`。
 - `research:reports/2026-10/2026-10-15-wangly-retention-optimization.md` → storage-cleanup；材料ID `c378f7d6268dbf1dd29dfc09`。
