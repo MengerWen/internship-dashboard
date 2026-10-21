@@ -78,7 +78,7 @@
       });
       document.addEventListener("click", e => {
         if (!this.selection || !$("view-journal").classList.contains("is-active") || e.defaultPrevented || e.detail === 0) return;
-        if (e.target.closest("a, button, input, select, textarea, label, summary, details, [role='button'], [contenteditable], .journal-controls, .journal-annotation, #journal-detail, tr[data-date]")) return;
+        if (e.target.closest("a, button, input, select, textarea, label, summary, details, [role='button'], [contenteditable], .journal-controls, .journal-annotation, .journal-day-context, #journal-detail, tr[data-date]")) return;
         if (!window.getSelection()?.isCollapsed) return;
         this.clearSelection();
       });
@@ -253,6 +253,9 @@
     reportLinks(day) {
       return (day.reports_covering || (day.report ? [day.report] : [])).map(d => `<a href="#/daily/${esc(d)}">${esc(d)}</a>`).join(" ");
     },
+    dayMetaHtml(day) {
+      return `<span>${esc(day.weekday)}</span><span>${day.reports_covering?.length || day.report ? "有相关汇报" : "未关联汇报"}</span><span>当天发布 ${day.reports_published?.length || 0} 篇</span>`;
+    },
     chainButtons(day) {
       return day.chains.map(cid => `<button type="button" class="journal-chain-link" data-journal-chain="${esc(cid)}">${esc(this.chains.get(cid)?.short || cid)}${day.chain_confidence[cid] === "inferred" ? ' <small>待核</small>' : ""}</button>`).join(" ") || "未归类";
     },
@@ -266,7 +269,46 @@
       return [...new Set(dates)].filter(d => this.reports.has(d));
     },
     sourceLinks(refs) {
-      return (refs || []).filter(ref => /^https:\/\/github\.com\//.test(ref.url || "")).map(ref => `<a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">${esc(ref.title)}</a>`).join("；");
+      return (refs || []).filter(ref => /^https:\/\/github\.com\//.test(ref.url || "")).map(ref => {
+        const kind = this.sourceKind(ref.url);
+        return `<a class="journal-source-link" data-source-kind="${kind}" href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer"><span class="journal-link-kind">${this.sourceKindLabel(kind)}</span><span class="journal-source-title">${esc(ref.title)}</span></a>`;
+      }).join(" ");
+    },
+    sourceKind(url) {
+      return /\/commit\//.test(url) ? "commit" : /\/blob\//.test(url) ? "file" : "repository";
+    },
+    sourceKindLabel(kind) {
+      return {commit: "提交", file: "文件", repository: "仓库"}[kind];
+    },
+    commitLink(url, sha, length = 8) {
+      const short = esc(sha?.slice(0, length));
+      return /^[a-f0-9]{7,40}$/.test(sha || "") && /^https:\/\/github\.com\//.test(url) ? `<a class="journal-source-link" data-source-kind="commit" href="${esc(url)}" target="_blank" rel="noopener noreferrer"><span class="journal-link-kind">提交</span><code class="journal-source-title">${short}</code></a>` : short;
+    },
+    prepareDayBody(root) {
+      root.querySelectorAll("h1, h2, h3, h4, h5").forEach(heading => {
+        const nested = document.createElement(`h${Math.min(6, Math.max(3, Number(heading.tagName.slice(1)) + 1))}`);
+        for (const attribute of heading.attributes) nested.setAttribute(attribute.name, attribute.value);
+        nested.append(...heading.childNodes);
+        heading.replaceWith(nested);
+      });
+      root.querySelectorAll("li > strong:first-child").forEach(heading => {
+        const next = heading.nextSibling;
+        if (next?.nodeType === Node.TEXT_NODE && /^\s*[：:]/.test(next.textContent)) {
+          heading.append("：");
+          next.textContent = next.textContent.replace(/^\s*[：:]\s*/, "");
+        }
+      });
+      root.querySelectorAll('a[href^="https://github.com/"]').forEach(link => {
+        if (link.classList.contains("journal-source-link")) return;
+        const kind = this.sourceKind(link.href), title = document.createElement("span"), label = document.createElement("span");
+        title.className = "journal-source-title";
+        title.append(...link.childNodes);
+        label.className = "journal-link-kind";
+        label.textContent = this.sourceKindLabel(kind);
+        link.classList.add("journal-source-link");
+        link.dataset.sourceKind = kind;
+        link.append(label, title);
+      });
     },
     render() {
       const focus = document.activeElement;
@@ -302,6 +344,10 @@
     },
     renderAtlas() {
       if (this.mode !== "atlas" || !$("view-journal").classList.contains("is-active")) return;
+      const selectedDay = this.days.find(day => day.date === this.selected);
+      const context = $("journal-day-context");
+      context.hidden = !selectedDay;
+      context.innerHTML = selectedDay ? `<time>${selectedDay.date}</time>${this.dayMetaHtml(selectedDay)}` : "";
       const focusedHandoff = document.activeElement?.dataset.journalHandoff;
       const days = this.visibleDays(true);
       const scroller = document.querySelector(".journal-scroller");
@@ -492,7 +538,7 @@
     },
     annotationHtml(day, cid, width, extra = "") {
       const note = this.pointNote(day, cid), dropped = note.outcome === "dropped";
-      return `<article class="journal-annotation ${extra}${dropped ? " is-dropped" : ""}" data-annotation-chain="${esc(cid)}" data-date="${day.date}" style="width:${width}px"><p><time>${day.date.slice(5)}</time> ${esc(this.chains.get(cid)?.short)}</p><strong>${esc(note.note || "注解待补")}</strong><small>${esc(this.weightLabel(day, cid))}</small>${dropped ? '<span class="journal-fate-badge">本条方案未采用</span>' : ""}${extra ? "" : `<small>${esc(day.weekday)}　${day.reports_covering?.length ? "有相关汇报" : "未关联汇报"}；当天发布 ${day.reports_published?.length || 0} 篇</small>`}</article>`;
+      return `<article class="journal-annotation ${extra}${dropped ? " is-dropped" : ""}" data-annotation-chain="${esc(cid)}" data-date="${day.date}" style="width:${width}px"><p><time>${day.date.slice(5)}</time> ${esc(this.chains.get(cid)?.short)}</p><strong>${esc(note.note || "注解待补")}</strong><small>${esc(this.weightLabel(day, cid))}</small>${dropped ? '<span class="journal-fate-badge">本条方案未采用</span>' : ""}</article>`;
     },
     renderList() {
       $("journal-list").innerHTML = this.visible.length ? `<table><caption class="sr-only">按真实工作日期排列的日志</caption><thead><tr><th scope="col">日期</th><th scope="col">这天做了什么</th><th scope="col">链条</th><th scope="col">提交</th><th scope="col">汇报</th></tr></thead><tbody>${this.visible.map(d => `<tr class="${d.report ? "has-report" : ""}" data-date="${d.date}" ${d.date === this.selected ? 'aria-current="date"' : ""}><td><a href="#/journal/${d.date}" data-journal-day="${d.date}">${d.date}</a><small>${esc(d.weekday)}</small></td><td><a href="#/journal/${d.date}" data-journal-day="${d.date}">${esc(d.headline)}</a>${d.headline_source === "commit" ? '<small>待写</small>' : ""}</td><td>${this.chainButtons(d)}</td><td class="journal-number">${d.total_commits}</td><td>${this.reportLinks(d) || "—"}</td></tr>`).join("")}</tbody></table>` : '<p class="journal-empty">没有匹配的日期。请调整时间窗、链条或查找词。</p>';
@@ -504,7 +550,7 @@
           const incoming = h.to === cid, other = incoming ? h.from : h.to;
           return `<li>${incoming ? "此前：" : "后续："}${this.chainButton(other)} <small>${esc(kinds[h.type] || h.type)}${h.confidence === "inferred" ? "；按记录顺序关联" : ""}</small>${h.note ? `<p>${esc(h.note)}</p>` : ""}${h.source_refs?.length ? `<p>原始依据：${this.sourceLinks(h.source_refs)}</p>` : ""}</li>`;
         });
-        return `<section><h4>${esc(this.chains.get(cid)?.label)}</h4><ul>${links.join("") || "<li>未登记前后关系</li>"}</ul></section>`;
+        return `<section class="journal-flow-item"><h4>${esc(this.chains.get(cid)?.label)}</h4><ul>${links.join("") || "<li>未登记前后关系</li>"}</ul></section>`;
       }).join("");
     },
     chainButton(cid) {
@@ -524,16 +570,21 @@
       }).join("");
       const pointNotes = day.chains.map(cid => {
         const note = this.pointNote(day, cid);
-        return `<li>${this.chainButton(cid)}：${esc(note.note || "注解待补")} <small>${esc(this.weightLabel(day, cid))}</small>${note.outcome === "dropped" ? ' <span class="journal-fate-badge">未采用</span>' : ""}${note.outcome_note ? `<p>${esc(note.outcome_note)}</p>` : ""}</li>`;
+        return `<li><div class="journal-task-chain">${this.chainButton(cid)}</div><div class="journal-task-note">${esc(note.note || "注解待补")}${note.outcome === "dropped" ? ' <span class="journal-fate-badge">未采用</span>' : ""}${note.outcome_note ? `<p>${esc(note.outcome_note)}</p>` : ""}</div><small class="journal-task-weight">${esc(this.weightLabel(day, cid))}</small></li>`;
       }).join("");
-      $("journal-detail").innerHTML = `<nav class="journal-day-nav" aria-label="相邻工作日">${this.navButton(all[index - 1], "前一天")}${this.navButton(all[index + 1], "后一天")}</nav><article class="journal-day-card" data-selected-date="${day.date}"><div class="journal-day-top"><p><time>${day.date}</time>　${esc(day.weekday)}　${day.total_commits} 次提交</p>${day.report ? `<a href="#/daily/${day.report}">每日汇报 ↗</a>` : ""}</div><h2 class="${day.headline_source === "commit" ? "journal-draft" : ""}">${esc(day.headline)}${day.headline_source === "commit" ? " <small>待写</small>" : ""}</h2><p>${this.chainButtons(day)}</p><div class="journal-card-columns"><div><section><h3>做了什么</h3><ul id="journal-highlights">${day.highlights.map(h => `<li>${esc(h)}</li>`).join("") || '<li>当天没有可展示的提交或计划。</li>'}</ul></section><section><h3>相关工作（整条任务线）</h3>${this.flowHtml(day.chains) || '<p>未归类</p>'}${lineage}</section><div id="journal-body" class="markdown-body"></div></div><section><h3>原始记录</h3><details class="journal-evidence" data-evidence-date="${day.date}"><summary>提交、计划与汇报 <small>${day.total_commits} 次提交</small></summary><div id="journal-evidence-content"><p>正在读取证据…</p></div></details></section></div></article>`;
+      $("journal-detail").innerHTML = `<nav class="journal-day-nav" aria-label="相邻工作日">${this.navButton(all[index - 1], "前一天")}${this.navButton(all[index + 1], "后一天")}</nav><article class="journal-day-card" data-selected-date="${day.date}">
+        <header class="journal-day-header"><div class="journal-day-top"><div class="journal-day-meta"><time>${day.date}</time>${this.dayMetaHtml(day)}<span>${day.total_commits} 次提交</span></div>${day.report ? `<a class="journal-report-link" href="#/daily/${day.report}">阅读每日汇报</a>` : ""}</div><h2 class="${day.headline_source === "commit" ? "journal-draft" : ""}">${esc(day.headline)}${day.headline_source === "commit" ? " <small>待写</small>" : ""}</h2></header>
+        <section class="journal-day-overview"><h3>当天工作</h3><ul id="journal-highlights">${day.highlights.map(h => `<li>${esc(h)}</li>`).join("") || '<li>当天没有可展示的提交或计划。</li>'}</ul></section>
+        <section class="journal-day-tasks"><h3>各项记录 <small>${day.chains.length} 条任务链</small></h3><div class="journal-task-head" aria-hidden="true"><span>任务链</span><span>当天进展</span><span>提交归属</span></div><ul class="journal-task-list">${pointNotes || '<li>未归类</li>'}</ul></section>
+        <details class="journal-relations"><summary>相关工作 <small>整条任务线与相邻记录</small></summary><div class="journal-flow-grid">${this.flowHtml(day.chains) || '<p>未归类</p>'}</div><div class="journal-lineage">${lineage}</div></details>
+        <div id="journal-body" class="markdown-body journal-body"></div>
+        <section class="journal-raw-records"><h3>原始记录</h3><details class="journal-evidence" data-evidence-date="${day.date}"><summary>提交、计划与汇报 <small>${day.total_commits} 次提交</small></summary><div id="journal-evidence-content"><p>正在读取证据…</p></div></details></section>
+      </article>`;
       document.querySelector(".journal-evidence").addEventListener("toggle", e => {
         if (e.target.open) this.loadEvidence(day.date);
       });
-      document.querySelector(".journal-day-card h3").textContent = "当天工作";
-      $("journal-highlights").closest("section").insertAdjacentHTML("afterend", `<section><h3>各项记录</h3><ul>${pointNotes}</ul></section>`);
       if (day.has_body) this.app.loadFragment(`journal/${day.date}.html`, `journal-body-${day.date}`).then(html => {
-        if (this.selected === day.date && !this.chain) { $("journal-body").innerHTML = html; this.app.enhanceContent($("journal-body")); }
+        if (this.selected === day.date && !this.chain) { $("journal-body").innerHTML = html; this.prepareDayBody($("journal-body")); this.app.enhanceContent($("journal-body")); }
       }).catch(() => { if ($("journal-body")) $("journal-body").textContent = "正文读取失败，请刷新重试。"; });
     },
     async loadEvidence(key, retry = false) {
@@ -565,8 +616,7 @@
     evidenceHtml(ev) {
       const repos = (ev.repos || []).map(repo => `<details class="journal-repo"><summary>${esc(repo.repo)} ${repo.commits} 次${repo.commits > repo.items.length ? `（列出前 ${repo.items.length} 条）` : ""}</summary><p>${(repo.top_paths || []).map(([p, n]) => `${esc(p)} ${n}`).join(" / ")}</p><ul>${repo.items.map(item => {
         const url = String(repo.commit_url || "").replace("{sha}", item.sha);
-        const sha = /^[a-f0-9]{7,40}$/.test(item.sha) && /^https:\/\/github\.com\//.test(url) ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${item.sha.slice(0, 7)}</a>` : esc(item.sha?.slice(0, 7));
-        return `<li>${sha} ${esc(item.subject)}</li>`;
+        return `<li class="journal-commit-record"><div class="journal-commit-heading">${this.commitLink(url, item.sha, 7)}<span>${esc(item.subject)}</span></div></li>`;
       }).join("")}</ul></details>`).join("");
       const report = d => `<li><a href="#/daily/${esc(d)}">${esc(d)} ${esc(this.reports.get(d)?.title || "每日汇报")}</a><p>${esc(this.reports.get(d)?.summary)}</p></li>`;
       const reverts = (ev.repos || []).reduce((sum, repo) => sum + (repo.revert_count || 0), 0);
@@ -579,11 +629,11 @@
       const label = {pending: "待核", maintenance: "维护", mirror: "历史导入", excluded: "范围外"};
       const row = (item, cid = "") => {
         const repo = ev.repos.find(r => r.repo === item.repo), url = String(repo?.commit_url || "").replace("{sha}", item.sha);
-        const link = /^https:\/\/github\.com\//.test(url) ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${item.sha.slice(0, 8)}</a>` : esc(item.sha.slice(0, 8));
+        const link = this.commitLink(url, item.sha);
         const share = item.shares[cid], paths = Array.isArray(item.paths) ? item.paths : item.paths?.[cid] || [];
         const portion = share ? `，计 ${share.numerator}/${share.denominator} 份` : "";
         const basis = item.basis ? `；${item.basis}` : "";
-        return `<li>${link} ${esc(item.subject)}<small>${esc(item.repo)}${portion}${esc(basis)}</small><p>${esc(item.reason)}</p>${paths.length ? `<small>依据文件：${paths.map(esc).join("；")}</small>` : ""}</li>`;
+        return `<li class="journal-commit-record"><div class="journal-commit-heading">${link}<span>${esc(item.subject)}</span></div><small>${esc(item.repo)}${portion}${esc(basis)}</small><p>${esc(item.reason)}</p>${paths.length ? `<small>依据文件：${paths.map(esc).join("；")}</small>` : ""}</li>`;
       };
       const groups = Object.keys(day.chain_weights).filter(cid => day.chain_weights[cid].value > 0).map(cid => {
         const involved = items.filter(item => item.shares[cid]);
