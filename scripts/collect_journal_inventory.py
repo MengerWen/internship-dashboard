@@ -14,7 +14,7 @@ import sys
 if __package__ in (None, ''):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from scripts.collect_journal_sessions import SHANGHAI, WRAPPERS, scope_text, within
+from scripts.collect_journal_sessions import SHANGHAI, WRAPPERS, scope_text, within, message
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -138,7 +138,7 @@ def collect(config, index, official_directory, output):
         if t['id'] not in known:
             issues.append({'id': 'codex:' + t['id'], 'kind': 'official-list-without-local-registration'})
 
-    native_files = {}
+    native_files, raw_body_ids = {}, {}
     for source in config['sources']:
         if source['platform'] != 'claude': continue
         for path in Path(source['path']).expanduser().rglob('*.jsonl'):
@@ -148,6 +148,8 @@ def collect(config, index, official_directory, output):
                     except ValueError: continue  # 原始JSONL的逐行错误仍由主采集器阻断。
                     if item.get('sessionId'):
                         native_files.setdefault(item['sessionId'], set()).add(str(path))
+                        if message(item, 'claude') is not None:
+                            raw_body_ids.setdefault(str(path), set()).add(item['sessionId'])
             except OSError as exc:
                 issues.append({'id': sha(str(path)), 'kind': 'claude-raw-unreadable', 'error': type(exc).__name__})
     archive_indexes, metadata = [], []
@@ -171,6 +173,8 @@ def collect(config, index, official_directory, output):
             ids = {str(obj.get('cliSessionId') or ''), sid.removeprefix('local_')}
             ids.update(x for x in obj.get('bridgeSessionIds', []) if isinstance(x, str))
             files = sorted({p for s in ids for p in native_files.get(s, [])})
+            body_ids = sorted({sid for path in files for sid in raw_body_ids.get(path, set())})
+            own_body = bool(set(body_ids) & ids)
             scoped = any(within(obj.get(k) or '', config['project_roots']) for k in ('cwd', 'originCwd'))
             fields = ('sessionId','cliSessionId','cwd','originCwd','createdAt','lastActivityAt','isArchived',
                       'title','completedTurns','forkedFromSessionId','bridgeSessionIds','lastAssistantUuid',
@@ -179,12 +183,15 @@ def collect(config, index, official_directory, output):
             row = {k: obj.get(k) for k in fields if k not in ('lastTurnReport', 'postTurnSummary')}
             row.update(id='claude-desktop:' + sid, platform='claude', native_id=obj.get('cliSessionId'),
                        indexed_archived=sid in archive_ids, raw_files=files, metadata_path=str(path),
+                       raw_message_session_ids=body_ids, own_body_available=own_body,
                        metadata_sha256=hashlib.sha256(raw).hexdigest(), scope='project-candidate' if scoped else 'outside-project-scope',
-                       body_representation='JSONL' if files else 'metadata-only',
-                       in_session_snapshot=any('claude:' + s in prior for s in ids))
+                       body_representation=('JSONL' if own_body else 'JSONL-inherited-context' if files else 'metadata-only'),
+                       in_session_snapshot=any('claude:' + s in prior for s in body_ids))
             rows.append(row)
             if scoped and not files:
                 issues.append({'id': row['id'], 'kind': 'registered-body-unavailable'})
+            elif scoped and obj.get('completedTurns') and not own_body:
+                issues.append({'id': row['id'], 'kind': 'completed-turns-without-own-body'})
             elif scoped and not row['in_session_snapshot']:
                 issues.append({'id': row['id'], 'kind': 'not-in-reviewed-session-snapshot'})
         for sid in archive_ids - present:
@@ -214,8 +221,9 @@ def validate_inventory(inventory, sessions):
             continue
         if row['body_representation'] == 'metadata-only':
             raise ValueError('独立会话清单登记缺少正文，不能只改通过标记')
-        identity = ('codex:' if row['platform'] == 'codex' else 'claude:') + str(row['native_id'])
-        if identity not in present:
+        identities = (['codex:' + str(row['native_id'])] if row['platform'] == 'codex' else
+                      ['claude:' + str(sid) for sid in row.get('raw_message_session_ids', [row['native_id']])])
+        if not any(identity in present for identity in identities):
             raise ValueError('独立清单中的会话未进入采集快照，不能只改通过标记')
 
 

@@ -14,7 +14,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 if __package__ in (None, ''):
     sys.path.insert(0, str(ROOT))
-WRITES = {'write', 'edit', 'add', 'update', 'delete'}
+WRITES = {'write', 'edit', 'add', 'update'}
 
 
 def digest(value):

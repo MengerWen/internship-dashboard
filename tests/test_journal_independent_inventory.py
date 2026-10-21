@@ -38,6 +38,15 @@ class IndependentInventoryGateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '未进入采集快照'):
             validate_inventory(args[5], args[1])
 
+    def test_desktop_ui_cli_and_actual_message_id_are_not_assumed_equal(self):
+        args = fixtures.ReconciliationTests().fixture()
+        args[5]['sessions'] = [{'scope':'project-candidate','platform':'claude','native_id':'different-cli-id',
+                               'raw_message_session_ids':['s'],'body_representation':'JSONL'}]
+        args[1]['sessions'][0]['platform']='claude'
+        from scripts.collect_journal_inventory import session_fingerprint
+        args[5]['session_snapshot_sha256']=session_fingerprint(args[1])
+        validate_inventory(args[5], args[1])
+
     def test_archive_pagination_must_end_and_not_duplicate_threads(self):
         with tempfile.TemporaryDirectory() as name:
             path = Path(name)/'codex-archived-page-000.json'
