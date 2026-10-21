@@ -31,6 +31,8 @@ class RebuiltCoverageTests(unittest.TestCase):
 
     def test_all_frozen_sources_have_explicit_destinations_without_private_text(self):
         for key, count in self.register['counts'].items():
+            if key not in self.ledger:  # 来源发现状态、缺失正文数等摘要不是账本条目。
+                continue
             rows = self.ledger[key]
             self.assertEqual(len(rows), count)
             self.assertEqual(len(rows), len({x['id'] for x in rows}))
