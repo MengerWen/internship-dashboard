@@ -435,8 +435,11 @@
       const cards = [...annotations.children], xs = [];
       cards.forEach((card, i) => xs.push(stack ? Math.min(a.width - cardWidth - 10, document.querySelector(".journal-scroller").scrollLeft + 10) : Math.max(a.positions.get(ids[i]) - cardWidth / 2, i ? xs[i - 1] + cardWidth + 10 : 10)));
       if (!stack && xs.length) {
-        const overflow = Math.max(0, xs.at(-1) + cardWidth - a.width + 10);
-        xs.forEach((x, i) => { xs[i] = x - overflow; });
+        // 从右向左逐张避让，保留左侧已有位置，避免整排左移后裁掉首张卡片。
+        for (let i = xs.length - 1; i >= 0; i--) {
+          const right = i === xs.length - 1 ? a.width - 10 : xs[i + 1] - 10;
+          xs[i] = Math.min(xs[i], right - cardWidth);
+        }
       }
       const totalHeight = stack ? cards.reduce((sum, card) => sum + card.offsetHeight + 10, -10) : Math.max(0, ...cards.map(card => card.offsetHeight));
       let bandY = cy + 22;
