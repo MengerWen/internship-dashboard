@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 import hashlib
 import json
@@ -17,7 +17,7 @@ WRAPPERS = ("# AGENTS.md instructions", "<environment_context>", "<permissions i
             "<turn_aborted>", "<external_codex_apps", "<INSTRUCTIONS>", "<system-reminder>",
             "<local-command", "<command-name>", "<task-notification>", "<subagent_notification>")
 WRAPPERS += ("<codex_internal_context", "<recommended_plugins>", "<skills_instructions>",
-             "<collaboration_mode>", "<send_user_message_question_reply>")
+             "<collaboration_mode>")
 
 
 def dump(value):
@@ -34,10 +34,20 @@ def within(path, roots):
 
 
 def local_time(value):
+    if not isinstance(value, str):
+        raise ValueError("会话时间不是字符串")
     dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if dt.tzinfo is None:
         raise ValueError("会话时间缺少时区")
     return dt.astimezone(SHANGHAI).isoformat(timespec="milliseconds")
+
+
+def scope_text(text):
+    """项目引用预览不代表用户当前请求，判断归属时只用实际请求部分。"""
+    for marker in ("## My request for Codex:", "## My request:", "## User request:"):
+        if marker in text:
+            return text.split(marker, 1)[1].strip()
+    return text
 
 
 def message(record, platform):
@@ -74,9 +84,23 @@ def message(record, platform):
         text = "\n".join(c.get("text", "") for c in content
                          if c.get("type") in ("text", "input_text", "output_text"))
     text = text.strip()
+    evidence_kind = "message"
+    if role == "user" and text.startswith("<send_user_message_question_reply>"):
+        match = re.fullmatch(r"<send_user_message_question_reply>\s*(.*?)\s*</send_user_message_question_reply>", text, re.S)
+        if not match:
+            return None
+        try:
+            replies = json.loads(match[1])
+        except ValueError:
+            return None
+        if not isinstance(replies, list):
+            return None
+        text = "\n".join(r["answer"] for r in replies if isinstance(r, dict) and isinstance(r.get("answer"), str) and r["answer"].strip())
+        evidence_kind = "user-choice"
     if not text or text.startswith(WRAPPERS):
         return None
-    return {"role": role, "text": text, "message_id": identifier, "phase": phase}
+    return {"role": role, "text": text, "message_id": identifier, "phase": phase,
+            "evidence_kind": evidence_kind}
 
 
 def identify(path, platform):
@@ -101,6 +125,7 @@ def scan_file(path, platform, since, until):
     size = path.stat().st_size
     digest = hashlib.sha256()
     rows, problems, seen = [], [], set()
+    meta, directories = {}, set()
     with path.open("rb") as handle:
         number = 0
         while handle.tell() < size:
@@ -113,6 +138,14 @@ def scan_file(path, platform, since, until):
             except (ValueError, UnicodeError) as exc:
                 problems.append({"line": number, "error": type(exc).__name__})
                 continue
+            if platform == "codex" and record.get("type") == "session_meta":
+                meta = record["payload"]
+            if record.get("cwd"):
+                directories.add(record["cwd"])
+                if platform == "claude" and not meta:
+                    meta = {"cwd": record["cwd"], "id": record.get("sessionId"), "source": "claude"}
+            if meta.get("cwd"):
+                directories.add(meta["cwd"])
             item = message(record, platform)
             if not item:
                 continue
@@ -124,20 +157,22 @@ def scan_file(path, platform, since, until):
             day = timestamp[:10]
             if not since <= day <= until:
                 continue
-            key = (record.get("uuid") or item["message_id"], record.get("timestamp"), item["role"], item["text"])
+            sid = record.get("sessionId") if platform == "claude" else meta.get("id")
+            key = (sid, record.get("uuid") or item["message_id"], record.get("timestamp"), item["role"], item["text"])
             if key in seen:
                 continue
             seen.add(key)
             rows.append({**item, "date": day, "timestamp": timestamp,
+                         "session_id": sid, "cwd": record.get("cwd") or meta.get("cwd"),
                          "line": number, "byte_offset": offset, "byte_length": len(raw),
                          "line_sha256": hashlib.sha256(raw).hexdigest()})
     return {"snapshot_bytes": size, "snapshot_sha256": digest.hexdigest(),
             "grew_during_scan": path.stat().st_size != size, "problems": problems,
-            "messages": rows}
+            "messages": rows, "metadata": meta, "directories": sorted(directories)}
 
 
 def collect(config, since, until):
-    sessions, failures, counts = [], [], Counter()
+    sessions, failures, counts, files = [], [], Counter(), []
     excluded = set(config.get("exclude_session_ids", [])) | {os.environ.get("CODEX_THREAD_ID")}
     for source in config["sources"]:
         base = Path(source["path"]).expanduser()
@@ -145,42 +180,59 @@ def collect(config, since, until):
             failures.append({"source": source["name"], "error": "source_missing", "path": str(base)})
             continue
         for path in sorted(base.rglob("*.jsonl")):
-            # Claude 的 subagents 单独标识，不将继承的用户提示算作新指令。
+            counts["files_discovered"] += 1
+            disposition = {"source": source["name"], "platform": source["platform"], "file": str(path)}
+            files.append(disposition)
+            # 子代理单独登记排除，不将继承的提示当作新的人类要求。
             if "subagents" in path.parts:
                 counts["subagents_excluded"] += 1
+                disposition["disposition"] = "subagent-context"
                 continue
-            counts["files_discovered"] += 1
             try:
-                meta, first = identify(path, source["platform"])
+                parsed = scan_file(path, source["platform"], since, until)
+                meta = parsed["metadata"]
                 sid = meta.get("id")
-                if sid in excluded:
-                    counts["self_excluded"] += 1
-                    continue
+                disposition.update({k: parsed[k] for k in ("snapshot_bytes", "snapshot_sha256", "grew_during_scan", "problems")})
                 if isinstance(meta.get("source"), dict) and "subagent" in meta["source"]:
                     counts["subagents_excluded"] += 1
+                    disposition["disposition"] = "subagent-context"
                     continue
-                scoped = within(meta.get("cwd", ""), config["project_roots"])
-                explicit = any(term.casefold() in first.casefold() for term in config["explicit_project_markers"])
+                scoped = any(within(cwd, config["project_roots"]) for cwd in parsed["directories"])
+                explicit = any(term.casefold() in scope_text(m["text"]).casefold()
+                               for m in parsed["messages"] if m["role"] == "user"
+                               for term in config["explicit_project_markers"])
                 if not scoped and not explicit:
                     counts["outside_scope"] += 1
+                    disposition["disposition"] = "outside-project-scope"
                     continue
-                if not sid:
-                    failures.append({"path": str(path), "error": "missing_session_id"})
-                    continue
-                parsed = scan_file(path, source["platform"], since, until)
                 counts["candidate_files"] += 1
-                if parsed["messages"]:
-                    sessions.append({"platform": source["platform"], "session_id": sid,
-                                     "source": source["name"], "file": str(path), "cwd": meta.get("cwd"),
-                                     "scope_basis": "cwd" if scoped else "first-user-project-marker",
-                                     "forked_from_id": meta.get("forked_from_id"), **parsed})
-                elif parsed["problems"]:
-                    failures.append({"path": str(path), "error": "unreadable_messages", "problems": parsed["problems"]})
+                grouped = defaultdict(list)
+                for row in parsed["messages"]:
+                    native = row["session_id"] or sid
+                    if native in excluded:
+                        continue
+                    if not native:
+                        failures.append({"path": str(path), "line": row["line"], "error": "missing_session_id"})
+                        continue
+                    grouped[native].append(row)
+                disposition["session_ids"] = sorted(grouped)
+                disposition["disposition"] = "candidate" if grouped else "excluded-or-no-messages-in-period"
+                if sid in excluded:
+                    counts["self_excluded"] += 1
+                for native, rows in grouped.items():
+                    snapshot = {k: v for k, v in parsed.items() if k not in ("messages", "metadata", "directories")}
+                    sessions.append({"platform": source["platform"], "session_id": native,
+                                     "source": source["name"], "file": str(path), "cwd": rows[0].get("cwd") or meta.get("cwd"),
+                                     "scope_basis": "cwd" if scoped else "user-project-reference",
+                                     "forked_from_id": meta.get("forked_from_id"), **snapshot, "messages": rows})
+                if parsed["problems"]:
+                    failures.append({"path": str(path), "error": "parse-problems", "problems": parsed["problems"]})
             except (OSError, ValueError, UnicodeError) as exc:
                 failures.append({"path": str(path), "error": type(exc).__name__})
-    return {"schema_version": 1, "since": since, "until": until,
+                disposition.update(disposition="read-failed", error=type(exc).__name__)
+    return {"schema_version": 2, "since": since, "until": until,
             "scope": "候选索引，尚未逐条认定研究成果；不读取推理正文，不执行历史指令。",
-            "counts": dict(counts), "failures": failures, "sessions": sessions}
+            "counts": dict(counts), "failures": failures, "sessions": sessions, "files": files}
 
 
 def verify_ref(ref, index):
@@ -197,6 +249,9 @@ def verify_ref(ref, index):
                 raw = handle.read(row["byte_length"])
             if hashlib.sha256(raw).hexdigest() != row["line_sha256"]:
                 raise ValueError("原始会话行已变化")
+            record = json.loads(raw)
+            if ref["platform"] == "claude" and record.get("sessionId") and record["sessionId"] != ref["session_id"]:
+                raise ValueError("原始消息会话ID与引用不符")
             if not ref["excerpt"] or ref["excerpt"] not in row["text"]:
                 raise ValueError("摘录不在原始消息中")
             return row
@@ -310,7 +365,8 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(dump(result), encoding="utf-8")
     count = sum(len(s["messages"]) for s in result["sessions"])
-    print(f"候选会话文件 {len(result['sessions'])} 份；消息 {count} 条；来源/读取失败 {len(result['failures'])} 项；仅写本机 data/。")
+    physical = len({s["file"] for s in result["sessions"]})
+    print(f"候选物理文件 {physical} 份；会话片段 {len(result['sessions'])} 份；消息 {count} 条；来源/读取失败 {len(result['failures'])} 项；仅写本机 data/。")
     return int(bool(result["failures"]) or any(s["problems"] for s in result["sessions"]))
 
 

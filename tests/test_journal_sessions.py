@@ -11,6 +11,67 @@ SPEC.loader.exec_module(sessions)
 
 
 class SessionEvidenceTests(unittest.TestCase):
+    def test_human_choice_reply_extracts_answer_without_adopting_question(self):
+        text = '<send_user_message_question_reply>\n' + json.dumps([
+            {'question': '问题文本不是用户的新决定', 'answer': '好了优化到这样已经可以了'}
+        ], ensure_ascii=False) + '\n</send_user_message_question_reply>'
+        record = {'type': 'response_item', 'payload': {'type': 'message', 'role': 'user',
+                  'content': [{'type': 'input_text', 'text': text}]}}
+        item = sessions.message(record, 'codex')
+        self.assertIsNotNone(item)
+        self.assertEqual(item['text'], '好了优化到这样已经可以了')
+        self.assertEqual(item['evidence_kind'], 'user-choice')
+
+    def test_claude_mixed_file_keeps_native_id_for_each_message(self):
+        rows = [
+            {'type': 'user', 'sessionId': 'original', 'cwd': 'D:/research',
+             'timestamp': '2026-08-01T01:00:00Z', 'uuid': 'one',
+             'message': {'role': 'user', 'content': '前面的研究'}},
+            {'type': 'user', 'sessionId': 'continued', 'cwd': 'D:/research',
+             'timestamp': '2026-08-02T01:00:00Z', 'uuid': 'two',
+             'message': {'role': 'user', 'content': '后续研究'}},
+        ]
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'continued.jsonl'
+            path.write_text(''.join(json.dumps(r) + '\n' for r in rows), encoding='utf-8')
+            result = sessions.collect({'sources': [{'name': 'fixture', 'path': folder, 'platform': 'claude'}],
+                'project_roots': ['D:/research'], 'explicit_project_markers': []}, '2026-08-01', '2026-08-03')
+            by_id = {s['session_id']: s['messages'] for s in result['sessions']}
+            self.assertEqual(set(by_id), {'original', 'continued'})
+            self.assertEqual(by_id['continued'][0]['text'], '后续研究')
+            self.assertEqual(by_id['continued'][0]['line'], 2)
+            self.assertEqual(by_id['continued'][0]['session_id'], 'continued')
+
+    def test_project_reference_after_first_message_is_discovered(self):
+        rows = [
+            {'type': 'session_meta', 'payload': {'id': 'outside', 'cwd': 'D:/tools'}},
+            {'type': 'response_item', 'timestamp': '2026-08-01T01:00:00Z',
+             'payload': {'type': 'message', 'role': 'user', 'content': [{'type': 'input_text', 'text': '先安装工具'}]}},
+            {'type': 'response_item', 'timestamp': '2026-08-02T01:00:00Z',
+             'payload': {'type': 'message', 'role': 'user', 'content': [{'type': 'input_text', 'text': '再转换 sirui-quant-research 的研究文件'}]}},
+        ]
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'outside.jsonl'
+            path.write_text(''.join(json.dumps(r) + '\n' for r in rows), encoding='utf-8')
+            result = sessions.collect({'sources': [{'name': 'fixture', 'path': folder, 'platform': 'codex'}],
+                'project_roots': ['D:/research'], 'explicit_project_markers': ['sirui-quant-research']}, '2026-08-01', '2026-08-03')
+            self.assertEqual(len(result['sessions']), 1)
+            self.assertEqual(result['sessions'][0]['scope_basis'], 'user-project-reference')
+            self.assertEqual(result['sessions'][0]['messages'][-1]['date'], '2026-08-02')
+
+    def test_quoted_chat_preview_does_not_claim_unrelated_project(self):
+        text = '## Referenced ChatGPT conversation:\n{"priorConversation":"sirui-quant-research"}\n## My request:\n解释一下代理设置'
+        self.assertEqual(sessions.scope_text(text), '解释一下代理设置')
+
+    def test_file_dispositions_account_for_empty_and_outside_sources(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'outside.jsonl'
+            path.write_text(json.dumps({'type': 'session_meta', 'payload': {'id': 'outside', 'cwd': 'D:/elsewhere'}}) + '\n', encoding='utf-8')
+            result = sessions.collect({'sources': [{'name': 'fixture', 'path': folder, 'platform': 'codex'}],
+                'project_roots': ['D:/research'], 'explicit_project_markers': []}, '2026-08-01', '2026-08-03')
+            self.assertEqual(result['files'][0]['disposition'], 'outside-project-scope')
+            self.assertEqual(len(result['files']), result['counts']['files_discovered'])
+
     def test_scope_uses_directory_boundary_and_windows_case(self):
         self.assertTrue(sessions.within('d:\\Research\\child', ['D:/research']))
         self.assertFalse(sessions.within('D:/research-private', ['D:/research']))
