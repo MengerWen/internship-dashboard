@@ -110,13 +110,15 @@ flowchart LR
 
 日志保存在 `content/journal/YYYY-MM-DD.md`，任务链和交接保存在 `content/chains.json`。一句话、链条归属与汇报覆盖关系以这些文件为准。构建只读取已入库的证据，不采集外部仓库。
 
-每日北京时间 9 点回顾前一自然日的完整提交、GitHub 远端记录和本地计划、研究文档，归入已有链条或按独立目标新建链条，再增量补写日志。日期、来源、归链、补漏与发布规则见 [研究日志每日更新规则](docs/journal-review/daily-update-rules.md)。定时任务在 Codex 本聊天执行；电脑须开机且应用保持运行。
+每日北京时间 9 点回顾前一自然日的完整提交、GitHub 远端记录、本地计划、研究文档，以及相关 Codex、Claude 会话，归入已有链条或按独立目标新建链条，再增量补写日志。日期、来源、归链、补漏与发布规则见 [研究日志每日更新规则](docs/journal-review/daily-update-rules.md)。定时任务在 Codex 本聊天执行；电脑须开机且应用保持运行。
 
 本地核对证据：
 
 ```powershell
 python scripts/collect_journal_evidence.py --check
 ```
+
+会话候选索引由 `scripts/collect_journal_sessions.py` 只读生成，全文只存本机被 Git 忽略的 `data/journal-sessions/`。人工核对后，将少量摘录、消息时间、会话 ID、原始行号和行哈希保存到审阅清单，再核验并写入现有日卡正文。原始会话不会随站点发布，也不按会话数或消息数计算成果。命令和证据边界见[会话佐证核对记录](docs/journal-review/session-evidence-2026-10-21.md)。
 
 需要刷新时，先在 `scripts/journal_repos.json` 中更新本地路径与固定 `revision`，运行不带 `--check` 的采集命令，再逐日核对日志和推断归属。采集器只改 `_evidence/*.json`，不会自动改写一句话或确认链条。父仓库只统计白名单子目录。
 
