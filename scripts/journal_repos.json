@@ -174,14 +174,10 @@
       "tokens": [
         "open5m-2025",
         "open5m-no",
-        "open5m-kernel",
-        "open5m-real",
-        "nine-parameter",
         "高频量价",
         "A-clean",
         "new-factor-mechanism",
-        "order-quantity",
-        "定标与3.11"
+        "order-quantity"
       ],
       "paths": [
         "scripts/run_open5m",
@@ -190,6 +186,22 @@
         "scripts/rank_open5m",
         "scripts/audit_open5m",
         "scripts/prepare_open5m"
+      ]
+    },
+    "old-factor-calibration": {
+      "tokens": [
+        "open5m-kernel",
+        "open5m-real",
+        "nine-parameter",
+        "定标与3.11",
+        "kernel-calibration",
+        "selected-date",
+        "frozen-parameters-200"
+      ],
+      "paths": [
+        "scripts/run_open5m_kernel_calibration",
+        "scripts/run_open5m_selected_date_calibration",
+        "scripts/run_open5m_real_data_calibration"
       ]
     },
     "cancel-phase": {
@@ -246,13 +258,6 @@
         "scripts/audit_sse"
       ]
     },
-    "ml-count": {
-      "tokens": [
-        "51个count",
-        "LightGBM"
-      ],
-      "paths": []
-    },
     "ml-exec": {
       "tokens": [
         "Open5m-ML",
@@ -261,7 +266,9 @@
         "boosting",
         "random-forest",
         "raw-linear",
-        "项目统一Python"
+        "项目统一Python",
+        "51个count",
+        "LightGBM"
       ],
       "paths": [
         "scripts/benchmark_intraday_ml",

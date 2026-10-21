@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "date": "2026-09-04",
   "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
-  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "source_config_sha256": "ab878968c056428a3c5a8c0e4752ae5994caa8cf48de49fd2c9414b8f67cc74c",
   "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
   "revisions": {
     "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
@@ -68,13 +68,16 @@
       "subject": "避免全时间逐日进程池死锁",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -92,13 +95,16 @@
       "subject": "修复全时间阶段指标采集",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -116,12 +122,15 @@
       "subject": "feat: select calibration dates from L1 regimes",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -139,13 +148,16 @@
       "subject": "docs: record L1 regime calibration dates",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -162,13 +174,16 @@
       "subject": "Add resumable selected-date Open5m calibration",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -260,12 +275,15 @@
       "subject": "fix: frame HTTPS result stream completely",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "wangly-env"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "wangly-env": {
           "numerator": 1,
           "denominator": 1
         }
@@ -329,12 +347,15 @@
       "subject": "build: lock complete server environment",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "wangly-env"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "wangly-env": {
           "numerator": 1,
           "denominator": 1
         }
@@ -369,13 +390,16 @@
       "subject": "docs: plan open5m order quantity distribution prescreen",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -392,13 +416,16 @@
       "subject": "feat: add order quantity distribution core",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -415,12 +442,15 @@
       "subject": "feat: aggregate order quantity counts in Doris",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -438,13 +468,16 @@
       "subject": "feat: add resumable order quantity distribution runner",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -462,13 +495,16 @@
       "subject": "feat: render order quantity distribution report",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -486,13 +522,16 @@
       "subject": "feat: add wangly order quantity server task",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -510,12 +549,15 @@
       "subject": "fix: preserve exact int64 distribution counts",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }

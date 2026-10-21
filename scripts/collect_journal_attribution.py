@@ -75,7 +75,9 @@ def classify(commit, rules):
                 if cid in allowed and any(re.search(pattern, p, re.I) for p in material):
                     subject_chain = cid
                     break
-        chain = subject_chain or ("dashboard-build" if day <= "2026-07-13" else "report-publish")
+        # 建站期也只把站点代码、构建和部署记为建站；只改报告正文的提交属于发布。
+        site = any(re.search(r"^(?:build\.py|site/(?!assets/)|worker/|templates/|tools/|wrangler|package|config\.json|docs/plans/|PLAN/)", p) for p in material)
+        chain = subject_chain or ("dashboard-build" if day <= "2026-07-13" and site else "report-publish")
         return {"status": "assigned", "chains": [chain], "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算", "anchors": material[:12]}
     if subject_chain in {"report328", "model-report", "visual-b", "report-tags", "research-journal"}:
         subject_chain = None
@@ -132,7 +134,8 @@ def classify(commit, rules):
 def attribute(commits, rules):
     ledger = []
     for commit in commits:
-        result = classify(commit, rules)
+        # 复制一份，后续阶段映射不能改写规则文件里的专项处置。
+        result = json.loads(json.dumps(classify(commit, rules)))
         if result["chains"] and commit["repo"] != "internship-dashboard":
             primary = result.get("subject_chain")
             remapped = {}
@@ -144,6 +147,12 @@ def attribute(commits, rules):
                 result["reason"] += "；同名公共模块按本次有界实施阶段归属，保留映射供复核"
                 result["chains"] = sorted(set(remapped.values()))
                 result["status"] = "shared" if len(result["chains"]) > 1 else "assigned"
+        if result["chains"] and commit["repo"] != "internship-dashboard":
+            revised = sorted({revise_chain(cid, commit) for cid in result["chains"]})
+            if revised != result["chains"]:
+                result["revised_from"] = result["chains"]
+                result["chains"] = revised
+                result["status"] = "shared" if len(revised) > 1 else "assigned"
         chains = result["chains"]
         shares = {cid: {"numerator": 1, "denominator": len(chains)} for cid in chains}
         ledger.append({**commit, **result, "shares": shares})
@@ -189,6 +198,47 @@ def phase_chain(cid, commit, primary=None):
         if day <= "2026-10-12":
             return "grouped-calibration"
     return cid
+
+
+def revise_chain(cid, commit):
+    """2026-10-22 复查后的链条边界：拆出旧因子定标，合并总量模型链，并修正几处错归。"""
+    day, subject = commit["date"], commit["subject"]
+    if cid == "ml-count":
+        return "ml-exec"
+    if subject.startswith("比较老因子重新定标前后"):
+        return "szse-model328"
+    if day == "2026-07-08" and cid in {"lv2-snapshot", "literature"}:
+        return "algobench"
+    if day == "2026-10-16" and cid == "depth-match":
+        return "behavior-design"
+    if day == "2026-09-09" and cid == "old-factor-bank":
+        return "old-factor-calibration"
+    if cid != "open5m" or not "2026-08-26" <= day <= "2026-09-18":
+        return cid
+    # 8月下旬起，这些提交属于旧因子定标、修改、机制预查等后续任务，不再记在开盘五分钟因子库。
+    if re.search(r"soft-compression|label tail", subject, re.I):
+        return "model-methods"
+    if re.search(r"HTTPS result|server environment", subject, re.I):
+        return "wangly-env"
+    if re.search(r"\bC7\b", subject):
+        return "depth-match"
+    if re.search(r"cancel.phase|phase registry|attention scheduler|无成交股票的缺失标签", subject, re.I):
+        return "cancel-phase"
+    if day in {"2026-09-10", "2026-09-11"} and re.search(r"预检|预查|prescreen", subject, re.I):
+        return "cancel-phase"
+    if day == "2026-09-09" and re.search(r"prescreen", subject, re.I):
+        return "cross-stock-sync"
+    if day == "2026-09-12":
+        return "old-factor-bank"
+    if re.search(r"old factor|regime reversal|date-equal factor|incremental|\bL3\b|directional|interaction|ordinary-flow|registry vintage|算法行为因子研究", subject, re.I):
+        return "old-factor-bank"
+    if not re.search(r"calibrat|定标", subject, re.I) and re.search(
+            r"prescreen|预检|预查|null|geometry|sequence-neighbor|cross-stock|circular|occupancy|fingerprint|order quantity|"
+            r"same-quantity|distribution counts|全时间|notional-grid|execution timestamps|depth repair|best-price|CUDA pair|"
+            r"pair scan|pair sort|pair events|pair setup|pair keys|raw max aggregation|lot-implied|replay worker (?:teardown|cleanup)|streaming query|"
+            r"C[13]|cuda repair|sequence layouts", subject, re.I):
+        return "mechanism-precheck"
+    return "old-factor-calibration"
 
 
 def summarize_day(payload, valid_chains):

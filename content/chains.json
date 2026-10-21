@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "note": "2026-10-21依审计修正的任务及承接登记。首末日期是记录跨度；待核日期另注。confirmed表示原始引用支持该关系，不是用户逐条签字或全流程已验收。source_date为来源阶段的已登记记录，date为承接记录，不宣称来源当天已完成未来交接；精确对象以source_refs为准。",
+  "note": "任务链和承接关系登记。首末日期是记录跨度，有待核日期的另注。confirmed 表示原始材料支持这条关系，不代表各阶段都已验收。source_date 是来源一方的记录日，date 是承接一方的记录日；精确对象以 source_refs 为准。",
   "tracks": [
     {
       "id": "infra",
@@ -44,24 +44,24 @@
       "track": "infra",
       "label": "上手：米筐环境与交易规则",
       "short": "上手",
-      "purpose": "配置米筐行情和回测环境，运行示例策略，整理沪深交易及异常交易监控规则，作为后续研究的基础。",
+      "purpose": "配置米筐行情和回测环境，跑通示例策略；读沪深交易规则和异常交易监控细则，作为后续研究的基础。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 4,
         "span": [
           "2026-06-23",
           "2026-07-09"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "米筐示例已运行，交易规则资料已入库。",
+      "fate_note": "米筐示例已跑通，交易规则资料已入库；之后零星的交易规则答疑也记在这里。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -88,26 +88,26 @@
     {
       "id": "doris-migration",
       "track": "infra",
-      "label": "Doris 取数与服务器迁移",
-      "short": "Doris 迁移",
-      "purpose": "把研究取数接到服务器上的 Doris 数据库，处理批量读取、内存限制和故障后的断点续算。",
+      "label": "服务器迁移与 Doris 取数",
+      "short": "服务器迁移",
+      "purpose": "把研究搬到公司服务器：配好登录和代码仓库，接入 Doris 数据库，处理批量读取、内存限制和故障后的断点续算。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 10,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 8,
         "span": [
           "2026-07-13",
-          "2026-09-04"
+          "2026-08-10"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "7 月 15 日草稿后被替换；7 月 16 日已实现唯一网关、查询计划与日级调度，7 月 17 日继续配置资源，7 月 30 日处理数据库恢复后的续算。",
+      "fate_note": "7 月 15 日的取数草稿后来被替换；7 月 16 日实现统一取数入口和按日调度，7 月 17 日起调整资源配置，7 月 30 日处理数据库恢复后的续算。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -141,24 +141,24 @@
       "track": "infra",
       "label": "服务器环境与跨账户结果传输",
       "short": "环境与传输",
-      "purpose": "配置 wangly 研究环境，建立并有界验收向 wenjie 的结果传输；后续修复两账户默认 Python 环境及来源校验。",
+      "purpose": "配置 wangly 计算环境，建立并验收向 wenjie 传结果的通道；之后迁移因子结果，修复两个账户的默认 Python 环境。",
       "status": "active",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 3,
         "span": [
           "2026-09-04",
           "2026-10-20"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "9 月 4 日已有传输实现及大小文件 canary、重复传输和篡改拒绝验收；不等于所有研究结果均已回传。10 月 20 日另有两账户环境故障定位、重建与独立来源核验。",
+      "fate_note": "9 月 4 日传输通过大小文件试传、重复传输和篡改拒绝检查；9 月 15 日迁移两套因子结果；10 月 20 日重建两个账户的默认环境。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -202,26 +202,26 @@
     {
       "id": "doris-efficiency",
       "track": "infra",
-      "label": "Doris 公共取数实现与有界实测",
-      "short": "Doris 效率",
-      "purpose": "实现并接入公共 L2 有界取数，实测解析、分组和分页开销，整理统一使用规约。",
+      "label": "Doris 公共取数入口与实测",
+      "short": "Doris 取数",
+      "purpose": "按服务器规则改造 Doris 取数：避开早盘时段、按代码区间分页，做成公共入口并实测开销。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 2,
         "span": [
           "2026-09-29",
           "2026-10-09"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "公共入口已实现并接入分组 runner，保存真实 SQL 和 Windows/Linux 回归。36.6% 是解析/分组子阶段，完整读取样本降幅为21.9%—30.4%；沪市自适应复测有变慢样本。未完成全部历史入口迁移。",
+      "fate_note": "10 月 9 日公共入口接入分组定标：解析和分组环节降了 36.6%，完整读取的样本降 21.9%—30.4%；沪市自适应复测有变慢的样本，旧入口还没全部迁移。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -241,9 +241,9 @@
     {
       "id": "storage-cleanup",
       "track": "infra",
-      "label": "存储盘点、归档与重复文件清理",
+      "label": "存储盘点与清理",
       "short": "存储清理",
-      "purpose": "区分正式结果、可恢复副本、运行暂存和到期材料，核对归档与恢复证据后清理重复文件，并保留实际回收量。",
+      "purpose": "分清正式结果、可恢复副本、运行暂存和到期材料，确认可以恢复后清理重复和过期文件，记录实际释放量。",
       "status": "active",
       "closes_into": {
         "daily": [
@@ -252,18 +252,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 27,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 26,
         "span": [
           "2026-08-08",
           "2026-10-19"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "9 月起已有多批清理及归档回读，按批次保留恢复与退役范围。对象逻辑字节、临时盘分配量、系统盘和实际配额分别计量，不把各批相加当成同一块硬盘的可用空间。",
+      "fate_note": "8 月起多次清理，每批都保留恢复和删除记录。不同文件系统和账户的释放量分开计，不相加成同一块盘的空间。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -309,7 +309,7 @@
       "track": "snapshot",
       "label": "逐笔数据重建 100ms 盘口快照",
       "short": "LV2 快照",
-      "purpose": "按委托、成交和撤单的事件顺序重建订单簿，生成 100ms 与 3 秒快照，用米筐 3 秒行情核对样本，并为后续因子研究整理数据说明。",
+      "purpose": "按委托、成交和撤单的事件顺序重建订单簿，生成 100ms 和 3 秒快照，用米筐 3 秒行情核对样本，并写数据说明供因子研究使用。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -318,18 +318,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 6,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 5,
         "span": [
           "2026-06-24",
           "2026-07-15"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "早期样本对照与图示已完成。后续回放审计另列一条链，早期样本一致不等于全部历史都已验证。",
+      "fate_note": "样本股票的对照和图示已完成。10 月的回放核验另成一条链；早期样本一致，不代表全部历史都已核验。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -361,26 +361,26 @@
     {
       "id": "replay",
       "track": "snapshot",
-      "label": "深市订单簿回放与正确性检查",
+      "label": "深市订单簿回放正确性核验",
       "short": "回放核验",
-      "purpose": "重新检查深市撮合规则、成交价格、事件前后盘口和快照时间，核对它们如何影响正式因子，并整理可复用的生产入口。",
+      "purpose": "重新检查深市撮合规则、成交价格、事件前后的盘口和快照时间，看它们怎样影响正式因子，并把正确的回放做成默认入口。",
       "status": "active",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 5,
         "span": [
           "2026-10-17",
           "2026-10-21"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "保留单日、三日和后续v4/v5完整日签收的具体版本与边界；10月20日明确旧参数不能直接用于当前回放。10月21日六核采集启动属于独立344定参链，不证明全历史修正因子已经生产完成。",
+      "fate_note": "单日、三日和完整日核验已通过。10 月 20 日确认旧参数不能直接用于修正后的回放，需要重新定参（见“修正回放下的 344 列重新定参”）。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -424,26 +424,26 @@
     {
       "id": "literature",
       "track": "footprint",
-      "label": "论文复现与首个因子评价框架",
+      "label": "论文复现与首个因子框架",
       "short": "论文复现",
-      "purpose": "整理订单流失衡、低延迟交易、订单簿聚类和HFT报价代理文献，分别记录方法复现、factor_lab实现、机制比较及识别限制。",
+      "purpose": "整理订单流失衡、低延迟交易、订单簿聚类等论文，复现方法，搭建 factor_lab 并跑出第一个因子。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 9,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 6,
         "span": [
           "2026-06-29",
-          "2026-10-15"
+          "2026-07-06"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "早期实现和评价方法继续用于algobench；10月12日至13日补有报价代理与价格分层的文献审查，未据此宣称识别真实账户或完成新增收益实证。",
+      "fate_note": "复现的方法和评价框架后来用在 algobench 里。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -477,7 +477,7 @@
       "track": "footprint",
       "label": "论文指标与主动关注度面板",
       "short": "论文指标",
-      "purpose": "先实现六篇论文的痕迹指标与检验，再于7月10日转向主动关注度预测面板；两个阶段的目标和评价分开记录。",
+      "purpose": "先把六篇论文的痕迹指标和检验做进 algobench，7 月 10 日起转做主动关注度因子面板；两个阶段的目标和评价分开看。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -488,18 +488,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 9,
         "span": [
           "2026-07-06",
           "2026-07-14"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "论文痕迹指标阶段不直接做收益预测；关注度阶段采用未来1—3日标签并限单月研究。后续正式引擎复用公共代码，不由此证明关注度预测结论已被采用。",
+      "fate_note": "论文指标阶段不做收益预测；关注度阶段用未来 1—3 日收益，只做了单月研究。后续正式因子计算沿用这里的公共代码。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -533,7 +533,7 @@
       "track": "footprint",
       "label": "正式因子计算：订单配对与行为评分",
       "short": "因子计算",
-      "purpose": "把逐笔数据整理成订单生命周期，寻找相关订单，对队列行为和价格冲击评分，再生成因子、收益标签和评价结果。",
+      "purpose": "把逐笔数据整理成订单生命周期，找出相关订单，对队列行为和价格冲击打分，再生成因子、收益标签和评价结果。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -542,18 +542,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 13,
         "span": [
           "2026-07-14",
           "2026-07-27"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "订单配对、评分和共享中间结果继续用于后续筛选定标及历史评价；具体版本是否通过验收仍看当天记录。",
+      "fate_note": "订单配对、评分和共享中间结果后来用于筛选规则和历史评价。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -575,7 +575,7 @@
       "track": "footprint",
       "label": "数量和价格筛选规则、历史区间扩展",
       "short": "筛选规则",
-      "purpose": "研究哪些订单关系需要保留、怎样按价格和数量连续评分，并把正式因子评价扩展到更长日期范围。",
+      "purpose": "研究哪些订单关系要保留、怎样按价格和数量连续打分，并把正式因子评价扩展到更长的日期范围。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -586,18 +586,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 6,
         "span": [
           "2026-07-27",
           "2026-08-02"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "7 月 29 日取消价格硬筛选，保留 10% 数量门和连续价格评分；这套规则随后用于固定参数历史评价。",
+      "fate_note": "7 月 29 日取消价格硬筛选，保留 10% 数量门和连续价格评分；这套规则随后用于固定参数的历史评价。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -631,7 +631,7 @@
       "track": "factor",
       "label": "固定参数的历史补算与结果解释",
       "short": "历史补算",
-      "purpose": "保留一套已固定参数，复用已完成日期，补算更早的历史区间，核对恢复来源，并解释报告中的因子公式。",
+      "purpose": "用一套固定参数补算更早的历史，复用已完成的日期，并解释结果，包括 2026Q2 结果异常的原因和是否改测隔日标签。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -640,18 +640,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 4,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 6,
         "span": [
           "2026-08-02",
-          "2026-08-05"
+          "2026-08-10"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "历史区间组织、恢复与评价框架继续用于后续研究；Open5m 另建窗口、标签及参数身份，旧 open3m 面板仅作比较。定标日前回溯结果不能自动作为纯样本外检验。",
+      "fate_note": "历史区间的组织和评价方法后来继续使用。参数是用后来的数据定的，回看的历史不算样本外。2026Q2 的异常主要来自那段时间高价、高流动性股票跑赢。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -683,33 +683,29 @@
     {
       "id": "open5m",
       "track": "factor",
-      "label": "开盘五分钟：因子评价与参数定标",
+      "label": "开盘五分钟新因子库",
       "short": "开盘5分钟",
-      "purpose": "记录开盘五分钟因子库、连续评分核定标与收益标签诊断；C系列真实分布预查另有独立链，保留共同输入和原有历史记录。",
+      "purpose": "研究窗口改为开盘后五分钟，建新因子库（后来整理为 490 个正式候选），提速并算完 2025 年至 2026 年 6 月的结果。",
       "status": "done",
       "closes_into": {
         "daily": [
           "2026-08-06",
-          "2026-08-07",
-          "2026-09-02",
-          "2026-09-03",
-          "2026-09-04",
-          "2026-09-17"
+          "2026-08-07"
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 25,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 10,
         "span": [
-          "2026-08-05",
-          "2026-09-18"
+          "2026-08-06",
+          "2026-08-19"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "窗口/因子库、六核定标、actual-only机制预查和标签尾部诊断分别看待；A_clean等仍有计划门，代表日未过60秒不能写成性能通过。后续分组定标复用历史定标方法。",
+      "fate_note": "这批因子后来作为“旧因子”进入全期定标、修改重算和模型研究。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -728,34 +724,87 @@
           "kind": "file",
           "repo": "sirui-quant-research",
           "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md",
+          "path": "PLAN/2026-08-06-高频量价与微观结构新因子批量构建实施计划.md",
           "lines": [
-            3,
-            59
+            1,
+            30
           ],
-          "title": "深市老因子分组定标：定档预检 Implementation Plan",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59"
+          "title": "Open5m“算法交易订单占比”新因子批量构建实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-%E9%AB%98%E9%A2%91%E9%87%8F%E4%BB%B7%E4%B8%8E%E5%BE%AE%E8%A7%82%E7%BB%93%E6%9E%84%E6%96%B0%E5%9B%A0%E5%AD%90%E6%89%B9%E9%87%8F%E6%9E%84%E5%BB%BA%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L30"
+        }
+      ]
+    },
+    {
+      "id": "old-factor-calibration",
+      "track": "factor",
+      "status": "done",
+      "fate": "folded",
+      "closes_into": {
+        "daily": [
+          "2026-09-03"
+        ]
+      },
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-27-2024-2026Q2因子定标与3.11秒硬门实施计划.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2024—2026Q2 旧因子连续核重新定标实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-27-2024-2026Q2%E5%9B%A0%E5%AD%90%E5%AE%9A%E6%A0%87%E4%B8%8E3.11%E7%A7%92%E7%A1%AC%E9%97%A8%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L30"
         },
         {
           "kind": "file",
           "repo": "sirui-quant-research",
           "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "decisions/2026-09-03-actual-only-new-factor-prescreen.md",
+          "path": "reports/2026-08/2026-08-28-open5m-kernel-calibration-2024-2026q2.md",
           "lines": [
             1,
-            26
+            30
           ],
-          "title": "新因子预查改为只统计真实分布",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26"
+          "title": "2024—2026Q2 旧因子连续核重新定标验收报告",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-08/2026-08-28-open5m-kernel-calibration-2024-2026q2.md#L1-L30"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2026-09-08 正式200日定标交付",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md#L1-L30"
         }
-      ]
+      ],
+      "review": {
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 11,
+        "span": [
+          "2026-08-26",
+          "2026-09-10"
+        ],
+        "unreviewed_days": [],
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
+      },
+      "label": "旧因子全期定标",
+      "short": "旧因子定标",
+      "purpose": "用 2024—2026Q2 全期数据重新估计旧因子的连续核尺度和结构参数，只出一套参数并固定下来，供旧因子正式计算使用。",
+      "fate_note": "8 月 28 日记录全期核定标结果；9 月 3 日九参数定标单日降到 116 秒，仍未到 60 秒目标；9 月 8 日启动 200 日正式定标，9 月 10 日交给旧因子全期计算。后来的分组定标沿用了这里的方法。"
     },
     {
       "id": "cancel-phase",
       "track": "factor",
-      "label": "撤单等待时间、相位与机械撤单研究",
+      "label": "撤单等待时间、相位与机械撤单",
       "short": "撤单研究",
-      "purpose": "分别研究撤单等待时间分布、正式相位因子与机械撤单测量及条件收益，保留各阶段的范围、完成与停止状态。",
+      "purpose": "研究撤单等待时间的分布，做成撤单相位因子，并测量机械撤单及其后的收益。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -765,18 +814,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 18,
         "span": [
           "2026-08-19",
           "2026-10-15"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "分布与相位已有历史交付；机械撤单于9月11日完成独立验收、封存及整包回验。10月15日仅停止后续逐股稳定性生成，不撤销既有相位结果或已交付预检。",
+      "fate_note": "分布和相位因子已交付；机械撤单 9 月 11 日完成独立验收和存档。10 月 15 日只停止了逐股稳定性分析的后续生成。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -820,9 +869,9 @@
     {
       "id": "depth-match",
       "track": "factor",
-      "label": "盘口深度匹配预检与24列因子",
+      "label": "盘口深度匹配预查与 24 列因子",
       "short": "深度匹配",
-      "purpose": "检查委托股数与可见盘口深度的关系，从描述性预检推进到独立24列买卖侧因子及601日评价；跨股票同步另列。",
+      "purpose": "检查委托股数和可见盘口深度的关系，从描述性预查做到 24 列买卖侧因子和 601 日评价。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -830,18 +879,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 7,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 5,
         "span": [
           "2026-09-04",
-          "2026-10-16"
+          "2026-09-09"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "C7.1在9月8日交付601日、24列评价。10月16日另有比例尺寸线实现后撤销，无Doris查询、无真实分布结果；不把局部撤销写成24列深度匹配成果失效。",
+      "fate_note": "9 月 8 日交付 601 日、24 列评价。之后“订单量按盘口比例定量”的想法归在算法行为构思里。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -873,9 +922,9 @@
     {
       "id": "old-factor-bank",
       "track": "factor",
-      "label": "老因子重算与单日性能检查",
+      "label": "旧因子修改与全期重算",
       "short": "老因子库",
-      "purpose": "从旧因子解释和逐组修改方案开始，核对定义、实现与正式计算，记录单日性能、内存排障及601日结果的版本边界。",
+      "purpose": "逐项讲解和审查旧因子，写修改方案，按定标参数做全期正式计算，并处理单日性能和内存问题。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -883,18 +932,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 23,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 22,
         "span": [
           "2026-08-27",
           "2026-10-10"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "旧R19来源的601日面板及评价保留；原生产guard最终汇总曾超时，逐日数值/独立检查与进程退出分开。10月10日2220数值列含1932诊断列的单日不变性通过，但822.468秒未过300秒门。当前回放下旧参数来源需重新核验。",
+      "fate_note": "9 月 16 日交付 601 日结果和评价（用 R19 参数）。10 月 10 日 2,220 列单日结果与原面板完全一致，但 822 秒没过 300 秒门槛。修正回放后，旧参数要重新定。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -940,7 +989,7 @@
       "track": "factor",
       "label": "按股票和市场状态分组定标",
       "short": "分组定标",
-      "purpose": "比较不同股票、市场状态下的行为尺度，确定分组方式，生成六类连续评分尺度和所需结构参数，供正式因子计算使用。",
+      "purpose": "比较不同股票和市场状态下的行为尺度，定下分组方式，估计六类连续核尺度和结构参数，供 328 列计算使用。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -949,20 +998,32 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 10,
         "span": [
           "2026-09-23",
           "2026-10-12"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "核包在10月10日零点封存，结构runtime_v2在10月12日凌晨交接；七组结构601日重估，z12与λRV沿用200日R19。历史验收保留，10月20日确认旧包缺当前回放来源、不能直接用于当前正式全量计算。",
+      "fate_note": "六核参数包 10 月 10 日凌晨存档；结构参数 v2 10 月 12 日凌晨交接，七组用 601 日重估，z12 和 λRV 沿用 200 日的 R19 参数。10 月 20 日确认旧参数包缺少修正回放的来源，不能直接用于新的全量计算。",
       "report_coverage": "curated",
       "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "深市老因子分组定标：定档预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59"
+        },
         {
           "kind": "file",
           "repo": "sirui-quant-research",
@@ -1004,9 +1065,9 @@
     {
       "id": "szse-model328",
       "track": "factor",
-      "label": "深市 328 列因子的计算、验收与评价",
+      "label": "深市 328 列因子的计算与评价",
       "short": "深市328",
-      "purpose": "用固定的模型输入列和新参数计算深市历史因子，逐日核验四类来源及合并结果，最后封存并评价与日内收益的关系。",
+      "purpose": "按冻结模型实际用到的 328 列和新参数，计算深市全期因子，逐日核验四类来源和合并结果，存档后评价与日内收益的关系。",
       "status": "done",
       "closes_into": {
         "showcase": "factor",
@@ -1016,18 +1077,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 9,
         "span": [
           "2026-10-10",
           "2026-10-19"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "10月18日旧参数/旧回放下601日、328列科学验收与单因子评价完成，性能采用record_only且未达门。10月20日旧包被当前回放准入拒收；新344清单与重新定参独立，不改写旧验收为从未发生。",
+      "fate_note": "10 月 18 日完成 601 日、328 列的验收和单因子评价（旧参数、旧回放），性能只记录、没达门槛。10 月 19 日比较新旧参数：老因子整体没变强。10 月 20 日旧参数包被修正回放拒收，改做 344 列重新定参。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1071,9 +1132,9 @@
     {
       "id": "sse-v2",
       "track": "factor",
-      "label": "沪市委托还原与公开可见因子口径",
+      "label": "沪市委托还原与公开可见因子",
       "short": "沪市委托",
-      "purpose": "根据沪市逐笔数据还原可观测委托，核对订单号、序列和成交价格，并逐项判断公开信息能支持哪些因子定义。",
+      "purpose": "根据沪市逐笔数据还原委托，核对订单号、序列和成交价格，逐项判断只用公开可见信息能算哪些因子。",
       "status": "active",
       "closes_into": {
         "daily": [
@@ -1081,18 +1142,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 17,
         "span": [
           "2026-08-19",
           "2026-10-21"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "原始委托、公开G1及后续v3分阶段记录。固定版本中v3候选已有实现，29/30股速度试算后触发一小时停止门，未完成全市场验收或生产面板；不将不同列数和候选身份混为同一已验收版本。",
+      "fate_note": "委托还原 v2、可见口径 G1 和 v3 分阶段推进；10 月 21 日 v3 在单日全市场通过正确性验收，速度还没达标，还没有生产面板。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1146,81 +1207,11 @@
       ]
     },
     {
-      "id": "ml-count",
-      "track": "model",
-      "label": "总量因子的模型研究计划与结构诊断",
-      "short": "总量模型",
-      "purpose": "记录从51个count输入到127个total-only输入的模型计划、方法选择与结构诊断起步。",
-      "status": "done",
-      "closes_into": {
-        "daily": []
-      },
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 11,
-        "span": [
-          "2026-08-04",
-          "2026-08-20"
-        ],
-        "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
-      },
-      "fate": "folded",
-      "fate_note": "8月4日原始写入为51个输入；8月11日补丁明确改为127个total-only输入。8月6日另有LightGBM计划；计划、实现与训练完成分开。",
-      "report_coverage": "curated",
-      "source_refs": [
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
-          "path": "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
-          "lines": [
-            1,
-            25
-          ],
-          "title": "首次入库的 127 个 total-only 模型计划",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2318d2ff29815213e6f108cb3308629dfa601869/PLAN/2026-08-04-51%E4%B8%AAcount%E5%9B%A0%E5%AD%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BB%93%E6%9E%84%E8%AF%8A%E6%96%AD%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L25"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "PLAN/2026-08-06-2026年至今全量原始因子LightGBM实施与运行计划.md",
-          "lines": [
-            1,
-            30
-          ],
-          "title": "2026 年至今全量原始因子 LightGBM Implementation Plan",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-2026%E5%B9%B4%E8%87%B3%E4%BB%8A%E5%85%A8%E9%87%8F%E5%8E%9F%E5%A7%8B%E5%9B%A0%E5%AD%90LightGBM%E5%AE%9E%E6%96%BD%E4%B8%8E%E8%BF%90%E8%A1%8C%E8%AE%A1%E5%88%92.md#L1-L30"
-        },
-        {
-          "kind": "commit",
-          "repo": "sirui-quant-research",
-          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
-          "title": "8 月 10 日两份模型计划首次入库",
-          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2318d2ff29815213e6f108cb3308629dfa601869"
-        },
-        {
-          "kind": "file",
-          "repo": "internship-dashboard",
-          "revision": "21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3",
-          "path": "docs/journal-review/rebuild-2026-10-21/findings.md",
-          "lines": [
-            1,
-            54
-          ],
-          "title": "51到127的原始写入与修订依据",
-          "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
-        }
-      ]
-    },
-    {
       "id": "ml-exec",
       "track": "model",
-      "label": "模型执行、任务调度与资源限制",
-      "short": "模型执行",
-      "purpose": "让不同模型共用固定的数据与研究规则，按 CPU、GPU、内存和时间限制分配任务，支持失败恢复，并减少重复拟合与归因计算。",
+      "label": "127 输入多模型族研究",
+      "short": "多模型族",
+      "purpose": "8 月用开盘五分钟的 127 个 total 因子跑多模型族：写计划，统一各模型的执行和资源调度，跑完开发阶段和 Final 评价，再做事后比较。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -1228,18 +1219,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 11,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 15,
         "span": [
-          "2026-08-11",
+          "2026-08-04",
           "2026-08-24"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "folded",
-      "fate_note": "区分模型适配/调度实现、Development、Freeze、Final与post-hoc比较；不同study身份和资源合同分别保存。后续330仅复用公共合同、权重及守护基础，不能据此沿用旧127研究的全部输入和运行结论。",
+      "fate_note": "开发、Final 和事后比较都已完成。导师复核后，下一轮只用 LightGBM；后续只复用这里的公共流程，不沿用 127 输入的结论。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1265,32 +1256,63 @@
           ],
           "title": "Open5m ML 实现前仓库审计",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-11-Open5m-ML%E5%AE%9E%E7%8E%B0%E5%89%8D%E4%BB%93%E5%BA%93%E5%AE%A1%E8%AE%A1.md#L1-L42"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "path": "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+          "lines": [
+            1,
+            25
+          ],
+          "title": "51 个 count 输入的模型计划（8 月 11 日改为 127 个 total-only）",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2318d2ff29815213e6f108cb3308629dfa601869/PLAN/2026-08-04-51%E4%B8%AAcount%E5%9B%A0%E5%AD%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BB%93%E6%9E%84%E8%AF%8A%E6%96%AD%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L25"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-2026年至今全量原始因子LightGBM实施与运行计划.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2026 年至今全量原始因子 LightGBM Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-2026%E5%B9%B4%E8%87%B3%E4%BB%8A%E5%85%A8%E9%87%8F%E5%8E%9F%E5%A7%8B%E5%9B%A0%E5%AD%90LightGBM%E5%AE%9E%E6%96%BD%E4%B8%8E%E8%BF%90%E8%A1%8C%E8%AE%A1%E5%88%92.md#L1-L30"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "title": "8 月 10 日两份模型计划首次入库",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2318d2ff29815213e6f108cb3308629dfa601869"
         }
       ]
     },
     {
       "id": "ml-330",
       "track": "model",
-      "label": "330 候选到 328 列模型的选择与重算",
-      "short": "模型重算",
-      "purpose": "分别记录330列候选manifest与选优runner实现，以及9月21日沿9月18日第15折模型开展的328列单次因果复算。",
+      "label": "601 日 LightGBM：试跑、候选研究与因果复算",
+      "short": "LightGBM",
+      "purpose": "9 月用 328 列因子做 LightGBM：先不调参试跑并看 test，再建 330 个候选的选择流程，最后按事先锁定选股名单的方式重算。",
       "status": "done",
       "closes_into": {
         "showcase": "model"
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 2,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 3,
         "span": [
-          "2026-09-20",
+          "2026-09-18",
           "2026-09-21"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "有133配置候选设施实现，未找到全部候选完整运行签收。9月21日交付固定第15折/1000轮/176日测试区间的因果复算；测试窗口已观察、未计完整成本和跨日退出，不能称为新的封存测试或完成全部候选选优。",
+      "fate_note": "9 月 18 日试跑；330 候选的选择设施已实现，但没有全部候选跑完的记录；9 月 21 日交付第 15 折、1000 轮、176 个测试日的因果复算。测试窗口已经看过，收益未计完整成本和跨日退出。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1348,29 +1370,24 @@
       "track": "delivery",
       "label": "研究成果看板建站",
       "short": "看板建站",
-      "purpose": "建立研究成果、每日汇报和展示页，加入公式、图示、离线阅读及部署配置，让研究材料可以集中浏览。",
+      "purpose": "建立研究成果、每日汇报和展示页，加入公式、图示、离线阅读和部署配置。",
       "status": "done",
       "closes_into": {
-        "daily": [
-          "2026-07-07",
-          "2026-07-08",
-          "2026-07-09",
-          "2026-07-13"
-        ]
+        "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 8,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 3,
         "span": [
           "2026-07-07",
-          "2026-08-05"
+          "2026-07-13"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "看板随后继续发布报告和增加功能；这里的记录段结束不表示网站不再维护。",
+      "fate_note": "7 月 13 日前完成建站；之后的报告发布和功能改进记在其他链。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1387,7 +1404,7 @@
       "track": "delivery",
       "label": "汇报发布与看板日常维护",
       "short": "发布维护",
-      "purpose": "发布研究报告、解释与图表，修正通用阅读功能并维护项目规则；研究日志建设另列独立目标。",
+      "purpose": "发布研究报告、解释和图表，修正通用阅读功能，维护项目规则；研究日志另成一链。",
       "status": "active",
       "closes_into": {
         "daily": [
@@ -1402,18 +1419,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 32,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 33,
         "span": [
           "2026-07-07",
           "2026-10-16"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "持续维护中。这里的提交可能只是报告或规则修改，不据此认定研究计算在同一天重跑。",
+      "fate_note": "持续进行。这里的提交可能只是改报告或规则，不代表研究计算在同一天重跑。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1430,24 +1447,24 @@
       "track": "delivery",
       "label": "研究编辑台版式改造",
       "short": "版式调整",
-      "purpose": "按已选定的研究编辑台方向调整字体、纸墨配色、页面结构和窄屏显示。",
+      "purpose": "按选定的研究编辑台方向调整字体、纸墨配色、页面结构和窄屏显示。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 1,
         "span": [
           "2026-08-11",
           "2026-08-11"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "版式改造已提交，后续报告继续使用这套阅读与展示方式。",
+      "fate_note": "版式改造已提交，后续报告继续用这套样式。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1479,26 +1496,26 @@
     {
       "id": "report-tags",
       "track": "delivery",
-      "label": "汇报标签与结果页浏览功能",
+      "label": "汇报标签与报告浏览功能",
       "short": "标签与浏览",
-      "purpose": "为汇报加入可保存的主题标签和筛选，并改进撤单、深度匹配报告中的方向对照、排序、公式和导航。",
+      "purpose": "给汇报加可保存的主题标签和筛选；改进撤单、深度匹配报告的方向对照、排序、公式和导航。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 2,
         "span": [
           "2026-09-07",
           "2026-09-09"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "9月7日在线标签/API持久化与9月9日报告方向对照、筛选排序分别记录。报告正文不能证明标签功能，标签也不是模型报告的研究前提。",
+      "fate_note": "9 月 7 日上线在线标签，9 月 9 日完成报告的方向对照和筛选排序。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1513,9 +1530,9 @@
     {
       "id": "model-report",
       "track": "delivery",
-      "label": "LightGBM 模型报告及结果修订",
+      "label": "LightGBM 模型报告及修订",
       "short": "模型报告",
-      "purpose": "发布模型设置、测试结果和诊断图，进一步解释 RankIC、组间排序及多空收益，并替换为因果时序修正后的结果。",
+      "purpose": "发布模型设置、测试结果和诊断图，解释 RankIC、分组排序和多空收益，再换成因果复算后的结果。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -1523,18 +1540,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 4,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 3,
         "span": [
-          "2026-09-18",
+          "2026-09-19",
           "2026-09-21"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "9 月 19 日的初版报告早于 330 候选研究；只有 9 月 21 日的修订接入相应重算结果。",
+      "fate_note": "9 月 19 日的初版报告基于 9 月 18 日试跑；9 月 21 日换成因果复算的结果。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1570,7 +1587,7 @@
       "track": "delivery",
       "label": "328 列因子的 601 日结果报告",
       "short": "328报告",
-      "purpose": "把深市新参数 328 列因子的 601 日评价发布为可筛选、比较和下载的报告，包含逐日相关性、分组收益与逐列诊断。",
+      "purpose": "把深市 328 列因子的 601 日评价发布成可筛选、比较和下载的报告，含逐日相关性、分组收益和逐列诊断。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -1578,18 +1595,18 @@
         ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 1,
         "span": [
           "2026-10-18",
           "2026-10-18"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "报告已发布。它是单因子历史评价，分组毛收益未扣成本，也不等于模型或策略已在新的样本外期间通过检验。",
+      "fate_note": "报告已发布。这是单因子的全历史评价，分组收益未扣成本，不等于模型或策略在新的样本外通过了检验。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1621,26 +1638,26 @@
     {
       "id": "corrected-replay-344",
       "track": "factor",
-      "label": "正确盘口344列重新定参",
+      "label": "修正回放下的 344 列重新定参",
       "short": "344重定参",
-      "purpose": "按独立344列清单和修正回放，重新取得六个全局共享核与八组结构参数各601日观测，止于冻结参数和有界消费者验收。",
+      "purpose": "按修正后的回放和独立的 344 列清单，重新采集六个全局核和八组结构参数各 601 日的观测，最后固定参数并交给下游。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "10月21日凌晨启动601日六核采集，午后40/601日暂停；晚间新科学身份P75完整冷启动两次通过60秒准入，旧40日保留旧身份。八组结构、全期冻结、消费者交接及344列全期因子生产仍未完成。",
+      "fate_note": "10 月 21 日六核采集换新版本后过了 60 秒门槛并正式启动；八组结构参数、全期固定和交给下游都还没做。",
       "closes_into": {
         "daily": []
       },
       "report_coverage": "curated",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 3,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 2,
         "span": [
-          "2026-10-19",
+          "2026-10-20",
           "2026-10-21"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "source_refs": [
         {
@@ -1684,26 +1701,26 @@
     {
       "id": "trading-window-freeze",
       "track": "infra",
-      "label": "交易日早盘自动冻结与恢复",
+      "label": "交易日早盘自动暂停与恢复",
       "short": "早盘冻结",
-      "purpose": "按交易日自动暂停和恢复研究任务，处理在途SQL、scope冻结、独立定时器和看门狗计时，验证失败恢复与科学输出不变。",
+      "purpose": "交易日早盘按规定自动暂停研究任务、之后自动恢复，处理在途查询、计时和失败兜底，并确认计算结果不受影响。",
       "status": "done",
       "fate": "landed",
-      "fate_note": "10月9日完成实现、Linux回归和有界集成，随后补缺失定时器等兜底；10月13日复验真实生产冻结。未把未实测的45分钟/GPU等场景写成通过。",
+      "fate_note": "10 月 9 日完成实现、Linux 回归和集成验收，随后补了定时器缺失等兜底；10 月 13 日在真实生产任务上复验。45 分钟以上的长暂停和 GPU 场景没有实测。",
       "closes_into": {
         "daily": []
       },
       "report_coverage": "curated",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 3,
         "span": [
           "2026-09-29",
           "2026-10-13"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "source_refs": [
         {
@@ -1747,26 +1764,26 @@
     {
       "id": "research-journal",
       "track": "delivery",
-      "label": "研究日志与证据图谱建设",
+      "label": "研究日志与证据图谱",
       "short": "研究日志",
-      "purpose": "建立固定版本证据、逐日多任务记录与链条图谱，完成交互、内容审阅及每日维护规则，使工作与原始来源可追溯。",
+      "purpose": "建立固定版本的证据、逐日多任务记录和链条图谱，并维护每日更新规则，让每项工作都能追到原始来源。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "保留10月20日至21日图谱、缩放和图例高亮交付；本轮修复来源采集并补核归档、正文库、历史版本及真实日期。36份Claude正文仍缺，全部来源完整性未通过；维护自身不重复计为科研成果。",
+      "fate_note": "10 月 20—21 日完成图谱、缩放和图例高亮，修复来源采集；仍有 36 份 Claude 会话正文缺失，来源完整性没有通过。日志维护本身不算科研成果。",
       "closes_into": {
         "daily": []
       },
       "report_coverage": "curated",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 2,
         "span": [
           "2026-10-20",
           "2026-10-21"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "source_refs": [
         {
@@ -1811,20 +1828,20 @@
     },
     {
       "id": "cross-stock-sync",
-      "track": "factor",
-      "label": "C3.3跨股票同步预查",
+      "track": "footprint",
+      "label": "C3.3 跨股票同步预查",
       "short": "跨股同步",
-      "purpose": "独立预查全市场跨股票的同量/同步委托关系，保存统计实现、性能及单日试跑边界；与单只股票盘口深度匹配分开。",
+      "purpose": "单独预查全市场不同股票之间的同量、同步委托，保存实现、性能和单日试跑结果；和单只股票的盘口深度匹配分开。",
       "status": "done",
       "fate": "dropped",
-      "fate_note": "后补计划称9月11日放弃C3.3；9月18日提交停止说明并清理相关执行材料。保留已发生的实现和单日试跑，不声称全历史/机制显著性通过；决定日自述与补记日分别说明。",
+      "fate_note": "9 月 11 日决定停止（日期来自 9 月 18 日补写的计划），9 月 18 日提交停止说明并清理执行材料。已做的实现和单日试跑保留，没有做全历史检验。",
       "closes_into": {
         "daily": []
       },
       "report_coverage": "curated",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 6,
         "span": [
           "2026-09-04",
@@ -1833,7 +1850,7 @@
         "unreviewed_days": [
           "2026-09-11"
         ],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "source_refs": [
         {
@@ -1867,26 +1884,26 @@
     {
       "id": "behavior-design",
       "track": "footprint",
-      "label": "算法行为构思：B/C/D/V候选与可行性",
+      "label": "算法行为构思：B/C/D/V 候选与可行性",
       "short": "行为构思",
-      "purpose": "从公开执行机制、订单响应和可观测信息构造候选，审查B/C/D/V各组定义、识别歧义、已有因子重叠及预检顺序。",
+      "purpose": "从公开的执行算法规则、订单响应和可观测信息出发构思候选因子，逐项研判定义、识别难点、和已有因子的重叠，以及先做哪些预查。",
       "status": "active",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 17,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 19,
         "span": [
           "2026-08-19",
           "2026-10-21"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "候选研究和报告已形成；V系列尚无真实L2预检或收益验收，不写成已实现的正式因子。",
+      "fate_note": "已写成多份候选研究和报告；V 系列还没跑真实 L2 预查或收益检验。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1906,65 +1923,82 @@
     {
       "id": "mechanism-precheck",
       "track": "footprint",
-      "label": "C系列候选机制的真实分布预查",
+      "label": "C 系列候选机制的真实分布预查",
       "short": "机制预查",
-      "purpose": "实现候选行为的基础分布预查和历史汇总，区分实际形状、随机背景显著性与后续收益有效性。",
+      "purpose": "不看收益标签，先统计候选行为在真实数据里的分布和形状，判断值不值得做成因子。",
       "status": "done",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-09-02",
+          "2026-09-04"
+        ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 4,
         "span": [
           "2026-09-02",
           "2026-09-07"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "形成真实分布及提速材料；随机对照已取消，形状出现不证明算法身份或收益有效。",
+      "fate_note": "形成真实分布结果并大幅提速；随机对照后来取消。看到某种形状，不等于证明了算法身份或收益有效。",
       "report_coverage": "curated",
       "source_refs": [
         {
           "kind": "file",
-          "repo": "internship-dashboard",
-          "revision": "21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3",
-          "path": "docs/journal-review/rebuild-2026-10-21/findings.md",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "decisions/2026-09-03-actual-only-new-factor-prescreen.md",
           "lines": [
             1,
-            54
+            26
           ],
-          "title": "C系列候选机制的真实分布预查",
-          "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+          "title": "新因子预查改为只统计真实分布",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-02-new-factor-mechanism-prescreen.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "新因子机制预查 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-02-new-factor-mechanism-prescreen.md#L1-L30"
         }
       ]
     },
     {
       "id": "model-methods",
       "track": "model",
-      "label": "模型方法：时间协议、标签与损失函数",
+      "label": "模型方法：时间划分、标签与损失函数",
       "short": "模型方法",
-      "purpose": "讨论模型原理、时间划分、CPU训练、标签、历史权重、损失函数及可比评价指标，分开记录建议与用户决议。",
+      "purpose": "讨论模型原理、训练和验证的时间划分、用 CPU 训练、标签处理、历史权重、损失函数和可比的评价指标；建议和用户的决定分开记。",
       "status": "active",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-09-17"
+        ]
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "days": 12,
+        "by": "Claude",
+        "on": "2026-10-22",
+        "days": 13,
         "span": [
           "2026-08-03",
-          "2026-09-20"
+          "2026-10-15"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "方法建议与已决定设置分别保留；不把讨论记为候选搜索完成或模型效果已验收。",
+      "fate_note": "方法建议和已定设置分开保留；讨论不等于候选模型已经跑完。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1986,24 +2020,24 @@
       "track": "model",
       "label": "股票池、资金分配与成交假设",
       "short": "策略假设",
-      "purpose": "研究股票池、等权与风险调整、主动吃档、资金分配和MarS的用途，明确从预测到可成交策略的限制。",
+      "purpose": "研究股票池、等权和风险调整、主动吃档、资金分配和 MarS 的用法，弄清从预测到能成交的策略之间还差什么。",
       "status": "active",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 3,
         "span": [
           "2026-09-17",
           "2026-09-22"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "已形成方法研究；未据此宣称策略通过真实交易验收。缺可靠工作日的板块轮动笔记另列待核。",
+      "fate_note": "形成方法研究，没有真实交易验收。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2023,26 +2057,26 @@
     {
       "id": "research-code",
       "track": "infra",
-      "label": "研究仓代码结构审查与整改",
+      "label": "研究仓代码结构整改",
       "short": "代码结构",
-      "purpose": "核对研究仓模块边界、公共IO、回放依赖与执行阶段，修复启动、导入和回归问题，区分本地交付与服务器验收。",
+      "purpose": "梳理研究仓的模块边界、公共 IO、回放依赖和执行阶段，修复启动、导入和回归问题。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 2,
         "span": [
           "2026-10-19",
           "2026-10-20"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "本地源码整改与回归材料保留；公司服务器同步和真实性能按各项收据分别判断。",
+      "fate_note": "本地整改和回归已完成；公司服务器同步和真实性能另看各次记录。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2062,26 +2096,26 @@
     {
       "id": "fund-research",
       "track": "special",
-      "label": "量化私募与NEXT产品研究",
+      "label": "量化私募与 NEXT 产品研究",
       "short": "产品研究",
-      "purpose": "整理量化私募月度压力、产品净值及NEXT产品表现，作为独立的产品研究交付，不混入因子或模型成果。",
+      "purpose": "整理量化私募 7 月的压力观察和 NEXT 全产品业绩，作为独立的产品研究，不混入因子或模型成果。",
       "status": "done",
       "closes_into": {
         "daily": []
       },
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
+        "by": "Claude",
+        "on": "2026-10-22",
         "days": 3,
         "span": [
           "2026-08-06",
           "2026-08-12"
         ],
         "unreviewed_days": [],
-        "scope": "已找到原件的归属、日期及状态边界已复核；全局仍缺36份Claude正文，不代表全部来源或运行验收完成。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
       "fate": "landed",
-      "fate_note": "8月形成两份研究材料；本轮确认材料与工作日期，没有重新确认报告中的投资判断。",
+      "fate_note": "8 月写成两份研究材料；本轮只核对了材料和工作日期，没有重新核对报告里的投资判断。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2108,6 +2142,7 @@
       "source_date": "2026-06-30",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "6 月 30 日的快照数据交给 factor_lab 计算第一个 OFI 因子。",
       "source_refs": [
         {
           "kind": "file",
@@ -2134,12 +2169,11 @@
           "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md#L1-L46"
         }
       ],
-      "note": "6月30日快照分区供factor_lab首个OFI框架读取；纯文献收集不依赖快照完成。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "6月30日快照分区供factor_lab首个OFI框架读取；纯文献收集不依赖快照完成。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "6 月 30 日的快照数据交给 factor_lab 计算第一个 OFI 因子。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2150,6 +2184,7 @@
       "source_date": "2026-07-03",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "六篇论文指标复用低延迟复现里的事件、生命周期和快照订单簿代码。",
       "source_refs": [
         {
           "kind": "file",
@@ -2164,12 +2199,11 @@
           "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/80513f65e40b4c89ef2d2e23b36a75283cfafd59/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/README.md#L3-L18"
         }
       ],
-      "note": "论文痕迹台架明确复用lowlat事件、生命周期与snapshot订单簿；承接方法和公共代码。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "论文痕迹台架明确复用lowlat事件、生命周期与snapshot订单簿；承接方法和公共代码。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "六篇论文指标复用低延迟复现里的事件、生命周期和快照订单簿代码。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2180,6 +2214,7 @@
       "source_date": "2026-07-14",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "正式因子计算在 algobench 的代码上扩展生命周期、配对和评分；关注度预测的结论没有带过去。",
       "source_refs": [
         {
           "kind": "file",
@@ -2194,12 +2229,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46"
         }
       ],
-      "note": "7月16日在同一研究代码基础扩展生命周期、配对与评分；不承接主动关注度预测结论。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "7月16日在同一研究代码基础扩展生命周期、配对与评分；不承接主动关注度预测结论。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "正式因子计算在 algobench 的代码上扩展生命周期、配对和评分；关注度预测的结论没有带过去。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2210,6 +2244,7 @@
       "source_date": "2026-07-16",
       "confidence": "confirmed",
       "evidence_kind": "code_input",
+      "note": "7 月 16 日正式面板接上已实现的统一取数入口和按日调度。",
       "source_refs": [
         {
           "kind": "file",
@@ -2236,12 +2271,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46"
         }
       ],
-      "note": "7月16日正式面板接入已实现的Doris网关和日级调度；7月15日草稿不是运行放行。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "7月16日正式面板接入已实现的Doris网关和日级调度；7月15日草稿不是运行放行。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "7 月 16 日正式面板接上已实现的统一取数入口和按日调度。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2252,6 +2286,7 @@
       "source_date": "2026-07-25",
       "confidence": "confirmed",
       "evidence_kind": "direct_file",
+      "note": "7 月 27 日在正式评分流程上修改候选、数量和连续价格规则。",
       "source_refs": [
         {
           "kind": "file",
@@ -2266,12 +2301,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-07-27-%E5%BC%80%E7%9B%98%E5%89%8D%E4%B8%89%E5%88%86%E9%92%9F%E8%BF%9E%E7%BB%AD%E8%AF%84%E5%88%86%E5%8F%AF%E8%A1%8C%E6%80%A7%E9%87%8D%E6%9E%84%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L7-L34"
         }
       ],
-      "note": "7月27日在正式评分与Response流程上调整候选、数量与连续价格规则。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "7月27日在正式评分与Response流程上调整候选、数量与连续价格规则。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "7 月 27 日在正式评分流程上修改候选、数量和连续价格规则。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2282,6 +2316,7 @@
       "source_date": "2026-08-02",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "固定开盘三分钟的规则和参数后往前补算历史；回看定标日以前的结果不算样本外。",
       "source_refs": [
         {
           "kind": "file",
@@ -2308,12 +2343,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-03-fixed-history-through-latest-complete-design.md#L5-L43"
         }
       ],
-      "note": "固定open3m规则和不可变种子后扩展历史区间；定标日前回溯不自动成为纯样本外。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "固定open3m规则和不可变种子后扩展历史区间；定标日前回溯不自动成为纯样本外。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "固定开盘三分钟的规则和参数后往前补算历史；回看定标日以前的结果不算样本外。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2324,6 +2358,7 @@
       "source_date": "2026-08-04",
       "confidence": "confirmed",
       "evidence_kind": "method_reuse",
+      "note": "复用历史区间的组织和评价框架；开盘五分钟另定窗口、标签和参数，旧面板只作对比。",
       "source_refs": [
         {
           "kind": "file",
@@ -2338,61 +2373,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md#L5-L21"
         }
       ],
-      "note": "复用区间组织和计算/评价框架；Open5m另建窗口、标签和参数身份，旧面板只作比较。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "复用区间组织和计算/评价框架；Open5m另建窗口、标签和参数身份，旧面板只作比较。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
-      }
-    },
-    {
-      "from": "ml-count",
-      "to": "ml-exec",
-      "type": "延续",
-      "date": "2026-08-11",
-      "source_date": "2026-08-10",
-      "confidence": "confirmed",
-      "evidence_kind": "direct_file",
-      "source_refs": [
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
-          "path": "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
-          "lines": [
-            1,
-            25
-          ],
-          "title": "首次入库的 127 个 total-only 模型计划",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2318d2ff29815213e6f108cb3308629dfa601869/PLAN/2026-08-04-51%E4%B8%AAcount%E5%9B%A0%E5%AD%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BB%93%E6%9E%84%E8%AF%8A%E6%96%AD%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L25"
-        },
-        {
-          "kind": "commit",
-          "repo": "sirui-quant-research",
-          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
-          "title": "8 月 10 日两份模型计划首次入库",
-          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2318d2ff29815213e6f108cb3308629dfa601869"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "因子/algobench/src/algobench/ml/data.py",
-          "lines": [
-            107,
-            178
-          ],
-          "title": "模型输入的冻结来源检查",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178"
-        }
-      ],
-      "note": "8月10日可追溯入库的总量模型计划进入8月11日实现；8月4日、6日编写日期仍待核。",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "8月10日可追溯入库的总量模型计划进入8月11日实现；8月4日、6日编写日期仍待核。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "复用历史区间的组织和评价框架；开盘五分钟另定窗口、标签和参数，旧面板只作对比。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2403,6 +2388,7 @@
       "source_date": "2026-08-10",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "模型只读取已固定的开盘五分钟因子结果和清单，并检查 354 个交易日是否齐全。",
       "source_refs": [
         {
           "kind": "file",
@@ -2417,12 +2403,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178"
         }
       ],
-      "note": "模型输入检查只读冻结的Open5m来源、manifest和354日完整性；不等于所有模型已运行完成。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "模型输入检查只读冻结的Open5m来源、manifest和354日完整性；不等于所有模型已运行完成。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "模型只读取已固定的开盘五分钟因子结果和清单，并检查 354 个交易日是否齐全。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2433,6 +2418,7 @@
       "source_date": "2026-08-10",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "撤单等待时间研究直接复用五分钟窗口的生命周期、日历和事件入口。",
       "source_refs": [
         {
           "kind": "file",
@@ -2447,42 +2433,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md#L5-L85"
         }
       ],
-      "note": "撤单分布直接复用五分钟生命周期、日历与事件入口，不读取收益或推断账户身份。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "撤单分布直接复用五分钟生命周期、日历与事件入口，不读取收益或推断账户身份。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
-      }
-    },
-    {
-      "from": "open5m",
-      "to": "depth-match",
-      "type": "派生",
-      "date": "2026-09-05",
-      "source_date": "2026-09-04",
-      "confidence": "confirmed",
-      "evidence_kind": "direct_file",
-      "source_refs": [
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md",
-          "lines": [
-            5,
-            30
-          ],
-          "title": "C7.1 精确盘口深度匹配规律预检 Implementation Plan",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md#L5-L30"
-        }
-      ],
-      "note": "C7.1复用现有机制预查和事件几何组件，已有股数汇总只作核验旁证。",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "C7.1复用现有机制预查和事件几何组件，已有股数汇总只作核验旁证。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "撤单等待时间研究直接复用五分钟窗口的生命周期、日历和事件入口。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2493,6 +2448,7 @@
       "source_date": "2026-09-17",
       "confidence": "confirmed",
       "evidence_kind": "code_input",
+      "note": "旧因子的原始定义和实际评分代码，拿来逐项检查在沪市能否只用公开可见数据计算。",
       "source_refs": [
         {
           "kind": "file",
@@ -2519,12 +2475,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-22-sse-cancel-phase-raw-bank-assessment.md#L3-L56"
         }
       ],
-      "note": "旧库原定义与实际评分器进入沪市可见输入的适用性核验；不表示全部沪市原式已可无损恢复。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "旧库原定义与实际评分器进入沪市可见输入的适用性核验；不表示全部沪市原式已可无损恢复。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "旧因子的原始定义和实际评分代码，拿来逐项检查在沪市能否只用公开可见数据计算。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2535,6 +2490,7 @@
       "source_date": "2026-10-10",
       "confidence": "confirmed",
       "evidence_kind": "direct_file",
+      "note": "10 月 12 日的清单按模型依赖精确选出 256 个旧因子输出和它们的依赖。",
       "source_refs": [
         {
           "kind": "file",
@@ -2549,42 +2505,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
         }
       ],
-      "note": "10月12日清单精确选择256个旧输出及其必要依赖，并非原284列全搬或只留325个分裂列。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "10月12日清单精确选择256个旧输出及其必要依赖，并非原284列全搬或只留325个分裂列。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
-      }
-    },
-    {
-      "from": "open5m",
-      "to": "grouped-calibration",
-      "type": "延续",
-      "date": "2026-10-08",
-      "source_date": "2026-08-27",
-      "confidence": "confirmed",
-      "evidence_kind": "method_reuse",
-      "source_refs": [
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md",
-          "lines": [
-            3,
-            59
-          ],
-          "title": "深市老因子分组定标：定档预检 Implementation Plan",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59"
-        }
-      ],
-      "note": "10月8日分组预检明确复用连续核历史脚本和股票日中心；200日预检不是601日最终参数。",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "10月8日分组预检明确复用连续核历史脚本和股票日中心；200日预检不是601日最终参数。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "10 月 12 日的清单按模型依赖精确选出 256 个旧因子输出和它们的依赖。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2595,6 +2520,7 @@
       "source_date": "2026-10-12",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "结构参数 v2 于 10 月 12 日 02:38 存档交接，重算计划绑定参数表和哈希；这是修正回放之前的版本。",
       "source_refs": [
         {
           "kind": "file",
@@ -2621,12 +2547,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
         }
       ],
-      "note": "结构runtime_v2于10月12日02:38封存交接，重算计划绑定核表和哈希。此为旧回放版本的历史交接。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "结构runtime_v2于10月12日02:38封存交接，重算计划绑定核表和哈希。此为旧回放版本的历史交接。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "结构参数 v2 于 10 月 12 日 02:38 存档交接，重算计划绑定参数表和哈希；这是修正回放之前的版本。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2637,6 +2562,7 @@
       "source_date": "2026-10-16",
       "confidence": "confirmed",
       "evidence_kind": "direct_file",
+      "note": "10 月 16 日清理 328 列生产和性能测试自己的暂存，保护恢复来源。",
       "source_refs": [
         {
           "kind": "file",
@@ -2651,12 +2577,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-szse-model328-storage-closeout.md#L3-L51"
         }
       ],
-      "note": "10月16日清理深市328生产/性能任务的自有暂存并保护恢复来源，不包含全部沪市和账户治理。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "10月16日清理深市328生产/性能任务的自有暂存并保护恢复来源，不包含全部沪市和账户治理。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "10 月 16 日清理 328 列生产和性能测试自己的暂存，保护恢复来源。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2667,6 +2592,7 @@
       "source_date": "2026-10-18",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "10 月 18 日把同一批 328 列单因子评价发布成可浏览的报告，不是新的模型训练结果。",
       "source_refs": [
         {
           "kind": "file",
@@ -2693,12 +2619,11 @@
           "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-18-szse-model328-report.md#L3-L39"
         }
       ],
-      "note": "10月18日同一批328列单因子评价被发布为可浏览报告，不是新模型训练结果。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "10月18日同一批328列单因子评价被发布为可浏览报告，不是新模型训练结果。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "10 月 18 日把同一批 328 列单因子评价发布成可浏览的报告，不是新的模型训练结果。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2709,6 +2634,7 @@
       "source_date": "2026-08-20",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "LightGBM 研究另建输入和运行配置，只复用多模型族研究的公共流程、权重和守护机制。",
       "source_refs": [
         {
           "kind": "file",
@@ -2735,12 +2661,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_data.py#L1-L30"
         }
       ],
-      "note": "330另建输入和运行身份，仅复用ML公共合同、权重与守护基础，不沿用整套127模型结果。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "330另建输入和运行身份，仅复用ML公共合同、权重与守护基础，不沿用整套127模型结果。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "LightGBM 研究另建输入和运行配置，只复用多模型族研究的公共流程、权重和守护机制。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2751,6 +2676,7 @@
       "source_date": "2026-06-26",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "10 月 17 日重新核验订单簿状态和数量处理的规则及其对因子的影响；早期样本对照不能代替这次核验。",
       "source_refs": [
         {
           "kind": "file",
@@ -2765,12 +2691,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-17-szse-replay-rule-verification.md#L7-L28"
         }
       ],
-      "note": "10月17日重新核验OrderBook状态和数量操作的规则及因子影响；早期样本对照不能提前通过新审计。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "10月17日重新核验OrderBook状态和数量操作的规则及因子影响；早期样本对照不能提前通过新审计。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "10 月 17 日重新核验订单簿状态和数量处理的规则及其对因子的影响；早期样本对照不能代替这次核验。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2781,6 +2706,7 @@
       "source_date": "2026-07-07",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "后续报告继续用原站点的构建和内容流程。",
       "source_refs": [
         {
           "kind": "commit",
@@ -2797,12 +2723,11 @@
           "url": "https://github.com/MengerWen/internship-dashboard/commit/11d42ebed84aa734e189b30d63c782f7cb816f1b"
         }
       ],
-      "note": "后续报告直接继续使用原站点构建与内容管线，有源码/产物连续性。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "后续报告直接继续使用原站点构建与内容管线，有源码/产物连续性。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "后续报告继续用原站点的构建和内容流程。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2813,6 +2738,7 @@
       "source_date": "2026-07-13",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "研究编辑台直接改原站点的外壳和样式，路由和构建不变。",
       "source_refs": [
         {
           "kind": "file",
@@ -2827,22 +2753,22 @@
           "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/docs/plans/2026-08-11-research-desk-visual-refresh.md#L5-L85"
         }
       ],
-      "note": "研究编辑台直接修改既有站点壳层和样式，保留原路由与构建基础。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "研究编辑台直接修改既有站点壳层和样式，保留原路由与构建基础。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "研究编辑台直接改原站点的外壳和样式，路由和构建不变。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
       "from": "ml-330",
       "to": "model-report",
       "type": "收口",
-      "date": "2026-09-21",
-      "source_date": "2026-09-21",
+      "date": "2026-09-19",
+      "source_date": "2026-09-18",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "9 月 18 日的试跑写成 9 月 19 日的初版报告；9 月 21 日因果复算的结果替换了报告数据。",
       "source_refs": [
         {
           "kind": "file",
@@ -2876,12 +2802,11 @@
           "url": "https://github.com/MengerWen/internship-dashboard/commit/bc1098eb8bc950290a83e37b92ad6da1c730d67d"
         }
       ],
-      "note": "仅9月21日因果328单次复算替换报告数据；9月19日初版及全部133候选未被算作本次交接。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "仅9月21日因果328单次复算替换报告数据；9月19日初版及全部133候选未被算作本次交接。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "9 月 18 日的试跑写成 9 月 19 日的初版报告；9 月 21 日因果复算的结果替换了报告数据。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2892,6 +2817,7 @@
       "source_date": "2026-09-17",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "330 候选研究读取已存档的旧因子结果作为输入。",
       "source_refs": [
         {
           "kind": "file",
@@ -2918,12 +2844,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_data.py#L1-L30"
         }
       ],
-      "note": "330合同只读封存老因子来源；这是因子输入关系，不是模型执行框架关系。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "330合同只读封存老因子来源；这是因子输入关系，不是模型执行框架关系。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "330 候选研究读取已存档的旧因子结果作为输入。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2934,6 +2859,7 @@
       "source_date": "2026-09-09",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "330 候选的输入包括撤单相位买卖各 24 列的存档结果。",
       "source_refs": [
         {
           "kind": "file",
@@ -2948,12 +2874,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42"
         }
       ],
-      "note": "330输入绑定撤单相位买卖各24列的封存来源与命名空间。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "330输入绑定撤单相位买卖各24列的封存来源与命名空间。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "330 候选的输入包括撤单相位买卖各 24 列的存档结果。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2964,6 +2889,7 @@
       "source_date": "2026-09-08",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "330 候选的输入包括 24 列深度匹配的存档结果。",
       "source_refs": [
         {
           "kind": "file",
@@ -2978,12 +2904,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42"
         }
       ],
-      "note": "330输入明确读取独立24列深度匹配的封存来源。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "330输入明确读取独立24列深度匹配的封存来源。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "330 候选的输入包括 24 列深度匹配的存档结果。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -2994,6 +2919,7 @@
       "source_date": "2026-09-21",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "9 月 21 日冻结模型的输入列、顺序和哈希决定了 328 列重算的范围；模型的预测分数不是因子输入。",
       "source_refs": [
         {
           "kind": "file",
@@ -3020,12 +2946,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-21-causal-single-fit-recompute.md#L1-L9"
         }
       ],
-      "note": "9月21日r03冻结模型的全部输入映射、顺序与哈希决定328重算范围；模型预测分数不是因子输入。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "9月21日r03冻结模型的全部输入映射、顺序与哈希决定328重算范围；模型预测分数不是因子输入。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "9 月 21 日冻结模型的输入列、顺序和哈希决定了 328 列重算的范围；模型的预测分数不是因子输入。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3036,6 +2961,7 @@
       "source_date": "2026-09-09",
       "confidence": "confirmed",
       "evidence_kind": "direct_file",
+      "note": "328 列生产直接沿用撤单相位买卖各 24 列的原定义和分母。",
       "source_refs": [
         {
           "kind": "file",
@@ -3050,12 +2976,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
         }
       ],
-      "note": "328生产直接保留相位买卖各24列的原定义与分母，不能把来源全归老库。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "328生产直接保留相位买卖各24列的原定义与分母，不能把来源全归老库。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "328 列生产直接沿用撤单相位买卖各 24 列的原定义和分母。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3066,6 +2991,7 @@
       "source_date": "2026-09-08",
       "confidence": "confirmed",
       "evidence_kind": "direct_file",
+      "note": "328 列生产直接沿用 24 列深度匹配的原定义和依赖。",
       "source_refs": [
         {
           "kind": "file",
@@ -3080,54 +3006,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
         }
       ],
-      "note": "328生产直接保留24列深度匹配原注册合同与必要依赖。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "328生产直接保留24列深度匹配原注册合同与必要依赖。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
-      }
-    },
-    {
-      "from": "open5m",
-      "to": "cross-stock-sync",
-      "type": "派生",
-      "date": "2026-09-08",
-      "source_date": "2026-09-03",
-      "confidence": "confirmed",
-      "evidence_kind": "method_reuse",
-      "source_refs": [
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
-          "lines": [
-            1,
-            32
-          ],
-          "title": "C3.3 跨股票同步行为深入预检 Implementation Plan",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md#L1-L32"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
-          "path": "decisions/2026-09-03-actual-only-new-factor-prescreen.md",
-          "lines": [
-            1,
-            26
-          ],
-          "title": "新因子预查改为只统计真实分布",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26"
-        }
-      ],
-      "note": "C3.3从已有候选机制预查独立展开跨股同步问题；不因同日推进深度匹配就将两者串成因果。",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "C3.3从已有候选机制预查独立展开跨股同步问题；不因同日推进深度匹配就将两者串成因果。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "328 列生产直接沿用 24 列深度匹配的原定义和依赖。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3138,6 +3021,7 @@
       "source_date": "2026-07-07",
       "confidence": "confirmed",
       "evidence_kind": "code_reuse",
+      "note": "研究日志在原有静态构建和站点路由上新增证据和任务链内容。",
       "source_refs": [
         {
           "kind": "file",
@@ -3164,12 +3048,11 @@
           "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column-v2.md#L1-L45"
         }
       ],
-      "note": "研究日志在既有静态构建和站点路由上新增独立证据与任务链内容。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "研究日志在既有静态构建和站点路由上新增独立证据与任务链内容。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "研究日志在原有静态构建和站点路由上新增证据和任务链内容。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3180,6 +3063,7 @@
       "source_date": "2026-09-04",
       "confidence": "confirmed",
       "evidence_kind": "direct_file",
+      "note": "C7.1 在核对过环境的 wangly 上运行；这不代表全量结果已经传回 wenjie。",
       "source_refs": [
         {
           "kind": "file",
@@ -3206,12 +3090,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-08-depth-match-full-history-completion.md#L3-L118"
         }
       ],
-      "note": "C7.1在wangly以核对后的环境和guard执行；仅表示环境前提，不表示全量结果已回传wenjie。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "C7.1在wangly以核对后的环境和guard执行；仅表示环境前提，不表示全量结果已回传wenjie。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "C7.1 在核对过环境的 wangly 上运行；这不代表全量结果已经传回 wenjie。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3222,6 +3105,7 @@
       "source_date": "2026-10-09",
       "confidence": "confirmed",
       "evidence_kind": "code_input",
+      "note": "10 月 9 日公共 L2 取数入口实际接入分组定标。",
       "source_refs": [
         {
           "kind": "file",
@@ -3236,12 +3120,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-general-compute-efficiency.md#L3-L108"
         }
       ],
-      "note": "10月9日公共有界L2 reader实际接入分组runner；此前预检不追溯归因于本次优化。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "10月9日公共有界L2 reader实际接入分组runner；此前预检不追溯归因于本次优化。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "10 月 9 日公共 L2 取数入口实际接入分组定标。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3252,6 +3135,7 @@
       "source_date": "2026-10-13",
       "confidence": "confirmed",
       "evidence_kind": "operational_input",
+      "note": "10 月 13 日在 328 列生产任务上核验早盘暂停和恢复；这是运行保障，不影响因子数值。",
       "source_refs": [
         {
           "kind": "file",
@@ -3266,12 +3150,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md#L1-L26"
         }
       ],
-      "note": "10月13日生产回执核验328任务的早盘暂停与恢复；这是运行保障，不是因子科学输入。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "10月13日生产回执核验328任务的早盘暂停与恢复；这是运行保障，不是因子科学输入。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "10 月 13 日在 328 列生产任务上核验早盘暂停和恢复；这是运行保障，不影响因子数值。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3282,6 +3165,7 @@
       "source_date": "2026-10-20",
       "confidence": "confirmed",
       "evidence_kind": "artifact_input",
+      "note": "修正回放和真实计算进程的来源，成为 344 列重新定参的前提；旧参数包没有这个来源。",
       "source_refs": [
         {
           "kind": "file",
@@ -3308,12 +3192,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127"
         }
       ],
-      "note": "修正回放合同与真实worker来源成为344重新定参前提；旧参数包不具备当前来源。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "修正回放合同与真实worker来源成为344重新定参前提；旧参数包不具备当前来源。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "修正回放和真实计算进程的来源，成为 344 列重新定参的前提；旧参数包没有这个来源。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3324,6 +3207,7 @@
       "source_date": "2026-10-12",
       "confidence": "confirmed",
       "evidence_kind": "method_reuse",
+      "note": "只复用定参的归约方法和公共采集接口；新范围是全局六核、八组各 601 日，旧参数值不直接沿用。",
       "source_refs": [
         {
           "kind": "file",
@@ -3350,12 +3234,11 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
         }
       ],
-      "note": "只复用归约方法和公共采集接口；新范围采用全局六核、八组各601日，旧分组参数值不直接复用。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "只复用归约方法和公共采集接口；新范围采用全局六核、八组各601日，旧分组参数值不直接复用。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "只复用定参的归约方法和公共采集接口；新范围是全局六核、八组各 601 日，旧参数值不直接沿用。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
     {
@@ -3366,6 +3249,7 @@
       "source_date": "2026-10-18",
       "confidence": "confirmed",
       "evidence_kind": "method_reuse",
+      "note": "复用旧的逐列校验和下游抽取方法，另建独立的 344 列清单。",
       "source_refs": [
         {
           "kind": "file",
@@ -3380,12 +3264,173 @@
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127"
         }
       ],
-      "note": "复用旧精确列校验与消费者抽取方法，同时新建344独立清单，不宣称新范围绑定旧模型。",
       "review": {
-        "by": "Codex",
-        "on": "2026-10-21",
-        "basis": "复用旧精确列校验与消费者抽取方法，同时新建344独立清单，不宣称新范围绑定旧模型。",
-        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "复用旧的逐列校验和下游抽取方法，另建独立的 344 列清单。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
+      }
+    },
+    {
+      "from": "mechanism-precheck",
+      "to": "depth-match",
+      "type": "派生",
+      "date": "2026-09-05",
+      "source_date": "2026-09-04",
+      "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "note": "C7.1 深度匹配复用机制预查的组件和事件几何计算。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md",
+          "lines": [
+            5,
+            30
+          ],
+          "title": "C7.1 精确盘口深度匹配规律预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md#L5-L30"
+        }
+      ],
+      "review": {
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "C7.1 深度匹配复用机制预查的组件和事件几何计算。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
+      }
+    },
+    {
+      "from": "mechanism-precheck",
+      "to": "cross-stock-sync",
+      "type": "派生",
+      "date": "2026-09-08",
+      "source_date": "2026-09-03",
+      "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "note": "C3.3 从机制预查里单独展开跨股票同步问题；和同期的深度匹配不是一回事。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
+          "lines": [
+            1,
+            32
+          ],
+          "title": "C3.3 跨股票同步行为深入预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md#L1-L32"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "decisions/2026-09-03-actual-only-new-factor-prescreen.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "新因子预查改为只统计真实分布",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26"
+        }
+      ],
+      "review": {
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "C3.3 从机制预查里单独展开跨股票同步问题；和同期的深度匹配不是一回事。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
+      }
+    },
+    {
+      "from": "old-factor-calibration",
+      "to": "grouped-calibration",
+      "type": "延续",
+      "date": "2026-10-08",
+      "source_date": "2026-08-27",
+      "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "note": "10 月 8 日的分组预检复用全期定标的历史脚本和股票日中心；200 日预检不是最终的 601 日参数。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "深市老因子分组定标：定档预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59"
+        }
+      ],
+      "review": {
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "10 月 8 日的分组预检复用全期定标的历史脚本和股票日中心；200 日预检不是最终的 601 日参数。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
+      }
+    },
+    {
+      "from": "open5m",
+      "to": "old-factor-calibration",
+      "type": "延续",
+      "date": "2026-08-27",
+      "source_date": "2026-08-08",
+      "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "note": "全期定标重新估计开盘五分钟因子库用到的连续核尺度，因子定义不变。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-27-2024-2026Q2因子定标与3.11秒硬门实施计划.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2024—2026Q2 旧因子连续核重新定标实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-27-2024-2026Q2%E5%9B%A0%E5%AD%90%E5%AE%9A%E6%A0%87%E4%B8%8E3.11%E7%A7%92%E7%A1%AC%E9%97%A8%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L30"
+        }
+      ],
+      "review": {
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "全期定标重新估计开盘五分钟因子库用到的连续核尺度，因子定义不变。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
+      }
+    },
+    {
+      "from": "old-factor-calibration",
+      "to": "old-factor-bank",
+      "type": "依赖解除",
+      "date": "2026-09-12",
+      "source_date": "2026-09-10",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "200 日定标得到的 R19 参数交给旧因子全期正式计算。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-10-old-factor-formal-calculation-handoff-prompt.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "旧因子正式计算交接说明",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-10-old-factor-formal-calculation-handoff-prompt.md#L1-L30"
+        }
+      ],
+      "review": {
+        "by": "Claude",
+        "on": "2026-10-22",
+        "basis": "200 日定标得到的 R19 参数交给旧因子全期正式计算。",
+        "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     }
   ],

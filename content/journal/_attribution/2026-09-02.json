@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "date": "2026-09-02",
   "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
-  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "source_config_sha256": "ab878968c056428a3c5a8c0e4752ae5994caa8cf48de49fd2c9414b8f67cc74c",
   "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
   "revisions": {
     "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
@@ -71,13 +71,16 @@
       "subject": "feat: bind phase registry to formal open5m runs",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "cancel-phase"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "cancel-phase": {
           "numerator": 1,
           "denominator": 1
         }
@@ -99,12 +102,15 @@
       "subject": "test: isolate attention scheduler loader",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "cancel-phase"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "cancel-phase": {
           "numerator": 1,
           "denominator": 1
         }
@@ -201,13 +207,16 @@
       "subject": "docs: define real-data calibration plan",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -225,13 +234,16 @@
       "subject": "docs: add manual gate after 60s benchmark",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -248,13 +260,16 @@
       "subject": "feat: add real-data calibration primitives",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -272,12 +287,15 @@
       "subject": "feat: add mergeable calibration statistics",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -295,13 +313,16 @@
       "subject": "feat: add label-free factor mechanism prescreen",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -325,12 +346,15 @@
       "subject": "feat: require frozen noisy-or calibration",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -353,13 +377,16 @@
       "subject": "perf: narrow prescreen lifecycle materialization",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -376,13 +403,16 @@
       "subject": "feat: add calibration benchmark and eta model",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": null,
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "old-factor-calibration": {
           "numerator": 1,
           "denominator": 1
         }
@@ -402,13 +432,16 @@
       "subject": "perf: scope prescreen query to frozen SZSE universe",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -426,7 +459,7 @@
       "subject": "perf: parallelize prescreen stock lifecycle replay",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
       "subject_chain": "replay",
@@ -436,8 +469,11 @@
       "phase_mapping": {
         "replay": "open5m"
       },
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -455,13 +491,16 @@
       "subject": "perf: vectorize cross-stock prescreen transforms",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -478,12 +517,15 @@
       "subject": "perf: accelerate cross-stock same-quantity pairs",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
       "context_rule": "calibration-support",
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }
@@ -501,13 +543,16 @@
       "subject": "perf: reuse prescreen neighbor ordering",
       "status": "assigned",
       "chains": [
-        "open5m"
+        "mechanism-precheck"
       ],
       "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
       "subject_chain": "open5m",
       "related_chains": [],
+      "revised_from": [
+        "open5m"
+      ],
       "shares": {
-        "open5m": {
+        "mechanism-precheck": {
           "numerator": 1,
           "denominator": 1
         }

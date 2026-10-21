@@ -589,7 +589,7 @@
       "timestamp": "2026-08-04T16:01:22.794+08:00",
       "kind": "user-decision",
       "chains": [
-        "ml-count"
+        "ml-exec"
       ],
       "excerpt": "我决定在所有待实现模型中加入ICA，去除LSTM。",
       "supports": "证明当日存在模型候选讨论；不能据此认定模型已实现或已训练。"
@@ -621,7 +621,7 @@
       "timestamp": "2026-08-06T00:11:04.354+08:00",
       "kind": "user-decision",
       "chains": [
-        "open5m"
+        "fixed-history"
       ],
       "excerpt": "我现在需要把研究重心放在区分买卖方向上。",
       "supports": "补充买卖方向拆分的研究动机。"
@@ -685,7 +685,7 @@
       "timestamp": "2026-08-10T15:50:12.864+08:00",
       "kind": "user-decision",
       "chains": [
-        "ml-count"
+        "ml-exec"
       ],
       "excerpt": "好的。接下来就是所有这些模型的实施细节问题了。我需要一一跟你敲定，先探讨，然后写入PLAN中",
       "supports": "记录模型实施细节仍需逐项讨论、再写入计划的状态。"
@@ -893,7 +893,7 @@
       "timestamp": "2026-08-27T14:52:17.955+08:00",
       "kind": "user-question",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "excerpt": "那个“3s的时间硬门”到底合不合理？？除了使得因子计算时跑得快，有没有经济意义？",
       "supports": "补充时间硬门的经济含义讨论。"
@@ -909,7 +909,7 @@
       "timestamp": "2026-08-27T15:47:47.405+08:00",
       "kind": "user-request",
       "chains": [
-        "open5m"
+        "old-factor-bank"
       ],
       "excerpt": "请你把这些每一个因子都对我进行详细、完整构建逻辑的讲解，要包含构建所使用的数学表达式并解释意思",
       "supports": "补充完整审阅Open5m因子逻辑的要求。"
@@ -925,7 +925,7 @@
       "timestamp": "2026-08-28T11:27:55.301+08:00",
       "kind": "user-decision",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "excerpt": "采用“充分统计量＋指纹＋季度审计归档  ”的方法。",
       "supports": "记录历史定标产物的存储方案选择。"
@@ -941,7 +941,7 @@
       "timestamp": "2026-08-29T16:54:25.456+08:00",
       "kind": "user-question",
       "chains": [
-        "open5m"
+        "old-factor-bank"
       ],
       "excerpt": "宽泛的活动 scorer 会直接支配整个并集。",
       "supports": "补充因子聚合方式可能掩盖增量信息的讨论。"
@@ -957,7 +957,7 @@
       "timestamp": "2026-09-01T10:04:22.226+08:00",
       "kind": "user-request",
       "chains": [
-        "open5m"
+        "old-factor-bank"
       ],
       "excerpt": "1. 我说的是`方法一：事件触发—动作匹配`, `方法二：目标跟踪与偏差修复`, `方法三：市场状态切换 → 订单动作模式切换`, `方法四：重复触发下的稳定响应`这些方法要实现",
       "supports": "记录清洁算法痕迹方法的实现方向，不能据此认定已通过预检。"
@@ -973,7 +973,7 @@
       "timestamp": "2026-09-02T17:26:17.894+08:00",
       "kind": "user-decision",
       "chains": [
-        "open5m"
+        "old-factor-bank"
       ],
       "excerpt": "我明确要用noisy-OR，不要用A1。",
       "supports": "记录聚合方法的直接选择。"
@@ -989,7 +989,7 @@
       "timestamp": "2026-09-03T22:18:05.115+08:00",
       "kind": "user-decision",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "excerpt": "我想使用1/3数据量的2024—2026Q2 的全市场数据。",
       "supports": "补充缩小定标样本范围的要求。"
@@ -1005,7 +1005,7 @@
       "timestamp": "2026-09-04T09:56:03.211+08:00",
       "kind": "user-decision",
       "chains": [
-        "open5m"
+        "old-factor-calibration"
       ],
       "excerpt": "但我更希望从“经济意义”的角度出发挑选“各个市场状态都能涵盖到的”时间段",
       "supports": "补充希望覆盖不同市场状态的抽样原则。"
@@ -1021,7 +1021,7 @@
       "timestamp": "2026-09-05T14:14:13.851+08:00",
       "kind": "user-decision",
       "chains": [
-        "cancel-phase"
+        "old-factor-calibration"
       ],
       "excerpt": "暂时封存当前进度。当前代码算得实在太慢了，优化空间巨大。我去优化完代码、提速之后再从当前位置继续开始计算。",
       "supports": "记录因效率问题封存进度、先提速再续算的决定。"
@@ -1101,7 +1101,7 @@
       "timestamp": "2026-09-10T11:32:30.443+08:00",
       "kind": "user-request",
       "chains": [
-        "old-factor-bank"
+        "old-factor-calibration"
       ],
       "excerpt": "处理好F40评分接入和并发控制，等等程序连续性方面的内容，使得因子计算阶段不要再重复造轮子、能够高效复用当前已有的代码和结果",
       "supports": "补充因子计算阶段复用定标代码和结果的要求。"
@@ -1165,7 +1165,7 @@
       "timestamp": "2026-09-18T23:31:39.847+08:00",
       "kind": "user-request",
       "chains": [
-        "open5m"
+        "old-factor-bank"
       ],
       "excerpt": "详细研判这些因子是否存在未来信息泄露的风险",
       "supports": "补充对算法行为代理因子进行未来信息审查的要求。"
