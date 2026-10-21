@@ -150,6 +150,7 @@ def reconcile(materials, sessions, actions, decisions, source_config):
                 seen_messages.add(identity)
                 message_rows.append({'id': identity, 'session': key, 'date': msg['date'],
                     'timestamp': msg['timestamp'], 'role': msg['role'], 'line': msg['line'],
+                    'evidence_kind': msg.get('evidence_kind', 'message'),
                     'line_sha256': msg['line_sha256'], 'destination': destinations,
                     'disposition': decision['disposition']})
     session_map = {x['id']: x for x in session_rows}

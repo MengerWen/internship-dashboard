@@ -67,8 +67,10 @@ def main():
             title = '、'.join(names[c] for c in decision['chains'])
         for day in sorted({m['date'] for m in session['users']}):
             msgs = [m for m in session['users'] if m['date'] == day]
-            days[day]['sessions'].append({'id': key, 'title': title, 'chains': decision['chains'],
-                'user_lines': [{'line': m['line'], 'sha256': m['line_sha256'], 'time': m['timestamp']} for m in msgs]})
+            day_chains = decision.get('date_chains', {}).get(day, decision['chains'])
+            days[day]['sessions'].append({'id': key, 'title': title, 'chains': day_chains,
+                'user_lines': [{'line': m['line'], 'sha256': m['line_sha256'], 'time': m['timestamp'],
+                                'kind': m.get('evidence_kind', 'message')} for m in msgs]})
     register = {'schema_version': 1, 'scope': '固定快照内的逐材料、逐会话登记；不代表重新运行研究计算',
         'documents': sources, 'days': dict(sorted(days.items())),
         'counts': {k: len(ledger[k]) for k in ['files', 'sessions', 'messages', 'commits', 'actions']},
@@ -82,9 +84,9 @@ def main():
         text = [f'# {day} 原始来源登记', '',
             '日期来自消息自身时间和文件写入回执，均换算为北京时间。材料标题日期、Git入库日期分别保留在 source-register.json。', '',
             '会话表证明当时有这些要求、讨论或决定。阶段栏说明材料用途；“运行记录”“验收记录”不表示已经运行成功或验收通过，具体结论须读对应正文与收据。', '',
-            '## 会话', '', '| 会话与内容定位 | 研究去向 | 当日原始用户行号 |', '|---|---|---|']
+            '## 会话', '', '| 会话与内容定位 | 研究去向 | 当日原始消息行号 |', '|---|---|---|']
         for item in data['sessions']:
-            text.append(f"| {item['title'].replace('|', '／')} · `{item['id']}` | {'、'.join(names[c] for c in item['chains'])} | {', '.join(str(x['line']) for x in item['user_lines'])} |")
+            text.append(f"| {item['title'].replace('|', '／')} · `{item['id']}` | {'、'.join(names[c] for c in item['chains'])} | {', '.join(str(x['line']) + ('（自动监控）' if x['kind'] == 'automation-message' else '') for x in item['user_lines'])} |")
         text += ['', '## 已匹配写入回执的材料', '', '| 材料 | 阶段 | 去向 | 内容SHA-256 |', '|---|---|---|---|']
         for fid in data['documents']:
             item = by_doc[fid]

@@ -97,6 +97,8 @@ def message(record, platform):
             return None
         text = "\n".join(r["answer"] for r in replies if isinstance(r, dict) and isinstance(r.get("answer"), str) and r["answer"].strip())
         evidence_kind = "user-choice"
+    if role == "user" and text.startswith(("<heartbeat>", "<automation>")):
+        evidence_kind = "automation-message"
     if not text or text.startswith(WRAPPERS):
         return None
     return {"role": role, "text": text, "message_id": identifier, "phase": phase,

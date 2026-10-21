@@ -11,6 +11,11 @@ SPEC.loader.exec_module(sessions)
 
 
 class SessionEvidenceTests(unittest.TestCase):
+    def test_heartbeat_is_retained_without_becoming_a_human_decision(self):
+        record = {'type': 'response_item', 'payload': {'type': 'message', 'role': 'user',
+                  'content': [{'type': 'input_text', 'text': '<heartbeat>monitor sirui-quant-research</heartbeat>'}]}}
+        self.assertEqual(sessions.message(record, 'codex')['evidence_kind'], 'automation-message')
+
     def test_human_choice_reply_extracts_answer_without_adopting_question(self):
         text = '<send_user_message_question_reply>\n' + json.dumps([
             {'question': '问题文本不是用户的新决定', 'answer': '好了优化到这样已经可以了'}
