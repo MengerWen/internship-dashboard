@@ -110,9 +110,9 @@ def reconcile(materials, sessions, actions, decisions, source_config, inventory=
             if fid:
                 action_files[action['id']].add(fid)
             receipt = action.get('receipt')
-            if (fid and target['operation'] in WRITES and action.get('date')
-                    and receipt and not receipt.get('is_error')):
-                write_dates[fid].append({'date': action['date'], 'action': action['id'],
+            if (fid and target['operation'] in WRITES and receipt and receipt.get('timestamp')
+                    and receipt.get('execution_status') == 'confirmed'):
+                write_dates[fid].append({'date': receipt['timestamp'][:10], 'action': action['id'],
                     'operation': target['operation'], 'receipt_line_sha256': receipt['line_sha256']})
     file_rows = []
     primary_hashes = {}

@@ -42,6 +42,20 @@ class ActionTests(unittest.TestCase):
                               'session_id': 'native', 'snapshot_bytes': path.stat().st_size}]})
         self.assertEqual(result['actions'][0]['call_id'], 'call_456')
         self.assertEqual(result['actions'][0]['receipt']['line'], 3)
+        self.assertEqual(result['actions'][0]['receipt']['execution_status'], 'unconfirmed')
+
+    def test_native_file_change_completion_is_write_proof_without_a_wrapper(self):
+        rows = [{'type':'session_meta','payload':{'id':'s','cwd':'D:/research'}},
+                {'type':'event_msg','timestamp':'2026-10-10T00:00:00Z','payload':{'type':'item_completed',
+                 'thread_id':'s','completed_at_ms':1791526757000,'item':{'type':'FileChange','id':'native-write',
+                 'status':'completed','changes':{'reports/a.md':{'type':'add','content':'body'}}}}}]
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'native.jsonl';path.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+            result=collect({'sessions':[{'file':str(path),'platform':'codex','session_id':'s','snapshot_bytes':path.stat().st_size}]})
+        self.assertEqual(len(result['actions']),1)
+        self.assertEqual(result['actions'][0]['receipt']['execution_status'],'confirmed')
+        self.assertEqual(result['actions'][0]['date'],'2026-10-09')
+        self.assertEqual(result['actions'][0]['targets'],[{'operation':'add','path':'reports/a.md'}])
 
     def test_patch_targets_and_direct_writes_remain_distinct(self):
         self.assertEqual(targets('Write', {'file_path': 'D:/research/report.md'}),

@@ -1,5 +1,6 @@
 import copy
 import unittest
+from pathlib import Path
 
 from scripts.reconcile_journal_sources import canonical, digest, public_ledger, reconcile
 from scripts.collect_journal_inventory import session_fingerprint
@@ -36,6 +37,17 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual(result['messages'][0]['date'], '2026-10-14')
         self.assertNotIn('path', public_ledger(result)['files'][0])
         self.assertEqual(public_ledger(result)['files'][0]['destination'], ['chain:idea'])
+
+    def test_wrapper_completion_is_not_write_proof_and_receipt_date_is_used(self):
+        args = self.fixture()
+        args[2]['actions'] = [{'id':'a','platform':'codex','session_id':'s','date':'2026-10-09',
+            'date_status':'message-timestamp','cwd':str(Path(__file__).resolve().parents[1]),
+            'targets':[{'operation':'add','path':'reports/a.md'}],
+            'receipt':{'is_error':False,'execution_status':'unconfirmed',
+                       'timestamp':'2026-10-10T00:01:00+08:00','line_sha256':'r'}}]
+        self.assertEqual(reconcile(*args)['files'][0]['write_evidence'],[])
+        args[2]['actions'][0]['receipt']['execution_status']='confirmed'
+        self.assertEqual(reconcile(*args)['files'][0]['write_evidence'][0]['date'],'2026-10-10')
 
     def test_changed_or_failed_input_cannot_pass_coverage(self):
         for mode in ('changed', 'failed'):

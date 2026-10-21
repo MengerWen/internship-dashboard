@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
@@ -14,6 +15,22 @@ except ModuleNotFoundError:
     from collect_journal_sessions import local_time
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def execution_status(platform, name, part, result):
+    if part.get('is_error') or part.get('isError'):
+        return 'failed'
+    text = str(result)
+    tool = name.rsplit('.', 1)[-1].lower()
+    if platform == 'codex' and tool == 'apply_patch':
+        exit_codes = re.findall(r'(?:Exit code:|"exit_code"\s*:)\s*(-?\d+)', text, re.I)
+        if any(int(code) != 0 for code in exit_codes):
+            return 'failed'
+        return 'confirmed' if 'Success. Updated the following files:' in text else 'unconfirmed'
+    if platform == 'claude' and tool in ('write', 'edit'):
+        return 'confirmed' if re.search(r'(?:created|updated|written|applied) successfully|successfully (?:created|updated|written)', text, re.I) else 'unconfirmed'
+    # exec返回完成只证明外壳结束；输入中的补丁可能只是引用或尚未成功执行。
+    return 'unconfirmed'
 
 
 def targets(name, arguments):
@@ -49,6 +66,40 @@ def collect(index):
                     if record.get('type') in ('session_meta', 'turn_context'):
                         meta.update(record.get('payload', {}))
                     platform = session['platform']
+                    event = record.get('payload', {})
+                    native = event.get('item', {})
+                    if platform == 'codex' and event.get('type') == 'item_completed' and str(native.get('type', '')).replace('_', '').lower() == 'filechange':
+                        digest = hashlib.sha256(raw).hexdigest()
+                        identity = hashlib.sha256((digest + '\0native-file-change\0' + str(native.get('id'))).encode()).hexdigest()
+                        if identity in seen:
+                            continue
+                        seen.add(identity)
+                        changes = native.get('changes', {})
+                        if isinstance(changes, dict):
+                            touched = []
+                            for p, v in changes.items():
+                                touched.append({'operation': 'delete' if v.get('move_path') else v.get('type', 'update').lower(), 'path': p})
+                                if v.get('move_path'):
+                                    touched.append({'operation':'add', 'path':v['move_path']})
+                        else:
+                            touched = [{'operation': (v.get('kind') or {}).get('type', 'update').lower(), 'path':v['path']} for v in changes]
+                        try:
+                            stamp = (local_time(datetime.fromtimestamp(event['completed_at_ms']/1000, timezone.utc).isoformat())
+                                     if event.get('completed_at_ms') is not None else local_time(record.get('timestamp')))
+                        except (ValueError, TypeError, KeyError, OverflowError):
+                            stamp = None
+                        confirmed = native.get('status') == 'completed'
+                        actions.append({'id': identity, 'platform': platform, 'session_id': event.get('thread_id') or meta.get('id') or session['session_id'],
+                            'file': filename, 'line': number, 'byte_offset': offset, 'line_sha256': digest,
+                            'timestamp': stamp, 'date': stamp[:10] if stamp else None,
+                            'date_status': 'native-completion-timestamp' if stamp else 'missing-timestamp',
+                            'cwd': meta.get('cwd') or session.get('cwd'), 'tool_name': 'native-file-change',
+                            'call_id': native.get('id'), 'native_item_id': native.get('id'), 'target_basis': 'native-file-change', 'targets': touched,
+                            'receipt': {'line': number, 'line_sha256': digest, 'is_error': not confirmed,
+                                        'execution_status': 'confirmed' if confirmed else 'failed', 'timestamp': stamp,
+                                        'preview': str(native.get('status'))}})
+                        counts['native_file_changes'] += 1
+                        continue
                     parts = record.get('message', {}).get('content', []) if platform == 'claude' else [record.get('payload', {})]
                     if not isinstance(parts, list):
                         continue
@@ -80,7 +131,7 @@ def collect(index):
                                 'timestamp': stamp, 'date': stamp[:10] if stamp else None,
                                 'date_status': 'message-timestamp' if stamp else 'missing-timestamp',
                                 'cwd': record.get('cwd') or meta.get('cwd') or session.get('cwd'),
-                                'tool_name': name, 'call_id': call_id, 'targets': touched, 'receipt': None}
+                                'tool_name': name, 'call_id': call_id, 'target_basis': 'argument-pattern', 'targets': touched, 'receipt': None}
                             actions.append(action)
                             actions_by_id[identity] = action
                         elif kind in ('tool_result', 'function_call_output', 'custom_tool_call_output'):
@@ -91,12 +142,15 @@ def collect(index):
                                 action = actions_by_id.get(digest)
                                 if action and action['receipt'] is None:
                                     result = part.get('content') if platform == 'claude' else part.get('output')
+                                    try: stamp = local_time(record.get('timestamp'))
+                                    except (ValueError, TypeError): stamp = None
+                                    status = execution_status(platform, action['tool_name'], part, result)
                                     action['receipt'] = {'line': number, 'line_sha256': hashlib.sha256(raw).hexdigest(),
-                                        'is_error': bool(part.get('is_error') or part.get('isError')),
+                                        'is_error': status == 'failed', 'execution_status': status, 'timestamp': stamp,
                                         'preview': str(result)[:600]}
         except (OSError, ValueError, TypeError) as exc:
             failures.append({'file': filename, 'error': str(exc)})
-    return {'schema_version': 2, 'actions': actions, 'counts': dict(counts), 'failures': failures,
+    return {'schema_version': 3, 'actions': actions, 'counts': dict(counts), 'failures': failures,
             'note': '历史文件动作定位。调用及返回不等于整个研究运行成功；完成状态仍核对正文、文件和专门运行收据。'}
 
 
