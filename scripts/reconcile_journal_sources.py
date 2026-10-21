@@ -22,13 +22,12 @@ def digest(value):
 
 
 def canonical(path):
-    path = path.replace('\\', '/')
-    if re.match(r'^/[A-Za-z]:/', path):
-        path = path[1:]
-    path = ntpath.normpath(path).replace('\\', '/')
-    path = path.replace('D:/MG/！Internship/26 Summer/❗思瑞投资',
-                        'D:/MG/_GitLinked/Quant_Research-Trading/26 Summer/❗思瑞投资')
-    return ntpath.normpath(path).replace('\\', '/').casefold()
+    from scripts.collect_journal_sessions import norm
+    value = norm(path)
+    alias = norm('D:/MG/！Internship/26 Summer/❗思瑞投资')
+    if value == alias or value.startswith(alias + '/'):
+        value = norm('D:/MG/_GitLinked/Quant_Research-Trading/26 Summer/❗思瑞投资') + value[len(alias):]
+    return value
 
 
 def private(path):

@@ -67,6 +67,8 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual(len(result['messages']), 1)
 
     def test_windows_alias_and_slash_prefix_match_without_losing_drive(self):
+        self.assertEqual(canonical(r'\\?\D:\MG\！Internship\26 Summer\❗思瑞投资\a.md'),
+                         canonical('D:/MG/_GitLinked/Quant_Research-Trading/26 Summer/❗思瑞投资/a.md'))
         self.assertEqual(canonical('/D:/MG/！Internship/26 Summer/❗思瑞投资/a.md'),
                          canonical('D:/MG/_GitLinked/Quant_Research-Trading/26 Summer/❗思瑞投资/a.md'))
         self.assertEqual(canonical(r'D:\\MG\\！Internship\\26 Summer\\❗思瑞投资\\a.md'),
