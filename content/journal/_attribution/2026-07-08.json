@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-08",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "4b39b0563ba091ad550a6ba618fb30d4d4d950e3",
+      "date": "2026-07-08",
+      "subject": "多加几张图 26.7.8 00:36",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/notebooks/90_method_comparison.ipynb"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "97e5b5cd69543b1fa0dac991af1f142491c3fc6c",
+      "date": "2026-07-08",
+      "subject": "Update dashboard submodule",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "dashboard"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "0032b09002b3755507bee56113c07567e71b908f",
+      "date": "2026-07-08",
+      "subject": "`ccp__sruns`改进 26.7.8 12:24",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [
+        "lv2-snapshot"
+      ],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/PLAN/PLAN_ccp_sruns_rework.md"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "15b41275ac1c5a9c0fbd172d03aa0035743d4cd8",
+      "date": "2026-07-08",
+      "subject": "实施`cc0__sruns`改进 26.7.8 15:01",
+      "status": "shared",
+      "chains": [
+        "literature",
+        "lv2-snapshot"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "literature": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "lv2-snapshot": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/原始数据说明书/上海证券交易所历史数据接口说明书(1.1.2)_20231213.pdf",
+        "lv2_snapshot_workspace/原始数据说明书/深交所历史数据 - 历史高频行情数据结构文档（20160509前生效）_2020.pdf",
+        "lv2_snapshot_workspace/原始数据说明书/深交所历史数据 - 历史高频行情数据结构文档（20160509后生效）v3.0.pdf",
+        "因子/lowlat/src/lowlat/runs.py",
+        "因子/lowlat/tests/test_lowlat_runs.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "74bc62e6e91e67d185b53ecf81927ac714dfa3b8",
+      "date": "2026-07-08",
+      "subject": "Update dashboard submodule",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "dashboard"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "2762dc74da88aa27252189ca70ddebf8cf333cf8",
+      "date": "2026-07-08",
+      "subject": "多加几张图 26.7.8 00:36",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-07-07.md",
+        "content/daily/2026-07-07.show.html",
+        "site/assets/algo-footprint-2026-07-07/bucket_leadlag_ccf.png",
+        "site/assets/algo-footprint-2026-07-07/flag_sub200_full_sample.png",
+        "site/assets/algo-footprint-2026-07-07/method_uniqueness.png",
+        "site/assets/algo-footprint-2026-07-07/order_hit_multiplicity.png",
+        "site/assets/algo-footprint-2026-07-07/order_overlap_jaccard.png",
+        "site/assets/algo-footprint-2026-07-07/physics_fingerprint_panel.png",
+        "site/assets/algo-footprint-2026-07-07/scorecard_size_neutralized.png"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "66151eb69c66ea157354d0b2eb00ca63bf744829",
+      "date": "2026-07-08",
+      "subject": "增加下载功能 26.7.8 00:46",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "build.py",
+        "site/css/daily.css",
+        "site/js/daily.js"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "24ce0dcf987a6c9628eeeae2d3c022cb5a9d8fcb",
+      "date": "2026-07-08",
+      "subject": "+数学表达式 26.7.8 01:36",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "build.py",
+        "content/daily/2026-07-07.md",
+        "site/index.html",
+        "site/js/content-enhance.js",
+        "site/js/daily.js",
+        "site/js/router.js",
+        "site/js/showcase.js",
+        "site/vendor/mathjax/tex-svg.js"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "679f505669cd755c93904b980ebcd50ceae900af",
+      "date": "2026-07-08",
+      "subject": "小修补 26.7.8 01:47",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-07-07.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "b06c2be4b2ab836a635a4f8476703db33438982e",
+      "date": "2026-07-08",
+      "subject": "粗体+引用 26.7.8 10:46",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "build.py",
+        "content/daily/2026-07-07.md",
+        "content/daily/2026-07-07.show.html",
+        "site/css/base.css",
+        "site/js/router.js"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "33988ba21c6bde9f68698dee3325529150e2d6a4",
+      "date": "2026-07-08",
+      "subject": "Add 2026-07-08 sruns dashboard",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-07-08.md",
+        "content/daily/2026-07-08.show.html",
+        "site/assets/algo-footprint-2026-07-08/fig_a_excess_curves.png",
+        "site/assets/algo-footprint-2026-07-08/fig_b_superset_distributions.png",
+        "site/assets/algo-footprint-2026-07-08/fig_c_length_survival.png",
+        "site/assets/algo-footprint-2026-07-08/fig_d_coverage.png",
+        "site/assets/algo-footprint-2026-07-08/fig_e_stability_heatmap.png",
+        "site/assets/algo-footprint-2026-07-08/fig_f_case_01.png",
+        "site/assets/algo-footprint-2026-07-08/fig_f_case_02.png",
+        "site/assets/algo-footprint-2026-07-08/fig_f_case_03.png"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "e6b80f52c3b33ffb61be34915eb8d03ad4f024a8",
+      "date": "2026-07-08",
+      "subject": "初步 26.7.8 15:25",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-07-07.md",
+        "content/daily/2026-07-08.md",
+        "site/assets/algo-footprint-2026-07-08/sruns_coverage_stability.png",
+        "site/assets/algo-footprint-2026-07-08/sruns_parameter_excess_curves.png",
+        "site/assets/algo-footprint-2026-07-08/sruns_placebo_link_rates.png",
+        "site/assets/algo-footprint-2026-07-08/sruns_price_layer_excess.png",
+        "site/assets/algo-footprint-2026-07-08/sruns_small_order_guard.png",
+        "site/assets/algo-footprint-2026-07-08/sruns_true_run_confirmation.png"
+      ]
+    }
+  ]
+}

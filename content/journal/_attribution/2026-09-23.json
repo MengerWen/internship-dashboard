@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-23",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "100337b1ed98ae2b20ff874da8ac0e13dc68e9c4",
+      "date": "2026-09-23",
+      "subject": "feat: reconstruct SSE logical orders with factor-specific input evidence",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [
+        "cancel-phase",
+        "depth-match"
+      ],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_sse_factor_inputs.py",
+        "因子/algobench/src/algobench/sse_reconstruction.py",
+        "因子/algobench/tests/test_sse_factor_dependencies.py",
+        "因子/algobench/tests/test_sse_reconstruction.py",
+        "因子/algobench/tests/test_sse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "acc1d0ba8c62250fbe68a884ea06de2359e0a562",
+      "date": "2026-09-23",
+      "subject": "fix: load production registry in SSE source audit",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_sse_factor_inputs.py",
+        "因子/algobench/tests/test_sse_reconstruction.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "122d5262d55750f783f563931fb03a30440480b5",
+      "date": "2026-09-23",
+      "subject": "feat: reconcile SSE reconstruction with company snapshots",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [
+        "cancel-phase"
+      ],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_sse_factor_inputs.py",
+        "因子/algobench/src/algobench/sse_reconstruction.py",
+        "因子/algobench/tests/test_sse_reconstruction.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c46a33b719d9d58a5557730de51cbe9e79683dd6",
+      "date": "2026-09-23",
+      "subject": "fix: require identified SSE inputs for complete factor panels",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [
+        "cancel-phase",
+        "depth-match"
+      ],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_cancel_phase_panel.py",
+        "因子/algobench/src/algobench/depth_match_run.py",
+        "因子/algobench/src/algobench/exchange_observability.py",
+        "因子/algobench/tests/test_depth_match_panel.py",
+        "因子/algobench/tests/test_run_open5m_cancel_phase_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "032befc44411d951be311ff3436d908148f49ec8",
+      "date": "2026-09-23",
+      "subject": "feat: preserve published order time for SSE residual orders",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_reconstruction.py",
+        "因子/algobench/tests/test_sse_reconstruction.py",
+        "因子/algobench/tests/test_sse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c2d6d525a09aee173c652fdbcf6f0e9217a74a6d",
+      "date": "2026-09-23",
+      "subject": "docs: record SSE reconstruction and factor acceptance evidence",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-23-sse-factor-reconstruction-implementation.md",
+        "reports/2026-09/2026-09-23-sse-implementation-evidence/company-input-audit-004-guard.json",
+        "reports/2026-09/2026-09-23-sse-implementation-evidence/company-input-audit-004.json",
+        "reports/2026-09/2026-09-23-sse-implementation-evidence/regression-final-003.log.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d69effd0e18d2fb885503f9274268a20d1345df3",
+      "date": "2026-09-23",
+      "subject": "test: preserve isolated SSE regression log",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-23-sse-implementation-evidence/regression-final-003.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c60af4a172f1a76b1591eccdb2d21c53ea6dcf21",
+      "date": "2026-09-23",
+      "subject": "增加沪市委托还原参考规则的公司数据核验",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_sse_reconstitution_reference.py",
+        "因子/algobench/tests/test_sse_reconstitution_reference.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fab4459c0ba108a8802380cca1cecdc5bc9e21f5",
+      "date": "2026-09-23",
+      "subject": "记录沪市委托还原资料和公司逐笔核验结论",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-23-sse-fintechhi-company-assessment.md",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/article-fields.tsv",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/company-audit.json",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/company-guard.json",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/company-schema.tsv",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/depth-price-tests-001.log",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/depth-price-tests-001.log.json",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/manifest-and-preflight.tsv",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/price-dependency-tests-001.log",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/price-dependency-tests-001.log.json",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/reference-tests-001.log",
+        "reports/2026-09/2026-09-23-sse-fintechhi-evidence/reference-tests-001.log.json"
+      ]
+    }
+  ]
+}

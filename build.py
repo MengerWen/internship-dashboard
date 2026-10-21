@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import html as html_lib
+import hashlib
 import json
 import re
 import shutil
@@ -605,6 +606,13 @@ class Builder:
             self.warnings.append(f"日志还有 {missing} 天缺少每日记录，已回落为待写条目")
         by_chain = {c["id"]: c for c in chains}
         daily = {p.key: p for p in self.daily_pages}
+        attribution_fingerprints = {}
+        for filename, field in [("journal_repos.json", "source_config_sha256"),
+                                ("journal_attribution_rules.json", "rules_sha256")]:
+            path = journal_dir.parent.parent / "scripts" / filename
+            if path.exists():
+                canonical = json.dumps(self.read_json(path), sort_keys=True, ensure_ascii=False).encode()
+                attribution_fingerprints[field] = hashlib.sha256(canonical).hexdigest()
         drafts = long_drafts = missing_chain_notes = 0
         for key in sorted(notes.keys() | evidence.keys()):
             try:
@@ -672,12 +680,31 @@ class Builder:
                     covering.append(rday)
             published = [d for d in ev.get("reports_published", []) if d in daily]
             commits = {repo["repo"]: repo["commits"] for repo in ev.get("repos", [])}
+            attribution_path = journal_dir / "_attribution" / f"{key}.json"
+            attribution, attribution_summary, chain_weights = None, None, {}
+            if attribution_path.exists():
+                from scripts.collect_journal_attribution import summarize_day
+                attribution = self.read_json(attribution_path)
+                if attribution.get("date") != key or attribution.get("schemaVersion") != 1:
+                    raise ValueError(f"日志 {key} 提交归属的日期或版本无效")
+                if any(attribution.get(field) != fingerprint for field, fingerprint in attribution_fingerprints.items()):
+                    raise ValueError(f"日志 {key} 提交归属落后于来源配置或分类规则，请重新核对采集")
+                attribution_summary = summarize_day(attribution, chain_ids)
+                if attribution_summary["repos"] != commits:
+                    raise ValueError(f"日志 {key} 归属清单与固定采集计数不一致")
+                chain_weights = dict(attribution_summary["chains"])
+                for cid in picked:
+                    chain_weights.setdefault(cid, {"value": 0, "direct": 0, "shared": 0,
+                                                   "numerator": 0, "denominator": 1})
             entry = {"date": key, "weekday": "周" + "一二三四五六日"[datetime.fromisoformat(key).weekday()],
                      "headline": headline, "headline_source": source, "chains": picked,
                      "chain_confidence": confidence, "chain_notes": chain_notes, "highlights": highlights, "commits": commits,
                      "total_commits": sum(commits.values()), "report": covering[0] if covering else None,
                      "reports_covering": covering, "reports_published": published,
                      "has_body": bool(body.strip()), "evidence_path": f"journal/_evidence/{key}.json"}
+            if attribution_summary is not None:
+                entry["chain_weights"] = chain_weights
+                entry["attribution_summary"] = {k: v for k, v in attribution_summary.items() if k != "chains"}
             if meta.get("date_notes"):
                 entry["date_notes"] = {cid: str(note) for cid, note in meta["date_notes"].items() if cid in picked}
             self.journal_entries.append(entry)
@@ -686,6 +713,8 @@ class Builder:
                 {"date": d, "title": daily[d].title, "summary": daily[d].meta["summary"]}
                 for d in dict.fromkeys(covering + published)
             ]}
+            if attribution is not None:
+                ev["attribution"] = attribution
             self.journal_evidence[key] = ev
             self.write_text(self.out_dir / entry["evidence_path"], json.dumps(ev, ensure_ascii=False, indent=2))
             self.write_text(self.out_dir / "journal" / f"{key}.html", body)

@@ -1,0 +1,1442 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-07",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dc8639068ccf2a65a2a515c126e6cfa71cdd57ba",
+      "date": "2026-08-07",
+      "subject": "feat: build open5m count proxy factor bank",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_count_proxy_bank_result.py",
+        "scripts/evaluate_open5m_count_proxy_bank.py",
+        "scripts/render_open5m_count_proxy_bank_launcher.py",
+        "scripts/run_open5m_count_proxy_bank_server_task.sh",
+        "因子/algobench/configs/open5m_count_proxy_factor_matrix_v2.yaml",
+        "因子/algobench/tests/test_evaluate_open5m_count_proxy_bank.py",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py",
+        "因子/algobench/tests/test_open5m_proxy_registry.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e043d5e518b3dd71ea1531d163882ff12a8934e0",
+      "date": "2026-08-07",
+      "subject": "fix: preserve accepted L1 reference root",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/render_open5m_count_proxy_bank_launcher.py",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "91156b789995b896c1d2a8a3afc7c4ca6b69e9bc",
+      "date": "2026-08-07",
+      "subject": "fix: run proxy bank with evaluation semantics",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_count_proxy_bank_server_task.sh",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "93f42e8b49360c48325cfebed4d0ea003846dca3",
+      "date": "2026-08-07",
+      "subject": "perf: bound proxy pair batches and vectorize contexts",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_contexts.py",
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a5d57f959da5d9b54a656e7685aab7dcba8b9988",
+      "date": "2026-08-07",
+      "subject": "optimize burst pair reduction",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c891772c7a65c53539677af21deaf34891c8810a",
+      "date": "2026-08-07",
+      "subject": "prune formal response queries",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_pair_stream.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c0493b206d0a7b42f3ee8727b03058a43280b3ca",
+      "date": "2026-08-07",
+      "subject": "perf(open5m): prune response pairs with exact pilots",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e5c603f041b629f4980187a7580fec8755a6c612",
+      "date": "2026-08-07",
+      "subject": "fix(open5m): scope adaptive response pruning",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1b055d03f5ef0b932ab59624b5978d5fce5ae396",
+      "date": "2026-08-07",
+      "subject": "perf(open5m): restore large pair batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "53c9de0293cae4622fc21e55f7557624c5e94607",
+      "date": "2026-08-07",
+      "subject": "perf(open5m): compact transient pair batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/tests/test_formal_pair_stream.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a57c76e867c4828a748af43121b6da92c964f355",
+      "date": "2026-08-07",
+      "subject": "perf(open5m): disable costly response pilot",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5407e50d44e683291d7d024142e9fa8584dfd2e2",
+      "date": "2026-08-07",
+      "subject": "perf(open5m): share response range compression",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc08028744444e1363d0b94e0bd0b0d7c4cb02de",
+      "date": "2026-08-07",
+      "subject": "optimize bounded pair group reduction",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b360a76a5a36101fc69b173f352120d64a901844",
+      "date": "2026-08-07",
+      "subject": "accelerate ordered response range reduction",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6d9d17975972bebb29268e1e6905c11a0ab382c",
+      "date": "2026-08-07",
+      "subject": "reuse intraday trade preparation",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/intraday_labels.py",
+        "因子/algobench/tests/test_intraday_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "466b7f8cc764ecb06bbdf95d79c62663c4c41907",
+      "date": "2026-08-07",
+      "subject": "perf: accelerate causal trigger and cancel scans",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_algorithm_purpose_factors.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4386733b0e9587c5621ac0911293ef3f30b09356",
+      "date": "2026-08-07",
+      "subject": "perf: scan response exclusions in compiled batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "974f25cd6e747e69b1f848f4cc1905f0e43d3c9f",
+      "date": "2026-08-07",
+      "subject": "perf: encode only projected pair columns",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0a521b277cd2e28c2d9f29abfaed1cff89485933",
+      "date": "2026-08-07",
+      "subject": "perf: enlarge projected pair batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "572993bbe73f84e1b3c1d6e2fa89d0e576f66d4b",
+      "date": "2026-08-07",
+      "subject": "perf: reduce bounded pair groups in compiled state",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "da58986baa8ec2904710b190c13d2ef2bebbc468",
+      "date": "2026-08-07",
+      "subject": "perf: compile bounded group prefix scoring",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ee9283eb5ecd5448e9422119448c7d3b579c59db",
+      "date": "2026-08-07",
+      "subject": "perf: dispatch projected pair arrays without Arrow",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76ca6506bc1897252d161a497a5d6a7748c6e9c0",
+      "date": "2026-08-07",
+      "subject": "Optimize repeated pair response lookups",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "595082a9a337a80c883dbe67ce809d56f037bdbe",
+      "date": "2026-08-07",
+      "subject": "Fuse response group selection",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a76535dc70c80f63c6937c0834e70e035c0306c",
+      "date": "2026-08-07",
+      "subject": "Prune repeated response lookups adaptively",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "298e94e476336be7b8e883aafc8b289c256bb7fa",
+      "date": "2026-08-07",
+      "subject": "Fuse adaptive response pruning masks",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "03a980dc44945e7b28a00be4a1d44cb3c5f7073d",
+      "date": "2026-08-07",
+      "subject": "Keep adaptive response pruning off production path",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2869a7b28bcb7afd540502c2dfa4be2a5b0f67a8",
+      "date": "2026-08-07",
+      "subject": "Compact adaptive response pilot lookups",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2f608b9cf132bd6d7797ea6835242d40a32d50e5",
+      "date": "2026-08-07",
+      "subject": "Compact adaptively pruned response batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "71548dbcc79fe803e45337358cc03e20de3d0972",
+      "date": "2026-08-07",
+      "subject": "Feed group and burst reducers from arrays",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1d4d3847e69c174143078bdc1e25a0705e2eca4b",
+      "date": "2026-08-07",
+      "subject": "Share bounded group reducers by signature",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7fd4133d7d9b0520ac3b9f4a9b6192a3bc5893cb",
+      "date": "2026-08-07",
+      "subject": "Revert \"Share bounded group reducers by signature\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "57aad583f5a7bbd88398fc39fdebd6ee03de9d27",
+      "date": "2026-08-07",
+      "subject": "Probe top response bounds per anchor",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e4af0dbedd658514cce0784038184d537bf1fc47",
+      "date": "2026-08-07",
+      "subject": "Tighten adaptive response range bounds",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e116329e1bb7c7aea1cbd07fca123b70d33ea9cc",
+      "date": "2026-08-07",
+      "subject": "Use one pilot with tight response bounds",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0238bc21b07dbecc54731a8bb9f91225e6d5c850",
+      "date": "2026-08-07",
+      "subject": "Compress adaptive range bounds by run",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e5de57d4d59c27c80c135feb2757608d32b9dfdf",
+      "date": "2026-08-07",
+      "subject": "Revert adaptive response range bounds",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0ebffebf8f6c6d8264335ab40ecd04b16ee89d29",
+      "date": "2026-08-07",
+      "subject": "Avoid group reducer batch stacking",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dd6caf61beb15622d815e6e2384edafe4241c683",
+      "date": "2026-08-07",
+      "subject": "Localize bounded group state layout",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d563984a7f3c0f1e0d7a4fa90c9756656eeec4b9",
+      "date": "2026-08-07",
+      "subject": "Reuse pair lookup positions across reducers",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c4f8bacb1bb80e1956a7af3a515f9cd5d131cedc",
+      "date": "2026-08-07",
+      "subject": "Build shared pair positions on demand",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5ffab06ae738660b8d530c56f355ef293d431940",
+      "date": "2026-08-07",
+      "subject": "Revert shared pair lookup positions",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b06d01da8e095741c0ae466943d4b28f3665ecd7",
+      "date": "2026-08-07",
+      "subject": "Probe sixteen response pilots per anchor",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d24804fa45b660542c3aa01ffa4459be3777e75c",
+      "date": "2026-08-07",
+      "subject": "Revert \"Probe sixteen response pilots per anchor\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf0f009a2b29c1612b21d215064164982a423da8",
+      "date": "2026-08-07",
+      "subject": "Reduce count proxy pair batch size",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5dec61bb350629a3be8b08f54af7d846b5515c0b",
+      "date": "2026-08-07",
+      "subject": "Revert \"Reduce count proxy pair batch size\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "51fc58df85b84b80aa72cbec1c42fd30efb60b66",
+      "date": "2026-08-07",
+      "subject": "Refine response survivors with tight bounds",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a714439cbfb4a790be2daace957aa42bb470bb3b",
+      "date": "2026-08-07",
+      "subject": "Pilot tight response survivors exactly",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3e4883838a5de1f232df1011889de1aebeabb4cb",
+      "date": "2026-08-07",
+      "subject": "Revert \"Pilot tight response survivors exactly\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d0fe989bd775b26202fa15229d5da3c42361c3b2",
+      "date": "2026-08-07",
+      "subject": "Revert \"Refine response survivors with tight bounds\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "066674c14c4c50d851a6c6cd0b72ea61fa5de55e",
+      "date": "2026-08-07",
+      "subject": "Balance heavy streamed stock tasks",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5b71aa6eef85083053fbee0d022bdc069c011cb4",
+      "date": "2026-08-07",
+      "subject": "Revert \"Balance heavy streamed stock tasks\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "20509f54f826b1c5f089af462d10eb3b6d997d68",
+      "date": "2026-08-07",
+      "subject": "Reuse worker progress file descriptors",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2ed08ce112cc2e6d38b1217005bdd6b83eab2e6f",
+      "date": "2026-08-07",
+      "subject": "Revert \"Reuse worker progress file descriptors\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82257a511b0bb2f6aab9eb5bb7d2fe01e673f1e9",
+      "date": "2026-08-07",
+      "subject": "Honor streaming parser threads and coalesce progress",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b28d5a5f1d4f917e42936b330b54801cec72f9a5",
+      "date": "2026-08-07",
+      "subject": "Align L2 stream order with Doris storage key",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cd032812673a1210ec4c2ea228bc4ac5e784e9a4",
+      "date": "2026-08-07",
+      "subject": "Restore canonical L2 query order",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "70326c770a13cef5f0f7ee22576eb78768272de9",
+      "date": "2026-08-07",
+      "subject": "Compile ordered response local-best reduction",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7e9769ef8e6dee423debeb0ed5b28872902dd8e3",
+      "date": "2026-08-07",
+      "subject": "Compile response lookups and trigger exclusions",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "81ee2960c94362388d65b6569d2c0e4a2c3b239f",
+      "date": "2026-08-07",
+      "subject": "Revert \"Compile response lookups and trigger exclusions\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e27b7b1d5dc168ed6bfcbcddf31dc79a78895022",
+      "date": "2026-08-07",
+      "subject": "Revert \"Compile ordered response local-best reduction\"",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    }
+  ]
+}

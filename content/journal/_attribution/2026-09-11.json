@@ -1,0 +1,2200 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-11",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "3f8b9c3be0082193ab8bfd1320590789a0fbd723",
+      "date": "2026-09-11",
+      "subject": "+机械预检 26.9.11 14:26",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/2026-09-11-mechanical-cancel-prescreen-research.md",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/age_histograms.png",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/controlled_amplitude.png",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/cross_day_verification.json",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/day_acceptance.json",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/model_deltas.png",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/model_numeric_reference.json",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/nonmonotonic_groups.png",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/report_bundle.json",
+        "content/assets/2026-09-11-mechanical-cancel-prescreen/research_collection.json",
+        "content/daily/2026-08-24.show.html"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "031a5cb24a903d1f318b833fd6e10b2766f848d7",
+      "date": "2026-09-11",
+      "subject": "复用订单上下文保存F63冻结尺度对照审计",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8ff7e250f9f6040414edc6f551533040b14f93e3",
+      "date": "2026-09-11",
+      "subject": "增加全历史日期等权与HAC独立复核及研究附表",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/review_cancel_phase_prescreen_history.py",
+        "因子/algobench/tests/test_review_cancel_phase_prescreen_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "87c409d1826065f9b056fb8e1b43feb1998ae968",
+      "date": "2026-09-11",
+      "subject": "按共同订单得分和实际coverage验收快撤尺度不等式",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [
+        "old-factor-bank"
+      ],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_scale_invariants.py",
+        "因子/algobench/tests/test_formal_scale_invariants.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4e227220545a17f112af744165381aae52c36844",
+      "date": "2026-09-11",
+      "subject": "以数组归并BBO匹配边并复用重复字符串身份",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "294a0409a17c06e75f15dc3e8700096b8e951bf4",
+      "date": "2026-09-11",
+      "subject": "Validate historical model transforms and independent reference fits",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/reference_cancel_phase_history_models.py",
+        "因子/algobench/tests/test_reference_cancel_phase_history_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "90f4854f39695d8792c2d09382f1c54212edb4ea",
+      "date": "2026-09-11",
+      "subject": "Aggregate date-equal prescreen research evidence from audited days",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [
+        "cancel-phase"
+      ],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/collect_cancel_phase_history_research.py",
+        "因子/algobench/tests/test_collect_cancel_phase_history_research.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "33a616e383ef4f29159e6fa33806445400257975",
+      "date": "2026-09-11",
+      "subject": "Deliver mechanical cancel research and enforce complete history sealing",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-history-delivery-status.md",
+        "reports/2026-09/2026-09-11-mechanical-cancel-delivery-delay-diagnosis.md",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/2026-09-11-mechanical-cancel-prescreen-research.md",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/age_histogram_annual.csv",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/age_histograms.png",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/age_mass_summary.csv",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/age_time_means.csv",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/controlled_amplitude.png",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/cross_day_verification.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/day_acceptance.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/descriptor_correlations_selected.csv",
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/factor_dictionary.csv"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "91c308971f507315340f91386ae3e5d8c1c172b0",
+      "date": "2026-09-11",
+      "subject": "Bind report bundle hashes to portable LF text artifacts",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-mechanical-cancel-report-bundle/report_bundle.json",
+        "scripts/render_cancel_phase_history_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d19c6cb42f0c20066fe6276d188ac199462d3863",
+      "date": "2026-09-11",
+      "subject": "Hash immutable result inventories with bounded parallel readers",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "机械撤单交付中使用并核验结果清单；传输实现是本次交付支撑，不把一个清单同时计成环境建设",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/result_transfer_contract.py",
+        "scripts/seal_cancel_phase_prescreen_history.py",
+        "因子/algobench/tests/test_result_transfer_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "57625944ba617c82c9b4341c62d1e26c953d12af",
+      "date": "2026-09-11",
+      "subject": "Bind complete history acceptance to sealed single-day performance evidence",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/seal_cancel_phase_prescreen_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3d3b2e3c03ac3be52a8c8e888fe5428e9e4d265c",
+      "date": "2026-09-11",
+      "subject": "Record exact response winners and reduce BBO edges before sorting",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bdb3661ba43f69607915959cf8912facbc7c7716",
+      "date": "2026-09-11",
+      "subject": "Verify canonical version-one manifests without rewriting sealed artifacts",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "机械撤单交付中使用并核验结果清单；传输实现是本次交付支撑，不把一个清单同时计成环境建设",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/result_transfer_contract.py",
+        "scripts/seal_cancel_phase_prescreen_history.py",
+        "因子/algobench/tests/test_result_transfer_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6d9624c345d696619c9c494dc76419ba7e98e2b0",
+      "date": "2026-09-11",
+      "subject": "Share formal worker kernels and daily style evaluation primitives",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/evaluate_open5m_raw_bank.py",
+        "scripts/rank_open5m_factor_contribution.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/src/algobench/formal_response_audit.py",
+        "因子/algobench/src/algobench/formal_style_evaluation.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_exactness.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1bf36f8c67ccd63f219bcc2053ad72c9f9ca50d0",
+      "date": "2026-09-11",
+      "subject": "Record complete mechanical cancel delivery and measured delay diagnosis",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-09-mechanical-cancel-prescreen.md",
+        "reports/2026-09/2026-09-10-mechanical-cancel-history-delivery-status.md",
+        "reports/2026-09/2026-09-11-mechanical-cancel-delivery-delay-diagnosis.md",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/PRESCREEN_RESULT.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/RUN_SEAL.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/business_timing_analysis.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/completed_days.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/correctness.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/final_guard_manifest.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/manifest_identity.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/profile_comparison.json",
+        "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/publication_guard_manifest.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "72ea3dafe42b5f13e11c7d4dcdf41b25f1550f3d",
+      "date": "2026-09-11",
+      "subject": "Share grouped BBO scoring and preserve typed empty response evidence",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/prepare_open5m_raw_bank_style_inputs.py",
+        "因子/algobench/tests/test_prepare_raw_bank_style_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dd872108bbb6f389fc25611bd59a5589ecb3da26",
+      "date": "2026-09-11",
+      "subject": "Reuse state-version evaluation and compact exact scoring identities",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/evaluate_open5m_raw_bank.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1d69206e800305c4fe05cf229b41ff05edea55cc",
+      "date": "2026-09-11",
+      "subject": "Validate complete response evidence with shared columnar kernels",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "953b9e3e3ed87b8b3b04164ca13d402fa7bc63e7",
+      "date": "2026-09-11",
+      "subject": "Publish bounded day buckets from verified hot files and reference complete manifests",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "eff7e5a3760da3d4dd34e8afa376936e2463a151",
+      "date": "2026-09-11",
+      "subject": "Reuse bounded numeric snapshot encoding with exact v1 identities",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "236b7a80d5153d0b81421d16bbbe9bfe2ab013a3",
+      "date": "2026-09-11",
+      "subject": "Preserve complete candidate and action diagnostics through shared scoring passes",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fb0c5b5e3fbf242148685ef824a7189f6b85d52e",
+      "date": "2026-09-11",
+      "subject": "Encode complete tie sets on the existing canonical member bitmap",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "30ac0fe0214e633633664e4d329958d7f8ad3bc0",
+      "date": "2026-09-11",
+      "subject": "Aggregate raw-bank mechanism diagnostics with frozen strata",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/evaluate_open5m_raw_bank.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f5a90c776e2830f0bb8b299eb78e4c438d9cdac1",
+      "date": "2026-09-11",
+      "subject": "Reuse unique-edge matching and bound exactness encoding memory",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c790a72dc1590b354e0a42aba8ea687e3b09f367",
+      "date": "2026-09-11",
+      "subject": "Capture and evaluate shared-input purpose formula comparisons",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/evaluate_open5m_raw_bank.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a1a7a8cb4f581f26ea02336d162664baeb2ed5d0",
+      "date": "2026-09-11",
+      "subject": "Reuse context intermediates for shared-input formula evaluation",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/evaluate_open5m_raw_bank.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7630c443f837fefb8224c80289947ec30e4e0598",
+      "date": "2026-09-11",
+      "subject": "Verify context projections against the full joint reduction axis",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/tests/test_formal_context_version_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3b021c62a4df3670074b69f2f508d5135a9ecd44",
+      "date": "2026-09-11",
+      "subject": "Reduce BBO candidate indices before expanding matching rows",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "938be782ea895fba380f194f29ddc5806a9f543c",
+      "date": "2026-09-11",
+      "subject": "Write complete day manifests with compact JSON encoding",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8dc45b3386182a06ffe4cfc60bc3e6e9bc4e1df2",
+      "date": "2026-09-11",
+      "subject": "Record repository-wide inventory acceptance requirements",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-contract-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f8bb3eff06084d78128717e44f71bda5d8ec91f1",
+      "date": "2026-09-11",
+      "subject": "perf: preserve sparse matching order with generation workspaces",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-sparse-assignment.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "98941c89ef8b6e5d57aa5fa217a3587f85137ac4",
+      "date": "2026-09-11",
+      "subject": "perf: encode canonical evidence without nested temporary records",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-sparse-assignment.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "978885e8423738b068c5cd5cd57a05955e62340c",
+      "date": "2026-09-11",
+      "subject": "feat: audit annual stock sources of mechanism winners",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-annual-source-weights.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ee9372bf23d817743a9d3961f748ff0867c1c65b",
+      "date": "2026-09-11",
+      "subject": "perf: reuse BBO edge lookup for winner comparison",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ad0cd994fb33272674b48cd13f6d1bd13ef243a1",
+      "date": "2026-09-11",
+      "subject": "perf: search reached assignment columns in canonical tie order",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-sparse-assignment.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2a26ca440f58f700bc13310121e2c2830a12db67",
+      "date": "2026-09-11",
+      "subject": "docs: record completed pressure profiles and candidate workspace measurements",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d87be450c1d3e2083ade3ccf26362ca7ef2e0480",
+      "date": "2026-09-11",
+      "subject": "feat: bind depth dependence statistics to explicit development dates",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-depth-dependence.md",
+        "scripts/evaluate_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_depth_dependence.py",
+        "因子/algobench/tests/test_formal_depth_dependence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "08c1b155ec6cdf9d2d569a12b9c8345168f28302",
+      "date": "2026-09-11",
+      "subject": "refactor: remove control scorers and composite dependencies",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-contract-audit.md",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_proxy_bank.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c850833bb2e5d95aab41ac2b8ca4b7c11b68059c",
+      "date": "2026-09-11",
+      "subject": "test: align chain and pairing coverage with supported scorer inventory",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-contract-audit.md",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_chain_scorers.py",
+        "因子/algobench/tests/test_formal_layer2_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9ad49a4b6945981ba5fb5a18719b48d42e33ca4d",
+      "date": "2026-09-11",
+      "subject": "feat: bound streaming stock admission by estimated memory",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-resource-admission.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cca63a9c0b04bb2551d766094c89317eab56969d",
+      "date": "2026-09-11",
+      "subject": "feat: bind verified Python runtime copies to raw-bank identity",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-resource-admission.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2d8a375abcd7e675a1a8aec31c02dc85b9d91e5a",
+      "date": "2026-09-11",
+      "subject": "perf: reuse dense integer groups for BBO winner reduction",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bbo-dense-reduction.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d3444d3c9d589c23600b3e01a8b5739d364907f",
+      "date": "2026-09-11",
+      "subject": "docs: record exact Linux and real-stock sparse matching validation",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-sparse-assignment.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "55289d4708ee414a77c9cb5218ad95d597378fa9",
+      "date": "2026-09-11",
+      "subject": "fix: reserve streaming capacity for waiting heavy stocks",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-resource-admission.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc297d0ef88455705ed15a66c456fc7da0ef00c6",
+      "date": "2026-09-11",
+      "subject": "perf: reduce BBO source indices and stream annual audit distributions",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-annual-distributions.md",
+        "reports/2026-09/2026-09-11-old-factor-bbo-dense-reduction.md",
+        "reports/2026-09/2026-09-11-old-factor-company-python-runtime.md",
+        "scripts/evaluate_open5m_raw_bank.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "33caef4ea852682a8a7ba406e467f108315a0a31",
+      "date": "2026-09-11",
+      "subject": "perf: tune bounded bucket publication and scalar audit encoding",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "reports/2026-09/2026-09-11-old-factor-resource-admission.md",
+        "reports/2026-09/2026-09-11-old-factor-sparse-assignment.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dc2100365bd094ca34557964907e3928fd181d70",
+      "date": "2026-09-11",
+      "subject": "perf: fuse BBO exposure checks and event maximum updates",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bbo-dense-reduction.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb832b7e4fb743579b19f16b52b2db4530d8b67e",
+      "date": "2026-09-11",
+      "subject": "回收旧因子股票任务完成后的分配器空闲页",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-worker-memory.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b9613984f65b5230ce0b5ce3e3c78865af1dc528",
+      "date": "2026-09-11",
+      "subject": "记录旧因子完整压力日验收和资源差额",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-contract-audit.md",
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fe20caea7854a75975ff51fff6e6363c05009ff7",
+      "date": "2026-09-11",
+      "subject": "复用分类编码计算重复证据字符串的原始身份",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_exactness.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d0b42838a1d225f140f04c8a051ba3a487b7459d",
+      "date": "2026-09-11",
+      "subject": "按驻留量触发旧因子 worker 回收并记录完整日实测",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "reports/2026-09/2026-09-11-old-factor-worker-memory.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "affb4e52c9230d4bb60c183259018ad59e74c387",
+      "date": "2026-09-11",
+      "subject": "复用 worker profiler 诊断完整因子日并隔离性能判定",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "988ebf4e08d3baff0bd6e89e4d7d558fa1054e3c",
+      "date": "2026-09-11",
+      "subject": "复用现有标签流水线对接已验收 raw-bank 面板",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-independent-labels.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a9ef4e048419f30135b44a9b646bcabd7f2458a3",
+      "date": "2026-09-11",
+      "subject": "修复 Windows 进程存活探测并隔离本地测试控制台",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "AGENTS.md",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/backend-after-tests.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/backend-exits.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/final-liveness-tests.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/final-liveness-tests.txt.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/interrupted-test-hashes.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/isolation-tests.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/isolation-tests.txt.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/scheduler-tests.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/scheduler-tests.txt.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/seal-liveness.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/seal-liveness.txt.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "931697771c6e5ec0b95a662a08d40b319e192abc",
+      "date": "2026-09-11",
+      "subject": "实现 C3.3 全市场六模块汇总与完整单日验收",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [
+        "ml-exec"
+      ],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
+        "reports/2026-09/2026-09-10-c33-v2-evidence/reuse_inventory.md",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/predeploy-local-tests.txt",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/predeploy-local-tests.txt.json",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/resume-local-tests.txt",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/resume-local-tests.txt.json",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/shared-resource-tests.txt",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/shared-resource-tests.txt.json",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/terminal-contract-tests.txt",
+        "reports/2026-09/2026-09-11-c33-v2-evidence/terminal-contract-tests.txt.json",
+        "scripts/benchmark_c33_candidates.py",
+        "scripts/benchmark_c33_output.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a890b681beb434fbf2987f256203008567947d4b",
+      "date": "2026-09-11",
+      "subject": "流式归约完整 BBO 图并复用因子精确性身份",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "04b91ff43d09de15188f0629fff42e6af93fb49c",
+      "date": "2026-09-11",
+      "subject": "压缩 C3.3 全市场统计与关系扫描成本并保留历史报告",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-c33-v2-optimization-inventory.md",
+        "scripts/update_c33_report.py",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_recurrence.py",
+        "因子/algobench/src/algobench/c33_wave_accel.py",
+        "因子/algobench/tests/test_c33_market_counts.py",
+        "因子/algobench/tests/test_c33_relation_summary.py",
+        "因子/algobench/tests/test_c33_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c278270c7ba1490a7afd0abfb92bbcbd25f08474",
+      "date": "2026-09-11",
+      "subject": "核对 C3.3 全日输入身份并记录阶段资源证据",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_c33_candidates.py",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/tests/test_c33_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "322581d033951de9d77caa7b4c40f50a739f7c90",
+      "date": "2026-09-11",
+      "subject": "为 F40 完整候选增加可校验的磁盘回放",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "old-factor-bank"
+      },
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_f40_execution.py",
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_f40_streaming_matching.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca684fd4ffe045f93dadc401e07fe2d6a129fe20",
+      "date": "2026-09-11",
+      "subject": "在业务 forkserver 内共享 BBO 归约内核编译",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "87bde873dfc54d5d92aeec37b32bac3fcc70ec3b",
+      "date": "2026-09-11",
+      "subject": "覆盖共享归约工作区的索引编译",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "af5433809fa9eb555e32fd04f4c0037844b05f26",
+      "date": "2026-09-11",
+      "subject": "合并 C3.3 五坐标稀疏关系扫描并保留精确密集回退",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-c33-v2-optimization-inventory.md",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_recurrence.py",
+        "因子/algobench/tests/test_c33_relation_summary.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c54c066cca643e520448d7bbe3a108bffe75b760",
+      "date": "2026-09-11",
+      "subject": "分离批量暂存与高频锁目录",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "51a712e27bbe06b57ddc0b0b22d4be9ab9d4249b",
+      "date": "2026-09-11",
+      "subject": "补齐 C3.3 单日选择证据与关系覆盖展示",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-c33-reuse-inventory.md",
+        "scripts/benchmark_c33_candidates.py",
+        "scripts/run_c33_prescreen.py",
+        "scripts/update_c33_report.py",
+        "因子/algobench/tests/test_c33_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5a4889a086fa0aa00608926e3664d0f032dddf17",
+      "date": "2026-09-11",
+      "subject": "将 C3.3 运行日志保留在本地并在终态发布",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/launch_c33_prescreen.sh",
+        "scripts/reconcile_c33_failure.py",
+        "因子/algobench/tests/test_c33_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "59dac63465d59be0283b3c5cada92f75645db8d6",
+      "date": "2026-09-11",
+      "subject": "复用 BBO 流式图的边唯一性并保留排序合同",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7895eaad21bf759af8d39860dd3b0c24c5e07a2e",
+      "date": "2026-09-11",
+      "subject": "在 C3.3 查询期间按 CPU 余量编译共享内核",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-c33-v2-optimization-inventory.md",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/configs/c33_runtime_v2_overlap.yaml",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/tests/test_c33_relation_summary.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a69de0aecb3f8558de8e7f3146c87293c1163d7",
+      "date": "2026-09-11",
+      "subject": "记录日桶归并编码与发布读回的分段耗时",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "037276c2b1d4f7a395c349dcd3bf37e7ac1d613a",
+      "date": "2026-09-11",
+      "subject": "docs: audit and clean server storage with deletion receipts",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-11-server-storage-cleanup-evidence/SHA256SUMS",
+        "reports/2026-09/2026-09-11-server-storage-cleanup-evidence/closure.json",
+        "reports/2026-09/2026-09-11-server-storage-cleanup-evidence/summary.json",
+        "reports/2026-09/2026-09-11-server-storage-cleanup-evidence/wangly-evidence.zip",
+        "reports/2026-09/2026-09-11-server-storage-cleanup-evidence/wenjie-evidence.zip",
+        "reports/2026-09/2026-09-11-server-storage-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fa266e9ecde45126653dfc9aa9cfbc8d4a0bdbc9",
+      "date": "2026-09-11",
+      "subject": "复用响应审计列哈希并支持校验后的对象存储直连发布",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_derived_fragments.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_response_audit.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_exactness.py",
+        "因子/algobench/tests/test_formal_object_publication.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5bad0434adcc3f8411f76c82dd20d222a28f6a27",
+      "date": "2026-09-11",
+      "subject": "直接归并 BBO 候选区间并按数值图执行精确匹配",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "af942ee33f69a426988833e91de4792f3225146f",
+      "date": "2026-09-11",
+      "subject": "无损压缩完整日清单并复用写入时的内容身份",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "269cbcffafaf908bc2486a786042ca74d3804e1c",
+      "date": "2026-09-11",
+      "subject": "按已验证父目录发布新对象以保持挂载可见性",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_artifact_commit.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d0d9214801d91d975ccbed60de058a64d44fbf5a",
+      "date": "2026-09-11",
+      "subject": "复用字符串字典和候选数组计算精确身份",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_exactness.py",
+        "因子/algobench/tests/test_formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "58849cc644e155d8c99607e09ee95f9dba70ca05",
+      "date": "2026-09-11",
+      "subject": "按启动身份验收压缩日清单及原有产物",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "70517cc1c12f19238896044737f20b7ef2cebe29",
+      "date": "2026-09-11",
+      "subject": "复用数组哈希与数值编码并记录逐评分器耗时",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/tests/test_formal_exactness.py",
+        "因子/algobench/tests/test_formal_structural_binding.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b93ae24514f847bcaebb0ea818ed28027f30b6f2",
+      "date": "2026-09-11",
+      "subject": "复用F16基础量和生命周期行并收窄评分字段投影",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_response_templates.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_structural_binding.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b70c913bba2e445658d7d32adfdc206a8dda1c16",
+      "date": "2026-09-11",
+      "subject": "按事件有界归并BBO重复边并复用精确全图累加器",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "45c9508eb54ef816f3cc8748a01db60427d49dfb",
+      "date": "2026-09-11",
+      "subject": "合并 F40 完整候选资格扫描并保留精确权重",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_structural_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ed42db9cc9fdf1bab1a43d1ba8f63e7032e04612",
+      "date": "2026-09-11",
+      "subject": "用保守权重上界精确裁剪 F40 无效边计算",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_structural_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f8e08cbf4bf6390aba28a8afd7154ba21334ae14",
+      "date": "2026-09-11",
+      "subject": "冻结 forkserver 常驻对象并保留业务循环引用回收",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e20860684c93d3d2cf9b6ed840363b7b851e2511",
+      "date": "2026-09-11",
+      "subject": "改善 BBO 哈希分布并共享完整来源与子集校验",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_exactness.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6482b8a2571a2dd5e7154a5d9b57e3d18c4d019c",
+      "date": "2026-09-11",
+      "subject": "perf: reuse sorted audit summaries and measure scoring stages",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_raw_consensus_audit.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_raw_consensus_audit.py",
+        "因子/algobench/tests/test_formal_structural_binding.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2ce90e75fb03839a3e0b7574e7f345c5f6e55467",
+      "date": "2026-09-11",
+      "subject": "perf: batch F40 path indexing and evidence assembly",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6c18a83a55e4bb9f6810d54bae5524439f4cdf96",
+      "date": "2026-09-11",
+      "subject": "perf: retain BBO event winners across candidate blocks",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d3950ebf3e5d12f20ffbc1f9b1326ba91c359f0c",
+      "date": "2026-09-11",
+      "subject": "perf: hoist invariant BBO candidate lookups from inner loops",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d14a8331de162d0a6f02e5d90f15a3e4fd03161a",
+      "date": "2026-09-11",
+      "subject": "docs: seal raw-bank optimization evidence and paused handoff",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/apply_pause_cleanup.py",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-continuity-one-event.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-continuity-tests.log",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-continuity-tests.log.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-hoisted-many-events.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-hoisted-one-event.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-hash-probe-final.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-hash-regression.log",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-loop-hoisting-final-tests.log",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-loop-hoisting-final-tests.log.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo_compact_probe.py",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/benchmark_launcher.py"
+      ]
+    }
+  ]
+}

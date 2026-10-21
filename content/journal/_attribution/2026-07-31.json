@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-31",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "34928c6fc93f23a2045ce934e4f29e39c5d1dff7",
+      "date": "2026-07-31",
+      "subject": "26.7.31 20:57",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-07-31-算法行为因子构建链路与165口径实测全景报告.show.html"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8714fc817016e9f08e60396d75c7d8db615d1786",
+      "date": "2026-07-31",
+      "subject": "fix: bind calibration handoff execution revision",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "scripts/import_intraday_calibration_handoff.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab97974315bbcad2f69ba9a37cde851695f9a908",
+      "date": "2026-07-31",
+      "subject": "fix: inherit accepted runtime for interval runs",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "scripts/import_intraday_interval_runtime_handoff.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8a08c8fb2500287b8eadd81ddcedfdc7bd959fa6",
+      "date": "2026-07-31",
+      "subject": "fix: import nested panel availability seeds",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/import_intraday_interval_panel_seed.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "30bb3852993daa73240c23d83111e7bd6f7fee12",
+      "date": "2026-07-31",
+      "subject": "test: audit interval quote tick failures",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "gates",
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_intraday_interval_quote_ticks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "175fd0be73c55544850a19c16fcc78a055cd4719",
+      "date": "2026-07-31",
+      "subject": "fix: bind panel-ready interval dates",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/audit_intraday_interval_panel_readiness.py",
+        "scripts/build_intraday_interval_contract.py",
+        "scripts/build_intraday_interval_stage_evidence.py",
+        "scripts/formal_study_control.py",
+        "scripts/intraday_interval_contract.py",
+        "scripts/run_formal_panel.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aac5031935c6c8e39d6fd002df8addbf9a527558",
+      "date": "2026-07-31",
+      "subject": "fix: separate reference and panel cutoffs",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "scripts/import_intraday_interval_runtime_handoff.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "da5f0b0dd1f4a26d6d6f0f415ba67e506c4236bd",
+      "date": "2026-07-31",
+      "subject": "fix: project frozen liquidity across interval dates",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "scripts/import_intraday_interval_runtime_handoff.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6af5225fb97038c64d759a71851e09478d6eaaef",
+      "date": "2026-07-31",
+      "subject": "fix: enforce causal baseline interval gate",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/audit_intraday_interval_panel_readiness.py",
+        "scripts/build_intraday_interval_contract.py",
+        "scripts/build_intraday_interval_report.py",
+        "scripts/formal_study_control.py",
+        "scripts/intraday_interval_contract.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "83a31e47dc5d77003a41347bc675e2275d7c0f67",
+      "date": "2026-07-31",
+      "subject": "fix: resume interval after empty label input",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/audit_intraday_interval_panel_readiness.py",
+        "scripts/build_intraday_interval_contract.py",
+        "scripts/import_intraday_interval_panel_seed.py",
+        "scripts/intraday_interval_contract.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9fa7ed90269486db8939209aceb19c846ae168f3",
+      "date": "2026-07-31",
+      "subject": "fix: allow slow notebook kernel startup",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_formal_notebooks.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_build_formal_notebooks.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    }
+  ]
+}

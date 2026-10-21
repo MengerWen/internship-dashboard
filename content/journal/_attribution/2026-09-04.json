@@ -1,0 +1,530 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-04",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "c6542f39c8afa017242ad7983e5c730456d9fe4c",
+      "date": "2026-09-04",
+      "subject": "26.9.4 10:02",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-08-19.md",
+        "content/daily/2026-09-02.md",
+        "content/daily/2026-09-02.show.html",
+        "content/daily/2026-09-03.md",
+        "design-demos/2026-09-02-new-factor-prescreen/design-spec.md",
+        "design-demos/2026-09-02-new-factor-prescreen/direction-a-editorial-wall.html",
+        "design-demos/2026-09-02-new-factor-prescreen/direction-approved.md",
+        "design-demos/2026-09-02-new-factor-prescreen/direction-b-diagnostic-matrix.html",
+        "design-demos/2026-09-02-new-factor-prescreen/direction-c-mechanism-map.html",
+        "design-demos/2026-09-02-new-factor-prescreen/directions.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "a86755c07bd656ce66696b2a41194f35049a6fab",
+      "date": "2026-09-04",
+      "subject": "update 9.2 预检结果 26.9.4 11:24",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-09-02.show.html"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fbccbd535bf6619dc98c615088718c74edd5c006",
+      "date": "2026-09-04",
+      "subject": "避免全时间逐日进程池死锁",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_new_factor_prescreen.py",
+        "因子/algobench/tests/test_open5m_new_factor_prescreen_full_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "080e9100fa3191f62ceacbb9169d7e1dd9f6feb2",
+      "date": "2026-09-04",
+      "subject": "修复全时间阶段指标采集",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_new_factor_prescreen.py",
+        "因子/algobench/tests/test_open5m_new_factor_prescreen_full_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c7d768d3e6edb39de2d575151ab8ac0b1058adb",
+      "date": "2026-09-04",
+      "subject": "feat: select calibration dates from L1 regimes",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/select_l1_calibration_dates_by_regime.py",
+        "因子/algobench/tests/test_select_l1_calibration_dates_by_regime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca64afa2ba02bbfc0b6c64676e4ec9621ec959be",
+      "date": "2026-09-04",
+      "subject": "docs: record L1 regime calibration dates",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/open5m_calibration_dates_l1_regime_2024_2026q2_v1.txt"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d4ab0ca83b2280d45af9f250b89a72e4b45e64b0",
+      "date": "2026-09-04",
+      "subject": "Add resumable selected-date Open5m calibration",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "因子/algobench/tests/test_open5m_selected_date_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a4a36e8e727f821dbea3161e766423982862b99c",
+      "date": "2026-09-04",
+      "subject": "docs: plan cancel phase 2026H1 evaluation",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-04-cancel-phase-2026h1-evaluation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e4a248e928718af9719a3c058b4252abdecccfea",
+      "date": "2026-09-04",
+      "subject": "feat: add verified cross-account result transfer",
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "wangly-env",
+      "related_chains": [],
+      "shares": {
+        "wangly-env": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-04-wangly-to-wenjie-result-transfer.md",
+        "decisions/2026-09-04-wangly-result-transfer.md",
+        "scripts/result_transfer_contract.py",
+        "因子/algobench/tests/test_result_transfer_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c316cc7c6c147dc22daaf4386b02dbf9fe68dbcc",
+      "date": "2026-09-04",
+      "subject": "feat: transfer results over pinned internal HTTPS",
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "wangly-env": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-04-wangly-to-wenjie-result-transfer.md",
+        "decisions/2026-09-04-wangly-result-transfer.md",
+        "因子/algobench/tests/test_result_transfer_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9d6ed5e1d2691724520620cca6d4147c01fee2db",
+      "date": "2026-09-04",
+      "subject": "fix: frame HTTPS result stream completely",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/serve_wangly_result.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5f268360b4e021550294472299f543d231fea3ca",
+      "date": "2026-09-04",
+      "subject": "docs: record cross-account transfer acceptance",
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "wangly-env": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-04-wangly-result-transfer-acceptance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a96ac59535a0101b476bff66c9828e6a50d2e9e9",
+      "date": "2026-09-04",
+      "subject": "ops: support wangly compute environment",
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "wangly-env": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-04-wangly-environment-bootstrap.md",
+        "docs/prompts/wangly-to-wenjie-result-sync.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "63f9b8749d0b7af9462a1c176ba5a8ed72e5a07d",
+      "date": "2026-09-04",
+      "subject": "build: lock complete server environment",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "requirements/server-py314.lock",
+        "scripts/audit_server_environment.py",
+        "scripts/install-server-environment.sh",
+        "因子/algobench/tests/test_server_environment_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "567bbb037e5b83065419ce58936f11ef953f93fa",
+      "date": "2026-09-04",
+      "subject": "docs: require wangly data access preflight",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "操作指令/凭据预检规约文档；不把规则文字计为一次真实环境/存储执行",
+      "review_basis": "差异中规约正文复核",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/prompts/wangly-compute-task.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0433e0eb3109dd8a2a1d6f2fcb4b207cb73b1167",
+      "date": "2026-09-04",
+      "subject": "docs: plan open5m order quantity distribution prescreen",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-04-open5m-order-quantity-distribution-prescreen.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "eb146801eb4387962573edf997037bd0922983e8",
+      "date": "2026-09-04",
+      "subject": "feat: add order quantity distribution core",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/open5m_order_qty_distribution_szse_2024_2026q2_v1.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5cab722e86081eac7b4927cd126a6da4d72a08fd",
+      "date": "2026-09-04",
+      "subject": "feat: aggregate order quantity counts in Doris",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/order_qty_distribution.py",
+        "因子/algobench/tests/test_order_qty_distribution.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6855ffbe6d47bdad80971b1221863724915bc448",
+      "date": "2026-09-04",
+      "subject": "feat: add resumable order quantity distribution runner",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_order_qty_distribution.py",
+        "因子/algobench/tests/test_run_open5m_order_qty_distribution.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c6c9e53ce937bf000e9de3495a863d81ddb8dbf",
+      "date": "2026-09-04",
+      "subject": "feat: render order quantity distribution report",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/render_open5m_order_qty_distribution_report.py",
+        "因子/algobench/tests/test_render_open5m_order_qty_distribution_report.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cddb225d3e8881e808b498f28488c962dae92ee6",
+      "date": "2026-09-04",
+      "subject": "feat: add wangly order quantity server task",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_order_qty_distribution_server_task.sh",
+        "因子/algobench/tests/test_open5m_order_qty_distribution_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ea60f4d53482d1a3cf2a4b6b7294bfdc1e8bc455",
+      "date": "2026-09-04",
+      "subject": "fix: preserve exact int64 distribution counts",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/order_qty_distribution.py",
+        "因子/algobench/tests/test_order_qty_distribution.py"
+      ]
+    }
+  ]
+}

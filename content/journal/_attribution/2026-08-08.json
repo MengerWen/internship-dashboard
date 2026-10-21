@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-08",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "06b993cb61e68785dbcb5b4977a1a3ecb3ffca2e",
+      "date": "2026-08-08",
+      "subject": "Implement fixed-gate open5m proxy factor bank",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-06-高频量价与微观结构新因子批量构建实施计划.md",
+        "scripts/build_open5m_count_proxy_bank_result.py",
+        "scripts/render_open5m_count_proxy_bank_launcher.py",
+        "scripts/run_open5m_count_proxy_bank_server_task.sh",
+        "因子/algobench/configs/formal_logic_intraday_open5m_count_proxy_v2.yaml",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py",
+        "因子/algobench/tests/test_open5m_proxy_registry.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "378c03ab457aeb80a716e10e7e0ba2a9c8444228",
+      "date": "2026-08-08",
+      "subject": "Fix proxy gate telemetry validation",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_count_proxy_bank_result.py",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cacfb6eb3dc962762c496987dbe10f688a730564",
+      "date": "2026-08-08",
+      "subject": "Prefilter fixed quantity gate before wide pair batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "gates",
+      "related_chains": [],
+      "phase_mapping": {
+        "gates": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "406ab644bd68db48c29e39b893cbce9efda1068b",
+      "date": "2026-08-08",
+      "subject": "Handle guard memory limit strings in proxy results",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_count_proxy_bank_result.py",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "40a29bcc81c15848a6379754647063f235245052",
+      "date": "2026-08-08",
+      "subject": "Keep formal progress writes on local scratch",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [
+        "open5m"
+      ],
+      "phase_mapping": {
+        "formal-engine": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_count_proxy_bank_server_task.sh",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_panel_runner.py",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "86b54fcc0fd55cf09857800319e16076dfcceb10",
+      "date": "2026-08-08",
+      "subject": "feat: launch audited open5m history and add factor notebooks",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_count_proxy_notebooks.py",
+        "scripts/prepare_open5m_count_proxy_history_contract.py",
+        "scripts/run_open5m_count_proxy_bank_server_task.sh",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/NOTEBOOK_INDEX.json",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__net.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__sell.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__total.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__net.ipynb"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0ee96e329552f1815fd771d58312e0cc8b4e580b",
+      "date": "2026-08-08",
+      "subject": "perf: avoid quadratic open5m history preflight",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/prepare_open5m_count_proxy_history_contract.py",
+        "scripts/run_open5m_count_proxy_bank_server_task.sh",
+        "因子/algobench/tests/test_open5m_count_proxy_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f7a79f7597f2bcac582ef55ec25c87ec97162c59",
+      "date": "2026-08-08",
+      "subject": "perf: linearize interval quote validation",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_quote_tick_daily_validation.py",
+        "因子/algobench/src/algobench/formal_quote_tick_evidence.py",
+        "因子/algobench/tests/test_formal_quote_tick_daily_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f80a443367582948dfffdcf4e05d1311ddd8d1ed",
+      "date": "2026-08-08",
+      "subject": "fix: audit historical quote tick exceptions",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "gates",
+      "related_chains": [],
+      "phase_mapping": {
+        "gates": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/szse_quote_tick_exemptions_v1.yaml"
+      ]
+    }
+  ]
+}

@@ -6,6 +6,37 @@ const context = {window: {}};
 vm.runInNewContext(fs.readFileSync('site/js/journal.js', 'utf8'), context);
 const journal = context.window.JournalView;
 
+test('点大小只读取对应任务的归属量，同日总量及其他任务不影响它', () => {
+  const day = {total_commits: 140, chain_weights: {a: {value: 4, direct: 4, shared: 0}, b: {value: 40, direct: 40, shared: 0}}};
+  const radius = journal.pointRadius(day, 'a');
+  assert(journal.pointRadius(day, 'b') > radius);
+  day.total_commits = 10000;
+  day.chain_weights.b.value = 9000;
+  assert.equal(journal.pointRadius(day, 'a'), radius);
+  assert.equal(journal.pointWeight(day, 'missing'), null);
+  assert.equal(journal.pointRadius(day, 'missing'), journal.pointRadius({chain_weights: {zero: {value: 0}}}, 'zero'));
+  assert.match(journal.weightLabel(day, 'missing'), /待核/);
+});
+
+test('跨链份额显示精确计量，缺少提交证据不冒充当天总量', () => {
+  const day = {total_commits: 100, chain_weights: {a: {value: 1.5, direct: 1, shared: 1}, zero: {value: 0, direct: 0, shared: 0}}};
+  assert.match(journal.weightLabel(day, 'a'), /1\.5.*1 条跨链/);
+  assert.match(journal.weightLabel(day, 'zero'), /无已归属提交/);
+  assert(journal.pointRadius(day, 'a') < journal.pointRadius({chain_weights: {a: {value: 100}}}, 'a'));
+});
+
+test('完整归属明细将提交标题、理由、路径和依据层级作为文本显示', () => {
+  const day = {date:'2026-10-20',chains:['a'],chain_weights:{a:{value:1,direct:1,shared:0}},attribution_summary:{statuses:{assigned:1}}};
+  const view = Object.assign({}, journal, {days:[day],chains:new Map([['a',{short:'任务'}]])});
+  const html = view.attributionHtml({date:day.date,repos:[{repo:'r',commit_url:'https://github.com/org/r/commit/{sha}'}],attribution:{items:[{
+    repo:'r',sha:'a'.repeat(40),subject:'<script>标题</script>',reason:'<img src=x>',basis:'<svg onload=x>',paths:['<script>路径</script>'],shares:{a:{numerator:1,denominator:1}}
+  }]}});
+  assert(!html.includes('<script>'));
+  assert(!html.includes('<svg onload'));
+  assert(html.includes('&lt;svg onload=x&gt;'));
+  assert(html.includes('&lt;script&gt;路径&lt;/script&gt;'));
+});
+
 test('人工核实的链成果不会混入同日其他链的报告', () => {
   const view = {reports: new Map([['2026-09-04', {}], ['2026-09-16', {}]])};
   const days = [{reports_covering: ['2026-09-04']}];

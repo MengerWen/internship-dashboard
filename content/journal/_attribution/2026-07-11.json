@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-11",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "ddcea99371a6f8b4f1403a1652d86014244609c3",
+      "date": "2026-07-11",
+      "subject": "chore: stop tracking Python cache artifacts",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/algobench/__pycache__/__init__.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/__init__.cpython-312.pyc",
+        "因子/algobench/src/algobench/__pycache__/__init__.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/bars.cpython-312.pyc",
+        "因子/algobench/src/algobench/__pycache__/bars.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/cli.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/config.cpython-312.pyc",
+        "因子/algobench/src/algobench/__pycache__/config.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/data.cpython-312.pyc",
+        "因子/algobench/src/algobench/__pycache__/data.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/fuse.cpython-312.pyc",
+        "因子/algobench/src/algobench/__pycache__/fuse.cpython-314.pyc"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "72f3ed6672c3945da34781ce5949b1aba79ea640",
+      "date": "2026-07-11",
+      "subject": "plan12: define active attention factor mainline",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/README.md",
+        "因子/algobench/configs/attention_ic_1d3d.yaml",
+        "因子/algobench/src/algobench/config.py",
+        "因子/algobench/src/algobench/paths.py",
+        "因子/algobench/tests/test_attention_config.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "e4432fd97503693e57d1f86dc4afedfd2c4e0318",
+      "date": "2026-07-11",
+      "subject": "plan12: add reusable PIT attention universe",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/anchors/build.py",
+        "因子/algobench/src/algobench/universe.py",
+        "因子/algobench/tests/test_attention_universe.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "f7c4336efdfb181258b744f0d99060c3c08ce6e2",
+      "date": "2026-07-11",
+      "subject": "更新PLAN12 26.7.11 17:28",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/PLAN/PLAN_12_主动算法关注度因子_未来1至3日IC_2026-07-10.md"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "7355819b041fc959562b611fd95c87d39d1114cb",
+      "date": "2026-07-11",
+      "subject": "plan12: cache adjusted prices for 1d to 3d labels",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/anchors/rqdata_fetch.py",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/paths.py",
+        "因子/algobench/tests/test_rqdata_fetch.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "249fd9347e36543094604a0c996463d4f6d0d601",
+      "date": "2026-07-11",
+      "subject": "plan12: implement unsigned active attention shares",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/attention.py",
+        "因子/algobench/tests/test_attention.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "b66822366b0c4978c7602c42cfb3b90777e9bb75",
+      "date": "2026-07-11",
+      "subject": "plan12: add resumable market-wide attention panel",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/attention_ic_1d3d.yaml",
+        "因子/algobench/src/algobench/attention_panel.py",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/paths.py",
+        "因子/algobench/tests/test_attention_panel.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "32635765ee486e467c0ac411b48914138897de7f",
+      "date": "2026-07-11",
+      "subject": "plan12: record failed attention smoke checkpoint",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "algobench",
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/RUN_NOTES.md",
+        "因子/algobench/src/algobench/attention_panel.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "688c210b46188b14408bde307e39245873aa6cc2",
+      "date": "2026-07-11",
+      "subject": "再更新 26.7.11 20:37",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/PLAN/PLAN_12_主动算法关注度因子_未来1至3日IC_2026-07-10.md"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "7ed013e965f9a65651615aeec149a4fd9b5e638d",
+      "date": "2026-07-11",
+      "subject": "优化速度 26.7.11 21:43",
+      "status": "assigned",
+      "chains": [
+        "literature"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "literature": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/lowlat/src/lowlat/lifecycle.py",
+        "因子/lowlat/src/lowlat/runs.py"
+      ]
+    }
+  ]
+}

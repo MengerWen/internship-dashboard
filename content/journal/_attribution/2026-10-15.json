@@ -1,0 +1,1792 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-15",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "88d75eab0c1ed301018ac1ead49859532e84b584",
+      "date": "2026-10-15",
+      "subject": "增加 wangly S3 分批盘点与显式清单清理工具",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "31cf29fc744e005434839671148948a83265204e",
+      "date": "2026-10-15",
+      "subject": "支持基础 Python 隔离模式启动 S3 清理入口",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "14cc0887a88cace43f8bf26d59e118f32421e096",
+      "date": "2026-10-15",
+      "subject": "允许 S3 盘点调整分页大小并沿断点续查",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c730756bc56c44a3a89fac661ecdd574a4a1ddd6",
+      "date": "2026-10-15",
+      "subject": "按任务子目录持久化 S3 盘点队列",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "122659e6cbcef5b9a38bd2c983a038013612de34",
+      "date": "2026-10-15",
+      "subject": "记录 wangly S3 1131 个重复对象清理与恢复映射",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-s3-duplicate-cleanup-evidence/RESTORE.md",
+        "reports/2026-10/2026-10-15-wangly-s3-duplicate-cleanup-evidence/metadata.tar.gz",
+        "reports/2026-10/2026-10-15-wangly-s3-duplicate-cleanup-evidence/summary.json",
+        "reports/2026-10/2026-10-15-wangly-s3-duplicate-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7e76a8f4cd483d1ca2256b4c8da7cba5bf68a9d7",
+      "date": "2026-10-15",
+      "subject": "保护当前模型重算的持久准备输入",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "04730927e161f5777a24720cb4dbea8bc9709e7d",
+      "date": "2026-10-15",
+      "subject": "记录旧 r09 中间表淘汰与第二批 S3 去重",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-s3-duplicate-cleanup-evidence/RESTORE.md",
+        "reports/2026-10/2026-10-15-wangly-s3-duplicate-cleanup.md",
+        "reports/2026-10/2026-10-15-wangly-s3-intermediate-cleanup-evidence/metadata.tar.gz",
+        "reports/2026-10/2026-10-15-wangly-s3-intermediate-cleanup-evidence/summary.json",
+        "reports/2026-10/2026-10-15-wangly-s3-intermediate-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0292f98314d57d118420e9df8ed77da898c50d3",
+      "date": "2026-10-15",
+      "subject": "隔离 S3 列表超时节点并保留逐节点续查状态",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "420c8a11a5d12335e7c7c528313681a52ef9bec1",
+      "date": "2026-10-15",
+      "subject": "遇到 S3 权限或服务端拒绝时停止任务段",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "352fd52e86cb602a301549a54b7e5e79fd7aa199",
+      "date": "2026-10-15",
+      "subject": "记录 S3 子树分段盘点的覆盖与断点核验",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7a65861c1eec9f4245490f5adeccdd1fd6c28258",
+      "date": "2026-10-15",
+      "subject": "安全回收可重建的校准预测导出",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "scripts/cleanup_precheck_prediction_exports.py",
+        "scripts/tests/test_cleanup_precheck_prediction_exports.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8dc7de91c3dbbbf233cf1b393e342451cb1fbaaa",
+      "date": "2026-10-15",
+      "subject": "保存预测导出的完整重建证明",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/prediction-exports-proof.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "303a3be1ae37b8fe1148d32d56ce9a6fd67423e6",
+      "date": "2026-10-15",
+      "subject": "记录预测导出回收与审计保留边界",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/export-cleanup-guard-metadata.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/export-proof-r02-guard-metadata.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/prediction-exports-cleanup.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/prediction-exports-cleanup.objects.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/prediction-exports-cleanup.plan.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/production-multipart-inventory.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/temporary-full-day-r16-comparison.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/write-probe-after-prediction-exports.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5b21adb01f446143ae0cda0349ffee968de49e28",
+      "date": "2026-10-15",
+      "subject": "支持原生客户端核验 S3 任务清单",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b7defec0251d883b5838dd2e0c2e449f76d81a2d",
+      "date": "2026-10-15",
+      "subject": "Retire reproducible F40 caches while preserving source and recovery inputs",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "scripts/cleanup_f40_episode_cache.py",
+        "scripts/tests/test_cleanup_f40_episode_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "446998c3cda446ced2c7a65d24206ac68fddf845",
+      "date": "2026-10-15",
+      "subject": "Record F40 cache retention proof and complete daily audit accounting",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/accepted-audit-accounting.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/audit-retention-candidates.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cache-rebuild-canary.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cache-recovery-protections.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cache-retirement-plan.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-seal-cache-reference-check.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/temporary-diagnostic-cleanup-plan.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/temporary-diagnostic-cleanup.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ce285ac19a764f72aadd5c95dcaf9c5ffa6a274c",
+      "date": "2026-10-15",
+      "subject": "Overlap bounded F40 source verification before serial cache retirement",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "scripts/cleanup_f40_episode_cache.py",
+        "scripts/tests/test_cleanup_f40_episode_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "42bcbb2307137e33dd4012a06d3611751b1d3871",
+      "date": "2026-10-15",
+      "subject": "记录 wangly 历史重复副本清理与恢复映射",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-s3-historical-duplicate-cleanup-evidence/metadata.tar.gz",
+        "reports/2026-10/2026-10-15-wangly-s3-historical-duplicate-cleanup-evidence/summary.json",
+        "reports/2026-10/2026-10-15-wangly-s3-historical-duplicate-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cbb42754e5171edc860dac8bff1fc62e1d0fd85e",
+      "date": "2026-10-15",
+      "subject": "Measure accepted audit storage and lossless telemetry compression",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/accepted-day-control-object-heads.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/inventory-reconciliation-with-f40.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/telemetry-lossless-compression-sample.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fe56b466e5f15c67e64c651f1b1d27d2858a4b7a",
+      "date": "2026-10-15",
+      "subject": "Record verified F40 cache retirement and remaining storage gate",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cache-cleanup-guard-metadata.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cache-cleanup.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cache-preserved-inputs.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cache-worktree-cleanup.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/f40-cleanup-test-residue.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/guard-runtime-cleanup.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/lossless-compression-guard-metadata.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/preservation-readback-guard-metadata.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/write-probe-after-f40-final-verification.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/write-probe-after-f40-retirement.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4080b88d5cd71616897f6c1d37919c4af15f6944",
+      "date": "2026-10-15",
+      "subject": "Assess post-acceptance audit release with read-only production checks",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/audit-release-feasibility-guard-metadata.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/audit-release-readonly-feasibility.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d8145c200e29f05ff8d8800252299f3fbc384144",
+      "date": "2026-10-15",
+      "subject": "支持按对象键范围核验 S3 清单",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-s3-inventory-cleanup.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "14de5d97b17efc535196b2d487e79db16fe30a77",
+      "date": "2026-10-15",
+      "subject": "按完整日验收释放订单明细并保留可核验续跑状态",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一改动包含328已验收订单明细释放与恢复核验；原旧库仅是数据来源，两项实际目标各计半份",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/cleanup_calibration_storage.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "scripts/tests/test_release_model328_order_audits.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_factor_run_schedule.py",
+        "因子/algobench/src/algobench/formal_order_audit_retention.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1cde2f6107b1f23419e57ed21d62b20e3fb7ac63",
+      "date": "2026-10-15",
+      "subject": "有界并行推进历史订单释放并增加独立续跑核验",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-canary-evidence.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md",
+        "scripts/release_model328_order_audits.py",
+        "scripts/tests/test_release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "edd6683568de1cc83ff3b4d545249708a554360d",
+      "date": "2026-10-15",
+      "subject": "按已验收的真实分页计数校验释放日续跑",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md",
+        "scripts/tests/test_release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37edd85d0e303062576568fba7798f23cf539a4a",
+      "date": "2026-10-15",
+      "subject": "复用对象快照读取并限制释放日续跑的遥测展开",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "phase_mapping": {
+        "lv2-snapshot": "sse-v2"
+      },
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md",
+        "scripts/release_model328_order_audits.py",
+        "scripts/tests/test_release_model328_order_audits.py",
+        "因子/algobench/src/algobench/formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d50d5bb2a8758f15455cc865ac5a35ba790e6544",
+      "date": "2026-10-15",
+      "subject": "完善订单释放凭证补存与已完成统计的只读复用",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md",
+        "scripts/release_model328_order_audits.py",
+        "scripts/tests/test_release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9e12044e85713aa3edc569c87dc8c6240b8aafbc",
+      "date": "2026-10-15",
+      "subject": "核验 wangly 全量研究目录并记录安全清理结果",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-s3-inventory-cleanup-evidence/metadata.tar.gz",
+        "reports/2026-10/2026-10-15-wangly-s3-inventory-cleanup-evidence/summary.json",
+        "reports/2026-10/2026-10-15-wangly-s3-inventory-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f3c2e67cebf6373325e0beccbe8aeb71f5d3afce",
+      "date": "2026-10-15",
+      "subject": "记录订单释放收尾验证与持久写入检查",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-control-evidence.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "396779a2ecafe460be41664be082782b11d9cb5e",
+      "date": "2026-10-15",
+      "subject": "记录 wangly 清理后的最新持久写入复测",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-s3-inventory-cleanup-evidence/write-probe-closing.json",
+        "reports/2026-10/2026-10-15-wangly-s3-inventory-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5e068c27f6540ce357764ab085cc15f7bd1c414c",
+      "date": "2026-10-15",
+      "subject": "在完整复查中处理进程退出的短暂不可读状态",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "scripts/cleanup_calibration_storage.py",
+        "scripts/tests/test_cleanup_calibration_storage.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/tests/test_release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2053570fbf74ceb33696c11fb8ff7ceed689c849",
+      "date": "2026-10-15",
+      "subject": "让组件完整回读与串行条件删除有界重叠",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "scripts/release_model328_order_audits.py",
+        "scripts/tests/test_release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82fd8394bfcd9a436dff64b9bbf9f53aff94f67f",
+      "date": "2026-10-15",
+      "subject": "保存订单读取流水线与进程检查的Linux验证",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-pipeline-evidence.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f4379a147cb3799ebdc38d0ead47d3df4746c85a",
+      "date": "2026-10-15",
+      "subject": "统一已验收订单释放范围并清除停用候选清单",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/audit-retention-candidates.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "390a18bf1f3a8a70050b6238f71145d0fcc90d06",
+      "date": "2026-10-15",
+      "subject": "记录主会话与审阅代理的模型强度现场核对",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/codex-model-runtime.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "95b4c8dce24f4d8b83a11d66ae2e1b1e9a329287",
+      "date": "2026-10-15",
+      "subject": "审查 wangly 研究产物保留必要性与容量目标",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/calibration-retention-summary.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/capacity-scenarios.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/current-heads-and-controls.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/head-probe-selection.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/inventory-accounting.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/manifest.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/mechanical-retention-summary.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/model-runtime-audit.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/semantic-field-profile.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/semantic-profile-guard.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c1b6250b0b0883018b0f7967f99a9a487434d253",
+      "date": "2026-10-15",
+      "subject": "重叠四来源辅助发布与独立订单验收",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b9362737ee34cc28471b59fcffe8a3c2377d7172",
+      "date": "2026-10-15",
+      "subject": "记录四来源发布重叠的双平台验证",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "reports/2026-10/2026-10-14-szse-model328-four-minute-performance-evidence/publication-overlap-validation.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cdca5dcc8e818625e859dc08c686e87cc01739b2",
+      "date": "2026-10-15",
+      "subject": "核验沪市通道索引的来源位置与截止边界",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-sse-sequence-and-factor-contract-audit.md",
+        "因子/algobench/src/algobench/sse_channel_sequence.py",
+        "因子/algobench/tests/test_sse_channel_sequence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e3744023e0dd029848771f8f2792e01f965e3f87",
+      "date": "2026-10-15",
+      "subject": "明确存储优化验收范围并区分进度与调度凭证",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-retention-optimization.md",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/inventory-accounting.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review-evidence/manifest.json",
+        "reports/2026-10/2026-10-15-wangly-retention-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d81750ccddd0c641103e0e2487701871f74fd692",
+      "date": "2026-10-15",
+      "subject": "校验已适配沪市三表的共同序列来源和时间窗口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_channel_sequence.py",
+        "因子/algobench/tests/test_sse_formal_integration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "db6d3d3d542232d1cc116091fc32ca8a334638e1",
+      "date": "2026-10-15",
+      "subject": "保持沪市事件距离在无符号序列输入下的对称性",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_channel_effect.py",
+        "因子/algobench/tests/test_sse_channel_effect.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "299e73c4f1483a16ba5be1cdab6887fb28f003f6",
+      "date": "2026-10-15",
+      "subject": "统一时间核的源时间精度并保留整数事件端点",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_sse_distance_contracts.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1a217aab2114332c2c7eb9b7e3c0156234a4a8b9",
+      "date": "2026-10-15",
+      "subject": "验收271日订单释放与历史续跑结果",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/codex-model-runtime.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/local-test-cleanup-residue.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-final-evidence.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-final-verification.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-write-response-final.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4bbb83873a3092f726e405d1bd3be82998e10671",
+      "date": "2026-10-15",
+      "subject": "按封存日终态核验并到期清理校准成功进度",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-retention-optimization.md",
+        "scripts/cleanup_wangly_s3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "123a0dee360e35bf0605bd5e42b17359cbf44129",
+      "date": "2026-10-15",
+      "subject": "增加只读缓存的沪市逻辑序列验收入口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_sse_sequence_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "446f1764c9722936e0e8925f9c7ba33ba6bf5f01",
+      "date": "2026-10-15",
+      "subject": "逐列明确沪市356项因子的输入资格与移植决定",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-sse-factor-contract-audit-evidence/factor-decisions.csv",
+        "reports/2026-10/2026-10-15-sse-factor-contract-audit-evidence/factor-decisions.json",
+        "reports/2026-10/2026-10-15-sse-factor-contract-audit.md",
+        "scripts/audit_sse_factor_contracts.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6d51c53bb70b0cd311cfac322e09e5b5c582c72",
+      "date": "2026-10-15",
+      "subject": "复核F40恢复边界并记录uncertainty无损压缩实测",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-f40-uncertainty-retention-second-audit.md",
+        "reports/2026-10/2026-10-15-wangly-additional-retention-second-audit.md",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/model-runtime-verification.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/uncertainty-lossless-parquet-sample.guard.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/uncertainty-lossless-parquet-sample.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ef812de953197080607f80f940a75020b6192a79",
+      "date": "2026-10-15",
+      "subject": "记录订单释放后的最新持久写入状态",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-closing-evidence.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8fc433de68bc658cf1a3dc5ffeaa615a35e3b6e5",
+      "date": "2026-10-15",
+      "subject": "记录订单生命周期191项最终集成验证",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-integration-evidence.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab8e3e1e95278dd6016a0e977b19fb4421866d9e",
+      "date": "2026-10-15",
+      "subject": "使配对活动时间和链响应时差保持源时间精度",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-sse-factor-contract-audit-evidence/factor-decisions.json",
+        "因子/algobench/tests/test_sse_distance_contracts.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "64863f126bbc6546b778274a3456421902be1e26",
+      "date": "2026-10-15",
+      "subject": "验收wangly三批清理并保存29.12GB释放证据",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-retention-optimization.md",
+        "reports/2026-10/2026-10-15-wangly-additional-retention-second-audit.md",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/archive-members.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/calibration-progress-plan.guard.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/calibration-progress-retirement.guard.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/calibration-progress-retirement.plan.json.gz",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/calibration-progress-retirement.receipt.json.gz",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/calibration-progress-retirement.summary.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/calibration-progress.keys.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/delivery-verification.json",
+        "reports/2026-10/2026-10-15-wangly-retention-optimization-evidence/f40-support-npz-lossless-sample.guard.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5bd26a56b62bf03f955d3c448e85384e8be4a15d",
+      "date": "2026-10-15",
+      "subject": "拒绝补进场后超出int64范围的通道序号",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_channel_sequence.py",
+        "因子/algobench/tests/test_sse_channel_sequence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1261964048b19918a74832a7ec1e77458cb7b75a",
+      "date": "2026-10-15",
+      "subject": "核对wangly清理后材料余额与S3拒写状态",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/storage-status-20261015T0836Z.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4b5093577df4b23b59d5b5c8539385c7878d4fc4",
+      "date": "2026-10-15",
+      "subject": "交付沪市序列距离验收与可观测因子决策",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-sse-sequence-and-factor-contract-audit.md",
+        "decisions/2026-10-10-sse-reconstructed-channel-sequence.md",
+        "decisions/2026-10-15-sse-observable-factor-contract.md",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/cache-validation.guard.json",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/cache-validation.json",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/cache-validation.log",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/distance-consumers.csv",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/linux-tests-command-source.guard.json",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/linux-tests.guard.json",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/linux-tests.log",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/runtime-cache.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "761d7cc9504096cc9096a5ece7f690ac5fea6461",
+      "date": "2026-10-15",
+      "subject": "保持沪市验收材料的原始字节与哈希一致",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/distance-consumers.csv",
+        "reports/2026-10/2026-10-15-sse-sequence-distance-audit-evidence/verification-summary.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0dec929b9e7bab977f8656618f840187305c3fc3",
+      "date": "2026-10-15",
+      "subject": "按明确保留终点退役历史定参与逐股误差载荷",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "退役历史定参与逐股误差载荷；open5m和账户名说明清理对象，不代表重新实施定标或环境建设",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-15-wangly-final-artifact-retirement.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/result_transfer_contract.py",
+        "scripts/retire_wangly_historical_artifacts.py",
+        "scripts/tests/test_historical_artifact_retirement.py",
+        "scripts/tests/test_retire_wangly_historical_artifacts.py",
+        "因子/algobench/src/algobench/formal_artifact_retirement.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6456cd361f306195764d1458fe8e751cc8981145",
+      "date": "2026-10-15",
+      "subject": "支持隔离Python执行历史退役安全测试",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_retire_wangly_historical_artifacts.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e79b9e2cb8fa0d62629b6abf5aa3a5a4e1091c6b",
+      "date": "2026-10-15",
+      "subject": "Add verified wenjie IDE storage cleanup",
+      "status": "excluded",
+      "chains": [],
+      "reason": "本次研究范围之外的工具事项",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wenjie-ide-cleanup.md",
+        "scripts/cleanup_wenjie_ide_storage.py",
+        "scripts/tests/test_cleanup_wenjie_ide_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc61e3c374361425b9b7cbb72d30e01d8f78d800",
+      "date": "2026-10-15",
+      "subject": "Normalize IDE cleanup source file endings",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_wenjie_ide_storage.py",
+        "scripts/tests/test_cleanup_wenjie_ide_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d03aaa3a347c9dc12a5b09f288fec9f64ab4328",
+      "date": "2026-10-15",
+      "subject": "Isolate CLI startup state during IDE cleanup verification",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_wenjie_ide_storage.py",
+        "scripts/tests/test_cleanup_wenjie_ide_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2497d417ee7a8f03d52ba6ccc1c4895c2fb46594",
+      "date": "2026-10-15",
+      "subject": "结束机械撤单逐股稳定性研究的后续生成",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_cancel_phase_prescreen.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "10ef70b895e55c00688ad531cc466bc0fc810b14",
+      "date": "2026-10-15",
+      "subject": "在完整日验收后将大清单和遥测迁移为可信摘要",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-final-artifact-retirement.md",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/tests/test_accepted_detail_retention.py",
+        "scripts/release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d40273a81700575140377a0fa0099633711125c0",
+      "date": "2026-10-15",
+      "subject": "Record verified wenjie disk cleanup and recovered capacity",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wenjie-storage-audit-evidence/tmp-retention.txt"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "530962e7f29bafb8bdecee69e3deed64824a02ab",
+      "date": "2026-10-15",
+      "subject": "将已验收日摘要持久保存并接通历史续跑读取",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-final-artifact-retirement.md",
+        "scripts/tests/test_accepted_detail_retention.py",
+        "scripts/release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b5693d8edf016d6c928a4424f7824578b0690058",
+      "date": "2026-10-15",
+      "subject": "按真实日内存测量启用16进程摘要化",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-15-wangly-final-artifact-retirement.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "693a7c5794050830888f755025f100876d6ed346",
+      "date": "2026-10-15",
+      "subject": "记录wangly五类材料退役与303.95GB释放验收",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/SERVER_SHA256SUMS",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/accepted-detail-certificates.json.gz",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/archive-members.json",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/completion-summary.json",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/final-direct-probe.guard.json",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/final-direct-write-probe.json",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/final-probe.guard.json",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/final-server-state.json",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/final-verification.child.log.gz",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/final-verification.guard.json",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/final-write-probe.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f50a2df7e2308f625948d2a36d5fa1e979c5dc6b",
+      "date": "2026-10-15",
+      "subject": "保存清理验收测试日志的原始字节及完整校验清单",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/windows-details-r02.log",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/windows-details-reader-r01.log",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/windows-ext4-r01.log",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/windows-ext4-r02.log",
+        "reports/2026-10/2026-10-15-wangly-final-artifact-retirement-evidence/windows-tests-r05.log"
+      ]
+    }
+  ]
+}

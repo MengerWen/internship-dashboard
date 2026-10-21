@@ -1,0 +1,4174 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-14",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "05268975cec984469aed896b83d5df8cdad389bf",
+      "date": "2026-10-14",
+      "subject": "明确项目代码复用与正确性效率共同验收",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENTS.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "78ac2e094c5f2069590a0671602ee986b7d66597",
+      "date": "2026-10-14",
+      "subject": "发布10.14沪市委托v2全流程提速报告",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "2026-10-14-沪市委托v2全流程提速.md",
+        "content/assets/sse-v2-speed-2026-10-14/benchmark-evidence.json",
+        "content/assets/sse-v2-speed-2026-10-14/completion.json",
+        "content/assets/sse-v2-speed-2026-10-14/forward-benchmark-evidence.json",
+        "content/assets/sse-v2-speed-2026-10-14/performance-report.md",
+        "content/assets/sse-v2-speed-2026-10-14/performance.json",
+        "content/assets/sse-v2-speed-2026-10-14/rule-equivalence.json",
+        "content/assets/sse-v2-speed-2026-10-14/runtime-evidence.json",
+        "content/assets/sse-v2-speed-2026-10-14/validation-report.md",
+        "content/daily/2026-10-14.md",
+        "content/daily/2026-10-14.show.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "94d11f824300291c16331313097caf0d1f856056",
+      "date": "2026-10-14",
+      "subject": "记录10.14提速报告的发布版本与布局验收",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/sse-v2-report-20261014/deployment.json",
+        "artifacts/sse-v2-report-20261014/publication.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "24c46c876583f1a3157570b8ddefd097d825fac1",
+      "date": "2026-10-14",
+      "subject": "在10.14提速汇报中记录运算缓存清理结果",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "2026-10-14-沪市委托v2全流程提速.md",
+        "content/assets/sse-v2-speed-2026-10-14/cleanup.json",
+        "content/daily/2026-10-14.md",
+        "content/daily/2026-10-14.show.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "f93296cdc76e1de41b5f75d6794daf04e9b5b9d4",
+      "date": "2026-10-14",
+      "subject": "保存10.14最终发布及临时worktree清理验收",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/sse-v2-report-20261014/final-browser-validation.json",
+        "artifacts/sse-v2-report-20261014/final-publication.json",
+        "artifacts/sse-v2-report-20261014/worktree-cleanup.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "9c6af730713829d3e46d0669c831800ebac2f4e3",
+      "date": "2026-10-14",
+      "subject": "更新10.14报告的来源权限核查与缓存清理结果",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "2026-10-14-沪市委托v2全流程提速.md",
+        "content/assets/sse-v2-speed-2026-10-14/cleanup.json",
+        "content/daily/2026-10-14.md",
+        "content/daily/2026-10-14.show.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "b6a6be3c55c42baf5badafafddbbd0121053e996",
+      "date": "2026-10-14",
+      "subject": "记录来源核查报告发布与临时检出清理证据",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/sse-v2-report-20261014/deployment.json",
+        "artifacts/sse-v2-report-20261014/final-publication.json",
+        "artifacts/sse-v2-report-20261014/source-audit-build.txt",
+        "artifacts/sse-v2-report-20261014/worktree-cleanup.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2540f752b774073d5544b2f411b73cc207f99a8b",
+      "date": "2026-10-14",
+      "subject": "增加样本期沪深交易规则与原始委托可行集",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "onboarding",
+      "related_chains": [],
+      "phase_mapping": {
+        "onboarding": "sse-v2",
+        "sse-v2": "sse-v2"
+      },
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-13-sse-original-order-v2.md",
+        "docs/sse-original-order-v2/rules-2023.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-rules.md",
+        "因子/algobench/src/algobench/sse_original_order_rules.py",
+        "因子/algobench/tests/test_sse_original_order_rules.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e20f35e1d10caf4729163ec667637b12f35321f4",
+      "date": "2026-10-14",
+      "subject": "实现带区间删失的逐tick停止概率极大似然模型",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_censored_tick_model.py",
+        "因子/algobench/tests/test_sse_censored_tick_model.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "66bd29c9b0301f0a35747abb6a53f46d3d92e021",
+      "date": "2026-10-14",
+      "subject": "增加独立深市掩码及订单规则反证和v1记分卡",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/src/algobench/sse_truth_mask.py",
+        "因子/algobench/tests/test_sse_order_research.py",
+        "因子/algobench/tests/test_sse_original_v2_scorecard.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bfc1853c3f0534646319932a8d4d2ff200f1e784",
+      "date": "2026-10-14",
+      "subject": "增加官方历史快照有界取数和累计成交区间十档核对",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [
+        "sse-v2"
+      ],
+      "phase_mapping": {
+        "lv2-snapshot": "sse-v2"
+      },
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_snapshots.py",
+        "因子/algobench/src/algobench/sse_snapshot_cut_audit.py",
+        "因子/algobench/tests/test_sse_snapshot_cut_audit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c39db6a115aa3274e83dbb03bc9445d32bf9f33e",
+      "date": "2026-10-14",
+      "subject": "按原始类型约束纯成交单数量并证明稀有深度即撤",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-rules.md",
+        "因子/algobench/src/algobench/sse_original_order_rules.py",
+        "因子/algobench/tests/test_sse_original_order_rules.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "48121f3ee20d3978bb0273ac27213bb7064ede9f",
+      "date": "2026-10-14",
+      "subject": "用科创板分类型数量上限排除市价成分并绑定规则实现哈希",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-rules.md",
+        "因子/algobench/src/algobench/sse_original_order_rules.py",
+        "因子/algobench/tests/test_sse_original_order_rules.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d21baad7d8ad157086f3bf08f58c451026493aa2",
+      "date": "2026-10-14",
+      "subject": "增加分协变量稀有深度撤余模型及可见超额数量分布",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_hidden_remainder_model.py",
+        "因子/algobench/tests/test_sse_hidden_remainder_model.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1809069fe78fa029d022009cabf691dfa842c26d",
+      "date": "2026-10-14",
+      "subject": "输出规则唯一确定的类型价格证明及股票日完整性",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/src/algobench/sse_original_order_rules.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "21ecf6b5c89731b0696ba21a19822eec3be156ba",
+      "date": "2026-10-14",
+      "subject": "保留缺消息后的订单未知状态和记分卡不可核验分母",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/tests/test_sse_order_research.py",
+        "因子/algobench/tests/test_sse_original_v2_scorecard.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d2a696c27a4d01cece60910eacc3cb6d0b20c518",
+      "date": "2026-10-14",
+      "subject": "按校验过的本地范围页和字节准入执行订单回放",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/tests/test_sse_original_v2_cached_pages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2b227c6343c01ea0130dc05af4f194e71e031bb3",
+      "date": "2026-10-14",
+      "subject": "输出独立v2身份条件估计和固定种子二十组可行抽样",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_hidden_remainder_model.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "00d14a9f1c3fc4ad609dd866c030e7e8823a4cc0",
+      "date": "2026-10-14",
+      "subject": "按空对手盘口的撤销规则排除对手最优残量",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-rules.md",
+        "因子/algobench/src/algobench/sse_original_order_rules.py",
+        "因子/algobench/tests/test_sse_original_order_rules.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0d00a46e64bfed9ad24dfc0207e4340a8be107b8",
+      "date": "2026-10-14",
+      "subject": "为沪市独立尾部与深市参考尾部绑定不同参数身份",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a310ba2dd74acef2b99d2c255fc88f629204be6c",
+      "date": "2026-10-14",
+      "subject": "增加独立撮合验证和订单对数得分校准指标",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/tests/test_sse_order_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7277b76ede6e2f3b1c2865af75f2ae21c63e7032",
+      "date": "2026-10-14",
+      "subject": "编排两市独立拟合留出记分卡和两种沪市尾部输出",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py",
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf31fee4681cb941e9adb5b167c74b2fe64647dd",
+      "date": "2026-10-14",
+      "subject": "按申报可接受范围归一化逐tick删失似然",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/src/algobench/sse_censored_tick_model.py",
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/tests/test_sse_censored_tick_model.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b8a8409ba685a657c9f36cf77a2edcb67fb37848",
+      "date": "2026-10-14",
+      "subject": "核验不可回放订单的宽区间并保留时序冲突分母",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/sse_order_research.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2388f8b79a685ce9ebd438d86e330d9e753d88de",
+      "date": "2026-10-14",
+      "subject": "按板块股价时段限定沪市可识别尾部及深市参考形状",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/src/algobench/sse_hidden_remainder_model.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_hidden_remainder_model.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d87e5a8a1b6c0c0320271eddcbc09bacf5205a0c",
+      "date": "2026-10-14",
+      "subject": "逐幅核对官方十档快照并区分盘口不可回放和持续差异",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/sse_original_v2_snapshot_audit.py",
+        "因子/algobench/src/algobench/sse_snapshot_cut_audit.py",
+        "因子/algobench/tests/test_sse_snapshot_cut_audit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f0fb5d68230c13bfd10e3264cdb702659b0e9ca3",
+      "date": "2026-10-14",
+      "subject": "在真实入场盘口独立撮合二十组订单并报告类型集合范围",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_forward.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/tests/test_sse_order_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "407f7b534f27da5fca2912131030e0b35434cc79",
+      "date": "2026-10-14",
+      "subject": "逐页准入完整主动单拟合并检查全部深市日期的反证",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2aa18c0f7c42a6869f58b01ee9bbe24eafab659e",
+      "date": "2026-10-14",
+      "subject": "输出逐tick后验众数点估计并单列中位数分位数",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_censored_tick_model.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_censored_tick_model.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1f96e8b977e1154c74100c0c44ff68f1cfbcd4c1",
+      "date": "2026-10-14",
+      "subject": "记录v2证明可行集条件估计抽样身份和验证合同",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76048580618a83313b7668d5574a8ae1c37a4f53",
+      "date": "2026-10-14",
+      "subject": "按原始类型解释深市真值报价并保留限价tick严格检查",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/tests/test_sse_order_research.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "91fd056efad82a460addb3f7d6a3e1f8792eca62",
+      "date": "2026-10-14",
+      "subject": "补齐两日全通道撤单订单号并复核数字缺口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_cancel_ids.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f23ada4ecaa222ac3799d23cc4eb20aff012306f",
+      "date": "2026-10-14",
+      "subject": "保留官方缺失字段状态并核对初始空盘口切点",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_snapshot_audit.py",
+        "因子/algobench/src/algobench/sse_snapshot_cut_audit.py",
+        "因子/algobench/tests/test_sse_snapshot_cut_audit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "99ed279bc6d16d702fe4ce9ef30c42b94c32b88f",
+      "date": "2026-10-14",
+      "subject": "在v2记分卡列出全部真值及价格数量不可核验分母",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_order_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7a9d953ec070c5c68512f6952abc9894e03ab4af",
+      "date": "2026-10-14",
+      "subject": "以输入哈希关联拟合真值字段并持久保存完整v2输出合同",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b46fce3239605e673f42dc1a2c69afb27b7fc273",
+      "date": "2026-10-14",
+      "subject": "分别标记价格数量可估状态并保留未识别撤余的抽样区间",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_forward.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76c107742697b37afa6411446d65d60e1e26802b",
+      "date": "2026-10-14",
+      "subject": "与原生盘口共用万分之一元价格编码后校验股票tick",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/tests/test_sse_order_research.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0f471933f6d6013fd1b0d5e4e137bc9186974a1",
+      "date": "2026-10-14",
+      "subject": "逐单配对两种沪市尾部抽样并分主动纯成交和买卖侧验证",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f9775404795f16566e5a47bd1340b7038f4bfd9e",
+      "date": "2026-10-14",
+      "subject": "限定数量点值状态为证明分布估计或未知",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "因子/algobench/src/algobench/sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dd137a6ed0b6d9230531cc2f25e8a403c90ff510",
+      "date": "2026-10-14",
+      "subject": "稀有深度缺少识别变异时保留撤余概率区间和可见数量分布",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_hidden_remainder_model.py",
+        "因子/algobench/tests/test_sse_hidden_remainder_model.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cf050e71074873b105766878263fc67da63deb9a",
+      "date": "2026-10-14",
+      "subject": "核验每笔v2抽样合同并汇总分阶段成本与私有证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_evidence.py",
+        "因子/algobench/tests/test_sse_original_v2_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "72a3a8743de2a550084d68bc524b039ea7c65bcc",
+      "date": "2026-10-14",
+      "subject": "复用相同撮合情景并按二十次抽样权重汇总可见统计",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_forward.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/tests/test_sse_order_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7bd852cf3cde6e8f4b2d177dd8ebb4ee43fe5153",
+      "date": "2026-10-14",
+      "subject": "区分盘口回放失败后的持续不可核验快照与缺消息证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/sse_snapshot_cut_audit.py",
+        "因子/algobench/tests/test_sse_snapshot_cut_audit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cd3bf169e69a05cf53082c7ec6b3666e36714328",
+      "date": "2026-10-14",
+      "subject": "按板块股价和时段统计有即时全撤证据的深市零成交市价单",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_evidence.py",
+        "因子/algobench/tests/test_sse_original_v2_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f19bb8af7634f54ff17b6d55bd1e052bd7f288d3",
+      "date": "2026-10-14",
+      "subject": "提供有独立身份和哈希校验的上下界流目录以复用不可变订单页",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_evidence.py",
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "70500c12fefbee23860849ea2c2987484de603ee",
+      "date": "2026-10-14",
+      "subject": "按本地股票谓词读取核对数据并双序配对测量整页读取成本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_evidence.py",
+        "scripts/sse_original_v2_forward.py",
+        "scripts/sse_original_v2_pages.py",
+        "scripts/sse_original_v2_snapshot_audit.py",
+        "因子/algobench/tests/test_sse_original_v2_pages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a936f263dcc4820247c186f46248445b523f4dcc",
+      "date": "2026-10-14",
+      "subject": "将精确停止点上限标为数据覆盖并说明市价混合的识别限制",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a923533a93a5dfe1a77a18f4a1bd31233cfd612",
+      "date": "2026-10-14",
+      "subject": "记录原始真值分母查询分段耗时及并行股票回放成本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/sse_original_v2_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "57b445a8276eaa264fc863e43510f24c0cd085a8",
+      "date": "2026-10-14",
+      "subject": "在披露盘口中还原本方最优报价并按输入身份保存研究回放",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/src/algobench/sse_truth_mask.py",
+        "因子/algobench/tests/test_sse_truth_mask_research.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dcc0e26f5cff37d0a5b5b9058fd027406fcc9655",
+      "date": "2026-10-14",
+      "subject": "直接复用已核验输入执行本地读取配对测速",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_pages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d37c613c0423b3a3e8d319615774256d5ba6acb3",
+      "date": "2026-10-14",
+      "subject": "按guard有效运行时钟记录完整阶段成本并扣除交易窗口冻结",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "trading-window-freeze",
+      "related_chains": [
+        "sse-v2"
+      ],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_cancel_ids.py",
+        "scripts/sse_original_v2_evidence.py",
+        "scripts/sse_original_v2_forward.py",
+        "scripts/sse_original_v2_inputs.py",
+        "scripts/sse_original_v2_models.py",
+        "scripts/sse_original_v2_pages.py",
+        "scripts/sse_original_v2_replay.py",
+        "scripts/sse_original_v2_snapshot_audit.py",
+        "scripts/sse_original_v2_snapshots.py",
+        "因子/algobench/src/algobench/sse_order_research.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "16a008454815564ae36e0e103c313a7f38f780f4",
+      "date": "2026-10-14",
+      "subject": "在v2估计与输出核验中保留已证明的撤余状态",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_evidence.py",
+        "因子/algobench/src/algobench/sse_hidden_remainder_model.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_hidden_remainder_model.py",
+        "因子/algobench/tests/test_sse_original_v2_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2dd6adf79631522e0c65654bc2091f6369375031",
+      "date": "2026-10-14",
+      "subject": "按整数tick划分撤余模型的股价条件组",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_hidden_remainder_model.py",
+        "因子/algobench/tests/test_sse_hidden_remainder_model.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9c3af6f748e126dac3676662a96978f360d15c46",
+      "date": "2026-10-14",
+      "subject": "用独立随机流保持v2条件限价与撤余抽样的边际分布",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f3fd73037fd48f03d24725551d23786b1cd9f4f5",
+      "date": "2026-10-14",
+      "subject": "用十元股价条件组核验可见超额数量的迁移检验",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "821c9388302902b7c1362a37683e14f6ffb2db9e",
+      "date": "2026-10-14",
+      "subject": "记录v2完整三表与十三日官方快照的输入覆盖和查询账目",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [],
+      "phase_mapping": {
+        "lv2-snapshot": "sse-v2",
+        "sse-v2": "sse-v2"
+      },
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-input-coverage.md",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-input-evidence/coverage.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37f8422d205a407792647980b333320ad46d69f2",
+      "date": "2026-10-14",
+      "subject": "仅以已完成guard的最终资源记录形成v2核验依据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_evidence.py",
+        "因子/algobench/tests/test_sse_original_v2_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "74d1555e73b4d29314e9353b9450b3b4ff7d2c82",
+      "date": "2026-10-14",
+      "subject": "在前向核对分母中保留盘口失败后尚未走到的订单",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_forward.py",
+        "因子/algobench/tests/test_sse_original_v2_forward.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fed9215bc1d918f4c6803e62d1acd8401d4bb101",
+      "date": "2026-10-14",
+      "subject": "优先复用同一来源哈希的本地订单页完成v2拟合和验证",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "104001f1bfb15fcaab40ae78ea1dcaf1d29113bb",
+      "date": "2026-10-14",
+      "subject": "明确样本期交易规则实施日期与风险警示股涨跌幅调整边界",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "onboarding",
+      "related_chains": [
+        "sse-v2"
+      ],
+      "phase_mapping": {
+        "onboarding": "sse-v2"
+      },
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-rules.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b95e601b126c0c533a3eb83ba7615535406b7462",
+      "date": "2026-10-14",
+      "subject": "区分M和本方最优订单的窗口零成交与已证实消失",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_evidence.py",
+        "因子/algobench/tests/test_sse_original_v2_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "451971ed4fb2ffa8e61d9b9ddadba05f44e71693",
+      "date": "2026-10-14",
+      "subject": "为复用三表超集绑定A股研究成员并核对评价分母",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-input-coverage.md",
+        "scripts/sse_original_v2_evidence.py",
+        "scripts/sse_original_v2_models.py",
+        "scripts/sse_original_v2_scope.py",
+        "因子/algobench/tests/test_sse_original_v2_evidence.py",
+        "因子/algobench/tests/test_sse_original_v2_scope.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e1cc9645ff9879d3a6ba313f48749a73f79b1ff8",
+      "date": "2026-10-14",
+      "subject": "在独立启动时初始化A股成员汇总的依赖路径",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_scope.py",
+        "因子/algobench/tests/test_sse_original_v2_scope.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9150a0a34e62a2e2d1bdc445e5ffdc7f5c58865c",
+      "date": "2026-10-14",
+      "subject": "记录十一日深市掩码v1订单记分卡与A股覆盖分母",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-v1-evidence/scorecard.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-v1-evidence/strata.csv",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-v1-scorecard.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "93ec639d172a4f623bc4e692adf5beb4875063a0",
+      "date": "2026-10-14",
+      "subject": "从已核验缓存或对象服务读取订单号归档输入",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_cancel_ids.py",
+        "因子/algobench/tests/test_sse_original_v2_cancel_ids.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f71eafd255c3b69c653b61bb0c4067297b819018",
+      "date": "2026-10-14",
+      "subject": "记录沪市完整三表订单号核对及撤单补充身份",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-number-complete-audit.md",
+        "reports/2026-10/2026-10-14-sse-original-order-number-evidence/cancel-completed.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1048620a9f3656ecc16ca862191a1de920679f75",
+      "date": "2026-10-14",
+      "subject": "记录十一日沪市规则区间及深市零反例验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-feasible-evidence/feasible.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-feasible-evidence/strata.csv",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-feasible-sets.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3a724eef0618fdc8495db6990f181bbf878342cf",
+      "date": "2026-10-14",
+      "subject": "记录十三日官方十档快照一致率与持续异常定位",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [],
+      "phase_mapping": {
+        "lv2-snapshot": "sse-v2",
+        "sse-v2": "sse-v2"
+      },
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-snapshot-audit.md",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-snapshot-evidence/dates.csv",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-snapshot-evidence/snapshots.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1f8bb4419c37a5cf4e0b97b2e7e9867d69af8749",
+      "date": "2026-10-14",
+      "subject": "盘口不可用时保留未知价格上界",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/tests/test_sse_order_research.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "15a627618c8cb6e926a2a6bae22ae8cd809e9d7e",
+      "date": "2026-10-14",
+      "subject": "统一沪市已核验的绝对申报价格约束",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-rules.md",
+        "因子/algobench/src/algobench/sse_order_research.py",
+        "因子/algobench/src/algobench/sse_original_order_rules.py",
+        "因子/algobench/tests/test_sse_order_research.py",
+        "因子/algobench/tests/test_sse_original_order_rules.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a6b2ca3364923b3877a0f16ecc36e3022201cf4d",
+      "date": "2026-10-14",
+      "subject": "以已发布价量独立维护沪市快照核对盘口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/output-contract.md",
+        "scripts/sse_original_v2_evidence.py",
+        "scripts/sse_original_v2_snapshot_audit.py",
+        "因子/algobench/src/algobench/sse_publication_book.py",
+        "因子/algobench/tests/test_sse_publication_book.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6070c3f274e60274b79dc8b9104542b9b0a83f0b",
+      "date": "2026-10-14",
+      "subject": "以已发布挂单身份核对未指定方向的撤单",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_publication_book.py",
+        "因子/algobench/tests/test_sse_publication_book.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1faa4f9789a7e248b5e3bfdcd5daa247d53ac71e",
+      "date": "2026-10-14",
+      "subject": "记录沪深八日独立删失模型及撤余假设检验",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-model-evidence/XSHE-fit.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-model-evidence/XSHE-quantity-training-hypothesis.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-model-evidence/XSHG-fit.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-model-evidence/guard.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-model-evidence/source-identities.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-models.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b65804e6f7d07130df37313756803133faafe68d",
+      "date": "2026-10-14",
+      "subject": "记录深市328列因子计算暂停断点与性能证据",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [
+        "trading-window-freeze"
+      ],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+        "reports/2026-10/2026-10-14-szse-model328-factor-recompute-pause-evidence/pause.json",
+        "reports/2026-10/2026-10-14-szse-model328-factor-recompute-pause-evidence/publication.json",
+        "reports/2026-10/2026-10-14-szse-model328-factor-recompute-paused.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0e8eb78e9029f4df257f54bdb370294b1790477c",
+      "date": "2026-10-14",
+      "subject": "汇总深市328列逐日耗时与剩余工作量参照",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-daily-timing-evidence/data.json",
+        "reports/2026-10/2026-10-14-szse-model328-daily-timing-evidence/durations.svg",
+        "reports/2026-10/2026-10-14-szse-model328-daily-timing-evidence/phases.json",
+        "reports/2026-10/2026-10-14-szse-model328-daily-timing-evidence/verification.json",
+        "reports/2026-10/2026-10-14-szse-model328-daily-timing-review.md",
+        "reports/2026-10/2026-10-14-szse-model328-daily-timings.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bd8323fcb87fbab493fca27b37ffc65b730db7d2",
+      "date": "2026-10-14",
+      "subject": "选定深市328列优化测速的三档典型日期",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-typical-date-selection-evidence/evidence.json",
+        "reports/2026-10/2026-10-14-szse-model328-typical-date-selection-evidence/optimization-sample-dates.json",
+        "reports/2026-10/2026-10-14-szse-model328-typical-date-selection.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "15b33ed8def0e158edbd482dcb4a1fcc1f8cf56c",
+      "date": "2026-10-14",
+      "subject": "落实代码复用评核与16核计算性能验收",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENTS.md",
+        "docs/agents/compute-efficiency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c116e50d2bf6f979ba6b99c70681fe14fae632a7",
+      "date": "2026-10-14",
+      "subject": "固定深市328列单日四分钟优化验收与复用范围",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3d6900bc06bf76f17f7c6e1fdfc2965e0d407ab9",
+      "date": "2026-10-14",
+      "subject": "使对象发布按命名空间定位并免除挂载目录查询",
+      "status": "pending",
+      "chains": [],
+      "reason": "只有公共代码或含义不明的标题，缺少可独立确认的任务目标",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "decisions/2026-10-14-object-publication-namespace.md",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7b336f45492cca6be56701196638217f2ba84bd4",
+      "date": "2026-10-14",
+      "subject": "提升沪市委托v2概率估计与订单评分效率",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-original-v2-performance.md",
+        "scripts/benchmark_sse_original_v2.py",
+        "因子/algobench/src/algobench/sse_censored_tick_model.py",
+        "因子/algobench/src/algobench/sse_hidden_remainder_model.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_censored_tick_model.py",
+        "因子/algobench/tests/test_sse_order_validation.py",
+        "因子/algobench/tests/test_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3d6ae8dbc9dd3c3f97491b2e92108b8dbfba6f80",
+      "date": "2026-10-14",
+      "subject": "通过对象接口提交日桶并独立核验持久订单证据",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "decisions/2026-10-14-object-publication-namespace.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/src/algobench/formal_artifact_commit.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6a08d795876482b33c731cd510b960a9720f99ad",
+      "date": "2026-10-14",
+      "subject": "复用可配置日桶布局减少深市因子发布对象数",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cc5085d55babb897a733adcffed30f36d2e16862",
+      "date": "2026-10-14",
+      "subject": "按Arrow列表值验收订单抽样的存储回读",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "663267cfc3f51338e530446d06e9f279b93f63ae",
+      "date": "2026-10-14",
+      "subject": "在BBO区间图中复用精确范围索引和跨批次边归并",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c505c924ca0a92f4c1c62869be9e70f54c42270d",
+      "date": "2026-10-14",
+      "subject": "以列式样本和逐页验收恢复沪市委托v2计算",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_sse_original_v2.py",
+        "scripts/sse_original_v2_inputs.py",
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "80fbae2e0c62759bf551a8dd5175be0a23e62653",
+      "date": "2026-10-14",
+      "subject": "以通用Parquet列表保存列式订单抽样",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_sse_original_v2.py",
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/src/algobench/sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8264c553ff7bc70d92a807c0d6113161c61457f0",
+      "date": "2026-10-14",
+      "subject": "以原生Arrow数组核对抽样结果与回读值",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_sse_original_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e491a4a2a8b34ad505fa23efb097a4839c9b3736",
+      "date": "2026-10-14",
+      "subject": "复用删失概率状态计算两市重叠区分布",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d49a30f2c55ce5139684da2cda726b88376a23f6",
+      "date": "2026-10-14",
+      "subject": "复用本地条件读取并约束前向核对的并发和队列",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_forward.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f303c8e774ddd803d0dd3776022ad0f348f18570",
+      "date": "2026-10-14",
+      "subject": "统一分块Arrow数组的订单结果验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_sse_original_v2.py",
+        "因子/algobench/tests/test_sse_original_v2_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dd923db340a252b294a8233795e6b719d48661fb",
+      "date": "2026-10-14",
+      "subject": "按回执回读四来源对象并保留面板目录权限",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f3ebc3981dc877176adf3968c293b1118113eb38",
+      "date": "2026-10-14",
+      "subject": "复用持久订单页并减少全日评分的内存复制",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py",
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d9139e1b4208348d206856edba3540a70ced7889",
+      "date": "2026-10-14",
+      "subject": "仅传输订单验收使用的匹配和行数证据",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2295bce7ae55851e551d56a9c1aba40f47918a6c",
+      "date": "2026-10-14",
+      "subject": "按内容哈希无损去重派生日桶元数据",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d4c224b9a793a9b6cead6274d34cc13d4e2cb6d",
+      "date": "2026-10-14",
+      "subject": "通过公共入口还原分布统计的日桶元数据",
+      "status": "pending",
+      "chains": [],
+      "reason": "只有公共代码或含义不明的标题，缺少可独立确认的任务目标",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_mechanism_distributions.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f16d4ca94465f0f7594d5dfea6c5636ea56cdd32",
+      "date": "2026-10-14",
+      "subject": "按事件行根数收紧BBO索引准入上界",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c7097558344db1904eabb9e7f35a3ae690d85268",
+      "date": "2026-10-14",
+      "subject": "以已核验的规则等价证明复用沪深拟合结果",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/rule-implementation-compatibility.json",
+        "reports/2026-10/2026-10-14-sse-original-v2-performance-evidence/rule-equivalence.json",
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "83377b7c92e941b26748133281ddad7fda7856db",
+      "date": "2026-10-14",
+      "subject": "显式限定并复用股票级F40候选内存",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bd1ff84b3ab7d0af6bd96aa7cd7f9a858825e24d",
+      "date": "2026-10-14",
+      "subject": "复用活跃行根并集计算BBO索引成本",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dde53c0b7930775851da53f42f9dde85af578d62",
+      "date": "2026-10-14",
+      "subject": "以逐页精确评分消除全日订单列的内存聚合",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-original-v2-performance.md",
+        "scripts/benchmark_sse_original_v2_scoring.py",
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "57e5a2207761828a976e5f8b6b50259b41c7f5d9",
+      "date": "2026-10-14",
+      "subject": "原子发布订单页并从完整本地收据恢复",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_models.py",
+        "因子/algobench/tests/test_sse_original_v2_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "816102f1109107bd45bc11d5692ae1aad534b605",
+      "date": "2026-10-14",
+      "subject": "将派生IPC解码限定为每个发布任务一条线程",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4f6cb6f5da1dde3d0794aaec6d0180c64f2e3be4",
+      "date": "2026-10-14",
+      "subject": "保持响应触发列表的Arrow缓冲并复用完整值指纹",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e11555c9ab2f80878d776d7491935bd2b99fe950",
+      "date": "2026-10-14",
+      "subject": "记录沪市委托v2复用评核与真实数据性能验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-v2-performance-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-14-sse-original-v2-performance-evidence/benchmark-evidence.json",
+        "reports/2026-10/2026-10-14-sse-original-v2-performance-evidence/runtime-evidence.json",
+        "reports/2026-10/2026-10-14-sse-original-v2-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2f7bf33419848eafd4bfb1f757a4335e34f51586",
+      "date": "2026-10-14",
+      "subject": "按响应摘要和规格验收的字段投影分组",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9bcab4fcf21dcc2791c74d2eca061cba3a0f26ca",
+      "date": "2026-10-14",
+      "subject": "按Arrow股票行段执行完整订单验收",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "33b17662460d45052d93abbdc40336e20f49bda5",
+      "date": "2026-10-14",
+      "subject": "按实际片段字节优先发布大桶并保持清单顺序",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d9eba1f82ad73e133df4fe42ed0bc9423eb61fed",
+      "date": "2026-10-14",
+      "subject": "通过对象接口写入并回读全部控制回执",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_factor_run_schedule.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4f73a83385520f5442f89745166df20d9d7d573f",
+      "date": "2026-10-14",
+      "subject": "以非零核后继表精确查询单调BBO区间上界",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1f47f17da2c17a82034448b3dc82595009a893ee",
+      "date": "2026-10-14",
+      "subject": "从验收回执绑定的对象比较股票级科学内容",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "scripts/build_szse_model328_performance_gate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fe2bd0f7d51598dcb9aa60fc10bf83cbe9d327ad",
+      "date": "2026-10-14",
+      "subject": "以共享Arrow股票行段持续调度前向验证并复用已完成结果",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-original-v2-performance.md",
+        "docs/sse-original-order-v2/forward-implementation-compatibility.json",
+        "scripts/benchmark_sse_original_v2_forward.py",
+        "scripts/sse_original_v2_forward.py",
+        "scripts/sse_original_v2_forward_arrow.py",
+        "因子/algobench/tests/test_sse_original_v2_forward_arrow.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9d1cc36bd9e035b999c6529093808f92f4f16f70",
+      "date": "2026-10-14",
+      "subject": "记录深市单日全链路优化分析与函数复用边界",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "69c93c77d6ce395a19de2db7bb0f5bce5975b7d1",
+      "date": "2026-10-14",
+      "subject": "以跨Python版本的规范语法树校验前向结果兼容身份",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/forward-implementation-compatibility.json",
+        "scripts/sse_original_v2_forward.py",
+        "因子/algobench/tests/test_sse_original_v2_forward_arrow.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d126fd2cc523737d82e915987bc927532082f4aa",
+      "date": "2026-10-14",
+      "subject": "按唯一证券代码准备缓存输入并固定前向测速参考版本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_sse_original_v2_forward.py",
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/tests/test_sse_original_v2_cached_pages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dbdd1af0a743a43cea601b88317f8231604377ba",
+      "date": "2026-10-14",
+      "subject": "复用安全内容解析缓存加载正式冻结参数",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1d5bf478116d6986d8ae0b47b98932d30d08b1d9",
+      "date": "2026-10-14",
+      "subject": "为重复原始委托抽样复用精确盘口前缀量索引",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-original-v2-performance.md",
+        "docs/sse-original-order-v2/forward-implementation-compatibility.json",
+        "scripts/benchmark_sse_original_v2_forward.py",
+        "scripts/sse_original_v2_forward.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/tests/test_sse_prepared_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0a00cf319d0d89a1098fc8c9260ae59d624163b1",
+      "date": "2026-10-14",
+      "subject": "用直接寻址区间累计完整BBO候选图",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "97cfda386946d71c7107f64fa505b114b85e8be0",
+      "date": "2026-10-14",
+      "subject": "将基础盘口和类型解码依赖纳入前向科学身份",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/sse-original-order-v2/forward-implementation-compatibility.json",
+        "scripts/benchmark_sse_original_v2_forward.py",
+        "scripts/sse_original_v2_forward.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d0d060d838d3284f8f6b650c7faf0d049e4f2ab3",
+      "date": "2026-10-14",
+      "subject": "用原生字符串缓冲精确准备和回读订单审计",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ee9dd77e3bbef62b17b6c9e564016a562f94ba8a",
+      "date": "2026-10-14",
+      "subject": "复用相同抽样的撮合统计并稳定前向汇总恢复文件",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-original-v2-performance.md",
+        "docs/sse-original-order-v2/forward-implementation-compatibility.json",
+        "scripts/sse_original_v2_forward.py",
+        "因子/algobench/src/algobench/sse_order_validation.py",
+        "因子/algobench/tests/test_sse_original_v2_forward_arrow.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9322a85d1fe55499fb127b5ba2a309ea9aaa6217",
+      "date": "2026-10-14",
+      "subject": "按实际正分数行归约股票响应审计规格",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "10cf8d590bb2cbde5f2220a6bab5e7224c501f8a",
+      "date": "2026-10-14",
+      "subject": "验收前向撮合完整吞吐及16核利用率",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-v2-performance-evidence/forward-benchmark-evidence.json",
+        "reports/2026-10/2026-10-14-sse-original-v2-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7e15812a7d016ddd343a896c51f82f3c4a83041f",
+      "date": "2026-10-14",
+      "subject": "按完整执行记录独立外推研究成本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-original-v2-performance.md",
+        "scripts/sse_original_v2_evidence.py",
+        "因子/algobench/tests/test_sse_original_v2_costs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3d7a795f3a5989f40b4fd657a0759ac5232f317e",
+      "date": "2026-10-14",
+      "subject": "保存合同验收断点并保留旧查询账本未知状态",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-original-v2-performance.md",
+        "scripts/sse_original_v2_evidence.py",
+        "因子/algobench/tests/test_sse_original_v2_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5753f48b81388cb1feae71a4b62c2a57f364c254",
+      "date": "2026-10-14",
+      "subject": "完成沪市原始委托v2留出验证与最终验收报告",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-original-order-v2-validation-evidence/aggregate.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-validation-evidence/completion.json",
+        "reports/2026-10/2026-10-14-sse-original-order-v2-validation.md",
+        "reports/2026-10/2026-10-14-sse-original-v2-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f783cfa8ee8ef5bb05beafc495d5236f107a3580",
+      "date": "2026-10-14",
+      "subject": "缩减列式配对归约的序列投影字段",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4c58aaa377469316d23f324fc712c727c8754663",
+      "date": "2026-10-14",
+      "subject": "并行发布共享输入计算出的三个辅助来源",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aa5b4bca161571857dcc6b1a723fd2c1f1d95a59",
+      "date": "2026-10-14",
+      "subject": "按持久哈希和重建收据清理沪市v2完成缓存",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-v2-hot-cleanup.md",
+        "scripts/cleanup_calibration_storage.py",
+        "scripts/cleanup_sse_original_v2_hot.py",
+        "scripts/tests/test_cleanup_sse_original_v2_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dd6807441bc8ee28d0ba6c7b2be9ba68ab31fa16",
+      "date": "2026-10-14",
+      "subject": "为深市完整因子计算配置普通页分配",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/tests/test_szse_model328_factor_recompute.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "594fc0327bb40c360de674154ff059e729449200",
+      "date": "2026-10-14",
+      "subject": "保留沪市v2已有的本地输入别名并禁止递归跟随",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_sse_original_v2_hot.py",
+        "scripts/tests/test_cleanup_sse_original_v2_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "21abde617cd1021e726918ebdcee90990bf06a5d",
+      "date": "2026-10-14",
+      "subject": "按已关闭文件发布派生对象并保留所有权属性",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d151be38c90b507931db6c3e559bedcaf7fdc815",
+      "date": "2026-10-14",
+      "subject": "保留持久来源不可读的沪市v2本地副本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_sse_original_v2_hot.py",
+        "scripts/tests/test_cleanup_sse_original_v2_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f9039fe042cd929839fab507efaadc8eb55c2b42",
+      "date": "2026-10-14",
+      "subject": "按赢家索引收集完整配对科学证据",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b99a7adf79407f6719f28012be7bb5310b907c70",
+      "date": "2026-10-14",
+      "subject": "归档验收后清除沪市v2测速诊断副本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_sse_original_v2_hot.py",
+        "scripts/tests/test_cleanup_sse_original_v2_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6b568ead5458003e73db179f3bc2bef28349e6eb",
+      "date": "2026-10-14",
+      "subject": "直接发布日面板及老库控制与验收文件",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/ml/artifacts.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "045700c9602991cabba28042384c444092f58e45",
+      "date": "2026-10-14",
+      "subject": "记录沪市v2缓存清理与持久来源验收",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/availability-guards.log.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/final-guards.log.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/final-summary.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/guards.log.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/local-cleanup.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/local-metadata-test-cleanup.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/local-recovery.zip",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/local-test-cleanup.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/metadata-summary.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/public-summary.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/server-summary.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9285e40a3281a78d0a4a2552fca780bf36ca6d42",
+      "date": "2026-10-14",
+      "subject": "在16核预算内重叠辅助来源发布与老库验收",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "515892b240a32fd311213a47c61abec7618107c7",
+      "date": "2026-10-14",
+      "subject": "保存沪市v2清理边界检查的实际输出",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/availability-guards.log",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/final-guards.log",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/guards.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "481bcc95ea41d0da0bce2f931ab1aeffa3f491f2",
+      "date": "2026-10-14",
+      "subject": "通过对象回读独立验收日面板和控制记录",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1fa4a0439e72cf4705359366ccf5b02edaeb8258",
+      "date": "2026-10-14",
+      "subject": "按对象SHA读取完整日比较的面板与科学证据",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "scripts/build_szse_model328_performance_gate.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "43fc98f1dfb52cda5d474e2ca542b329e5933344",
+      "date": "2026-10-14",
+      "subject": "核验对象存储原件并清理订单号审计重复副本",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-v2-hot-cleanup.md",
+        "scripts/cleanup_sse_original_v2_hot.py",
+        "scripts/tests/test_cleanup_sse_original_v2_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ef4ec8bfcf2fd57c72cad125a465cafa9a87b714",
+      "date": "2026-10-14",
+      "subject": "记录订单号审计对象权限原因与重复副本清理结果",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-sse-v2-hot-cleanup.md",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/order-source-audit.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/public-summary.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/source-tests.log.json",
+        "reports/2026-10/2026-10-14-sse-v2-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fb2809d923797fcfcf94869cf454d60ec5d532fe",
+      "date": "2026-10-14",
+      "subject": "保存来源验收的完整测试输出",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-sse-v2-cleanup-evidence/source-tests.txt"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "71b06316de4f3a635b4f1716a7b7f5ebd83fd3b9",
+      "date": "2026-10-14",
+      "subject": "按已验证的日清单回读老库面板与状态",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dc2747a81e0f5cc7e5aeaec381a51e1592bf8dad",
+      "date": "2026-10-14",
+      "subject": "审计暂存与日桶合并复用 Arrow 字典缓冲",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8884e8c353b8041943963898dcb46b1e6abb91fa",
+      "date": "2026-10-14",
+      "subject": "日遥测按内容身份复用科学结构头与冻结清单",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_day_manifest_codec.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_day_manifest_codec.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d8ae027eb718af8c4ac09bc53b404b2c6f0163d7",
+      "date": "2026-10-14",
+      "subject": "冻结清单结构池保留浮点符号身份",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_day_manifest_codec.py",
+        "因子/algobench/tests/test_formal_day_manifest_codec.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5bdb827b72bb67f4e87c6d64ab399b63365b1c03",
+      "date": "2026-10-14",
+      "subject": "优先读取已测重股票的完整独立范围页",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41ab33cb162696422537ce95480e7e1a04d2c88d",
+      "date": "2026-10-14",
+      "subject": "老库验收失败时保存辅助来源的独立回执",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f411cb8dd48aba90b169a7210f86b9ba448bfafb",
+      "date": "2026-10-14",
+      "subject": "在统一核预算内并行消费重股票响应批次",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7eb93ac2c3ee04d29ee7e75396953c76ba36e025",
+      "date": "2026-10-14",
+      "subject": "复用精确整数索引查询响应订单身份",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9d5f121ccf00bd3bf4b999e470060505d6dda265",
+      "date": "2026-10-14",
+      "subject": "按完整股票任务分配十六核计算资源",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "983df014a908ee1310d409e520e78e3dc9aca9af",
+      "date": "2026-10-14",
+      "subject": "并行封存共享辅助来源的完整验收回执",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b471a658d237854dd0beeaa99baf9124f47b1407",
+      "date": "2026-10-14",
+      "subject": "复用自有解析容器恢复完整日清单",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cb57234db7ea59437ad1b8d68f02f3d392dd7cb7",
+      "date": "2026-10-14",
+      "subject": "Reuse immutable text labels in pair candidate arrays",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ddf77e2b297a959384c2e1483282d7ba2b78b736",
+      "date": "2026-10-14",
+      "subject": "Record verified cleanup of superseded SZSE benchmark artifacts",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-benchmark-storage-cleanup.md",
+        "reports/2026-10/2026-10-14-szse-model328-four-minute-performance-evidence/cleanup-hot-files-result.json",
+        "reports/2026-10/2026-10-14-szse-model328-four-minute-performance-evidence/cleanup-object-result.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b7e30afd0d44440bb4bfef33aeb76ffab6f935be",
+      "date": "2026-10-14",
+      "subject": "Encode exact numeric telemetry summaries as compact rows",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "462cd25bdc112a01a35d122ec4fd552555a84409",
+      "date": "2026-10-14",
+      "subject": "记录 wangly 存储排查与分级清理候选",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-wangly-storage-audit-evidence/cleanup-candidates.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5e674b891724c06424f13dca6d67b12fa8613d7a",
+      "date": "2026-10-14",
+      "subject": "Record full telemetry equality and verified staging cleanup",
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-benchmark-storage-cleanup.md",
+        "reports/2026-10/2026-10-14-szse-model328-four-minute-performance-evidence/cleanup-expanded-manifests-result.json",
+        "reports/2026-10/2026-10-14-szse-model328-four-minute-performance-evidence/numeric-summary-r12-diagnostic.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "00e3bd9dce0ae8855926d1a15d4b7c590b63f1dd",
+      "date": "2026-10-14",
+      "subject": "确定 wangly 已授权清理范围与恢复验证方案",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-10-14-wangly-storage-cleanup-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "eb7457a473c8a3349487615f7eb9f73eeb9663e3",
+      "date": "2026-10-14",
+      "subject": "按固定范围验证并清理 wangly 重复对象与已归档暂存",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_wangly_model328_storage.py",
+        "scripts/tests/test_cleanup_wangly_model328_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1eac4f199765aba3c120e9c81b655aba33bf22e8",
+      "date": "2026-10-14",
+      "subject": "限制存储清理并发以保留同账户运行资源",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-10-14-wangly-storage-cleanup-design.md",
+        "scripts/cleanup_wangly_model328_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "14e7bb207d45a3080c1e195c06bfbf7b817c8b02",
+      "date": "2026-10-14",
+      "subject": "在删除热副本前持久保存完整归档验收记录",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_wangly_model328_storage.py",
+        "scripts/tests/test_cleanup_wangly_model328_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6be3ec3ded19d2fc956792319233edb211cbab96",
+      "date": "2026-10-14",
+      "subject": "按现有持久来源清理完整验证的热数据副本",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-10-14-wangly-storage-cleanup-design.md",
+        "scripts/cleanup_wangly_model328_storage.py",
+        "scripts/tests/test_cleanup_wangly_model328_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "197323ff5807553c041e42e9217f5092b33c7347",
+      "date": "2026-10-14",
+      "subject": "记录 wangly 已验证回收量与保留恢复映射",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-wangly-storage-cleanup-evidence/linux-tests.txt",
+        "reports/2026-10/2026-10-14-wangly-storage-cleanup-evidence/metadata-evidence.tar.gz",
+        "reports/2026-10/2026-10-14-wangly-storage-cleanup-evidence/summary.json",
+        "reports/2026-10/2026-10-14-wangly-storage-cleanup-evidence/windows-tests.txt",
+        "reports/2026-10/2026-10-14-wangly-storage-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a57993552fb99ad20090e6304b35ae1c6c739a6b",
+      "date": "2026-10-14",
+      "subject": "复用目录描述符降低暂存监控扫描成本",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bea83e81e16c9c06a4102f3f8341e4fbc9c0ea6c",
+      "date": "2026-10-14",
+      "subject": "记录完整日临时诊断与服务器暂存扫描实测",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-14-szse-model328-compute-diagnostics.md",
+        "reports/2026-10/2026-10-14-szse-model328-four-minute-performance-evidence/staging-linux-micro.json",
+        "reports/2026-10/2026-10-14-szse-model328-four-minute-performance-evidence/temporary-full-day-r15-comparison-and-costs.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "619b9106c78250e494b02ca81d5f5cfd45cb7a29",
+      "date": "2026-10-14",
+      "subject": "并行执行完整订单验收与日清单编码",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_artifact_commit.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py",
+        "因子/algobench/tests/test_formal_day_buckets.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    }
+  ]
+}

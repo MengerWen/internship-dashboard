@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-18",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "c0c88c6f937e7239095add5221c230da8e1618e8",
+      "date": "2026-09-18",
+      "subject": "chore: sync Sirui research reports",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        ".gitignore",
+        "sirui-quant-research"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "f6d966889e7878ac59eb6a63bb16d2573d71c0f0",
+      "date": "2026-09-18",
+      "subject": "chore: advance Sirui integration revision",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "sirui-quant-research"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "6bcb0ae6f3ee5ea7073b4f5233cf6283d7c877ca",
+      "date": "2026-09-18",
+      "subject": "发布9月17日标签软压缩拐点c的601日预检",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/label-soft-compression-2026-09-17/fig1_tail_vs_normal.png",
+        "content/assets/label-soft-compression-2026-09-17/fig2_daily_p99.png",
+        "content/assets/label-soft-compression-2026-09-17/fig3_compression_curve.png",
+        "content/assets/label-soft-compression-2026-09-17/fig4_tradeoff.png",
+        "content/assets/label-soft-compression-2026-09-17/fig5_tail_composition.png",
+        "content/daily/2026-09-17.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a73af4131b99169bc04d18e5952e4538669994e3",
+      "date": "2026-09-18",
+      "subject": "feat: diagnose standardized label tails for soft-compression knee",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/diagnose_label_soft_compression.py",
+        "因子/algobench/tests/test_diagnose_label_soft_compression.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9e26b6ed8b131a9d387fe62078ef8aeae62b6076",
+      "date": "2026-09-18",
+      "subject": "docs: cancel C3.3 prescreen and remove its execution evidence",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/initial-workspace.json",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r01.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r02.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r03.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r04.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r05.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r06.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r07.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r02.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r03.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r04.txt"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "706cab7b60df55856a36444174f3bf166c75373c",
+      "date": "2026-09-18",
+      "subject": "feat: measure soft-compression knee on the direction-aware label sample",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/diagnose_label_soft_compression.py",
+        "因子/algobench/tests/test_diagnose_label_soft_compression.py"
+      ]
+    }
+  ]
+}

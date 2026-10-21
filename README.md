@@ -116,11 +116,14 @@ flowchart LR
 
 ```powershell
 python scripts/collect_journal_evidence.py --check
+python scripts/collect_journal_attribution.py --check
 ```
 
 会话候选索引由 `scripts/collect_journal_sessions.py` 只读生成，全文只存本机被 Git 忽略的 `data/journal-sessions/`。人工核对后，将少量摘录、消息时间、会话 ID、原始行号和行哈希保存到审阅清单，再核验并写入现有日卡正文。原始会话不会随站点发布，也不按会话数或消息数计算成果。命令和证据边界见[会话佐证核对记录](docs/journal-review/session-evidence-2026-10-21.md)。
 
 需要刷新时，先在 `scripts/journal_repos.json` 中更新本地路径与固定 `revision`，运行不带 `--check` 的采集命令，再逐日核对日志和推断归属。采集器只改 `_evidence/*.json`，不会自动改写一句话或确认链条。父仓库只统计白名单子目录。
+
+任务点按该任务当天的归属提交量计重，采用统一的对数点径刻度。逐条归属另存于 `content/journal/_attribution/`，由 `scripts/collect_journal_attribution.py` 读取完整Git清单和 `scripts/journal_attribution_rules.json` 生成。刷新证据后须复核新提交的目标、共享实现与跨链记录，补相应规则或逐SHA处置，再更新归属产物；候选规则不等于已经人工逐条读完差异。每条提交合计一份，明确跨任务才等分；待核、维护、历史导入和范围外记录不进入点径。详细分类、边界与待核项见[任务提交归属复核](docs/journal-review/task-attribution-2026-10-21.md)。
 
 正式版的 `#/journal` 在宽屏默认图谱、窄屏默认清单；日期、链条和视图均可用深链打开。证据第一次展开才请求，离线版使用内联数据。浏览器验收使用 `node scripts/verify_journal.cjs`；可通过 `JOURNAL_BASE_URL` 和 `JOURNAL_OFFLINE_DIR` 指定隔离构建。
 

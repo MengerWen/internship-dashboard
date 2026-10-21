@@ -1,0 +1,1274 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-08",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "58173176f8acfcb9e863250501fb66ea56b6ef19",
+      "date": "2026-09-08",
+      "subject": "完善撤单相位报告的相关诊断、全量散点与标签导航",
+      "status": "shared",
+      "chains": [
+        "report-publish",
+        "report-tags"
+      ],
+      "reason": "同一提交既新增相关诊断及全量散点产物，又接入标签导航，两个交付目标各计半份",
+      "review_basis": "实际图像资产及导航文件清单复核",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "report-tags": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/cancel-phase-2026-09-06/F01-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F01-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F02-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F02-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F03-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F03-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F04-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F04-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F05-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F05-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F06-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F06-scatter.webp"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c121b436c92b3d62a22cb431578e46ccfb8a73d1",
+      "date": "2026-09-08",
+      "subject": "为撤单相位分组收益增加组内离散与均值区间误差棒",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/cancel-phase-2026-09-06/F01-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F02-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F03-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F04-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F05-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F06-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F07-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F08-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F09-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F10-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F11-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/F12-errorbars.webp"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c43dd6ea769cab23c9d4ba7b5fe7b5e1d62ced8e",
+      "date": "2026-09-08",
+      "subject": "fix: keep embedded report anchors inside preview",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "package.json",
+        "site/js/router.js",
+        "tests/isolated-html.config.cjs",
+        "tests/isolated-html.spec.cjs"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "75650788e6c6a7dc2cba54bf3c677a8c8a726505",
+      "date": "2026-09-08",
+      "subject": "feat(report): group prescreen navigation by parent chapter",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-09-04.show.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "7c47a36c52d0a573deb1d802c00636932a0822d4",
+      "date": "2026-09-08",
+      "subject": "+C7.1 26.9.8 21:46",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/depth-match-2026-09-07/2026-09-07-browser-audit.json",
+        "content/assets/depth-match-2026-09-07/2026-09-07-report-build-audit.json",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_buy-daily.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_buy-distribution.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_buy-groups.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_buy-monthly.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_buy-scatter.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_sell-daily.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_sell-distribution.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_sell-groups.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_sell-monthly.png",
+        "content/assets/depth-match-2026-09-07/assets/dm01_exact_sell-scatter.png"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "08006dcbc3cb1fe1fac36ab60d66808f74c114c3",
+      "date": "2026-09-08",
+      "subject": "统一波动与恢复定标原语并修正补量候选单位和搜索锚",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "decisions/2026-09-08-old-factor-bank-execution-contract.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "453f46ef9a05d1b69f723a2965f7eddb8dff55ac",
+      "date": "2026-09-08",
+      "subject": "实现F40分阶段两轮定标及共享盘口和窗口状态",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/run_open5m_structural_repair_benchmark.py",
+        "因子/algobench/configs/formal_real_data_calibration_open5m_selected_200_v3.yaml",
+        "因子/algobench/src/algobench/formal_contexts.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/src/algobench/formal_window_states_v2.py",
+        "因子/algobench/tests/test_formal_contexts_v2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4b12fddba35816b9f87eee2a9b7e6d75706d2306",
+      "date": "2026-09-08",
+      "subject": "按日归档F40事实并在本地临时盘执行阶段计算",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "72e5aaa8c39ed08fb9d228104da7a049f36cab75",
+      "date": "2026-09-08",
+      "subject": "在线归约补量定标支持并过滤非正匹配收益",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/resume_open5m_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cff3e62000de4cb55fd65da9349a45f002c77242",
+      "date": "2026-09-08",
+      "subject": "修正旧因子数量门、路径质量与方向输出并记录F40验证",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-old-factor-repair-validation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0105f0169f150870a3e63171f62f27b9d9af7b81",
+      "date": "2026-09-08",
+      "subject": "接入旧因子结构参数并按完整响应候选匹配F42",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-old-factor-repair-validation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e7c0c052951db5e86aff3ca5a9edbc64cff4632b",
+      "date": "2026-09-08",
+      "subject": "为流式BBO响应提供精确订单终止时间",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "87d8918f704782a7624c55428509dda56593ff82",
+      "date": "2026-09-08",
+      "subject": "绑定全时期定标参数并增加完整因子库单日验收入口",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_runtime_parameters.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "因子/algobench/tests/test_open5m_selected_date_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "86751d8e6bc919eba35fe0c9fe4ee1545395b77e",
+      "date": "2026-09-08",
+      "subject": "fix: allow factor banks without historical baseline dependencies",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/historical_baselines.py",
+        "因子/algobench/tests/test_formal_structural_binding.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "13e41a7a9758f06ac8d9726fd93ff8ad83291f93",
+      "date": "2026-09-08",
+      "subject": "fix: resolve F40 path anchors and preserve purpose observability",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_recovery.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_algorithm_purpose_factors.py",
+        "因子/algobench/tests/test_formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_recovery.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6e697656928abf1e57df1c913e98e22d0c3ab425",
+      "date": "2026-09-08",
+      "subject": "perf: batch recovery depth projection and expose stock profiling",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+        "reports/2026-08/2026-08-28-旧因子修改idea.md",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_recovery.py",
+        "因子/algobench/tests/test_formal_recovery.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "857f23c8cb7b4bf4ea60a6a5847a6e145631152f",
+      "date": "2026-09-08",
+      "subject": "perf: prune BBO exposure windows and bind actual context schemas",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_structural_binding.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "af44aebf4c9835f45dff61231385ccd580700a9a",
+      "date": "2026-09-08",
+      "subject": "Freeze reusable calibration dependencies and eliminate repeated F40 work",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+        "decisions/2026-09-08-old-factor-bank-execution-contract.md",
+        "scripts/build_open5m_runtime_parameters.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/run_open5m_structural_repair_benchmark.py",
+        "因子/algobench/configs/formal_real_data_calibration_open5m_selected_200_v3.yaml",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_parameter_contracts.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "43769ae143e4f67ec5f9e56a057711676a78dc49",
+      "date": "2026-09-08",
+      "subject": "Reuse audited observations and share factor input preparation",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_structural_repair_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ba447868cbaf53935d4d7e8cac6020b87b3bcd30",
+      "date": "2026-09-08",
+      "subject": "Publish validated frozen parameters with dependency-compatible calibration reuse",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+        "reports/2026-08/2026-08-28-旧因子修改idea.md",
+        "scripts/build_open5m_runtime_parameters.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/run_open5m_structural_repair_benchmark.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_calibration_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d8ad6c1ffa83cdba7ef724e6177e873cb10d9c69",
+      "date": "2026-09-08",
+      "subject": "feat: benchmark one authorized calibration collection day",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_selected_collection_result.py",
+        "scripts/time_open5m_selected_collection.py",
+        "因子/algobench/tests/test_open5m_selected_collection.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e5b18ae591d075cca522435d79e152cd4aeeb17f",
+      "date": "2026-09-08",
+      "subject": "Add frozen 24-column depth-match registry and configuration",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/open5m_depth_match_2024_2026q2_v1.yaml",
+        "因子/algobench/src/algobench/depth_match_registry.py",
+        "因子/algobench/tests/test_depth_match_registry.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2736dbe0f40e334960ed3ff84b9d49daff069f73",
+      "date": "2026-09-08",
+      "subject": "perf: 按相同动作锚精确归约F42定标响应",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-60s-ledger.md",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "eb7cf980aa118c45d949c208469116c30f511611",
+      "date": "2026-09-08",
+      "subject": "Project causal depth-match submission and initial execution state",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/depth_match_panel.py",
+        "因子/algobench/tests/test_depth_match_event_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7e55702777d5ff709865ab8dd89245af9a197ee5",
+      "date": "2026-09-08",
+      "subject": "Compute all depth-match buy and sell factors with observability",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/depth_match_factors.py",
+        "因子/algobench/tests/test_depth_match_factors.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4c1811a19619326e21bf3aae3a3fee5eb7258d90",
+      "date": "2026-09-08",
+      "subject": "perf: 就地发布日包并流式校验F40事实",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_selected_collection.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "02025c19a1cdcdee02c3c842f3672028fdd8f19b",
+      "date": "2026-09-08",
+      "subject": "perf: 共享回放编译并向量化时段判断",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [
+        "literature"
+      ],
+      "phase_mapping": {
+        "replay": "old-factor-bank"
+      },
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-60s-ledger.md",
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/tests/test_collection_startup_equivalence.py",
+        "因子/lowlat/src/lowlat/events.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9714b120890bd0b68f82ac9a346933d30781925c",
+      "date": "2026-09-08",
+      "subject": "perf: 紧凑投影F42订单和p03冲击输入",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-60s-ledger.md",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_impacts.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_formal_impacts.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "352bf711f44a004f63ee617287f47e876d4e5898",
+      "date": "2026-09-08",
+      "subject": "feat: 记录正式采集重票的独立性能诊断",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/profile_open5m_calibration_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9893aa058897d5adfe438cb01f939173181a2716",
+      "date": "2026-09-08",
+      "subject": "Add guarded depth-match panel execution and approval-bound evidence",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/finalize_open5m_depth_match_run.py",
+        "scripts/render_open5m_depth_match_launcher.py",
+        "scripts/run_open5m_depth_match_panel.py",
+        "scripts/run_open5m_depth_match_performance_gate.py",
+        "scripts/run_open5m_depth_match_server_task.sh",
+        "scripts/validate_open5m_depth_match_run.py",
+        "因子/algobench/configs/open5m_depth_match_2024_2026q2_v1.yaml",
+        "因子/algobench/src/algobench/depth_match_factors.py",
+        "因子/algobench/src/algobench/depth_match_run.py",
+        "因子/algobench/tests/test_depth_match_event_contract.py",
+        "因子/algobench/tests/test_depth_match_finalization.py",
+        "因子/algobench/tests/test_depth_match_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ed5059296ed5536aecacd29af8fc2fac5d4b4cd0",
+      "date": "2026-09-08",
+      "subject": "Evaluate depth-match factors with verified labels, independent audits and offline reports",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_depth_match_labels.py",
+        "scripts/build_open5m_depth_match_report.py",
+        "scripts/evaluate_open5m_depth_match.py",
+        "因子/algobench/src/algobench/depth_match_evaluation.py",
+        "因子/algobench/tests/test_depth_match_evaluation.py",
+        "因子/algobench/tests/test_depth_match_report.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "20f0d7f2d83b7b2863d1a7ec18d0994f62891090",
+      "date": "2026-09-08",
+      "subject": "Recognize legal one-sided depth-match books and diagnose unavailable state",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_depth_match_panel.py",
+        "因子/algobench/src/algobench/depth_match_panel.py",
+        "因子/algobench/tests/test_depth_match_event_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5fabe477f8fc5e4aaedc3fe0d9072700851722c9",
+      "date": "2026-09-08",
+      "subject": "Preserve depth-match iteration comparisons and terminal progress",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/finalize_open5m_depth_match_run.py",
+        "scripts/render_open5m_depth_match_launcher.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca250fa300796788f19719751f9d902bd088c1d3",
+      "date": "2026-09-08",
+      "subject": "docs: 保存单日采集暂停状态和清理证据",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-stage-a-handoff.md",
+        "scripts/profile_open5m_calibration_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "63948f2220f79f4397242a3928c9926feac88c57",
+      "date": "2026-09-08",
+      "subject": "Share compiled DM signatures and retain numeric depth arrays through projection",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/finalize_open5m_depth_match_run.py",
+        "scripts/run_open5m_depth_match_panel.py",
+        "因子/algobench/src/algobench/depth_match_panel.py",
+        "因子/algobench/tests/test_depth_match_event_contract.py",
+        "因子/algobench/tests/test_depth_match_finalization.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9ad04ab0af0a737c22acaa712be6b31ec56394dd",
+      "date": "2026-09-08",
+      "subject": "Bound DM table reads with parallel shards and amortize order key formatting",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/finalize_open5m_depth_match_run.py",
+        "scripts/run_open5m_depth_match_panel.py",
+        "因子/algobench/configs/open5m_depth_match_2024_2026q2_v1.yaml",
+        "因子/algobench/src/algobench/depth_match_panel.py",
+        "因子/algobench/tests/test_depth_match_finalization.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8a3a71d9b642aaffd15aec24a1afef0429ff0345",
+      "date": "2026-09-08",
+      "subject": "perf: 精简定标区间展开与候选索引复制",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-60s-ledger.md",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_structural_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "147ab55c38939f3754ced42576c1b82c0b2d60f0",
+      "date": "2026-09-08",
+      "subject": "Buffer pipe reads natively before Arrow parsing",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cb2b22ace536f6a3dd6cc1ed1e0a9367b2e91b8b",
+      "date": "2026-09-08",
+      "subject": "perf: 按盘口变化侧枚举F42并投影采集候选列",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-60s-ledger.md",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "836a3fc8d61d5afd5b404ddf7b7038ac5e6b836d",
+      "date": "2026-09-08",
+      "subject": "Record accepted 27.16-second DM single-day gate and review evidence",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-depth-match-single-day-acceptance.md",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/DM_RESULT.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/PERFORMANCE_COMPARISON.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/PERFORMANCE_GATE.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/RUN_SEAL.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/acceptance_summary.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/approval/hot_path_approval.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/cache_artifact_hashes.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/cache_identity.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/config.json",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/evidence/SHA256SUMS",
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/formal.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca902ff339c6455e9360e27acb45d747334ce9ea",
+      "date": "2026-09-08",
+      "subject": "Record complete local evidence verification inventory",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-depth-match-single-day-evidence/acceptance_summary.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b52e13ab859619ef3622f41539b63e35e6259f02",
+      "date": "2026-09-08",
+      "subject": "perf: 按内容复用日包校验并批量构建可空列",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-60s-ledger.md",
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/tests/test_run_open5m_real_data_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2afe1d99633c3332edc0928065649cd737cef277",
+      "date": "2026-09-08",
+      "subject": "perf: 以数值盘口边界供给恢复采集",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "reports/2026-09/2026-09-08-selected-collection-60s-ledger.md",
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_recovery.py",
+        "因子/algobench/tests/test_event_prestate.py",
+        "因子/algobench/tests/test_formal_recovery.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6a63eedd6f0c496bd4132ebd557b6336feacf6a0",
+      "date": "2026-09-08",
+      "subject": "记录200日定标授权及分阶段运行计时",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "scripts/calibrate_open5m_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fea499443a86af51281226f5f8e1fc585c338690",
+      "date": "2026-09-08",
+      "subject": "采用已验证的动作组正式采集实现",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d7d2daa3803f1e306e9789bda1095a552b121cda",
+      "date": "2026-09-08",
+      "subject": "记录正式定标运行状态和半小时检查安排",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8d263af95dbe9b5331b10509a9922ac62ccd38cd",
+      "date": "2026-09-08",
+      "subject": "Deliver accepted 601-day DM evaluation and sealed evidence",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-depth-match-full-history-completion.md",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/DM_RESULT.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/LOCAL_COPY_AUDIT.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/RUN_SEAL.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/approval/approval_record.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/approval/hot_path_approval.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/cache_artifact_hashes.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/cache_identity.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/config.json",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/evaluation/coverage.csv",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/evaluation/daily_ic.parquet",
+        "reports/2026-09/2026-09-08-depth-match-full-history-evidence/evaluation/distribution.json"
+      ]
+    }
+  ]
+}

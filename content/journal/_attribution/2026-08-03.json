@@ -1,0 +1,529 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-03",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "cb9e929f06a2370c3d08ec01b23afc2d1898fc3b",
+      "date": "2026-08-03",
+      "subject": "feat: publish fixed-history factor report",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/factor-report-2026-08-02/00066adce39ce007a4d09082.png",
+        "content/assets/factor-report-2026-08-02/005243a1e71142ed839a4de2.png",
+        "content/assets/factor-report-2026-08-02/00b1d2d58cd7f5a68db5adc0.png",
+        "content/assets/factor-report-2026-08-02/0113e8b69eff62b81e53c864.png",
+        "content/assets/factor-report-2026-08-02/0199453af510ea8e35bcee1d.png",
+        "content/assets/factor-report-2026-08-02/01b385ad8fcdfeb4979af2e1.png",
+        "content/assets/factor-report-2026-08-02/01ca3a86c5ab86ab92b821da.png",
+        "content/assets/factor-report-2026-08-02/01de988bbd4200fd26fc83c5.png",
+        "content/assets/factor-report-2026-08-02/01f19f87bf8e4f7d862a73d3.png",
+        "content/assets/factor-report-2026-08-02/037f5a03cfa44fd121c3a5d8.png",
+        "content/assets/factor-report-2026-08-02/046945ec0642c3feb2704848.png",
+        "content/assets/factor-report-2026-08-02/046cfc4c36742125406924db.png"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "145b8ec9649eb916e4ee2bf811e479c324ac93ca",
+      "date": "2026-08-03",
+      "subject": "fix: inherit proven quote audit exclusions",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "gates": "fixed-history"
+      },
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_intraday_interval_quote_ticks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aec963cc957ba310a589efeaf07ee171a31a3fd7",
+      "date": "2026-08-03",
+      "subject": "fix: preflight quote audit daily bar coverage",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "gates": "fixed-history"
+      },
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_intraday_interval_quote_ticks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ff4246f6a39a5da6d254ec83fe7183c50fbf1f43",
+      "date": "2026-08-03",
+      "subject": "fix interval latest-request guard validation",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0ce0f147f5386f40e2d8945086a417b28842c947",
+      "date": "2026-08-03",
+      "subject": "support audited control-only finalization upgrades",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "因子/algobench/tests/test_formal_resume_stage_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab5f69857fa980e54301fb4895a5955afdeb8ad0",
+      "date": "2026-08-03",
+      "subject": "bind accepted completeness to latest complete date",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6195afe048b497923dc2593a382f585ed65b9ef0",
+      "date": "2026-08-03",
+      "subject": "separate audit and panel readiness date bounds",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e186f357f5a91041ecc0e4af71601009c6bef6c9",
+      "date": "2026-08-03",
+      "subject": "docs: design latest-complete fixed-history coverage",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "fixed-history",
+      "related_chains": [],
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-08-03-fixed-history-through-latest-complete-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "73eddea6a7b4111b9d91095c6e85ab8a8f883eb9",
+      "date": "2026-08-03",
+      "subject": "docs: plan latest-complete fixed-history implementation",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "fixed-history",
+      "related_chains": [],
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-08-03-fixed-history-through-latest-complete-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2889d6406d5ac9e9c2f56993a21e4a9f258605a2",
+      "date": "2026-08-03",
+      "subject": "feat: audit no-event stock-day absences",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/audit_intraday_stock_day_absences.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "65e1c099d29c55af543dac51f43039abec9db749",
+      "date": "2026-08-03",
+      "subject": "feat: promote proven no-event stock-days",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/audit_intraday_interval_panel_readiness.py",
+        "scripts/build_intraday_interval_contract.py",
+        "scripts/intraday_interval_contract.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a162581a8789d625d2bf6a2c6b11c919f5966756",
+      "date": "2026-08-03",
+      "subject": "feat: preserve proven no-event stock-days",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_formal_panel.py",
+        "因子/algobench/src/algobench/formal_quote_tick_daily_validation.py",
+        "因子/algobench/src/algobench/formal_quote_tick_evidence.py",
+        "因子/algobench/tests/test_formal_quote_tick_daily_validation.py",
+        "因子/algobench/tests/test_run_formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4ba855044d56ba163efbfae1915edf634521fa55",
+      "date": "2026-08-03",
+      "subject": "feat: bind stock-day absence stage",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_interval_result.py",
+        "scripts/build_intraday_interval_stage_evidence.py",
+        "scripts/evaluate_formal_factors.py",
+        "scripts/formal_study_control.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "scripts/validate_intraday_study_outputs.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2870ace6677fbaf9a7c6352bb4386c27dc3b2de8",
+      "date": "2026-08-03",
+      "subject": "feat: seed from completed interval candidate",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/import_intraday_interval_panel_seed.py",
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cddd3897be7a2c2eee40531178c21fabac179585",
+      "date": "2026-08-03",
+      "subject": "fix: normalize semantic diff paths",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/evaluate_formal_factors.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c8727c644f38e8bb545f95f426f3889a71f7cf19",
+      "date": "2026-08-03",
+      "subject": "fix: re-audit proven prior stock-day absences",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/audit_intraday_interval_panel_readiness.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "38d654851299190be3fb487e5017d74d1598ebeb",
+      "date": "2026-08-03",
+      "subject": "fix: split runtime and panel seed sources",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_intraday_interval_extension_server_task.sh",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bd8759f936491516b1d2ed83e62b090e2940725d",
+      "date": "2026-08-03",
+      "subject": "test: specify 2025 prefix backfill contract",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/tests/test_intraday_history_backfill.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "46081b7f1dfcd49822d7fbb1671036873096599b",
+      "date": "2026-08-03",
+      "subject": "feat: compose immutable prefix and suffix evidence",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_interval_contract.py",
+        "scripts/compose_intraday_history_backfill_evidence.py",
+        "scripts/import_intraday_interval_panel_seed.py",
+        "scripts/import_intraday_interval_runtime_handoff.py",
+        "scripts/import_intraday_reference_seed.py",
+        "scripts/intraday_interval_contract.py",
+        "scripts/validate_reference_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e9eb1e57fe7c598267c3a82bf155cca3b87a96c2",
+      "date": "2026-08-03",
+      "subject": "feat: run efficient historical prefix backfill",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_interval_report.py",
+        "scripts/build_intraday_interval_stage_evidence.py",
+        "scripts/formal_study_control.py",
+        "scripts/render_intraday_history_backfill_launcher.py",
+        "scripts/run_intraday_history_backfill_server_task.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "405cfc8c08a96b544e43badf3b5aec1ea1237bf3",
+      "date": "2026-08-03",
+      "subject": "fix: preserve non-exemption quote audit failures",
+      "status": "assigned",
+      "chains": [
+        "fixed-history"
+      ],
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点",
+      "context_rule": "fixed-history-support",
+      "shares": {
+        "fixed-history": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/audit_intraday_interval_panel_readiness.py",
+        "因子/algobench/tests/test_intraday_interval_extension.py"
+      ]
+    }
+  ]
+}

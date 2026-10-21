@@ -1,0 +1,827 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-28",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "793ee1b5309d121454cf355be032a3f55cf26c8b",
+      "date": "2026-08-28",
+      "subject": "perf: project calibration prestate replay",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_event_prestate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "af9036971d1033d981a49d9670958282275f8aa5",
+      "date": "2026-08-28",
+      "subject": "perf: specialize calibration lifecycle replay",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_lifecycle.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_lifecycle.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0fe068857722645727c9aba45524fe1684beb5b8",
+      "date": "2026-08-28",
+      "subject": "perf: reuse calibration canonical event blocks",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "06fc454c6bf7958de1ce6436b956c11f64996fde",
+      "date": "2026-08-28",
+      "subject": "perf: honor streaming parser concurrency",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c0c5773f016a215daf2e78717b952449c31ae875",
+      "date": "2026-08-28",
+      "subject": "perf: shard calibration order stream",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ed8e14173c0d2623a303e7d99339dc970f5632bc",
+      "date": "2026-08-28",
+      "subject": "perf: share streaming parser budget",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "536412904c92a36d808d6d262a3ce9425a6daf87",
+      "date": "2026-08-28",
+      "subject": "perf: prestart calibration compute pool",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "64d8afd4d042852f4fb8578c14445b551ab15a9a",
+      "date": "2026-08-28",
+      "subject": "perf: shard calibration trade stream",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6e499faa44a6f400f8fe9a89ce9d803a9c1fcc03",
+      "date": "2026-08-28",
+      "subject": "perf: split ordered Doris frames by boundaries",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fc7c651d66999aa35aa7d5e3b50a28403c7a4d8b",
+      "date": "2026-08-28",
+      "subject": "fix: preserve calibration input identity",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e089eb5d76976cb86ad8a4517994c314c164a92e",
+      "date": "2026-08-28",
+      "subject": "Add exact calibration output comparator",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/compare_open5m_kernel_calibration_exact.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "33065926f8406cb537328a734c530bb8ccab6876",
+      "date": "2026-08-28",
+      "subject": "Retain quarterly calibration audit archives",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_kernel_calibration_result.py",
+        "scripts/compare_open5m_kernel_calibration_exact.py",
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "993c26ca026ad8e980d620a7439c797d91a3b537",
+      "date": "2026-08-28",
+      "subject": "Stream multi-day schedules through one compute pool",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0da006fd51a40eaea6ec3b263cf210aef21c9f64",
+      "date": "2026-08-28",
+      "subject": "Stream exact calibration summaries",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "84e612ef1fdf9c0d43a1121a2d1335e1d7f88839",
+      "date": "2026-08-28",
+      "subject": "Map streamed quantity calibration input",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a8bd7da1f2295fe0eb5b5abdef213a443e65d9a7",
+      "date": "2026-08-28",
+      "subject": "Accept derived calibration stream fields",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5c76984ce6837656f1f2962621693015b8153d3a",
+      "date": "2026-08-28",
+      "subject": "Fingerprint exact calibration histograms",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/compare_open5m_kernel_calibration_exact.py",
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1c33c771d5b0e6b3c83bee8e5bd864cd9819bb85",
+      "date": "2026-08-28",
+      "subject": "Project calibration summary pair arrays",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cb0fb82d24898b4a7f056e83e8bf0c0f09dc84fb",
+      "date": "2026-08-28",
+      "subject": "Include pair identity in calibration summaries",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a6ab4d5ddd5675e1253af25c5743cebae118a7e",
+      "date": "2026-08-28",
+      "subject": "Trim calibration stream overhead",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pair_stream.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3b25c0dc9dde4b1b71698071afb75e28055e3b1a",
+      "date": "2026-08-28",
+      "subject": "Parallelize oversized calibration batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "abd0cec4166a9e59c250ee5301c91b3ea3025bef",
+      "date": "2026-08-28",
+      "subject": "Shard oversized calibration stock days",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6c10414a12d8aeba2e1b606ee7555af9dc1e3d56",
+      "date": "2026-08-28",
+      "subject": "Use all available calibration cores",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0bcce56e5f117bf7ad48774d47ad3ba9bc566ba",
+      "date": "2026-08-28",
+      "subject": "Share calibration replay across shards",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f898217dd76f8acf0518657c813e92ffb56c7dcd",
+      "date": "2026-08-28",
+      "subject": "Balance calibration cancellation shards",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pair_stream.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f2a9e26909d4cf5335ea0e7150e6b7141a413ddb",
+      "date": "2026-08-28",
+      "subject": "Prioritize heavy streamed calibration stocks",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "74012c90a04a1c94ace774674a1094ff65c5da9b",
+      "date": "2026-08-28",
+      "subject": "Prepare calibration pairs as compact columns",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41a33b0fbcc0d9cb5c515c59a5ea0e42a5d0988a",
+      "date": "2026-08-28",
+      "subject": "Overlap calibration extraction and compute",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1f67c3485aee4c2edfb9abd2eb6b725880bddbd9",
+      "date": "2026-08-28",
+      "subject": "Prioritize measured calibration heavy stock",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4c95ae1e05dbb31b6aec5a61754378fa6d66642e",
+      "date": "2026-08-28",
+      "subject": "Reuse compatible calibration dates from multiple roots",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8193b93b68cd8e8183ed11472a984f876b81d734",
+      "date": "2026-08-28",
+      "subject": "Diagnose old factor regime reversal",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/diagnose_open5m_old_factor_regime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7e2cd36f3b830fe41a659938bcf4fcd8dbb7d8d6",
+      "date": "2026-08-28",
+      "subject": "Document date-equal factor return groups",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-08/2026-08-28-旧因子修改idea.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3959a6a6c740ba8f97f60f482106c4b7ac835a20",
+      "date": "2026-08-28",
+      "subject": "docs: consolidate factor research and revision plans",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "归档或移动既有计划/报告；不把复制、改路径重复计为多项研究",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        ".gitignore",
+        "CONTEXT.md",
+        "PLAN/2026-08-27-l2-three-second-gate-audit-support.md",
+        "PLAN/2026-08-27-l2-three-second-gate-real-data-findings.md",
+        "reports/2026-08/2026-08-24-cancel-lag-factor-methodology-research.md",
+        "reports/2026-08/2026-08-26-arbitrary-multimodal-circular-phase-methods.md",
+        "reports/2026-08/2026-08-27-continuous-kernel-factor-calibration-research.md",
+        "reports/2026-08/2026-08-27-l2-three-second-gate-audit-support.md",
+        "reports/2026-08/2026-08-27-l2-three-second-gate-real-data-findings.md",
+        "reports/2026-08/2026-08-27-three-second-candidate-gate-research.md",
+        "reports/2026-08/2026-08-28-f10-f21-repost-factor-source-audit.md",
+        "reports/2026-08/2026-08-28-l3-order-context-factor-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "564718a4b12838d1e65b2d1c5da773eec6ca59de",
+      "date": "2026-08-28",
+      "subject": "docs: record full-period kernel calibration evidence",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-08/2026-08-28-open5m-kernel-calibration-2024-2026q2.md"
+      ]
+    }
+  ]
+}

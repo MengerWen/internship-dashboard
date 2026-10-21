@@ -1,0 +1,1166 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-10",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "1b589b301a3fa3f8a1271b304d183fd5c62c90f0",
+      "date": "2026-09-10",
+      "subject": "chore: sync Sirui research docs, NEXT NAV page and agent guidance",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "父仓同步/规约或授权传递说明，不把旧资料或子仓状态再次记为上手/文献研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "NEXT产品净值与策略表现.html",
+        "sirui-quant-research",
+        "因子/文献/西部证券-撤单视角下的算法交易识别与Alpha捕捉-250912.pdf"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2be129d687eb0ff494d71584bb1207b06e3cc265",
+      "date": "2026-09-10",
+      "subject": "perf(c33): 复用间隔关系索引并批量累计容差统计",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-c33-execution-evidence/candidates-indexed-gaps.json",
+        "reports/2026-09/2026-09-10-c33-execution-evidence/gap-layout.json",
+        "reports/2026-09/2026-09-10-c33-execution-evidence/launch-r08.txt",
+        "reports/2026-09/2026-09-10-c33-execution-evidence/linux-validation-r08.txt",
+        "reports/2026-09/2026-09-10-c33-execution-evidence/local-initial-status.txt",
+        "reports/2026-09/2026-09-10-c33-execution-evidence/progress-r08.txt",
+        "reports/2026-09/2026-09-10-c33-native-output-and-publication.md",
+        "scripts/benchmark_c33_output.py",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_continuous_stream.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aad38bdbbb3bce1d774cdd13d9e5b103f7056f16",
+      "date": "2026-09-10",
+      "subject": "fix(c33): 将计算暂存迁入本地 tmp 并校验发布后清理",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [
+        "cross-stock-sync"
+      ],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-c33-execution-evidence/cleanup-r08.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b9acce81a88f9a6a93aa16ac35e28de7e42fe45e",
+      "date": "2026-09-10",
+      "subject": "实现机械撤单预检测量与单日验收",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-09-mechanical-cancel-prescreen.md",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/launch_cancel_phase_prescreen.sh",
+        "scripts/run_cancel_phase_prescreen.py",
+        "scripts/verify_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_market.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0f69a1278d19af9cc61c295776e52d093429a6d",
+      "date": "2026-09-10",
+      "subject": "批量优化机械撤单预检计算与日级归约",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/launch_cancel_phase_prescreen.sh",
+        "scripts/run_cancel_phase_prescreen.py",
+        "scripts/verify_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_startup.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "eb2ec0fb26014b0a06f201f9fad6e3a618ad22b9",
+      "date": "2026-09-10",
+      "subject": "批量计算机械撤单描述符并重叠日级归约",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "67b182d070e61d6060ff10781b87586c0dceb931",
+      "date": "2026-09-10",
+      "subject": "共享预检数值输入并合并持久写入",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [
+        "cancel-phase"
+      ],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/launch_cancel_phase_prescreen.sh",
+        "scripts/run_cancel_phase_prescreen.py",
+        "scripts/verify_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_market.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_startup.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a3e1aa35bdbad9f94c2b2fe11eeabe6e78c841f4",
+      "date": "2026-09-10",
+      "subject": "用完整整数账本证明生成订单数组并重叠收尾",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "42f41c4f613083447fa01daa0d910faad396275e",
+      "date": "2026-09-10",
+      "subject": "复用块统计和共同样本秩并补齐历史诊断接口",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/cancel_phase_prescreen_history.py",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8e1b11eb55cf58a0d370b0ab984fc3ecc04e43d5",
+      "date": "2026-09-10",
+      "subject": "采用列式传输与有界批量预检归约",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [
+        "cancel-phase"
+      ],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/run_cancel_phase_prescreen.py",
+        "scripts/run_open5m_cancel_phase_panel.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py",
+        "因子/algobench/tests/test_run_open5m_cancel_phase_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5af762f17d92ee46ae53bbed6f1e654e8f4a9771",
+      "date": "2026-09-10",
+      "subject": "分离源解析进程与持久发布队列",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2409a8a0270bbf14495e8a7bd12239e7d26348a2",
+      "date": "2026-09-10",
+      "subject": "Optimize columnar uncertainty reduction and support aggregation",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/run_cancel_phase_prescreen.py",
+        "scripts/verify_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "085fc8b0a071db1f5bf8d0e252c4b8ac2996a0c9",
+      "date": "2026-09-10",
+      "subject": "Balance uncertainty tasks and publish completed evidence promptly",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "65ecd2735ca3a95fe75cddceb616e4c21fe0ba6f",
+      "date": "2026-09-10",
+      "subject": "Stream uncertainty output and reuse fixed age statistics",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "92c5df91b9c888967aa28736a35cfcb20b937892",
+      "date": "2026-09-10",
+      "subject": "Share single-threaded runtime and retain workers for daily evaluation",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cfa69099e08d9715db2098cc3eac16391684fe19",
+      "date": "2026-09-10",
+      "subject": "Keep startup single-threaded and close completion metadata concurrently",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/launch_cancel_phase_prescreen.sh",
+        "scripts/run_cancel_phase_prescreen.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ade15bc9221f340ab3aaa7df1eed0b64892b334a",
+      "date": "2026-09-10",
+      "subject": "Cache validated Python bytecode locally and buffer persistent streams",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "scripts/launch_cancel_phase_prescreen.sh",
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4e54e73ee3ad66de6094d101841896af8e7de318",
+      "date": "2026-09-10",
+      "subject": "Record sealed mechanical cancel single-day acceptance and history review gate",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-09-mechanical-cancel-prescreen.md",
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-evidence/2026-09-10-history-approval.template.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-evidence/seal_receipt.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-evidence/verification_summary.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-performance.md",
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "196f3df378f19bceb70be2d403b394e1b220330e",
+      "date": "2026-09-10",
+      "subject": "Record target plan update separately from preserved unrelated files",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-evidence/verification_summary.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c7fb65a030cc6db2ccc5270f49dc291b174cd61",
+      "date": "2026-09-10",
+      "subject": "共享机械撤单计数与订单索引并优化日级和历史归约",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cancel_phase_prescreen_history.py",
+        "scripts/evaluate_cancel_phase_prescreen.py",
+        "scripts/launch_cancel_phase_prescreen.sh",
+        "scripts/run_cancel_phase_prescreen.py",
+        "scripts/run_open5m_cancel_phase_panel.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_inputs.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_market.py",
+        "因子/algobench/src/algobench/cancel_phase_prescreen_output.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_optimization.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8e448a69d12ca0e4b23b2dba27903c70b5bdd8df",
+      "date": "2026-09-10",
+      "subject": "记录机械撤单批量优化的完整单日验收及封存证据",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-09-mechanical-cancel-prescreen.md",
+        "reports/2026-09/2026-09-10-mechanical-cancel-optimization-evidence/2026-09-10-history-approval.template.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-optimization-evidence/equivalence_probe.py",
+        "reports/2026-09/2026-09-10-mechanical-cancel-optimization-evidence/local_verification.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-optimization-evidence/r16_evidence.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-optimization-evidence/seal_receipt.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-optimization-evidence/synthetic_comparison.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-optimization-review.md",
+        "reports/2026-09/2026-09-10-mechanical-cancel-performance-audit/probe.py",
+        "reports/2026-09/2026-09-10-mechanical-cancel-performance-audit/probe_results.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-prescreen-remaining-performance-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5c17a7db6b54f008f6c1b3299c38e829b0788167",
+      "date": "2026-09-10",
+      "subject": "修复并发进度发布并校验复用完整历史日",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_cancel_phase_prescreen.py",
+        "因子/algobench/tests/test_cancel_phase_prescreen_recovery.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fb567aefc295a3f16c21d0b547d67d3c94c7fd7d",
+      "date": "2026-09-10",
+      "subject": "记录机械撤单历史恢复验证与运行来源",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-history-recovery.json",
+        "reports/2026-09/2026-09-10-mechanical-cancel-history-recovery.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f6deae993b3fd59c0ed44351eca1a1601f654df0",
+      "date": "2026-09-10",
+      "subject": "Reuse exact F40 matching in scoring with bounded workers and verified edge caches",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_f40_cache.py",
+        "因子/algobench/src/algobench/formal_f40_execution.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_f40_scoring_continuity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e2bad2fa824f71f89d14d0a3da17e1bcad3abd52",
+      "date": "2026-09-10",
+      "subject": "Hash F40 inputs without copying unrelated scoring workspace payloads",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分",
+      "context_rule": "old-bank-support",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_f40_cache.py",
+        "因子/algobench/tests/test_f40_scoring_continuity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a08b9cd47a8e6a4abcb888d83968ad3efd70ad91",
+      "date": "2026-09-10",
+      "subject": "Document F40 scoring reuse and Linux continuity verification",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-f40-continuity-evidence/linux-tests.log",
+        "reports/2026-09/2026-09-10-f40-continuity-evidence/verification.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "48d7744629ccded82cd868d787b05624a1259088",
+      "date": "2026-09-10",
+      "subject": "docs: 同步 2026-09 因子研究报告、计划与术语",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "归档或移动既有计划/报告；不把复制、改路径重复计为多项研究",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "CONTEXT.md",
+        "PLAN/2026-09-01-A-clean-max-staged-implementation.md",
+        "PLAN/2026-09-02-new-factor-mechanism-prescreen.md",
+        "PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md",
+        "PLAN/2026-09-07-report-tags.md",
+        "PLAN/2026-09-08-C7.1-depth-match-buy-sell-factor-implementation.md",
+        "reports/2026-09/2026-09-01-A-clean-max-methodology-review.md",
+        "reports/2026-09/2026-09-01-arbitrary-multimodal-circular-phase-methods-review.md",
+        "reports/2026-09/2026-09-01-f54-consensus-calibration-methods-research.md",
+        "reports/2026-09/2026-09-02-新因子idea-proposal.md",
+        "reports/2026-09/2026-09-03-D2-D7-primary-source-review.md",
+        "reports/2026-09/2026-09-03-D2-D7-因子审阅.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "94c27f205428e08e59e3bf069bf4aff56afe6823",
+      "date": "2026-09-10",
+      "subject": "记录定标暂存清理与正式因子计算交接",
+      "status": "shared",
+      "chains": [
+        "old-factor-bank",
+        "storage-cleanup"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-10-old-factor-formal-calculation-handoff-prompt.md",
+        "reports/2026-09/2026-09-10-calibration-storage-cleanup-evidence/cleanup-evidence.zip",
+        "reports/2026-09/2026-09-10-calibration-storage-cleanup-evidence/summary.json",
+        "reports/2026-09/2026-09-10-calibration-storage-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f25429c66923c792449bfe715b97bc492dede8b1",
+      "date": "2026-09-10",
+      "subject": "Validate and record formal raw-bank launch configuration",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/r19-live-audit.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md",
+        "因子/algobench/configs/formal_scoring_open5m_raw_bank_v1.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e6f414e2dcd5a6abb8772c4aaacac2035f7bf155",
+      "date": "2026-09-10",
+      "subject": "Add raw-bank post-exit checks and daily-equal evaluation statistics",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/linux-startup-tests.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/local-startup-tests.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/startup-preflight-f25429c6.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fd47a76c02c74f413c2d4fffdf6e78a414b983ba",
+      "date": "2026-09-10",
+      "subject": "feat: evaluate accepted raw-bank panels with daily-equal statistics",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/local-evaluation-tests.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/pressure-selection.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/evaluate_open5m_raw_bank.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9e5ac57409c838ccad7d304b785d5fd86e633a6d",
+      "date": "2026-09-10",
+      "subject": "fix: preserve complete pair fingerprints in raw-bank scoring",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/business.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/effective_config.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/exit-audit.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/guard_manifest.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/launcher.py",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/launcher_identity.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/launcher_result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r01/result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/local-scoring-fix-tests.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5dd55f0d3dfa670b78c19e336128d74c5ce8f018",
+      "date": "2026-09-10",
+      "subject": "Bound raw-bank manifest memory and reuse formal verification utilities",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r02/FACTOR_BANK_RESULT.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r02/business.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r02/effective_config.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r02/guard_manifest.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r02/launcher_identity.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r02/launcher_result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r02/result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/local-reuse-integration-tests.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/resource-envelope.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md",
+        "scripts/build_open5m_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cf0d1a492122b7023cebaaee2db67d3a70fc4b95",
+      "date": "2026-09-10",
+      "subject": "Reuse matching results for raw-bank reference and publish scorer diagnostics",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/FACTOR_BANK_RESULT.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/business.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/effective_config.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/guard_manifest.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/launcher.py",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/launcher_identity.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/launcher_result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/optimized/result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/reference/business.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/reference/effective_config.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/reference/guard_manifest.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r03/reference/launcher.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "563cbaf0536c34d2914c3829999878f64ec6e0eb",
+      "date": "2026-09-10",
+      "subject": "复用日分桶保存完整订单归属与匹配审计",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/archive-receipt.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/comparison/comparison.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/exploration/queue_identity.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/optimized/FACTOR_BANK_RESULT.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/optimized/effective_config.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/optimized/guard_manifest.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/optimized/launcher_identity.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/optimized/launcher_result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/optimized/panel_win0930_0935/shards/date=2026-04-22.telemetry.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/optimized/stock_profile.pstats",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/reference/FACTOR_BANK_RESULT.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r04/reference/effective_config.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b9990a2a2bb3baece535441ca123aee07d395a26",
+      "date": "2026-09-10",
+      "subject": "记录机械撤单601日计算完成及验收交付待办",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-09-mechanical-cancel-prescreen.md",
+        "reports/2026-09/2026-09-10-mechanical-cancel-history-delivery-status.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2951b4727c26bcea79d42279acff5d19d66aa993",
+      "date": "2026-09-10",
+      "subject": "统一响应核精确运算与配对评分字段并复用注册表解析",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/archive-receipt.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/business.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/effective_config.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/guard_manifest.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/launcher_identity.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/launcher_result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/linux-response-tests-563cbaf0.log",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution-evidence/canary-r05/result.json",
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "38660abd747e90d6f3ce6ad7c03cda7fa9e99977",
+      "date": "2026-09-10",
+      "subject": "校验响应批量路由守恒并保留逐位结果验收",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a8c1c7dd8f108d4789cc701de924ed25fcaebfa4",
+      "date": "2026-09-10",
+      "subject": "增加机械撤单全历史独立日包验收与复用证据归档",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_cancel_phase_prescreen_history.py",
+        "因子/algobench/tests/test_audit_cancel_phase_prescreen_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "06e9389e680cd9512770f76b49fc3adecb005452",
+      "date": "2026-09-10",
+      "subject": "按买卖侧存储合同独立核验Total分块守恒",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_cancel_phase_prescreen_history.py",
+        "因子/algobench/tests/test_audit_cancel_phase_prescreen_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "985f1a9188126ee1117da415a94bc0e4e60ac078",
+      "date": "2026-09-10",
+      "subject": "记录机械撤单全历史独立验收运行状态",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-mechanical-cancel-history-delivery-status.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d324c55c88509ec01cab882ba743ec7c6b1d5dbc",
+      "date": "2026-09-10",
+      "subject": "复用标量核保证配对动作与响应数组逐位一致",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-10-old-factor-formal-execution.md"
+      ]
+    }
+  ]
+}

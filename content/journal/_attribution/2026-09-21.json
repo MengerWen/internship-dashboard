@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-21",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "1a98191ddf5b6b4ea26d6e7070e291f1044e2e1c",
+      "date": "2026-09-21",
+      "subject": "为 9 月 18 日的 27 张图加上悬停读数",
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "model-report": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/daily/2026-09-18.show.html",
+        "scripts/build_model_report_20260918.py",
+        "scripts/report_charts.py",
+        "scripts/verify_model_report_readout_20260918.cjs",
+        "templates/model-report-20260918.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "bc1098eb8bc950290a83e37b92ad6da1c730d67d",
+      "date": "2026-09-21",
+      "subject": "Publish causal Open5m 328-factor model recompute",
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "model-report": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        ".gitignore",
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/report-data.json",
+        "content/daily/2026-09-18.md",
+        "content/daily/2026-09-18.show.html",
+        "scripts/build_model_report_20260921.py",
+        "scripts/download_model_report_20260921.py",
+        "scripts/verify_model_report_20260918.cjs",
+        "scripts/verify_model_report_readout_20260918.cjs",
+        "tests/test_model_report_20260918.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "8349892245fd5eb076b76af7b7b29dd7304ada7a",
+      "date": "2026-09-21",
+      "subject": "Restore original model report presentation with corrected results",
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "model-report": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/figures/cpu.png",
+        "content/assets/model-report-2026-09-18/figures/cpu.svg",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.png",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.png",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.png",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.svg",
+        "content/assets/model-report-2026-09-18/figures/deciles.png",
+        "content/assets/model-report-2026-09-18/figures/deciles.svg",
+        "content/assets/model-report-2026-09-18/figures/dispersion.png"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6e95f1eefaaf05061eb61e767704b9a98dd0ac6a",
+      "date": "2026-09-21",
+      "subject": "fix(ml): freeze open5m selection budgets and mark open exits",
+      "status": "assigned",
+      "chains": [
+        "ml-330"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "phase_mapping": {
+        "ml-330": "ml-330",
+        "ml-exec": "ml-330"
+      },
+      "shares": {
+        "ml-330": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-21-causal-single-fit-recompute.md",
+        "scripts/run_open5m_single_fit_causal.py",
+        "scripts/run_open5m_single_fit_causal_test.py",
+        "因子/algobench/tests/test_open5m_single_fit_causal.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "761e46bdfa280f596f2184dbb5edf3d08b0e6447",
+      "date": "2026-09-21",
+      "subject": "feat(ml): exclude both f97 sides from causal single fit",
+      "status": "assigned",
+      "chains": [
+        "ml-330"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-330",
+      "related_chains": [],
+      "shares": {
+        "ml-330": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-21-causal-single-fit-recompute.md",
+        "scripts/run_open5m_single_fit_causal.py",
+        "scripts/run_open5m_single_fit_causal_test.py",
+        "因子/algobench/tests/test_open5m_single_fit_causal.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8563e80b4203ae6c7c6488881fe448bfb6484d25",
+      "date": "2026-09-21",
+      "subject": "fix(ml): accept guard without task memory high",
+      "status": "assigned",
+      "chains": [
+        "ml-330"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "ml-exec",
+      "related_chains": [
+        "ml-330"
+      ],
+      "phase_mapping": {
+        "ml-exec": "ml-330"
+      },
+      "shares": {
+        "ml-330": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_single_fit_causal.py",
+        "因子/algobench/tests/test_open5m_single_fit_causal.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0cedf22d5d531d6ac3e88e87966d6afae1429c0b",
+      "date": "2026-09-21",
+      "subject": "fix(ml): bound active causal fit memory under 100G guard",
+      "status": "assigned",
+      "chains": [
+        "ml-330"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "ml-exec",
+      "related_chains": [
+        "ml-330"
+      ],
+      "phase_mapping": {
+        "ml-exec": "ml-330"
+      },
+      "shares": {
+        "ml-330": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_single_fit_causal.py",
+        "因子/algobench/tests/test_open5m_single_fit_causal.py"
+      ]
+    }
+  ]
+}

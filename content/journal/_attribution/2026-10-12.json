@@ -1,0 +1,1162 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-12",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cc23d2a9e46fdaeff57a2176f7ac794fe4a38362",
+      "date": "2026-10-12",
+      "subject": "记录全期精确匹配完成500日与持续监控策略",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T154211Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T160219Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T161751Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T165827Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitoring_policy.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "50c6b3281bd8dfb8e729b8646ab89facc2c66343",
+      "date": "2026-10-12",
+      "subject": "记录全期601日精确匹配完成与监控读取证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T171638Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T172913Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T174936Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T181439Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitoring_policy.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/ssh-monitor-read-error.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4beb8237eebea20630cf3198de4c252f8c572ec0",
+      "date": "2026-10-12",
+      "subject": "交付601日结构参数v2验收封存与正式入口证据",
+      "status": "shared",
+      "chains": [
+        "grouped-calibration",
+        "szse-model328"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/SEALED.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/binding_comparison.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/business_correctness.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/calibration_bundle.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/completion_checks.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/config.yaml",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/daily_manifest.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/determinism_check.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/f40_count_comparison.json",
+        "reports/2026-10/2026-10-12-old-factor-recompute-preparation-evidence/f40_stage_timings.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "62e7290b4a121ed03fe7a424f563be665f65d6b9",
+      "date": "2026-10-12",
+      "subject": "按正式验收与源归档校验清理定标临时文件",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_completed_calibration_hot.py",
+        "scripts/tests/test_cleanup_completed_calibration_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "503212a93f37896c93140f1bf64e84e76bb65e35",
+      "date": "2026-10-12",
+      "subject": "核验定标测速目录的持久来源链接并保留目标",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_completed_calibration_hot.py",
+        "scripts/tests/test_cleanup_completed_calibration_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4472b282f258b85ab7c7216f700e22cece7d5212",
+      "date": "2026-10-12",
+      "subject": "固定临时材料恢复清单的文件身份",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_completed_calibration_hot.py",
+        "scripts/tests/test_cleanup_completed_calibration_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a56084695625e9b6d53f048aae62d287f5fad01f",
+      "date": "2026-10-12",
+      "subject": "规划深市328列模型因子全期重算与重日期优先调度",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-12-szse-model328-factor-recompute.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3454934807593150f5f39e0b91fe6d958ff7c979",
+      "date": "2026-10-12",
+      "subject": "按内容身份核验原始与预处理F40缓存来源",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_completed_calibration_hot.py",
+        "scripts/tests/test_cleanup_completed_calibration_hot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ed72951da021e9f849a96cf7baad016dd0532d98",
+      "date": "2026-10-12",
+      "subject": "明确328列普通日300秒关卡与计算前性能优化",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-12-szse-model328-factor-recompute.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7997b63b1bdd38955cdf0a96f0daa1d4bbb0f481",
+      "date": "2026-10-12",
+      "subject": "正式验收后去重历史测速数据并保留恢复索引",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/cleanup_calibration_storage.py",
+        "scripts/tests/test_cleanup_calibration_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a99c93b129abbf048469febfe332242491f2a30b",
+      "date": "2026-10-12",
+      "subject": "冻结深市328列模型输入及只读参数预检合同",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_feature_manifest.py",
+        "因子/algobench/configs/formal_scoring_open5m_model328_v1.yaml",
+        "因子/algobench/configs/szse_model328_authority_observation_v1.json",
+        "因子/algobench/configs/szse_model328_feature_manifest_v1.json",
+        "因子/algobench/tests/test_szse_model328_feature_manifest.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0f9a5437ab4990f05cf10006f58f83d3e1c72eb5",
+      "date": "2026-10-12",
+      "subject": "按模型依赖计算并验收256个老因子输出",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "按当前模型列合同交付256个旧库来源输出及其对象验收，属于四来源328生产，不是独立旧库重算",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_feature_scope.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_proxy_bank.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_window_state_comparison.py",
+        "因子/algobench/src/algobench/formal_window_states_v2.py",
+        "因子/algobench/tests/test_formal_feature_scope.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a6fef5d487651729bbcce857d18742840f67771d",
+      "date": "2026-10-12",
+      "subject": "记录601日定参完成后的存储清理与恢复验收",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-calibration-storage-cleanup.md",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/LOCAL_SHA256SUMS",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/RESTORE.md",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/TRANSFER.json",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/allocation-before.json",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/apply-guard.path",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/apply.log",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/audit-SHA256SUMS",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/audit-limit-guard.json",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/benchmark-apply-guard.json",
+        "reports/2026-10/2026-10-12-calibration-storage-cleanup-evidence/benchmark-apply-guard.path"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0ed8ee16e467f04e3c0de53c10f8c9b9c3c0ae8b",
+      "date": "2026-10-12",
+      "subject": "增加328列因子的压力日屏障与按来源恢复调度",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_szse_model328_factor_recompute.py",
+        "因子/algobench/tests/test_szse_model328_factor_recompute.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "139f5da28ef5aa93cb9750ebe5d4a8b417a159f2",
+      "date": "2026-10-12",
+      "subject": "接入研究分页与仅买卖方向的撤单因子计算",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_cancel_phase_directions.py",
+        "scripts/run_open5m_cancel_phase_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4475235019ebcd6bd64638342f6bc42b0f837154",
+      "date": "2026-10-12",
+      "subject": "按研究分页与统一资源准入计算深度匹配因子",
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "depth-match",
+      "related_chains": [],
+      "shares": {
+        "depth-match": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_depth_match_panel.py",
+        "因子/algobench/src/algobench/depth_match_panel.py",
+        "因子/algobench/tests/test_depth_match_event_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "12b9b0d8ae1e5b0e8ffddd39c5d88eaff06463ff",
+      "date": "2026-10-12",
+      "subject": "接入四来源328列日面板与持久验收回执",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [
+        "old-factor-bank"
+      ],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_szse_model328_factor_recompute.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ebacf0b5afa2b431b03ab4d992e12e6123d98b24",
+      "date": "2026-10-12",
+      "subject": "以单日L1分页补齐全期报价验证来源",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_quote_validation.py",
+        "因子/algobench/tests/test_szse_model328_quote_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ef6e5d6122e2227fed6275d6bcf5612e6472d08",
+      "date": "2026-10-12",
+      "subject": "以精确对象列举核实缺失回执并保留存储失败",
+      "status": "pending",
+      "chains": [],
+      "reason": "只有公共代码或含义不明的标题，缺少可独立确认的任务目标",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "566c3bce9aaf5901bff87f821c7b20a601cc5a50",
+      "date": "2026-10-12",
+      "subject": "绑定全期报价与实际依赖缓存并提供328列受限启动器",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_feature_manifest.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "scripts/run_szse_model328_factor_recompute.sh",
+        "因子/algobench/tests/test_szse_model328_factor_recompute.py",
+        "因子/algobench/tests/test_szse_model328_quote_validation.py",
+        "因子/algobench/tests/test_szse_model328_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7780f7223988b18a54bc47979a07b634f0112269",
+      "date": "2026-10-12",
+      "subject": "记录受限业务命令从进程创建到退出的完整墙钟",
+      "status": "pending",
+      "chains": [],
+      "reason": "只有公共代码或含义不明的标题，缺少可独立确认的任务目标",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_guard_sentinel.py",
+        "scripts/run_guarded.py",
+        "因子/algobench/tests/test_run_guarded.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e13087e352a942e3a4bb384bfd892afcba93338f",
+      "date": "2026-10-12",
+      "subject": "按完整日持久提交完成时间验收连续运行与补算成绩",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_szse_model328_factor_recompute.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c1110a41301e0bc78ea5397acc1bf14682bd327",
+      "date": "2026-10-12",
+      "subject": "固定压力日分类并验收完整328列进程性能与精确对照",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_benchmark_dates.py",
+        "scripts/build_szse_model328_performance_gate.py",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b570d86d9d600f1eab164a72f30f8f2b705ff9d9",
+      "date": "2026-10-12",
+      "subject": "监测四来源热暂存峰值并约束任务scope的字节上限",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_performance_gate.py",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "068a17249a3f77647bed5e0598082ff9171c250e",
+      "date": "2026-10-12",
+      "subject": "Validate and seal complete SZSE model328 factor coverage",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_factor_acceptance.py",
+        "因子/algobench/tests/test_szse_model328_factor_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1cca10f9176d3cfbb065ddee9ec1940bee3bb727",
+      "date": "2026-10-12",
+      "subject": "Verify historical F40 load receipt content identities",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_benchmark_dates.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ee4bef81a06f96783b939a11f3f9f0d3e0f68f46",
+      "date": "2026-10-12",
+      "subject": "Bind bounded stock checks to the complete SZSE quote evidence",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_szse_model328_quote_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "05f866a85ab85283e741c69792e18f0f7be77455",
+      "date": "2026-10-12",
+      "subject": "Verify committed factor audits with bounded parallel object reads",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "按当前模型列合同交付256个旧库来源输出及其对象验收，属于四来源328生产，不是独立旧库重算",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_day_buckets.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "477d4469c52e82c7c6d00078407e3661af7d620d",
+      "date": "2026-10-12",
+      "subject": "Release verified day-bucket copies within the bounded publication queue",
+      "status": "pending",
+      "chains": [],
+      "reason": "只有公共代码或含义不明的标题，缺少可独立确认的任务目标",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb09717e1abc1eef31833cec2e618731a4af1caa",
+      "date": "2026-10-12",
+      "subject": "Pass thresholded worker memory reclamation to model328 scoring",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b40fac4c99360803fc449e82b2660c6d1c68a182",
+      "date": "2026-10-12",
+      "subject": "Verify frozen model328 inputs with bounded parallel reads",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_szse_model328_feature_manifest.py",
+        "因子/algobench/tests/test_szse_model328_quote_validation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0da3fc24ae62301c12eb45b3a7dd8b3917ea0eeb",
+      "date": "2026-10-12",
+      "subject": "Expand streaming compute capacity after extraction completes",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3eec7d48a0555572bccb03c9d2b788ce508cff4a",
+      "date": "2026-10-12",
+      "subject": "Use approved publication and audit capacity after scoring",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9be63f90eba45b9e4e71ce6e5c843e70c9096cfe",
+      "date": "2026-10-12",
+      "subject": "Validate persisted guard paths when loading factor performance samples",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_performance_gate.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8a188a19ba961334f581779770d765f10829adea",
+      "date": "2026-10-12",
+      "subject": "Read factor performance evidence through verified object publication",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_performance_gate.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5853ae15737e3d97406a66c902b6d3c413e65b10",
+      "date": "2026-10-12",
+      "subject": "Read scientific audit evidence from committed compressed day manifests",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_performance_gate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ad58387476f4fa5adc574808d59ea04133fb93ee",
+      "date": "2026-10-12",
+      "subject": "Compute model328 auxiliary sources on the existing shared factor stream",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "szse-model328",
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_cancel_source.py",
+        "因子/algobench/src/algobench/formal_depth_source.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f71c69b09a6ac47dffeb55e2eb7a794f7f0cffb0",
+      "date": "2026-10-12",
+      "subject": "Preserve durable audit paths during verified local manifest reads",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_performance_gate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c8f4b959a341e884e72f8d9cb2c110f8cd1be245",
+      "date": "2026-10-12",
+      "subject": "Reuse bounded native integer-array hashing for persisted exactness audits",
+      "status": "pending",
+      "chains": [],
+      "reason": "只有公共代码或含义不明的标题，缺少可独立确认的任务目标",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/tests/test_formal_numeric_cell_hash.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "815945eb1c2053f1981a9de4c04e93710af00d85",
+      "date": "2026-10-12",
+      "subject": "Verify each exactness column is hashed once across shared projections",
+      "status": "pending",
+      "chains": [],
+      "reason": "只有公共代码或含义不明的标题，缺少可独立确认的任务目标",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_formal_exactness.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6266e27060830665afa1e753b1e5cc9632be0e0a",
+      "date": "2026-10-12",
+      "subject": "Finalize shared factor sources while daily task payloads remain live",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "472c50e48b6cd9ae7e7185288b99286db2fb0c70",
+      "date": "2026-10-12",
+      "subject": "Finalize factor performance evidence through verified object reads",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_szse_model328_performance_gate.py",
+        "因子/algobench/tests/test_szse_model328_factor_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7ec33b3996cf9df87bbb69e9aedf08679c03a4b5",
+      "date": "2026-10-12",
+      "subject": "Document factor engine reuse and verified single-day performance repair",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-12-szse-factor-engineering-reuse-audit.md",
+        "reports/2026-10/2026-10-12-szse-factor-engineering-reuse-evidence/baseline-comparison.json",
+        "reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/diagnostics.json",
+        "reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/measurements.json",
+        "reports/2026-10/2026-10-12-szse-factor-performance-repair.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "18af8e4c202d843ca5ff4729e428b8c385c45898",
+      "date": "2026-10-12",
+      "subject": "Allow accepted factor throughput with recorded daily performance",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+        "scripts/build_szse_model328_factor_acceptance.py",
+        "scripts/build_szse_model328_performance_gate.py",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "scripts/run_szse_model328_factor_recompute.sh",
+        "因子/algobench/tests/test_szse_model328_factor_acceptance.py",
+        "因子/algobench/tests/test_szse_model328_factor_recompute.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1d60e61997b14d08a733a4769d7c3ee26a05ccdd",
+      "date": "2026-10-12",
+      "subject": "Run factor qualification, production and sealed publication in one workflow",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/complete_szse_model328_factor_recompute.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "023b2bb288030c18ffa63586d3e14539e5a927f7",
+      "date": "2026-10-12",
+      "subject": "深市全期因子计算使用有界 F40 候选重放",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+        "因子/algobench/configs/szse_model328_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "69a1f8ccd84d5a18e2a85e2b32d84f8de25ea35b",
+      "date": "2026-10-12",
+      "subject": "记录深市全期因子生产启动与首个压力日验收",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-12-szse-model328-production-start-evidence/staging-failure.json",
+        "reports/2026-10/2026-10-12-szse-model328-production-start-evidence/verified-start.json",
+        "reports/2026-10/2026-10-12-szse-model328-production-start.md"
+      ]
+    }
+  ]
+}

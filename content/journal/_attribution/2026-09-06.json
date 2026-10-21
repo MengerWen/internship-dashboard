@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-06",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "104450fe7f4cf56aa316ca268e6dd681f6239c49",
+      "date": "2026-09-06",
+      "subject": "feat: parameterize full-history label output root",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "全历史相位评价的标签输出根接入；属于相位评价所需标签生产",
+      "review_basis": "差异中命令参数与9月6日相位上下文复核",
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/audit_rqdata_vwap_units.py",
+        "scripts/build_labels_d1_1030.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "321af6efaef4a880320c10920f50447c2b02263a",
+      "date": "2026-09-06",
+      "subject": "docs: 记录全历史评价阻塞与 S3FS 进度写入诊断",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-06-cancel-phase-evaluation-diagnosis-evidence/SHA256SUMS",
+        "reports/2026-09/2026-09-06-cancel-phase-evaluation-diagnosis-evidence/probe_consumer.py",
+        "reports/2026-09/2026-09-06-cancel-phase-evaluation-diagnosis-evidence/probe_evaluator_contract.py",
+        "reports/2026-09/2026-09-06-cancel-phase-evaluation-diagnosis-evidence/probe_progress_sized.py",
+        "reports/2026-09/2026-09-06-cancel-phase-evaluation-diagnosis-evidence/probe_progress_small.py",
+        "reports/2026-09/2026-09-06-cancel-phase-evaluation-diagnosis-evidence/snapshot.json",
+        "reports/2026-09/2026-09-06-cancel-phase-evaluation-performance-diagnosis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a12fada82669a94c13127681b689dfac1de62564",
+      "date": "2026-09-06",
+      "subject": "fix: 按日提交日内标签并支持全历史相位评价",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_cancel_phase_report.py",
+        "scripts/build_open5m_cancel_phase_result.py",
+        "scripts/complete_open5m_cancel_phase.py",
+        "scripts/evaluate_open5m_cancel_phase_2026h1.py",
+        "scripts/finalize_open5m_cancel_phase_run.py",
+        "因子/algobench/tests/test_build_open5m_cancel_phase_result.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4e5a324a3902850a20934177403700a036e42ece",
+      "date": "2026-09-06",
+      "subject": "style: 规范任务入口文件末尾",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/complete_open5m_cancel_phase.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9d2a97aeefaff710736a51ead5a01bf5d374f179",
+      "date": "2026-09-06",
+      "subject": "fix: 保留无成交股票的缺失标签及失败运行证据",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_intraday_labels.py",
+        "因子/algobench/tests/test_build_open5m_intraday_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9ae33fc3414192bb66a5c7336731d1ceeb2ec555",
+      "date": "2026-09-06",
+      "subject": "Support verified evaluation reuse and provision report dependencies",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_cancel_phase_result.py",
+        "scripts/complete_open5m_cancel_phase.py",
+        "因子/algobench/tests/test_complete_open5m_cancel_phase.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5a99501615c59e68138b5ad4bf86e8dcfa1fc6d3",
+      "date": "2026-09-06",
+      "subject": "Record accepted 601-day intraday label and factor evaluation results",
+      "status": "shared",
+      "chains": [
+        "cancel-phase",
+        "storage-cleanup"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/2026-09-06-cancel-phase-2024-2026q2-evaluation.md",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/CANCEL_PHASE_2024_2026Q2_RESULT.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/LOCAL_SHA256SUMS",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/NOTEBOOK_INDEX.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/RUN_SEAL.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/SHA256SUMS",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/acceptance-audit.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/business_result.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/canary_value_comparison.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/download-map.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/evaluation_reuse.json",
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/label_alignment.csv"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9a60d105e494284570428b5cbb97ccf24b76fdce",
+      "date": "2026-09-06",
+      "subject": "Preserve byte-stable local evidence metadata",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-06-cancel-phase-601d-completion-evidence/LOCAL_SHA256SUMS"
+      ]
+    }
+  ]
+}

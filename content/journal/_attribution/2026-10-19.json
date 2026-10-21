@@ -1,0 +1,1130 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-19",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "3650f66a67efe2d46f83fb44a6f4ff9ee480bfb8",
+      "date": "2026-10-19",
+      "subject": "将旧快照包入口指向权威研究实现",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [],
+      "phase_mapping": {
+        "lv2-snapshot": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/__init__.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e0e053bc33bce01ae13ec29187076c721db69050",
+      "date": "2026-10-19",
+      "subject": "比较老因子重新定标前后的601日收益表现",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-19-old-factor-performance-comparison.md",
+        "reports/2026-10/2026-10-19-old-factor-comparison-evidence/analyze.py",
+        "reports/2026-10/2026-10-19-old-factor-comparison-evidence/factor-details.json.gz",
+        "reports/2026-10/2026-10-19-old-factor-comparison-evidence/input-manifest.json",
+        "reports/2026-10/2026-10-19-old-factor-comparison-evidence/matched-performance.csv",
+        "reports/2026-10/2026-10-19-old-factor-comparison-evidence/summary.json",
+        "reports/2026-10/2026-10-19-old-factor-comparison-evidence/verification.json",
+        "reports/2026-10/2026-10-19-old-factor-performance-comparison.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab86e94c9d4f874b32383becfa33b20c76d23e2e",
+      "date": "2026-10-19",
+      "subject": "增加实际成交价回放合同并拒绝越界闭合证明",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-19-foundation-correctness-audit.md",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/regression-negative.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/windows-tests.json",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/windows-tests.log",
+        "scripts/tests/test_foundation_correctness.py",
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c208aea0fb218f5a3cb088739a5e9d9b6b1cf4c1",
+      "date": "2026-10-19",
+      "subject": "修正决策时点候选范围与组合资金分母",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/portfolio-negative.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/portfolio-tests.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/portfolio-tests.log.json",
+        "因子/algobench/src/algobench/ml/open5m_330_data.py",
+        "因子/algobench/src/algobench/ml/open5m_330_evaluation.py",
+        "因子/algobench/src/algobench/ml/open5m_330_runtime.py",
+        "因子/algobench/tests/test_foundation_portfolio_contract.py",
+        "因子/algobench/tests/test_intraday_ml_open5m_330_data.py",
+        "因子/algobench/tests/test_intraday_ml_open5m_330_evaluation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3c3c0ee93d24ff2897c0497587b4e3aaa0ee6493",
+      "date": "2026-10-19",
+      "subject": "拒绝存在订单类型歧义的正确回放输入",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/replay-quality-tests.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/replay-quality-tests.log.json",
+        "scripts/tests/test_foundation_correctness.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c596b15378316c99cab3f0f93c90291f644dffce",
+      "date": "2026-10-19",
+      "subject": "严格回放拒绝零成交价和非正消息数量",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/source-contract-negative.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/source-contract-tests.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/source-contract-tests.log.json",
+        "scripts/tests/test_foundation_correctness.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e4fc8fe16f1868667b4ee894ae934bdc5ffb5d25",
+      "date": "2026-10-19",
+      "subject": "记录基础正确性审计与原生回放验收证据",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-19-foundation-correctness-audit.md",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/native-final-guard.json",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/native-final-tests.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/native-test-receipt.json",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ec9c80125d04204b78c604388618faf1e3b43ba3",
+      "date": "2026-10-19",
+      "subject": "修正全天快照的撮合回放与交易阶段边界",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-19-native-replay-entry-migration.md",
+        "scripts/tests/test_native_replay_migration.py",
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "735d7fd9bf1f419ede20a2203d0edf3ceb6b8985",
+      "date": "2026-10-19",
+      "subject": "将正确原生回放设为正式入口默认并传递到工作进程",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [
+        "cancel-phase",
+        "depth-match"
+      ],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_native_replay_defaults.py",
+        "scripts/tests/test_szse_replay_book.py",
+        "scripts/tests/test_szse_replay_production.py",
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6940d3f559b3caede77a85cc6cebc6cf9a88f352",
+      "date": "2026-10-19",
+      "subject": "核对快照续用身份并迁移参考验证与取数入口",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [
+        "replay"
+      ],
+      "phase_mapping": {
+        "lv2-snapshot": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        ".gitattributes",
+        "lv2_snapshot_workspace/src/snapshot/cli.py",
+        "lv2_snapshot_workspace/src/snapshot/orderbook.py",
+        "lv2_snapshot_workspace/src/snapshot/snapshot.py",
+        "lv2_snapshot_workspace/src/snapshot/validate.py",
+        "lv2_snapshot_workspace/tests/test_orderbook.py",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/defaults-unit.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/defaults-unit.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/entry-resume-unit.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/entry-resume-unit.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/full-day-unit.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/full-day-unit.log.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ded6da996b26fc214e10033435adda990f2e6dc6",
+      "date": "2026-10-19",
+      "subject": "将撮合计划绑定源数据并拒绝未闭合的截断块",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_native_replay_defaults.py",
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c7f46c64a0c8a8dddca2e4d426bb4305e4d40d9f",
+      "date": "2026-10-19",
+      "subject": "加入全天原生回放的固定样本独立认证入口",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-19-native-replay-entry-migration.md",
+        "scripts/certify_native_replay_foundation.py",
+        "scripts/tests/test_native_replay_certificate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4f8386f61522085d6fa12c606594955fe38aa74d",
+      "date": "2026-10-19",
+      "subject": "限定频道闭合证据的交易日与观察截止",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_native_replay_defaults.py",
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "40025cb3be76b4df8dea58a05035a05071756af2",
+      "date": "2026-10-19",
+      "subject": "按交易所规则确定集合竞价价格并区分沪深平价处理",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/auction.py",
+        "lv2_snapshot_workspace/src/snapshot/snapshot.py",
+        "lv2_snapshot_workspace/src/snapshot/validate.py",
+        "scripts/tests/test_native_auction_rules.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4829e05bc18af790cddedcc410be860e21cf01d6",
+      "date": "2026-10-19",
+      "subject": "按不重叠交易时段分页读取完整日快照源数据",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [
+        "replay"
+      ],
+      "phase_mapping": {
+        "lv2-snapshot": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/cli.py",
+        "lv2_snapshot_workspace/src/snapshot/snapshot.py",
+        "scripts/tests/test_native_replay_migration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e6fcd69bc3f0ebfbedd42aabc644ff7c424ee783",
+      "date": "2026-10-19",
+      "subject": "校验集合成交限价及两侧优先级并约束生产回放输入",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_native_replay_defaults.py",
+        "scripts/tests/test_native_replay_migration.py",
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "daed2aca7e07990dd0b0809acbb399b6ec5d9747",
+      "date": "2026-10-19",
+      "subject": "将集合竞价参考价纳入快照续用核验",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [
+        "replay"
+      ],
+      "phase_mapping": {
+        "lv2-snapshot": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/cli.py",
+        "lv2_snapshot_workspace/src/snapshot/snapshot.py",
+        "scripts/tests/test_native_replay_migration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f917a399cb43b5b7da0ab881ef449488bf2c99a5",
+      "date": "2026-10-19",
+      "subject": "分别认证连续十档盘口和全天最终成交统计",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/certify_native_replay_foundation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d4db7e4c04dca7494486619d973f3af2f93341e5",
+      "date": "2026-10-19",
+      "subject": "统一辅助盘口消费者并使用因果时间网格与成交价格",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "literature": "replay",
+        "replay": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_native_replay_consumers.py",
+        "因子/clusterlob/src/clusterlob/book_state.py",
+        "因子/lowlat/src/lowlat/book_replay.py",
+        "因子/lowlat/src/lowlat/events.py",
+        "因子/lowlat/tests/test_lowlat_runs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "68e254dec5dc64d2debc6c1d40a30237bacb1347",
+      "date": "2026-10-19",
+      "subject": "用现有哈希输入独立认证辅助报价与时间网格",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/certify_native_replay_foundation.py",
+        "scripts/tests/test_native_replay_certificate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aa530243de4c3773e0978cd4fe78c85a30c66895",
+      "date": "2026-10-19",
+      "subject": "为批量快照逐股传入集合竞价参考价",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "lv2-snapshot",
+      "related_chains": [
+        "replay"
+      ],
+      "phase_mapping": {
+        "lv2-snapshot": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/cli.py",
+        "scripts/tests/test_native_replay_migration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "377b2b40b7717e7bb635e5ef9b9efcb799cbec8a",
+      "date": "2026-10-19",
+      "subject": "记录原生盘口入口迁移与真实数据独立验收",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-19-native-replay-entry-migration.md",
+        "lv2_snapshot_workspace/README.md",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/auction-final.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/auction-final.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-final.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-final.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-red.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-red.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/cleanup-receipt.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/cli-reference.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/cli-reference.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/closure-accepted.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c5463ed226f065b9813804be75b51f49d86e6568",
+      "date": "2026-10-19",
+      "subject": "修订 README 的服务器运行与查询规约说明",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "README.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82fde606bd3e9865e34ac92cd5e4a7f62c182c16",
+      "date": "2026-10-19",
+      "subject": "记录 IO 函数合同与源码身份约束",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-19-io-contract-inventory.json",
+        "reports/2026-10/2026-10-19-io-contract-inventory.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "23c0a4c0e49fdda874df45b47195e1223d7a94c3",
+      "date": "2026-10-19",
+      "subject": "复用已核对合同的哈希与标签产物 IO",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/compare_open3m_all_order_count_factors.py",
+        "scripts/compare_open3m_directional_count_factors.py",
+        "scripts/compare_open3m_interday_count_factors.py",
+        "因子/algobench/src/algobench/anchors/l1_turnover.py",
+        "因子/algobench/src/algobench/anchors/sse_instruments.py",
+        "因子/algobench/src/algobench/cancel_lag_distribution.py",
+        "因子/algobench/src/algobench/formal_calibration_scratch.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_label_pipeline.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_reference.py",
+        "因子/algobench/src/algobench/historical_baselines.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "058c4c21d319a1dbd794b074aa01086b344dc996",
+      "date": "2026-10-19",
+      "subject": "将可见性审计共享逻辑迁入包并保留旧入口",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/analyze_sse_stage1.py",
+        "scripts/analyze_visible_factor_ranks.py",
+        "scripts/attribute_visible_sources.py",
+        "scripts/audit_sse_automatic_cancels.py",
+        "scripts/audit_sse_original_order_ids.py",
+        "scripts/audit_sse_visibility_cached_inputs.py",
+        "scripts/audit_szse_cancel_adjacency.py",
+        "scripts/audit_szse_replay_rules.py",
+        "scripts/audit_szse_replay_validation.py",
+        "scripts/audit_szse_visible_contract.py",
+        "scripts/audit_visible_cancel_ages.py",
+        "scripts/audit_visible_factor_dependencies.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fd2a957b6354a4d3ac449473fa0fb02e83a8b14c",
+      "date": "2026-10-19",
+      "subject": "将正式评价编排与配置迁入 formal 子包",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal/__init__.py",
+        "因子/algobench/src/algobench/formal/artifacts.py",
+        "因子/algobench/src/algobench/formal/evaluation.py",
+        "因子/algobench/src/algobench/formal/intraday_labels.py",
+        "因子/algobench/src/algobench/formal/label_specs.py",
+        "因子/algobench/src/algobench/formal/labels.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal/preregister.py",
+        "因子/algobench/src/algobench/formal/reference.py",
+        "因子/algobench/src/algobench/formal_artifact_graph.py",
+        "因子/algobench/src/algobench/formal_evaluation_specs.py",
+        "因子/algobench/src/algobench/formal_label_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a084812d73768f12df9e4ea0bee0f155a674adfd",
+      "date": "2026-10-19",
+      "subject": "用分组运行配置承接正式评价的宽参数入口",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "docs/formal-run-spec.md",
+        "因子/algobench/src/algobench/formal/__init__.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal/run_spec.py",
+        "因子/algobench/tests/test_formal_run_specs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "12757d61571876c330b2107a4a2a3e12347914d0",
+      "date": "2026-10-19",
+      "subject": "让迁移后的审计证据绑定真实实现源码",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_sse_factor_contracts.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c65e4ab6204c8e4ca71bea3637587dc75ca635f7",
+      "date": "2026-10-19",
+      "subject": "记录结构整改交付与基准失败复验",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-19-io-contract-inventory.json",
+        "reports/2026-10/2026-10-19-io-contract-inventory.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "15eac64e92496900792145a21a4af93a7efdc960",
+      "date": "2026-10-19",
+      "subject": "修复共享审计脚本从当前检出启动",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-19-script-checkout-bootstrap-fix.json",
+        "reports/2026-10/2026-10-19-script-checkout-bootstrap-fix.md",
+        "scripts/analyze_sse_stage1.py",
+        "scripts/analyze_visible_factor_ranks.py",
+        "scripts/attribute_visible_sources.py",
+        "scripts/audit_sse_automatic_cancels.py",
+        "scripts/audit_sse_original_order_ids.py",
+        "scripts/audit_sse_visibility_cached_inputs.py",
+        "scripts/audit_szse_cancel_adjacency.py",
+        "scripts/audit_szse_replay_rules.py",
+        "scripts/audit_szse_replay_validation.py",
+        "scripts/audit_szse_visible_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2fc4f1e7adfab2df4883de58aa673aa39743f137",
+      "date": "2026-10-19",
+      "subject": "修复共享 Arrow 助手的独立导入顺序",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/sse_original_v2_forward_arrow.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3afa4ef85108e4d416d579692eb5f81e99e4737c",
+      "date": "2026-10-19",
+      "subject": "集中审计脚本启动与检出源码定位",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-19-project-architecture.md",
+        "scripts/_bootstrap.py",
+        "scripts/analyze_sse_stage1.py",
+        "scripts/analyze_visible_factor_ranks.py",
+        "scripts/attribute_visible_sources.py",
+        "scripts/audit_sse_automatic_cancels.py",
+        "scripts/audit_sse_original_order_ids.py",
+        "scripts/audit_sse_visibility_cached_inputs.py",
+        "scripts/audit_szse_cancel_adjacency.py",
+        "scripts/audit_szse_replay_rules.py",
+        "scripts/audit_szse_replay_validation.py",
+        "scripts/audit_szse_visible_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a677965e190588cb62a79890ff384d986080e95",
+      "date": "2026-10-19",
+      "subject": "将通用文件协议与产物发布集中到 artifact_io",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_formal_day_bucket_publication.py",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/build_szse_model328_factor_acceptance.py",
+        "scripts/build_szse_model328_performance_gate.py",
+        "scripts/build_szse_model328_quote_validation.py",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/compare_open3m_all_order_count_factors.py",
+        "scripts/compare_open3m_directional_count_factors.py",
+        "scripts/compare_open3m_interday_count_factors.py",
+        "scripts/prescreen_runtime.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/run_2026q2_intraday_continuation.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "53eb2bd81952afe61a6e096558e043c59239e7de",
+      "date": "2026-10-19",
+      "subject": "让正式评价与 pilot 入口使用分组运行配置",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_formal_panel.py",
+        "scripts/run_pilot.py",
+        "因子/algobench/tests/test_run_formal_panel.py",
+        "因子/algobench/tests/test_run_pilot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cdfc75f878e70f09155bb7c815895300cb2f25d9",
+      "date": "2026-10-19",
+      "subject": "记录项目模块职责与运行入口合同",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "decisions/2026-10-19-shared-runtime-interfaces.md",
+        "docs/project-architecture.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7a2c3bb90049d6c1e375318ff26045640aa294bb",
+      "date": "2026-10-19",
+      "subject": "记录架构整改全量对照与兼容验收结果",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/project-architecture.md",
+        "reports/2026-10/2026-10-19-project-architecture-delivery.md",
+        "reports/2026-10/2026-10-19-project-architecture-verification.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a509759a7ea2ce9cfc83c57f10fa12897ad64653",
+      "date": "2026-10-19",
+      "subject": "将原生回放核心集中到 snapshot 并解除研究包反向依赖",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d1e753812eddd417fb95d458442b3f30f4e431ab",
+      "date": "2026-10-19",
+      "subject": "将共享产物构建和单股执行拆成独立生命周期阶段",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "replay"
+      },
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_formal_execution_stages.py",
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aad338c2a84fab3bfa499470ee18d9b0b3bfb98d",
+      "date": "2026-10-19",
+      "subject": "将正式面板与多窗口编排拆成准备调度和发布阶段",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1dc329b35bfc7604cbbbf98b4fbf27f2b0162bde",
+      "date": "2026-10-19",
+      "subject": "说明原生回放单向依赖和正式执行阶段合同",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/project-architecture.md"
+      ]
+    }
+  ]
+}

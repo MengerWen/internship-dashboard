@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-09",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "e4632c57f199064bf30722af7404c21182fbc27a",
+      "date": "2026-07-09",
+      "subject": "`PLAN_00_数据预检与原始缓存` 26.7.9 16:39",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "algobench"
+      },
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/scripts/probe_anchor_sources.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "943a088c89c59f782a0b6ea49f143d074cca5a0e",
+      "date": "2026-07-09",
+      "subject": "`PLAN_01_P0_注册表与配置骨架` 26.7.9 16:51",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/configs/evalv2.yaml",
+        "因子/algobench/configs/factor_registry.yaml",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/evalv2/__init__.py",
+        "因子/algobench/src/algobench/evalv2/registry.py",
+        "因子/algobench/src/algobench/evalv2/report.py",
+        "因子/algobench/src/algobench/paths.py",
+        "因子/algobench/tests/test_evalv2_registry.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "6aa2918fcb39925f6d958c9a94e72f6ebaa3a55e",
+      "date": "2026-07-09",
+      "subject": "`PLAN_02_P1_锚数据层构建` 26.7.9 17:09",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/anchors/__init__.py",
+        "因子/algobench/src/algobench/anchors/build.py",
+        "因子/algobench/src/algobench/anchors/fetch.py",
+        "因子/algobench/src/algobench/anchors/seats.py",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/paths.py",
+        "因子/algobench/tests/test_anchors_build.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "a23881de82d7353b84006d52ef07caf03ee0d9b5",
+      "date": "2026-07-09",
+      "subject": "`PLAN_03_P2_litepanel宽样本` 26.7.9 17:26",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/RUN_NOTES.md",
+        "因子/algobench/configs/wide.yaml",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/litepanel.py",
+        "因子/algobench/src/algobench/paths.py",
+        "因子/algobench/tests/test_litepanel.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "3f1622233e569dca51d7c8f3738f81d33cc3d178",
+      "date": "2026-07-09",
+      "subject": "`PLAN_04_P3_L0_L1选择性矩阵` 26.7.9 17:41",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/evalv2/__init__.py",
+        "因子/algobench/src/algobench/evalv2/contamination.py",
+        "因子/algobench/src/algobench/evalv2/report.py",
+        "因子/algobench/src/algobench/evalv2/residualize.py",
+        "因子/algobench/src/algobench/evalv2/selectivity.py",
+        "因子/algobench/tests/test_evalv2_selectivity.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "ec2789ad79fd7aa28100d82245150e880827ad6f",
+      "date": "2026-07-09",
+      "subject": "`PLAN_05_P4_L2事件检验` 26.7.9 17:50",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/evalv2/__init__.py",
+        "因子/algobench/src/algobench/evalv2/events.py",
+        "因子/algobench/src/algobench/evalv2/report.py",
+        "因子/algobench/tests/test_evalv2_events.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "2692e397e8519cf6789eb81ab24dcea8e7b462b7",
+      "date": "2026-07-09",
+      "subject": "`PLAN_06_P5_L3时间尺度签名` 26.7.9 18:37",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/evalv2/__init__.py",
+        "因子/algobench/src/algobench/evalv2/report.py",
+        "因子/algobench/src/algobench/evalv2/timescale.py",
+        "因子/algobench/tests/test_evalv2_timescale.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "2bce47d9bbd9ec6bcb2c183ad8da65c716f22dca",
+      "date": "2026-07-09",
+      "subject": "`PLAN_07_P6_scorecard报告与增量入口` 26.7.9 18:48",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/evalv2/__init__.py",
+        "因子/algobench/src/algobench/evalv2/reliability.py",
+        "因子/algobench/src/algobench/evalv2/report.py",
+        "因子/algobench/tests/test_evalv2_report.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "ff784c064ae8398ef05ea5c3ef03a66b67c5b4dc",
+      "date": "2026-07-09",
+      "subject": "cc检查 26.7.9 19:14",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/tests/_tmp_evalv2_report_output/evalv2/reports/factor_b.md"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "ec962e68b3f5343c2bdbae8d018c758bbc15c3dd",
+      "date": "2026-07-09",
+      "subject": "codex修复 26.7.9 21:24",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/RUN_NOTES.md",
+        "因子/algobench/configs/wide.yaml",
+        "因子/algobench/scripts/probe_anchor_sources.py",
+        "因子/algobench/src/algobench/anchors/build.py",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/config.py",
+        "因子/algobench/src/algobench/evalv2/events.py",
+        "因子/algobench/src/algobench/evalv2/residualize.py",
+        "因子/algobench/src/algobench/evalv2/selectivity.py",
+        "因子/algobench/src/algobench/paths.py",
+        "因子/algobench/src/algobench/universe.py",
+        "因子/algobench/tests/test_anchors_build.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "027f2bc8c1b06b394e38208fb9ac02c82f820c40",
+      "date": "2026-07-09",
+      "subject": "cc检查 26.7.9 21:34",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/__pycache__/paths.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/universe.cpython-314.pyc",
+        "因子/algobench/src/algobench/evalv2/__pycache__/events.cpython-314.pyc",
+        "因子/algobench/src/algobench/evalv2/__pycache__/residualize.cpython-314.pyc",
+        "因子/algobench/src/algobench/evalv2/__pycache__/selectivity.cpython-314.pyc",
+        "因子/algobench/tests/__pycache__/test_evalv2_events.cpython-314-pytest-9.1.1.pyc",
+        "因子/algobench/tests/__pycache__/test_evalv2_selectivity.cpython-314-pytest-9.1.1.pyc",
+        "因子/algobench/tests/__pycache__/test_universe.cpython-314-pytest-9.1.1.pyc"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "2c8d4e1468f43a20ae9f1993244f4d49eac0b0d8",
+      "date": "2026-07-09",
+      "subject": "codex修复 26.7.9 21:52",
+      "status": "assigned",
+      "chains": [
+        "algobench"
+      ],
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码",
+      "context_rule": "parent-algobench",
+      "shares": {
+        "algobench": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/RUN_NOTES.md",
+        "因子/algobench/configs/evalv2.yaml",
+        "因子/algobench/src/algobench/anchors/build.py",
+        "因子/algobench/src/algobench/anchors/diagnostics.py",
+        "因子/algobench/src/algobench/anchors/fetch.py",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/src/algobench/evalv2/events.py",
+        "因子/algobench/tests/test_anchors_build.py",
+        "因子/algobench/tests/test_evalv2_events.py"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "6f38cb7f9b8dc2300c2441750649e97b1d104bc6",
+      "date": "2026-07-09",
+      "subject": "cc检查 26.7.9 23:16",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/__pycache__/cli.cpython-314.pyc",
+        "因子/algobench/src/algobench/__pycache__/config.cpython-314.pyc",
+        "因子/algobench/src/algobench/anchors/__pycache__/build.cpython-314.pyc",
+        "因子/algobench/src/algobench/anchors/__pycache__/diagnostics.cpython-314.pyc",
+        "因子/algobench/src/algobench/anchors/__pycache__/fetch.cpython-314.pyc",
+        "因子/algobench/src/algobench/evalv2/__pycache__/events.cpython-314.pyc",
+        "因子/algobench/tests/__pycache__/test_anchors_build.cpython-314-pytest-9.1.1.pyc",
+        "因子/algobench/tests/__pycache__/test_evalv2_events.cpython-314-pytest-9.1.1.pyc"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "3da1015e2b4eef06685d31555dd619ef9594aa8a",
+      "date": "2026-07-09",
+      "subject": "26.7.9 23:38",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-07-09.md",
+        "site/assets/algo-footprint-2026-07-09/anchor_counts.png",
+        "site/assets/algo-footprint-2026-07-09/passive_fix.png",
+        "site/assets/algo-footprint-2026-07-09/pipeline_5layers.png",
+        "site/assets/algo-footprint-2026-07-09/selectivity_concept.png"
+      ]
+    }
+  ]
+}

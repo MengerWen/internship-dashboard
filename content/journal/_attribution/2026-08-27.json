@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-27",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "792b936237302d15804ff04a0bb0a5aefea11f24",
+      "date": "2026-08-27",
+      "subject": "feat: 增加三秒候选门L2审计",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-27-l2-three-second-gate-audit-support.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "344ed3ae79dcca3337767ba786f9bf1a9e37ab7b",
+      "date": "2026-08-27",
+      "subject": "docs: 记录三秒候选门L2审计结论",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-27-l2-three-second-gate-real-data-findings.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "514a577ff76e6ffbbdb5e3566640bd80fd47b40e",
+      "date": "2026-08-27",
+      "subject": "feat: freeze full-period kernel calibration contract",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/formal_kernel_calibration_open5m_2024_2026q2_v1.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "476eaf22b0e7eb201cf3ce554f6b1f0df6c0b4af",
+      "date": "2026-08-27",
+      "subject": "fix: use exact 3.11 second calibration gate",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_candidate_gates.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_candidate_gates.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "effcd3a65fc7e74b760617e63ddabaddc3cfba26",
+      "date": "2026-08-27",
+      "subject": "fix: require complete calibration observation windows",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_observability.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pair_observability.py",
+        "因子/algobench/tests/test_formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ba132af9b7aa013bf24c25da05c69c4f1e7542d6",
+      "date": "2026-08-27",
+      "subject": "feat: emit unbiased kernel calibration observations",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_calibration_sufficient.py",
+        "因子/algobench/src/algobench/formal_derived_fragments.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_calibration_sufficient.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8e2199d301489cc6b2fb41e44132edb3a39ddbb6",
+      "date": "2026-08-27",
+      "subject": "feat: calibrate shared scales with hierarchical medians",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/calibrate_kernel_scales.py",
+        "因子/algobench/tests/test_calibrate_kernel_scales.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f7b07c3dbc8f8250e6cc8fda2010484855dc27b1",
+      "date": "2026-08-27",
+      "subject": "feat: add resumable full-period calibration runner",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_kernel_calibration_result.py",
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "66860d791d2df96308611f8a8c90325351bed849",
+      "date": "2026-08-27",
+      "subject": "docs: define full-period kernel recalibration plan",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__net.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__sell.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__total.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__net.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__sell.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__total.ipynb"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "adf42a699916c182a30a3ae389e8b85ece8f9b5f",
+      "date": "2026-08-27",
+      "subject": "fix: restore unrelated research notebooks",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__net.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__sell.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f01_cancel_c__total.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__net.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__sell.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/f04_subhuman_50ms_c__total.ipynb"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "55fa32d38b0da2ee7b3af590e460ee1bc5ae20fd",
+      "date": "2026-08-27",
+      "subject": "feat: revise fast-cancel scales and audit factor bank",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-06-高频量价与微观结构新因子批量构建实施计划.md",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/NOTEBOOK_INDEX.json",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__net.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__sell.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c01_periodic_c__total.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__absnet.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__buy.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__net.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__sell.ipynb",
+        "因子/algobench/research/新factors_open5m_count_proxy_v2/第一层_L1_老scorer计数侧投影/c02_fixed_c__total.ipynb"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "943643000c03d85db0fa80cb60d7b708207c1fa3",
+      "date": "2026-08-27",
+      "subject": "fix: commit no-data calibration stock days",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3f087da9e05d7bd08a794b55049c7abd21efb351",
+      "date": "2026-08-27",
+      "subject": "docs: define calibration local hot path",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-27-open5m-kernel-calibration-local-hot-path-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "740b201cfaccbdc359fea9eec2bb63a6757c23ac",
+      "date": "2026-08-27",
+      "subject": "perf: compact calibration stock-day persistence",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_kernel_calibration_result.py",
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "26e3bae0aea63f0dbb92a6ab0bcdf011a2c0211f",
+      "date": "2026-08-27",
+      "subject": "perf: activate compiled calibration replay",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [
+        "open5m"
+      ],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/tests/test_event_prestate.py",
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ebc029779991ef7ee5752d422fe7d868a8cf7554",
+      "date": "2026-08-27",
+      "subject": "test: exercise compiled missing references",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据",
+      "context_rule": "calibration-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/tests/test_event_prestate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fb7c1ab2442ee55da158d2d27b1b750695c7ed21",
+      "date": "2026-08-27",
+      "subject": "fix: retain missing replay references",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/tests/test_event_prestate.py"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,418 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-20",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "e52e7a9e03bd34a4fdd176fdc8ad0f18203183c3",
+      "date": "2026-07-20",
+      "subject": "chore: update Sirui submodule after lifecycle rollback",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "sirui-quant-research"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "08f02c1ce40119d809e36fc301c00a4804200a92",
+      "date": "2026-07-20",
+      "subject": "改用numpy 26.7.20 11:55",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/候选边NumPy_Arrow分块重构实施计划_2026-07-20.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8a558f6a98d064971ee1aa2cb5fec270b531139d",
+      "date": "2026-07-20",
+      "subject": "test: freeze pair candidate semantics and column audit",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/tests/_formal_pairing_reference.py",
+        "因子/algobench/tests/test_formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py",
+        "因子/algobench/tests/test_pair_candidate_schema_migration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "caef194029e6cc6919f533c9de7a02eaa300e945",
+      "date": "2026-07-20",
+      "subject": "feat: add versioned bounded pair candidate store",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing.py",
+        "因子/algobench/tests/test_pair_candidate_schema_migration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a4dc9d2bd44bbc5b629cddff257baaede534588d",
+      "date": "2026-07-20",
+      "subject": "feat: columnarize pair candidate inputs",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "958e04eb2a3c5be10cab48ce7ef58be590acc499",
+      "date": "2026-07-20",
+      "subject": "feat: bound pair windows with searchsorted",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "423a123e04c36d85c0bee2795ee2e65d17fe1124",
+      "date": "2026-07-20",
+      "subject": "feat: stream pair candidates with compact v2 schema",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c39411af861b035f9f6e6ad85323e7fe45fc850",
+      "date": "2026-07-20",
+      "subject": "perf: vectorize pair component scoring",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fc3ce6263a42da21b41b3e95a7bca5315ff463b6",
+      "date": "2026-07-20",
+      "subject": "refactor: use pair candidate stores in formal engine",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_placebo.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_e2e_2x2.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "73a7c121783eb4e72129fe3addaf5d9867aea8b3",
+      "date": "2026-07-20",
+      "subject": "perf: stream local-best pair scorers",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_layer2_scorers.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e84d95057acdb4a8d8598c63cfacae62ecfe5ff6",
+      "date": "2026-07-20",
+      "subject": "perf: bound grouped pair scorer state",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_layer2_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7098cda81cb603d30d055a5afca4f13f906230b6",
+      "date": "2026-07-20",
+      "subject": "feat: report pair candidate batch telemetry",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/single_day_benchmark.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_panel_runner.py",
+        "因子/algobench/tests/test_single_day_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "26acedb7769d79edf1946c0fbdda9f4951d2aee3",
+      "date": "2026-07-20",
+      "subject": "feat: migrate pair candidate consumers to v2",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/factor_preregister.yaml",
+        "scripts/calibrate_kernel_scales.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_stage2.py",
+        "因子/algobench/src/algobench/idio_decomposition.py",
+        "因子/algobench/tests/test_calibrate_kernel_scales.py",
+        "因子/algobench/tests/test_formal_stage2.py",
+        "因子/algobench/tests/test_idio_decomposition.py",
+        "因子/algobench/tests/test_pair_candidate_schema_migration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "23c1375cca0195a338ef9cfd1b2de326e0a92db5",
+      "date": "2026-07-20",
+      "subject": "test: verify pair candidate v2 integration",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/tests/test_formal_e2e_2x2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "079c3d9de073179f2d8b78c8ccb5104efed984be",
+      "date": "2026-07-20",
+      "subject": "perf: externalize exact pair calibration",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/calibrate_kernel_scales.py",
+        "因子/algobench/tests/test_calibrate_kernel_scales.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "98ab03855c0c952449932d3c159ced896aba3fe4",
+      "date": "2026-07-20",
+      "subject": "计算提速PLAN 26.7.20 20:17",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/2026-07-20-formal-computation-efficiency-optimization.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0f96bd77649760e0342e39482f830a0b57d08179",
+      "date": "2026-07-20",
+      "subject": "计算提速 26.7.20 21:36",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/单日真实性能测量_服务器执行说明.md"
+      ]
+    }
+  ]
+}

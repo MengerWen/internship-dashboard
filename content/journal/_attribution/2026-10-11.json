@@ -1,0 +1,1906 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-11",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c2243357b1c13c0dca4380e4df3871e46eb7cce4",
+      "date": "2026-10-11",
+      "subject": "在归档入口正常退出后发布逐股适配汇总",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/cached_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "310010b210a5739d640b4915d08bf7e79a237015",
+      "date": "2026-10-11",
+      "subject": "记录 R10 通道重建往返对照及恢复清理证据",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [
+        "sse-v2"
+      ],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/archive-cleanup.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "38a1a209812d0846cf4a1b0693ec932c9fa55c30",
+      "date": "2026-10-11",
+      "subject": "诊断沪市全代码通道并核验补充成员覆盖",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/collect_inputs.py",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/diagnose_sse.py",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/test_diagnose_sse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "80c27a1dbbba1867efb7969a8c99bc4ba37a14c6",
+      "date": "2026-10-11",
+      "subject": "核对沪市三表覆盖缺口的时间邻接与边界",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/audit_coverage_gaps.py",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/test_diagnose_sse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6ec8cacef1f1987d06b68b15463e806d9525688f",
+      "date": "2026-10-11",
+      "subject": "按开盘后记录时间戳识别通道出版空窗",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/diagnose_sse.py",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/test_diagnose_sse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e763dd99854a9d27d06bf7649d49dfda0761c6e6",
+      "date": "2026-10-11",
+      "subject": "记录沪市两日重建时钟诊断与覆盖限制",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "decisions/2026-10-10-sse-reconstructed-channel-sequence.md",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/delivery-ledger-before-diagnostics-report.json",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/gap-audit-test.txt",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/opening-gap-final-test.txt",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-budget.json",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-catalog-2024-01-02-queries.jsonl",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-catalog-2024-01-02-receipt.json",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-channel-summary.csv",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-closeout-control.py",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-closeout.json",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-coverage-gap-audit-2024-01-02.json",
+        "reports/2026-10/2026-10-10-sse-reconstructed-sequence-evidence/results/sse-coverage-gap-audit-2026-06-30.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "67ed7d861889070509639cf46a3904c91e0757b8",
+      "date": "2026-10-11",
+      "subject": "记录全期结构采集二百零五日进度",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T154213Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T160217Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T162221Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T164245Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T170251Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T172254Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T174301Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T180304Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37f90ec3301fc5d7e3d5dd8a938ab2647de9a89b",
+      "date": "2026-10-11",
+      "subject": "记录全期结构日采集完成过半",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T182308Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T184315Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T190318Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T192323Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T194326Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T200334Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T202340Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab3d5642d84ad052ee2e85b32a9a829904a543de",
+      "date": "2026-10-11",
+      "subject": "记录全期结构日采集完成四百零五日",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T204347Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T210356Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T212404Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T214411Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T220419Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T222427Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f52f8665968d7fceeb7745d33c5001490290a6a9",
+      "date": "2026-10-11",
+      "subject": "记录全期结构日采集完成五百零八日",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T224437Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T230446Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T232457Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261010T234507Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T000518Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T002536Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T004548Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d3ade8f9181465ee17c5d149c9758aa5af39b7d8",
+      "date": "2026-10-11",
+      "subject": "记录六百零一日结构观测采集完成",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/f40-entry-process.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T010606Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T012618Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T014632Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T020644Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T022709Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T024719Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T030724Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T032737Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a4b62c6b1fe9903c3ca5c6cff2aa3a4e5e028a73",
+      "date": "2026-10-11",
+      "subject": "记录F40 episode完成与anchor阶段进度",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次F40 episode/anchor和归档读取服务601日结构参数采集；旧库为所复用的实现",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T034818Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T040859Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T043115Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T045223Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T051255Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T053315Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-error-20261011T042854Z.txt",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7c22ac9d691c30d6684a739a1ad905b936211dff",
+      "date": "2026-10-11",
+      "subject": "记录F40 anchor全期完成与cost启动",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T055344Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T061407Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T063433Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T065442Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T071505Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T073558Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf3658b21ea3832e6d3926d8b2dd95e029e2b8a0",
+      "date": "2026-10-11",
+      "subject": "记录剩余阶段优化暂停与正式计算范围",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/freeze-audit-20261011T0837Z.txt",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T075608Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T081708Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T083725Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/pause-20261011-remaining-stage-optimization.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c654c62d4cad7d685bf6f0709d90c8bfcb449539",
+      "date": "2026-10-11",
+      "subject": "合并F40归档校验与读取并允许有界并行解包",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次F40 episode/anchor和归档读取服务601日结构参数采集；旧库为所复用的实现",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_f40_remaining_stage_efficiency.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0d5f1c98bb1d9a5c1573909d23159e1f3989a1c2",
+      "date": "2026-10-11",
+      "subject": "限定结构定参续跑与发布验收范围",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "grouped-calibration": "grouped-calibration",
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-11-f40-remaining-stage-optimization.md",
+        "scripts/run_open5m_structural_resume.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6a42af1baf70357dd348f5101231c01534c52f34",
+      "date": "2026-10-11",
+      "subject": "补全F40运行资源回归测试的窗口标识",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_f40_scoring_continuity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d4b6a84886cc1b7a4864b5113a3e059c8e652476",
+      "date": "2026-10-11",
+      "subject": "减少F40精确匹配分量的列索引复制",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/tests/test_f40_streaming_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "62f97556ce3fb354a56907d49b00df74a0e961f9",
+      "date": "2026-10-11",
+      "subject": "复用相同定参分组归约并合并日包发布校验",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "因子/algobench/tests/test_open5m_selected_date_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a8a139f1afa2910134839433c2a4b24138eb200b",
+      "date": "2026-10-11",
+      "subject": "增加正式缓存事实的后续阶段性能与一致性验收",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_open5m_remaining_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a752ccd86234b3d2793ea75197a7058bdc160441",
+      "date": "2026-10-11",
+      "subject": "复用续跑日包完整校验并显示验证进度",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_selected_date_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6fbc4c1fc26e0b7616b1cdb6e45845abc719279d",
+      "date": "2026-10-11",
+      "subject": "支持交替顺序和缓存一致的后续阶段性能对照",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_open5m_remaining_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c21dc7edbdc428571e8702675d9bdf110121b891",
+      "date": "2026-10-11",
+      "subject": "单次扫描F40 cost候选块并保留原最大权重",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_f40_remaining_stage_efficiency.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "04d7874934767728b34504478a69510f69649988",
+      "date": "2026-10-11",
+      "subject": "保留无编译器环境的F40候选向量归约",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_f40_remaining_stage_efficiency.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0c468105d805a572b0667a7da16ac9831b28fe5e",
+      "date": "2026-10-11",
+      "subject": "优先调度F40 cost中工作量较大的股票",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "grouped-calibration": "grouped-calibration",
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/tests/test_f40_remaining_stage_efficiency.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a6affe5a1fa98443a2eb6d5546873080e5c0fda2",
+      "date": "2026-10-11",
+      "subject": "记录F40后续阶段一致性验收与正式续跑",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization-evidence/acceptance_summary.json",
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization-evidence/resume_identity.json",
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization-evidence/resume_start_verification.json",
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "55b476f45ef69c5e7c81a13596a41b74cf9b3a45",
+      "date": "2026-10-11",
+      "subject": "记录正式定参优化后续跑与监控切换",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/guard-manifest-stopped-20261011T083847Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T085751Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T091810Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T093828Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T093946Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca7ebda4ef85c8a7236f4388fa82dae1aa2e0753",
+      "date": "2026-10-11",
+      "subject": "将深市定参计划收敛至正式参数发布",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4b6fd07dc16ac605a1886141c7fd2eb937ab946a",
+      "date": "2026-10-11",
+      "subject": "增加沪市股票观测消息重建时钟与完整性扫描入口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_sse_stage1_integrity.py",
+        "scripts/sse_stage1_common.py",
+        "因子/algobench/src/algobench/sse_channel_sequence.py",
+        "因子/algobench/src/algobench/sse_order_flow.py",
+        "因子/algobench/tests/test_sse_channel_sequence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "183798dbd8bc9f0aeba19a716b8620119eb7dbdd",
+      "date": "2026-10-11",
+      "subject": "增加沪市完整度月度定位及快照成交对照",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/compare_sse_stage1_integrity.py",
+        "scripts/run_sse_stage1_integrity.py",
+        "scripts/sse_stage1_common.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc93c7548488994fb5e220655944b3219ca296f2",
+      "date": "2026-10-11",
+      "subject": "验证沪市范围页排他截止与快照累计字段对照",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/compare_sse_stage1_integrity.py",
+        "scripts/sse_stage1_common.py",
+        "因子/algobench/tests/test_sse_stage1_integrity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f240e2c6b1151bcfa697615d3416c87d81e4fae6",
+      "date": "2026-10-11",
+      "subject": "完善沪市完整度区间定位和股票快照分页对照",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/compare_sse_stage1_integrity.py",
+        "scripts/refine_sse_stage1_timeline.py",
+        "scripts/sse_stage1_common.py",
+        "因子/algobench/tests/test_sse_stage1_integrity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6dd2470165f8845fecda6966a35459dfb97837cb",
+      "date": "2026-10-11",
+      "subject": "记录全期日包复用验收和cost续跑进度",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T095949Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T102039Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T104158Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bdbcfdf4789fa0d59bd3a88a41874f2108ccb0c6",
+      "date": "2026-10-11",
+      "subject": "补充沪市快照时间边界的零查询归因",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/diagnose_sse_snapshot_boundaries.py",
+        "因子/algobench/tests/test_sse_stage1_integrity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a3efa96927e00271bd185d857264733e5670a80f",
+      "date": "2026-10-11",
+      "subject": "记录沪市完整度时间线与Q_equity数据质量结论",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-data-integrity.md",
+        "reports/2026-10/2026-10-11-sse-stage1-integrity-evidence/aggregate-evidence.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "36a6a0042e412ea3c1eb5e578ed808ad7330ea91",
+      "date": "2026-10-11",
+      "subject": "增加沪市显式元数据和开盘前因果特征合同",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_stage1_metadata.py",
+        "因子/algobench/tests/test_sse_stage1_metadata.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "faf4a997123ce0209d831e86ff73cfa3b354625a",
+      "date": "2026-10-11",
+      "subject": "增加沪市元数据历史与阶段日期L1特征取数入口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_sse_stage1_features.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76e6b2a2624d219a131baa68706de18ddd1ab1c6",
+      "date": "2026-10-11",
+      "subject": "增加沪市t−1精简描述子取数与缺失值证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_sse_stage1_features.py",
+        "scripts/fetch_sse_stage1_rq.py",
+        "scripts/sse_stage1_common.py",
+        "因子/algobench/tests/test_sse_stage1_metadata.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "79bf3fd1abf54d4a3651cf2b3903e1a74f348543",
+      "date": "2026-10-11",
+      "subject": "记录沪市元数据及开盘前特征的实际覆盖和成本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-feature-evidence/aggregate.json",
+        "reports/2026-10/2026-10-11-sse-stage1-features.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2fcc6791168a185987c05ae16b34af798f20a874",
+      "date": "2026-10-11",
+      "subject": "增加Q_equity正式入口及沪市逐级重建观测入口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_sse_stage1_levels.py",
+        "scripts/sse_stage1_common.py",
+        "scripts/sse_stage1_observations.py",
+        "因子/algobench/src/algobench/sse_channel_sequence.py",
+        "因子/algobench/src/algobench/sse_order_flow.py",
+        "因子/algobench/tests/test_sse_formal_integration.py",
+        "因子/algobench/tests/test_sse_stage1_levels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "211a7e87ef557932ca1f1f88a49889dc6db95d52",
+      "date": "2026-10-11",
+      "subject": "记录600000的重建和原生盘口一致性验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-level-evidence/level1-reconstruction.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c7d8f8eee8af741bb5f04d9008ba005478549be7",
+      "date": "2026-10-11",
+      "subject": "记录12个沪市固定锚的重建与盘口验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-level-evidence/level2-reconstruction.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc2e3942e42e1362ed103a3c4c44bdc51d10f880",
+      "date": "2026-10-11",
+      "subject": "记录42股两日委托流重建和盘口验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-level-evidence/level3-reconstruction.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8ffed3d76ac13d9a14e36055e9114767b07490df",
+      "date": "2026-10-11",
+      "subject": "增加通道效应检验及因果κ合同",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_sse_stage1_levels.py",
+        "scripts/sse_stage1_observations.py",
+        "因子/algobench/src/algobench/sse_channel_effect.py",
+        "因子/algobench/tests/test_sse_channel_effect.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "67f97c4e7c7979941141869848ec147f659549e2",
+      "date": "2026-10-11",
+      "subject": "持续监控会话内正式计算进度与guard",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitoring_policy.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "28764c2398819dbbedb9e2d3edbba17b149f5536",
+      "date": "2026-10-11",
+      "subject": "记录601日cost完成及全期精确归并预算失败",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/cost-full-period-receipt-audit.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/guard-manifest-failed-20261011T111155Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/launcher-exit-failed-20261011T111155Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T110334Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T112347Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T112558Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/result-failed-20261011T111155Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3d317fe03f3ea33ffaaa2c1cf9489de946b71202",
+      "date": "2026-10-11",
+      "subject": "在归约预算内精确计算大规模日期等权分位数",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4f43e9dc1fb4dac664dd3602daecae0cb9f78631",
+      "date": "2026-10-11",
+      "subject": "保留深市默认运行身份及缓存兼容性",
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "沪市接入后保留深市原运行身份和缓存兼容；被保障的深市生产任务为328",
+      "review_basis": "差异中startup_record条件字段复核",
+      "shares": {
+        "szse-model328": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3162b5e1f0f32f9f26c152815c0174a152eaae4f",
+      "date": "2026-10-11",
+      "subject": "续跑时校验复用多个运行的已完成F40成果",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_structural_resume.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dba0d3a01b1548e81fc247c7560d3c40896a3fe3",
+      "date": "2026-10-11",
+      "subject": "校验真实支持的精确分位边界与归约资源",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_open5m_exact_date_quantiles.py",
+        "因子/algobench/tests/test_validate_open5m_exact_date_quantiles.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "718f43b95304d86947367172f54e7c6314e552e2",
+      "date": "2026-10-11",
+      "subject": "记录沪市全市场重建质量和资源验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-level-evidence/level4-reconstruction.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "99948f188b71a81dac767d8548528bbac21036df",
+      "date": "2026-10-11",
+      "subject": "记录精确归约验收与601日成果复用续跑",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T120949Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T121126Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitoring_policy.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-green.json",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-red.json",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-regression.json",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-workspace.json",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-f40-layered-resume-verified.json",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-real-quantile-validation-tool.json",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/linux-quantile-guard.json",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/linux-reuse-guard.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "425fa26ee1e5f3931358717b0da32db1060e685e",
+      "date": "2026-10-11",
+      "subject": "保存精确归约与跨运行复用的回归检查日志",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-green.log",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-red.log",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-regression.log",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-exact-date-quantile-workspace.log",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-f40-layered-resume-verified.log",
+        "reports/2026-10/2026-10-11-f40-exact-quantile-evidence/20261011-real-quantile-validation-tool.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cf58ac5a80b1a22781fe3f63b7ec69c10e3a32ab",
+      "date": "2026-10-11",
+      "subject": "增加六核观测空证据处理和分阶段耗时记录",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_sse_stage1_levels.py",
+        "scripts/sse_stage1_observations.py",
+        "因子/algobench/src/algobench/sse_channel_sequence.py",
+        "因子/algobench/src/algobench/sse_order_flow.py",
+        "因子/algobench/tests/test_sse_stage1_levels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "17cac719b6c59e46e01df846e302f960c3903f5c",
+      "date": "2026-10-11",
+      "subject": "增加六核描述性对比和实测成本外推入口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/analyze_sse_stage1.py",
+        "scripts/run_sse_stage1_levels.py",
+        "因子/algobench/src/algobench/sse_channel_effect.py",
+        "因子/algobench/tests/test_sse_channel_effect.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "287e5dffc226a492e25a434780db10c8273f394f",
+      "date": "2026-10-11",
+      "subject": "记录42股两日六核距离观测运行证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-observation-evidence/level3-observations.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "02372c992c945ab0ac712db6fe9fac199c7389cb",
+      "date": "2026-10-11",
+      "subject": "记录沪市全市场六核距离观测和scope资源",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-observation-evidence/level4-observations.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d864f3341142e5daf8c2bde17eef76fbc330a0fc",
+      "date": "2026-10-11",
+      "subject": "补充通道索引构建测速和股票日资格证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/analyze_sse_stage1.py",
+        "scripts/benchmark_sse_stage1_index.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37fe267d0fbf96272e2f0067f80f4d8a2341be55",
+      "date": "2026-10-11",
+      "subject": "记录已存R10深市输入的零查询六核对照",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-observation-evidence/XSHE-R10-observations.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "713a6a9ecead4b7578a0ead3db88a0aff3120929",
+      "date": "2026-10-11",
+      "subject": "支持先完成六核面板和通道效应检验",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/analyze_sse_stage1.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "09fe1a6c3a89c06a08ee40272c52358c849c3651",
+      "date": "2026-10-11",
+      "subject": "落实经检验采用的沪市因果κ距离选项",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/analyze_sse_stage1.py",
+        "scripts/run_sse_stage1_levels.py",
+        "因子/algobench/src/algobench/sse_channel_effect.py",
+        "因子/algobench/tests/test_sse_channel_effect.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cebe817f0e2269ac9d5a8c8b3d73e56b08e6993c",
+      "date": "2026-10-11",
+      "subject": "记录601日日观测校验与F40前序支持复用进度",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T121233Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T121331Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T121647Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T122102Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T122445Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T122929Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T123312Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T123534Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T123607Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T123639Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T123712Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T123745Z.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a6d01199b5cd466dd443e89275f096ba44b37cea",
+      "date": "2026-10-11",
+      "subject": "在查询前验证沪市κ观测选项边界",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_sse_stage1_levels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "feb8ff47536cac0461d0e69c833096c0f08cf594",
+      "date": "2026-10-11",
+      "subject": "支持全成功重建面板的成本汇总",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/analyze_sse_stage1.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aea059550e93f56062c4a001f7f348db0c4818ec",
+      "date": "2026-10-11",
+      "subject": "记录沪深六核预检、通道κ检验和历史成本外推",
+      "status": "shared",
+      "chains": [
+        "grouped-calibration",
+        "sse-v2"
+      ],
+      "reason": "同一提交有多个明确目标，按目标数等分一份提交量；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration",
+        "sse-v2": "sse-v2"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-11-sse-stage1-analysis-evidence/channel-effect.json",
+        "reports/2026-10/2026-10-11-sse-stage1-analysis-evidence/guards.json",
+        "reports/2026-10/2026-10-11-sse-stage1-analysis-evidence/precheck-panel.identity.json",
+        "reports/2026-10/2026-10-11-sse-stage1-analysis-evidence/six-distance-comparison.json",
+        "reports/2026-10/2026-10-11-sse-stage1-analysis-evidence/stock-day-qualification.json",
+        "reports/2026-10/2026-10-11-sse-stage1-analysis-evidence/timing-extrapolation.json",
+        "reports/2026-10/2026-10-11-sse-stage1-observation-evidence/XSHE-R10-observations.json",
+        "reports/2026-10/2026-10-11-sse-stage1-observation-evidence/level3-observations.json",
+        "reports/2026-10/2026-10-11-sse-stage1-observation-evidence/level4-observations.json",
+        "reports/2026-10/2026-10-11-sse-stage1-precheck-channel-and-cost.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fce3ac88adf4beafe9c8ffeedd7aa472ca69d680",
+      "date": "2026-10-11",
+      "subject": "接受Q_equity正式时钟及前序历史κ距离合同",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "decisions/2026-10-10-sse-reconstructed-channel-sequence.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3a0ba864dfbc294f03b3bf5c4a823237463401d0",
+      "date": "2026-10-11",
+      "subject": "标记v2时钟合同已被Q_equity取代",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-sse-v2-clock-contract.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "06481bfa724430f53eb18023541ae8c8a57da221",
+      "date": "2026-10-11",
+      "subject": "记录601日cost支持复用及全期精确归约准入",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T124752Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T124826Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T125012Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T125127Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T125244Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T125353Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T125502Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T125542Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "94516f7acf859d6e49d931ce3061c038ff39cbf9",
+      "date": "2026-10-11",
+      "subject": "记录cost精确归约完成与正式匹配启动",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T130144Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T130734Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T130810Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T131218Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "adeb7890173775605bb4748dee97c1cb66163765",
+      "date": "2026-10-11",
+      "subject": "记录全期精确匹配完成200日的运行证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T131433Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T131744Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T132239Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T132720Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T133214Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T133635Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T134047Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T134824Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T140229Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "859c5f8b96215658ef5302050651214b73bc06c2",
+      "date": "2026-10-11",
+      "subject": "记录全期精确匹配完成300日的运行证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T141734Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T142904Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T144446Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T145401Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6f2b0d49b4f268794c9cf8eb632389f9996395ce",
+      "date": "2026-10-11",
+      "subject": "记录全期精确匹配完成400日的运行证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T150015Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T150548Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T151248Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T152200Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    }
+  ]
+}

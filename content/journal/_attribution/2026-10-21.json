@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-21",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "b58b636f4414f2339270eeeb896c7fa1a08e856e",
+      "date": "2026-10-21",
+      "subject": "制定研究日志每日九点更新与证据归并规则",
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "research-journal": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "README.md",
+        "docs/journal-review/daily-update-rules.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "902b03b440425600c64ac4ba0030eeab3a36d9e9",
+      "date": "2026-10-21",
+      "subject": "支持研究日志链条图的 Ctrl 滚轮纵向缩放",
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "research-journal": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DESIGN.md",
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/index.html",
+        "site/js/journal.js"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "0910a201154aa02b6889ad77899943a2eb656d1c",
+      "date": "2026-10-21",
+      "subject": "支持研究日志点击图例高亮对应交接线",
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "research-journal": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DESIGN.md",
+        "artifacts/journal-legend/1440-report-highlight.png",
+        "artifacts/journal-legend/390-report-highlight.png",
+        "artifacts/journal-legend/regression/verification.json",
+        "artifacts/journal-legend/results.json",
+        "docs/journal-review/legend-highlight-2026-10-21.md",
+        "docs/plans/2026-10-21-journal-handoff-highlight.md",
+        "scripts/verify_journal_legend.cjs",
+        "site/css/journal.css",
+        "site/js/journal.js"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5f78618a242cfb845125d9f39504132ce5cdccd5",
+      "date": "2026-10-21",
+      "subject": "Apply independent escalation consistency and public response paths in v3",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_sse_visible_v3_acceptance.py",
+        "scripts/tests/test_sse_visible_v3.py",
+        "因子/algobench/src/algobench/sse_visible_v3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c21000071782a14e5698bb8c63edab1141371145",
+      "date": "2026-10-21",
+      "subject": "Summarize public v3 comparisons with column and branch evidence",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/summarize_sse_visible_v3.py",
+        "scripts/tests/test_sse_visible_v3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "877c6b6af263118beeea414697571c51a94d067c",
+      "date": "2026-10-21",
+      "subject": "Restrict full-day forecasts to representative thirty-stock pilots",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_sse_visible_v3_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6ea19a7d7d7c7b85f2f5f6a85166c146aa805eb",
+      "date": "2026-10-21",
+      "subject": "Use complete mechanism evidence in v3 child contract test",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/tests/test_sse_visible_v3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "761a80e731a2efb0732336aa2e96e515acc4caa9",
+      "date": "2026-10-21",
+      "subject": "Mark partial v3 evidence separately from full-market acceptance",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/summarize_sse_visible_v3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fe0b4d57f83b7dce0aec6de05f863bb10ed2301d",
+      "date": "2026-10-21",
+      "subject": "Admit v4 six-kernel calibration with full-day and scaling evidence",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "修正盘口下六核定参的窗口闭合、日级统计与缩放核验；复用open5m采集器，不回记旧定标任务",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        ".gitattributes",
+        "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-002409-source-classification-audit.md",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis.md",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/adjacency-business-guard.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/adjacency-tests-guard.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/cancel-adjacency.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/formal-launch.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/historical-workload.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/kernel-scenarios.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/manifest.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "972a263b4b3713a1de2dd70fdf5f91883a69e2d0",
+      "date": "2026-10-21",
+      "subject": "Record SSE v3 implementation evidence and one-hour acceptance stop",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-20-sse-visible-v3-implementation.md",
+        "reports/2026-10/2026-10-21-sse-visible-v3-columns.csv",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/board-side-comparisons.csv",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/manifest.json",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/measurement-totals.json",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/model-evidence.json",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/response-winning-branches.csv",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/speed-guard.json",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/speed-stop.json",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/stock-check-guard.json",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/stock-check.json.gz",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/storage-state.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5f693a56ced6a798bfa39fb95e9a9ad79429b400",
+      "date": "2026-10-21",
+      "subject": "Include the verified v3 acceptance test transcript",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/tests.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dac44001863c67de411b404ea7294e6cea4fceff",
+      "date": "2026-10-21",
+      "subject": "Record the latest independently supplied wangly run version",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation-evidence/wangly-launch-observation.json",
+        "reports/2026-10/2026-10-21-sse-visible-v3-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0b18ae16d72a4e84381ae8b4ec068634a824b83",
+      "date": "2026-10-21",
+      "subject": "按限价不可成交证明终端撮合块闭合",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "终端闭合证明及开盘窗口的回放合同修正；是344的输入前提，当前提交本身归回放修复",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/options.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "lv2_snapshot_workspace/src/snapshot/snapshot.py",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "scripts/tests/test_channel_closed_calibration_inputs.py",
+        "scripts/tests/test_szse_limit_terminal_closure.py",
+        "scripts/tests/test_szse_rule_supported_cancel.py",
+        "因子/algobench/configs/formal_kernel_calibration_open5m_corrected_344_v1.yaml",
+        "因子/algobench/src/algobench/event_prestate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ce3d4e8294907afb1a1c853f35714f669e3a74e7",
+      "date": "2026-10-21",
+      "subject": "按规范LF字节核对回放验收证据清单",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/manifest.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "95f9f8b68d5042b9905926e4aa2d1cecbeb2f181",
+      "date": "2026-10-21",
+      "subject": "记录v5完整日验收与601日正式采集启动",
+      "status": "shared",
+      "chains": [
+        "replay",
+        "corrected-replay-344"
+      ],
+      "reason": "同一记录分别保存v5完整日回放验收与344六核601日正式采集启动，两个实际目标均有独立记录，等分一份",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        ".gitattributes",
+        "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis.md",
+        "reports/2026-10/2026-10-20-source-ambiguity-admission.md",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/final-evidence.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/handoff-latest.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/handoff-live.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/live-acceptance.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/manifest.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/model-audit.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/terminal-price-contracts-r02.log.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+      "date": "2026-10-21",
+      "subject": "补齐可回读的Windows验收日志",
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "replay": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/manifest.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/terminal-price-contracts-r02.txt",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/terminal-price-green-r02.txt"
+      ]
+    }
+  ]
+}

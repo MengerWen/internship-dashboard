@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-24",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "1bea211b04210f3871691b9a372a2887217c031e",
+      "date": "2026-08-24",
+      "subject": "docs: define final-state artifact policy",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENTS.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "1255769a94769277e4ce132f39121daec9b82e1e",
+      "date": "2026-08-24",
+      "subject": "feat: publish SZSE cancel lag history",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-08-24.md",
+        "content/daily/2026-08-24.show.html",
+        "design-demos/2026-08-24-cancel-lag-szse-history/design-spec.md",
+        "design-demos/2026-08-24-cancel-lag-szse-history/direction-approved.md",
+        "design-demos/2026-08-24-cancel-lag-szse-history/research-template.html",
+        "design-demos/2026-08-24-cancel-lag-szse-history/screenshots/desktop/daily-heatmap.png",
+        "design-demos/2026-08-24-cancel-lag-szse-history/screenshots/desktop/raw-frequency.png",
+        "design-demos/2026-08-24-cancel-lag-szse-history/screenshots/desktop/site-cover.png",
+        "design-demos/2026-08-24-cancel-lag-szse-history/screenshots/mobile/actual-site-raw-frequency.png",
+        "design-demos/2026-08-24-cancel-lag-szse-history/validate_analysis.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "1f2216100c2b39f6a441b0800cd8743f93ff125a",
+      "date": "2026-08-24",
+      "subject": "docs: finalize SZSE history design record",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "design-demos/2026-08-24-cancel-lag-szse-history/design-spec.md",
+        "design-demos/2026-08-24-cancel-lag-szse-history/direction-approved.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "39c503ded144a979b80ce60695bb41bf25475089",
+      "date": "2026-08-24",
+      "subject": "feat: extend cancel lag study to SZSE history",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_open5m_cancel_lag_szse_history.py",
+        "因子/algobench/configs/open5m_cancel_lag_szse_2024_2026q2_v1.yaml",
+        "因子/algobench/src/algobench/cancel_lag_distribution.py",
+        "因子/algobench/src/algobench/cancel_lag_fast.py",
+        "因子/algobench/tests/test_cancel_lag_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1483d236a152f86243318f2620617126f274cf69",
+      "date": "2026-08-24",
+      "subject": "ops: add guarded SZSE history launcher",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/launch_open5m_cancel_lag_szse_history.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7805c401fa5e14d7fc56db84db9c33a0082644cf",
+      "date": "2026-08-24",
+      "subject": "feat: publish SZSE cancel lag history analysis",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cancel-phase",
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_cancel_lag_szse_history_result.py",
+        "scripts/render_open5m_cancel_lag_szse_history_report.py",
+        "因子/algobench/tests/test_cancel_lag_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4db7018a0fbe62c1c33e892b1437f99ad0157013",
+      "date": "2026-08-24",
+      "subject": "perf: compact SZSE lag heatmap payload",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/render_open5m_cancel_lag_szse_history_report.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a79c385198b41e487709298e681bb045f4e28828",
+      "date": "2026-08-24",
+      "subject": "docs: align SZSE heatmap labels",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/render_open5m_cancel_lag_szse_history_report.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f3efd3866e660e7abb076ba4fbe9ab621926168f",
+      "date": "2026-08-24",
+      "subject": "test: freeze SZSE heatmap aggregation",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_cancel_lag_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3870054bd1a41b324c3539154faa23ea6deafcd3",
+      "date": "2026-08-24",
+      "subject": "fix: bound SZSE peak evidence to ten seconds",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/render_open5m_cancel_lag_szse_history_report.py",
+        "因子/algobench/tests/test_cancel_lag_szse_history.py"
+      ]
+    }
+  ]
+}

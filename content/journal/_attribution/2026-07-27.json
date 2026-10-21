@@ -1,0 +1,636 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-27",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8d64da9df5353c7725b6f8b1171a319eb7764db5",
+      "date": "2026-07-27",
+      "subject": "缩限PLAN 26.7.27 14:53",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/2026-07-27-开盘前三分钟连续评分可行性重构实施计划.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "38c8e306bae61bff964755ada3390037f76d7b60",
+      "date": "2026-07-27",
+      "subject": "test: freeze open3m feasibility study contract",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/factor_preregister_2026q2_intraday_feasibility_v2.yaml",
+        "scripts/formal_study_control.py",
+        "因子/algobench/configs/formal_logic_intraday_feasibility_2026q2_v2.yaml",
+        "因子/algobench/configs/formal_parameter_semantics_intraday_2026q2_v2.yaml",
+        "因子/algobench/src/algobench/formal_parameter_semantics.py",
+        "因子/algobench/tests/test_formal_parameter_semantics.py",
+        "因子/algobench/tests/test_intraday_continuation_contract.py",
+        "因子/algobench/tests/test_run_2026q2_logic_study.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "08f3fae2522789229c45f9021fb2bfe84437bd71",
+      "date": "2026-07-27",
+      "subject": "feat: define causal candidate gate semantics",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "gates",
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_candidate_gates.py",
+        "因子/algobench/src/algobench/formal_primitives.py",
+        "因子/algobench/tests/test_formal_candidate_gates.py",
+        "因子/algobench/tests/test_formal_primitives.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0914c49fcc6fb9d3a7e41411f5ea93aa3fd5b2c2",
+      "date": "2026-07-27",
+      "subject": "feat: enforce open3m candidate window defaults",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_formal_panel.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_pair_stream.py",
+        "因子/algobench/tests/test_formal_pairing.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py",
+        "因子/algobench/tests/test_run_formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b02728752221b2307d4ec016b752568be23a81be",
+      "date": "2026-07-27",
+      "subject": "feat: gate pair candidates before expensive transforms",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_lifecycle.py",
+        "因子/algobench/src/algobench/formal_pair_execution.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/_formal_pairing_reference.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_pair_execution.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_stream.py",
+        "因子/algobench/tests/test_formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2b072a73825acdc7653b88c3828a537c4a982010",
+      "date": "2026-07-27",
+      "subject": "feat: score gated edges with dual quantity and price lanes",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e860f122326e28062e53b3d9ade3e95ade214a19",
+      "date": "2026-07-27",
+      "subject": "feat: restrict market response to one second before action",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ce721e1d16066a395049939b9e65ba3532806fb8",
+      "date": "2026-07-27",
+      "subject": "refactor: remove placebo artifacts from formal research path",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_formal_artifact_writes.py",
+        "scripts/build_nonrandom_placebo.py",
+        "scripts/compare_formal_window_outputs.py",
+        "scripts/prepare_intraday_response_acceptance_runtime.py",
+        "scripts/run_formal_response_canary.sh",
+        "scripts/run_formal_response_single_day_acceptance.sh",
+        "scripts/step7a_formal.sh",
+        "scripts/validate_formal_response_single_day_acceptance.py",
+        "因子/algobench/src/algobench/formal_artifact_graph.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_derived_fragments.py",
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d74aff477f45a90bfbb4d3e69bc763f72022b684",
+      "date": "2026-07-27",
+      "subject": "refactor: remove placebo factors from intraday inventory",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/factor_preregister.yaml",
+        "PLAN/factor_preregister_2026q2_intraday_feasibility_v2.yaml",
+        "scripts/validate_preregister.py",
+        "因子/algobench/research/factor_lab.py",
+        "因子/algobench/src/algobench/formal_preregister_loader.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_factor_lab_formal9.py",
+        "因子/algobench/tests/test_formal_scorers.py",
+        "因子/algobench/tests/test_validate_preregister.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0cdf182e995e4599abac3ea675f7321473733e82",
+      "date": "2026-07-27",
+      "subject": "feat: calibrate candidate gates without labels or placebo",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "gates",
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_candidate_gates.py",
+        "因子/algobench/tests/test_calibrate_candidate_gates.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3ae27acd8d4e04ccb1fa024cda5d29909d6622d6",
+      "date": "2026-07-27",
+      "subject": "refactor: freeze continuous scales from gated observed pairs",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/calibrate_kernel_scales.py",
+        "scripts/freeze_intraday_feasibility_parameters.py",
+        "因子/algobench/configs/formal_parameter_semantics_intraday_2026q2_v2.yaml",
+        "因子/algobench/src/algobench/formal_calibration_sufficient.py",
+        "因子/algobench/tests/test_calibrate_kernel_scales.py",
+        "因子/algobench/tests/test_freeze_intraday_feasibility_parameters.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8fd02c7c81ad4e71a19b45a053fd35d77bea5af9",
+      "date": "2026-07-27",
+      "subject": "feat: wire gated open3m study through formal runner",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/factor_preregister_2026q2_intraday.yaml",
+        "PLAN/factor_preregister_2026q2_logic.yaml",
+        "scripts/freeze_intraday_feasibility_parameters.py",
+        "scripts/run_formal_panel.py",
+        "因子/algobench/configs/formal_logic_intraday_feasibility_2026q2_v2.yaml",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_evaluation_specs.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_study.py",
+        "因子/algobench/tests/fixtures/formal_open1h_equivalence_fixture_v1.json",
+        "因子/algobench/tests/test_formal_e2e_2x2.py",
+        "因子/algobench/tests/test_formal_evaluation_specs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6bac9c2ace096f58b480b2895ee2578f9aedee48",
+      "date": "2026-07-27",
+      "subject": "test: verify gated intraday feasibility pipeline",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/compare_formal_window_outputs.py",
+        "scripts/run_2026q2_intraday_continuation.sh",
+        "scripts/validate_formal_response_single_day_acceptance.py",
+        "scripts/validate_intraday_study_outputs.py",
+        "scripts/validate_preregister.py",
+        "因子/algobench/src/algobench/formal_preregister_loader.py",
+        "因子/algobench/tests/conftest.py",
+        "因子/algobench/tests/test_build_formal_notebooks.py",
+        "因子/algobench/tests/test_build_hist_baselines.py",
+        "因子/algobench/tests/test_build_hist_observations.py",
+        "因子/algobench/tests/test_compare_formal_window_outputs.py",
+        "因子/algobench/tests/test_evaluate_formal_factors.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f7bf8188aa85e2d8220132330b60e2769c8140e5",
+      "date": "2026-07-27",
+      "subject": "test: add guarded real-data open3m canary",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_intraday_candidate_gate_canary.py",
+        "因子/algobench/tests/test_validate_intraday_candidate_gate_canary.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb88773747af18c1aea1db7f2866c59cfcf7d39a",
+      "date": "2026-07-27",
+      "subject": "fix: keep guard sentinel state on hot scratch",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/render_intraday_feasibility_launcher.py",
+        "scripts/run_guarded.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_launcher.py",
+        "因子/algobench/tests/test_run_guarded.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0fc7ddb7b6124e5ff0c960c544a36f72af15d3d6",
+      "date": "2026-07-27",
+      "subject": "fix: bound heavy-stock canary evidence",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_intraday_candidate_gate_canary.py",
+        "因子/algobench/tests/test_validate_intraday_candidate_gate_canary.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "13ca36b40b30099a9e87c55c9f06f50b064ff80d",
+      "date": "2026-07-27",
+      "subject": "fix: derive canary pair delta from timestamps",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_intraday_candidate_gate_canary.py",
+        "因子/algobench/tests/test_validate_intraday_candidate_gate_canary.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "25551525fecc39780e06a3bae47b99973ca9445a",
+      "date": "2026-07-27",
+      "subject": "fix: resolve committed canary generation manifests",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_intraday_candidate_gate_canary.py",
+        "因子/algobench/tests/test_validate_intraday_candidate_gate_canary.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6d8e956e1dbac7a445c3eb3386f063028dc3aa2d",
+      "date": "2026-07-27",
+      "subject": "test: report guarded full-day feasibility performance",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_guarded.py",
+        "scripts/run_intraday_feasibility_server_task.sh",
+        "scripts/summarize_intraday_feasibility_performance.py",
+        "因子/algobench/src/algobench/formal_calibration_sufficient.py",
+        "因子/algobench/src/algobench/formal_candidate_gate_calibration.py",
+        "因子/algobench/src/algobench/formal_derived_fragments.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_candidate_gate_calibration.py",
+        "因子/algobench/tests/test_formal_day_buckets.py",
+        "因子/algobench/tests/test_formal_panel_runner.py",
+        "因子/algobench/tests/test_run_guarded.py",
+        "因子/algobench/tests/test_summarize_intraday_feasibility_performance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "17a7c5ea02a73e2b7414b7812f0b306e1a0c8337",
+      "date": "2026-07-27",
+      "subject": "fix: preserve server wrapper validation contract",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_intraday_feasibility_server_task.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d85b161279f7938769cb15d7e792e4f6fc89e362",
+      "date": "2026-07-27",
+      "subject": "fix: reconcile calibration evidence and scheduler accounting",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/build_intraday_feasibility_result.py",
+        "scripts/render_intraday_feasibility_launcher.py",
+        "scripts/run_guarded.py",
+        "scripts/summarize_intraday_feasibility_performance.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_build_intraday_feasibility_result.py",
+        "因子/algobench/tests/test_formal_panel_runner.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_launcher.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ccbe0b90827d79b61a2bdf2d3cd6010b672a0bf7",
+      "date": "2026-07-27",
+      "subject": "fix: close intraday feasibility evidence gaps",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_feasibility_result.py",
+        "scripts/render_intraday_feasibility_launcher.py",
+        "scripts/run_intraday_feasibility_server_task.sh",
+        "因子/algobench/src/algobench/formal_parameter_semantics.py",
+        "因子/algobench/src/algobench/formal_study.py",
+        "因子/algobench/tests/test_build_intraday_feasibility_result.py",
+        "因子/algobench/tests/test_formal_parameter_semantics.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_launcher.py",
+        "因子/algobench/tests/test_run_intraday_feasibility_server_task.py"
+      ]
+    }
+  ]
+}

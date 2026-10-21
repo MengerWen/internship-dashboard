@@ -1,0 +1,535 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-30",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "eed31e290d997ccd947027d4b02d4c2d5c4904ae",
+      "date": "2026-07-30",
+      "subject": "26.7.30 12:59",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/daily/2026-07-22.md",
+        "content/daily/2026-07-29.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41036155bc06506b37aee16f12fe21bb0b04277d",
+      "date": "2026-07-30",
+      "subject": "fix: ignore market order price payloads",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_chain_scorers.py",
+        "因子/algobench/tests/test_formal_pairing_columnar.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a429f9f99b2e5a1475ea39d9529f64003461b423",
+      "date": "2026-07-30",
+      "subject": "config: refresh fixed-policy kernel binding",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/configs/formal_logic_intraday_feasibility_2026q2_v4.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ccf42a23fcb117e8446b8626c2dad4c7f40c4476",
+      "date": "2026-07-30",
+      "subject": "feat: audit intraday resume source artifacts",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_resume_source_evidence.py",
+        "因子/algobench/tests/test_build_intraday_resume_source_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "729d5c4c4f24ed44824bb598ba3b74da4452fd17",
+      "date": "2026-07-30",
+      "subject": "feat: build fail-closed intraday resume results",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_resume_result.py",
+        "因子/algobench/tests/test_build_intraday_resume_result.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7199d23678d523ffd37644b33584eea49225cd3b",
+      "date": "2026-07-30",
+      "subject": "feat: resume failed intraday evaluation panels",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_intraday_feasibility_resume_server_task.sh",
+        "因子/algobench/tests/test_run_intraday_feasibility_resume_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "90002c19268253ad8d006ff35fc9765dd5d17828",
+      "date": "2026-07-30",
+      "subject": "feat: gate intraday evaluation resume readiness",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_resume_readiness.py",
+        "因子/algobench/tests/test_build_intraday_resume_readiness.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "339fc893529f9f99b6e257ca8829a0433b997a5a",
+      "date": "2026-07-30",
+      "subject": "feat: render guarded intraday resume launchers",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/render_intraday_feasibility_resume_launcher.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_resume_launcher.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "979d16ce9fb55d24fd3535c6898744ea65ff3595",
+      "date": "2026-07-30",
+      "subject": "feat: publish resumed intraday notebooks",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_resume_result.py",
+        "scripts/render_intraday_feasibility_resume_launcher.py",
+        "scripts/run_intraday_feasibility_resume_server_task.sh",
+        "因子/algobench/tests/test_build_intraday_resume_result.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_resume_launcher.py",
+        "因子/algobench/tests/test_run_intraday_feasibility_resume_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9d29f9b2eb84dda8cb148ae066d29d4aeb203879",
+      "date": "2026-07-30",
+      "subject": "fix: resume notebook publication from validated factors",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "scripts/render_intraday_feasibility_resume_launcher.py",
+        "scripts/run_intraday_feasibility_resume_server_task.sh",
+        "因子/algobench/tests/test_formal_study_control.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_resume_launcher.py",
+        "因子/algobench/tests/test_run_intraday_feasibility_resume_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fe7f13bab6e7e64cdd9b1854b5beff5bdeb42b6a",
+      "date": "2026-07-30",
+      "subject": "fix: preserve canonical panel evidence across resumes",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_resume_result.py",
+        "因子/algobench/tests/test_build_intraday_resume_result.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dcaa75b18b9db62c98541d7f009b25904d42961b",
+      "date": "2026-07-30",
+      "subject": "fix: publish notebooks safely across filesystems",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_formal_notebooks.py",
+        "因子/algobench/tests/test_build_formal_notebooks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "096e9662a57393440fad31b96cee54ed4505587b",
+      "date": "2026-07-30",
+      "subject": "fix: bind real resume guards and control provenance",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-07-30-Doris恢复后Xq10正式全因子旧失败根续跑与证据验收实施计划.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1737ddeb35b56a32ae54fcc67a028c2d5cd016a4",
+      "date": "2026-07-30",
+      "subject": "test: model local notebook filesystems on Linux",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/tests/test_build_formal_notebooks.py",
+        "因子/algobench/tests/test_formal_resume_stage_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9f672282e8d1ed647db791431ae7f93dcb2153fc",
+      "date": "2026-07-30",
+      "subject": "fix: validate formal resume inventory provenance",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_intraday_resume_result.py",
+        "scripts/formal_study_control.py",
+        "scripts/run_intraday_feasibility_resume_server_task.sh",
+        "因子/algobench/tests/test_build_intraday_resume_result.py",
+        "因子/algobench/tests/test_formal_resume_stage_evidence.py",
+        "因子/algobench/tests/test_run_intraday_feasibility_resume_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "560958402a9e4df7c915473ac50a875efd02d730",
+      "date": "2026-07-30",
+      "subject": "fix: verify observation membership file identity",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_intraday_feasibility_resume_server_task.sh",
+        "因子/algobench/tests/test_run_intraday_feasibility_resume_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "42047dbf66ea7e0a2c737e3faf4cd995664584cd",
+      "date": "2026-07-30",
+      "subject": "fix: bind validator panel path compatibility",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_resume_result.py",
+        "scripts/formal_study_control.py",
+        "scripts/render_intraday_feasibility_resume_launcher.py",
+        "因子/algobench/tests/test_build_intraday_resume_result.py",
+        "因子/algobench/tests/test_formal_resume_stage_evidence.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_resume_launcher.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e4555ee613431e09e6656eae4d438c93a1f6e81e",
+      "date": "2026-07-30",
+      "subject": "fix: verify imported historical bucket evidence",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "因子/algobench/tests/test_formal_study_control.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bfa916fd8c532bdfaf1b38d65d269a54fe2346b5",
+      "date": "2026-07-30",
+      "subject": "fix: resolve feasibility validation evidence",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/formal_study_control.py",
+        "因子/algobench/tests/test_formal_study_control.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bed5da052ce2e3835f436259ffe8ebd4e3a4d7f3",
+      "date": "2026-07-30",
+      "subject": "feat: plot formal bins by factor value",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/research/factor_lab.py",
+        "因子/algobench/tests/test_factor_lab_formal9.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8d1f156be817d917dd54e4dfef719a55a755fb45",
+      "date": "2026-07-30",
+      "subject": "feat: extend formal intraday evaluation interval",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/audit_intraday_interval_completeness.py",
+        "scripts/build_intraday_interval_contract.py",
+        "scripts/build_intraday_interval_panel_manifest.py",
+        "scripts/build_intraday_interval_report.py",
+        "scripts/build_intraday_interval_result.py",
+        "scripts/build_intraday_interval_stage_evidence.py",
+        "scripts/evaluate_formal_factors.py",
+        "scripts/formal_study_control.py",
+        "scripts/import_intraday_interval_panel_seed.py",
+        "scripts/intraday_interval_contract.py",
+        "scripts/run_formal_panel.py",
+        "scripts/run_intraday_interval_extension_server_task.sh"
+      ]
+    }
+  ]
+}

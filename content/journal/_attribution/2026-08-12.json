@@ -1,0 +1,1783 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-12",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "54002d358a702ad69a41ffa0c7d55c1331194966",
+      "date": "2026-08-12",
+      "subject": "fix: implement guarded intraday ML execution",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [
+        "ml-330"
+      ],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-12-Open5m-ML-stop_failed根因与修复审计.md",
+        "PLAN/evidence/open5m_ml_implementation/task_13_repair_1/STEP_REVIEW.json",
+        "PLAN/evidence/open5m_ml_implementation/task_13_repair_1/tests.md",
+        "scripts/build_intraday_ml_attribution_specs.py",
+        "scripts/build_intraday_ml_dataset.py",
+        "scripts/build_intraday_ml_pbo.py",
+        "scripts/build_intraday_ml_result.py",
+        "scripts/evaluate_intraday_ml_final_test.py",
+        "scripts/freeze_intraday_ml_design.py",
+        "scripts/generate_intraday_ml_final_predictions.py",
+        "scripts/render_intraday_ml_launcher.py",
+        "scripts/run_intraday_ml_development.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8f2ee1e5eca9320e50ed8233266c7fb7e53ba835",
+      "date": "2026-08-12",
+      "subject": "fix: make all-model smoke compatible with frozen boosters",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-12-Open5m-ML-stop_failed根因与修复审计.md",
+        "scripts/smoke_intraday_ml_models.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7b22ca3e9d948760c9438693c4fc576bafcf535d",
+      "date": "2026-08-12",
+      "subject": "build: unify server Python runtime",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-12-项目统一Python运行环境与依赖闭包审计.md",
+        "requirements/intraday-ml-py314.in",
+        "因子/algobench/configs/intraday_ml_stage_contracts_v1.yaml",
+        "因子/algobench/src/algobench/ml/orchestration.py",
+        "因子/algobench/tests/test_intraday_ml_orchestration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5895183724cd30130876f4e0174839b229c593cd",
+      "date": "2026-08-12",
+      "subject": "docs: correct unified runtime location",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-12-项目统一Python运行环境与依赖闭包审计.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2083754cca5d90fedc9ec82a471b56e99201cc20",
+      "date": "2026-08-12",
+      "subject": "fix: keep optional AkShare outside shared runtime",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-12-项目统一Python运行环境与依赖闭包审计.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "073084c4d16acf34ddd8805508c2d98674ed635a",
+      "date": "2026-08-12",
+      "subject": "fix: install shared runtime without wheel cache",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "多模型执行阶段的资源/环境支撑；公共守护器没有因此成为独立研究目标",
+      "context_rule": "ml-runtime-support",
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/install-server-environment.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6bcbbdb6bed567c0770d381d7c8400d5f511180",
+      "date": "2026-08-12",
+      "subject": "perf: parallelize shared runtime installation with uv",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-12-项目统一Python运行环境与依赖闭包审计.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a61f5186f751309692fb9bdd91db40e07f3758a4",
+      "date": "2026-08-12",
+      "subject": "build: use one hdd-store Python environment",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-12-项目统一Python运行环境与依赖闭包审计.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76b873bbc05e0557156d8815bbe77d24cdb38b0a",
+      "date": "2026-08-12",
+      "subject": "docs(ml): freeze CUDA backend contract",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+        "PLAN/2026-08-12-项目统一Python运行环境与依赖闭包审计.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dd9899b392ad6988d5f4d911f41dedfd9929c35a",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record CUDA plan review",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/gpu_plan_revision_1/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/gpu_plan_revision_1/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e901db39d965eef1e671ad571da45b393ba44a8d",
+      "date": "2026-08-12",
+      "subject": "perf(ml): add server compute cost benchmark",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0c85b3f02ddd1dcc09dd13dd7c201eddf421cad9",
+      "date": "2026-08-12",
+      "subject": "fix(ml): resolve benchmark registry contract",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "55e62c970433c8b87f2f5a3f30f30a43da09460e",
+      "date": "2026-08-12",
+      "subject": "fix(ml): benchmark ordered candidate quantiles",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e15e14fe474c2112460df2e8607992be0a626d6b",
+      "date": "2026-08-12",
+      "subject": "fix(ml): benchmark the predictive 988-group scope",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3be0496d248a74b26cc9c4cd0314c9c1f67bb354",
+      "date": "2026-08-12",
+      "subject": "fix(ml): retain benchmark contract failures",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a4fa96bb2b3a4dac6c816fbf4e3304eb521f1bec",
+      "date": "2026-08-12",
+      "subject": "fix(ml): import benchmark contract failure type",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a7e57c2bd4cd5b3e013f1fc1b1823cdbd68de736",
+      "date": "2026-08-12",
+      "subject": "perf(ml): parallelize fixed quick benchmark",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b22c80d46225dfd4cf67be39adfc8c67e03ef10f",
+      "date": "2026-08-12",
+      "subject": "fix(ml): require viable quick-benchmark representatives",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py",
+        "因子/algobench/tests/test_intraday_ml_compute_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "77f9b17137c23b6e797c3614e391d83191014331",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record server compute cost baseline",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/cost_baseline_1/ATTEMPT7_STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/cost_baseline_1/BENCHMARK_RESULTS.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/cost_baseline_1/BENCHMARK_SUBSET_MANIFEST.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/cost_baseline_1/BENCHMARK_TASKS.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/cost_baseline_1/COST_MODEL.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/cost_baseline_1/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/cost_baseline_1/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9038dc4fdf8f6026ae00cc84b144ba087503f574",
+      "date": "2026-08-12",
+      "subject": "perf(ml): deduplicate decay weight computation",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/weights.py",
+        "因子/algobench/tests/test_intraday_ml_compute_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ecb1c04e51f5952551b75a7949be364575780667",
+      "date": "2026-08-12",
+      "subject": "perf(ml): encode decay dates as ordinals",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/weights.py",
+        "因子/algobench/tests/test_intraday_ml_compute_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "29b1df80cf82aebee3f08b116b4ebfe1764c2f7a",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record decay weight reuse evidence",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/decay_weights_2_1/PERFORMANCE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/decay_weights_2_1/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/decay_weights_2_1/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "199a8037e62ad5307608ec1b73bc56d7eb44a10e",
+      "date": "2026-08-12",
+      "subject": "perf(ml): stop AE monitor at patience",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/autoencoders.py",
+        "因子/algobench/tests/test_intraday_ml_ae_compute_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e09d8704b1d6d4a0f00c7291966af9684ab03c4c",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record AE early-stop evidence",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/ae_early_stop_2_2/PERFORMANCE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/ae_early_stop_2_2/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/ae_early_stop_2_2/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1a68b7275629c7ce804dbb85db82ec91377d59e2",
+      "date": "2026-08-12",
+      "subject": "perf(ml): reuse AE representations by fit context",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/model_adapters.py",
+        "因子/algobench/tests/test_intraday_ml_ae_representation_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "906cbb187d50e199e5f0a923a6d010463a3ddf2a",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record AE representation cache evidence",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/ae_cache_2_3/PERFORMANCE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/ae_cache_2_3/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/ae_cache_2_3/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9db61f7e4a2de8b728c7153fc4c05c95792743bb",
+      "date": "2026-08-12",
+      "subject": "perf(ml): reuse weighted PCA by fit context",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/model_adapters.py",
+        "因子/algobench/src/algobench/ml/representations.py",
+        "因子/algobench/tests/test_intraday_ml_pca_representation_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d1c6434fb97c8ce9e5f0acf1266ff09bbcf844a8",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record weighted PCA reuse evidence",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/pca_cache_2_4/PERFORMANCE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pca_cache_2_4/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pca_cache_2_4/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "48c38372525a565111cc9d9472cdaa058794af0d",
+      "date": "2026-08-12",
+      "subject": "perf(ml): reuse preallocated P-spline designs",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/gam.py",
+        "因子/algobench/src/algobench/ml/model_adapters.py",
+        "因子/algobench/tests/test_intraday_ml_pspline_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "03cb7bae7f924d60cbc184398de08b31049cc358",
+      "date": "2026-08-12",
+      "subject": "fix(ml): preserve spline basis reduction layout",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/gam.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5094a9de1ed7a9cefad35f8c1927e93efb4cc78a",
+      "date": "2026-08-12",
+      "subject": "fix(ml): preserve spline design BLAS layout",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/gam.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2ac1ee1f9927c02e39b4473fb73f4fccfacf4de1",
+      "date": "2026-08-12",
+      "subject": "fix(ml): bound P-spline design cache residency",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/model_adapters.py",
+        "因子/algobench/tests/test_intraday_ml_pspline_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1cb24bd1edf54f3a2d5b3ca1a93007f9156249b0",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record P-spline reuse and chunk review",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_design_2_5/CHUNK_NUMERICS.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_design_2_5/CHUNK_STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_design_2_5/DESIGN_REUSE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_design_2_5/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_design_2_5/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7677ffaed0c0eab96752b24ce5fa3f3bf6c5ca22",
+      "date": "2026-08-12",
+      "subject": "perf(ml): cache two recent fold arrays",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/tests/test_intraday_ml_compute_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b564ee25e4eac19baf9060ee1bff0014738a08ac",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record fold-array cache evidence",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/fit_array_cache_2_6/PERFORMANCE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/fit_array_cache_2_6/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/fit_array_cache_2_6/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "23f15ba5c95e236bfe2cca82d6fd9811fc5fcfe1",
+      "date": "2026-08-12",
+      "subject": "perf(ml): reuse advanced sparse precomputes",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/linear_models.py",
+        "因子/algobench/src/algobench/ml/model_adapters.py",
+        "因子/algobench/tests/test_intraday_ml_advanced_sparse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7a67b9e99988bab07795859a2cc997408e7a8da3",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record sparse precompute evidence",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/sparse_precompute_2_7/PERFORMANCE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/sparse_precompute_2_7/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/sparse_precompute_2_7/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ffb8f1c411932882e15b1acc4f821ae2e42caa7c",
+      "date": "2026-08-12",
+      "subject": "perf(ml): activate bounded P-spline Gram",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+        "scripts/run_intraday_ml_development.py",
+        "因子/algobench/configs/intraday_ml_numerical_algorithms_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/tests/test_intraday_ml_contract.py",
+        "因子/algobench/tests/test_intraday_ml_pspline_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6d1fe1f10535a9c9cf70883b0386148f5230b0ee",
+      "date": "2026-08-12",
+      "subject": "bench(ml): measure chunked P-spline resources",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_pspline_chunk.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "74959781d4af7e3b429dc1547f37c6b2a2ab0538",
+      "date": "2026-08-12",
+      "subject": "fix(bench): use distinct Development rows",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_pspline_chunk.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1c3fbf9926bc85e9529521f8549a46f145b3d170",
+      "date": "2026-08-12",
+      "subject": "fix(ml): preserve P-spline BLAS layout in chunks",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/gam.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f74fc16ca5b339a40f9f57c49eccf6915254cea6",
+      "date": "2026-08-12",
+      "subject": "fix(ml): stabilize P-spline linear systems",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+        "因子/algobench/configs/intraday_ml_numerical_algorithms_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/gam.py",
+        "因子/algobench/tests/test_intraday_ml_contract.py",
+        "因子/algobench/tests/test_intraday_ml_pspline_reuse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8085551ff22faed3d4d7e4b70797f8e3be598979",
+      "date": "2026-08-12",
+      "subject": "fix(ml): strengthen P-spline scale stabilization",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+        "因子/algobench/configs/intraday_ml_numerical_algorithms_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/gam.py",
+        "因子/algobench/tests/test_intraday_ml_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "658a26271cc8adecc5d20edf1c45cafd7881dc07",
+      "date": "2026-08-12",
+      "subject": "Revert \"fix(ml): strengthen P-spline scale stabilization\"",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+        "因子/algobench/configs/intraday_ml_numerical_algorithms_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/gam.py",
+        "因子/algobench/tests/test_intraday_ml_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "62e3bdc43d7e4ebca4045410f2b8a583c005b9cc",
+      "date": "2026-08-12",
+      "subject": "fix(ml): apply minimal P-spline jitter revision",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+        "因子/algobench/configs/intraday_ml_numerical_algorithms_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/gam.py",
+        "因子/algobench/tests/test_intraday_ml_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "eb2cd1d7799b23baea745b67a50b8d21d1e9bc34",
+      "date": "2026-08-12",
+      "subject": "fix(ml): cap P-spline condition amplification",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+        "因子/algobench/configs/intraday_ml_numerical_algorithms_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/gam.py",
+        "因子/algobench/tests/test_intraday_ml_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "77c8014b32bd052529fb33636913ba1558ae4850",
+      "date": "2026-08-12",
+      "subject": "docs(ml): record approved P-spline chunk evidence",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/ERROR_ANALYSIS.md",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/FULL_800K.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/FULL_800K_TIME.txt",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/NUMERICAL_EQUIVALENCE.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/NUMERICAL_JITTER_1E10.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/NUMERICAL_JITTER_1E8.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/NUMERICAL_UNSTABILIZED.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/pspline_chunk_2_5_3/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b4fc3f649d8f80ed7451f6fbd3837a6c872e05e",
+      "date": "2026-08-12",
+      "subject": "bench(ml): exercise context-level reuse caches",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9cb6e10242486534d860612e7a502573d42ff4c8",
+      "date": "2026-08-12",
+      "subject": "bench(ml): report post-reuse cost metrics",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_compute.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b4d9d1d04f3a7201a6f8e9deda0aa70dc00e038b",
+      "date": "2026-08-12",
+      "subject": "docs(ml): accept compute reuse batch",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/compute_reuse_batch_2/COST_MODEL.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/compute_reuse_batch_2/EQUIVALENCE_CLASSIFICATION.md",
+        "PLAN/evidence/intraday_ml_compute_configuration/compute_reuse_batch_2/OPTIMIZED_BENCHMARK.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/compute_reuse_batch_2/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/compute_reuse_batch_2/tests.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1e8a598e5d7a352b1628fb3d74424809d4442122",
+      "date": "2026-08-12",
+      "subject": "feat(ml): enforce runtime compute contract",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_intraday_ml_dataset.py",
+        "scripts/build_intraday_ml_pbo.py",
+        "scripts/build_intraday_ml_result.py",
+        "scripts/evaluate_intraday_ml_final_test.py",
+        "scripts/freeze_intraday_ml_design.py",
+        "scripts/generate_intraday_ml_final_predictions.py",
+        "scripts/run_intraday_ml_development.py",
+        "scripts/validate_intraday_ml_outputs.py",
+        "因子/algobench/configs/intraday_ml_stage_contracts_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/orchestration.py",
+        "因子/algobench/src/algobench/ml/stage_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ea4b6877c2fc5c08cc65bbdcc98cde29c2b1f1c5",
+      "date": "2026-08-12",
+      "subject": "fix(ml): preserve guard test compatibility",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/orchestration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fd8b35150b5f091044e08a8267944b15a740b44e",
+      "date": "2026-08-12",
+      "subject": "fix(guard): validate and record resource limits",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "多模型执行阶段的资源/环境支撑；公共守护器没有因此成为独立研究目标",
+      "context_rule": "ml-runtime-support",
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_guarded.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cac1effa0b78a5d4c89722420e35a0fc25549e7a",
+      "date": "2026-08-12",
+      "subject": "feat(ml): route predictive autoencoders to GPU",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/generate_intraday_ml_final_predictions.py",
+        "scripts/run_intraday_ml_development.py",
+        "因子/algobench/src/algobench/ml/autoencoders.py",
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/final_pipeline.py",
+        "因子/algobench/src/algobench/ml/model_adapters.py",
+        "因子/algobench/src/algobench/ml/orchestration.py",
+        "因子/algobench/src/algobench/ml/stage_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "88ec84afe6ed3339dfbcc5166132c3af130f3f34",
+      "date": "2026-08-12",
+      "subject": "feat(ml): report predictive task progress",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_intraday_ml_development.py",
+        "因子/algobench/src/algobench/ml/autoencoders.py",
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/stage_runtime.py",
+        "因子/algobench/tests/test_intraday_ml_autoencoders.py",
+        "因子/algobench/tests/test_intraday_ml_stage_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a048567d2ff5bad09728887df905e028d355e961",
+      "date": "2026-08-12",
+      "subject": "feat(ml): normalize runtime resource contract",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/intraday_ml_compute_configuration/runtime_progress_3_4/STEP_REVIEW.json",
+        "PLAN/evidence/intraday_ml_compute_configuration/runtime_progress_3_4/tests.md",
+        "因子/algobench/src/algobench/ml/stage_runtime.py",
+        "因子/algobench/tests/test_intraday_ml_stage_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b24245cb343b5b2498a4bb1684fade5b5a8798d3",
+      "date": "2026-08-12",
+      "subject": "bench(ml): add representative AE GPU calibration",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_ae_gpu.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5740dcd8d5fedd7c72482eaea0381f415b539702",
+      "date": "2026-08-12",
+      "subject": "fix(ml): use current CUDA device for memory stats",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_ae_gpu.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "68699ee1435752e0ee9e977624304ecf7210d707",
+      "date": "2026-08-12",
+      "subject": "perf(ml): eliminate CUDA DataLoader collation",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/autoencoders.py",
+        "因子/algobench/tests/test_intraday_ml_autoencoders.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d01fc67af0f063afd10024ca1b9ca223e32cda5f",
+      "date": "2026-08-12",
+      "subject": "perf(ml): avoid repeated deterministic backend setup",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/autoencoders.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "26fd0d1e81a5eb8312ccb5155a05fac8568d3c41",
+      "date": "2026-08-12",
+      "subject": "Revert \"perf(ml): avoid repeated deterministic backend setup\"",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/autoencoders.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fb5ed2ec974f4fc2fe96e6e20a4aeaa7e8fdc492",
+      "date": "2026-08-12",
+      "subject": "bench(ml): parameterize AE batch calibration",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_ae_gpu.py",
+        "因子/algobench/src/algobench/ml/autoencoders.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a1911b7542d6286287f7c59f7814f5ae72371307",
+      "date": "2026-08-12",
+      "subject": "feat(ml): freeze shared CPU GPU environment identity",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_intraday_ml_environment_manifest.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "67fed5161764c3b58ca8a678e5e27ea2ecf6966a",
+      "date": "2026-08-12",
+      "subject": "fix(ml): resolve inherited cgroup resource limits",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_intraday_ml_environment_manifest.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f6c9d22e0a5d8d1bb3385d44bf7b8def19574858",
+      "date": "2026-08-12",
+      "subject": "fix(ml): freeze locale and timezone in sandbox",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/orchestration.py",
+        "因子/algobench/tests/test_intraday_ml_orchestration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "58f3c9f0be181fc0a25b97a45a20c0e93da0c469",
+      "date": "2026-08-12",
+      "subject": "bench(ml): add process concurrency canary grid",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c363a141deaa4a1775ee4b244304354518089e15",
+      "date": "2026-08-12",
+      "subject": "fix(ml): use persistent process canary workers",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "97a32ff27f3b06c7d959f7fac8f6f057610cdb70",
+      "date": "2026-08-12",
+      "subject": "bench(ml): materialize scaled scheduler canary tasks",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5a20e657e370567e318385749561c076e744b5cd",
+      "date": "2026-08-12",
+      "subject": "fix(ml): synchronize CUDA calibration timing",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_ae_gpu.py",
+        "因子/algobench/src/algobench/ml/autoencoders.py",
+        "因子/algobench/src/algobench/ml/stage_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d00fdb1bdcaad3c43148cb9668304dcfc43d6fa8",
+      "date": "2026-08-12",
+      "subject": "feat(ml): implement three-token process scheduler",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/resource_scheduler.py",
+        "因子/algobench/tests/test_intraday_ml_resource_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "754ae82e271c84c749138b37f57be9ea43686853",
+      "date": "2026-08-12",
+      "subject": "refactor(ml): run canary through resource scheduler",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_scheduler.py"
+      ]
+    }
+  ]
+}

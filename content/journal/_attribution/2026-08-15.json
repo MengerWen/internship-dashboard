@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-15",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c16fe8f7f4d59736a6e45fb6613c231c303681ec",
+      "date": "2026-08-15",
+      "subject": "Calibrate intraday ML resource contract V2",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-08-15-ml-resource-contract-v2.md",
+        "scripts/benchmark_intraday_ml_mixed_scheduler.py",
+        "scripts/validate_intraday_ml_resource_plan.py",
+        "因子/algobench/configs/intraday_ml_stage_contracts_v1.yaml",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/execution_contracts.py",
+        "因子/algobench/src/algobench/ml/family_execution.py",
+        "因子/algobench/src/algobench/ml/gpu_execution.py",
+        "因子/algobench/src/algobench/ml/stage_runtime.py",
+        "因子/algobench/tests/test_intraday_ml_family_execution.py",
+        "因子/algobench/tests/test_intraday_ml_gpu_execution.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c4cb821a39d181a277d908ebfd64e159963c6dce",
+      "date": "2026-08-15",
+      "subject": "fix: isolate CPU-only AE from CUDA",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_intraday_ml_ae_gpu.py",
+        "因子/algobench/src/algobench/ml/stage_runtime.py",
+        "因子/algobench/tests/test_benchmark_intraday_ml_ae_gpu.py",
+        "因子/algobench/tests/test_intraday_ml_stage_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5c64964f88f592a6c15059608d39a1ba6bc553fd",
+      "date": "2026-08-15",
+      "subject": "feat(ml): add two-stage RF screening contract",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [
+        "ml-330"
+      ],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_intraday_ml_development.py",
+        "scripts/run_intraday_ml_rf_screening_canary.py",
+        "因子/algobench/configs/intraday_ml_candidate_tables_v2.yaml",
+        "因子/algobench/configs/intraday_ml_stage_contracts_v2.yaml",
+        "因子/algobench/src/algobench/ml/artifacts.py",
+        "因子/algobench/src/algobench/ml/contracts.py",
+        "因子/algobench/src/algobench/ml/development.py",
+        "因子/algobench/src/algobench/ml/freeze.py",
+        "因子/algobench/src/algobench/ml/model_adapters.py",
+        "因子/algobench/src/algobench/ml/orchestration.py",
+        "因子/algobench/src/algobench/ml/random_forest_benchmark.py",
+        "因子/algobench/src/algobench/ml/random_forest_canary.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "27a9713c6aae094133f300a86f8fdc6901ccf530",
+      "date": "2026-08-15",
+      "subject": "fix(ml): run RF canary on complete nested context",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_intraday_ml_rf_screening_canary.py",
+        "因子/algobench/src/algobench/ml/random_forest_canary.py",
+        "因子/algobench/tests/test_intraday_ml_rf_screening_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b68effb0486b04f7ce26e4bd106be9edd7fbc610",
+      "date": "2026-08-15",
+      "subject": "fix(ml): derive RF canary counts from frozen folds",
+      "status": "assigned",
+      "chains": [
+        "ml-exec"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "ml-exec",
+      "related_chains": [],
+      "shares": {
+        "ml-exec": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/ml/random_forest_canary.py",
+        "因子/algobench/tests/test_intraday_ml_rf_screening_contract.py"
+      ]
+    }
+  ]
+}

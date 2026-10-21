@@ -1,0 +1,1288 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-09",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "ca8cdfab0e5c2c6f1e356502d1d2d8fdbf82f3c0",
+      "date": "2026-09-09",
+      "subject": "Register September 7 briefing and publish its downloadable results",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/depth-match-2026-09-07/2026-09-07-browser-audit.json",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part01.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part02.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part03.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-report-build-audit.json",
+        "content/assets/depth-match-2026-09-07/evaluation/correlation.csv",
+        "content/assets/depth-match-2026-09-07/evaluation/coverage.csv",
+        "content/assets/depth-match-2026-09-07/evaluation/cross_sectional_correlation.csv",
+        "content/assets/depth-match-2026-09-07/evaluation/daily_ic.csv",
+        "content/assets/depth-match-2026-09-07/evaluation/daily_ic.parquet",
+        "content/assets/depth-match-2026-09-07/evaluation/decile_daily.csv",
+        "content/assets/depth-match-2026-09-07/evaluation/decile_spread.csv"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "2450b836a8df5f84bc1cf7b4dd9a5c6a7cdf73c1",
+      "date": "2026-09-09",
+      "subject": "Preserve canonical bytes for published result evidence",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/depth-match-2026-09-07/2026-09-07-browser-audit.json",
+        "content/assets/depth-match-2026-09-07/2026-09-07-report-build-audit.json",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_buy-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_buy-groups.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_buy-monthly.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_sell-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_sell-groups.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_sell-monthly.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_buy-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_buy-groups.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_buy-monthly.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_sell-daily.svg"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "5e0a8fcb0e2fb768382bcbd1f2a9f1c50293364d",
+      "date": "2026-09-09",
+      "subject": "feat: add total buy sell selection to cancellation phase report",
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "shares": {
+        "report-tags": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "tests/cancel-phase-report.spec.cjs",
+        "tests/test_cancel_phase_direction_report.py",
+        "tools/build_cancel_phase_report_20260906.py",
+        "tools/cancel_phase_dispersion.py",
+        "tools/fetch_cancel_phase_report_inputs.py",
+        "tools/monitor_cancel_phase_directions.py",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "614bd9cd6dc34719c8f629d8e59b307f71b05a64",
+      "date": "2026-09-09",
+      "subject": "feat: stage verified directional panels and preserve report rebuilds",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "tools/build_cancel_phase_report_20260906.py",
+        "tools/fetch_cancel_phase_direction_inputs.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "862b8cfd5bf9b6facfabf665ee411cdb9d630f11",
+      "date": "2026-09-09",
+      "subject": "fix: keep report monitoring resilient to transient SSH responses",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "tools/fetch_cancel_phase_direction_inputs.py",
+        "tools/monitor_cancel_phase_directions.py",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "0a56533ba4caa26a95c4df623e48392aff57dd08",
+      "date": "2026-09-09",
+      "subject": "fix: retry transient directional input inventory connections",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "tools/fetch_cancel_phase_direction_inputs.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "798a038bc14cf842603c9cb0936fd12f76ec7e94",
+      "date": "2026-09-09",
+      "subject": "fix: resolve complete guard records for direction monitoring",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "tools/monitor_cancel_phase_directions.py",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "3a11667dd66dd427f8c85b5a19aa5996b19eab05",
+      "date": "2026-09-09",
+      "subject": "feat: support single checks and ten-minute monitor intervals",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "tools/monitor_cancel_phase_directions.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "22b6ecdb6ac8eab9f2c749318ea03af4aed993a2",
+      "date": "2026-09-09",
+      "subject": "report: add complete buy and sell cancellation phase results",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/cancel-phase-2026-09-06/buy/F01-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F01-distribution.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F01-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F01-monthly.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F01-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F02-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F02-distribution.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F02-errorbars.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F02-monthly.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F02-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F03-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/buy/F03-distribution.webp"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "9f5bd14d973ed65c141fe2d42e9cab2c6e4a806a",
+      "date": "2026-09-09",
+      "subject": "feat: browse all cancellation directions with ranked factor hierarchy",
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "shares": {
+        "report-tags": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-09-06.html",
+        "content/daily/2026-09-06.show.html",
+        "docs/plans/2026-09-09-cancel-phase-all-directions-design.md",
+        "tests/cancel-phase-report.spec.cjs",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "698a74cc68dc6378f7ef61096950c13d9375a5cb",
+      "date": "2026-09-09",
+      "subject": "feat: select factor scopes and compare direction plots side by side",
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "shares": {
+        "report-tags": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/cancel-phase-2026-09-06/F01-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F02-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F03-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F04-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F05-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F06-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F07-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F08-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F09-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F10-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F11-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F12-daily.webp"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c0dc431893e95a0903242f639293405ef0512429",
+      "date": "2026-09-09",
+      "subject": "fix: typeset report equations with stacked fractions",
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "shares": {
+        "report-tags": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-09-06.html",
+        "content/daily/2026-09-06.show.html",
+        "docs/plans/2026-09-09-cancel-phase-all-directions-design.md",
+        "tests/cancel-phase-report.spec.cjs",
+        "tools/build_cancel_phase_report_20260906.py",
+        "tools/cancel_phase_math.py",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "dc1af6e46ef270cb2fd89b9ef4b13879a79e9485",
+      "date": "2026-09-09",
+      "subject": "feat: unify factor atlas with grouped and flat result sorting",
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "shares": {
+        "report-tags": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-09-06.html",
+        "content/daily/2026-09-06.show.html",
+        "docs/plans/2026-09-09-cancel-phase-all-directions-design.md",
+        "tests/cancel-phase-report.spec.cjs",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "3ed2dab66950a4605f6cf513e91441fbaf4ade60",
+      "date": "2026-09-09",
+      "subject": "feat: unify depth-match atlas and paired direction diagnostics",
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "shares": {
+        "report-tags": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/depth-match-2026-09-07/2026-09-07-browser-audit.json",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part01.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part02.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part03.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-report-build-audit.json",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_buy-daily.png",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_buy-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_sell-daily.png",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_sell-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_buy-daily.png",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_buy-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_sell-daily.png"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "7fbff494552b2abd13b104e2b1ec956be85d9a04",
+      "date": "2026-09-09",
+      "subject": "+html最后更新时间 26.9.9 19:23",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "build.py",
+        "site/js/daily.js"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bfc6aef10368350e78471dcd7d2412e0c9a7f068",
+      "date": "2026-09-09",
+      "subject": "控制F40归档页缓存驻留并保留已验证阶段复用",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-archive-cache-resume.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1493096525d15351fb21d36781539b08f9f61658",
+      "date": "2026-09-09",
+      "subject": "记录200日定标续算目录与归档核验证据",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "200日冻结定标的续算/归档记录，属于早期定标阶段；不能提前计为10月股票/市场状态分组定标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-archive-cache-resume.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6cbeb48adaf183658fe4a2eff564b2477f0ea83f",
+      "date": "2026-09-09",
+      "subject": "隔离F40阶段进程内存并允许显式设置定标并发",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-stage-memory-resume.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8acf702babda36155cf786ea6f5bbaacb2527507",
+      "date": "2026-09-09",
+      "subject": "记录F40一次匹配续算部署身份与资源配置",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-stage-memory-resume.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "43fb8581084683c596ba0a90160ee2c770c5488e",
+      "date": "2026-09-09",
+      "subject": "按独立买卖侧生成F40候选并紧凑回收精确匹配边",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "27e834ab81d9b0917edb6eb7d817877d5673ddd3",
+      "date": "2026-09-09",
+      "subject": "补充F40逐位差分与精确匹配续算身份",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a59896ddb5a87eb809e3d9f9e672cb7cf564e75a",
+      "date": "2026-09-09",
+      "subject": "保存R17输出存储写入故障与复制恢复条件",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-r17-storage-incident-evidence/filesystem-summary.json",
+        "reports/2026-09/2026-09-09-r17-storage-incident-evidence/snapshot.json",
+        "reports/2026-09/2026-09-09-r17-storage-incident.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41b7fc79bb51c262fba754061e173cccfae401e2",
+      "date": "2026-09-09",
+      "subject": "记录定标内存与存储阻塞诊断并暂停监控状态",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-calibration-blockers-SHA256SUMS",
+        "reports/2026-09/2026-09-09-calibration-blockers-analysis.md",
+        "reports/2026-09/2026-09-09-calibration-blockers-evidence.json",
+        "reports/2026-09/2026-09-09-r17-storage-incident.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0676d2ab92a41d4e1d7d946d5bc7294f5896e75e",
+      "date": "2026-09-09",
+      "subject": "记录清理后的定标恢复条件与重票验证决策",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-calibration-resumption-readiness.json",
+        "reports/2026-09/2026-09-09-calibration-resumption-readiness.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "63e21702470e4d088f44ec6e774bd3210b016744",
+      "date": "2026-09-09",
+      "subject": "feat: compute buy and sell cancellation phase panels with shared evaluation",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-09-cancel-phase-buy-sell-completion.md",
+        "scripts/run_open5m_cancel_phase_directions.py",
+        "因子/algobench/src/algobench/cancel_phase_factors.py",
+        "因子/algobench/src/algobench/cancel_phase_panel.py",
+        "因子/algobench/tests/test_cancel_phase_directions.py",
+        "因子/algobench/tests/test_run_open5m_cancel_phase_directions.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c6c3c104a9c525d8520ededa6c9145dfa67d66e1",
+      "date": "2026-09-09",
+      "subject": "perf: stream F40 candidates into exact sparse matching graphs",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_open5m_f40_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "09624996297387390d7ec3658e6fd6497ea59354",
+      "date": "2026-09-09",
+      "subject": "压缩F40分量内存并只读复用已验收定标成果",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "old-factor-bank",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_open5m_f40_matching.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/tests/test_f40_immutable_reuse.py",
+        "因子/algobench/tests/test_f40_streaming_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "90d1a3afd2b6fb753f2b77fa79b9151314e574eb",
+      "date": "2026-09-09",
+      "subject": "在释放F40内存后交接求解槽并记录资源验收",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-f40-streaming-memory-acceptance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7eb7ac5d2dbba2b2ee19627e9376ab890bbb8ba0",
+      "date": "2026-09-09",
+      "subject": "Bound calibration concurrency and release completed support arrays",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/tests/test_open5m_selected_date_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b086eab9d5be0b2158187168ebaab70ee089706f",
+      "date": "2026-09-09",
+      "subject": "Reduce exact support merge memory and release loaded file cache",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0557d5eed7797540700e83f829ba3d225fab29b5",
+      "date": "2026-09-09",
+      "subject": "Record repeated full-day F40 memory acceptance and immutable continuation",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-f40-streaming-memory-acceptance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3950a5a4abc61d464f642ce5e220f5c19a3d87ce",
+      "date": "2026-09-09",
+      "subject": "Initialize F40 workers with the active stage memory lock",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7c0a8854626d23f5dda1718bf104a7b30ba40d3b",
+      "date": "2026-09-09",
+      "subject": "report: verify and seal complete buy sell cancellation phase results",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-cancel-phase-buy-sell-completion.md",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/DIRECTION_RESULT.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/RUN_SEAL.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/TRANSFER_MANIFEST.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/_SUCCESS",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/comparison.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/evidence/SHA256SUMS",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/evidence/acceptance.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/evidence/guard.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/final-server-state.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/guard_manifest.json",
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/launcher.pid"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "74252f47d0d1ccbd2ff11a7d7c666ce17daee82f",
+      "date": "2026-09-09",
+      "subject": "report: retain launcher log with sealed execution evidence",
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "cancel-phase": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/evidence/2026-09-09-cancel-phase-buy-sell/launcher.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "074c7f2ae031a09d19e9ce47e4a5b77b28c7f86b",
+      "date": "2026-09-09",
+      "subject": "Implement complete descriptive C3.3 single-day prescreen",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/initial-workspace.json",
+        "scripts/launch_c33_prescreen.sh",
+        "scripts/run_c33_prescreen.py",
+        "scripts/seal_c33_run.py",
+        "scripts/update_c33_report.py",
+        "因子/algobench/configs/c33_cross_stock_prescreen_v1.yaml",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_contract.py",
+        "因子/algobench/src/algobench/c33_state.py",
+        "因子/algobench/tests/test_c33_analysis.py",
+        "因子/algobench/tests/test_c33_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cffb8e02acebf2dca18df5d992cf0ea2c435b2ab",
+      "date": "2026-09-09",
+      "subject": "Include fresh JIT compilation in each C3.3 business run",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_c33_prescreen.py",
+        "scripts/seal_c33_run.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b28fc9356da6f2498175325f3dc8cba6383df6c",
+      "date": "2026-09-09",
+      "subject": "Use native fused reductions and compact state for complete C3.3 prescreen",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r01.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/server-prelaunch.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/stop-r01.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/terminal-r01.txt",
+        "reports/2026-09/2026-09-09-c33-performance-design.md",
+        "scripts/run_c33_prescreen.py",
+        "scripts/seal_c33_run.py",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_contract.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f3b63beed2af72bc7e2eeee5c95190f8400e6925",
+      "date": "2026-09-09",
+      "subject": "Reduce exact C3.3 windows and stream verified derived tables",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [
+        "storage-cleanup",
+        "open5m"
+      ],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r02.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r02.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/terminal-r02.txt",
+        "reports/2026-09/2026-09-09-c33-performance-design.md",
+        "scripts/launch_c33_prescreen.sh",
+        "scripts/reconcile_c33_failure.py",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_contract.py",
+        "因子/algobench/src/algobench/c33_prepared.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "900943a771d4b5b4f6eda3d403367c8228697c49",
+      "date": "2026-09-09",
+      "subject": "Normalize shared prescreen input module formatting",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/prescreen_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c21f1dd632b431567b75aaf29d59197aebf125c1",
+      "date": "2026-09-09",
+      "subject": "Bound C33 relation output and share prescreen input layouts",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r03.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r03.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/terminal-r03.txt",
+        "reports/2026-09/2026-09-09-c33-performance-design.md",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_continuous_stream.py",
+        "因子/algobench/src/algobench/c33_contract.py",
+        "因子/algobench/src/algobench/c33_prepared.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py",
+        "因子/algobench/src/algobench/c33_quantity_windows.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "68b3ddbfc09d61faac986b4acd7582debecc7b58",
+      "date": "2026-09-09",
+      "subject": "Pack exact recurrence histograms and reuse checkpoint-only replay",
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [
+        "cross-stock-sync"
+      ],
+      "phase_mapping": {
+        "replay": "old-factor-bank"
+      },
+      "shares": {
+        "old-factor-bank": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/events.py",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r04.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r04.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/stop-r04.txt",
+        "reports/2026-09/2026-09-09-c33-performance-design.md",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_contract.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py",
+        "因子/algobench/src/algobench/c33_table_sink.py",
+        "因子/algobench/src/algobench/c33_wave_accel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c9d63cbfb935cee9625a1f16861125ba3a25cb0",
+      "date": "2026-09-09",
+      "subject": "perf(c33): share order statistics and parallelize verified table shards",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r05.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r05.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/stop-r05.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/terminal-r04.txt",
+        "reports/2026-09/2026-09-09-c33-performance-design.md",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py",
+        "因子/algobench/src/algobench/c33_quantity_states.py",
+        "因子/algobench/src/algobench/c33_quantity_windows.py",
+        "因子/algobench/src/algobench/c33_table_sink.py",
+        "因子/algobench/tests/test_c33_quantity_states.py",
+        "因子/algobench/tests/test_c33_table_sink.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d5fa0468240fc7c3fd1cd69fdb52c237fc9372a",
+      "date": "2026-09-09",
+      "subject": "perf(c33): close bounded output parts and retire failed detail shards",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-execution-evidence/terminal-r05.txt",
+        "reports/2026-09/2026-09-09-c33-performance-design.md",
+        "因子/algobench/src/algobench/c33_table_sink.py",
+        "因子/algobench/tests/test_c33_runner.py",
+        "因子/algobench/tests/test_c33_table_sink.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b3c02e8aa62a819ff9de04cac17d83babca54f81",
+      "date": "2026-09-09",
+      "subject": "perf(c33): reuse native workspaces and complete recurrence profiles",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r06.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r06.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/stop-r06.txt",
+        "reports/2026-09/2026-09-09-c33-performance-design.md",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_analysis.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_continuous_stream.py",
+        "因子/algobench/src/algobench/c33_contract.py",
+        "因子/algobench/src/algobench/c33_prepared.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py",
+        "因子/algobench/src/algobench/c33_quantity_windows.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b04676d2861b0db3482465c7956f6d6e95b977c7",
+      "date": "2026-09-09",
+      "subject": "perf(c33): share verified output receipts and daily state infrastructure",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-execution-evidence/launch-r07.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/linux-validation-r07.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/local-validation-paused.txt",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/terminal-r06.json",
+        "reports/2026-09/2026-09-09-c33-execution-evidence/terminal-r07.json",
+        "reports/2026-09/2026-09-09-c33-paused-handoff.md",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_day_state.py",
+        "因子/algobench/src/algobench/c33_quantity_accel.py",
+        "因子/algobench/src/algobench/c33_stream_metrics.py",
+        "因子/algobench/src/algobench/c33_table_sink.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c1942169979420855939f3bac76613d7a4c7ecf8",
+      "date": "2026-09-09",
+      "subject": "perf(c33): 改进列式归约、异步持久化与规模候选检索",
+      "status": "assigned",
+      "chains": [
+        "cross-stock-sync"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "cross-stock-sync",
+      "related_chains": [],
+      "shares": {
+        "cross-stock-sync": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-09-c33-optimization-evidence/candidates.json",
+        "reports/2026-09/2026-09-09-c33-optimization-evidence/output-16-after.json",
+        "reports/2026-09/2026-09-09-c33-optimization-evidence/output-16-before.json",
+        "reports/2026-09/2026-09-09-c33-optimization-evidence/output-16-synchronous.json",
+        "reports/2026-09/2026-09-09-c33-optimization-evidence/output-before.json",
+        "reports/2026-09/2026-09-09-c33-optimization-evidence/server-observations.json",
+        "reports/2026-09/2026-09-09-c33-performance-audit-and-optimization.md",
+        "scripts/benchmark_c33_candidates.py",
+        "scripts/benchmark_c33_output.py",
+        "scripts/run_c33_prescreen.py",
+        "因子/algobench/src/algobench/c33_continuous_accel.py",
+        "因子/algobench/src/algobench/c33_continuous_stream.py"
+      ]
+    }
+  ]
+}

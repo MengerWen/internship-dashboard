@@ -70,6 +70,8 @@
 
 ## 保存、检查与发布
 
+任务点大小单独读取`content/journal/_attribution/`的逐条归属清单。更新固定证据后，运行`python scripts/collect_journal_attribution.py`并复核本轮新增/变化的归类，再运行同命令的`--check`。规则中的`reviewed_through`限制已审阅日期，超出日期的提交先标待核；完成本轮逐条核对后再更新该日期。新增研究目标、公共代码或新阶段不能仅靠旧关键词自动确认；在`scripts/journal_attribution_rules.json`补明确规则或逐SHA处置，证据不足保留`pending`。跨链提交只有确实交付多个独立目标才等分；共用模块、下游消费或旧研究名称不构成多次计重的依据。构建会核对每仓总数、提交唯一性和份额守恒；缺归属时保留最小定位点，不得回退到当天总量。相关检查增加`tests/test_journal_attribution.py`。链的工作日期和Git入库日期仍分别解释；归属清单中“当日未设图点”的记录供后续补核，不自动覆盖人工日卡。
+
 1. 在 `docs/journal-review/daily-updates/YYYY-MM-DD.md` 保存本次核对记录，日期为运行日。同日重跑更新原记录。记录覆盖日期、逐来源版本与读取结果、归链决定、修改文件、验证结果、缺口，以及提交、推送和线上核验的独立状态。该目录首份记录产生前，首次待核日期为 2026-10-20。
 2. 沿用采集器时显式固定各仓库 revision，并按需要使用 `--since` 缩小范围。现有采集器按 author date 分日、按计划文件名归档且只展示前 10 条提交；以完整枚举和原始材料补核实际工作日。它也没有截止日期，会处理 `--since` 之后所有日期，且可能删除预期集合之外的证据文件。先备份或用临时配置核对 diff，只保留本次已审阅的变更，保留既有人工补充与无关日期。历史快照的版本说明保持真实。
 3. 核对 frontmatter、链条 id、逐点注解、报告引用与证据链接，确认新链和 handoff 可被当前格式读取。内容变更运行 `D:\MG\anaconda3\python.exe -m pytest tests/test_journal_build.py tests/test_journal_evidence.py tests/test_journal_provenance.py -q` 和 `D:\MG\anaconda3\python.exe build.py`；取数或连线代码改动同时运行`npm test`。`collect_journal_evidence.py --check`仅证明指定配置与采集产物一致，不能代替来源完整性审阅。`verify_journal_sources.py`核验本次审计目录中的固定引用；以后新增引用仍须回查其实际Git对象和行号。

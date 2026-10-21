@@ -91,6 +91,38 @@ class JournalBuildTests(unittest.TestCase):
             self.assertEqual(builder.journal_entries[0]["chain_notes"]["a"]["outcome_note"], "")
             self.assertEqual(builder.chains["chains"][0]["fate_note"], "后续进入另一条研究线")
 
+    def test_task_weights_use_full_ledger_and_keep_pending_out_of_points(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            content = self.make_fixture(root)
+            attribution = content / "journal/_attribution"
+            attribution.mkdir()
+            date = "2026-06-23"
+            payload = {"schemaVersion": 1, "date": date, "items": [
+                {"date": date, "repo": "r", "sha": "a" * 40, "status": "assigned",
+                 "shares": {"a": {"numerator": 1, "denominator": 1}}},
+                {"date": date, "repo": "r", "sha": "b" * 40, "status": "pending", "shares": {}}]}
+            (attribution / f"{date}.json").write_text(json.dumps(payload), encoding="utf-8")
+            evidence = content / f"journal/_evidence/{date}.json"
+            ev = json.loads(evidence.read_text(encoding="utf-8"))
+            ev["repos"][0]["commits"] = 2
+            evidence.write_text(json.dumps(ev), encoding="utf-8")
+            builder = Builder()
+            builder.out_dir = root / "out"
+            with patch("build.CONTENT_DIR", content), patch("subprocess.run", side_effect=AssertionError("构建不得采集外仓")):
+                builder.build_journal()
+            first, missing = builder.journal_entries
+            self.assertEqual(first["total_commits"], 2)
+            self.assertEqual(first["chain_weights"]["a"]["value"], 1)
+            self.assertEqual(first["attribution_summary"]["statuses"]["pending"], 1)
+            self.assertNotIn("chain_weights", missing)
+            published = json.loads((builder.out_dir / first["evidence_path"]).read_text(encoding="utf-8"))
+            self.assertEqual(published["attribution"], payload)
+            ev["repos"][0]["commits"] = 3
+            evidence.write_text(json.dumps(ev), encoding="utf-8")
+            with patch("build.CONTENT_DIR", content), self.assertRaisesRegex(ValueError, "计数不一致"):
+                builder.build_journal()
+
 
 if __name__ == "__main__":
     unittest.main()

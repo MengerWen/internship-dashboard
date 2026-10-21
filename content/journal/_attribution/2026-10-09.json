@@ -1,0 +1,1935 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-09",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "51b1f908fc174e3a8c7cab7b73a2492ef371d562",
+      "date": "2026-10-09",
+      "subject": "思瑞投资入口指向公司服务器与 Doris 使用规则",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENT.md",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c6efd4396be7a80afb8d3eb3d314fc812671dca7",
+      "date": "2026-10-09",
+      "subject": "发布10月7日深市601日分组校准预检汇报",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/grouped-calibration-2026-10-07/aggregates.json.gz",
+        "content/assets/grouped-calibration-2026-10-07/market_curves.png",
+        "content/assets/grouped-calibration-2026-10-07/market_scatter.png",
+        "content/assets/grouped-calibration-2026-10-07/mechanism_theta_bbo_ticks.png",
+        "content/assets/grouped-calibration-2026-10-07/mechanism_theta_events.png",
+        "content/assets/grouped-calibration-2026-10-07/mechanism_theta_marketability_ticks.png",
+        "content/assets/grouped-calibration-2026-10-07/mechanism_theta_price_ticks.png",
+        "content/assets/grouped-calibration-2026-10-07/mechanism_theta_qty.png",
+        "content/assets/grouped-calibration-2026-10-07/mechanism_theta_wall_seconds.png",
+        "content/assets/grouped-calibration-2026-10-07/source.json",
+        "content/assets/grouped-calibration-2026-10-07/stock_curves.png",
+        "content/daily/2026-10-07.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9654d6f8390e86fe14f6c6696e5bac90ecd58981",
+      "date": "2026-10-09",
+      "subject": "fix: predict calibration centers for all feature-complete stock-days",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/grouped_calibration_precheck.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "28fc4f64040be4ebd91b7c481b02bf831ddb7bba",
+      "date": "2026-10-09",
+      "subject": "perf: use task bytecode cache for foreground calibration input fetch",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/fetch_grouped_calibration_precheck_rqdata.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "461074fe069e75be8931af34d9d1df5e3bcfb4c2",
+      "date": "2026-10-09",
+      "subject": "feat: run grouped calibration diagnostics across the frozen 601-day period",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_calibration_precheck_analysis.py",
+        "scripts/run_grouped_calibration_precheck_l2.py",
+        "因子/algobench/configs/grouped_calibration_precheck_szse_601_v1.yaml",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0627cf36b55149ad2805ffc31443e472017ae2b7",
+      "date": "2026-10-09",
+      "subject": "fix: preserve POSIX server paths in the Windows calibration fetch launcher",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/fetch_grouped_calibration_precheck_rqdata.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "13028c680d81faeffd8f4e59b9e0135898df2692",
+      "date": "2026-10-09",
+      "subject": "feat: record calibration vendor initialization and daily fetch timings",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/fetch_grouped_calibration_precheck_rqdata.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9114e07bf759ef76921daeecac9580ff1c93d76f",
+      "date": "2026-10-09",
+      "subject": "fix: show both prediction boundary modes and reference rows in calibration curves",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_calibration_precheck_analysis.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c3789dc024c1067902601f290015148f333800c4",
+      "date": "2026-10-09",
+      "subject": "perf: parallelize independent calibration fits and registered diagnostics",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_calibration_precheck_analysis.py",
+        "因子/algobench/src/algobench/grouped_calibration_precheck.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2b2a2aadbcc74b4432278427ba26a40dc23db561",
+      "date": "2026-10-09",
+      "subject": "fix: preserve stock equal weighting with missing features and price conditions",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_calibration_precheck_analysis.py",
+        "因子/algobench/src/algobench/grouped_calibration_precheck.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "93cd371108e619176ebc2c358cd6e36be2514711",
+      "date": "2026-10-09",
+      "subject": "feat: scale SSE message distances by time-bucketed channel-rate ratios",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/sse_order_flow.py",
+        "因子/algobench/tests/test_sse_order_flow.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8351566d2a9093d00b50fd5c81375246e5328072",
+      "date": "2026-10-09",
+      "subject": "docs: validate the SSE order-flow adapter with an SZSE round trip",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/blend_conventions.py",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/channel_density_100ms.sql",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/channel_density_buckets.sql",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/channel_density_seconds.sql",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/check_roundtrip_real.py",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/check_roundtrip_synthetic.py",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/debug_roundtrip_failure.py",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/formal_panel.patch",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/adapter-profile-10s-2026-06-30.json",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/adapter-profile-1s-2026-06-30.json",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/blend-2026-06-30.csv",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/blend-summary-2026-06-30.txt"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "58e16665e9368fa2b05d596f9e7b7439e00ca60a",
+      "date": "2026-10-09",
+      "subject": "perf: reuse invariant shared leave-one centers across calibration schemes",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_calibration_precheck_analysis.py",
+        "因子/algobench/src/algobench/grouped_calibration_precheck.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "01c7e85b812f94605ccfca32a641f56ad6354008",
+      "date": "2026-10-09",
+      "subject": "perf: partition calibration cells once before support aggregation",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_calibration_precheck_analysis.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f389ed88ca6296a7bb6ccd733789d008e93bcf64",
+      "date": "2026-10-09",
+      "subject": "docs: publish full601 calibration canary evidence and timing gates",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/EVIDENCE_SNAPSHOT.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/RESULT.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/SNAPSHOT_VERIFICATION.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/analysis-parallel-guard.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/analysis-serial-guard.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/bars.sql",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/canary-panel.parquet",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/canary_parallel_RESULT.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/canary_serial_RESULT.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/daily-bar-manifest.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-timing-evidence/extreme-guard.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "949474a8448d9b42a873215ec1b377e1b7ccc398",
+      "date": "2026-10-09",
+      "subject": "feat: continue authorized calibration through full601 analysis",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/continue_grouped_calibration_precheck.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck_controller.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1672bca331793714d4181676989a0baf2f70936a",
+      "date": "2026-10-09",
+      "subject": "fix: retain calibration stage commands and process exit evidence",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/continue_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a0e3fa249ee8da1a350c6f35000801bd6890b311",
+      "date": "2026-10-09",
+      "subject": "docs: record authorized full601 calibration launch and continuation",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/RESULT.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/controller-state-at-launch.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/controller-tests.log",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/controller-tests.result.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/execution_authorization.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/launch-summary.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/launcher-remaining.pid",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/launcher-remaining.sh",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/run_manifest.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch-evidence/timing_gate.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-601d-launch.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc9165870710cc17e60f8b0fae85b713f85f5389",
+      "date": "2026-10-09",
+      "subject": "记录分组定标预检的阶段并行依赖与耗时依据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-pipeline-concurrency-evidence/observations.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-pipeline-concurrency-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "53bb0b4099eeeb38d901a65918e597dd504047df",
+      "date": "2026-10-09",
+      "subject": "支持分组定标预检验收后按日恢复串行计算",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_grouped_calibration_execution.py",
+        "scripts/continue_grouped_calibration_precheck.py",
+        "scripts/run_grouped_calibration_precheck_l2.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck_resume.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0b5bd2a83dd4bfafecd25e39dcb5208dec6fc35f",
+      "date": "2026-10-09",
+      "subject": "记录601日分组定标预检的串行恢复与验收快照",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/PAUSED-before-resume.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/RESUMED.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/controller-state-at-resume.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/execution-identity.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/launch.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/launcher-remaining.sh",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/progress-at-resume.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/resume-observation.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/resume-validation.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/run-manifest-at-resume.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-serial-resume-evidence/tests-result.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "02880d8096d06766b1510e188d6965ee19a60012",
+      "date": "2026-10-09",
+      "subject": "Doris 取数避开 08:50–09:35，并支持按 code 区间分页",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/conftest.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "71cf134439893851d41601c09f62dd9abac01c2b",
+      "date": "2026-10-09",
+      "subject": "分组定标 L2 改用按 code 区间串行分页取数",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [
+        "open5m"
+      ],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_grouped_calibration_execution.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck_resume.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ec2a7dcac6634234d653bcae3992e428c93482c1",
+      "date": "2026-10-09",
+      "subject": "加入分组定标 L2 新旧 Doris 取数写法的对比脚本",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_doris_query_shapes.py",
+        "因子/algobench/tests/test_doris_query_shape_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8040e8b7d35fa9aa95956944c4f00407abd30251",
+      "date": "2026-10-09",
+      "subject": "面板日线和市场汇总改为逐日单日查询",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_grouped_calibration_execution.py",
+        "scripts/build_grouped_calibration_precheck_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "977e2f7607a585795286c7207d9d50fabac424fd",
+      "date": "2026-10-09",
+      "subject": "记录深市分组定标剩余 24 日恢复启动与身份验收",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume-evidence/initial-snapshot.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume-evidence/launch.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume-evidence/preflight.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3e8a671004b6e747e4a28d0c69b952e5d46b3ada",
+      "date": "2026-10-09",
+      "subject": "把公司服务器与 Doris 使用规则写进 agent 指令",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENT.md",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fdc62f1d28303be33e2a71a1a114b49156f32c5c",
+      "date": "2026-10-09",
+      "subject": "记录分组定标新增 24 日耗时和串行分页查询遥测",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/daily-business-calls.csv",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/daily-table-query-telemetry.csv",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/efficiency.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/full-l2-acceptance.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/remaining-l2-guard.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "85284a8d8a8f36903436e90b90484586339cb246",
+      "date": "2026-10-09",
+      "subject": "保留分组定标运行证据的原始字节以支持跨平台哈希核对",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/daily-business-calls.csv",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/daily-table-query-telemetry.csv",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-query-efficiency-evidence/efficiency.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume-evidence/initial-snapshot.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume-evidence/launch.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-24d-resume-evidence/preflight.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3e88b4df49fa2e63295e88114206af0ac676f8dd",
+      "date": "2026-10-09",
+      "subject": "Add bounded Doris page processing benchmark and correctness checks",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "doris-efficiency",
+      "related_chains": [],
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-09-general-doris-efficiency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a02fb2c3686dc79e2e705367809dfddd7f1cd1e8",
+      "date": "2026-10-09",
+      "subject": "增加单查询有界页读取和完整调用性能验收",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/tests/test_bounded_page_io.py",
+        "scripts/benchmark_doris_page_end_to_end.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7df629de0c0ae16370a10bb2b5e18e5fe136ba2e",
+      "date": "2026-10-09",
+      "subject": "统一研究任务的有界取数与自适应分页入口",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": null,
+      "related_chains": [],
+      "phase_mapping": {
+        "open5m": "grouped-calibration"
+      },
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_open5m_kernel_calibration_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca89e746869d2319a08cae80c1bb8e3a58393637",
+      "date": "2026-10-09",
+      "subject": "强制公共页预算并记录单查询返回峰值",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_bounded_page_io.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7abeb6a7088fc54f5fb245f0d2ab66a0b205ba4e",
+      "date": "2026-10-09",
+      "subject": "允许研究任务按代表样本选择固定或自适应页宽",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "db1ef9c28bac4d3ec2712c357ca5c74dfde5d931",
+      "date": "2026-10-09",
+      "subject": "记录通用计算方案实测结果与后续任务规约",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-09-general-doris-efficiency.md",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/adaptive-plan-guard.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/adaptive-plan.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/client-replay-guard.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/client-replay.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/end-to-end-guard.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/end-to-end.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/entrypoint-audit.md",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/final-plan-guard.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/final-plan.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/server-evidence-manifest.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "30bba0ee2292a4d53330bd02b33b2da0d3a00e8c",
+      "date": "2026-10-09",
+      "subject": "保存验收证据原始字节与完整测试回执",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/adaptive-plan-server-tests.log",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/client-replay-server-tests.log",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/end-to-end-server-tests.log",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/final-plan-server-tests.log",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/windows-budget-regression.log",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/windows-regression.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0b52f87992e6613ac83d8293f3b1ac9184493a75",
+      "date": "2026-10-09",
+      "subject": "固定跨平台验收证据的字节一致性",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/entrypoint-audit.md",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/server-evidence-manifest.json",
+        "reports/2026-10/2026-10-09-general-compute-efficiency-evidence/summary.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2d2fc95c28fc4051817fef6026e62ad2443bd922",
+      "date": "2026-10-09",
+      "subject": "feat: 保存分组校准分析的阶段恢复点",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-09-grouped-calibration-analysis-speedup.md",
+        "scripts/_grouped_calibration_checkpoints.py",
+        "scripts/run_grouped_calibration_precheck_analysis.py",
+        "因子/algobench/tests/test_grouped_calibration_analysis_checkpoints.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "43ded56c5d2b91a6bf32aefeb4d088b5c8e273bc",
+      "date": "2026-10-09",
+      "subject": "补齐沪市往返 R8 比对与一秒时钟校正依据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/compare_panels.py",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/compare-rt-tv100ms-fix1s-2026-06-30.csv",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/r8-compare-guard-20261009.json",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/r8-completion-20261009.json",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/roundtrip-model-columns-2026-06-30.csv",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/results/roundtrip-summary-2026-06-30.txt",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/summarize_roundtrip.py",
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "50ad741bbd6707a88081bbd9491dffd1c4f08930",
+      "date": "2026-10-09",
+      "subject": "保存沪市往返实验补丁与系统盘清理回执",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [
+        "sse-v2"
+      ],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip-evidence/experiment-patches/cleanup-receipt.json",
+        "reports/2026-10/2026-10-09-sse-roundtrip-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41af438d6fb8d16729744fcca77fda76deb84c19",
+      "date": "2026-10-09",
+      "subject": "perf: 并行价格回归并复用分组和训练折预处理",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_grouped_calibration_checkpoints.py",
+        "scripts/benchmark_grouped_calibration_analysis.py",
+        "scripts/run_grouped_calibration_precheck_analysis.py",
+        "因子/algobench/src/algobench/grouped_calibration_precheck.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a208995f97e62585a9533b27cb0bf45f7a2d1541",
+      "date": "2026-10-09",
+      "subject": "早盘限制改为只在交易日生效，跨窗任务改用冻结续跑",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENT.md",
+        "docs/agents/compute-efficiency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a8a090102435c2f9b7371217f70bf1f96ff0315f",
+      "date": "2026-10-09",
+      "subject": "fix: 两日分析对照保留回归目标列",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_grouped_calibration_analysis.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f71edf11eb9adee2f6eebf543bdac5a026c1620c",
+      "date": "2026-10-09",
+      "subject": "feat: 核对冻结输入后仅续跑已验证的分析实现",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_grouped_calibration_execution.py",
+        "scripts/continue_grouped_calibration_precheck.py",
+        "因子/algobench/tests/test_grouped_calibration_analysis_resume.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "66d4129df11f574b12e254c6bf6f196764058677",
+      "date": "2026-10-09",
+      "subject": "fix: 固定完整行业回归的系数选解并记录求解器",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_calibration_precheck_analysis.py",
+        "因子/algobench/tests/test_grouped_calibration_precheck.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d2697227ecc90fa6237b2c19f4d7617641e36c71",
+      "date": "2026-10-09",
+      "subject": "记录沪市 B 类九列保留及偏差口径",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "05fae1d155e53fd8e4fc943447f15c711bd1fec5",
+      "date": "2026-10-09",
+      "subject": "fix: 将回归耗时与科学结果差分核对分开",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/benchmark_grouped_calibration_analysis.py",
+        "因子/algobench/tests/test_grouped_calibration_analysis_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9a0a9f563c043db27cc99fa768abdbfb2bc53eab",
+      "date": "2026-10-09",
+      "subject": "docs: 保存分析提速对照及601日续跑证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-09-grouped-calibration-analysis-speedup.md",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/accepted-comparison.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/accepted-guard.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/comparison-tests.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/input-identity.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/launch.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/pause.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/prior-completed-analysis.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/resume-snapshot.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/server-resume.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/windows-tests.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d958bd722c83db37d6bf95147c8fb8636f9432d",
+      "date": "2026-10-09",
+      "subject": "接入沪市适配语义与分通道一秒时钟校正",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/windows-regression.log",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering.md",
+        "scripts/build_sse_clock_profiles.py",
+        "因子/algobench/src/algobench/sse_clock.py",
+        "因子/algobench/src/algobench/sse_order_flow.py",
+        "因子/algobench/src/algobench/sse_reconstruction.py",
+        "因子/algobench/tests/test_sse_formal_integration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "05902253175ee0eafeea51ad601101804353f229",
+      "date": "2026-10-09",
+      "subject": "docs: 将测试日志纳入可验证的提速证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/comparison-tests.log",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/windows-tests.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e1cf292164860b0db300ceb3f30e6a3c8afe0793",
+      "date": "2026-10-09",
+      "subject": "记录沪市工程 Linux 验收与深市逐值比对证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "sse-v2",
+      "related_chains": [
+        "storage-cleanup"
+      ],
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-08-sse-adapter-roundtrip.md",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/000001.log",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/300750.log",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/compare_diagnostics.py",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/comparison-r02.log",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/diagnostic-verification.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/linux-tests.log",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/server-evidence-paths.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/server-evidence-sha256.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/server-sync-7d958bd7.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/sse-engineering-tests-20261009_20261009T111338Z_9f984310388c4f9f9b932ea7a87097df.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7e4e9e593835b010507b10f0caee805bf5d13d1e",
+      "date": "2026-10-09",
+      "subject": "保留跨平台验收证据的原始字节",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "修改目标为沪市输入可见性/公开定义及其验收；所用相位或dm列定义是被审对象，不是重新开展对应旧研究",
+      "review_basis": "路径、主题及阶段目标复核",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/.gitattributes",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/compare_diagnostics.py",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/diagnostic-temp-cleanup.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/server-evidence-paths.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/server-evidence-sha256.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/windows-regression.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f31ffdd4927d51ab2c304137e227539eedf14ed7",
+      "date": "2026-10-09",
+      "subject": "fix: share exchange trading calendar across Doris quiet-window gateways",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "Doris交易冻结窗口统一使用交易日历；属于早盘自动控制能力，不是7月服务器迁移",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/sirui_trading_window.py",
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/trading_holidays.json",
+        "lv2_snapshot_workspace/tests/test_trading_window.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "696d26003930549f5d2b761ed15886150b42e524",
+      "date": "2026-10-09",
+      "subject": "feat: schedule trading-day scope freeze and thaw with pause-aware guard timeouts",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_trading_window.py",
+        "scripts/validate_trading_window_integration.py",
+        "因子/algobench/tests/test_trading_freeze.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "991ad771953f305be998152e98e426736e107d85",
+      "date": "2026-10-09",
+      "subject": "docs: describe automatic trading-window freeze and legacy timer cleanup",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENT.md",
+        "docs/agents/compute-efficiency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8c462db222cb3a125befa92f47a01b60e9ca18d1",
+      "date": "2026-10-09",
+      "subject": "记录601日分析耗时与完整验收封存证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/checkpoint-manifests.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/final-analysis.log",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/final-controller-state.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/final-guard.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/final-seal.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup-evidence/final-validation.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-analysis-speedup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c5353d9b9aa783e162d7226b99a4881d64edef46",
+      "date": "2026-10-09",
+      "subject": "fix: keep freeze control journals local and wait before scope probing",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_trading_freeze.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6bd5d8dd1a9481d95eee9b346d0005bc784b4baf",
+      "date": "2026-10-09",
+      "subject": "test: record trading-window freeze integration and byte-identical research sample",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "trading-window-freeze",
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/business-comparison.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/helper-journals.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/read_only_inventory.py",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/wangly-final-inventory.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/wangly-inventory.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/wangly-sync-final-code.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/wenjie-inventory.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/wenjie-sync-code.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/wenjie-sync-final-code.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/wenjie-tests.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-evidence/windows-calendar-tests.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2542199649f0624c730470e97078f4d0e01fdde2",
+      "date": "2026-10-09",
+      "subject": "fix: add in-process trading freeze and thaw backup",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "trading-window-freeze",
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_trading_window.py",
+        "因子/algobench/tests/test_trading_freeze.py",
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "81f32dc37ccb1293648412940b41fcf3f1376b58",
+      "date": "2026-10-09",
+      "subject": "fix: recover trading pause clocks after unlogged thaw",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_trading_window.py",
+        "scripts/validate_trading_window_hardening.py",
+        "因子/algobench/tests/test_trading_freeze.py",
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ac5634bb89b4837de82d868cdf65febc251730db",
+      "date": "2026-10-09",
+      "subject": "docs: document trading backup and journal-aware manual thaw",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "AGENT.md",
+        "docs/agents/compute-efficiency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "64af5cf9170bd73e7743e8c39ce0dba9ec3d8bf3",
+      "date": "2026-10-09",
+      "subject": "fix: launch synthetic active-clock probes with valid Python source",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_trading_window_hardening.py",
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "67c5376cdef0d139eae90c95940cf581b5011d28",
+      "date": "2026-10-09",
+      "subject": "test: validate independently sampled active-clock timestamps",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "49c000772e5c4a3448517739f6e94cdfb4cf3cc3",
+      "date": "2026-10-09",
+      "subject": "test: await timer service registration before reading ExecStart",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/validate_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d2f6004e445e3b24d9de80f4919bed77b2a9a58f",
+      "date": "2026-10-09",
+      "subject": "fix: preserve shared trading-event metadata for guard observations",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/_trading_window.py",
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2f93e708bd492c9afd57771a322837ec6cc3143f",
+      "date": "2026-10-09",
+      "subject": "fix: keep trading backup checkpoints responsive during long resource polls",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "121767d453f0b7848b73806379521c99b3130fa1",
+      "date": "2026-10-09",
+      "subject": "test: record trading freeze hardening acceptance evidence",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "trading-window-freeze",
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/calendar-2027-check.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/code-sync-wangly.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/code-sync-wenjie.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/initial-wangly.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/initial-wenjie.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/previous-log-cleanup.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/server-test-command.sh",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/wenjie-hardening.json",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/windows-backup.log",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/windows-clock.log",
+        "reports/2026-10/2026-10-09-trading-window-freeze-hardening-evidence/windows-full.log"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1b67c58141c85788a568c9562c8bb6d86a633fa6",
+      "date": "2026-10-09",
+      "subject": "fix: keep trading control check failures from aborting guarded commands",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "68858608eb2bea48e7327bf7c3e0976212b71fcc",
+      "date": "2026-10-09",
+      "subject": "fix: start a new pause when an unclosed one has passed its cap",
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "trading-window-freeze": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/tests/test_trading_window_hardening.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a54ce4106e1b8f9bf265d872d883684b1d129a44",
+      "date": "2026-10-09",
+      "subject": "清理601日分组校准预检的临时材料并记录验收",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "storage-cleanup",
+      "related_chains": [],
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-10/2026-10-09-grouped-calibration-cleanup-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-grouped-calibration-cleanup-evidence/formal-hash-verification.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-cleanup-evidence/local-receipt.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-cleanup-evidence/post-cleanup.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-cleanup-evidence/remote-receipt.json",
+        "reports/2026-10/2026-10-09-grouped-calibration-cleanup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5e01da36d2f94ba180b9e421c6a635167b066aa3",
+      "date": "2026-10-09",
+      "subject": "docs: 冻结深市六核分组定标规格 v1",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "reports/2026-09/2026-09-29-grouped-calibration-classification-design.md",
+        "reports/2026-10/2026-10-09-grouped-kernel-calibration-spec.md",
+        "因子/algobench/configs/grouped_kernel_calibration_szse_v1.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d8f55684f316b348246670f77f1264ec1b308ab7",
+      "date": "2026-10-09",
+      "subject": "docs: 规划深市六核分组定标 v1 的计算与验收",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-09-grouped-kernel-calibration-v1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "89f84ee17d4b76db5a7e8363e33f0e903942551d",
+      "date": "2026-10-09",
+      "subject": "docs: 定参改为先过小规模测速，并精简验收",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-10-09-grouped-kernel-calibration-v1.md",
+        "reports/2026-10/2026-10-09-grouped-kernel-calibration-spec.md",
+        "因子/algobench/configs/grouped_kernel_calibration_szse_v1.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "89f503c0f7ecf7345469d193aefe11d8e82b0ee6",
+      "date": "2026-10-09",
+      "subject": "实现六核参数的全样本拟合与四级回退",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/grouped_kernel_calibration.py",
+        "因子/algobench/tests/test_grouped_kernel_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7a8735d484e54ece3dcfed8a74a892d5d3de50fa",
+      "date": "2026-10-09",
+      "subject": "生成并验收六核分组参数包及运行证据",
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "grouped-calibration",
+      "related_chains": [],
+      "shares": {
+        "grouped-calibration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_grouped_kernel_calibration.py",
+        "scripts/seal_grouped_kernel_calibration.py",
+        "因子/algobench/tests/test_grouped_kernel_calibration.py"
+      ]
+    }
+  ]
+}

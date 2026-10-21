@@ -1,0 +1,4384 @@
+{
+  "schemaVersion": 1,
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "subject_rules": [
+    [
+      "research-journal",
+      "journal|研究日志|图谱|链条图"
+    ],
+    [
+      "report328",
+      "发布.*328.*报告|328.*成果报告|10月18日.*报告|10.18.*报告|model328.*report"
+    ],
+    [
+      "model-report",
+      "模型.*(页|报告|诊断图)|RankIC.*直接答案|RankIC and Sharpe|model report|causal Open5m 328-factor model recompute"
+    ],
+    [
+      "visual-b",
+      "research desk visual|研究编辑台|visual refresh"
+    ],
+    [
+      "report-tags",
+      "report tags|标签.*(持久|筛选|导航|保存)|persistent report tags|topic filtering"
+    ],
+    [
+      "corrected-replay-344",
+      "(?<![0-9])344(?![0-9])|六核.*(重新|重定)|corrected.replay.*recalibrat"
+    ],
+    [
+      "trading-window-freeze",
+      "trading.window|交易.*(冻结|恢复)|早盘.*(冻结|恢复)|交易日.*(冻结|暂停)|trading.freeze"
+    ],
+    [
+      "wangly-env",
+      "默认.*(环境|Python)|两账户.*环境|双账户.*环境|wangly.*wenjie.*(传输|transfer)|result.transfer|环境引导|environment bootstrap"
+    ],
+    [
+      "storage-cleanup",
+      "清理|存储.*(收尾|准入|治理|原则)|S3.*盘点|retention|retirement|storage.closeout|hot.cleanup|回收.*缓存|归档.*(清理|删除)|清退"
+    ],
+    [
+      "cross-stock-sync",
+      "c3[._]?3|c33|cross.stock.synchron|跨股票同步"
+    ],
+    [
+      "cancel-phase",
+      "机械撤单|mechanical.cancel|cancel.phase|cancel.lag|撤单相位|撤单等待|相位.*(因子|评价|收益|分组)|快撤尺度"
+    ],
+    [
+      "depth-match",
+      "c7[._]?1|exact.depth|depth.match|深度匹配|比例尺寸线"
+    ],
+    [
+      "replay",
+      "回放|replay|chinext.*snapshot|快照.*(正确|诊断|规则)|基础正确性|基础撮合|成交.*价格.*合同|撮合.*(修复|规则)|实际成交价"
+    ],
+    [
+      "sse-v2",
+      "沪市|\\bSSE\\b|sse[._-]|visible.*(g1|v3)|public v3|public.*response.paths|public.factor|公开可见|可见.*(因子|评分|排名)|original.order"
+    ],
+    [
+      "grouped-calibration",
+      "分组.*(定标|核|参数|校准|尺度)|grouped.*(calibrat|kernel|structur)|结构参数.*(601|v2)|结构.*runtime|六核.*(参数|封存|分组)|f40.remaining"
+    ],
+    [
+      "szse-model328",
+      "model328|328列|328.*(因子|生产|全期)|深市.*(重算|完整因子|因子续跑)|recompute.prep"
+    ],
+    [
+      "ml-330",
+      "330|causal.single.fit|single.fit|因果.*(单次|复算)|f97.*(causal|single)|cpu.lightgbm"
+    ],
+    [
+      "doris-efficiency",
+      "通用.*(Doris|取数|效率)|general.doris|bounded.*Doris|公共.*L2.*(读取|取数)|分页.*公共"
+    ],
+    [
+      "old-factor-bank",
+      "老因子|旧因子|old.factor|raw.bank|F40.*(定标|归档|阶段)|旧库"
+    ],
+    [
+      "ml-exec",
+      "\\bml\\b|ML-|no.RF|no.AdaBoost|AdaBoost|LightGBM|Random.Forest|\\bRF\\b|PSpline|AE.*(CPU|CUDA)|Development|Freeze.*Final|all.model|all.family|混合.*(调度|canary)|模型.*(调度|数值|执行|候选)|post.hoc|依赖闭包|统一.*Python"
+    ],
+    [
+      "gates",
+      "Xq10|candidate.gate|quote.tick|tick.*(normal|calibrat)|固定参数全区间|开盘前三分钟|价格.*[Gg]ate|真实报价|quantity.gate"
+    ],
+    [
+      "fixed-history",
+      "fixed.history|fixed.parameter.*histor|historical.interval|历史评价.*(恢复|来源)|long.history.*factor"
+    ],
+    [
+      "open5m",
+      "open5m|prescreen|预查|预检|A.clean|continuous.kernel|kernel.calibrat|real.data.calibrat|selected.date.calibrat"
+    ],
+    [
+      "doris-migration",
+      "服务器迁移|doris.*(gateway|migration)|唯一网关"
+    ],
+    [
+      "literature",
+      "文献|lowlat|clusterlob|factor.lab|论文复现"
+    ],
+    [
+      "algobench",
+      "主动.*关注度|attention.*(factor|mask|universe)|sixpaper|6docs|PLAN1[23]|ccp.*sruns|算法痕迹"
+    ],
+    [
+      "onboarding",
+      "交易规则|米筐|官方示例策略"
+    ],
+    [
+      "lv2-snapshot",
+      "lv2|快照|plan_?[1-4]|初勘"
+    ],
+    [
+      "formal-engine",
+      "formal|scorer|lifecycle|pairing|Task1[02]|7A|q2|因子.*PLAN|候选边|生命周期"
+    ]
+  ],
+  "path_rules": [
+    [
+      "wangly-env",
+      "prepare_server_environment|cache_structural_calibration_runtime.*2026-10-20"
+    ],
+    [
+      "storage-cleanup",
+      "storage_capacity|retire_wangly"
+    ],
+    [
+      "replay",
+      "diagnose_szse_snapshots|szse_snapshot_diagnosis|szse_production_evidence|io-contract-inventory|project-architecture|shared-runtime-interfaces|server-factor-smoke|formal_execution_stages"
+    ],
+    [
+      "sse-v2",
+      "visible_candidate|visible_missingness|visible_factor_decisions|visible_window|visible_rank|visible_contract|visible_tables|原始委托可行集|交易规则实施"
+    ],
+    [
+      "doris-efficiency",
+      "bounded_page_io"
+    ],
+    [
+      "open5m",
+      "soft_compression|frozen-parameters-200"
+    ],
+    [
+      "grouped-calibration",
+      "f40-exact-quantile|structural-day-publication|calibration-fastest-version|best-version-pressure-day|f40-archive-cache|f40-stage-memory|calibration-blockers"
+    ],
+    [
+      "old-factor-bank",
+      "old-bank-invariance|f40-streaming-memory|f40-continuity|r17-storage-incident"
+    ],
+    [
+      "research-journal",
+      "journal|chains\\.json|journal-column"
+    ],
+    [
+      "report328",
+      "model328-report|model328_report|2026-10-18"
+    ],
+    [
+      "model-report",
+      "model-report|model_report|2026-09-18|model-dashboard|model_results|ml-results"
+    ],
+    [
+      "report-tags",
+      "report.tags|tag-model|tag_model|tag-api|tag_api|worker/(index|schema)|report-tags"
+    ],
+    [
+      "visual-b",
+      "research-desk|visual-refresh|visual-b"
+    ],
+    [
+      "corrected-replay-344",
+      "corrected.replay.344|344.recalibrat|recalibration344"
+    ],
+    [
+      "trading-window-freeze",
+      "trading.window|trading_window|trading.freeze|trading.pause|quiet.window"
+    ],
+    [
+      "wangly-env",
+      "wangly.environment|wangly.to.wenjie|result.transfer|default.environment|server.startup|two.account|full.default.environment"
+    ],
+    [
+      "storage-cleanup",
+      "cleanup|retention|retirement|storage.principles|storage.closeout|storage.enforcement|s3.inventory|certificate.backfill"
+    ],
+    [
+      "cross-stock-sync",
+      "c3[._]?3|c33|cross.stock.synchron"
+    ],
+    [
+      "cancel-phase",
+      "cancel.phase|cancel_phase|cancel.lag|cancel_lag|mechanical.cancel|mechanical_cancel"
+    ],
+    [
+      "depth-match",
+      "c7[._]?1|exact.depth|depth.match|depth_match|ratio.size"
+    ],
+    [
+      "replay",
+      "szse.*replay|replay.*(rule|production|native|price|contract)|chinext.snapshot|foundation.correctness|native.replay|full.recompute.admission|frozen.parameter.replay|remediation.and.acceptance|replay.and.stages|limit.terminal.closure|rule.supported.cancel"
+    ],
+    [
+      "sse-v2",
+      "sse[._-]|sse_original|沪市委托|visible.*(g1|g4|v3)|public_visible"
+    ],
+    [
+      "grouped-calibration",
+      "grouped|f40.remaining|f40_remaining|structural.runtime.v2"
+    ],
+    [
+      "szse-model328",
+      "szse.model328|model328|szse.old.factor.recompute|old.factor.recompute.prep"
+    ],
+    [
+      "ml-330",
+      "open5m.330|open5m_330|causal.single.fit|causal_single|single_fit|cpu.lightgbm|ml.*selection"
+    ],
+    [
+      "doris-efficiency",
+      "general.doris|general.compute.efficiency|doris.efficiency|bounded_l2|bounded.l2"
+    ],
+    [
+      "old-factor-bank",
+      "old.factor|old_factor|raw.bank|raw_bank|formal_f40_stages"
+    ],
+    [
+      "ml-count",
+      "51个count|全量原始因子LightGBM"
+    ],
+    [
+      "ml-exec",
+      "intraday.ml|intraday_ml|open5m.ml|open5m_ml|/ml/|no.rf|no_rf|ml.resource|python运行环境|依赖闭包|python_runtime|model.adapt|boosting|random.forest"
+    ],
+    [
+      "fixed-history",
+      "fixed.history|复用2026年131|固定参数.*全区间"
+    ],
+    [
+      "gates",
+      "candidate_gate|quote.tick|tick.*recalibrat|价格Gate|Xq10|open3m.*feasibility|candidate-gate"
+    ],
+    [
+      "open5m",
+      "open5m|kernel_calibration|selected_date_calibration|新因子|nine.parameter|continuous.kernel|高频量价"
+    ],
+    [
+      "doris-migration",
+      "服务器迁移|doris.data.access|doris_data_access|doris_gateway"
+    ],
+    [
+      "literature",
+      "文献|/factor_lab/|/lowlat/|/clusterlob/|Cross-Impact|聪明钱|SMART_MONEY|SHORT_TERM_ALPHA|factor_eval_framework"
+    ],
+    [
+      "algobench",
+      "CODEX_PLAN_ALGOBENCH|因子/PLAN/PLAN_1[23]|ccp_sruns|ALGO_FOOTPRINT|ALGO_TRADING_TRACE"
+    ],
+    [
+      "onboarding",
+      "米筐|交易规则|思瑞投资介绍|开会/"
+    ],
+    [
+      "formal-engine",
+      "最初构建因子|formal-factor-engine|formal-panel|formal-chain|formal-pairing|final-assembly|unified-event-prestate|data-quality-window-split|historical-baselines|queue-fifo-scorers|L1参考数据切换|服务器内存事故|单日真实性能测量"
+    ],
+    [
+      "open5m",
+      "三秒候选门|l2-three-second|旧因子修改idea|L3订单上下文|方向投影|算法行为与盘口状态"
+    ],
+    [
+      "lv2-snapshot",
+      "lv2_snapshot_workspace/(?:docs|notebooks|PLAN|FIX_PLAN)|snapshot.*(?:説明|说明)|初勘|100ms|3s_snapshot"
+    ]
+  ],
+  "non_task_paths": "(?:^|/)(?:AGENTS\\.md|CLAUDE\\.md|\\.gitignore|\\.gitattributes|README\\.md|environment[^/]*|requirements[^/]*|pyproject\\.toml|pytest\\.ini|package-lock\\.json)$|__pycache__|\\.pyc$|benchmark-evidence/|(?:^|/)dashboard$|(?:^|/)sirui-quant-research$|(?:^|/)AGENT\\.md$|^docs/agents/|^\\.pytest_tmp/|\\.pem$|version-record\\.md$",
+  "unrelated": "dating|wenjie.ide|wenjie_ide|codex.windows.crash|harness.comparison",
+  "overrides": {
+    "1ca631cff8450fa8119d706f23a516bd0f17afd7": {
+      "status": "assigned",
+      "chains": [
+        "literature"
+      ],
+      "reason": "7月1日为论文踪迹检测方向及复现计划，早于后续六篇比较/关注度面板；不因文件名含ALGO就提前归入algobench",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "因子/ALGO_FOOTPRINT_DETECTION_PLAN_2026-07-01.md",
+        "因子/ALGO_TRADING_TRACE_RESEARCH_PLAN_2026-07-01.md",
+        "因子/CODEX_PLAN_C1_ClusterLOB_2026-07-01.md",
+        "因子/CODEX_PLAN_HASBROUCK_SAAR_LOWLATENCY_2026-07-01.md",
+        "因子/factor_lab/notebooks/FACTOR_TEMPLATE.ipynb"
+      ]
+    },
+    "b55d89e2d1b3b283ba6980bcdc7449296d145e1d": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "相位评价使用并修正既有五分钟窗口/生命周期/标签基础设施；这些依赖修正服务本次相位任务，不另计上游任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/factor_preregister_intraday_open5m_cancel_phase_only_v1.yaml",
+        "scripts/build_open5m_cancel_phase_report.py",
+        "scripts/build_open5m_cancel_phase_result.py",
+        "scripts/build_open5m_count_proxy_notebooks.py",
+        "scripts/evaluate_open5m_cancel_phase_2026h1.py",
+        "scripts/render_open5m_cancel_phase_launcher.py",
+        "scripts/run_open5m_cancel_phase_panel.py",
+        "scripts/run_open5m_cancel_phase_server_task.sh",
+        "因子/algobench/configs/open5m_cancel_phase_2026h1_v1.yaml",
+        "因子/algobench/src/algobench/cancel_phase_factors.py",
+        "因子/algobench/src/algobench/cancel_phase_panel.py",
+        "因子/algobench/src/algobench/cancel_phase_registry.py"
+      ]
+    },
+    "53d87b1927b3bb957fbaefe0b7c08833818ae1f1": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "相位评价使用并修正既有五分钟窗口/生命周期/标签基础设施；这些依赖修正服务本次相位任务，不另计上游任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/run_open5m_cancel_lag.py",
+        "因子/algobench/src/algobench/cancel_lag_distribution.py",
+        "因子/algobench/tests/test_cancel_lag_distribution.py"
+      ]
+    },
+    "cbe5b2b57379e85ce297150fca9c38c221a9c1dc": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "相位评价使用并修正既有五分钟窗口/生命周期/标签基础设施；这些依赖修正服务本次相位任务，不另计上游任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/run_open5m_cancel_lag.py",
+        "因子/algobench/tests/test_cancel_lag_distribution.py"
+      ]
+    },
+    "f2ab963a6b2415d840c413631aba98434ae05807": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "相位评价使用并修正既有五分钟窗口/生命周期/标签基础设施；这些依赖修正服务本次相位任务，不另计上游任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "因子/algobench/configs/formal_logic_intraday_open5m_count_proxy_v2.yaml",
+        "因子/algobench/tests/test_open5m_proxy_registry.py"
+      ]
+    },
+    "16f3b1e20dd842bd5c70615e44a07be2f7415021": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "相位评价使用并修正既有五分钟窗口/生命周期/标签基础设施；这些依赖修正服务本次相位任务，不另计上游任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/build_open5m_cancel_phase_result.py",
+        "scripts/finalize_open5m_cancel_phase_run.py",
+        "因子/algobench/src/algobench/formal_lifecycle.py",
+        "因子/algobench/tests/test_build_open5m_cancel_phase_result.py",
+        "因子/algobench/tests/test_formal_lifecycle.py"
+      ]
+    },
+    "593bda4529899b1f8a037067caf8597c759134da": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "相位评价使用并修正既有五分钟窗口/生命周期/标签基础设施；这些依赖修正服务本次相位任务，不另计上游任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/build_open5m_cancel_phase_result.py",
+        "scripts/run_open5m_cancel_phase_panel.py",
+        "因子/algobench/configs/open5m_cancel_phase_2026h1_v1.yaml",
+        "因子/algobench/src/algobench/cancel_phase_panel.py",
+        "因子/algobench/src/algobench/formal_lifecycle.py",
+        "因子/algobench/tests/test_build_open5m_cancel_phase_result.py",
+        "因子/algobench/tests/test_cancel_phase_panel.py"
+      ]
+    },
+    "6e697656928abf1e57df1c913e98e22d0c3ab425": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+        "reports/2026-08/2026-08-28-旧因子修改idea.md",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_recovery.py",
+        "因子/algobench/tests/test_formal_recovery.py"
+      ]
+    },
+    "af44aebf4c9835f45dff61231385ccd580700a9a": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+        "decisions/2026-09-08-old-factor-bank-execution-contract.md",
+        "scripts/build_open5m_runtime_parameters.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/run_open5m_structural_repair_benchmark.py",
+        "因子/algobench/configs/formal_real_data_calibration_open5m_selected_200_v3.yaml",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_parameter_contracts.py"
+      ]
+    },
+    "ba447868cbaf53935d4d7e8cac6020b87b3bcd30": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+        "reports/2026-08/2026-08-28-旧因子修改idea.md",
+        "scripts/build_open5m_runtime_parameters.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/run_open5m_structural_repair_benchmark.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_calibration_reuse.py"
+      ]
+    },
+    "bfc6aef10368350e78471dcd7d2412e0c9a7f068": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-archive-cache-resume.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    "6cbeb48adaf183658fe4a2eff564b2477f0ea83f": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-stage-memory-resume.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    "8acf702babda36155cf786ea6f5bbaacb2527507": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-stage-memory-resume.md"
+      ]
+    },
+    "41b7fc79bb51c262fba754061e173cccfae401e2": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-calibration-blockers-SHA256SUMS",
+        "reports/2026-09/2026-09-09-calibration-blockers-analysis.md",
+        "reports/2026-09/2026-09-09-calibration-blockers-evidence.json",
+        "reports/2026-09/2026-09-09-r17-storage-incident.md"
+      ]
+    },
+    "a59896ddb5a87eb809e3d9f9e672cb7cf564e75a": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-r17-storage-incident-evidence/filesystem-summary.json",
+        "reports/2026-09/2026-09-09-r17-storage-incident-evidence/snapshot.json",
+        "reports/2026-09/2026-09-09-r17-storage-incident.md"
+      ]
+    },
+    "cfbae68aba5186db13e853941369c3c5f72d1790": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/benchmark_launcher.py",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/bbo-active-row-final-probe.json",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/bbo_range_index_probe.py",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/check_event_test_baseline.py",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/complete-optimization-local-tests.log",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/complete-optimization-local-tests.log.json",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/event-normalization-probe.json",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/event-tests-baseline.json",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/event_normalization_probe.py",
+        "reports/2026-09/2026-09-12-old-factor-performance-evidence/linux-regression-433f017f-guard.json"
+      ]
+    },
+    "d87be450c1d3e2083ade3ccf26362ca7ef2e0480": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-11-old-factor-depth-dependence.md",
+        "scripts/evaluate_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_depth_dependence.py",
+        "因子/algobench/tests/test_formal_depth_dependence.py"
+      ]
+    },
+    "d14a8331de162d0a6f02e5d90f15a3e4fd03161a": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "本次F40旧库实现/续算/验收目标明确；定标、development日期和共享代码是该任务的合同支撑，不据词语另立模型或10月分组任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/apply_pause_cleanup.py",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-continuity-one-event.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-continuity-tests.log",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-continuity-tests.log.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-hoisted-many-events.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-event-hoisted-one-event.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-hash-probe-final.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-hash-regression.log",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-loop-hoisting-final-tests.log",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo-loop-hoisting-final-tests.log.json",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/bbo_compact_probe.py",
+        "reports/2026-09/2026-09-11-old-factor-300s-evidence/benchmark_launcher.py"
+      ]
+    },
+    "1493096525d15351fb21d36781539b08f9f61658": {
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "200日冻结定标的续算/归档记录，属于早期定标阶段；不能提前计为10月股票/市场状态分组定标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+        "reports/2026-09/2026-09-09-f40-archive-cache-resume.md"
+      ]
+    },
+    "d19c6cb42f0c20066fe6276d188ac199462d3863": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "机械撤单交付中使用并核验结果清单；传输实现是本次交付支撑，不把一个清单同时计成环境建设",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/result_transfer_contract.py",
+        "scripts/seal_cancel_phase_prescreen_history.py",
+        "因子/algobench/tests/test_result_transfer_contract.py"
+      ]
+    },
+    "bdb3661ba43f69607915959cf8912facbc7c7716": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "机械撤单交付中使用并核验结果清单；传输实现是本次交付支撑，不把一个清单同时计成环境建设",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/result_transfer_contract.py",
+        "scripts/seal_cancel_phase_prescreen_history.py",
+        "因子/algobench/tests/test_result_transfer_contract.py"
+      ]
+    },
+    "b20aebfd9a14ea2b881af5db2f06bc35d480dca2": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "修改目标为沪市输入可见性/公开定义及其验收；所用相位或dm列定义是被审对象，不是重新开展对应旧研究",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-09/2026-09-22-sse-cancel-phase-raw-bank-assessment.md",
+        "reports/2026-09/2026-09-22-sse-company-source-observability.md",
+        "reports/2026-09/2026-09-22-sse-exact-reconstruction-contract.md",
+        "reports/2026-09/2026-09-22-sse-factor-dependency-evidence/acceptance-receipt.json",
+        "reports/2026-09/2026-09-22-sse-factor-dependency-evidence/acceptance.log",
+        "reports/2026-09/2026-09-22-sse-factor-dependency-evidence/validation.json",
+        "reports/2026-09/2026-09-22-sse-factor-replay-extension-research.md",
+        "reports/2026-09/2026-09-22-sse-logical-order-construction.md",
+        "reports/2026-09/2026-09-22-sse-replay-evidence/README.md",
+        "reports/2026-09/2026-09-22-sse-replay-evidence/audited_file_hashes.json",
+        "reports/2026-09/2026-09-22-sse-replay-evidence/database_schema.tsv",
+        "reports/2026-09/2026-09-22-sse-replay-evidence/exact_book_probe.jsonl"
+      ]
+    },
+    "7e4e9e593835b010507b10f0caee805bf5d13d1e": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "修改目标为沪市输入可见性/公开定义及其验收；所用相位或dm列定义是被审对象，不是重新开展对应旧研究",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/.gitattributes",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/compare_diagnostics.py",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/diagnostic-temp-cleanup.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/server-evidence-paths.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/server-evidence-sha256.json",
+        "reports/2026-10/2026-10-09-sse-old-bank-engineering-evidence/windows-regression.log"
+      ]
+    },
+    "c0a54cd4b92b9106926cab08b96168c4bb13da9c": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "修改目标为沪市输入可见性/公开定义及其验收；所用相位或dm列定义是被审对象，不是重新开展对应旧研究",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-16-sse-visible-g1-three-valued.md",
+        "scripts/tests/test_visible_depth_match.py",
+        "因子/algobench/src/algobench/visible_depth_match.py"
+      ]
+    },
+    "d0bbd5e1f1c39e2b482b46945e7bd53d16d169ac": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "正式328输入重算的准备范围与阻塞记录；分组参数作为所需输入，不把准备记录同时计成参数交付",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-grouped-kernels.md",
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md"
+      ]
+    },
+    "865c28a80d548d875faba0b81538f1e292a74947": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "正式328输入重算的准备范围与阻塞记录；分组参数作为所需输入，不把准备记录同时计成参数交付",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/601-date-entry-probe.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/contract-checks.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/kernel-consumers-index.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/kernel-consumers.csv",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/local-state.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/r19-identity.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/sirui-server-wangly-state.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/sirui-server-wenjie-state.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/validation.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight-evidence/verified-inputs.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preflight.md"
+      ]
+    },
+    "2d3c1cfbae6c7a954cc03c9e66069703e092f90d": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "旧库逐股票日核绑定及整库不变性验收，和328正式生产目标分开",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/binding_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/columns.csv",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/comparison.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/constant-table-manifest.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/guard_manifest.actual.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/preparation_identity.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/quote_validation_preflight.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/runtime_parameters_v2.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/server-SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/binding-regression/verification_guard.actual.json",
+        "reports/2026-10/2026-10-10-old-factor-stock-day-binding.md"
+      ]
+    },
+    "0af45c6944dd97004b170c2030d48b3f7de07afd": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-kernel-parameter-table.md",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-canary/guard_manifest.actual.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-canary/manifest.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-canary/run_identity.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-full/guard_manifest.actual.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-full/manifest.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-full/run_identity.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-full/server-SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/parameter-table-validation.json"
+      ]
+    },
+    "8c49ba5e69b60f16735fbf04b4167e6d3f80315f": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/component-cli-tests.log",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/component-tests.log",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/src/algobench/formal_f40_execution.py",
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/tests/test_f40_streaming_matching.py",
+        "因子/algobench/tests/test_open5m_selected_collection.py"
+      ]
+    },
+    "f0b10ec252bae472677822e7b304895030db391f": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/component-benchmark-tests.log",
+        "scripts/benchmark_open5m_f40_components.py",
+        "因子/algobench/tests/test_open5m_f40_component_benchmark.py"
+      ]
+    },
+    "776c3556d554a3176d8b1f71d1c0eaf632805b69": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-structural-calibration-baseline.md",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/baseline-summary-SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/collection/business_correctness.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/collection/daily_evidence/date=2024-12-30/collection_timing.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/collection/daily_supports/date=2024-12-30/day_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/collection/result.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/collection/run_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/evidence/guard_manifest.actual.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/launcher.sh",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/launcher_exit.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-baseline-extreme/preparation_identity.json"
+      ]
+    },
+    "0961bcb3e5c3f08f5d13f16d899ecfd7c58677d2": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-structural-calibration-baseline.md",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/r19-reference/matched-day-reference.json"
+      ]
+    },
+    "906ab3b8bfe2c066c7fc327bbb0e30257e4c4e18": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-structural-collection-optimization.md",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/collection/business_correctness.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/collection/daily_evidence/date=2024-12-30/collection_timing.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/collection/daily_supports/date=2024-12-30/day_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/collection/result.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/collection/run_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/evidence/guard_manifest.actual.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/kernel_table_reference.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/launcher.sh",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/launcher_exit.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-optimized-extreme/observation_comparison.json"
+      ]
+    },
+    "46a6be0b7e79888a302a02215733876ed6e12534": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-structural-collection-optimization.md",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/acceptance.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/benchmark/components-1/f40_stages/match_1/date=2024-12-30/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/benchmark/components-1/f40_stages/match_1/date=2025-04-02/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/benchmark/components-3/f40_stages/match_1/date=2024-12-30/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/benchmark/components-3/f40_stages/match_1/date=2025-04-02/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/benchmark/identity.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/benchmark/result.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/evidence/guard_manifest.actual.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-components/launcher.sh"
+      ]
+    },
+    "ee46dff5c58f9eb39bf9c2052789340d3c198528": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/r19-group-reuse-tests.log",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/tests/test_open5m_selected_date_calibration.py"
+      ]
+    },
+    "bd17442012de096c5220487a0cce7d4a1837812d": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-overlap-process-tests.log",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/configs/formal_real_data_calibration_open5m_grouped_601_overlap_v1.yaml",
+        "因子/algobench/tests/test_open5m_selected_collection.py"
+      ]
+    },
+    "a56c8c8cb5852fb7a809690726697da18bdc85d3": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-structural-action-projection.md",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/action-projection-suite/launcher.log",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/action-projection-suite/launcher.sh",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/action-projection-suite/launcher_exit.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/action-projection-suite/preflight.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-action-extreme/collection/business_correctness.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-action-extreme/collection/daily_evidence/date=2024-12-30/collection_timing.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-action-extreme/collection/daily_supports/date=2024-12-30/day_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-action-extreme/collection/result.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-action-extreme/collection/run_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/collection-action-extreme/evidence/SHA256SUMS"
+      ]
+    },
+    "f4eedd0b68b23fcdb8fb6db4653bcc6325361bbe": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/global-support-merge-tests.log",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/global-support-merge-tests.log.json",
+        "scripts/benchmark_open5m_structural_global_merge.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "因子/algobench/tests/test_open5m_selected_date_calibration.py"
+      ]
+    },
+    "21c5bd096ef8e1e2523a2bdd6a0de7057965b070": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-structural-f40-pipeline.md",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/identity.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/measurements.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/result.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/workers12-components1-days1/f40_episode_cache/date=2024-12-30/0838fb52ebe594f492dd718432df8a8797db14d876a0ea3ba842d768b84e2638/manifest.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/workers12-components1-days1/f40_episode_cache/date=2025-04-02/88d94afebca014df066717d83e17b9738942a3c804a5a5b5ef7061978482443e/manifest.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/workers12-components1-days1/f40_stages/anchor/date=2024-12-30/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/workers12-components1-days1/f40_stages/anchor/date=2025-04-02/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/workers12-components1-days1/f40_stages/cost/date=2024-12-30/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/workers12-components1-days1/f40_stages/cost/date=2025-04-02/receipt.json",
+        "reports/2026-10/2026-10-10-old-factor-recompute-preparation-evidence/performance/f40-pipeline/benchmark/workers12-components1-days1/f40_stages/episode/date=2024-12-30/receipt.json"
+      ]
+    },
+    "219a30b2654d7ca9f16e78c8415780d4a9fec30f": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md",
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_runtime_v2.py",
+        "因子/algobench/src/algobench/formal_structural_binding.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_calibration_reuse.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_runtime_v2.py"
+      ]
+    },
+    "f0c76fb3d633a1b3ea00262b8401002030a85c7d": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/benchmark_open5m_structural_stock.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    "6c13a2b7269067931fd61c3b4b43707d9e17aa02": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/tests/test_f40_streaming_matching.py",
+        "因子/algobench/tests/test_open5m_f40_resource_pipeline.py"
+      ]
+    },
+    "901e1bba8dc7afc0281e0749526c1e6826864dc8": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/benchmark_open5m_structural_stock.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_parallel_structural_pairs.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_parallel_structural_pairs.py"
+      ]
+    },
+    "dcc4a18a397c70ffba80da23f662971f52698b43": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/benchmark_open5m_exact_support_merge.py",
+        "因子/algobench/src/algobench/formal_calibration_quantiles.py",
+        "因子/algobench/tests/test_formal_calibration_quantiles.py"
+      ]
+    },
+    "4265c4a6dc2bde1b6151d70cae48b0e64b22cbf9": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/benchmark_open5m_structural_stock.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    "cb4aee783fba0ea9dfa54a5276d9a223aa6e1b2f": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/benchmark_open5m_f40_resource_pipeline.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_f40_immutable_reuse.py"
+      ]
+    },
+    "421df37e945dfc6a88c6a33babe56358277b12e1": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/stock-bbo-41c62d18-guard.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/stock-bbo-41c62d18-result.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/benchmark_open5m_structural_stock.py"
+      ]
+    },
+    "10732ef7369c301fe4ce0f11891e6e04acdf2963": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/benchmark_open5m_f85_cross_date.py",
+        "scripts/compare_open5m_structural_observations.py",
+        "因子/algobench/tests/test_open5m_structural_observations.py"
+      ]
+    },
+    "b6a8292b873c3a4c699dfdf25ec88c036c67ef1c": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration.md",
+        "scripts/calibrate_open5m_f40_stages.py"
+      ]
+    },
+    "0c5b72ca6cb26aff94ccff5cf2217ebfea0d8a63": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/.gitattributes",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/2026-10-10-failed-performance-gate.py",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/SHA256SUMS",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/business_correctness.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/daily_evidence/date=2024-12-30/collection_timing.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/daily_evidence/date=2025-04-02/collection_timing.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/daily_supports/date=2024-12-30/day_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/daily_supports/date=2025-04-02/day_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/result.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/run_identity.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/collection/run_summary.json",
+        "reports/2026-10/2026-10-10-old-factor-acceleration-evidence/final-canary-01c81273/after/evidence/guard_manifest.actual.json"
+      ]
+    },
+    "a6affe5a1fa98443a2eb6d5546873080e5c0fda2": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization-evidence/acceptance_summary.json",
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization-evidence/resume_identity.json",
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization-evidence/resume_start_verification.json",
+        "reports/2026-10/2026-10-11-f40-remaining-stage-optimization.md"
+      ]
+    },
+    "67f97c4e7c7979941141869848ec147f659549e2": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitoring_policy.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    "cc23d2a9e46fdaeff57a2176f7ac794fe4a38362": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次直接产物是六核/结构参数、F40精确匹配采集或相应性能与封存记录；328为下游消费者，旧库为复用实现，不重复计三条链",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-10-szse-old-factor-recompute-preparation.md",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T154211Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T160219Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T161751Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T165827Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitoring_policy.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    "3d6ae8dbc9dd3c3f97491b2e92108b8dbfba6f80": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "decisions/2026-10-14-object-publication-namespace.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/src/algobench/formal_artifact_commit.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    "6b568ead5458003e73db179f3bc2bef28349e6eb": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/ml/artifacts.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    "481bcc95ea41d0da0bce2f931ab1aeffa3f491f2": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-14-szse-model328-optimization-analysis.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    "619b9106c78250e494b02ca81d5f5cfd45cb7a29": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-14-szse-model328-four-minute-performance.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_artifact_commit.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py",
+        "因子/algobench/tests/test_formal_day_buckets.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    "d433021d06a4eb6eb4218f5e00af4b759eb536d9": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "四来源328生产中的日面板、订单验收、控制记录与发布性能；源旧库和模型接口属于实现来源，不同时算新旧库或模型执行",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-16-szse-model328-four-minute-continuation.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    "c208aea0fb218f5a3cb088739a5e9d9b6b1cf4c1": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/portfolio-negative.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/portfolio-tests.log",
+        "reports/2026-10/2026-10-19-foundation-correctness-audit-evidence/portfolio-tests.log.json",
+        "因子/algobench/src/algobench/ml/open5m_330_data.py",
+        "因子/algobench/src/algobench/ml/open5m_330_evaluation.py",
+        "因子/algobench/src/algobench/ml/open5m_330_runtime.py",
+        "因子/algobench/tests/test_foundation_portfolio_contract.py",
+        "因子/algobench/tests/test_intraday_ml_open5m_330_data.py",
+        "因子/algobench/tests/test_intraday_ml_open5m_330_evaluation.py"
+      ]
+    },
+    "377b2b40b7717e7bb635e5ef9b9efcb799cbec8a": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-19-native-replay-entry-migration.md",
+        "lv2_snapshot_workspace/README.md",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/auction-final.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/auction-final.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-final.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-final.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-red.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/call-trade-red.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/cleanup-receipt.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/cli-reference.log",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/cli-reference.log.json",
+        "reports/2026-10/2026-10-19-native-replay-entry-migration-evidence/closure-accepted.log"
+      ]
+    },
+    "23c0a4c0e49fdda874df45b47195e1223d7a94c3": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/compare_open3m_all_order_count_factors.py",
+        "scripts/compare_open3m_directional_count_factors.py",
+        "scripts/compare_open3m_interday_count_factors.py",
+        "因子/algobench/src/algobench/anchors/l1_turnover.py",
+        "因子/algobench/src/algobench/anchors/sse_instruments.py",
+        "因子/algobench/src/algobench/cancel_lag_distribution.py",
+        "因子/algobench/src/algobench/formal_calibration_scratch.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_label_pipeline.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_reference.py",
+        "因子/algobench/src/algobench/historical_baselines.py"
+      ]
+    },
+    "058c4c21d319a1dbd794b074aa01086b344dc996": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/analyze_sse_stage1.py",
+        "scripts/analyze_visible_factor_ranks.py",
+        "scripts/attribute_visible_sources.py",
+        "scripts/audit_sse_automatic_cancels.py",
+        "scripts/audit_sse_original_order_ids.py",
+        "scripts/audit_sse_visibility_cached_inputs.py",
+        "scripts/audit_szse_cancel_adjacency.py",
+        "scripts/audit_szse_replay_rules.py",
+        "scripts/audit_szse_replay_validation.py",
+        "scripts/audit_szse_visible_contract.py",
+        "scripts/audit_visible_cancel_ages.py",
+        "scripts/audit_visible_factor_dependencies.py"
+      ]
+    },
+    "15eac64e92496900792145a21a4af93a7efdc960": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-19-script-checkout-bootstrap-fix.json",
+        "reports/2026-10/2026-10-19-script-checkout-bootstrap-fix.md",
+        "scripts/analyze_sse_stage1.py",
+        "scripts/analyze_visible_factor_ranks.py",
+        "scripts/attribute_visible_sources.py",
+        "scripts/audit_sse_automatic_cancels.py",
+        "scripts/audit_sse_original_order_ids.py",
+        "scripts/audit_sse_visibility_cached_inputs.py",
+        "scripts/audit_szse_cancel_adjacency.py",
+        "scripts/audit_szse_replay_rules.py",
+        "scripts/audit_szse_replay_validation.py",
+        "scripts/audit_szse_visible_contract.py"
+      ]
+    },
+    "3afa4ef85108e4d416d579692eb5f81e99e4737c": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-19-project-architecture.md",
+        "scripts/_bootstrap.py",
+        "scripts/analyze_sse_stage1.py",
+        "scripts/analyze_visible_factor_ranks.py",
+        "scripts/attribute_visible_sources.py",
+        "scripts/audit_sse_automatic_cancels.py",
+        "scripts/audit_sse_original_order_ids.py",
+        "scripts/audit_sse_visibility_cached_inputs.py",
+        "scripts/audit_szse_cancel_adjacency.py",
+        "scripts/audit_szse_replay_rules.py",
+        "scripts/audit_szse_replay_validation.py",
+        "scripts/audit_szse_visible_contract.py"
+      ]
+    },
+    "4a677965e190588cb62a79890ff384d986080e95": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/benchmark_formal_day_bucket_publication.py",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/build_szse_model328_factor_acceptance.py",
+        "scripts/build_szse_model328_performance_gate.py",
+        "scripts/build_szse_model328_quote_validation.py",
+        "scripts/cleanup_wangly_s3.py",
+        "scripts/compare_open3m_all_order_count_factors.py",
+        "scripts/compare_open3m_directional_count_factors.py",
+        "scripts/compare_open3m_interday_count_factors.py",
+        "scripts/prescreen_runtime.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/run_2026q2_intraday_continuation.sh"
+      ]
+    },
+    "28b8f2fbe3060167d9eebe318bdd699eec5228b7": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-remediation-and-acceptance.md",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_sse_distance_contracts.py"
+      ]
+    },
+    "817420c0a0d2056f52dee6a201784e2d5c179c9e": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "10月19—20日正确性/接口整改及回归验收；只修改旧消费者以满足同一合同，不让所有被触及旧任务同时增重",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-remediation-and-acceptance.md",
+        "因子/algobench/tests/test_cancel_phase_prescreen_contract.py"
+      ]
+    },
+    "8ab8dc69accaac050754ac0dc5b51db82be7eb6e": {
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "统一默认环境的调用迁移、完整性和并发修复；多个消费者接入同一个环境成果，只给环境任务计一份",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "AGENT.md",
+        "PLAN/2026-10-20-full-recompute-admission.md",
+        "docs/agents/server-environment.md",
+        "scripts/build_sse_stage1_features.py",
+        "scripts/fetch_grouped_calibration_precheck_rqdata.py",
+        "scripts/launch_c33_prescreen.sh",
+        "scripts/launch_cancel_phase_prescreen.sh",
+        "scripts/render_open5m_cancel_phase_launcher.py",
+        "scripts/run_open5m_depth_match_server_task.sh"
+      ]
+    },
+    "cb7205738084ba928edd1d62437a730478ad3cc0": {
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "统一默认环境的调用迁移、完整性和并发修复；多个消费者接入同一个环境成果，只给环境任务计一份",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-full-recompute-admission.md",
+        "scripts/cache_structural_calibration_runtime.py",
+        "scripts/prepare_server_environment.py"
+      ]
+    },
+    "72dc5a11cf46244998384da7da51d950d74f1642": {
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "统一默认环境的调用迁移、完整性和并发修复；多个消费者接入同一个环境成果，只给环境任务计一份",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-full-recompute-admission.md",
+        "docs/agents/server-environment.md",
+        "scripts/prepare_server_environment.py",
+        "scripts/tests/test_prepare_server_environment.py"
+      ]
+    },
+    "df17ea241c8d43a676d3ef5d0d0f311f2e9989b3": {
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "正确盘口344的新采集/定参准入及双情景核验；复用早期open5m采集模块不代表重启旧任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration-evidence/linux-and-initial-kernel.json",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "scripts/benchmark_open5m_structural_stock.py"
+      ]
+    },
+    "f5bf1eff054817fde324c137f18d381a9ca0f2ac": {
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "正确盘口344的新采集/定参准入及双情景核验；复用早期open5m采集模块不代表重启旧任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".gitattributes",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/classification.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/complete-days.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/diagnosis.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/manifest.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/model-audit.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/performance.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/post-run.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/previous-storage.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/resources.json",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis-evidence/resume.json"
+      ]
+    },
+    "4b38c28d152244e9790f2569d336bc2ad6ed55f5": {
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "正确盘口344的新采集/定参准入及双情景核验；复用早期open5m采集模块不代表重启旧任务",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/options.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "reports/2026-10/2026-10-20-source-ambiguity-admission.md",
+        "scripts/check_open5m_source_scenarios.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_open5m_source_scenarios.py",
+        "因子/algobench/src/algobench/formal_calibration_lineage.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py"
+      ]
+    },
+    "82ffcd42908e92af45d38d821627672d81360496": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "终端闭合证明及开盘窗口的回放合同修正；是344的输入前提，当前提交本身归回放修复",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis.md",
+        "scripts/diagnose_open5m_replay_rejections.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_channel_closed_calibration_inputs.py",
+        "scripts/tests/test_szse_replay_production.py"
+      ]
+    },
+    "b0b18ae16d72a4e84381ae8b4ec068634a824b83": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "终端闭合证明及开盘窗口的回放合同修正；是344的输入前提，当前提交本身归回放修复",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/options.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "lv2_snapshot_workspace/src/snapshot/snapshot.py",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "scripts/tests/test_channel_closed_calibration_inputs.py",
+        "scripts/tests/test_szse_limit_terminal_closure.py",
+        "scripts/tests/test_szse_rule_supported_cancel.py",
+        "因子/algobench/configs/formal_kernel_calibration_open5m_corrected_344_v1.yaml",
+        "因子/algobench/src/algobench/event_prestate.py"
+      ]
+    },
+    "95f9f8b68d5042b9905926e4aa2d1cecbeb2f181": {
+      "status": "shared",
+      "chains": [
+        "replay",
+        "corrected-replay-344"
+      ],
+      "reason": "同一记录分别保存v5完整日回放验收与344六核601日正式采集启动，两个实际目标均有独立记录，等分一份",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".gitattributes",
+        "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis.md",
+        "reports/2026-10/2026-10-20-source-ambiguity-admission.md",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/final-evidence.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/handoff-latest.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/handoff-live.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/live-acceptance.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/manifest.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/model-audit.json",
+        "reports/2026-10/2026-10-21-limit-terminal-closure-evidence/terminal-price-contracts-r02.log.json"
+      ]
+    },
+    "567bbb037e5b83065419ce58936f11ef953f93fa": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "操作指令/凭据预检规约文档；不把规则文字计为一次真实环境/存储执行",
+      "review_basis": "差异中规约正文复核",
+      "anchors": [
+        "docs/prompts/wangly-compute-task.md"
+      ]
+    },
+    "5655b7a354d59035dcafa3267d65bef37ab9840d": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "操作指令/凭据预检规约文档；不把规则文字计为一次真实环境/存储执行",
+      "review_basis": "差异中规约正文复核",
+      "anchors": [
+        "AGENT.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "CONTEXT.md"
+      ]
+    },
+    "963d9c53f0d1f55219c1c234dc9ed7c3d4b90bb8": {
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "差异为C7盘口深度检查点、滞后深度及reach geometry；公共回放的改动服务C7预查",
+      "review_basis": "差异中相关函数和测试复核",
+      "anchors": [
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/tests/test_event_prestate_lagged_depth.py"
+      ]
+    },
+    "cd60e56072306992b5572c4074c1de76b0d21791": {
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "差异为C7盘口深度检查点、滞后深度及reach geometry；公共回放的改动服务C7预查",
+      "review_basis": "差异中相关函数和测试复核",
+      "anchors": [
+        "因子/algobench/src/algobench/execution_geometry_prescreen.py",
+        "因子/algobench/tests/test_execution_geometry_prescreen.py"
+      ]
+    },
+    "b9bc3b220a4d3d89192e225f2638693032d8901e": {
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "差异为C7盘口深度检查点、滞后深度及reach geometry；公共回放的改动服务C7预查",
+      "review_basis": "差异中相关函数和测试复核",
+      "anchors": [
+        "因子/algobench/src/algobench/event_prestate.py"
+      ]
+    },
+    "1488a114105101a8b11a4936f53db882bded95eb": {
+      "status": "assigned",
+      "chains": [
+        "depth-match"
+      ],
+      "reason": "差异为C7盘口深度检查点、滞后深度及reach geometry；公共回放的改动服务C7预查",
+      "review_basis": "差异中相关函数和测试复核",
+      "anchors": [
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/tests/test_execution_geometry_prescreen.py"
+      ]
+    },
+    "104450fe7f4cf56aa316ca268e6dd681f6239c49": {
+      "status": "assigned",
+      "chains": [
+        "cancel-phase"
+      ],
+      "reason": "全历史相位评价的标签输出根接入；属于相位评价所需标签生产",
+      "review_basis": "差异中命令参数与9月6日相位上下文复核",
+      "anchors": [
+        "scripts/audit_rqdata_vwap_units.py",
+        "scripts/build_labels_d1_1030.py"
+      ]
+    },
+    "02880d8096d06766b1510e188d6965ee19a60012": {
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/conftest.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    "a02fb2c3686dc79e2e705367809dfddd7f1cd1e8": {
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/tests/test_bounded_page_io.py",
+        "scripts/benchmark_doris_page_end_to_end.py"
+      ]
+    },
+    "ca89e746869d2319a08cae80c1bb8e3a58393637": {
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_bounded_page_io.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py"
+      ]
+    },
+    "7abeb6a7088fc54f5fb245f0d2ab66a0b205ba4e": {
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py"
+      ]
+    },
+    "8640221a4abebadacff2dc36a04cd3ab7a76cf6f": {
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共Doris的有界分页、预算和取数窗口合同；专用io/query_plan函数及测试可核对",
+      "review_basis": "差异中分页/查询合同复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/tests/test_bounded_page_io.py"
+      ]
+    },
+    "da26ca2c736198a9fe41c61181d2dfbf97670f28": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "旧库常数核绑定回归的独立单日范围与冻结日历合同",
+      "review_basis": "差异中binding_regression_only复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    "b67e452fcaca767afb7c346359ebce32d32f6987": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_parallel_structural_pairs.py",
+        "因子/algobench/tests/test_parallel_structural_pairs.py"
+      ]
+    },
+    "bd6f64106ca79412f1632df8d6d15315ad2b984f": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_parallel_structural_pairs.py",
+        "因子/algobench/tests/test_parallel_structural_pairs.py"
+      ]
+    },
+    "f3b5061db1d483e672cb504aeef8550ad290a920": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_structural_calibration_worker.py"
+      ]
+    },
+    "f010bbbca8edaa82981e73aa8cd2aa62cf32d2c3": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/cache_structural_calibration_runtime.py",
+        "因子/algobench/tests/test_structural_runtime_cache.py"
+      ]
+    },
+    "6b040a0d86554bb3f123c89828f8d1daf14e2f6f": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/cache_structural_calibration_runtime.py",
+        "因子/algobench/tests/test_structural_runtime_cache.py"
+      ]
+    },
+    "d82e5c5fbb73c0abe4ca03d6e31f00e8e51cf386": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/tests/test_run_open5m_real_data_calibration.py"
+      ]
+    },
+    "cea4b7ae355f0b1861f6e57b8c7def07bb18bf1d": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/tests/test_run_open5m_real_data_calibration.py"
+      ]
+    },
+    "f1a1e18860c52c6f50a9c3a7ee82daacdea72f6c": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/tests/test_run_open5m_real_data_calibration.py"
+      ]
+    },
+    "ba77d66d60e56e0db9a80d823d43cd7ee71b5b24": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py"
+      ]
+    },
+    "b8b56e6fafdc26a528037ac5277068fa6e0b9d14": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    "0d31f1ad021a6c0412418edfd62451525492beba": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/tests/test_run_open5m_real_data_calibration.py"
+      ]
+    },
+    "53d56dfe3774a1bca64967ea5e029b0f731435fc": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py",
+        "因子/algobench/tests/test_run_open5m_real_data_calibration.py"
+      ]
+    },
+    "73f89e7824412c16008627434bad92a2d2b5ed99": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    "6a42af1baf70357dd348f5101231c01534c52f34": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "因子/algobench/tests/test_f40_scoring_continuity.py"
+      ]
+    },
+    "d4b6a84886cc1b7a4864b5113a3e059c8e652476": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "结构采集/F40匹配的分片、日包、归档与依赖缓存支撑；不按公共文件名归旧库",
+      "review_basis": "差异中结构采集、F40 archive或匹配函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/tests/test_f40_streaming_matching.py"
+      ]
+    },
+    "4f43e9dc1fb4dac664dd3602daecae0cb9f78631": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "沪市接入后保留深市原运行身份和缓存兼容；被保障的深市生产任务为328",
+      "review_basis": "差异中startup_record条件字段复核",
+      "anchors": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py"
+      ]
+    },
+    "6266e27060830665afa1e753b1e5cc9632be0e0a": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    "7ec33b3996cf9df87bbb69e9aedf08679c03a4b5": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "reports/2026-10/2026-10-12-szse-factor-engineering-reuse-audit.md",
+        "reports/2026-10/2026-10-12-szse-factor-engineering-reuse-evidence/baseline-comparison.json",
+        "reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/diagnostics.json",
+        "reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/measurements.json",
+        "reports/2026-10/2026-10-12-szse-factor-performance-repair.md"
+      ]
+    },
+    "d9139e1b4208348d206856edba3540a70ced7889": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    "d9eba1f82ad73e133df4fe42ed0bc9423eb61fed": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_factor_run_schedule.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    "8884e8c353b8041943963898dcb46b1e6abb91fa": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_day_manifest_codec.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_day_manifest_codec.py"
+      ]
+    },
+    "d8ae027eb718af8c4ac09bc53b404b2c6f0163d7": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_day_manifest_codec.py",
+        "因子/algobench/tests/test_formal_day_manifest_codec.py"
+      ]
+    },
+    "dfd48989fe1bc979d413eb1e18bfb7a570e9e7a8": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "scripts/benchmark_formal_day_bucket_publication.py",
+        "scripts/tests/test_benchmark_formal_day_bucket_publication.py"
+      ]
+    },
+    "454da69995ee391e8d43bfa11721772229ccbbdf": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "328生产的按日收尾、日面板/订单回执、清单身份及发布成本验收",
+      "review_basis": "差异中ModelSources、日桶或完整日发布函数复核",
+      "anchors": [
+        "scripts/benchmark_formal_day_bucket_publication.py"
+      ]
+    },
+    "40025cb3be76b4df8dea58a05035a05071756af2": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/auction.py",
+        "lv2_snapshot_workspace/src/snapshot/snapshot.py",
+        "lv2_snapshot_workspace/src/snapshot/validate.py",
+        "scripts/tests/test_native_auction_rules.py"
+      ]
+    },
+    "53eb2bd81952afe61a6e096558e043c59239e7de": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "scripts/run_formal_panel.py",
+        "scripts/run_pilot.py",
+        "因子/algobench/tests/test_run_formal_panel.py",
+        "因子/algobench/tests/test_run_pilot.py"
+      ]
+    },
+    "aad338c2a84fab3bfa499470ee18d9b0b3bfb98d": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    "b27cfd07657731e8710ef2dfd69aa9987dd1f883": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "scripts/tests/test_formal_execution_stages.py"
+      ]
+    },
+    "efd085a37b759fd77437a41217113202d54b4147": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/tests/test_formal_worker_memory.py"
+      ]
+    },
+    "811638b4c6929770453d77e3d57226ba17086db5": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/tests/test_build_labels_d1_1030.py"
+      ]
+    },
+    "581f4ca346c39696eb1bc688bc5b597fb4e472fe": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    "12228e502c37d6559055f21ce160cdad35a18735": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/tests/test_litepanel.py"
+      ]
+    },
+    "13b984de9406753e5b4f9233039f6b56716d5d02": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/tests/test_formal_raw_bank_diagnostics.py"
+      ]
+    },
+    "9b9d30cfbdae07ab7ad69472ae17287c99deeb3d": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "scripts/validate_preregister.py",
+        "因子/algobench/tests/test_intraday_continuation_contract.py",
+        "因子/algobench/tests/test_run_2026q2_logic_study.py",
+        "因子/algobench/tests/test_validate_preregister.py"
+      ]
+    },
+    "87ee7f40fbd5bf230a830f2ce23e17a3119507ab": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "scripts/build_hist_observations.py",
+        "因子/algobench/src/algobench/historical_baselines.py",
+        "因子/algobench/tests/test_formal_study_control.py",
+        "因子/algobench/tests/test_historical_empty_inventory.py",
+        "因子/algobench/tests/test_prepare_intraday_response_acceptance_runtime.py"
+      ]
+    },
+    "833196bd0061451f89d3c7d9c0e5acc84e77160d": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/tests/test_attention_panel.py"
+      ]
+    },
+    "c9e27b0393b0ba083c2f265a52cde755db2abfee": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "因子/algobench/tests/test_formal_proxy_panel.py"
+      ]
+    },
+    "65a37d1b927b06470b4cd9f25b19d68e1758886b": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "scripts/tests/test_channel_closed_calibration_inputs.py"
+      ]
+    },
+    "7b0c01827a5e233c6435f981bee4db5cdec847d9": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性与执行接口整改中的合法事件、实际源码身份和回归合同；未重新开展被触及的旧研究",
+      "review_basis": "差异中相关函数、测试及10月19—20日整改上下文复核",
+      "anchors": [
+        "scripts/tests/test_kernel_shard_benchmark.py"
+      ]
+    },
+    "17064361b6fb3f21c2cdf0c46e422e3211d71ee3": {
+      "status": "assigned",
+      "chains": [
+        "wangly-env"
+      ],
+      "reason": "服务器临时路径改为当前账户默认值的回归核对",
+      "review_basis": "差异中HOME相对路径复核",
+      "anchors": [
+        "lv2_snapshot_workspace/tests/test_server_paths.py"
+      ]
+    },
+    "d9f0adfbeab7b13ef556c6ebe50cab8223c28bc5": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-08-19.md",
+        "content/daily/2026-08-19.show.html",
+        "design-demos/2026-08-19-ml-results/build-report.ps1",
+        "design-demos/2026-08-19-ml-results/design-spec.md",
+        "design-demos/2026-08-19-ml-results/direction-a-evidence-ledger.html",
+        "design-demos/2026-08-19-ml-results/direction-approved.md",
+        "design-demos/2026-08-19-ml-results/direction-b-research-desk.html",
+        "design-demos/2026-08-19-ml-results/direction-c-bauhaus-map.html",
+        "design-demos/2026-08-19-ml-results/report-template.html",
+        "design-demos/2026-08-19-ml-results/report.spec.js",
+        "design-demos/2026-08-19-ml-results/screenshots/direction-a.png",
+        "design-demos/2026-08-19-ml-results/screenshots/direction-b.png"
+      ]
+    },
+    "f26f17e68113a8433b4db3771f4d91aaa707fd42": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-08-19.show.html",
+        "design-demos/2026-08-19-ml-results/report-template.html",
+        "design-demos/2026-08-19-ml-results/report.spec.js",
+        "design-demos/2026-08-19-ml-results/screenshots/tooltip-zero-baseline.png"
+      ]
+    },
+    "f13950a4f5d6daa354f94bd84e7d7b7005b8a58a": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".codex-vet-huashu-f6a4b4ebb34c424bbc9b6f95f1a0917d/repo",
+        "artifacts/open5m-report-2026-08-07/visual-top.png",
+        "content/daily/2026-06-25.md",
+        "content/daily/2026-06-26.md",
+        "content/daily/2026-08-19.show.html"
+      ]
+    },
+    "9789e72f39ef827f92cace5a3f3331a883355ea2": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".codex-vet-huashu-f6a4b4ebb34c424bbc9b6f95f1a0917d/repo",
+        ".gitignore"
+      ]
+    },
+    "06d53d9b69fd152ad512ee85f55c3005fdce8ec6": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-08-16.md",
+        "content/daily/2026-08-16.show.html",
+        "design-demos/2026-08-16-cancel-lag/design-spec.md",
+        "design-demos/2026-08-16-cancel-lag/direction-approved.md",
+        "design-demos/2026-08-16-cancel-lag/direction-c-evidence-wall.html",
+        "design-demos/2026-08-16-cancel-lag/screenshots-c/desktop.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-c/mobile.png"
+      ]
+    },
+    "b43c9c8ace83be3223bc93fdc24d4047ed64d43e": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-08-16.md",
+        "content/daily/2026-08-16.show.html",
+        "design-demos/2026-08-16-cancel-lag/build_show_html.py",
+        "design-demos/2026-08-16-cancel-lag/design-spec.md",
+        "design-demos/2026-08-16-cancel-lag/direction-approved.md",
+        "design-demos/2026-08-16-cancel-lag/export_visual_data.py",
+        "design-demos/2026-08-16-cancel-lag/fetch_visual_data.py",
+        "design-demos/2026-08-16-cancel-lag/research-frequency-template.html",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v2/desktop/01-hero.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v2/desktop/02-section.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v2/desktop/03-section.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v2/desktop/04-section.png"
+      ]
+    },
+    "81bc1c7be6acc32535e0ffbac84aed6f558ac3af": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-08-16.show.html",
+        "design-demos/2026-08-16-cancel-lag/design-spec.md",
+        "design-demos/2026-08-16-cancel-lag/direction-approved.md",
+        "design-demos/2026-08-16-cancel-lag/research-frequency-template.html",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/desktop/01-cover.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/desktop/02-sse-raw.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/desktop/05-sse-heat.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/desktop/07-sse-monthly.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/desktop/09-peak-table.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/desktop/10-boundary.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/desktop/site-embedded.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v3/mobile/01-cover.png"
+      ]
+    },
+    "3c98d9dc4303ae3129497f37dc07dcde5f811c39": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-08-16.show.html",
+        "design-demos/2026-08-16-cancel-lag/design-spec.md",
+        "design-demos/2026-08-16-cancel-lag/direction-approved.md",
+        "design-demos/2026-08-16-cancel-lag/research-frequency-template.html",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v4/desktop/02-frequency-pair.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v4/desktop/04-daily-pair.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v4/desktop/05-monthly-pair.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v4/desktop/site-embedded-paired.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v4/mobile/02-frequency-pair.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v4/mobile/04-daily-pair.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v4/mobile/05-monthly-pair.png"
+      ]
+    },
+    "b079822ac4ffabf9c29aa295b618e190f64e41be": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-08-16.show.html",
+        "design-demos/2026-08-16-cancel-lag/design-spec.md",
+        "design-demos/2026-08-16-cancel-lag/direction-approved.md",
+        "design-demos/2026-08-16-cancel-lag/research-frequency-template.html",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v5/desktop/02-frequency-vertical.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v5/desktop/04-daily-vertical.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v5/desktop/site-frequency-vertical.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v5/mobile/02-frequency-vertical.png",
+        "design-demos/2026-08-16-cancel-lag/screenshots-v5/mobile/04-daily-vertical.png"
+      ]
+    },
+    "a4f5af84182616227fe6d21c86c7a29e00631b63": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".gitignore",
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/report-data.json",
+        "content/daily/2026-09-18.md",
+        "content/daily/2026-09-18.show.html",
+        "direction-approved.md",
+        "scripts/build_model_report_20260918.py",
+        "scripts/verify_model_report_20260918.cjs",
+        "templates/model-report-20260918.html",
+        "tests/test_model_report_20260918.py"
+      ]
+    },
+    "1265d59e07a614e5351f5400e8e469a9e6c87d83": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/figures/cpu.png",
+        "content/assets/model-report-2026-09-18/figures/cpu.svg",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.png",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.png",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.png",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.svg",
+        "content/assets/model-report-2026-09-18/figures/deciles.png",
+        "content/assets/model-report-2026-09-18/figures/deciles.svg",
+        "content/assets/model-report-2026-09-18/figures/dispersion.png"
+      ]
+    },
+    "22e2bd864e36b69941c45e54359a14416f3ceab2": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/figures/cpu.svg",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.svg",
+        "content/assets/model-report-2026-09-18/figures/deciles.svg",
+        "content/assets/model-report-2026-09-18/figures/dispersion.svg",
+        "content/assets/model-report-2026-09-18/figures/ic-contribution.svg",
+        "content/assets/model-report-2026-09-18/figures/ic-scatter.svg",
+        "content/assets/model-report-2026-09-18/figures/inner-ic.png",
+        "content/assets/model-report-2026-09-18/figures/inner-ic.svg",
+        "content/assets/model-report-2026-09-18/figures/legs.png"
+      ]
+    },
+    "0a94bd529b084bf1a825f45a424e977e59a5dcdd": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/figures/cpu.png",
+        "content/assets/model-report-2026-09-18/figures/cpu.svg",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.png",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.png",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.png",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.svg",
+        "content/assets/model-report-2026-09-18/figures/deciles.png",
+        "content/assets/model-report-2026-09-18/figures/deciles.svg",
+        "content/assets/model-report-2026-09-18/figures/dispersion.png"
+      ]
+    },
+    "8988c1eaf4176f47900adc9c8ff6769f1f1d4e9b": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "README.md",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part01.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part02.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part03.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-report-build-audit.json",
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/figures/cpu.png",
+        "content/assets/model-report-2026-09-18/figures/cpu.svg",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.png",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.png",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.svg"
+      ]
+    },
+    "1a98191ddf5b6b4ea26d6e7070e291f1044e2e1c": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/daily/2026-09-18.show.html",
+        "scripts/build_model_report_20260918.py",
+        "scripts/report_charts.py",
+        "scripts/verify_model_report_readout_20260918.cjs",
+        "templates/model-report-20260918.html"
+      ]
+    },
+    "bc1098eb8bc950290a83e37b92ad6da1c730d67d": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".gitignore",
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/report-data.json",
+        "content/daily/2026-09-18.md",
+        "content/daily/2026-09-18.show.html",
+        "scripts/build_model_report_20260921.py",
+        "scripts/download_model_report_20260921.py",
+        "scripts/verify_model_report_20260918.cjs",
+        "scripts/verify_model_report_readout_20260918.cjs",
+        "tests/test_model_report_20260918.py"
+      ]
+    },
+    "8349892245fd5eb076b76af7b7b29dd7304ada7a": {
+      "status": "assigned",
+      "chains": [
+        "model-report"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/assets/model-report-2026-09-18/README.md",
+        "content/assets/model-report-2026-09-18/figures/cpu.png",
+        "content/assets/model-report-2026-09-18/figures/cpu.svg",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.png",
+        "content/assets/model-report-2026-09-18/figures/daily-ic.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.png",
+        "content/assets/model-report-2026-09-18/figures/decile-excess.svg",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.png",
+        "content/assets/model-report-2026-09-18/figures/decile-sharpe.svg",
+        "content/assets/model-report-2026-09-18/figures/deciles.png",
+        "content/assets/model-report-2026-09-18/figures/deciles.svg",
+        "content/assets/model-report-2026-09-18/figures/dispersion.png"
+      ]
+    },
+    "ef248d3170112c5424e8949bb86341bef012c564": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/assets/grouped-kernel-calibration-2026-10-09/.gitattributes",
+        "content/assets/grouped-kernel-calibration-2026-10-09/RESULT.json",
+        "content/assets/grouped-kernel-calibration-2026-10-09/SEALED.json",
+        "content/assets/grouped-kernel-calibration-2026-10-09/acceptance/annual_centers.csv",
+        "content/assets/grouped-kernel-calibration-2026-10-09/acceptance/conservation.json",
+        "content/assets/grouped-kernel-calibration-2026-10-09/acceptance/shared_centers.csv",
+        "content/assets/grouped-kernel-calibration-2026-10-09/acceptance/stock_only_vs_precheck.csv",
+        "content/assets/grouped-kernel-calibration-2026-10-09/acceptance/support.csv",
+        "content/assets/grouped-kernel-calibration-2026-10-09/acceptance/tracking_error.csv",
+        "content/assets/grouped-kernel-calibration-2026-10-09/evidence/guard_manifest.actual.json",
+        "content/assets/grouped-kernel-calibration-2026-10-09/local-validation.json",
+        "content/assets/grouped-kernel-calibration-2026-10-09/models/coefficients.csv"
+      ]
+    },
+    "b8e329b56d0ce25fc3ccd23cf6031fd8e4cc9da4": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/assets/grouped-kernel-calibration-2026-10-09/.gitattributes",
+        "content/assets/grouped-kernel-calibration-2026-10-09/local-validation.json",
+        "content/assets/grouped-kernel-calibration-2026-10-09/source.json",
+        "content/assets/grouped-kernel-calibration-2026-10-09/timing_gate.json"
+      ]
+    },
+    "3744cff5e3b3a7a585b28dbdaee23256a052f3d3": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/daily/2026-10-09.md",
+        "scripts/build_grouped_kernel_report_20261009.py"
+      ]
+    },
+    "78ac2e094c5f2069590a0671602ee986b7d66597": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "2026-10-14-沪市委托v2全流程提速.md",
+        "content/assets/sse-v2-speed-2026-10-14/benchmark-evidence.json",
+        "content/assets/sse-v2-speed-2026-10-14/completion.json",
+        "content/assets/sse-v2-speed-2026-10-14/forward-benchmark-evidence.json",
+        "content/assets/sse-v2-speed-2026-10-14/performance-report.md",
+        "content/assets/sse-v2-speed-2026-10-14/performance.json",
+        "content/assets/sse-v2-speed-2026-10-14/rule-equivalence.json",
+        "content/assets/sse-v2-speed-2026-10-14/runtime-evidence.json",
+        "content/assets/sse-v2-speed-2026-10-14/validation-report.md",
+        "content/daily/2026-10-14.md",
+        "content/daily/2026-10-14.show.md"
+      ]
+    },
+    "94d11f824300291c16331313097caf0d1f856056": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/sse-v2-report-20261014/deployment.json",
+        "artifacts/sse-v2-report-20261014/publication.json"
+      ]
+    },
+    "24c46c876583f1a3157570b8ddefd097d825fac1": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "2026-10-14-沪市委托v2全流程提速.md",
+        "content/assets/sse-v2-speed-2026-10-14/cleanup.json",
+        "content/daily/2026-10-14.md",
+        "content/daily/2026-10-14.show.md"
+      ]
+    },
+    "f93296cdc76e1de41b5f75d6794daf04e9b5b9d4": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/sse-v2-report-20261014/final-browser-validation.json",
+        "artifacts/sse-v2-report-20261014/final-publication.json",
+        "artifacts/sse-v2-report-20261014/worktree-cleanup.json"
+      ]
+    },
+    "9c6af730713829d3e46d0669c831800ebac2f4e3": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "2026-10-14-沪市委托v2全流程提速.md",
+        "content/assets/sse-v2-speed-2026-10-14/cleanup.json",
+        "content/daily/2026-10-14.md",
+        "content/daily/2026-10-14.show.md"
+      ]
+    },
+    "b6a6be3c55c42baf5badafafddbbd0121053e996": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/sse-v2-report-20261014/deployment.json",
+        "artifacts/sse-v2-report-20261014/final-publication.json",
+        "artifacts/sse-v2-report-20261014/source-audit-build.txt",
+        "artifacts/sse-v2-report-20261014/worktree-cleanup.json"
+      ]
+    },
+    "05b66c7ac43fdec916c90725f3b2ad96c1f09135": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "2026-10-16-深市328列因子全流程提速与存储收尾.md",
+        "content/assets/szse-model328-speed-2026-10-16/performance.json",
+        "content/assets/szse-model328-speed-2026-10-16/sources.json",
+        "content/daily/2026-10-16.md",
+        "content/report-tags.json"
+      ]
+    },
+    "c7ccf47c1c8dcc56c21f33fc3ae41369cd9fdd25": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/szse-model328-report-20261016/publication.json",
+        "artifacts/szse-model328-report-20261016/published.jpg"
+      ]
+    },
+    "89ed348113b718caeb24147c5eb4ca95e45d9685": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "2026-10-16-深市328列因子全流程提速与存储收尾.md",
+        "content/assets/szse-model328-speed-2026-10-16/optimization-index.json",
+        "content/assets/szse-model328-speed-2026-10-16/performance.json",
+        "content/assets/szse-model328-speed-2026-10-16/sources.json",
+        "content/daily/2026-10-16.md"
+      ]
+    },
+    "da94946f002043234b65bcc4193222df867a0466": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/szse-model328-report-20261016/publication-detailed.json",
+        "artifacts/szse-model328-report-20261016/published-detailed.jpg"
+      ]
+    },
+    "cf1305667371a3cd2863b48deef73c5ff5183374": {
+      "status": "assigned",
+      "chains": [
+        "report328"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-18-szse-model328-report.md",
+        "artifacts/model328-report-2026-10-18/accepted-aggregates.json",
+        "artifacts/model328-report-2026-10-18/browser-verification.json",
+        "artifacts/model328-report-2026-10-18/desktop-1440-atlas.png",
+        "artifacts/model328-report-2026-10-18/desktop-1440-hero.png",
+        "artifacts/model328-report-2026-10-18/desktop-390-atlas.png",
+        "artifacts/model328-report-2026-10-18/desktop-390-hero.png",
+        "artifacts/model328-report-2026-10-18/validation.json",
+        "artifacts/model328-report-2026-10-18/verify-report.cjs",
+        "content/assets/model328-2026-10-18/coverage.svg",
+        "content/assets/model328-2026-10-18/daily-coverage.csv",
+        "content/assets/model328-2026-10-18/factor-coverage.csv"
+      ]
+    },
+    "0ae375df0c76a084692c20bdef3ef6fd971dd11d": {
+      "status": "assigned",
+      "chains": [
+        "report328"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/model328-report-2026-10-18/publication.json"
+      ]
+    },
+    "1a0fefd809d4dad0410cc02640fc5f086a94f209": {
+      "status": "assigned",
+      "chains": [
+        "report328"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".gitignore",
+        "PLAN/2026-10-18-szse-model328-report.md",
+        "artifacts/model328-report-2026-10-18/browser-verification.json",
+        "artifacts/model328-report-2026-10-18/desktop-1440-atlas.png",
+        "artifacts/model328-report-2026-10-18/desktop-1440-hero.png",
+        "artifacts/model328-report-2026-10-18/desktop-390-atlas.png",
+        "artifacts/model328-report-2026-10-18/desktop-390-hero.png",
+        "artifacts/model328-report-2026-10-18/validation.json",
+        "artifacts/model328-report-2026-10-18/verify-report.cjs",
+        "content/assets/model328-2026-10-18/all-period-performance.csv",
+        "content/assets/model328-2026-10-18/coverage.svg",
+        "content/assets/model328-2026-10-18/daily-coverage.csv"
+      ]
+    },
+    "d020059d2fd84bc224da7dc27a479e043a78545c": {
+      "status": "assigned",
+      "chains": [
+        "report328"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-18-szse-model328-report.md",
+        "artifacts/model328-report-2026-10-18/publication.json"
+      ]
+    },
+    "5c2494f442a48df6a91028bf070622537c7081c0": {
+      "status": "assigned",
+      "chains": [
+        "report328"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/model328-report-2026-10-18/publication.json"
+      ]
+    },
+    "11168214e2c88a0d7722cefe0629251f0355d016": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "design-demos/journal-prototype/README.md",
+        "design-demos/journal-prototype/build_data.py",
+        "design-demos/journal-prototype/chains-review.md",
+        "design-demos/journal-prototype/data.js",
+        "design-demos/journal-prototype/data.json",
+        "design-demos/journal-prototype/direction-1-ledger.html",
+        "design-demos/journal-prototype/direction-2-chain-rail.html",
+        "design-demos/journal-prototype/direction-3-atlas.html",
+        "design-demos/journal-prototype/export_seed.py",
+        "design-demos/journal-prototype/headlines.py",
+        "design-demos/journal-prototype/proto.css",
+        "design-demos/journal-prototype/shots.cjs"
+      ]
+    },
+    "4cb455b90ae13dec35842ee65f47ced1a3c9c84f": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "direction-approved.md",
+        "docs/plans/2026-10-20-journal-column-design.md"
+      ]
+    },
+    "211af448b79d7192a44dd0c572da39e5fa319a34": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-06-23.md",
+        "content/journal/2026-06-24.md",
+        "content/journal/2026-06-25.md",
+        "content/journal/2026-06-26.md",
+        "content/journal/2026-06-29.md",
+        "content/journal/2026-06-30.md",
+        "content/journal/2026-07-01.md",
+        "content/journal/2026-07-03.md",
+        "content/journal/2026-07-06.md",
+        "content/journal/2026-07-07.md",
+        "content/journal/2026-07-08.md"
+      ]
+    },
+    "ae6efaa7b1f59851598364d1ab4b28ceb946bbc1": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-journal-column.md"
+      ]
+    },
+    "64288fdd1c5c0a22a9e05914e3b3a1edcad8a6b2": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/journal/_evidence/2026-06-23.json",
+        "content/journal/_evidence/2026-06-24.json",
+        "content/journal/_evidence/2026-06-25.json",
+        "content/journal/_evidence/2026-06-26.json",
+        "content/journal/_evidence/2026-06-29.json",
+        "content/journal/_evidence/2026-06-30.json",
+        "content/journal/_evidence/2026-07-01.json",
+        "content/journal/_evidence/2026-07-03.json",
+        "content/journal/_evidence/2026-07-06.json",
+        "content/journal/_evidence/2026-07-07.json",
+        "content/journal/_evidence/2026-07-08.json",
+        "content/journal/_evidence/2026-07-09.json"
+      ]
+    },
+    "17f0d64c921ef71b893ae627f0c36e3e1a2189f9": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "build.py",
+        "tests/test_journal_build.py"
+      ]
+    },
+    "e40fbc80a0bacd587cd9a21c663345a51372f2f9": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/index.html",
+        "site/js/journal.js",
+        "site/js/router.js"
+      ]
+    },
+    "4ec925b7db733daa09dbf06720f420f968b700a6": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/index.html",
+        "site/js/journal.js"
+      ]
+    },
+    "8fb67eb965707fd66084667cbdc94186a5e2c1fe": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/js/journal.js"
+      ]
+    },
+    "5787222b462c24c43c201b6322910f50ea8a6756": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/journal/_evidence/2026-07-14.json",
+        "scripts/collect_journal_evidence.py",
+        "tests/test_journal_evidence.py"
+      ]
+    },
+    "e314c1d055ff3d5937238f72070a0fad5411d2e9": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-06-23.md",
+        "content/journal/2026-06-24.md",
+        "content/journal/2026-06-25.md",
+        "content/journal/2026-06-26.md",
+        "content/journal/2026-06-29.md",
+        "content/journal/2026-06-30.md",
+        "docs/journal-review/2026-06.md"
+      ]
+    },
+    "cf27fffafe1ae3af3f0256c5c319865573dd4366": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-07-01.md",
+        "content/journal/2026-07-03.md",
+        "content/journal/2026-07-06.md",
+        "content/journal/2026-07-07.md",
+        "content/journal/2026-07-08.md",
+        "content/journal/2026-07-09.md",
+        "content/journal/2026-07-10.md",
+        "content/journal/2026-07-11.md",
+        "content/journal/2026-07-12.md",
+        "content/journal/2026-07-13.md",
+        "content/journal/2026-07-14.md"
+      ]
+    },
+    "d981ee29e63cb1abefabdd6220464c4db7e27baf": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-08-02.md",
+        "content/journal/2026-08-03.md",
+        "content/journal/2026-08-04.md",
+        "content/journal/2026-08-05.md",
+        "content/journal/2026-08-06.md",
+        "content/journal/2026-08-07.md",
+        "content/journal/2026-08-08.md",
+        "content/journal/2026-08-09.md",
+        "content/journal/2026-08-10.md",
+        "content/journal/2026-08-11.md",
+        "content/journal/2026-08-12.md"
+      ]
+    },
+    "bfbd69144f7646cd2d7e9c8ea8d7b955f3a01562": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-09-01.md",
+        "content/journal/2026-09-02.md",
+        "content/journal/2026-09-03.md",
+        "content/journal/2026-09-04.md",
+        "content/journal/2026-09-05.md",
+        "content/journal/2026-09-06.md",
+        "content/journal/2026-09-07.md",
+        "content/journal/2026-09-08.md",
+        "content/journal/2026-09-09.md",
+        "content/journal/2026-09-10.md",
+        "content/journal/2026-09-11.md"
+      ]
+    },
+    "7ca512a6470322ff633d6ff73944a2a5bf66ba6e": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-10-07.md",
+        "content/journal/2026-10-08.md",
+        "content/journal/2026-10-09.md",
+        "content/journal/2026-10-10.md",
+        "content/journal/2026-10-11.md",
+        "content/journal/2026-10-12.md",
+        "content/journal/2026-10-13.md",
+        "content/journal/2026-10-14.md",
+        "content/journal/2026-10-15.md",
+        "content/journal/2026-10-16.md",
+        "content/journal/2026-10-17.md"
+      ]
+    },
+    "2ae893b00d9411fce980631122fff0631075f79b": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "build.py",
+        "content/chains.json",
+        "content/journal/_evidence/2026-08-20.json",
+        "content/journal/_evidence/2026-09-06.json",
+        "content/journal/_evidence/2026-09-11.json",
+        "content/journal/_evidence/2026-09-12.json",
+        "content/journal/_evidence/2026-10-10.json",
+        "docs/journal-review/chains-and-handoffs.md",
+        "scripts/journal_repos.json",
+        "scripts/verify_journal.cjs",
+        "site/js/journal.js"
+      ]
+    },
+    "56d54323b59316ac0ca49bd0c47e16070fdf6841": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css"
+      ]
+    },
+    "0ccb96a4ad7a03b66ffa3b0d4fdbab994977bd86": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "tests/isolated-html.spec.cjs",
+        "tests/report-tags.spec.cjs"
+      ]
+    },
+    "22a74f3b06fdf9f1c7b89ec23606ac3411a2c09f": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/verify_journal.cjs",
+        "site/js/journal.js"
+      ]
+    },
+    "3d14205123c0e262de2e4bb4f42f52aae980e588": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "build.py",
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/js/journal.js",
+        "tests/test_journal_build.py"
+      ]
+    },
+    "777bfa4c995b9a8a610717891557690dee19c63e": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "scripts/verify_journal.cjs",
+        "site/js/journal.js"
+      ]
+    },
+    "d45d0d66cad81dd607658e353211a1a24bdfd62c": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".impeccable/design.json",
+        "DESIGN.md",
+        "PRODUCT.md",
+        "docs/journal-review/design-system-audit.md"
+      ]
+    },
+    "51b61b8d098865bca14a0a403918528ca7c5dde9": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".gitattributes"
+      ]
+    },
+    "be172059cd52bb7caa954a3f696ec8f4583243ba": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        ".gitignore",
+        "PLAN/2026-10-20-journal-column.md",
+        "README.md",
+        "artifacts/journal-column/chain-1440.png",
+        "artifacts/journal-column/chain-390.png",
+        "artifacts/journal-column/day-evidence-1440.png",
+        "artifacts/journal-column/day-evidence-390.png",
+        "artifacts/journal-column/desktop.png",
+        "artifacts/journal-column/first-viewport-1440.png",
+        "artifacts/journal-column/first-viewport-390.png",
+        "artifacts/journal-column/mobile-capture.json",
+        "artifacts/journal-column/mobile-full-1.png"
+      ]
+    },
+    "23942e57acd2d1bd08bfdc8ec201ef1966772ea0": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "build.py",
+        "scripts/collect_journal_evidence.py",
+        "tests/test_journal_build.py",
+        "tests/test_journal_evidence.py"
+      ]
+    },
+    "9b8437bf2985a76ac97f3074e4a8109da9ba2308": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "build.py",
+        "content/chains.json",
+        "content/journal/2026-06-23.md",
+        "content/journal/2026-06-24.md",
+        "content/journal/2026-06-25.md",
+        "content/journal/2026-06-26.md",
+        "content/journal/2026-06-29.md",
+        "content/journal/2026-06-30.md",
+        "content/journal/2026-07-01.md",
+        "content/journal/2026-07-03.md",
+        "content/journal/2026-07-06.md",
+        "content/journal/2026-07-07.md"
+      ]
+    },
+    "a97222421b3dc38eaaef8c6c05b7497ac2791716": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "DESIGN.md",
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/index.html",
+        "site/js/journal.js"
+      ]
+    },
+    "d55c7f6a227aead85f7c1a620def73c91370fbfa": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "PLAN/2026-10-20-journal-column-v2.md",
+        "artifacts/journal-column-v2/atlas-compact-1440.png",
+        "artifacts/journal-column-v2/atlas-compact-390.png",
+        "artifacts/journal-column-v2/atlas-compact-768.png",
+        "artifacts/journal-column-v2/atlas-relaxed-1440.png",
+        "artifacts/journal-column-v2/atlas-relaxed-390.png",
+        "artifacts/journal-column-v2/atlas-relaxed-768.png",
+        "artifacts/journal-column-v2/atlas-standard-1440.png",
+        "artifacts/journal-column-v2/atlas-standard-390.png",
+        "artifacts/journal-column-v2/atlas-standard-768.png",
+        "artifacts/journal-column-v2/chain-1440.png",
+        "artifacts/journal-column-v2/chain-390.png"
+      ]
+    },
+    "5160bd330036823e834c096b5d9c3db106bd66a6": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "site/index.html",
+        "site/js/journal.js"
+      ]
+    },
+    "b3516732feea8365359397527bd3f3d9a88af0fa": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/journal-polish/atlas-standard-1440.png",
+        "artifacts/journal-polish/day-390.png",
+        "artifacts/journal-polish/evidence-1440.png",
+        "artifacts/journal-polish/list-390.png",
+        "artifacts/journal-polish/skill-inventory.json",
+        "artifacts/journal-polish/source-receipt.json",
+        "artifacts/journal-polish/verification.json",
+        "build.py",
+        "content/chains.json",
+        "content/daily/2026-06-25.md",
+        "content/daily/2026-06-26.md",
+        "content/daily/2026-07-07.md"
+      ]
+    },
+    "c329b30c6f7da531083242c1871e1aa291c65ff2": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/journal-polish/content-build-status.json",
+        "artifacts/journal-polish/source-receipt.json",
+        "content/chains.json",
+        "content/journal/2026-07-03.md",
+        "content/journal/2026-07-14.md",
+        "content/journal/2026-07-18.md",
+        "content/journal/2026-08-04.md",
+        "content/journal/2026-08-05.md",
+        "content/journal/2026-08-14.md",
+        "content/journal/2026-08-16.md",
+        "content/journal/2026-08-18.md",
+        "content/journal/2026-10-07.md"
+      ]
+    },
+    "799707800cfa03c13f9b99368724e5cd7f7e4570": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "artifacts/journal-holidays-2026-10-20/holiday-month-1440.png",
+        "artifacts/journal-holidays-2026-10-20/source-receipt.json",
+        "artifacts/journal-holidays-2026-10-20/verification.json",
+        "docs/journal-review/holiday-shading-2026-10-20.md",
+        "package.json",
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/js/journal.js",
+        "tests/journal-calendar.test.cjs"
+      ]
+    },
+    "b58b636f4414f2339270eeeb896c7fa1a08e856e": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "README.md",
+        "docs/journal-review/daily-update-rules.md"
+      ]
+    },
+    "902b03b440425600c64ac4ba0030eeab3a36d9e9": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "DESIGN.md",
+        "scripts/verify_journal.cjs",
+        "site/css/journal.css",
+        "site/index.html",
+        "site/js/journal.js"
+      ]
+    },
+    "0910a201154aa02b6889ad77899943a2eb656d1c": {
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "看板提交按本次制作/功能交付目标归属；模板、旧报告字样和测试依赖不改变本次目标",
+      "review_basis": "路径、主题及阶段目标复核",
+      "anchors": [
+        "DESIGN.md",
+        "artifacts/journal-legend/1440-report-highlight.png",
+        "artifacts/journal-legend/390-report-highlight.png",
+        "artifacts/journal-legend/regression/verification.json",
+        "artifacts/journal-legend/results.json",
+        "docs/journal-review/legend-highlight-2026-10-21.md",
+        "docs/plans/2026-10-21-journal-handoff-highlight.md",
+        "scripts/verify_journal_legend.cjs",
+        "site/css/journal.css",
+        "site/js/journal.js"
+      ]
+    },
+    "5af712a0fdf48c3bddbd077cc98f29e1d89028dd": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "父仓同步/规约或授权传递说明，不把旧资料或子仓状态再次记为上手/文献研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        ".gitignore",
+        "benchmark-evidence/event-3s-stats-20260727T052205Z-f8c79c61/daily_bar_001399.tsv",
+        "benchmark-evidence/event-3s-stats-20260727T052205Z-f8c79c61/diagnostics_001399.json",
+        "benchmark-evidence/event-3s-stats-20260727T052205Z-f8c79c61/evidence_001399_bucket_detail.json",
+        "benchmark-evidence/event-3s-stats-20260727T052205Z-f8c79c61/guard_manifest.json",
+        "benchmark-evidence/event-3s-stats-20260727T052205Z-f8c79c61/instrument_001399.tsv",
+        "benchmark-evidence/event-3s-stats-20260727T052205Z-f8c79c61/per_stock_3s_event_stats.csv",
+        "benchmark-evidence/event-3s-stats-20260727T052205Z-f8c79c61/result.json",
+        "sirui-quant-research",
+        "米筐Ricequant/bundle/future_info.json",
+        "米筐Ricequant/bundle/share_transformation.json"
+      ]
+    },
+    "1b589b301a3fa3f8a1271b304d183fd5c62c90f0": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "父仓同步/规约或授权传递说明，不把旧资料或子仓状态再次记为上手/文献研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "NEXT产品净值与策略表现.html",
+        "sirui-quant-research",
+        "因子/文献/西部证券-撤单视角下的算法交易识别与Alpha捕捉-250912.pdf"
+      ]
+    },
+    "97b821cd52928bb07335a1aefc82156c6ada530a": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "父仓同步/规约或授权传递说明，不把旧资料或子仓状态再次记为上手/文献研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md"
+      ]
+    },
+    "ac4cb8624eebf959a20328bc2fee670e74112d38": {
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "9月3日定标与机制预查阶段中的评分顺序、阶段计时和结构生命周期；公共formal模块名不是7月正式引擎研究目标",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    "2cb0c87d050a7149c48534111c1feca9a0ebfab0": {
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "9月3日定标与机制预查阶段中的评分顺序、阶段计时和结构生命周期；公共formal模块名不是7月正式引擎研究目标",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    "cd4e59f07f9900c11b5c778b82b50dba83ac5ac8": {
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "9月3日定标与机制预查阶段中的评分顺序、阶段计时和结构生命周期；公共formal模块名不是7月正式引擎研究目标",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_formal_real_data_calibration.py"
+      ]
+    },
+    "82c52a1480c37ca7b1c6656df41b1d98134f64f8": {
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "9月3日定标与机制预查阶段中的评分顺序、阶段计时和结构生命周期；公共formal模块名不是7月正式引擎研究目标",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_structural_calibration.py"
+      ]
+    },
+    "6d9624c345d696619c9c494dc76419ba7e98e2b0": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "reports/2026-09/2026-09-11-old-factor-bank-performance.md",
+        "scripts/evaluate_open5m_raw_bank.py",
+        "scripts/rank_open5m_factor_contribution.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/src/algobench/formal_response_audit.py",
+        "因子/algobench/src/algobench/formal_style_evaluation.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_exactness.py"
+      ]
+    },
+    "08c1b155ec6cdf9d2d569a12b9c8345168f28302": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "reports/2026-09/2026-09-11-old-factor-bank-contract-audit.md",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_proxy_bank.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_scorers.py"
+      ]
+    },
+    "c850833bb2e5d95aab41ac2b8ca4b7c11b68059c": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "reports/2026-09/2026-09-11-old-factor-bank-contract-audit.md",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_chain_scorers.py",
+        "因子/algobench/tests/test_formal_layer2_scorers.py"
+      ]
+    },
+    "a9ef4e048419f30135b44a9b646bcabd7f2458a3": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "AGENTS.md",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/backend-after-tests.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/backend-exits.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/final-liveness-tests.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/final-liveness-tests.txt.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/interrupted-test-hashes.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/isolation-tests.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/isolation-tests.txt.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/scheduler-tests.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/scheduler-tests.txt.json",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/seal-liveness.txt",
+        "reports/2026-09/2026-09-11-codex-crash-evidence/seal-liveness.txt.json"
+      ]
+    },
+    "b93ae24514f847bcaebb0ea818ed28027f30b6f2": {
+      "status": "assigned",
+      "chains": [
+        "old-factor-bank"
+      ],
+      "reason": "9月11日旧库优化与运行验收中的公共评分、守护器和测试修正；未重启7月引擎或8月多模型执行研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_response_templates.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_structural_binding.py"
+      ]
+    },
+    "f31ffdd4927d51ab2c304137e227539eedf14ed7": {
+      "status": "assigned",
+      "chains": [
+        "trading-window-freeze"
+      ],
+      "reason": "Doris交易冻结窗口统一使用交易日历；属于早盘自动控制能力，不是7月服务器迁移",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "lv2_snapshot_workspace/src/sirui_trading_window.py",
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/trading_holidays.json",
+        "lv2_snapshot_workspace/tests/test_trading_window.py"
+      ]
+    },
+    "a4b62c6b1fe9903c3ca5c6cff2aa3a4e5e028a73": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次F40 episode/anchor和归档读取服务601日结构参数采集；旧库为所复用的实现",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T034818Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T040859Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T043115Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T045223Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T051255Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-20261011T053315Z.json",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation-evidence/monitor-error-20261011T042854Z.txt",
+        "reports/2026-10/2026-10-10-grouped-formal-calculation.md"
+      ]
+    },
+    "c654c62d4cad7d685bf6f0709d90c8bfcb449539": {
+      "status": "assigned",
+      "chains": [
+        "grouped-calibration"
+      ],
+      "reason": "本次F40 episode/anchor和归档读取服务601日结构参数采集；旧库为所复用的实现",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_f40_remaining_stage_efficiency.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    "0f9a5437ab4990f05cf10006f58f83d3e1c72eb5": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "按当前模型列合同交付256个旧库来源输出及其对象验收，属于四来源328生产，不是独立旧库重算",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_feature_scope.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_proxy_bank.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_window_state_comparison.py",
+        "因子/algobench/src/algobench/formal_window_states_v2.py",
+        "因子/algobench/tests/test_formal_feature_scope.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    "05f866a85ab85283e741c69792e18f0f7be77455": {
+      "status": "assigned",
+      "chains": [
+        "szse-model328"
+      ],
+      "reason": "按当前模型列合同交付256个旧库来源输出及其对象验收，属于四来源328生产，不是独立旧库重算",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/src/algobench/prescreen_runtime.py",
+        "因子/algobench/tests/test_formal_day_buckets.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    "d2a696c27a4d01cece60910eacc3cb6d0b20c518": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/tests/test_sse_original_v2_cached_pages.py"
+      ]
+    },
+    "b8a8409ba685a657c9f36cf77a2edcb67fb37848": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/src/algobench/sse_order_research.py"
+      ]
+    },
+    "d87e5a8a1b6c0c0320271eddcbc09bacf5205a0c": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/sse_original_v2_snapshot_audit.py",
+        "因子/algobench/src/algobench/sse_snapshot_cut_audit.py",
+        "因子/algobench/tests/test_sse_snapshot_cut_audit.py"
+      ]
+    },
+    "7bd852cf3cde6e8f4b2d177dd8ebb4ee43fe5153": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/src/algobench/sse_snapshot_cut_audit.py",
+        "因子/algobench/tests/test_sse_snapshot_cut_audit.py"
+      ]
+    },
+    "4a923533a93a5dfe1a77a18f4a1bd31233cfd612": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/sse_original_v2_evidence.py"
+      ]
+    },
+    "57b445a8276eaa264fc863e43510f24c0cd085a8": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/sse_original_v2_replay.py",
+        "因子/algobench/src/algobench/sse_truth_mask.py",
+        "因子/algobench/tests/test_sse_truth_mask_research.py"
+      ]
+    },
+    "8fc433de68bc658cf1a3dc5ffeaa615a35e3b6e5": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "reports/2026-10/2026-10-15-wangly-audit-retention-evidence/order-release-integration-evidence.json",
+        "reports/2026-10/2026-10-15-wangly-audit-retention.md"
+      ]
+    },
+    "fdeafc43dfb920761ec2dc7e5a7ef7f99250abbf": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/audit_visible_factor_dependencies.py",
+        "scripts/tests/test_visible_factor_contract.py",
+        "因子/algobench/src/algobench/visible_factor_contract.py"
+      ]
+    },
+    "de281716c7850279286bc9df9843491efbc68101": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-16-sse-visible-factor-contract.md",
+        "scripts/audit_visible_cancel_ages.py",
+        "scripts/tests/test_visible_cancel_ages.py"
+      ]
+    },
+    "44b60f42852a0db05b2b527678138b901e9378d2": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/audit_visible_g1_rule_truth.py",
+        "scripts/tests/test_visible_order_predicates.py",
+        "因子/algobench/src/algobench/visible_order_predicates.py"
+      ]
+    },
+    "a5d9f0774bd32b906597c0234277bbcfc72b7de0": {
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "沪市/公开可见定义的订单可行性、十档快照与G1三值合同核对；相位和回放是被审输入/方法，不重复归旧研究",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-17-sse-g1-overnight-optimization.md",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/compact-logs-closeout.guard.json",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/compact-logs-closeout.json.gz",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/compact-logs-final.guard.json",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/compact-logs-final.json.gz",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/final-version-snapshot.json",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/local-synthetic-cleanup.json",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/model-execution-check.json",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/storage-closeout-final.guard.json",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/storage-closeout-final.json.gz",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/storage-tests-linux.xml.gz",
+        "reports/2026-10/2026-10-17-sse-g1-overnight-evidence/storage-tests-windows.xml.gz"
+      ]
+    },
+    "14de5d97b17efc535196b2d487e79db16fe30a77": {
+      "status": "shared",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "reason": "同一改动包含328已验收订单明细释放与恢复核验；原旧库仅是数据来源，两项实际目标各计半份",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-15-wangly-audit-retention.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/cleanup_calibration_storage.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "scripts/run_szse_model328_factor_recompute.py",
+        "scripts/tests/test_release_model328_order_audits.py",
+        "因子/algobench/src/algobench/formal_day_buckets.py",
+        "因子/algobench/src/algobench/formal_factor_run_schedule.py",
+        "因子/algobench/src/algobench/formal_order_audit_retention.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py"
+      ]
+    },
+    "0dec929b9e7bab977f8656618f840187305c3fc3": {
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "退役历史定参与逐股误差载荷；open5m和账户名说明清理对象，不代表重新实施定标或环境建设",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-15-wangly-final-artifact-retirement.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/result_transfer_contract.py",
+        "scripts/retire_wangly_historical_artifacts.py",
+        "scripts/tests/test_historical_artifact_retirement.py",
+        "scripts/tests/test_retire_wangly_historical_artifacts.py",
+        "因子/algobench/src/algobench/formal_artifact_retirement.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py"
+      ]
+    },
+    "a084812d73768f12df9e4ea0bee0f155a674adfd": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "docs/formal-run-spec.md",
+        "因子/algobench/src/algobench/formal/__init__.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal/run_spec.py",
+        "因子/algobench/tests/test_formal_run_specs.py"
+      ]
+    },
+    "27cb9f900fbb93f5d78ddcd2ca36d844d80a47c0": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-20-remediation-and-acceptance.md",
+        "因子/algobench/src/algobench/ml/development.py"
+      ]
+    },
+    "bd8154c5bb285bade1bf4238a5f96b76c6844057": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/tests/test_cancel_phase_panel.py",
+        "因子/algobench/tests/test_execution_geometry_prescreen.py",
+        "因子/algobench/tests/test_formal_structural_calibration.py"
+      ]
+    },
+    "9a15b3b65a086d96db12dd0cbc105f5f55b3af9c": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/tests/test_depth_match_event_contract.py",
+        "因子/algobench/tests/test_sse_reconstruction.py"
+      ]
+    },
+    "843a945f05bc10d37f3a4808b8393675d62c152e": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/tests/test_grouped_calibration_precheck_resume.py",
+        "因子/algobench/tests/test_intraday_panel_recovery.py"
+      ]
+    },
+    "708c60c750527395fcd3f985d90a7fb1993d80cb": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/tests/test_cancel_lag_distribution.py"
+      ]
+    },
+    "115497391ddc385b1f995aafb7916bcba1ce240f": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "因子/algobench/tests/test_cancel_phase_prescreen_optimization.py"
+      ]
+    },
+    "60760592f3c8d0e73681056c523fe44e459e0187": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "PLAN/2026-10-20-remediation-and-acceptance.md",
+        "lv2_snapshot_workspace/src/sirui_jsonl/__init__.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "scripts/_trading_window.py",
+        "scripts/tests/test_jsonl_append.py"
+      ]
+    },
+    "f26aa3187aae3f5119b5bdf2ddce775b1ff4100d": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "统一正确性/源码身份/执行阶段整改中的接口迁移与回归；旧消费者被触及不等于旧任务重新开展",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        ".gitattributes",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/baseline-algobench.xml.gz",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/baseline-full-suites.json",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/baseline-scripts.xml.gz",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/baseline-snapshot.xml.gz",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/child-output-encoding-green.log.gz",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/child-output-encoding-green.runner.json",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/child-output-encoding-green.xml.gz",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/distance-inventory-summary.json",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/distance-inventory.csv.gz",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/full-algobench-final.log.gz",
+        "reports/2026-10/2026-10-20-remediation-acceptance-evidence/full-algobench-final.runner.json"
+      ]
+    },
+    "df1e971baeead2474e52a2751793259ba2847bf7": {
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "修正盘口下六核定参的窗口闭合、日级统计与缩放核验；复用open5m采集器，不回记旧定标任务",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis.md",
+        "scripts/diagnose_open5m_replay_rejections.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/tests/test_channel_closed_calibration_inputs.py",
+        "scripts/tests/test_open5m_replay_rejections.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py"
+      ]
+    },
+    "5160799892a622fed726f2ece12fcd73c535535d": {
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "修正盘口下六核定参的窗口闭合、日级统计与缩放核验；复用open5m采集器，不回记旧定标任务",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/benchmark_open5m_kernel_shards.py",
+        "scripts/tests/test_kernel_shard_benchmark.py"
+      ]
+    },
+    "982c924d560bc9d2bbe80bc8ae9553da81dcd63c": {
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "修正盘口下六核定参的窗口闭合、日级统计与缩放核验；复用open5m采集器，不回记旧定标任务",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis.md",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_shard_benchmark.py"
+      ]
+    },
+    "fe0b4d57f83b7dce0aec6de05f863bb10ed2301d": {
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "修正盘口下六核定参的窗口闭合、日级统计与缩放核验；复用open5m采集器，不回记旧定标任务",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        ".gitattributes",
+        "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-002409-source-classification-audit.md",
+        "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+        "reports/2026-10/2026-10-20-open5m-rejection-diagnosis.md",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/adjacency-business-guard.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/adjacency-tests-guard.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/cancel-adjacency.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/formal-launch.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/historical-workload.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/kernel-scenarios.json",
+        "reports/2026-10/2026-10-20-rule-supported-cancel-evidence/manifest.json"
+      ]
+    },
+    "1a7235ce6da80f0409279ecd86535531aba45f57": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "原生限价/市价账本及源消息分类、盘口深度和终态证明核查；属于当前回放正确性输入修复",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/diagnose_open5m_replay_rejections.py",
+        "scripts/tests/test_open5m_replay_rejections.py"
+      ]
+    },
+    "611b72a1a952c8294c4c6e1fca4dac2d93f4d2b3": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "原生限价/市价账本及源消息分类、盘口深度和终态证明核查；属于当前回放正确性输入修复",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "reports/2026-10/2026-10-20-002409-source-classification-audit.md",
+        "scripts/audit_open5m_002409_source.py",
+        "scripts/tests/test_open5m_002409_source.py"
+      ]
+    },
+    "ae52f015814a77aedd02a51daba9ff43a8a44057": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "原生限价/市价账本及源消息分类、盘口深度和终态证明核查；属于当前回放正确性输入修复",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/audit_open5m_002409_source.py",
+        "scripts/tests/test_open5m_002409_source.py"
+      ]
+    },
+    "e194844a9e52828e1707b77fd46f24058e76e99f": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "原生限价/市价账本及源消息分类、盘口深度和终态证明核查；属于当前回放正确性输入修复",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/diagnose_open5m_replay_rejections.py",
+        "scripts/tests/test_open5m_replay_rejections.py"
+      ]
+    },
+    "4a519b4fdb9ac542eaeb3fc98ffb0b1f832f8e44": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "原生限价/市价账本及源消息分类、盘口深度和终态证明核查；属于当前回放正确性输入修复",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "reports/2026-10/2026-10-20-source-ambiguity-admission.md",
+        "scripts/audit_open5m_cancel_adjacency.py",
+        "scripts/tests/test_open5m_cancel_adjacency_audit.py"
+      ]
+    },
+    "317f71e5c2419fd3adbc360b4c436672f4bcaa68": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "原生限价/市价账本及源消息分类、盘口深度和终态证明核查；属于当前回放正确性输入修复",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/audit_open5m_cancel_adjacency.py"
+      ]
+    },
+    "31f5f6ae6c339b9414afb68fbb514a2f12a1e7ae": {
+      "status": "assigned",
+      "chains": [
+        "replay"
+      ],
+      "reason": "原生限价/市价账本及源消息分类、盘口深度和终态证明核查；属于当前回放正确性输入修复",
+      "review_basis": "全量跨度反查：原始提交的专用路径、主题及所服务目标",
+      "anchors": [
+        "scripts/audit_open5m_cancel_adjacency.py",
+        "scripts/tests/test_open5m_cancel_adjacency_audit.py"
+      ]
+    },
+    "58173176f8acfcb9e863250501fb66ea56b6ef19": {
+      "status": "shared",
+      "chains": [
+        "report-publish",
+        "report-tags"
+      ],
+      "reason": "同一提交既新增相关诊断及全量散点产物，又接入标签导航，两个交付目标各计半份",
+      "review_basis": "实际图像资产及导航文件清单复核",
+      "anchors": [
+        "content/assets/cancel-phase-2026-09-06/F01-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F01-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F02-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F02-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F03-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F03-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F04-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F04-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F05-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F05-scatter.webp",
+        "content/assets/cancel-phase-2026-09-06/F06-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F06-scatter.webp"
+      ]
+    },
+    "5e0a8fcb0e2fb768382bcbd1f2a9f1c50293364d": {
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "anchors": [
+        "tests/cancel-phase-report.spec.cjs",
+        "tests/test_cancel_phase_direction_report.py",
+        "tools/build_cancel_phase_report_20260906.py",
+        "tools/cancel_phase_dispersion.py",
+        "tools/fetch_cancel_phase_report_inputs.py",
+        "tools/monitor_cancel_phase_directions.py",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    "9f5bd14d973ed65c141fe2d42e9cab2c6e4a806a": {
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "anchors": [
+        "content/daily/2026-09-06.html",
+        "content/daily/2026-09-06.show.html",
+        "docs/plans/2026-09-09-cancel-phase-all-directions-design.md",
+        "tests/cancel-phase-report.spec.cjs",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    "698a74cc68dc6378f7ef61096950c13d9375a5cb": {
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "anchors": [
+        "content/assets/cancel-phase-2026-09-06/F01-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F02-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F03-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F04-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F05-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F06-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F07-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F08-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F09-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F10-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F11-daily.webp",
+        "content/assets/cancel-phase-2026-09-06/F12-daily.webp"
+      ]
+    },
+    "c0dc431893e95a0903242f639293405ef0512429": {
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "anchors": [
+        "content/daily/2026-09-06.html",
+        "content/daily/2026-09-06.show.html",
+        "docs/plans/2026-09-09-cancel-phase-all-directions-design.md",
+        "tests/cancel-phase-report.spec.cjs",
+        "tools/build_cancel_phase_report_20260906.py",
+        "tools/cancel_phase_math.py",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    "dc1af6e46ef270cb2fd89b9ef4b13879a79e9485": {
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "anchors": [
+        "content/daily/2026-09-06.html",
+        "content/daily/2026-09-06.show.html",
+        "docs/plans/2026-09-09-cancel-phase-all-directions-design.md",
+        "tests/cancel-phase-report.spec.cjs",
+        "tools/templates/cancel-phase-20260906.html"
+      ]
+    },
+    "3ed2dab66950a4605f6cf513e91441fbaf4ade60": {
+      "status": "assigned",
+      "chains": [
+        "report-tags"
+      ],
+      "reason": "结果页的买卖方向选择、因子范围、层级排序、成对对照或公式浏览功能；不把功能建设混入当日内容发布",
+      "review_basis": "逐条路径、主题与结果页计划目标复核",
+      "anchors": [
+        "content/assets/depth-match-2026-09-07/2026-09-07-browser-audit.json",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part01.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part02.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-depth-match-review-part03.zip",
+        "content/assets/depth-match-2026-09-07/2026-09-07-report-build-audit.json",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_buy-daily.png",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_buy-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_sell-daily.png",
+        "content/assets/depth-match-2026-09-07/figures/dm01_exact_sell-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_buy-daily.png",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_buy-daily.svg",
+        "content/assets/depth-match-2026-09-07/figures/dm02_confirmed_sell-daily.png"
+      ]
+    }
+  },
+  "context_rules": [
+    {
+      "id": "parent-snapshot",
+      "repo": "Quant_Research-Trading",
+      "start": "2026-06-25",
+      "end": "2026-07-08",
+      "path": "lv2_snapshot_workspace/",
+      "chain": "lv2-snapshot",
+      "reason": "父仓早期快照工作区的修正与说明；专用工作区及同时期快照计划限定目标"
+    },
+    {
+      "id": "parent-literature",
+      "repo": "Quant_Research-Trading",
+      "start": "2026-06-29",
+      "end": "2026-07-03",
+      "path": "LOWLAT|ClusterLOB|factor_lab|复现论文",
+      "chain": "literature",
+      "reason": "复现目录中的论文计划与实现，按本次明确的复现对象归属"
+    },
+    {
+      "id": "parent-algobench",
+      "repo": "Quant_Research-Trading",
+      "start": "2026-07-06",
+      "end": "2026-07-14",
+      "path": "因子/algobench/",
+      "chain": "algobench",
+      "reason": "父仓六篇论文比较与关注度面板实施阶段；不用于后续同名研究仓代码"
+    },
+    {
+      "id": "formal-initial",
+      "repo": "sirui-quant-research",
+      "start": "2026-07-15",
+      "end": "2026-07-25",
+      "path": "因子/algobench/|lv2_snapshot_workspace/|scripts/|PLAN/",
+      "chain": "formal-engine",
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用"
+    },
+    {
+      "id": "gate-implementation",
+      "repo": "sirui-quant-research",
+      "start": "2026-07-27",
+      "end": "2026-08-02",
+      "path": "因子/algobench/|lv2_snapshot_workspace/|scripts/|PLAN/",
+      "chain": "gates",
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间"
+    },
+    {
+      "id": "fixed-history-support",
+      "repo": "sirui-quant-research",
+      "start": "2026-08-03",
+      "end": "2026-08-05",
+      "path": "因子/algobench/|lv2_snapshot_workspace/|scripts/|PLAN/",
+      "chain": "fixed-history",
+      "reason": "固定参数历史补算阶段的时间兼容、区间校验及恢复支撑；未发现其他目标锚点"
+    },
+    {
+      "id": "open5m-support",
+      "repo": "sirui-quant-research",
+      "start": "2026-08-06",
+      "end": "2026-08-10",
+      "path": "因子/algobench/|lv2_snapshot_workspace/|scripts/|PLAN/",
+      "chain": "open5m",
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段"
+    },
+    {
+      "id": "ml-runtime-support",
+      "repo": "sirui-quant-research",
+      "start": "2026-08-11",
+      "end": "2026-08-20",
+      "path": "scripts/.*(?:guard|environment)|因子/algobench/",
+      "chain": "ml-exec",
+      "reason": "多模型执行阶段的资源/环境支撑；公共守护器没有因此成为独立研究目标"
+    },
+    {
+      "id": "calibration-support",
+      "repo": "sirui-quant-research",
+      "start": "2026-08-27",
+      "end": "2026-09-04",
+      "path": "因子/algobench/|lv2_snapshot_workspace/|scripts/",
+      "chain": "open5m",
+      "reason": "全期连续核定标和机制预查阶段的公共代码支撑；有专用撤单或其他目标时优先专用证据"
+    },
+    {
+      "id": "old-bank-support",
+      "repo": "sirui-quant-research",
+      "start": "2026-09-08",
+      "end": "2026-09-12",
+      "path": "formal_|event_prestate|lv2_snapshot_workspace/|scripts/(?:calibrate|benchmark|run_guarded)",
+      "chain": "old-factor-bank",
+      "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分"
+    }
+  ],
+  "reviewed_through": "2026-10-21"
+}

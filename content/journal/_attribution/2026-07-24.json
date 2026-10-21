@@ -1,0 +1,875 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-24",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "abdf2144c60092a9812cfa548262d7109e17bcd5",
+      "date": "2026-07-24",
+      "subject": "chore: sync sirui q2 intraday research",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "sirui-quant-research"
+      ]
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "sha": "df409d9e22d9d3ef8f264507893a2f3b33520be6",
+      "date": "2026-07-24",
+      "subject": "chore: update Sirui submodule to merged main",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        "sirui-quant-research"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9b8fb2219a908bc2eba82021a68e4ebffe758255",
+      "date": "2026-07-24",
+      "subject": "fix: pickle intraday label worker spec",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/intraday_label_pipeline.py",
+        "因子/algobench/tests/test_intraday_label_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a4f9d35eb14992301d4a4f2c6c8926586742d4db",
+      "date": "2026-07-24",
+      "subject": "fix: count active cgroup cpu as guarded progress",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_2026q2_intraday_continuation.sh",
+        "scripts/run_guarded.py",
+        "因子/algobench/configs/formal_logic_eval_2026q2.yaml",
+        "因子/algobench/configs/formal_logic_intraday_2026q2.yaml",
+        "因子/algobench/src/algobench/formal_study.py",
+        "因子/algobench/tests/test_formal_study.py",
+        "因子/algobench/tests/test_intraday_continuation_contract.py",
+        "因子/algobench/tests/test_run_guarded.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "31fa6d07fc345b419a21fba5db65619a02f4acec",
+      "date": "2026-07-24",
+      "subject": "docs: plan intraday scorer performance optimization",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-07-24-2026Q2日内正式因子Scorer与Response全流程性能优化实施计划.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5c6b8d73c9dd5ac37846c8ba230df45bdfc456cb",
+      "date": "2026-07-24",
+      "subject": "docs: refine intraday scorer validation plan",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/2026-07-24-2026Q2日内正式因子Scorer与Response全流程性能优化实施计划.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3a62f3725805763f83741ef704f4a4b37b635919",
+      "date": "2026-07-24",
+      "subject": "chore: ignore pytest temporary workspaces",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "只有仓库规则、依赖、缓存或子仓指针；不重复作为任务产出计重",
+      "shares": {},
+      "basis": "主题与专用文件",
+      "paths": [
+        ".gitignore"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb560498e4d2b8a7b68690f9ce37d9f77a033887",
+      "date": "2026-07-24",
+      "subject": "后半提速PLAN 26.7.24 15:18",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/2026-07-24-2026Q2日内正式因子Scorer与Response全流程性能优化实施计划.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b4aa7f09514697a9b2858787a2ce53ae182d7078",
+      "date": "2026-07-24",
+      "subject": "docs: freeze formal response performance baseline",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/evidence/formal_response_performance_baseline_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "70ed9234a457d072edd91126e6a30b9c345ecefa",
+      "date": "2026-07-24",
+      "subject": "fix: persist stock factor failures immediately",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_e2e_2x2.py",
+        "因子/algobench/tests/test_formal_panel_runner.py",
+        "因子/algobench/tests/test_intraday_label_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "56ea51c783729d1e270a40c2cd5b8b9db6bd6a6e",
+      "date": "2026-07-24",
+      "subject": "feat: add worker-native formal telemetry",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/run_formal_panel.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py",
+        "因子/algobench/tests/test_run_formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "18a556a094e67ab08575527d57258db410babdc3",
+      "date": "2026-07-24",
+      "subject": "perf: prune unused l2 intervals and release stock frames",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/run_2026q2_intraday_continuation.sh",
+        "scripts/run_formal_panel.py",
+        "scripts/run_formal_response_canary.sh",
+        "因子/algobench/src/algobench/formal_evaluation_specs.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/src/algobench/intraday_label_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "44db4b72ffc40ea6389fec538dd4ba84a23f8656",
+      "date": "2026-07-24",
+      "subject": "perf: build one compact pair response context per stock",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_impacts.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_impacts.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "71708cc5adbd34e706f1a1e1ecd1c9f50a8a559c",
+      "date": "2026-07-24",
+      "subject": "perf: plan response transforms by semantic dependencies",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py",
+        "因子/algobench/tests/test_intraday_continuation_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1b1b62ffdb798f824810f2461abdaf2f87ce4060",
+      "date": "2026-07-24",
+      "subject": "perf: fuse response scans and prune impossible edges",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b88cfe0f74a2d5f5eb0a728910746e5a3bce3d6",
+      "date": "2026-07-24",
+      "subject": "perf: reuse exact response queries in downstream scorers",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_response_scorers.py",
+        "因子/algobench/tests/test_formal_scoring_workspace.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fec7417bd267928a73ef0879141b39966451a9bb",
+      "date": "2026-07-24",
+      "subject": "perf: add low-memory exact response block index",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fa9afe388b02f559be50baf53dd720cd1ac77dcf",
+      "date": "2026-07-24",
+      "subject": "perf: remove pandas objects from response reduction",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "50bcf2fa0d93af5b4aee312dce0393e806b50112",
+      "date": "2026-07-24",
+      "subject": "perf: reuse aggregation alignment and scorer outputs",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_aggregation.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_formal_aggregation.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_scoring_workspace.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "46b167b6a46b625a4cc71b29cf9ad7f53ddf0b7c",
+      "date": "2026-07-24",
+      "subject": "test: close formal response integration regressions",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "因子/algobench/src/algobench/attention_panel.py",
+        "因子/algobench/tests/test_formal_label_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6a120046524d71408bbcd860613f370d2421f3a",
+      "date": "2026-07-24",
+      "subject": "feat: expose response execution mode in formal runner",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_formal_panel.py",
+        "scripts/run_formal_response_canary.sh",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_panel_runner.py",
+        "因子/algobench/tests/test_run_formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1e98e470f5fd72489f823c7433f2b28c6a277c87",
+      "date": "2026-07-24",
+      "subject": "test: add real-stock response exactness evidence",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/compare_formal_response_canaries.py",
+        "scripts/freeze_formal_response_canary_inventory.py",
+        "scripts/run_formal_panel.py",
+        "scripts/run_formal_response_canary.sh",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_exactness.py",
+        "因子/algobench/tests/test_run_formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e6fd3e21e269904f7d1ec298f0361278203ca544",
+      "date": "2026-07-24",
+      "subject": "chore: keep response canary logs compact",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/compare_formal_response_canaries.py",
+        "scripts/freeze_formal_response_canary_inventory.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf8a0d6830b98856df8f56bab7a29278ad49c1c6",
+      "date": "2026-07-24",
+      "subject": "fix: hash canonical response canary artifacts",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e6f77fcce1ce90a89ffe15f9d679c8865c4d1d38",
+      "date": "2026-07-24",
+      "subject": "fix: link canary reference before handoff",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_formal_response_canary.sh",
+        "因子/algobench/tests/test_intraday_continuation_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ec8c6c66969697a3839d23bf84407b68e7481467",
+      "date": "2026-07-24",
+      "subject": "fix: align response acceptance with approved scope",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/2026-07-24-2026Q2日内正式因子Scorer与Response全流程性能优化实施计划.md",
+        "PLAN/formal-streaming-rollout-checklist.md",
+        "scripts/compare_formal_response_canaries.py",
+        "scripts/freeze_formal_response_canary_inventory.py",
+        "因子/algobench/tests/test_intraday_continuation_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5773c79291cc8fe4f352ce0f173d856e8e44a43b",
+      "date": "2026-07-24",
+      "subject": "fix: serialize shared progress jsonl writes",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "653624e75d3c1045e4db576fd40efef96a03790e",
+      "date": "2026-07-24",
+      "subject": "fix: make formal evaluation score only",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_formal_panel.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_panel_runner.py",
+        "因子/algobench/tests/test_run_formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "73f8d2aa15548ab5142bfa202c00bcf370dfb544",
+      "date": "2026-07-24",
+      "subject": "perf: prepare response runtime without handoff copies",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_hist_observations.py",
+        "scripts/calibrate_kernel_scales.py",
+        "scripts/prepare_intraday_response_acceptance_runtime.py",
+        "因子/algobench/tests/test_build_hist_observations.py",
+        "因子/algobench/tests/test_calibrate_kernel_scales.py",
+        "因子/algobench/tests/test_prepare_intraday_response_acceptance_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "45f241b8134cd74899d6857204f0d1b5e6a6e064",
+      "date": "2026-07-24",
+      "subject": "perf: record terminal cgroup resource deltas",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_guarded.py",
+        "因子/algobench/tests/test_run_guarded.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "68d918fe9e05c92553a12d1c0fa80221cd62bc5f",
+      "date": "2026-07-24",
+      "subject": "perf: run response exactness canaries ephemerally",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/compare_formal_response_canaries.py",
+        "scripts/run_formal_response_canary.sh",
+        "scripts/run_guarded.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_compare_formal_response_canaries.py",
+        "因子/algobench/tests/test_intraday_continuation_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aa27068f77dc90dd14a4bb1b8ca629b39dceb8c3",
+      "date": "2026-07-24",
+      "subject": "feat: add formal response single-day acceptance",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_formal_response_single_day_acceptance.sh",
+        "scripts/validate_formal_response_single_day_acceptance.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_response_single_day_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b5f76a1f4590ef61158c7938df04719fd38519e9",
+      "date": "2026-07-24",
+      "subject": "docs: align response acceptance with ephemeral evidence",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/单日真实性能测量_服务器执行说明.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e49c603b3b3f2388a8c348b24f8facaf86871c66",
+      "date": "2026-07-24",
+      "subject": "fix: make response acceptance launcher executable",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_formal_response_single_day_acceptance.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc465c5b7c06f4d221374f150d771e291b31ec6a",
+      "date": "2026-07-24",
+      "subject": "fix: accept unavailable cgroup io counters",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/compare_formal_response_canaries.py",
+        "scripts/run_formal_response_canary.sh",
+        "scripts/validate_formal_response_single_day_acceptance.py",
+        "因子/algobench/tests/test_compare_formal_response_canaries.py",
+        "因子/algobench/tests/test_formal_response_single_day_acceptance.py"
+      ]
+    }
+  ]
+}

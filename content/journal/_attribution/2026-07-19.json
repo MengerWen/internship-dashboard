@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-19",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0938dd05c73e36f75a68585f9694a4ffb6534ce3",
+      "date": "2026-07-19",
+      "subject": "计算设定 26.7.19 01:03",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/RUNBOOK_服务器执行顺序.md",
+        "docs/plans/2026-07-19-fixed-production-concurrency-watchdog-design.md",
+        "docs/plans/2026-07-19-fixed-production-concurrency-watchdog.md",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/build_labels_d1_1030.py",
+        "scripts/ladder_next.py",
+        "scripts/run_formal_panel.py",
+        "scripts/run_guarded.py",
+        "scripts/run_pilot.py",
+        "因子/algobench/src/algobench/formal_label_pipeline.py",
+        "因子/algobench/src/algobench/formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1da6f17898ff07ad413f295698b9f90e5c24da93",
+      "date": "2026-07-19",
+      "subject": "补计算设定 26.7.19 01:17",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "正式因子引擎实施阶段的公共代码、配对评分与有界运行支撑；仅在无其他专用目标证据时采用",
+      "context_rule": "formal-initial",
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "PLAN/RUNBOOK_服务器执行顺序.md",
+        "docs/plans/2026-07-19-fixed-production-concurrency-watchdog-design.md",
+        "docs/plans/2026-07-19-fixed-production-concurrency-watchdog.md",
+        "因子/algobench/src/algobench/attention_panel.py",
+        "因子/algobench/src/algobench/attention_parallel.py",
+        "因子/algobench/src/algobench/cli.py",
+        "因子/algobench/tests/test_attention_parallel.py",
+        "因子/algobench/tests/test_runbook_execution_policy.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "405b563e3efbd2f1927311b89f4c58fe58249c16",
+      "date": "2026-07-19",
+      "subject": "7A又卡爆修改 26.7.19 11:32",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/RUNBOOK_服务器执行顺序.md",
+        "PLAN/incidents/STEP7A_REAL_OOM_20260719.md",
+        "docs/plans/2026-07-19-step7a-p0-oom-design.md",
+        "docs/plans/2026-07-19-step7a-p0-oom.md",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "scripts/run_formal_panel.py",
+        "scripts/run_guarded.py",
+        "scripts/run_guarded_oom_integration.py",
+        "scripts/step7a_canary.sh",
+        "scripts/step7a_formal.sh",
+        "scripts/step7a_preflight.sh"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "22bf1707b65d319476dc0215c257b1801f4e5d02",
+      "date": "2026-07-19",
+      "subject": "无法运行7A.0 26.7.19 13:25",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/incidents/STEP7A_REAL_OOM_20260719.md",
+        "scripts/run_guarded_oom_integration.py",
+        "scripts/step7a_preflight.sh",
+        "因子/algobench/tests/test_run_guarded_oom_integration.py",
+        "因子/algobench/tests/test_runbook_execution_policy.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1aa40a47a5c8beb58168a9907c370be1ce16bfe7",
+      "date": "2026-07-19",
+      "subject": "单日性能测量 26.7.19 15:21",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/单日真实性能测量_服务器执行说明.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bbb91259eed08256d01ee4574fd161869f61fcfe",
+      "date": "2026-07-19",
+      "subject": "小改单日先测 26.7.19 22:18",
+      "status": "assigned",
+      "chains": [
+        "formal-engine"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "formal-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "PLAN/单日真实性能测量_服务器执行说明.md"
+      ]
+    }
+  ]
+}

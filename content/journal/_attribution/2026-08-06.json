@@ -1,0 +1,706 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-06",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "485ef6d703bf89b1e2c3c2280169b950c458ede6",
+      "date": "2026-08-06",
+      "subject": "26.8.6 13:56",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "content/assets/factor-structure-2026-08-05/pca_scree_curve.png",
+        "content/assets/factor-structure-2026-08-05/spearman_correlation_heatmap.png",
+        "content/daily/2026-08-05.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "7a138f8e059847e32cd5c13d7a94c89152cd348f",
+      "date": "2026-08-06",
+      "subject": "feat: add collapsible markdown headings",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "看板提交按本次制作/交互目标归属；报告主题不转记为研究计算",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "build.py",
+        "docs/plans/2026-08-06-markdown-heading-collapse.md",
+        "site/css/base.css",
+        "site/css/daily.css",
+        "site/index.html",
+        "site/js/content-enhance.js",
+        "site/js/daily.js",
+        "tests/test_heading_collapse.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "493ee169d1ed17196384bb7b982e652ff42955ff",
+      "date": "2026-08-06",
+      "subject": "feat: add open5m intraday study and benchmark contract",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-08-06-open5m-2025-2026h1-performance-design.md",
+        "docs/plans/2026-08-06-open5m-2025-2026h1-performance.md",
+        "scripts/build_open5m_performance_result.py",
+        "scripts/run_open5m_single_day_benchmark.py",
+        "因子/algobench/configs/formal_evaluation_intraday_open5m_2025_2026h1_v1.yaml",
+        "因子/algobench/configs/formal_logic_intraday_open5m_2025_2026h1_v1.yaml",
+        "因子/algobench/configs/formal_parameter_semantics_intraday_open5m_2025_2026h1_v1.yaml",
+        "因子/algobench/configs/intraday_open5m_single_day_performance_v1.yaml",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fa0cc0c398d5c7a1b60a3da02f0b45fd8f948731",
+      "date": "2026-08-06",
+      "subject": "feat: freeze open5m runtime and benchmark pipeline",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "scripts/validate_open5m_benchmark_runtime.py",
+        "因子/algobench/configs/formal_logic_intraday_open5m_2025_2026h1_v1.yaml",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0b3d01933f1c50fc1417be4c5adc6b16cd70fa2",
+      "date": "2026-08-06",
+      "subject": "fix: omit redundant interval readiness evidence",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_interval_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5edd8249179eadc8d8fe2ce5ed784cf27c1e6d43",
+      "date": "2026-08-06",
+      "subject": "fix: resolve revision for versioned interval contracts",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/intraday_interval_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ba7fc5e827d85e0031c413744e491c2b4e03602",
+      "date": "2026-08-06",
+      "subject": "fix: honor frozen open5m benchmark resources",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "57f9217c3b3217510ca28944a0c9147584311147",
+      "date": "2026-08-06",
+      "subject": "perf: parallelize formal evaluation artifacts",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [
+        "open5m"
+      ],
+      "phase_mapping": {
+        "formal-engine": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "docs/plans/2026-08-06-open5m-2025-2026h1-performance-design.md",
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "scripts/build_open5m_performance_result.py",
+        "scripts/evaluate_formal_factors.py",
+        "scripts/validate_intraday_study_outputs.py",
+        "因子/algobench/configs/intraday_open5m_single_day_performance_v1.yaml",
+        "因子/algobench/tests/test_evaluate_formal_factors.py",
+        "因子/algobench/tests/test_open5m_performance_contract.py",
+        "因子/algobench/tests/test_validate_intraday_study_outputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e574e54beaf14c18d33586bf12573ea835ae640b",
+      "date": "2026-08-06",
+      "subject": "perf: streamline fresh evaluation writes",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ced0f4b06c9b46e9c22d191715d9edc21a09b3bf",
+      "date": "2026-08-06",
+      "subject": "fix: bind interval reports to open5m scope",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "86b039f8a0433dffcce9ddab393eaf2e90ce3016",
+      "date": "2026-08-06",
+      "subject": "perf: parallelize open5m daily panel",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "scripts/build_open5m_performance_result.py",
+        "因子/algobench/configs/formal_logic_intraday_open5m_2025_2026h1_v1.yaml",
+        "因子/algobench/configs/intraday_open5m_single_day_performance_v1.yaml",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1364ac422cd19d303f7a04b16c568cd810b232f6",
+      "date": "2026-08-06",
+      "subject": "perf: linearize ordered pair reductions",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "因子/algobench/configs/formal_logic_intraday_open5m_2025_2026h1_v1.yaml",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9b27260fa5f53f140bef0c2fe4c7dbee021d5da2",
+      "date": "2026-08-06",
+      "subject": "perf: coalesce pair batches and anchor lookups",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6b2ab7ab10c4b3d5eb19cac97ef0cc1e8a5e1c56",
+      "date": "2026-08-06",
+      "subject": "perf: project unused L2 receive timestamps",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "因子/algobench/src/algobench/formal_panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "21470f6ba279628220acbd2a3c6f3247968ba555",
+      "date": "2026-08-06",
+      "subject": "perf: trim event rows and raise open5m parser width",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "open5m",
+      "related_chains": [],
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/build_open5m_benchmark_command_plan.py",
+        "因子/algobench/configs/formal_logic_intraday_open5m_2025_2026h1_v1.yaml",
+        "因子/algobench/tests/test_open5m_performance_contract.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "354fb4da940ce2a39c40c3cfc48820f4525e9b60",
+      "date": "2026-08-06",
+      "subject": "perf: enlarge pair reduction batches",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ba588f72a3cf1063b6d0b24a4f93e7d94bbec09",
+      "date": "2026-08-06",
+      "subject": "perf: reuse lifecycle window proof",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_lifecycle.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_lifecycle.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c41a91ca8784b96f7b75f136deaacabec3372520",
+      "date": "2026-08-06",
+      "subject": "perf: trust audited pair enumeration gates",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "97edcdb5671b719d75607f37767c17aa27979ee9",
+      "date": "2026-08-06",
+      "subject": "Overlap single-day extraction with factor compute",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c463cb3b681cbd5c5e5ee9c130cdf4cc8e4a7456",
+      "date": "2026-08-06",
+      "subject": "Compile numeric event prestate replay",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/src/algobench/formal_event_replay.py",
+        "因子/algobench/tests/test_event_prestate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a6092121082551f6e561246f114d2d78d8404bc0",
+      "date": "2026-08-06",
+      "subject": "Compile event replay helper primitives",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/event_prestate_accel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9bb4a09d9b2706a5bbd9fd50b03aac86ec217bc2",
+      "date": "2026-08-06",
+      "subject": "Cap parser threads during streamed compute",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ba32523cc38cb42caba184c37e8ba6b23dd6e948",
+      "date": "2026-08-06",
+      "subject": "Trim lifecycle replay overhead",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_lifecycle.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b957de2023a1af5a95ffaca7f6b043937c1e6e1e",
+      "date": "2026-08-06",
+      "subject": "Preserve incremental replay instrumentation",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_lifecycle.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "df0452d736c4573c7e203ad37944bce9f5332f01",
+      "date": "2026-08-06",
+      "subject": "Reduce lifecycle event dispatch overhead",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_lifecycle.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "05166a30d32af4ec27396e531e88fd4e79fa8918",
+      "date": "2026-08-06",
+      "subject": "Prioritize heavy stocks in formal streaming queries",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "open5m"
+      },
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "因子/algobench/src/algobench/formal_panel.py",
+        "因子/algobench/tests/test_formal_panel_runner.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b598fe57b7f34763240a727cd3d41d9bad881b4b",
+      "date": "2026-08-06",
+      "subject": "Validate prioritized Doris stream order",
+      "status": "assigned",
+      "chains": [
+        "open5m"
+      ],
+      "reason": "五分钟因子及count代理实施阶段的公共配对、响应、调度优化；限定对应业务阶段",
+      "context_rule": "open5m-support",
+      "shares": {
+        "open5m": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/io.py",
+        "lv2_snapshot_workspace/tests/test_doris_io.py"
+      ]
+    }
+  ]
+}

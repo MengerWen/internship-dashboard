@@ -1,0 +1,1183 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-28",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "9ed642cad403275bdcad7a8554f8585beccea483d8e54765ca6e428049f021c6",
+  "rules_sha256": "ce6d8329c1e1120c284f53ee498d5726e1f3511fe97016f4534d6956ba2618dc",
+  "revisions": {
+    "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+  },
+  "items": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "52c43675824c566325c3feb98c6f66a4bb49b38c",
+      "date": "2026-07-28",
+      "subject": "fix: bound candidate gate calibration memory",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "gates",
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_candidate_gate_calibration.py",
+        "因子/algobench/tests/test_formal_candidate_gate_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1b8699dc6182efab5835ed1a19be53aeb29e1162",
+      "date": "2026-07-28",
+      "subject": "fix: parallelize guarded gate calibration",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": null,
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/calibrate_candidate_gates.py",
+        "因子/algobench/tests/test_calibrate_candidate_gates.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a3f47129244c43166ff2cddec683e689d632229",
+      "date": "2026-07-28",
+      "subject": "fix: freeze scales from compact gate buckets",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/calibrate_kernel_scales.py",
+        "因子/algobench/tests/test_calibrate_kernel_scales.py",
+        "因子/algobench/tests/test_freeze_intraday_feasibility_parameters.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8bec2cc929a012d7b7480bc300c86965c296374a",
+      "date": "2026-07-28",
+      "subject": "config: bind approved intraday candidate gates",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
+      "subject_chain": "gates",
+      "related_chains": [],
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/configs/formal_logic_intraday_feasibility_2026q2_v2.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2708b83486cfe78c53e99e1e00ca371c11acb8e4",
+      "date": "2026-07-28",
+      "subject": "fix: allow guarded frozen calibration replay",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "replay",
+      "related_chains": [],
+      "phase_mapping": {
+        "replay": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "scripts/run_formal_panel.py",
+        "scripts/run_intraday_feasibility_server_task.sh",
+        "因子/algobench/tests/test_run_formal_panel.py",
+        "因子/algobench/tests/test_run_intraday_feasibility_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "01259cde00b84fa61568b08f1dc9ae91f1212479",
+      "date": "2026-07-28",
+      "subject": "fix: use optimized response path for evaluation",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/run_intraday_feasibility_server_task.sh",
+        "因子/algobench/tests/test_run_intraday_feasibility_server_task.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ed35973bb842681acf539298d819a9c745323c44",
+      "date": "2026-07-28",
+      "subject": "perf: accelerate exact response time kernels",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "85b42bd1b77a4fc4f6b6846fdcad0f7920b9e08e",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize exact response leaf scans",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "59eb03f1827bcd40695e06162764ab86aa8c6db6",
+      "date": "2026-07-28",
+      "subject": "perf: cache exact response node bounds",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4660429e2f51a057b58232a8b027a3d5eebd70f5",
+      "date": "2026-07-28",
+      "subject": "fix: preserve missing repricing evidence",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_chain_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1995907e8415e176bbed6cde28de03abf8a8e3e9",
+      "date": "2026-07-28",
+      "subject": "perf: tighten exact response block bounds",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9e75c596f62d2a108503815fd9393b66302208a7",
+      "date": "2026-07-28",
+      "subject": "perf: prune exact response at event granularity",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dbfc13d070849959e9848b9f8ea6084c42896de1",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize exact response leaf winners",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "71d5834ada9e6c20c72f0bace65f344a90fb24a9",
+      "date": "2026-07-28",
+      "subject": "perf: query exact response winners by range",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c4ab27cad86a236a91df16fa1a2021754101e657",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize exact response batch queries",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c4e717ce00ed276b8ae90015060f017f13b5cd85",
+      "date": "2026-07-28",
+      "subject": "perf: batch exact response exclusions and profiles",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5d39920ebf5e2b26c126953de4d84f9c91a45fa6",
+      "date": "2026-07-28",
+      "subject": "perf: reduce exact response outputs by batch",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6e47e6b5414c42b7a33e5c6d4b1c0b7218c20e01",
+      "date": "2026-07-28",
+      "subject": "perf: isolate exact response fallback edges",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2ccad420ec05a6329aed71e7b164a563b52c5df8",
+      "date": "2026-07-28",
+      "subject": "perf: expose response batch fallback telemetry",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cd1a9f206c29c48b9751341cb7036d65387446ae",
+      "date": "2026-07-28",
+      "subject": "perf: trace response batch stage timings",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "27ead10a2b25743761d0b442ff51efcf22127a08",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize response winner reduction",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "90d7cfff791fd31e62a65b0cc01806846ff173e8",
+      "date": "2026-07-28",
+      "subject": "perf: trace pair reduction stage timings",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e61d5adebef9929cc84c3f3352d8fe5700227a49",
+      "date": "2026-07-28",
+      "subject": "perf: batch bounded group reduction",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1c3629648e9078aa4fbe76dc3b74ea9e2189a67a",
+      "date": "2026-07-28",
+      "subject": "perf: keep bounded groups columnar through scoring",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e12e98c90e9dccddebd875c1a0385b0f64e0bb0e",
+      "date": "2026-07-28",
+      "subject": "perf: trace formal scorer progress",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ef0416ae9f2b4ed491c7e95251b86f71d3bca286",
+      "date": "2026-07-28",
+      "subject": "perf: batch chain response scoring",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_formal_response_scorers.py",
+        "因子/algobench/tests/test_formal_scoring_workspace.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0021f7ceb56c614f91bd2d7dcb1524cf38ccacd7",
+      "date": "2026-07-28",
+      "subject": "perf: share order projections across scorers",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8335256c2a544c1f637d937288061094a24d37af",
+      "date": "2026-07-28",
+      "subject": "perf: coalesce bounded pair batches",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "530d94e3538049aed0ed5e84f9d8c86bd7294689",
+      "date": "2026-07-28",
+      "subject": "perf: amortize pair and row batch setup",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9ad058f7ca341df1b906c8798ae1820dce043673",
+      "date": "2026-07-28",
+      "subject": "perf: linearize chain and evidence scoring",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_chains.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cc260d9b4b3150ad6f92f3acee89f406c981624f",
+      "date": "2026-07-28",
+      "subject": "perf: fuse pair scoring projections",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a00e3847fa4cced65ae9ef1a35c787e74258ba09",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize pair scorer transforms",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标；同名公共模块按本次有界实施阶段归属，保留映射供复核",
+      "subject_chain": "formal-engine",
+      "related_chains": [],
+      "phase_mapping": {
+        "formal-engine": "gates"
+      },
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "主题与专用文件",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6c53a8ebe5bfd27388eec335a4ff98e43b6743e7",
+      "date": "2026-07-28",
+      "subject": "perf: amortize factor progress and score alignment",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_aggregation.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_formal_aggregation.py",
+        "因子/algobench/tests/test_formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9c89ba529c307a689c059ddf54e33cd5d5bb5b0a",
+      "date": "2026-07-28",
+      "subject": "perf: bound scoring telemetry projections",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_formal_scorers.py",
+        "因子/algobench/tests/test_formal_scoring_workspace.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "be845d374921f284a1f536c176c88e8278a13b09",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize execution speed scoring",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_response_engine.py",
+        "因子/algobench/tests/test_formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6516e200afc3e8bb2abba2105437dead7c43b1f3",
+      "date": "2026-07-28",
+      "subject": "perf: precompute queue dilution responses",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_layer2_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e5c23a3a0c185a7ba41085fc2c9885c51215af39",
+      "date": "2026-07-28",
+      "subject": "perf: batch exact response kernels",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8683ab30084488b7003139b01746f03a0cb526d6",
+      "date": "2026-07-28",
+      "subject": "feat: bind guarded runs to runtime cache",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/build_intraday_feasibility_result.py",
+        "scripts/render_intraday_feasibility_launcher.py",
+        "因子/algobench/tests/test_build_intraday_feasibility_result.py",
+        "因子/algobench/tests/test_render_intraday_feasibility_launcher.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c8704ea4b08d39c00adcb608be7408ea3b97ec55",
+      "date": "2026-07-28",
+      "subject": "perf: bound pair local-best reduction",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "24e64bdc6884247ecabadf071572636ebc4efc43",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize response batch control path",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "32e847cb7976db7f67e96f3e705520ff660fb729",
+      "date": "2026-07-28",
+      "subject": "perf: reuse bounded response winners",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6dbf0da2c20dda8311a669dd3c7628cdc27f3b8e",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize exact response kernel",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3c3a59d22be5972b061ab86741e0bf81f3c7f8b6",
+      "date": "2026-07-28",
+      "subject": "perf: streamline frozen evidence scoring",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_event_prestate.py",
+        "因子/algobench/tests/test_formal_chain_scorers.py",
+        "因子/algobench/tests/test_formal_layer2_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82fc56770d4aa580b2a1ca43ddccadc1761137aa",
+      "date": "2026-07-28",
+      "subject": "perf: batch frozen scoring hot paths",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_reference.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0622048dc0afbdf3725ceab70f361fe539ae3aba",
+      "date": "2026-07-28",
+      "subject": "perf: deduplicate response range queries",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1fe5ca363a3227ab43f9dcdba2b39ec964d01b75",
+      "date": "2026-07-28",
+      "subject": "perf: reuse stock-day scoring state",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_impacts.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e7a8cf101db10908f2c856494d3c226cdfb5211d",
+      "date": "2026-07-28",
+      "subject": "perf: reuse pair response indexes",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_response_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bd7f7a1cb3ea7fb87a9fb1c99f210037143e0f6c",
+      "date": "2026-07-28",
+      "subject": "perf: vectorize frozen factor reductions",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "因子/algobench/src/algobench/formal_aggregation.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca9c872f4e209edbe86d891249773a001a7ddea1",
+      "date": "2026-07-28",
+      "subject": "fix: bind acceptance runtime to frozen gate bundle",
+      "status": "assigned",
+      "chains": [
+        "gates"
+      ],
+      "reason": "候选数量/真实报价门及区间评价的公共实现；限定该轮计划与实施区间",
+      "context_rule": "gate-implementation",
+      "shares": {
+        "gates": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "阶段上下文",
+      "paths": [
+        "scripts/prepare_intraday_response_acceptance_runtime.py",
+        "因子/algobench/tests/test_prepare_intraday_response_acceptance_runtime.py"
+      ]
+    }
+  ]
+}
