@@ -61,7 +61,8 @@ def collect(index):
                             if not touched:
                                 continue
                             digest = hashlib.sha256(raw).hexdigest()
-                            call_id = part.get('id') or part.get('call_id')
+                            # Codex 的 id 是项目项身份，回执用 call_id；Claude 用工具 id。
+                            call_id = (part.get('call_id') or part.get('id')) if platform == 'codex' else (part.get('id') or part.get('call_id'))
                             calls[call_id] = digest
                             if digest in seen:
                                 continue
