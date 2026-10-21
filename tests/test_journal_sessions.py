@@ -139,6 +139,10 @@ class SessionEvidenceTests(unittest.TestCase):
                 manifest = {'entries': [entry]}
                 self.assertEqual(sessions.render_manifest(manifest), ['2026-08-02'])
                 self.assertEqual(sessions.render_manifest(manifest, check=True), [])
+                suffix = '\n\n## 后补原始材料\n保留这段正文和所在位置。\n'
+                fresh.write_text(fresh.read_text(encoding='utf-8') + suffix, encoding='utf-8')
+                self.assertEqual(sessions.render_manifest(manifest, check=True), [])
+                self.assertTrue(fresh.read_text(encoding='utf-8').endswith(suffix))
             self.assertEqual(old.read_bytes(), original)
             self.assertIn('&lt;script&gt;', fresh.read_text(encoding='utf-8'))
             self.assertTrue(fresh.read_text(encoding='utf-8').startswith('当日正文\n'))

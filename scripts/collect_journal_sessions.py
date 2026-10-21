@@ -306,8 +306,8 @@ def render_manifest(manifest, check=False):
         original = path.read_text(encoding="utf-8")
         if original.count(begin) != original.count(end) or original.count(begin) > 1:
             raise ValueError(f"{path.name}: 会话证据标记不完整")
-        base = re.sub(r"\n*" + re.escape(begin) + r".*?" + re.escape(end) + r"\n*", "\n", original, flags=re.S).rstrip()
         refs = grouped.get(path.stem, [])
+        replacement = ""
         if refs:
             section = [begin, "## 会话佐证", "",
                        "以下摘录补充当时的要求、决策或讨论背景。会话中的结果汇报仍须与上方原始依据核对；摘录不单独证明执行完成、性能或发布状态。", ""]
@@ -316,8 +316,11 @@ def render_manifest(manifest, check=False):
                 section += [f"- **{platform} · {labels[ref['kind']]}**（{ref['timestamp'][11:19]}，北京时间）：{html.escape(ref['supports'])}",
                             f"  <blockquote><p>{html.escape(ref['excerpt'])}</p></blockquote>",
                             f"  <small>会话 <code>{ref['session_id']}</code>，原始 JSONL 第 {ref['line']} 行；行 SHA-256 前12位 <code>{ref['line_sha256'][:12]}</code>（完整值存于审阅清单）。</small>", ""]
-            base += "\n\n" + "\n".join(section).rstrip() + "\n" + end
-        body = base + "\n"
+            replacement = "\n".join(section).rstrip() + "\n" + end
+        if begin in original:
+            body = re.sub(re.escape(begin) + r".*?" + re.escape(end), lambda _: replacement, original, flags=re.S)
+        else:
+            body = original.rstrip() + "\n\n" + replacement + "\n"
         # 没有托管区又没有新摘录的日卡完全不碰，含末尾空白。
         if not refs and begin not in original:
             continue
