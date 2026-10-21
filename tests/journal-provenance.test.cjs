@@ -32,19 +32,21 @@ test('旧密度按比例迁移，保存后再次打开不重复放大', () => {
   vm.runInNewContext(fs.readFileSync('site/js/journal.js', 'utf8'), scoped);
   const view = Object.assign({}, scoped.window.JournalView, {window: '3m'});
   view.density = view.densityFromPreferences({density: 11});
-  assert.equal(view.density, 23);
-  assert.equal(view.densityFromPreferences({density: 7}), 7 * 23 / 11);
+  assert.equal(view.density, 14);
+  assert.equal(view.densityFromPreferences({density: 7}), 7 * 14 / 11);
   assert.equal(view.densityFromPreferences({density: 44}), 44);
   view.savePreferences();
   const saved = JSON.parse(stored.get('journal-atlas-preferences'));
   assert.equal(saved.window, '3m');
-  assert.equal(view.densityFromPreferences(saved), 23);
-  assert.equal(view.densityFromPreferences({...saved, density: 11}), 11);
+  assert.equal(view.densityFromPreferences(saved), 14);
+  for (const density of [7, 11, 14, 23, 36]) {
+    assert.equal(view.densityFromPreferences({...saved, density}), density);
+  }
 });
 
 test('缺少或无效的密度偏好回到新标准间距', () => {
   for (const value of [undefined, null, {}, {density: '11'}, {density: 0}, {density: 45}]) {
-    assert.equal(journal.densityFromPreferences(value), 23);
+    assert.equal(journal.densityFromPreferences(value), 14);
   }
 });
 

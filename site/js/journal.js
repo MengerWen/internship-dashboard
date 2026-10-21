@@ -3,7 +3,7 @@
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const $ = id => document.getElementById(id);
   const densityRange = {min: 4, max: 44};
-  const densityPreferences = {version: 2, standard: 23, legacyStandard: 11};
+  const densityPreferences = {version: 2, standard: 14, legacyStandard: 11};
   // 国办发明电〔2025〕7号：https://www.gov.cn/zhengce/content/202511/content_7047090.htm
   // 按年维护官方放假调休安排；未收录年份只标周末，不推算农历节日。
   const mainlandCalendar = {
