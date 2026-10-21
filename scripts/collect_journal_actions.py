@@ -30,6 +30,7 @@ def targets(name, arguments):
 def collect(index):
     by_file = {s['file']: s for s in index['sessions']}
     actions, failures, seen, counts = [], [], set(), Counter()
+    actions_by_id = {}
     for filename, session in sorted(by_file.items()):
         meta = {}
         calls = {}
@@ -51,7 +52,7 @@ def collect(index):
                     parts = record.get('message', {}).get('content', []) if platform == 'claude' else [record.get('payload', {})]
                     if not isinstance(parts, list):
                         continue
-                    for part in parts:
+                    for part_index, part in enumerate(parts):
                         kind = part.get('type')
                         if kind in ('tool_use', 'function_call', 'custom_tool_call'):
                             counts['tool_calls'] += 1
@@ -63,27 +64,31 @@ def collect(index):
                             digest = hashlib.sha256(raw).hexdigest()
                             # Codex 的 id 是项目项身份，回执用 call_id；Claude 用工具 id。
                             call_id = (part.get('call_id') or part.get('id')) if platform == 'codex' else (part.get('id') or part.get('call_id'))
-                            calls[call_id] = digest
-                            if digest in seen:
+                            # Claude 一行可以包含多个工具调用；行哈希不能充当动作身份。
+                            identity = hashlib.sha256((digest + '\0' + str(call_id or part_index)).encode()).hexdigest()
+                            calls[call_id] = identity
+                            if identity in seen:
                                 continue
-                            seen.add(digest)
+                            seen.add(identity)
                             try:
                                 stamp = local_time(record.get('timestamp'))
                             except ValueError:
                                 stamp = None
-                            actions.append({'id': digest, 'platform': platform,
+                            action = {'id': identity, 'platform': platform,
                                 'session_id': record.get('sessionId') or meta.get('id') or session['session_id'],
                                 'file': filename, 'line': number, 'byte_offset': offset, 'line_sha256': digest,
                                 'timestamp': stamp, 'date': stamp[:10] if stamp else None,
                                 'date_status': 'message-timestamp' if stamp else 'missing-timestamp',
                                 'cwd': record.get('cwd') or meta.get('cwd') or session.get('cwd'),
-                                'tool_name': name, 'call_id': call_id, 'targets': touched, 'receipt': None})
+                                'tool_name': name, 'call_id': call_id, 'targets': touched, 'receipt': None}
+                            actions.append(action)
+                            actions_by_id[identity] = action
                         elif kind in ('tool_result', 'function_call_output', 'custom_tool_call_output'):
                             counts['tool_receipts'] += 1
                             call_id = part.get('tool_use_id') or part.get('call_id')
                             digest = calls.get(call_id)
                             if digest:
-                                action = next((a for a in reversed(actions) if a['id'] == digest), None)
+                                action = actions_by_id.get(digest)
                                 if action and action['receipt'] is None:
                                     result = part.get('content') if platform == 'claude' else part.get('output')
                                     action['receipt'] = {'line': number, 'line_sha256': hashlib.sha256(raw).hexdigest(),
@@ -91,7 +96,7 @@ def collect(index):
                                         'preview': str(result)[:600]}
         except (OSError, ValueError, TypeError) as exc:
             failures.append({'file': filename, 'error': str(exc)})
-    return {'schema_version': 1, 'actions': actions, 'counts': dict(counts), 'failures': failures,
+    return {'schema_version': 2, 'actions': actions, 'counts': dict(counts), 'failures': failures,
             'note': '历史文件动作定位。调用及返回不等于整个研究运行成功；完成状态仍核对正文、文件和专门运行收据。'}
 
 

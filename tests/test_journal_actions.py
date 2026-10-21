@@ -7,6 +7,25 @@ from scripts.collect_journal_actions import collect, targets
 
 
 class ActionTests(unittest.TestCase):
+    def test_multiple_writes_in_one_claude_row_are_all_retained(self):
+        rows = [
+            {'type': 'assistant', 'sessionId': 's', 'timestamp': '2026-10-14T07:25:00Z',
+             'message': {'content': [{'type': 'tool_use', 'id': 'w1', 'name': 'Write', 'input': {'file_path': 'a.md'}},
+                                     {'type': 'tool_use', 'id': 'w2', 'name': 'Write', 'input': {'file_path': 'b.md'}}]}},
+            {'type': 'user', 'sessionId': 's', 'message': {'content': [
+                {'type': 'tool_result', 'tool_use_id': 'w1', 'content': 'ok'},
+                {'type': 'tool_result', 'tool_use_id': 'w2', 'content': 'ok'}]}},
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'claude.jsonl'
+            path.write_text(''.join(json.dumps(r) + '\n' for r in rows), encoding='utf-8')
+            result = collect({'sessions': [{'file': str(path), 'platform': 'claude', 'session_id': 's',
+                                          'snapshot_bytes': path.stat().st_size}]})
+        self.assertEqual(len(result['actions']), 2)
+        self.assertNotEqual(result['actions'][0]['id'], result['actions'][1]['id'])
+        self.assertEqual(result['actions'][0]['line_sha256'], result['actions'][1]['line_sha256'])
+        self.assertTrue(all(a['receipt']['line'] == 2 for a in result['actions']))
+
     def test_codex_item_id_is_not_the_receipt_call_id(self):
         rows = [
             {'type': 'session_meta', 'payload': {'id': 'native', 'cwd': 'D:/research'}},
