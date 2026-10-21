@@ -98,7 +98,7 @@ def collect(config, index, official_directory, output):
         t = dict(record); key = 'codex:' + t['id']
         body = [m for r in history.execute("SELECT * FROM thread_items WHERE thread_id=? AND item_type IN ('userMessage','agentMessage') ORDER BY rollout_ordinal", (t['id'],))
                 if (m := projected_message(r)) and index['since'] <= m['date'] <= index['until']]
-        scoped = key in prior or within(t['cwd'], config['project_roots']) or any(
+        scoped = t['id'] in config.get('include_session_ids', []) or key in prior or within(t['cwd'], config['project_roots']) or any(
             any(term in scope_text(m['text']).casefold() for term in markers) for m in body if m['role'] == 'user')
         source = t['source']
         try: source = json.loads(source)

@@ -184,6 +184,7 @@ def scan_file(path, platform, since, until):
 def collect(config, since, until):
     sessions, failures, counts, files = [], [], Counter(), []
     excluded = set(config.get("exclude_session_ids", [])) | {os.environ.get("CODEX_THREAD_ID")}
+    included = set(config.get('include_session_ids', []))
     for source in config["sources"]:
         base = Path(source["path"]).expanduser()
         if not base.is_dir():
@@ -208,10 +209,11 @@ def collect(config, since, until):
                     disposition["disposition"] = "subagent-context"
                     continue
                 scoped = any(within(cwd, config["project_roots"]) for cwd in parsed["directories"])
+                reviewed = sid in included or any(m.get('session_id') in included for m in parsed['messages'])
                 explicit = any(term.casefold() in scope_text(m["text"]).casefold()
                                for m in parsed["messages"] if m["role"] == "user"
                                for term in config["explicit_project_markers"])
-                if not scoped and not explicit:
+                if not scoped and not explicit and not reviewed:
                     counts["outside_scope"] += 1
                     disposition["disposition"] = "outside-project-scope"
                     continue
@@ -233,7 +235,7 @@ def collect(config, since, until):
                     snapshot = {k: v for k, v in parsed.items() if k not in ("messages", "metadata", "directories")}
                     sessions.append({"platform": source["platform"], "session_id": native,
                                      "source": source["name"], "file": str(path), "cwd": rows[0].get("cwd") or meta.get("cwd"),
-                                     "scope_basis": "cwd" if scoped else "user-project-reference",
+                                     "scope_basis": "reviewed-session-id" if reviewed else "cwd" if scoped else "user-project-reference",
                                      "forked_from_id": meta.get("forked_from_id"), **snapshot, "messages": rows})
                 if parsed["problems"]:
                     failures.append({"path": str(path), "error": "parse-problems", "problems": parsed["problems"]})

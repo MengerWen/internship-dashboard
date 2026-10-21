@@ -11,6 +11,17 @@ SPEC.loader.exec_module(sessions)
 
 
 class SessionEvidenceTests(unittest.TestCase):
+    def test_reviewed_project_origin_is_kept_when_initial_cwd_has_no_project_name(self):
+        rows=[{'type':'session_meta','payload':{'id':'reviewed-origin','cwd':'E:/'}},
+              {'type':'response_item','timestamp':'2026-06-24T01:35:58Z','payload':{'type':'message','role':'user','content':[{'type':'input_text','text':'mentor让我手搓100ms快照'}]}}]
+        with tempfile.TemporaryDirectory() as tmp:
+            p=Path(tmp)/'origin.jsonl';p.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+            result=sessions.collect({'sources':[{'name':'c','path':tmp,'platform':'codex'}],
+                'project_roots':['D:/research'],'explicit_project_markers':[],
+                'include_session_ids':['reviewed-origin']},'2026-06-01','2026-10-21')
+        self.assertEqual(len(result['sessions']),1)
+        self.assertEqual(result['sessions'][0]['scope_basis'],'reviewed-session-id')
+
     def test_heartbeat_is_retained_without_becoming_a_human_decision(self):
         record = {'type': 'response_item', 'payload': {'type': 'message', 'role': 'user',
                   'content': [{'type': 'input_text', 'text': '<heartbeat>monitor sirui-quant-research</heartbeat>'}]}}
