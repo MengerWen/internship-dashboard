@@ -197,3 +197,8 @@ npm run test:browser
 ```
 
 浏览器测试启动仅绑定 `127.0.0.1` 的测试 Worker，并使用 `.wrangler/test-state` 中的独立存储；不会修改线上标签。`tests/fixtures/tag-worker.mjs` 的模拟登录仅用于测试，生产入口固定为 `worker/index.mjs`。
+# 原始来源补全与对账
+
+研究日志的来源登记独立于日卡。`scripts/collect_journal_sessions.py`、`scripts/collect_journal_materials.py` 和 `scripts/collect_journal_actions.py` 分别采集原始会话、文件及完整Git历史、历史文件动作和回执。原始正文只写本机 `data/`。
+
+`scripts/reconcile_journal_sources.py --decisions docs/journal-review/rebuild-2026-10-21/review-decisions.json` 检查固定来源范围与逐项去向；新增材料或消息不能直接沿用旧审阅。`scripts/build_journal_source_register.py` 生成公开来源目录和逐日定位。公开账本保存身份、哈希与去向，完整路径映射留本机。规则见 [每日更新规则](docs/journal-review/daily-update-rules.md)，本轮补全依据见 [来源复核](docs/journal-review/rebuild-2026-10-21/findings.md)。阶段标签说明材料用途，不自动认定运行成功或验收通过。
