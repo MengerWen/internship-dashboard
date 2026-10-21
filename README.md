@@ -110,6 +110,8 @@ flowchart LR
 
 日志保存在 `content/journal/YYYY-MM-DD.md`，任务链和交接保存在 `content/chains.json`。一句话、链条归属与汇报覆盖关系以这些文件为准。构建只读取已入库的证据，不采集外部仓库。
 
+每日北京时间 9 点回顾前一自然日的完整提交、GitHub 远端记录和本地计划、研究文档，归入已有链条或按独立目标新建链条，再增量补写日志。日期、来源、归链、补漏与发布规则见 [研究日志每日更新规则](docs/journal-review/daily-update-rules.md)。定时任务在 Codex 本聊天执行；电脑须开机且应用保持运行。
+
 本地核对证据：
 
 ```powershell
