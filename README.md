@@ -129,7 +129,7 @@ python scripts/collect_journal_attribution.py --check
 
 正式版的 `#/journal` 在宽屏默认图谱、窄屏默认清单；日期、链条和视图均可用深链打开。证据第一次展开才请求，离线版使用内联数据。浏览器验收使用 `node scripts/verify_journal.cjs`；可通过 `JOURNAL_BASE_URL` 和 `JOURNAL_OFFLINE_DIR` 指定隔离构建。
 
-本次实施与发布结果见 [2026-10-20 验收记录](docs/journal-review/acceptance-2026-10-20.md)。
+本次实施与发布结果见 [2026-10-20 验收记录](docs/journal-review/acceptance-2026-10-20.md)。2026-10-22 按原始记录重审了全部日卡和链条，结论与修改见[研究日志复查](docs/journal-review/claude-review-2026-10-21.md)；日卡写法和链条边界见每日更新规则的“写法”“链条边界”两节。
 
 ## 发布流程
 
