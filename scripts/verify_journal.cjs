@@ -59,6 +59,81 @@ async function restDayBands(page) {
   return bands.length;
 }
 
+async function wheelZoom(page) {
+  const geometry = () => page.locator('.journal-atlas').evaluate(svg => ({
+    density: Number(svg.dataset.density), width: svg.getBoundingClientRect().width,
+    height: svg.getBoundingClientRect().height,
+    columns: [...svg.querySelectorAll('.journal-chain-unit')].map(n => n.dataset.chainX),
+    radii: [...svg.querySelectorAll('.journal-dot')].map(n => n.getAttribute('r')),
+    stroke: getComputedStyle(svg.querySelector('.journal-chain-line')).strokeWidth,
+    font: getComputedStyle(svg.querySelector('.journal-date-label')).fontSize,
+    annotations: [...document.querySelectorAll('.journal-annotation')].map(n => ({left: n.style.left, width: n.style.width})),
+    selection: document.querySelector('[data-selected-date]')?.dataset.selectedDate
+  }));
+  const before = await geometry();
+  const hit = page.locator('.journal-day-hit[data-journal-day="2026-08-03"]');
+  await hit.scrollIntoViewIfNeeded();
+  const box = await hit.boundingBox(), pointerY = box.y + box.height / 2;
+  await page.mouse.move(box.x + 30, pointerY);
+  await page.keyboard.down('Control');
+  try { await page.mouse.wheel(0, -100); } finally { await page.keyboard.up('Control'); }
+  await page.waitForFunction(d => Number(document.querySelector('.journal-atlas').dataset.density) > d, before.density);
+  await settled(page);
+  const enlarged = await geometry(), anchored = await hit.boundingBox();
+  assert(enlarged.height > before.height, 'Ctrl＋向上滚轮应拉长图谱');
+  const shift = anchored.y + anchored.height / 2 - pointerY;
+  const bounds = await page.evaluate(() => ({y: scrollY, max: Math.max(0, document.documentElement.scrollHeight - innerHeight)}));
+  assert(Math.abs(shift) < 2 || (shift > 0 && bounds.y >= bounds.max - 2) || (shift < 0 && bounds.y < 2), '在可滚动范围内应固定鼠标处的日期');
+  for (const key of ['width', 'columns', 'radii', 'stroke', 'font', 'annotations', 'selection']) assert.deepEqual(enlarged[key], before[key], key);
+  assert.match(await page.locator('#journal-density option:checked').textContent(), /自定义/);
+  await restDayBands(page);
+
+  const custom = enlarged.density;
+  await page.reload();
+  await page.waitForSelector('.journal-atlas');
+  assert.equal((await geometry()).density, custom, '刷新后恢复连续缩放值');
+  await hit.scrollIntoViewIfNeeded();
+  const next = await hit.boundingBox();
+  await page.mouse.move(next.x + 30, next.y + next.height / 2);
+  await page.keyboard.down('Control');
+  try { await page.mouse.wheel(0, 100); } finally { await page.keyboard.up('Control'); }
+  await page.waitForFunction(d => Number(document.querySelector('.journal-atlas').dataset.density) < d, custom);
+
+  const dispatch = (target, options) => page.locator(target).evaluate((node, input) => {
+    const event = new WheelEvent('wheel', {bubbles: true, cancelable: true, ...input});
+    node.dispatchEvent(event);
+    return event.defaultPrevented;
+  }, options);
+  const unchanged = (await geometry()).density;
+  assert.equal(await dispatch('.journal-scroller', {deltaY: 100}), false, '普通滚轮保留滚动');
+  assert.equal(await dispatch('.journal-scroller', {ctrlKey: true, deltaY: 0, deltaX: 100}), false);
+  assert.equal(await dispatch('.journal-heading', {ctrlKey: true, deltaY: -100}), false, '图外不拦截浏览器缩放');
+  assert.equal((await geometry()).density, unchanged);
+
+  for (const [deltaY, limit] of [[-100, 44], [100, 4]]) {
+    const prevented = await page.locator('.journal-scroller').evaluate((node, input) => {
+      return Array.from({length: 40}, () => {
+        const event = new WheelEvent('wheel', {bubbles: true, cancelable: true, ctrlKey: true, deltaY: input, clientY: 450});
+        node.dispatchEvent(event);
+        return event.defaultPrevented;
+      });
+    }, deltaY);
+    assert(prevented.every(Boolean), '到达缩放边界时仍拦截整页缩放');
+    await page.waitForFunction(d => Number(document.querySelector('.journal-atlas').dataset.density) === d, limit);
+    await settled(page);
+    assert.equal((await geometry()).width, before.width);
+  }
+  // 行和页单位的滚轮也应生效；每批事件只重绘一帧。
+  for (const deltaMode of [1, 2]) {
+    const density = (await geometry()).density;
+    assert.equal(await dispatch('.journal-scroller', {ctrlKey: true, deltaY: -1, deltaMode, clientY: 450}), true);
+    await page.waitForFunction(d => Number(document.querySelector('.journal-atlas').dataset.density) > d, density);
+  }
+  await page.locator('#journal-density').selectOption('11');
+  assert.equal((await geometry()).density, 11, '预设密度可恢复标准长度');
+  await atTop(page);
+}
+
 (async () => {
   await fs.mkdir(output, {recursive: true});
   const manifest = JSON.parse(await fs.readFile('dist/manifest.json', 'utf8'));
@@ -186,6 +261,7 @@ async function restDayBands(page) {
         assert.equal(await page.locator('.journal-selection-ring').count(), day.chains.length);
         await containedAnnotations(page);
       }
+      await wheelZoom(page);
       await page.locator('#journal-clear').click();
       await page.locator(`.journal-point-hit[data-date="${date}"][data-journal-point="algobench"]`).click();
       assert.equal(await page.locator('.journal-annotation').count(), 1);
@@ -282,6 +358,14 @@ async function restDayBands(page) {
       }
       assert.deepEqual(errors, []);
       results.push({width, days: days.length, chains: 28, notes: noteCount, restDays, minimumGap, compactHeight, errors});
+      if (width === 1440) {
+        await page.setViewportSize({width: 1100, height: 2000});
+        await page.locator('[data-journal-view="atlas"]').click();
+        await page.waitForSelector('.journal-atlas');
+        await settled(page);
+        await wheelZoom(page);
+        results.push({wheelZoom: true, scrollbarWidthStable: true});
+      }
       await context.close();
     }
     const context = await browser.newContext({viewport: {width: 1440, height: 900}, reducedMotion: 'reduce'});
@@ -317,6 +401,7 @@ async function restDayBands(page) {
     assert.equal(await offline.locator('.journal-chain-label').count(), 28);
     await restDayBands(offline);
     assert.equal(await offline.locator('.journal-annotation').count(), days.find(d => d.date === '2026-10-14').chains.length);
+    await wheelZoom(offline);
     assert.deepEqual(offlineRequests, []);
     assert.deepEqual(offlineErrors, []);
     results.push({offline: true, requests: offlineRequests, errors: offlineErrors});

@@ -1,3 +1,4 @@
+html:has(#view-journal.is-active) { scrollbar-gutter: stable; }
 .journal-view { max-width: 1360px; margin: 0 auto; padding: 28px 24px 80px; min-width: 0; }
 .journal-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px 28px; margin-bottom: 24px; }
 .journal-heading h1 { font: 700 30px/1.3 var(--font-serif); margin: 0; }
@@ -36,10 +37,11 @@
 .journal-day-card h2 { font: 700 24px/1.6 var(--font-serif); margin: 12px 0; overflow-wrap: anywhere; }
 .journal-empty { padding: 40px 0; color: var(--text); }
 .journal-figure { margin: 16px 0 0; position: relative; }
+.journal-zoom-hint { margin: 0 0 12px; font-size: 12px; color: var(--text); }
 .journal-atlas-header { position: sticky; top: var(--topbar-h); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
 .journal-head-scroller { overflow: hidden; scrollbar-color: var(--line-soft) var(--bg); }
 .journal-header-inner { position: relative; height: 116px; }
-.journal-scroller { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-color: var(--line-soft) var(--bg); }
+.journal-scroller { overflow-x: auto; overscroll-behavior-x: contain; overflow-anchor: none; scrollbar-color: var(--line-soft) var(--bg); }
 .journal-canvas { position: relative; }
 .journal-atlas { display: block; max-width: none; }
 .journal-atlas text { font-family: var(--font-body); fill: var(--text); }

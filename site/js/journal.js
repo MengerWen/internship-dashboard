@@ -2,6 +2,7 @@
   "use strict";
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const $ = id => document.getElementById(id);
+  const densityRange = {min: 4, max: 44};
   // 国办发明电〔2025〕7号：https://www.gov.cn/zhengce/content/202511/content_7047090.htm
   // 按年维护官方放假调休安排；未收录年份只标周末，不推算农历节日。
   const mainlandCalendar = {
@@ -34,7 +35,7 @@
       let preferences = {};
       try { preferences = JSON.parse(localStorage.getItem("journal-atlas-preferences") || "{}"); } catch (_) { /* 无可用设置时使用默认值。 */ }
       this.window = ["1m", "3m"].includes(preferences?.window) ? preferences.window : "all";
-      this.density = [7, 11, 17].includes(preferences?.density) ? preferences.density : 11;
+      this.density = Number.isFinite(preferences?.density) && preferences.density >= densityRange.min && preferences.density <= densityRange.max ? preferences.density : 11;
       this.chain = "";
       this.query = "";
       this.evidence = new Map();
@@ -44,6 +45,7 @@
         `<optgroup label="${esc(t.label)}">${this.registry.chains.filter(c => c.track === t.id).map(c => `<option value="${esc(c.id)}">${esc(c.label)}</option>`).join("")}</optgroup>`).join("");
       $("journal-window").addEventListener("change", e => { this.window = e.target.value; this.savePreferences(); this.render(); this.writeHash(); });
       $("journal-density").addEventListener("change", e => { this.density = Number(e.target.value); this.savePreferences(); this.render(); });
+      document.querySelector(".journal-scroller").addEventListener("wheel", e => this.zoomAtlas(e), {passive: false});
       $("journal-chain").addEventListener("change", e => this.focusChain(e.target.value));
       $("journal-clear").addEventListener("click", () => this.clearSelection());
       $("journal-find").addEventListener("input", e => { this.query = e.target.value; this.render(); });
@@ -101,6 +103,47 @@
     },
     savePreferences() {
       try { localStorage.setItem("journal-atlas-preferences", JSON.stringify({density: this.density, window: this.window})); } catch (_) { /* 离线或禁用存储时仍可操作。 */ }
+    },
+    syncDensityControl() {
+      const control = $("journal-density"), custom = $("journal-density-custom");
+      const preset = [7, 11, 17].includes(this.density);
+      custom.hidden = preset;
+      custom.value = preset ? "" : String(this.density);
+      custom.textContent = `自定义（${Math.round(this.density / 11 * 100)}%）`;
+      control.value = String(this.density);
+    },
+    zoomAtlas(event) {
+      const svg = document.querySelector(".journal-atlas");
+      if (!event.ctrlKey || !event.deltaY || this.mode !== "atlas" || !$("view-journal").classList.contains("is-active") || !svg || !this.atlas) return;
+      event.preventDefault();
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+      const delta = Math.max(-120, Math.min(120, event.deltaY * unit));
+      const density = Math.max(densityRange.min, Math.min(densityRange.max, this.density * Math.exp(-delta * .0015)));
+      if (density === this.density) return;
+      if (!this.zoomFrame) {
+        const dayOffset = (event.clientY - svg.getBoundingClientRect().top - this.atlas.top) / this.density;
+        const clientY = event.clientY;
+        this.zoomFrame = requestAnimationFrame(() => {
+          this.zoomFrame = 0;
+          const scroller = document.querySelector(".journal-scroller"), scrollLeft = scroller.scrollLeft;
+          const focus = document.activeElement;
+          const focusSelector = focus?.matches(".journal-atlas") ? ".journal-atlas" :
+            focus?.matches(".journal-day-hit") ? `.journal-day-hit[data-journal-day="${CSS.escape(focus.dataset.journalDay)}"]` :
+            focus?.matches(".journal-chain-label") ? `.journal-chain-label[data-journal-chain="${CSS.escape(focus.dataset.journalChain)}"]` : null;
+          this.syncDensityControl();
+          this.renderAtlas();
+          scroller.scrollLeft = scrollLeft;
+          document.querySelector(".journal-head-scroller").scrollLeft = scroller.scrollLeft;
+          if (focusSelector) document.querySelector(focusSelector)?.focus({preventScroll: true});
+          const updated = document.querySelector(".journal-atlas");
+          if (this.mode === "atlas" && updated) {
+            const top = updated.getBoundingClientRect().top + this.atlas.top + dayOffset * this.density - clientY;
+            window.scrollBy({top, behavior: "instant"});
+          }
+          this.savePreferences();
+        });
+      }
+      this.density = density;
     },
     show(key) {
       const params = new URLSearchParams(location.hash.split("?")[1] || "");
@@ -184,7 +227,7 @@
       if (!this.chain && !this.visible.some(d => d.date === this.selected)) { this.selected = null; this.selection = null; }
       $("journal-window").value = this.window;
       $("journal-chain").value = this.chain;
-      $("journal-density").value = String(this.density);
+      this.syncDensityControl();
       document.querySelector(".journal-density-control").hidden = this.mode !== "atlas";
       $("journal-clear").hidden = !this.selection;
       const reports = new Set(this.visible.flatMap(d => d.reports_covering || []));
@@ -298,7 +341,7 @@
       scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
       document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示当天各采集仓库的提交总数，不表示单条链的提交数或工时。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" aria-label="任务关系线型">' + [["继续开展", ""], ["扩展研究", "4 3"], ["提供输入", "1 3"], ["汇入报告", "7 2 1 2"]].map(([label, dash]) => `<span><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</span>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
-      this.atlas = {y, positions, days, height, width, dateWidth, right, radius, ordered, active};
+      this.atlas = {y, positions, days, height, width, top, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
     },
