@@ -147,7 +147,7 @@ async function wheelZoom(page) {
   assert.equal(noteCount, days.reduce((n, d) => n + d.chains.length, 0));
   assert(days.every(d => d.chains.every(cid => d.chain_notes[cid].note.length > 0 && d.chain_notes[cid].note.length <= 24)));
   const dropped = days.flatMap(d => d.chains.filter(cid => d.chain_notes[cid].outcome === 'dropped').map(cid => ({date: d.date, cid})));
-  assert(dropped.some(d => d.date === '2026-10-16' && d.cid === 'depth-match'));
+  assert(dropped.some(d => d.date === '2026-10-16' && d.cid === 'behavior-design'));
   assert(dropped.some(d => d.date === '2026-09-18' && d.cid === 'cross-stock-sync'));
   assert(days.every(d => d.highlights.length > 0 && d.highlights.length <= 3));
   assert.deepEqual(days.find(d => d.date === '2026-07-06').reports_covering, ['2026-07-07']);
@@ -181,7 +181,7 @@ async function wheelZoom(page) {
       assert.equal(await page.locator('.journal-point-hit').count(), noteCount);
       assert.equal(await page.locator('.journal-annotation').count(), 0);
       const restDays = await restDayBands(page);
-      assert.equal(await page.locator('.journal-handoff[data-chains="ml-330 model-report"]').getAttribute('data-date'), '2026-09-21');
+      assert.equal(await page.locator('.journal-handoff[data-chains="ml-330 model-report"]').getAttribute('data-date'), '2026-09-19');
       assert.deepEqual(await page.locator('.journal-handoff').evaluateAll(nodes => [...new Set(nodes.map(n => n.dataset.type))].sort()), ['依赖解除', '延续', '收口', '派生'].sort());
       const columns = await page.locator('.journal-chain-unit').evaluateAll(nodes => nodes.map(n => Number(n.dataset.chainX)).sort((a, b) => a - b));
       assert.equal(new Set(columns).size, chainCount);
