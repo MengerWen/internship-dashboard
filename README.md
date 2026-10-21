@@ -201,4 +201,4 @@ npm run test:browser
 
 研究日志的来源登记独立于日卡。`scripts/collect_journal_sessions.py`、`scripts/collect_journal_materials.py` 和 `scripts/collect_journal_actions.py` 分别采集原始会话、文件及完整Git历史、历史文件动作和回执。原始正文只写本机 `data/`。
 
-`scripts/reconcile_journal_sources.py --decisions docs/journal-review/rebuild-2026-10-21/review-decisions.json` 检查固定来源范围与逐项去向；新增材料或消息不能直接沿用旧审阅。`scripts/build_journal_source_register.py` 生成公开来源目录和逐日定位。公开账本保存身份、哈希与去向，完整路径映射留本机。规则见 [每日更新规则](docs/journal-review/daily-update-rules.md)，本轮补全依据见 [来源复核](docs/journal-review/rebuild-2026-10-21/findings.md)。阶段标签说明材料用途，不自动认定运行成功或验收通过。
+先用`python scripts/collect_journal_inventory.py --sessions 本轮会话快照 --official 正式归档响应目录 --output 本轮独立核对目录`交叉核对正式归档、数据库及Claude桌面索引，再向`scripts/reconcile_journal_sources.py`提供`--inventory 本轮独立核对目录/inventory.json`和`--decisions 审阅决议`。新增材料或消息不能沿用旧审阅；登记缺正文时禁止签收全部来源。`scripts/build_journal_source_register.py`生成公开来源目录和逐日定位。公开账本保存身份、哈希与去向，完整路径映射留本机。规则见[每日更新规则](docs/journal-review/daily-update-rules.md)，此前固定快照见[来源复核](docs/journal-review/rebuild-2026-10-21/findings.md)，后续缺口见[独立归档审查](docs/journal-review/archive-audit-2026-10-21.md)。阶段标签说明材料用途，不自动认定运行成功或验收通过。

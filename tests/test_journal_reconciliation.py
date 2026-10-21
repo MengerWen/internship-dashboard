@@ -2,6 +2,7 @@ import copy
 import unittest
 
 from scripts.reconcile_journal_sources import canonical, digest, public_ledger, reconcile
+from scripts.collect_journal_inventory import session_fingerprint
 
 
 class ReconciliationTests(unittest.TestCase):
@@ -18,7 +19,9 @@ class ReconciliationTests(unittest.TestCase):
                      'material_universe_sha256': digest([('f', 'h', None, 'document')]),
                      'message_universe_sha256': digest(['codex:s:m'])}
         config = {'sources': [{'id': 'r', 'path': '.'}]}
-        return material, session, {'actions': [], 'failures': []}, decisions, config
+        inventory = {'schema_version': 1, 'coverage_status': 'covered', 'issues': [], 'failures': [],
+                     'session_snapshot_sha256': session_fingerprint(session)}
+        return material, session, {'actions': [], 'failures': []}, decisions, config, inventory
 
     def test_missing_session_decision_fails_instead_of_silently_dropping(self):
         args = self.fixture()
@@ -52,6 +55,7 @@ class ReconciliationTests(unittest.TestCase):
                 args[0]['files'].append(new)
             else:
                 args[1]['sessions'][0]['messages'].append(dict(args[1]['sessions'][0]['messages'][0], line_sha256='new'))
+                args[5]['session_snapshot_sha256'] = session_fingerprint(args[1])
             with self.assertRaisesRegex(ValueError, '范围'):
                 reconcile(*args)
 

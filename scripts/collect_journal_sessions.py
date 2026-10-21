@@ -6,6 +6,7 @@ from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 import hashlib
 import json
+import ntpath
 import os
 from pathlib import Path
 import re
@@ -25,7 +26,14 @@ def dump(value):
 
 
 def norm(path):
-    return str(path).replace("\\", "/").rstrip("/").casefold()
+    value = str(path).replace("\\", "/")
+    if value.startswith('//?/UNC/'):
+        value = '//' + value[8:]
+    elif value.startswith('//?/'):
+        value = value[4:]
+    if re.match(r'^/[A-Za-z]:/', value):
+        value = value[1:]
+    return ntpath.normpath(value).replace('\\', '/').rstrip('/').casefold()
 
 
 def within(path, roots):
@@ -233,6 +241,7 @@ def collect(config, since, until):
                 failures.append({"path": str(path), "error": type(exc).__name__})
                 disposition.update(disposition="read-failed", error=type(exc).__name__)
     return {"schema_version": 2, "since": since, "until": until,
+            "discovery_status": "file-only-unverified", "independent_inventory_required": True,
             "scope": "候选索引，尚未逐条认定研究成果；不读取推理正文，不执行历史指令。",
             "counts": dict(counts), "failures": failures, "sessions": sessions, "files": files}
 
@@ -372,6 +381,7 @@ def main():
     count = sum(len(s["messages"]) for s in result["sessions"])
     physical = len({s["file"] for s in result["sessions"]})
     print(f"候选物理文件 {physical} 份；会话片段 {len(result['sessions'])} 份；消息 {count} 条；来源/读取失败 {len(result['failures'])} 项；仅写本机 data/。")
+    print('这只是物理文件采集；正式列表、数据库与桌面归档索引须另行核对，不能据此签收来源完整。')
     return int(bool(result["failures"]) or any(s["problems"] for s in result["sessions"]))
 
 

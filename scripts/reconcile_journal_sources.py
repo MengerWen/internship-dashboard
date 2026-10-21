@@ -9,8 +9,11 @@ import json
 import ntpath
 from pathlib import Path
 import re
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+if __package__ in (None, ''):
+    sys.path.insert(0, str(ROOT))
 WRITES = {'write', 'edit', 'add', 'update', 'delete'}
 
 
@@ -76,7 +79,9 @@ def assert_exact(label, expected, actual):
         raise ValueError(f'{label} 未守恒：缺 {len(set(expected)-set(actual))}，多 {len(set(actual)-set(expected))}')
 
 
-def reconcile(materials, sessions, actions, decisions, source_config):
+def reconcile(materials, sessions, actions, decisions, source_config, inventory=None):
+    from scripts.collect_journal_inventory import validate_inventory
+    validate_inventory(inventory, sessions)
     for name, obj in [('materials', materials), ('sessions', sessions), ('actions', actions)]:
         if obj.get('failures'):
             raise ValueError(name + ' 有读取失败，不能签收完整来源')
@@ -181,6 +186,8 @@ def reconcile(materials, sessions, actions, decisions, source_config):
                          for s in sessions['sessions'] for m in s['messages']}
     assert_exact('原始消息行', expected_messages, [x['id'] for x in message_rows])
     result = {'schema_version': 1, 'snapshots': materials['snapshots'],
+              'source_coverage': {'status': inventory['coverage_status'], 'inventory_sha256': digest(inventory),
+                                  'captured_at': inventory.get('captured_at')},
               'files': file_rows, 'sessions': session_rows, 'messages': message_rows,
               'commits': commit_rows, 'actions': action_rows,
               'directory_exclusions': materials['directory_exclusions'], 'session_files': sessions['files']}
@@ -193,6 +200,8 @@ def reconcile(materials, sessions, actions, decisions, source_config):
 def public_ledger(ledger):
     """公开副本只保留身份、哈希及去向，完整定位保留在本机。"""
     out = {'schema_version': 1}
+    if 'source_coverage' in ledger:
+        out['source_coverage'] = ledger['source_coverage']
     for key in ['files', 'sessions', 'messages', 'commits', 'actions']:
         out[key] = [{k: v for k, v in row.items() if k not in
                      {'path', 'review_level', 'reason', 'index', 'filename_dates', 'write_evidence'}}
@@ -212,12 +221,17 @@ def main():
     parser.add_argument('--decisions', type=Path, required=True)
     parser.add_argument('--output', type=Path, default=ROOT / 'data/journal-rebuild-2026-10-21/dispositions.json')
     parser.add_argument('--public', type=Path)
+    parser.add_argument('--inventory', type=Path, required=True, help='独立清单核对结果；存在正文缺口时拒绝完整签收')
     args = parser.parse_args()
     if not args.output.resolve().is_relative_to((ROOT / 'data').resolve()):
         parser.error('完整定位只写本机 data/')
     read = lambda p: json.loads(p.read_text(encoding='utf-8'))
-    result = reconcile(read(args.input / 'materials.json'), read(args.input / 'sessions.json'),
-                       read(args.input / 'actions.json'), read(args.decisions), read(ROOT / 'scripts/journal_materials.json'))
+    try:
+        result = reconcile(read(args.input / 'materials.json'), read(args.input / 'sessions.json'),
+                           read(args.input / 'actions.json'), read(args.decisions), read(ROOT / 'scripts/journal_materials.json'), read(args.inventory))
+    except ValueError as exc:
+        print('来源对账未签收：' + str(exc))
+        return 1
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     if args.public:
         args.public.parent.mkdir(parents=True, exist_ok=True)
