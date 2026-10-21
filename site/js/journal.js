@@ -226,6 +226,18 @@
     chainButtons(day) {
       return day.chains.map(cid => `<button type="button" class="journal-chain-link" data-journal-chain="${esc(cid)}">${esc(this.chains.get(cid)?.short || cid)}${day.chain_confidence[cid] === "inferred" ? ' <small>待核</small>' : ""}</button>`).join(" ") || "未归类";
     },
+    handoffDates(edge, from, to) {
+      const target = edge.date ? to.find(d => d.date === edge.date)?.date : to[0]?.date;
+      const source = edge.source_date ? from.find(d => d.date === edge.source_date)?.date : from.filter(d => d.date <= target).at(-1)?.date;
+      return source && target && source <= target ? {source, target} : null;
+    },
+    chainReports(chain, days) {
+      const dates = chain.report_coverage === "curated" ? (chain.closes_into?.daily || []) : [...days.flatMap(d => d.reports_covering || []), ...(chain.closes_into?.daily || [])];
+      return [...new Set(dates)].filter(d => this.reports.has(d));
+    },
+    sourceLinks(refs) {
+      return (refs || []).filter(ref => /^https:\/\/github\.com\//.test(ref.url || "")).map(ref => `<a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">${esc(ref.title)}</a>`).join("；");
+    },
     render() {
       const focus = document.activeElement;
       const wasFocused = focus?.classList.contains("journal-atlas");
@@ -289,7 +301,7 @@
       });
       ordered.forEach(chain => header.push(`<button type="button" class="journal-chain-label${chain.fate === "dropped" ? " is-dropped" : ""}" data-journal-chain="${esc(chain.id)}" style="left:${positions.get(chain.id)}px;width:${Math.min(32, colWidth - 2)}px" aria-pressed="false" aria-label="${esc(chain.label)}${chain.fate === "dropped" ? "，未采用" : ""}"><span class="journal-chain-name">${esc(chain.short)}</span>${chain.fate === "dropped" ? '<small class="journal-fate-badge">未采用</small>' : ""}</button>`));
       head.innerHTML = header.join("") + "</div>";
-      const parts = [`<div class="journal-canvas" style="width:${width}px"><svg class="journal-atlas" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" tabindex="0" role="group" aria-labelledby="journal-atlas-title journal-atlas-desc" data-days="${days.length}" data-density="${this.density}"><title id="journal-atlas-title">工作日期与任务链条</title><desc id="journal-atlas-desc">日期从上到下，28 条链各占一列，按六个轨道分组。底纹表示周末和中国大陆公共假期，调休补班日除外。点的大小表示提交数。实心点表示工作写进了汇报，日期旁的短刻度表示当天发布了汇报。叉号表示未采用。点击日期、列头链名或单个点查看说明；上下键换日，左右键换点，Esc 取消。清单与下方说明提供文字入口。</desc>`];
+      const parts = [`<div class="journal-canvas" style="width:${width}px"><svg class="journal-atlas" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" tabindex="0" role="group" aria-labelledby="journal-atlas-title journal-atlas-desc" data-days="${days.length}" data-density="${this.density}"><title id="journal-atlas-title">工作日期与任务链条</title><desc id="journal-atlas-desc">日期从上到下，${ordered.length} 条链各占一列，按六个轨道分组。底纹表示周末和中国大陆公共假期，调休补班日除外。点的大小表示提交数。实心点表示工作写进了汇报，日期旁的短刻度表示当天发布了汇报。叉号表示未采用。点击日期、列头链名或单个点查看说明；上下键换日，左右键换点，Esc 取消。清单与下方说明提供文字入口。</desc>`];
       for (let n = first; n <= last; n++) {
         const date = new Date(n * 86400000).toISOString().slice(0, 10);
         const restDay = this.restDayLabel(date);
@@ -309,13 +321,14 @@
       this.registry.handoffs.forEach(edge => {
         const from = active.get(edge.from), to = active.get(edge.to);
         if (!from?.length || !to?.length) return;
-        const target = to.find(d => !edge.date || d.date >= edge.date)?.date || to.at(-1).date;
-        const source = from.filter(d => d.date <= target).at(-1)?.date || from[0].date;
+        const dates = this.handoffDates(edge, from, to);
+        if (!dates) return;
+        const {source, target} = dates;
         const x1 = positions.get(edge.from), x2 = positions.get(edge.to), y1 = y(source), y2 = y(target);
         const dash = edge.type === "派生" ? "4 3" : edge.type === "依赖解除" ? "1 3" : edge.type === "收口" ? "7 2 1 2" : (edge.confidence === "inferred" ? "2 5" : "");
         const bend = Math.max(22, Math.abs(y2 - y1) / 2);
         const path = `M${x1},${y1} C${x1},${y1 + bend} ${x2},${y2 - bend} ${x2},${y2}`;
-        parts.push(`<g class="journal-unit journal-handoff" data-chains="${esc(edge.from)} ${esc(edge.to)}" data-type="${esc(edge.type)}" data-date="${target}"><path class="journal-halo" d="${path}"/><path class="journal-handoff-path" stroke-dasharray="${dash}" d="${path}"/></g>`);
+        parts.push(`<g class="journal-unit journal-handoff" data-chains="${esc(edge.from)} ${esc(edge.to)}" data-type="${esc(edge.type)}" data-date="${target}" data-source-date="${source}"><path class="journal-halo" d="${path}"/><path class="journal-handoff-path" stroke-dasharray="${dash}" d="${path}"/></g>`);
       });
       ordered.forEach(chain => {
         const dates = active.get(chain.id), cx = positions.get(chain.id);
@@ -453,7 +466,7 @@
       return ids.map(cid => {
         const links = this.registry.handoffs.filter(h => h.from === cid || h.to === cid).map(h => {
           const incoming = h.to === cid, other = incoming ? h.from : h.to;
-          return `<li>${incoming ? "此前：" : "后续："}${this.chainButton(other)} <small>${esc(kinds[h.type] || h.type)}${h.confidence === "inferred" ? "；按记录顺序关联" : ""}</small>${h.note ? `<p>${esc(h.note)}</p>` : ""}</li>`;
+          return `<li>${incoming ? "此前：" : "后续："}${this.chainButton(other)} <small>${esc(kinds[h.type] || h.type)}${h.confidence === "inferred" ? "；按记录顺序关联" : ""}</small>${h.note ? `<p>${esc(h.note)}</p>` : ""}${h.source_refs?.length ? `<p>原始依据：${this.sourceLinks(h.source_refs)}</p>` : ""}</li>`;
         });
         return `<section><h4>${esc(this.chains.get(cid)?.label)}</h4><ul>${links.join("") || "<li>未登记前后关系</li>"}</ul></section>`;
       }).join("");
@@ -526,10 +539,10 @@
     renderChainCard() {
       const chain = this.chains.get(this.chain);
       const days = this.days.filter(d => d.chains.includes(chain.id));
-      const reports = [...new Set([...days.flatMap(d => d.reports_covering || []), ...(chain.closes_into?.daily || [])])].filter(d => this.reports.has(d));
+      const reports = this.chainReports(chain, days);
       const track = this.registry.tracks.find(t => t.id === chain.track);
       const windowNote = !this.visible.length ? '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下面展示这条链的全部历史。</p>' : "";
-      $("journal-detail").innerHTML = `<article class="journal-day-card journal-chain-card">${windowNote}<p>${esc(track?.label)}　${days.length} 个记录日　首条 ${chain.start} / 末条 ${chain.end}</p><h2>${esc(chain.label)}</h2><p>${esc(chain.purpose)}</p><h3>与其他工作的关系</h3>${this.flowHtml([chain.id])}<h3>相关汇报与成果</h3><ul>${reports.map(d => `<li><a href="#/daily/${d}">${d} ${esc(this.reports.get(d).title)}</a></li>`).join("") || "<li>尚无关联汇报</li>"}${chain.closes_into?.showcase ? `<li><a href="#/showcase/${esc(chain.closes_into.showcase)}">正式成果：${esc(this.app.getStage(chain.closes_into.showcase).label)}</a></li>` : ""}</ul><h3>这条链上的每一天</h3><div class="journal-chain-days">${days.map(d => `<button type="button" data-journal-day="${d.date}"><time>${d.date}</time><span>${esc(d.headline)}</span>${d.chain_confidence[chain.id] === "inferred" ? '<small>归属待核</small>' : ""}</button>`).join("")}</div></article>`;
+      $("journal-detail").innerHTML = `<article class="journal-day-card journal-chain-card">${windowNote}<p>${esc(track?.label)}　${days.length} 个记录日　首条 ${chain.start} / 末条 ${chain.end}</p><h2>${esc(chain.label)}</h2><p>${esc(chain.purpose)}</p><h3>与其他工作的关系</h3>${this.flowHtml([chain.id])}<h3>原始依据</h3><p>${this.sourceLinks(chain.source_refs) || "尚未登记"}</p><h3>相关汇报与成果</h3><ul>${reports.map(d => `<li><a href="#/daily/${d}">${d} ${esc(this.reports.get(d).title)}</a></li>`).join("") || "<li>尚无关联汇报</li>"}${chain.closes_into?.showcase ? `<li><a href="#/showcase/${esc(chain.closes_into.showcase)}">正式成果：${esc(this.app.getStage(chain.closes_into.showcase).label)}</a></li>` : ""}</ul><h3>这条链上的每一天</h3><div class="journal-chain-days">${days.map(d => `<button type="button" data-journal-day="${d.date}"><time>${d.date}</time><span>${esc(d.headline)}</span>${d.chain_confidence[chain.id] === "inferred" ? `<small>${d.date_notes?.[chain.id] ? '日期待核' : '归属待核'}</small>` : ""}</button>`).join("")}</div></article>`;
       const fate = {landed: chain.status === "active" ? "仍在更新" : "记录说明", folded: "后续去向", parked: "暂搁", dropped: "未采用"};
       document.querySelector(".journal-chain-card h2").insertAdjacentHTML("afterend", `<p>${fate[chain.fate] || fate.landed}${chain.fate_note ? `：${esc(chain.fate_note)}` : ""}</p>`);
       document.querySelectorAll(".journal-chain-days button").forEach((button, i) => {

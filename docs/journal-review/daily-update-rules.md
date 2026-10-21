@@ -49,6 +49,10 @@
 3. `highlights` 说明结果、关键决策和仍未解决的问题；有必要时在正文补充原因、试验比较、失败及下一步。
 4. 能支持结论的提交链接、仓库相对文档路径或结果收据；`reports_covering` 只关联确实覆盖该项工作的真实汇报。
 
+链和关系沿用2026-10-21审计后的证据字段。链及handoff的`source_refs`保存仓库、完整revision、文件路径/行号或commit及固定GitHub链接。每条关系写明承接对象、方法/输入类型和版本边界，并登记`source_date`与`date`；两日必须分别存在于来源链和目标链的日点中。来源日表示被连接的阶段记录，承接日表示后项记录。
+
+每条链保留`report_coverage: curated`，只把确实覆盖本链的汇报加入`closes_into.daily`；没有对应汇报时用空列表。日卡的`reports_covering`是当天相关报告的集合，不能直接复制为每条并行链的成果。日期无法闭合时，在`date_notes`记录具体链、日期线索及缺口，同步`review.unreviewed_days`，并在正文解释名义日、入库日与实际工作日。
+
 合并同一成果的多次修补提交，保留不同工作的有效信息。写“已完成”须满足对应完成条件；测试数量、性能数值和效果改善须有原始结果。更新原日卡时保留人工文字，只修改有新证据或需要纠正的部分。涉及旧日结论的修正注明原因和补记日期。
 
 按已安装的 `shuorenhua` skill 写作。入站正文及证据继续隐去凭据、邮箱、内网地址和服务器绝对路径；可引用仓库相对路径及适合本站读者的 GitHub 链接。
@@ -57,7 +61,7 @@
 
 1. 在 `docs/journal-review/daily-updates/YYYY-MM-DD.md` 保存本次核对记录，日期为运行日。同日重跑更新原记录。记录覆盖日期、逐来源版本与读取结果、归链决定、修改文件、验证结果、缺口，以及提交、推送和线上核验的独立状态。该目录首份记录产生前，首次待核日期为 2026-10-20。
 2. 沿用采集器时显式固定各仓库 revision，并按需要使用 `--since` 缩小范围。现有采集器按 author date 分日、按计划文件名归档且只展示前 10 条提交；以完整枚举和原始材料补核实际工作日。它也没有截止日期，会处理 `--since` 之后所有日期，且可能删除预期集合之外的证据文件。先备份或用临时配置核对 diff，只保留本次已审阅的变更，保留既有人工补充与无关日期。历史快照的版本说明保持真实。
-3. 核对 frontmatter、链条 id、逐点注解、报告引用与证据链接，确认新链和 handoff 可被当前格式读取。内容变更运行 `D:\MG\anaconda3\python.exe -m pytest tests/test_journal_build.py tests/test_journal_evidence.py -q` 和 `D:\MG\anaconda3\python.exe build.py`。`collect_journal_evidence.py --check` 仅证明指定配置与采集产物一致，不能代替来源完整性审阅。
+3. 核对 frontmatter、链条 id、逐点注解、报告引用与证据链接，确认新链和 handoff 可被当前格式读取。内容变更运行 `D:\MG\anaconda3\python.exe -m pytest tests/test_journal_build.py tests/test_journal_evidence.py tests/test_journal_provenance.py -q` 和 `D:\MG\anaconda3\python.exe build.py`；取数或连线代码改动同时运行`npm test`。`collect_journal_evidence.py --check`仅证明指定配置与采集产物一致，不能代替来源完整性审阅。`verify_journal_sources.py`核验本次审计目录中的固定引用；以后新增引用仍须回查其实际Git对象和行号。
 4. 研究日志实际变化后，按 `AGENTS.md` 用浏览器检查受影响日期、链条、日卡和证据；涉及新链时检查其引用和交接。线上受登录或其他条件阻塞时，分别报告本地结果和线上未验证范围。
 5. 只定向暂存本项文件，在本仓库 `main` 提交最小完整改动集合并推送。保留其他任务的修改，核对待推送历史；有不属于本任务的待推送提交时不夹带。远端确认目标 SHA 后记录推送成功。本站 push 会触发既有自动构建，查询发布收据并核对线上内容后才称已发布；发布失败保留本地成果和失败证据。
 6. 无内容变化但完成了来源核对时，可仅保存核对记录，避免用更新日志自身制造新的研究成果。推送、发布和资料缺口保留为后续待核项；同一问题持续存在时不重复制造日卡或通知。

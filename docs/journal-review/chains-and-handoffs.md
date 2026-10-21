@@ -1,67 +1,87 @@
-# 链条与交接审阅
+# 链条与交接复核登记
 
-审阅日期：2026-10-20。审阅者：Codex。逐月记录保留原55条推断的每一条处置；本记录不冒称用户已逐条签字。
+更新：2026-10-21。依据[完整审计](chain-audit-2026-10-21.md)与[实施记录](audit-remediation-2026-10-21.md)。当前表取代2026-10-20的28链/26边登记；旧月审保留历史身份。研究归属由Codex整理，原始出处支持定义、输入或交接，并不等于原作者使用了同样的链名，也不代表全部运行验收通过。
 
-## 28 条链条
+## 32 条链
 
-| 链条 | 起止（从每日引用推导） | 天数 | 结论 |
+| 链条 | 已登记跨度 | 日点数 | 日期缺口 |
 |---|---|---:|---|
-| `onboarding` 上手：行情环境与交易规则 | 2026-06-23 → 2026-06-24 | 2 | 已逐日核对 |
-| `doris-migration` Doris 访问重构与服务器迁移 | 2026-07-15 → 2026-07-30 | 2 | 已逐日核对 |
-| `wangly-env` wangly 环境与结果转移 | 2026-09-04 → 2026-09-04 | 1 | 已逐日核对 |
-| `doris-efficiency` Doris 通用效率 | 2026-10-09 → 2026-10-09 | 1 | 已逐日核对 |
-| `storage-cleanup` 存储盘点、保留与清理 | 2026-10-14 → 2026-10-16 | 3 | 已逐日核对 |
-| `lv2-snapshot` LV2 逐笔重建 100ms 快照 | 2026-06-25 → 2026-07-08 | 4 | 已逐日核对 |
-| `replay` 深市回放与基础正确性 | 2026-10-17 → 2026-10-20 | 4 | 已逐日核对 |
-| `literature` 文献复现与因子框架搭建 | 2026-06-29 → 2026-07-03 | 4 | 已逐日核对 |
-| `algobench` algobench 台架与注意力面板 | 2026-07-06 → 2026-07-14 | 9 | 已逐日核对 |
-| `formal-engine` 正式因子引擎与打分器 | 2026-07-15 → 2026-07-25 | 11 | 已逐日核对 |
-| `gates` 数量门与价格门定标与区间扩展 | 2026-07-27 → 2026-08-02 | 6 | 已逐日核对 |
-| `fixed-history` 固定参数历史回补 | 2026-08-03 → 2026-08-05 | 3 | 已逐日核对 |
-| `open5m` open5m 因子表现与核定标 | 2026-08-06 → 2026-09-18 | 13 | 已逐日核对 |
-| `cancel-phase` 撤单延迟与撤单阶段因子 | 2026-08-19 → 2026-09-09 | 8 | 已逐日核对 |
-| `depth-match` 深度匹配与跨股同步预查 | 2026-09-05 → 2026-09-09 | 3 | 已逐日核对 |
-| `old-factor-bank` 老因子库与 300 秒门 | 2026-09-07 → 2026-09-12 | 4 | 已逐日核对 |
-| `grouped-calibration` 分组定标 | 2026-10-07 → 2026-10-11 | 5 | 已逐日核对 |
-| `szse-model328` 深市 328 列：重算到签收 | 2026-10-10 → 2026-10-18 | 5 | 已逐日核对 |
-| `sse-v2` 沪市委托 v2 与可见 G1 | 2026-09-23 → 2026-10-17 | 8 | 已逐日核对 |
-| `ml-count` count 因子 ML 与结构诊断 | 2026-08-04 → 2026-08-06 | 2 | 已逐日核对 |
-| `ml-exec` ML 执行适配与资源合同 | 2026-08-11 → 2026-08-20 | 10 | 已逐日核对 |
-| `ml-330` 330 候选与因果单次拟合 | 2026-09-20 → 2026-09-21 | 2 | 已逐日核对 |
-| `dashboard-build` 看板建站 | 2026-07-07 → 2026-07-13 | 5 | 已逐日核对 |
-| `report-publish` 日报与报告发布、看板维护 | 2026-07-23 → 2026-10-20 | 18 | 已逐日核对 |
-| `visual-b` 研究编辑台视觉实施 | 2026-08-11 → 2026-08-11 | 1 | 已逐日核对 |
-| `report-tags` 汇报标签与报告页 | 2026-09-07 → 2026-09-09 | 2 | 已逐日核对 |
-| `model-report` 模型报告发布 | 2026-09-19 → 2026-09-21 | 3 | 已逐日核对 |
-| `report328` 328 列成果报告发布 | 2026-10-18 → 2026-10-18 | 1 | 已逐日核对 |
+| `onboarding` 上手：米筐环境与交易规则 | 2026-06-23 → 2026-06-24 | 2 | 本轮未登记日期缺口 |
+| `doris-migration` Doris 取数与服务器迁移 | 2026-07-15 → 2026-07-30 | 4 | 2026-07-15 |
+| `wangly-env` 服务器环境与跨账户结果传输 | 2026-09-04 → 2026-10-20 | 2 | 本轮未登记日期缺口 |
+| `doris-efficiency` Doris 公共取数实现与有界实测 | 2026-10-09 → 2026-10-09 | 1 | 本轮未登记日期缺口 |
+| `storage-cleanup` 存储盘点、归档与重复文件清理 | 2026-09-09 → 2026-10-18 | 13 | 2026-09-09 |
+| `lv2-snapshot` 逐笔数据重建 100ms 盘口快照 | 2026-06-25 → 2026-07-08 | 4 | 本轮未登记日期缺口 |
+| `replay` 深市订单簿回放与正确性检查 | 2026-10-17 → 2026-10-21 | 5 | 本轮未登记日期缺口 |
+| `literature` 论文复现与首个因子评价框架 | 2026-06-29 → 2026-07-03 | 4 | 本轮未登记日期缺口 |
+| `algobench` 论文指标与主动关注度面板 | 2026-07-06 → 2026-07-14 | 9 | 本轮未登记日期缺口 |
+| `formal-engine` 正式因子计算：订单配对与行为评分 | 2026-07-15 → 2026-07-25 | 11 | 本轮未登记日期缺口 |
+| `gates` 数量和价格筛选规则、历史区间扩展 | 2026-07-27 → 2026-08-02 | 6 | 2026-07-28 |
+| `fixed-history` 固定参数的历史补算与结果解释 | 2026-08-03 → 2026-08-05 | 3 | 本轮未登记日期缺口 |
+| `open5m` 开盘五分钟：因子评价与参数定标 | 2026-08-06 → 2026-09-18 | 13 | 本轮未登记日期缺口 |
+| `cancel-phase` 撤单等待时间、相位与机械撤单研究 | 2026-08-19 → 2026-10-15 | 12 | 本轮未登记日期缺口 |
+| `depth-match` 盘口深度匹配预检与24列因子 | 2026-09-05 → 2026-10-16 | 3 | 本轮未登记日期缺口 |
+| `old-factor-bank` 老因子重算与单日性能检查 | 2026-09-07 → 2026-10-10 | 7 | 本轮未登记日期缺口 |
+| `grouped-calibration` 按股票和市场状态分组定标 | 2026-10-07 → 2026-10-12 | 6 | 本轮未登记日期缺口 |
+| `szse-model328` 深市 328 列因子的计算、验收与评价 | 2026-10-10 → 2026-10-18 | 6 | 本轮未登记日期缺口 |
+| `sse-v2` 沪市委托还原与公开可见因子口径 | 2026-09-23 → 2026-10-21 | 12 | 本轮未登记日期缺口 |
+| `ml-count` 总量因子的模型研究计划与结构诊断 | 2026-08-04 → 2026-08-10 | 3 | 2026-08-04, 2026-08-06 |
+| `ml-exec` 模型执行、任务调度与资源限制 | 2026-08-11 → 2026-08-20 | 10 | 本轮未登记日期缺口 |
+| `ml-330` 330 候选到 328 列模型的选择与重算 | 2026-09-20 → 2026-09-21 | 2 | 本轮未登记日期缺口 |
+| `dashboard-build` 研究成果看板建站 | 2026-07-07 → 2026-07-13 | 5 | 本轮未登记日期缺口 |
+| `report-publish` 汇报发布与看板日常维护 | 2026-07-23 → 2026-10-16 | 21 | 本轮未登记日期缺口 |
+| `visual-b` 研究编辑台版式改造 | 2026-08-11 → 2026-08-11 | 1 | 本轮未登记日期缺口 |
+| `report-tags` 汇报标签与结果页浏览功能 | 2026-09-07 → 2026-09-09 | 2 | 本轮未登记日期缺口 |
+| `model-report` LightGBM 模型报告及结果修订 | 2026-09-19 → 2026-09-21 | 3 | 本轮未登记日期缺口 |
+| `report328` 328 列因子的 601 日结果报告 | 2026-10-18 → 2026-10-18 | 1 | 本轮未登记日期缺口 |
+| `corrected-replay-344` 正确盘口344列重新定参 | 2026-10-20 → 2026-10-21 | 2 | 本轮未登记日期缺口 |
+| `trading-window-freeze` 交易日早盘自动冻结与恢复 | 2026-10-09 → 2026-10-13 | 2 | 本轮未登记日期缺口 |
+| `research-journal` 研究日志与证据图谱建设 | 2026-10-20 → 2026-10-21 | 2 | 本轮未登记日期缺口 |
+| `cross-stock-sync` C3.3跨股票同步预查 | 2026-09-08 → 2026-09-18 | 5 | 2026-09-11 |
 
-## 26 条交接
+## 36 条有原始依据的关系
 
-| 从 | 到 | 类型 | 结论与依据 |
-|---|---|---|---|
-| `onboarding` | `lv2-snapshot` | 延续 | 6月23—24日环境和交易规则提交后，6月25日进入 lv2_snapshot_workspace 的快照实现。 |
-| `lv2-snapshot` | `literature` | 依赖解除 | 6月30日新增快照数据摘要并由 factor_lab 使用快照输入；不把6月29日纯文献收集算作快照开发。 |
-| `literature` | `algobench` | 延续 | 7月1—3日复现 lowlat/ClusterLOB，7月6日将六篇论文方法落入 algobench。 |
-| `algobench` | `formal-engine` | 延续 | 7月14日研究工作区入独立仓，7月15—16日同一 algobench 实施正式因子引擎。 |
-| `doris-migration` | `formal-engine` | 依赖解除 | 7月15日服务器/Doris 总计划为7月16日正式引擎提供数据访问；后续7月30日恢复不作为首次交接。 |
-| `formal-engine` | `gates` | 延续 | 7月27—29日计划在正式 Scorer/Response 上调整数量门、Tick 与价格门。 |
-| `gates` | `fixed-history` | 延续 | 8月2日固定参数全区间计划后，8月3日以不可变种子补齐历史前缀。 |
-| `fixed-history` | `open5m` | 延续 | 8月6日 Open5m 正式评价计划复用已有历史区间、registry 和输出。 |
-| `ml-count` | `ml-exec` | 延续 | 8月4日 ML 计划与8月6日全量原始因子计划，延续为8月11日 algobench.ml 冻结研究和家族适配。 |
-| `open5m` | `ml-exec` | 依赖解除 | ML 规范计划明确只读取冻结的 Open5m 因子历史输出，数据验收是执行前置。 |
-| `open5m` | `cancel-phase` | 派生 | 8月19日撤单延迟计划明确复用 Open5m 日期契约、生命周期与事件标准化。 |
-| `open5m` | `depth-match` | 派生 | 9月5日 C7.1 计划直接复用 L2、提交前盘口和订单量分布旁证，未声称由撤单相位结果派生；来源改为 open5m。 |
-| `wangly-env` | `old-factor-bank` | 依赖解除 | 9月4日环境引导与结果转移在先，9月7日旧因子300秒计划使用已核验服务器环境。 |
-| `old-factor-bank` | `sse-v2` | 派生 | 9月23日沪市委托输入审计与重建代码用于相同因子面板；老因子注册和可识别性约束仍在。 |
-| `old-factor-bank` | `szse-model328` | 延续 | 10月12日重算计划明确从冻结模型映射提取256个老因子与其余输入，沿用老因子合同。 |
-| `open5m` | `grouped-calibration` | 延续 | 10月8日定档预检明确复用旧的连续核历史定标脚本和六核日级中心；来源由深度匹配改为 open5m。 |
-| `grouped-calibration` | `szse-model328` | 延续 | 10月12日计划明确绑定已验收六核逐股票日参数表与正式结构参数 v2。 |
-| `szse-model328` | `storage-cleanup` | 派生 | 10月16日深市328列存储收尾计划对应深市生产与性能试验，不将10月14日沪市热清理作为此边交接点。 |
-| `szse-model328` | `report328` | 收口 | 10月18日研究提交10bca944与看板提交1a0fefd8，分别完成收益评价记录与相同328列报告发布。 |
-| `ml-exec` | `ml-330` | 延续 | 9月20—21日 LightGBM/因果单次拟合沿用 ML 研究执行与模型输入规范。 |
-| `sse-v2` | `replay` | 延续 | 10月17日沪市G1缺失分析与深市快照/回放规则核验并行，后续审计复用回放组件。 |
-| `dashboard-build` | `report-publish` | 延续 | 7月7—13日建站后，7月23日以后继续在同一看板仓发布和维护报告。 |
-| `dashboard-build` | `visual-b` | 延续 | 8月11日 c9ecdcf2 直接修改已有看板视觉与壳层。 |
-| `visual-b` | `report-tags` | 延续 | 9月7日7896f7d9在已有研究编辑台上新增标签与归类。 |
-| `report-tags` | `model-report` | 延续 | 9月19日模型报告使用已有看板阅读/展示与导航；本边记录交付演进，不表示标签算法是模型研究前提。 |
-| `ml-330` | `model-report` | 收口 | 模型报告9月19日初版早于330研究；9月21日bc1098eb发布因果重算，83498922恢复展示，交接明确定位9月21日。 |
+来源日表示曲线所连的来源阶段记录，承接日表示后项记录；不是精确发生到分钟的交接日志。全部有固定源文件或提交链接，具体对象与版本限制见说明。
+
+| 来源 → 后项 | 类型 | 来源记录 → 承接记录 | 对象与限制 | 证据 |
+|---|---|---|---|---|
+| `lv2-snapshot` → `literature` | 依赖解除 | 2026-06-30 → 2026-06-30 | 6月30日快照分区供factor_lab首个OFI框架读取；纯文献收集不依赖快照完成。 | [首个因子框架的快照输入配置](https://github.com/MengerWen/Quant_Research-Trading/blob/94492df7f1e937c20fa9727351ad5ad90326ec7f/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/factor_lab/configs/default.yaml#L1-L20)；[源数据说明书：A股 Level-2 逐笔事件流（用于"聪明钱"/算法交易痕迹因子研究）](https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md#L1-L46) |
+| `literature` → `algobench` | 延续 | 2026-07-03 → 2026-07-06 | 论文痕迹台架明确复用lowlat事件、生命周期与snapshot订单簿；承接方法和公共代码。 | [algobench](https://github.com/MengerWen/Quant_Research-Trading/blob/80513f65e40b4c89ef2d2e23b36a75283cfafd59/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/README.md#L3-L18) |
+| `algobench` → `formal-engine` | 延续 | 2026-07-14 → 2026-07-16 | 7月16日在同一研究代码基础扩展生命周期、配对与评分；不承接主动关注度预测结论。 | [正式因子引擎实现](https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46) |
+| `doris-migration` → `formal-engine` | 依赖解除 | 2026-07-16 → 2026-07-16 | 7月16日正式面板接入已实现的Doris网关和日级调度；7月15日草稿不是运行放行。 | [Doris 唯一网关的实际实现](https://github.com/MengerWen/sirui-quant-research/blob/9e4260f4425b3b158b6d71fdf7a9b410ace8bf38/lv2_snapshot_workspace/src/snapshot/io.py#L1-L205)；[正式因子引擎实现](https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46) |
+| `formal-engine` → `gates` | 延续 | 2026-07-25 → 2026-07-27 | 7月27日在正式评分与Response流程上调整候选、数量与连续价格规则。 | [开盘前三分钟连续评分可行性重构 Implementation Plan](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-07-27-%E5%BC%80%E7%9B%98%E5%89%8D%E4%B8%89%E5%88%86%E9%92%9F%E8%BF%9E%E7%BB%AD%E8%AF%84%E5%88%86%E5%8F%AF%E8%A1%8C%E6%80%A7%E9%87%8D%E6%9E%84%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L7-L34) |
+| `gates` → `fixed-history` | 延续 | 2026-08-02 → 2026-08-03 | 固定open3m规则和不可变种子后扩展历史区间；定标日前回溯不自动成为纯样本外。 | [2026-01-05 至最新完整交易日固定参数全因子统一评价实施计划](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-02-2026%E5%B9%B4%E5%9B%BA%E5%AE%9A%E5%8F%82%E6%95%B0%E5%85%A8%E5%8C%BA%E9%97%B4%E5%9B%A0%E5%AD%90%E8%AF%84%E4%BB%B7%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L5-L43)；[固定参数历史评价覆盖至最新完整日：设计](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-03-fixed-history-through-latest-complete-design.md#L5-L43) |
+| `fixed-history` → `open5m` | 延续 | 2026-08-04 → 2026-08-06 | 复用区间组织和计算/评价框架；Open5m另建窗口、标签和参数身份，旧面板只作比较。 | [Open5m 2025–2026H1 Formal Evaluation and Performance Design](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md#L5-L21) |
+| `ml-count` → `ml-exec` | 延续 | 2026-08-10 → 2026-08-11 | 8月10日可追溯入库的总量模型计划进入8月11日实现；8月4日、6日编写日期仍待核。 | [首次入库的 127 个 total-only 模型计划](https://github.com/MengerWen/sirui-quant-research/blob/2318d2ff29815213e6f108cb3308629dfa601869/PLAN/2026-08-04-51%E4%B8%AAcount%E5%9B%A0%E5%AD%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BB%93%E6%9E%84%E8%AF%8A%E6%96%AD%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L25)；[8 月 10 日两份模型计划首次入库](https://github.com/MengerWen/sirui-quant-research/commit/2318d2ff29815213e6f108cb3308629dfa601869)；[模型输入的冻结来源检查](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178) |
+| `open5m` → `ml-exec` | 依赖解除 | 2026-08-10 → 2026-08-11 | 模型输入检查只读冻结的Open5m来源、manifest和354日完整性；不等于所有模型已运行完成。 | [模型输入的冻结来源检查](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178) |
+| `open5m` → `cancel-phase` | 派生 | 2026-08-10 → 2026-08-19 | 撤单分布直接复用五分钟生命周期、日历与事件入口，不读取收益或推断账户身份。 | [Open5m 沪深 A 股撤单时间差分布研究实施计划](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md#L5-L85) |
+| `open5m` → `depth-match` | 派生 | 2026-09-04 → 2026-09-05 | C7.1复用现有机制预查和事件几何组件，已有股数汇总只作核验旁证。 | [C7.1 精确盘口深度匹配规律预检 Implementation Plan](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md#L5-L30) |
+| `old-factor-bank` → `sse-v2` | 派生 | 2026-09-17 → 2026-09-23 | 旧库原定义与实际评分器进入沪市可见输入的适用性核验；不表示全部沪市原式已可无损恢复。 | [2026-09-22 沪市原生回放与因子输入验收](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-22-sse-replay-implementation.md#L3-L59)；[2026-09-22 沪市 cancel-phase 与旧因子计算条件评估](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-22-sse-cancel-phase-raw-bank-assessment.md#L3-L56) |
+| `old-factor-bank` → `szse-model328` | 延续 | 2026-10-10 → 2026-10-12 | 10月12日清单精确选择256个旧输出及其必要依赖，并非原284列全搬或只留325个分裂列。 | [深市 328 列模型输入因子全期重算 PLAN](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107) |
+| `open5m` → `grouped-calibration` | 延续 | 2026-08-27 → 2026-10-08 | 10月8日分组预检明确复用连续核历史脚本和股票日中心；200日预检不是601日最终参数。 | [深市老因子分组定标：定档预检 Implementation Plan](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59) |
+| `grouped-calibration` → `szse-model328` | 延续 | 2026-10-12 → 2026-10-12 | 结构runtime_v2于10月12日02:38封存交接，重算计划绑定核表和哈希。此为旧回放版本的历史交接。 | [深市全期结构参数 v2 发布与交接](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-12-old-factor-recompute-preparation.md#L3-L37)；[深市 328 列模型输入因子全期重算 PLAN](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107) |
+| `szse-model328` → `storage-cleanup` | 派生 | 2026-10-16 → 2026-10-16 | 10月16日清理深市328生产/性能任务的自有暂存并保护恢复来源，不包含全部沪市和账户治理。 | [深市328列计算与提速任务的存储收尾](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-szse-model328-storage-closeout.md#L3-L51) |
+| `szse-model328` → `report328` | 收口 | 2026-10-18 → 2026-10-18 | 10月18日同一批328列单因子评价被发布为可浏览报告，不是新模型训练结果。 | [深市328列因子的601日收益评价](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-model328-factor-performance.md#L3-L38)；[深市328列因子的601日收益评价报告](https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-18-szse-model328-report.md#L3-L39) |
+| `ml-exec` → `ml-330` | 延续 | 2026-08-20 → 2026-09-20 | 330另建输入和运行身份，仅复用ML公共合同、权重与守护基础，不沿用整套127模型结果。 | [330 研究独立执行合同及公共基础复用](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_runtime.py#L24-L57)；[330 来源只读对齐实现](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_data.py#L1-L30) |
+| `lv2-snapshot` → `replay` | 延续 | 2026-06-26 → 2026-10-17 | 10月17日重新核验OrderBook状态和数量操作的规则及因子影响；早期样本对照不能提前通过新审计。 | [深市单日回放规则核验实施计划](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-17-szse-replay-rule-verification.md#L7-L28) |
+| `dashboard-build` → `report-publish` | 延续 | 2026-07-07 → 2026-07-23 | 后续报告直接继续使用原站点构建与内容管线，有源码/产物连续性。 | [md解释 26.7.7 22:24](https://github.com/MengerWen/internship-dashboard/commit/1b792246376fa7a0cdd20025642d3be0c9a85544)；[fix(docs): render daily report formulas](https://github.com/MengerWen/internship-dashboard/commit/11d42ebed84aa734e189b30d63c782f7cb816f1b) |
+| `dashboard-build` → `visual-b` | 延续 | 2026-07-13 → 2026-08-11 | 研究编辑台直接修改既有站点壳层和样式，保留原路由与构建基础。 | [Research Desk Visual Refresh Implementation Plan](https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/docs/plans/2026-08-11-research-desk-visual-refresh.md#L5-L85) |
+| `ml-330` → `model-report` | 收口 | 2026-09-21 → 2026-09-21 | 仅9月21日因果328单次复算替换报告数据；9月19日初版及全部133候选未被算作本次交接。 | [2026-09-21 固定时点选股与持仓估值模型重算](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-21-causal-single-fit-recompute.md#L1-L9)；[2026-09-18 模型试验图表数据](https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/content/assets/model-report-2026-09-18/README.md#L3-L30)；[Publish causal Open5m 328-factor model recompute](https://github.com/MengerWen/internship-dashboard/commit/bc1098eb8bc950290a83e37b92ad6da1c730d67d) |
+| `old-factor-bank` → `ml-330` | 依赖解除 | 2026-09-17 → 2026-09-20 | 330合同只读封存老因子来源；这是因子输入关系，不是模型执行框架关系。 | [330 列研究的三类封存因子来源](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42)；[330 来源只读对齐实现](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_data.py#L1-L30) |
+| `cancel-phase` → `ml-330` | 依赖解除 | 2026-09-09 → 2026-09-20 | 330输入绑定撤单相位买卖各24列的封存来源与命名空间。 | [330 列研究的三类封存因子来源](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42) |
+| `depth-match` → `ml-330` | 依赖解除 | 2026-09-08 → 2026-09-20 | 330输入明确读取独立24列深度匹配的封存来源。 | [330 列研究的三类封存因子来源](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42) |
+| `ml-330` → `szse-model328` | 依赖解除 | 2026-09-21 → 2026-10-12 | 9月21日r03冻结模型的全部输入映射、顺序与哈希决定328重算范围；模型预测分数不是因子输入。 | [深市 328 列模型输入因子全期重算 PLAN](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107)；[2026-09-21 固定时点选股与持仓估值模型重算](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-21-causal-single-fit-recompute.md#L1-L9) |
+| `cancel-phase` → `szse-model328` | 依赖解除 | 2026-09-09 → 2026-10-12 | 328生产直接保留相位买卖各24列的原定义与分母，不能把来源全归老库。 | [深市 328 列模型输入因子全期重算 PLAN](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107) |
+| `depth-match` → `szse-model328` | 依赖解除 | 2026-09-08 → 2026-10-12 | 328生产直接保留24列深度匹配原注册合同与必要依赖。 | [深市 328 列模型输入因子全期重算 PLAN](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107) |
+| `open5m` → `cross-stock-sync` | 派生 | 2026-09-03 → 2026-09-08 | C3.3从已有候选机制预查独立展开跨股同步问题；不因同日推进深度匹配就将两者串成因果。 | [C3.3 跨股票同步行为深入预检 Implementation Plan](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md#L1-L32)；[新因子预查改为只统计真实分布](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26) |
+| `dashboard-build` → `research-journal` | 延续 | 2026-07-07 → 2026-10-20 | 研究日志在既有静态构建和站点路由上新增独立证据与任务链内容。 | [新栏目「研究日志」实施计划](https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column.md#L1-L45)；[研究日志第二轮：转竖向推进流，补逐点注解与去留标记](https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column-v2.md#L1-L45) |
+| `wangly-env` → `depth-match` | 依赖解除 | 2026-09-04 → 2026-09-08 | C7.1在wangly以核对后的环境和guard执行；仅表示环境前提，不表示全量结果已回传wenjie。 | [wangly 计算环境引导 Implementation Plan](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-04-wangly-environment-bootstrap.md#L5-L43)；[2026-09-08 盘口深度匹配全历史交付](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-08-depth-match-full-history-completion.md#L3-L118) |
+| `doris-efficiency` → `grouped-calibration` | 依赖解除 | 2026-10-09 → 2026-10-09 | 10月9日公共有界L2 reader实际接入分组runner；此前预检不追溯归因于本次优化。 | [后续计算任务的通用取数与效率方案](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-general-compute-efficiency.md#L3-L108) |
+| `trading-window-freeze` → `szse-model328` | 依赖解除 | 2026-10-13 → 2026-10-13 | 10月13日生产回执核验328任务的早盘暂停与恢复；这是运行保障，不是因子科学输入。 | [深市 328 列全期计算：早盘暂停与恢复核验](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md#L1-L26) |
+| `replay` → `corrected-replay-344` | 依赖解除 | 2026-10-20 → 2026-10-20 | 修正回放合同与真实worker来源成为344重新定参前提；旧参数包不具备当前来源。 | [冻结参数与当前盘口的适用性核验](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62)；[正确盘口 344 列重新定参](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127) |
+| `grouped-calibration` → `corrected-replay-344` | 延续 | 2026-10-12 → 2026-10-20 | 只复用归约方法和公共采集接口；新范围采用全局六核、八组各601日，旧分组参数值不直接复用。 | [正确盘口 344 列重新定参](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127)；[冻结参数与当前盘口的适用性核验](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62) |
+| `szse-model328` → `corrected-replay-344` | 延续 | 2026-10-18 → 2026-10-20 | 复用旧精确列校验与消费者抽取方法，同时新建344独立清单，不宣称新范围绑定旧模型。 | [正确盘口 344 列重新定参](https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127) |
+
+已删除：onboarding→lv2-snapshot、wangly-env→old-factor-bank、visual-b→report-tags、report-tags→model-report。前后出现、同一网站或同一服务器本身不构成承接。
+
+原始引用、逐链修改及删除/新增边的机器登记见[remediation-actions.json](audit-2026-10-21/remediation-actions.json)。

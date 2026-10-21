@@ -139,13 +139,16 @@ async function wheelZoom(page) {
   const manifest = JSON.parse(await fs.readFile('dist/manifest.json', 'utf8'));
   const tags = JSON.parse(await fs.readFile('content/report-tags.json', 'utf8'));
   const days = manifest.journal;
-  assert.equal(days.length, 88);
-  assert.equal(manifest.chains.chains.length, 28);
+  const registry = JSON.parse(await fs.readFile('content/chains.json', 'utf8'));
+  const chainCount = registry.chains.length;
+  assert.equal(days.length, (await fs.readdir('content/journal')).filter(p => /^\d{4}-\d{2}-\d{2}\.md$/.test(p)).length);
+  assert.equal(manifest.chains.chains.length, chainCount);
   const noteCount = days.reduce((n, d) => n + Object.keys(d.chain_notes).length, 0);
-  assert.equal(noteCount, 151);
+  assert.equal(noteCount, days.reduce((n, d) => n + d.chains.length, 0));
   assert(days.every(d => d.chains.every(cid => d.chain_notes[cid].note.length > 0 && d.chain_notes[cid].note.length <= 24)));
   const dropped = days.flatMap(d => d.chains.filter(cid => d.chain_notes[cid].outcome === 'dropped').map(cid => ({date: d.date, cid})));
-  assert.equal(dropped.length, 5);
+  assert(dropped.some(d => d.date === '2026-10-16' && d.cid === 'depth-match'));
+  assert(dropped.some(d => d.date === '2026-09-18' && d.cid === 'cross-stock-sync'));
   assert(days.every(d => d.highlights.length > 0 && d.highlights.length <= 3));
   assert.deepEqual(days.find(d => d.date === '2026-07-06').reports_covering, ['2026-07-07']);
   assert(!days.some(d => d.reports_covering.includes('2026-07-06')), '示例日报不能作为真实工作的根据');
@@ -172,8 +175,8 @@ async function wheelZoom(page) {
       await capture(page, `list-${width}`);
       await page.locator('[data-journal-view="atlas"]').click();
       await settled(page);
-      assert.equal(await page.locator('.journal-chain-label').count(), 28);
-      assert.equal(await page.locator('.journal-chain-unit').count(), 28);
+      assert.equal(await page.locator('.journal-chain-label').count(), chainCount);
+      assert.equal(await page.locator('.journal-chain-unit').count(), chainCount);
       assert.equal(await page.locator('.journal-day-hit').count(), days.length);
       assert.equal(await page.locator('.journal-point-hit').count(), noteCount);
       assert.equal(await page.locator('.journal-annotation').count(), 0);
@@ -181,7 +184,7 @@ async function wheelZoom(page) {
       assert.equal(await page.locator('.journal-handoff[data-chains="ml-330 model-report"]').getAttribute('data-date'), '2026-09-21');
       assert.deepEqual(await page.locator('.journal-handoff').evaluateAll(nodes => [...new Set(nodes.map(n => n.dataset.type))].sort()), ['依赖解除', '延续', '收口', '派生'].sort());
       const columns = await page.locator('.journal-chain-unit').evaluateAll(nodes => nodes.map(n => Number(n.dataset.chainX)).sort((a, b) => a - b));
-      assert.equal(new Set(columns).size, 28);
+      assert.equal(new Set(columns).size, chainCount);
       const minimumGap = Math.min(...columns.slice(1).map((v, i) => v - columns[i]));
       if (width === 1440) assert(minimumGap >= 35, `最小列距 ${minimumGap}`);
       const labels = await page.locator('.journal-chain-label').evaluateAll(nodes => nodes.map(n => {
@@ -357,7 +360,7 @@ async function wheelZoom(page) {
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
       }
       assert.deepEqual(errors, []);
-      results.push({width, days: days.length, chains: 28, notes: noteCount, restDays, minimumGap, compactHeight, errors});
+      results.push({width, days: days.length, chains: chainCount, notes: noteCount, restDays, minimumGap, compactHeight, errors});
       if (width === 1440) {
         await page.setViewportSize({width: 1100, height: 2000});
         await page.locator('[data-journal-view="atlas"]').click();
@@ -398,7 +401,7 @@ async function wheelZoom(page) {
     await offline.waitForSelector('.journal-evidence');
     await offline.locator('.journal-evidence > summary').click();
     await offline.waitForSelector('.journal-repo');
-    assert.equal(await offline.locator('.journal-chain-label').count(), 28);
+    assert.equal(await offline.locator('.journal-chain-label').count(), chainCount);
     await restDayBands(offline);
     assert.equal(await offline.locator('.journal-annotation').count(), days.find(d => d.date === '2026-10-14').chains.length);
     await wheelZoom(offline);

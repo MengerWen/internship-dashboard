@@ -678,9 +678,11 @@ class Builder:
                      "total_commits": sum(commits.values()), "report": covering[0] if covering else None,
                      "reports_covering": covering, "reports_published": published,
                      "has_body": bool(body.strip()), "evidence_path": f"journal/_evidence/{key}.json"}
+            if meta.get("date_notes"):
+                entry["date_notes"] = {cid: str(note) for cid, note in meta["date_notes"].items() if cid in picked}
             self.journal_entries.append(entry)
             # 标题和摘要来自已有构建结果，不额外复制日报正文。
-            ev = {**ev, "reports": [
+            ev = {**ev, "reports_covering": covering, "reports_published": published, "reports": [
                 {"date": d, "title": daily[d].title, "summary": daily[d].meta["summary"]}
                 for d in dict.fromkeys(covering + published)
             ]}

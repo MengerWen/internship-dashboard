@@ -15,7 +15,7 @@ class JournalBuildTests(unittest.TestCase):
             "chains": [{"id": "a", "track": "t", "review": {"unreviewed_days": ["2026-06-23"]}}],
             "handoffs": []}), encoding="utf-8")
         (content / "journal/2026-06-23.md").write_text(
-            '---\nheadline: 一句话\nheadline_source: written\nchains: [a, absent]\nreports_covering: [2026-01-01]\n---\n正文独有文字', encoding="utf-8")
+            '---\nheadline: 一句话\nheadline_source: written\nchains: [a, absent]\ndate_notes: {a: 首次入库日晚于自述日, absent: 不存在的链}\nreports_covering: [2026-01-01]\n---\n正文独有文字', encoding="utf-8")
         for day in ("2026-06-23", "2026-06-24"):
             (content / f"journal/_evidence/{day}.json").write_text(json.dumps({"date": day,
                 "repos": [{"repo": "r", "commits": 123, "items": [{"subject": "</script>证据"}]}],
@@ -34,6 +34,8 @@ class JournalBuildTests(unittest.TestCase):
             first, missing = builder.journal_entries
             self.assertEqual(first["chains"], ["a"])
             self.assertEqual(first["chain_confidence"], {"a": "inferred"})
+            self.assertEqual(first["date_notes"], {"a": "首次入库日晚于自述日"})
+            self.assertEqual(builder.journal_evidence["2026-06-23"]["reports_covering"], [])
             self.assertEqual(missing["chains"], [])  # suggest 不参与构建。
             self.assertEqual(missing["headline_source"], "commit")
             self.assertEqual(missing["total_commits"], 123)

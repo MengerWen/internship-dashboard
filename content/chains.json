@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "note": "任务归类和关系的登记表；起止取首末记录日期，不表示中间每天都在做。日摘要与关联报告已回查固定版本的提交、计划和报告，审计见 docs/journal-review/polish-content-audit-2026-10-20.md。status 与 fate 不能替代逐项运行验收。",
+  "note": "2026-10-21依审计修正的任务及承接登记。首末日期是记录跨度；待核日期另注。confirmed表示原始引用支持该关系，不是用户逐条签字或全流程已验收。source_date为来源阶段的已登记记录，date为承接记录，不宣称来源当天已完成未来交接；精确对象以source_refs为准。",
   "tracks": [
     {
       "id": "infra",
@@ -41,19 +41,44 @@
       "short": "上手",
       "purpose": "配置米筐行情和回测环境，运行示例策略，整理沪深交易及异常交易监控规则，作为后续研究的基础。",
       "status": "done",
-      "closes_into": null,
+      "closes_into": {
+        "daily": []
+      },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 2,
         "span": [
           "2026-06-23",
           "2026-06-24"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "米筐示例已运行，交易规则资料已入库。"
+      "fate_note": "米筐示例已运行，交易规则资料已入库。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+          "path": "26 Summer/❗思瑞投资/米筐Ricequant/reports/buy_and_hold_report.csv/portfolio.csv",
+          "lines": [
+            1,
+            5
+          ],
+          "title": "米筐示例回测输出",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E7%B1%B3%E7%AD%90Ricequant/reports/buy_and_hold_report.csv/portfolio.csv#L1-L5"
+        },
+        {
+          "kind": "commit",
+          "repo": "Quant_Research-Trading",
+          "revision": "b852739ab5018ad30df1972dbbd5f7f96d9f613c",
+          "title": "沪深规则与异常交易监控资料提交",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/commit/b852739ab5018ad30df1972dbbd5f7f96d9f613c"
+        }
+      ]
     },
     {
       "id": "doris-migration",
@@ -63,72 +88,152 @@
       "purpose": "把研究取数接到服务器上的 Doris 数据库，处理批量读取、内存限制和故障后的断点续算。",
       "status": "done",
       "closes_into": {
-        "daily": [
-          "2026-08-01"
-        ]
+        "daily": []
       },
       "review": {
-        "days": 2,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 4,
         "span": [
           "2026-07-15",
           "2026-07-30"
         ],
-        "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "unreviewed_days": [
+          "2026-07-15"
+        ],
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "7 月 15 日的固定分批方案后来被替换；7 月 30 日继续处理数据库恢复后的续算。两者不能都称为最终采用方案。"
+      "fate_note": "7 月 15 日草稿后被替换；7 月 16 日已实现唯一网关、查询计划与日级调度，7 月 17 日继续配置资源，7 月 30 日处理数据库恢复后的续算。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/服务器迁移与Doris数据访问重构总计划_2026-07-15.md",
+          "lines": [
+            3,
+            100
+          ],
+          "title": "服务器迁移与 Doris 数据访问重构 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%81%E7%A7%BB%E4%B8%8EDoris%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E9%87%8D%E6%9E%84%E6%80%BB%E8%AE%A1%E5%88%92_2026-07-15.md#L3-L100"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9e4260f4425b3b158b6d71fdf7a9b410ace8bf38",
+          "path": "lv2_snapshot_workspace/src/snapshot/io.py",
+          "lines": [
+            1,
+            205
+          ],
+          "title": "Doris 唯一网关的实际实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9e4260f4425b3b158b6d71fdf7a9b410ace8bf38/lv2_snapshot_workspace/src/snapshot/io.py#L1-L205"
+        }
+      ]
     },
     {
       "id": "wangly-env",
       "track": "infra",
-      "label": "wangly 计算环境与结果同步方案",
-      "short": "wangly 环境",
-      "purpose": "配置 wangly 的研究依赖和数据访问检查，编写向 wenjie 同步结果的方案。",
-      "status": "done",
+      "label": "服务器环境与跨账户结果传输",
+      "short": "环境与传输",
+      "purpose": "配置 wangly 研究环境，建立并有界验收向 wenjie 的结果传输；后续修复两账户默认 Python 环境及来源校验。",
+      "status": "active",
       "closes_into": {
-        "daily": [
-          "2026-09-04"
-        ]
+        "daily": []
       },
       "review": {
-        "days": 1,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 2,
         "span": [
           "2026-09-04",
-          "2026-09-04"
+          "2026-10-20"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "有环境配置代码和结果同步计划；不能据此认定每份结果都已传回 wenjie。"
+      "fate_note": "9 月 4 日已有传输实现及大小文件 canary、重复传输和篡改拒绝验收；不等于所有研究结果均已回传。10 月 20 日另有两账户环境故障定位、重建与独立来源核验。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-04-wangly-environment-bootstrap.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "wangly 计算环境引导 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-04-wangly-environment-bootstrap.md#L5-L43"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-04-wangly-result-transfer-acceptance.md",
+          "lines": [
+            3,
+            41
+          ],
+          "title": "wangly 到 wenjie 结果传输验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-04-wangly-result-transfer-acceptance.md#L3-L41"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-full-recompute-admission.md",
+          "lines": [
+            3,
+            40
+          ],
+          "title": "全量重算前核验与默认环境验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-full-recompute-admission.md#L3-L40"
+        }
+      ]
     },
     {
       "id": "doris-efficiency",
       "track": "infra",
-      "label": "Doris 取数效率方案",
+      "label": "Doris 公共取数实现与有界实测",
       "short": "Doris 效率",
-      "purpose": "整理数据库取数中可减少重复查询、传输和解析开销的做法，供后续任务使用。",
+      "purpose": "实现并接入公共 L2 有界取数，实测解析、分组和分页开销，整理统一使用规约。",
       "status": "done",
       "closes_into": {
-        "daily": [
-          "2026-10-09"
-        ]
+        "daily": []
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 1,
         "span": [
           "2026-10-09",
           "2026-10-09"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "这段记录主要是一份通用效率计划，不代表所有查询都已改完或获得同一提速幅度。"
+      "fate_note": "公共入口已实现并接入分组 runner，保存真实 SQL 和 Windows/Linux 回归。36.6% 是解析/分组子阶段，完整读取样本降幅为21.9%—30.4%；沪市自适应复测有变慢样本。未完成全部历史入口迁移。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-09-general-compute-efficiency.md",
+          "lines": [
+            3,
+            108
+          ],
+          "title": "后续计算任务的通用取数与效率方案",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-general-compute-efficiency.md#L3-L108"
+        }
+      ]
     },
     {
       "id": "storage-cleanup",
@@ -136,7 +241,7 @@
       "label": "存储盘点、归档与重复文件清理",
       "short": "存储清理",
       "purpose": "区分正式结果、可恢复副本、运行暂存和到期材料，核对归档与恢复证据后清理重复文件，并保留实际回收量。",
-      "status": "done",
+      "status": "active",
       "closes_into": {
         "daily": [
           "2026-10-14",
@@ -144,17 +249,59 @@
         ]
       },
       "review": {
-        "days": 3,
-        "span": [
-          "2026-10-14",
-          "2026-10-16"
-        ],
-        "unreviewed_days": [],
         "by": "Codex",
-        "on": "2026-10-20"
+        "on": "2026-10-21",
+        "days": 13,
+        "span": [
+          "2026-09-09",
+          "2026-10-18"
+        ],
+        "unreviewed_days": [
+          "2026-09-09"
+        ],
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "已记录多次指定范围内的清理及回读核验，并保留实际回收量和恢复记录。"
+      "fate_note": "9 月起已有多批清理及归档回读，按批次保留恢复与退役范围。对象逻辑字节、临时盘分配量、系统盘和实际配额分别计量，不把各批相加当成同一块硬盘的可用空间。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-11-server-storage-cleanup.md",
+          "lines": [
+            1,
+            38
+          ],
+          "title": "2026-09-11 双服务器存储检查与清理",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-11-server-storage-cleanup.md#L1-L38"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-12-calibration-storage-cleanup.md",
+          "lines": [
+            1,
+            38
+          ],
+          "title": "2026-10-12 深市定参完成后的存储清理",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-12-calibration-storage-cleanup.md#L1-L38"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-16-szse-model328-storage-closeout.md",
+          "lines": [
+            3,
+            51
+          ],
+          "title": "深市328列计算与提速任务的存储收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-szse-model328-storage-closeout.md#L3-L51"
+        }
+      ]
     },
     {
       "id": "lv2-snapshot",
@@ -166,22 +313,49 @@
       "closes_into": {
         "daily": [
           "2026-06-25",
-          "2026-06-26",
-          "2026-07-08"
+          "2026-06-26"
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 4,
         "span": [
           "2026-06-25",
           "2026-07-08"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "早期样本对照与图示已完成。后续回放审计另列一条链，早期样本一致不等于全部历史都已验证。"
+      "fate_note": "早期样本对照与图示已完成。后续回放审计另列一条链，早期样本一致不等于全部历史都已验证。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "41a3f9522814fc622e5723b89ae93cc09c27ef17",
+          "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/README.md",
+          "lines": [
+            3,
+            99
+          ],
+          "title": "LV2 Snapshot Workspace",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/41a3f9522814fc622e5723b89ae93cc09c27ef17/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/lv2_snapshot_workspace/README.md#L3-L99"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+          "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "源数据说明书：A股 Level-2 逐笔事件流（用于\"聪明钱\"/算法交易痕迹因子研究）",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md#L1-L46"
+        }
+      ]
     },
     {
       "id": "replay",
@@ -191,22 +365,60 @@
       "purpose": "重新检查深市撮合规则、成交价格、事件前后盘口和快照时间，核对它们如何影响正式因子，并整理可复用的生产入口。",
       "status": "active",
       "closes_into": {
-        "daily": [
-          "2026-10-18"
-        ]
+        "daily": []
       },
       "review": {
-        "days": 4,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 5,
         "span": [
           "2026-10-17",
-          "2026-10-20"
+          "2026-10-21"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "截至记录版本，已有单日、三日和真实因子小样本核验；全量重算的前置条件仍单独检查，不能据此称全历史修正已经完成。"
+      "fate_note": "保留单日、三日和后续v4/v5完整日签收的具体版本与边界；10月20日明确旧参数不能直接用于当前回放。10月21日六核采集启动属于独立344定参链，不证明全历史修正因子已经生产完成。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-17-szse-replay-rule-verification.md",
+          "lines": [
+            3,
+            88
+          ],
+          "title": "2026-06-30 深市盘口回放：交易规则核验与因子影响",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-17-szse-replay-rule-verification.md#L3-L88"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-18-szse-replay-production-multiday.md",
+          "lines": [
+            3,
+            88
+          ],
+          "title": "深市修复回放生产化与三个交易日复核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-replay-production-multiday.md#L3-L88"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-replay-and-stages-delivery.md",
+          "lines": [
+            3,
+            40
+          ],
+          "title": "回放依赖与正式执行阶段交付",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-replay-and-stages-delivery.md#L3-L40"
+        }
+      ]
     },
     {
       "id": "literature",
@@ -215,30 +427,59 @@
       "short": "论文复现",
       "purpose": "整理订单流失衡、低延迟交易和订单簿聚类等论文，复现其中的方法，并搭建可以计算、评价因子的 factor_lab。",
       "status": "done",
-      "closes_into": null,
+      "closes_into": {
+        "daily": []
+      },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 4,
         "span": [
           "2026-06-29",
           "2026-07-03"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "其中的实现和评价方法继续用于 algobench；不把论文方法直接当成已经识别真实算法账户的证据。"
+      "fate_note": "其中的实现和评价方法继续用于 algobench；不把论文方法直接当成已经识别真实算法账户的证据。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "94492df7f1e937c20fa9727351ad5ad90326ec7f",
+          "path": "26 Summer/❗思瑞投资/因子/factor_lab/configs/default.yaml",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "首个因子框架的快照输入配置",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/94492df7f1e937c20fa9727351ad5ad90326ec7f/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/factor_lab/configs/default.yaml#L1-L20"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "80513f65e40b4c89ef2d2e23b36a75283cfafd59",
+          "path": "26 Summer/❗思瑞投资/因子/algobench/README.md",
+          "lines": [
+            3,
+            18
+          ],
+          "title": "algobench",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/80513f65e40b4c89ef2d2e23b36a75283cfafd59/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/README.md#L3-L18"
+        }
+      ]
     },
     {
       "id": "algobench",
       "track": "footprint",
       "label": "论文指标与主动关注度面板",
       "short": "论文指标",
-      "purpose": "把六篇论文的方法写成可计算的指标，检查指标相关性，再研究股票上主动交易痕迹的关注度，并生成按日面板。",
+      "purpose": "先实现六篇论文的痕迹指标与检验，再于7月10日转向主动关注度预测面板；两个阶段的目标和评价分开记录。",
       "status": "done",
       "closes_into": {
         "daily": [
-          "2026-07-06",
           "2026-07-07",
           "2026-07-08",
           "2026-07-09",
@@ -246,17 +487,45 @@
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 9,
         "span": [
           "2026-07-06",
           "2026-07-14"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "旧方向在 7 月 10 日调整；关注度面板和公共计算代码继续进入正式因子研究。"
+      "fate_note": "论文痕迹指标阶段不直接做收益预测；关注度阶段采用未来1—3日标签并限单月研究。后续正式引擎复用公共代码，不由此证明关注度预测结论已被采用。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "80513f65e40b4c89ef2d2e23b36a75283cfafd59",
+          "path": "26 Summer/❗思瑞投资/因子/algobench/README.md",
+          "lines": [
+            3,
+            18
+          ],
+          "title": "algobench",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/80513f65e40b4c89ef2d2e23b36a75283cfafd59/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/README.md#L3-L18"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "b4f413755c07c9e482e24b96330197045f125567",
+          "path": "26 Summer/❗思瑞投资/因子/algobench/configs/attention13_m202507.yaml",
+          "lines": [
+            23,
+            59
+          ],
+          "title": "主动关注度与单月评价配置",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/b4f413755c07c9e482e24b96330197045f125567/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/configs/attention13_m202507.yaml#L23-L59"
+        }
+      ]
     },
     {
       "id": "formal-engine",
@@ -272,17 +541,33 @@
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 11,
         "span": [
           "2026-07-15",
           "2026-07-25"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "订单配对、评分和共享中间结果继续用于后续筛选定标及历史评价；具体版本是否通过验收仍看当天记录。"
+      "fate_note": "订单配对、评分和共享中间结果继续用于后续筛选定标及历史评价；具体版本是否通过验收仍看当天记录。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "a214f26e0756739d7aedfe9b0eb909f2c3203ef3",
+          "path": "因子/algobench/src/algobench/formal_engine.py",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "正式因子引擎实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46"
+        }
+      ]
     },
     {
       "id": "gates",
@@ -300,17 +585,47 @@
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 6,
         "span": [
           "2026-07-27",
           "2026-08-02"
         ],
-        "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "unreviewed_days": [
+          "2026-07-28"
+        ],
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "7 月 29 日取消价格硬筛选，保留 10% 数量门和连续价格评分；这套规则随后用于固定参数历史评价。"
+      "fate_note": "7 月 29 日取消价格硬筛选，保留 10% 数量门和连续价格评分；这套规则随后用于固定参数历史评价。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-07-27-开盘前三分钟连续评分可行性重构实施计划.md",
+          "lines": [
+            7,
+            34
+          ],
+          "title": "开盘前三分钟连续评分可行性重构 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-07-27-%E5%BC%80%E7%9B%98%E5%89%8D%E4%B8%89%E5%88%86%E9%92%9F%E8%BF%9E%E7%BB%AD%E8%AF%84%E5%88%86%E5%8F%AF%E8%A1%8C%E6%80%A7%E9%87%8D%E6%9E%84%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L7-L34"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-02-2026年固定参数全区间因子评价实施计划.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "2026-01-05 至最新完整交易日固定参数全因子统一评价实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-02-2026%E5%B9%B4%E5%9B%BA%E5%AE%9A%E5%8F%82%E6%95%B0%E5%85%A8%E5%8C%BA%E9%97%B4%E5%9B%A0%E5%AD%90%E8%AF%84%E4%BB%B7%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L5-L43"
+        }
+      ]
     },
     {
       "id": "fixed-history",
@@ -326,82 +641,189 @@
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 3,
         "span": [
           "2026-08-03",
           "2026-08-05"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "后续开盘五分钟研究复用这批历史输入。定标日前的回溯结果属于固定参数历史评价，不能自动算作样本外检验。"
+      "fate_note": "历史区间组织、恢复与评价框架继续用于后续研究；Open5m 另建窗口、标签及参数身份，旧 open3m 面板仅作比较。定标日前回溯结果不能自动作为纯样本外检验。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-03-fixed-history-through-latest-complete-design.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "固定参数历史评价覆盖至最新完整日：设计",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-03-fixed-history-through-latest-complete-design.md#L5-L43"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md",
+          "lines": [
+            5,
+            21
+          ],
+          "title": "Open5m 2025–2026H1 Formal Evaluation and Performance Design",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md#L5-L21"
+        }
+      ]
     },
     {
       "id": "open5m",
       "track": "factor",
       "label": "开盘五分钟：因子评价与参数定标",
       "short": "开盘5分钟",
-      "purpose": "围绕开盘后五分钟的委托行为构建和评价因子，估计连续评分尺度与结构参数，并改进读取、回放和计算速度。",
+      "purpose": "分阶段记录五分钟正式因子库、连续评分核定标、候选行为机制预查与共享收益标签诊断，各阶段保留独立输入及验收范围。",
       "status": "done",
       "closes_into": {
         "daily": [
           "2026-08-06",
           "2026-08-07",
-          "2026-08-24",
           "2026-09-02",
           "2026-09-03",
-          "2026-09-04"
+          "2026-09-04",
+          "2026-09-17"
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 13,
         "span": [
           "2026-08-06",
           "2026-09-18"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "后续分出撤单相位、深度匹配和分组定标等研究；计算提速与预测表现分开评价，九参数定标曾未达到 60 秒目标。"
+      "fate_note": "窗口/因子库、六核定标、actual-only机制预查和标签尾部诊断分别看待；A_clean等仍有计划门，代表日未过60秒不能写成性能通过。后续分组定标复用历史定标方法。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md",
+          "lines": [
+            5,
+            21
+          ],
+          "title": "Open5m 2025–2026H1 Formal Evaluation and Performance Design",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md#L5-L21"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "深市老因子分组定标：定档预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "decisions/2026-09-03-actual-only-new-factor-prescreen.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "新因子预查改为只统计真实分布",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26"
+        }
+      ]
     },
     {
       "id": "cancel-phase",
       "track": "factor",
       "label": "撤单等待时间、相位与机械撤单研究",
       "short": "撤单研究",
-      "purpose": "先统计委托经过多久撤单，再把等待节奏、买卖方向及机械撤单行为写成因子，检查它们与同日日内收益的关系。",
+      "purpose": "分别研究撤单等待时间分布、正式相位因子与机械撤单测量及条件收益，保留各阶段的范围、完成与停止状态。",
       "status": "done",
       "closes_into": {
         "daily": [
           "2026-08-16",
           "2026-08-24",
-          "2026-09-04",
           "2026-09-06"
         ]
       },
       "review": {
-        "days": 10,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 12,
         "span": [
           "2026-08-19",
           "2026-10-15"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "撤单分布和相位因子已有历史报告；机械撤单逐股稳定性的后续生成于 10 月 15 日停止。局部停止不撤销已有相位结果。"
+      "fate_note": "分布与相位已有历史交付；机械撤单于9月11日完成独立验收、封存及整包回验。10月15日仅停止后续逐股稳定性生成，不撤销既有相位结果或已交付预检。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md",
+          "lines": [
+            5,
+            85
+          ],
+          "title": "Open5m 沪深 A 股撤单时间差分布研究实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md#L5-L85"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-01-cancel-phase-factor-library-implementation.md",
+          "lines": [
+            17,
+            59
+          ],
+          "title": "Cancel Phase Factor Library Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-01-cancel-phase-factor-library-implementation.md#L17-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/PRESCREEN_RESULT.json",
+          "lines": [
+            1,
+            25
+          ],
+          "title": "机械撤单全期结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/PRESCREEN_RESULT.json#L1-L25"
+        }
+      ]
     },
     {
       "id": "depth-match",
       "track": "factor",
-      "label": "盘口深度匹配与跨股票同步预查",
+      "label": "盘口深度匹配预检与24列因子",
       "short": "深度匹配",
-      "purpose": "检查委托股数是否贴近可见盘口深度，并完成买卖侧因子评价；另曾预查不同股票是否出现同步委托。",
+      "purpose": "检查委托股数与可见盘口深度的关系，从描述性预检推进到独立24列买卖侧因子及601日评价；跨股票同步另列。",
       "status": "done",
       "closes_into": {
         "daily": [
@@ -409,17 +831,45 @@
         ]
       },
       "review": {
-        "days": 5,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 3,
         "span": [
           "2026-09-05",
-          "2026-09-18"
+          "2026-10-16"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "深度匹配有 601 日、24 列评价。跨股票同步 C3.3 于 9 月 11 日放弃，9 月 18 日补记并清理；两项工作的去向不同。"
+      "fate_note": "C7.1在9月8日交付601日、24列评价。10月16日另有比例尺寸线实现后撤销，无Doris查询、无真实分布结果；不把局部撤销写成24列深度匹配成果失效。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md",
+          "lines": [
+            5,
+            30
+          ],
+          "title": "C7.1 精确盘口深度匹配规律预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md#L5-L30"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-08-depth-match-full-history-completion.md",
+          "lines": [
+            3,
+            118
+          ],
+          "title": "2026-09-08 盘口深度匹配全历史交付",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-08-depth-match-full-history-completion.md#L3-L118"
+        }
+      ]
     },
     {
       "id": "old-factor-bank",
@@ -430,22 +880,61 @@
       "status": "done",
       "closes_into": {
         "daily": [
-          "2026-09-07",
           "2026-09-16"
         ]
       },
       "review": {
-        "days": 4,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 7,
         "span": [
           "2026-09-07",
-          "2026-09-12"
+          "2026-10-10"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "历史结果用于后续模型输入和深市 328 列计算；300 秒是验收目标，不是所有交易日都能达到的统一耗时。"
+      "fate_note": "旧R19来源的601日面板及评价保留；原生产guard最终汇总曾超时，逐日数值/独立检查与进程退出分开。10月10日2220数值列含1932诊断列的单日不变性通过，但822.468秒未过300秒门。当前回放下旧参数来源需重新核验。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+          "lines": [
+            15,
+            369
+          ],
+          "title": "Open5m 旧因子改造与单日 300 秒验收 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md#L15-L369"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-10-old-factor-formal-execution.md",
+          "lines": [
+            3,
+            93
+          ],
+          "title": "旧因子正式评分执行记录",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-10-old-factor-formal-execution.md#L3-L93"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "content/daily/2026-09-16.md",
+          "lines": [
+            15,
+            21
+          ],
+          "title": "开盘五分钟的订单行为",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/content/daily/2026-09-16.md#L15-L21"
+        }
+      ]
     },
     {
       "id": "grouped-calibration",
@@ -461,17 +950,57 @@
         ]
       },
       "review": {
-        "days": 5,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 6,
         "span": [
           "2026-10-07",
-          "2026-10-11"
+          "2026-10-12"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "参数包与结构参数接入后续深市 328 列计算。601 日内估计和评价这些参数，仍属于历史样本内研究。"
+      "fate_note": "核包在10月10日零点封存，结构runtime_v2在10月12日凌晨交接；七组结构601日重估，z12与λRV沿用200日R19。历史验收保留，10月20日确认旧包缺当前回放来源、不能直接用于当前正式全量计算。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-10-grouped-kernel-calibration-v1.md",
+          "lines": [
+            1,
+            31
+          ],
+          "title": "2026-10-10 深市六核分组定标 v1 结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-10-grouped-kernel-calibration-v1.md#L1-L31"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-12-old-factor-recompute-preparation.md",
+          "lines": [
+            3,
+            37
+          ],
+          "title": "深市全期结构参数 v2 发布与交接",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-12-old-factor-recompute-preparation.md#L3-L37"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        }
+      ]
     },
     {
       "id": "szse-model328",
@@ -483,23 +1012,62 @@
       "closes_into": {
         "showcase": "factor",
         "daily": [
-          "2026-10-14",
           "2026-10-16",
           "2026-10-18"
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 6,
         "span": [
           "2026-10-10",
           "2026-10-18"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "10 月 18 日记录 601 日、328 列全期验收与单因子评价；这是当时参数与回放版本的结果，后续正确性修正另有记录。"
+      "fate_note": "10月18日旧参数/旧回放下601日、328列科学验收与单因子评价完成，性能采用record_only且未达门。10月20日旧包被当前回放准入拒收；新344清单与重新定参独立，不改写旧验收为从未发生。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+          "lines": [
+            5,
+            107
+          ],
+          "title": "深市 328 列模型输入因子全期重算 PLAN",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-18-szse-model328-factor-performance.md",
+          "lines": [
+            3,
+            38
+          ],
+          "title": "深市328列因子的601日收益评价",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-model328-factor-performance.md#L3-L38"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        }
+      ]
     },
     {
       "id": "sse-v2",
@@ -510,43 +1078,122 @@
       "status": "active",
       "closes_into": {
         "daily": [
-          "2026-10-14",
-          "2026-10-16"
+          "2026-10-14"
         ]
       },
       "review": {
-        "days": 10,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 12,
         "span": [
           "2026-09-23",
-          "2026-10-17"
+          "2026-10-21"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "仍有版本迭代、缺失与定义差检查。G0/G1、270/350/356 等数目属于不同版本和范围，不汇总成一套已全部完成的因子。"
+      "fate_note": "原始委托、公开G1及后续v3分阶段记录。固定版本中v3候选已有实现，29/30股速度试算后触发一小时停止门，未完成全市场验收或生产面板；不将不同列数和候选身份混为同一已验收版本。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-22-sse-replay-implementation.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "2026-09-22 沪市原生回放与因子输入验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-22-sse-replay-implementation.md#L3-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-16-sse-visible-g1-v2.md",
+          "lines": [
+            3,
+            53
+          ],
+          "title": "沪市G1三值判定：实现进度与速度验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-sse-visible-g1-v2.md#L3-L53"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-21-sse-visible-v3-implementation.md",
+          "lines": [
+            3,
+            126
+          ],
+          "title": "沪市可见口径 v3：实现与深市验收状态",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-21-sse-visible-v3-implementation.md#L3-L126"
+        }
+      ]
     },
     {
       "id": "ml-count",
       "track": "model",
       "label": "总量因子的模型研究计划与结构诊断",
       "short": "总量模型",
-      "purpose": "早期从 count 因子出发规划机器学习和结构诊断；原计划文件名写 51 个，正文后来改为 127 个 total-only 因子。",
+      "purpose": "记录127个total-only连续强度输入的模型计划与结构诊断起步。文件名保留‘51个’，首次可追溯正文已为127，未找到51到127的改数证据。",
       "status": "done",
-      "closes_into": null,
+      "closes_into": {
+        "daily": []
+      },
       "review": {
-        "days": 2,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 3,
         "span": [
+          "2026-08-04",
+          "2026-08-10"
+        ],
+        "unreviewed_days": [
           "2026-08-04",
           "2026-08-06"
         ],
-        "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "这里主要记录模型研究的起步计划；实际执行和多模型结果在后续“模型执行”链中。"
+      "fate_note": "两份计划于8月10日首次入库；8月4日、8月6日是文件名/正文日期线索，实际编写日仍待核。它们不是当日已训练或全量计算完成的证据。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "path": "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+          "lines": [
+            1,
+            25
+          ],
+          "title": "首次入库的 127 个 total-only 模型计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2318d2ff29815213e6f108cb3308629dfa601869/PLAN/2026-08-04-51%E4%B8%AAcount%E5%9B%A0%E5%AD%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BB%93%E6%9E%84%E8%AF%8A%E6%96%AD%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L25"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-2026年至今全量原始因子LightGBM实施与运行计划.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2026 年至今全量原始因子 LightGBM Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-2026%E5%B9%B4%E8%87%B3%E4%BB%8A%E5%85%A8%E9%87%8F%E5%8E%9F%E5%A7%8B%E5%9B%A0%E5%AD%90LightGBM%E5%AE%9E%E6%96%BD%E4%B8%8E%E8%BF%90%E8%A1%8C%E8%AE%A1%E5%88%92.md#L1-L30"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "title": "8 月 10 日两份模型计划首次入库",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2318d2ff29815213e6f108cb3308629dfa601869"
+        }
+      ]
     },
     {
       "id": "ml-exec",
@@ -561,40 +1208,120 @@
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 10,
         "span": [
           "2026-08-11",
           "2026-08-20"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "folded",
-      "fate_note": "后续 330 候选研究沿用部分输入和执行基础。无随机森林的阶段报告是 8 月 19 日归档的模型报告，不是撤单延迟报告。"
+      "fate_note": "区分模型适配/调度实现、Development、Freeze、Final与post-hoc比较；不同study身份和资源合同分别保存。后续330仅复用公共合同、权重及守护基础，不能据此沿用旧127研究的全部输入和运行结论。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/data.py",
+          "lines": [
+            107,
+            178
+          ],
+          "title": "模型输入的冻结来源检查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-11-Open5m-ML实现前仓库审计.md",
+          "lines": [
+            1,
+            42
+          ],
+          "title": "Open5m ML 实现前仓库审计",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-11-Open5m-ML%E5%AE%9E%E7%8E%B0%E5%89%8D%E4%BB%93%E5%BA%93%E5%AE%A1%E8%AE%A1.md#L1-L42"
+        }
+      ]
     },
     {
       "id": "ml-330",
       "track": "model",
       "label": "330 候选到 328 列模型的选择与重算",
       "short": "模型重算",
-      "purpose": "从 330 个因子候选建立 LightGBM 和排序研究，修正选股、成交与估值的先后顺序；排除 f97 买卖两列后，发布 328 列输入的重算结果。",
+      "purpose": "分别记录330列候选manifest与选优runner实现，以及9月21日沿9月18日第15折模型开展的328列单次因果复算。",
       "status": "done",
       "closes_into": {
         "showcase": "model"
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 2,
         "span": [
           "2026-09-20",
           "2026-09-21"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "9 月 21 日发布修正模型结果。自动选择、已使用历史样本和毛收益各有边界，不能直接认定已得到可实盘交易的策略。"
+      "fate_note": "有133配置候选设施实现，未找到全部候选完整运行签收。9月21日交付固定第15折/1000轮/176日测试区间的因果复算；测试窗口已观察、未计完整成本和跨日退出，不能称为新的封存测试或完成全部候选选优。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml",
+          "lines": [
+            24,
+            42
+          ],
+          "title": "330 列研究的三类封存因子来源",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-21-causal-single-fit-recompute.md",
+          "lines": [
+            1,
+            9
+          ],
+          "title": "2026-09-21 固定时点选股与持仓估值模型重算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-21-causal-single-fit-recompute.md#L1-L9"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/open5m_330_candidates.py",
+          "lines": [
+            1,
+            8
+          ],
+          "title": "open5m_330_candidates.py",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_candidates.py#L1-L8"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "scripts/run_intraday_ml_open5m_330_study.py",
+          "lines": [
+            1,
+            10
+          ],
+          "title": "run_intraday_ml_open5m_330_study.py",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/scripts/run_intraday_ml_open5m_330_study.py#L1-L10"
+        }
+      ]
     },
     {
       "id": "dashboard-build",
@@ -612,24 +1339,35 @@
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 5,
         "span": [
           "2026-07-07",
           "2026-07-13"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "看板随后继续发布报告和增加功能；这里的记录段结束不表示网站不再维护。"
+      "fate_note": "看板随后继续发布报告和增加功能；这里的记录段结束不表示网站不再维护。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "1b792246376fa7a0cdd20025642d3be0c9a85544",
+          "title": "md解释 26.7.7 22:24",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/1b792246376fa7a0cdd20025642d3be0c9a85544"
+        }
+      ]
     },
     {
       "id": "report-publish",
       "track": "delivery",
       "label": "汇报发布与看板日常维护",
       "short": "发布维护",
-      "purpose": "把研究结果、解释和图表发布到看板，修正文案和浏览功能，并维护构建及项目规则。",
+      "purpose": "发布研究报告、解释与图表，修正通用阅读功能并维护项目规则；研究日志建设另列独立目标。",
       "status": "active",
       "closes_into": {
         "daily": [
@@ -644,17 +1382,28 @@
         ]
       },
       "review": {
-        "days": 22,
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 21,
         "span": [
           "2026-07-23",
-          "2026-10-20"
+          "2026-10-16"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "持续维护中。这里的提交可能只是报告或规则修改，不据此认定研究计算在同一天重跑。"
+      "fate_note": "持续维护中。这里的提交可能只是报告或规则修改，不据此认定研究计算在同一天重跑。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "11d42ebed84aa734e189b30d63c782f7cb816f1b",
+          "title": "fix(docs): render daily report formulas",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/11d42ebed84aa734e189b30d63c782f7cb816f1b"
+        }
+      ]
     },
     {
       "id": "visual-b",
@@ -663,19 +1412,49 @@
       "short": "版式调整",
       "purpose": "按已选定的研究编辑台方向调整字体、纸墨配色、页面结构和窄屏显示。",
       "status": "done",
-      "closes_into": null,
+      "closes_into": {
+        "daily": []
+      },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 1,
         "span": [
           "2026-08-11",
           "2026-08-11"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "版式改造已提交，后续报告继续使用这套阅读与展示方式。"
+      "fate_note": "版式改造已提交，后续报告继续使用这套阅读与展示方式。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "direction-approved.md",
+          "lines": [
+            15,
+            35
+          ],
+          "title": "设计方向批准记录",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/direction-approved.md#L15-L35"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "docs/plans/2026-08-11-research-desk-visual-refresh.md",
+          "lines": [
+            5,
+            85
+          ],
+          "title": "Research Desk Visual Refresh Implementation Plan",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/docs/plans/2026-08-11-research-desk-visual-refresh.md#L5-L85"
+        }
+      ]
     },
     {
       "id": "report-tags",
@@ -685,22 +1464,31 @@
       "purpose": "为汇报加入可保存的主题标签和筛选，并改进撤单、深度匹配报告中的方向对照、排序、公式和导航。",
       "status": "done",
       "closes_into": {
-        "daily": [
-          "2026-09-07"
-        ]
+        "daily": []
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 2,
         "span": [
           "2026-09-07",
           "2026-09-09"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "标签功能与报告浏览改造分别记录；不能把报告中的买卖方向功能都称为标签算法。"
+      "fate_note": "9月7日在线标签/API持久化与9月9日报告方向对照、筛选排序分别记录。报告正文不能证明标签功能，标签也不是模型报告的研究前提。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "7896f7d9782ce572cdb13f867733be9c6bd3b75d",
+          "title": "feat: add persistent report tags and topic filtering",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/7896f7d9782ce572cdb13f867733be9c6bd3b75d"
+        }
+      ]
     },
     {
       "id": "model-report",
@@ -709,19 +1497,53 @@
       "short": "模型报告",
       "purpose": "发布模型设置、测试结果和诊断图，进一步解释 RankIC、组间排序及多空收益，并替换为因果时序修正后的结果。",
       "status": "done",
-      "closes_into": null,
+      "closes_into": {
+        "daily": [
+          "2026-09-18"
+        ]
+      },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 3,
         "span": [
           "2026-09-19",
           "2026-09-21"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "9 月 19 日的初版报告早于 330 候选研究；只有 9 月 21 日的修订接入相应重算结果。"
+      "fate_note": "9 月 19 日的初版报告早于 330 候选研究；只有 9 月 21 日的修订接入相应重算结果。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "a4f5af84182616227fe6d21c86c7a29e00631b63",
+          "title": "发布9月18日LightGBM模型设置、test结果与18张诊断图",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/a4f5af84182616227fe6d21c86c7a29e00631b63"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "content/assets/model-report-2026-09-18/README.md",
+          "lines": [
+            3,
+            30
+          ],
+          "title": "2026-09-18 模型试验图表数据",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/content/assets/model-report-2026-09-18/README.md#L3-L30"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "bc1098eb8bc950290a83e37b92ad6da1c730d67d",
+          "title": "Publish causal Open5m 328-factor model recompute",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/bc1098eb8bc950290a83e37b92ad6da1c730d67d"
+        }
+      ]
     },
     {
       "id": "report328",
@@ -736,335 +1558,1578 @@
         ]
       },
       "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
         "days": 1,
         "span": [
           "2026-10-18",
           "2026-10-18"
         ],
         "unreviewed_days": [],
-        "by": "Codex",
-        "on": "2026-10-20"
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
       },
       "fate": "landed",
-      "fate_note": "报告已发布。它是单因子历史评价，分组毛收益未扣成本，也不等于模型或策略已在新的样本外期间通过检验。"
+      "fate_note": "报告已发布。它是单因子历史评价，分组毛收益未扣成本，也不等于模型或策略已在新的样本外期间通过检验。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-18-szse-model328-report.md",
+          "lines": [
+            3,
+            39
+          ],
+          "title": "深市328列因子的601日收益评价报告",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-18-szse-model328-report.md#L3-L39"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-18-szse-model328-factor-performance.md",
+          "lines": [
+            3,
+            38
+          ],
+          "title": "深市328列因子的601日收益评价",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-model328-factor-performance.md#L3-L38"
+        }
+      ]
+    },
+    {
+      "id": "corrected-replay-344",
+      "track": "factor",
+      "label": "正确盘口344列重新定参",
+      "short": "344重定参",
+      "purpose": "按独立344列清单和修正回放，重新取得六个全局共享核与八组结构参数各601日观测，止于冻结参数和有界消费者验收。",
+      "status": "active",
+      "fate": "landed",
+      "fate_note": "截至固定来源记录，10月21日00:50:52已启动601日六核正式采集；八组结构、全期冻结和消费者交接尚未完成，未启动344列全期因子生产。",
+      "closes_into": {
+        "daily": []
+      },
+      "report_coverage": "curated",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 2,
+        "span": [
+          "2026-10-20",
+          "2026-10-21"
+        ],
+        "unreviewed_days": [],
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
+      },
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [
+            3,
+            127
+          ],
+          "title": "正确盘口 344 列重新定参",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        }
+      ]
+    },
+    {
+      "id": "trading-window-freeze",
+      "track": "infra",
+      "label": "交易日早盘自动冻结与恢复",
+      "short": "早盘冻结",
+      "purpose": "按交易日自动暂停和恢复研究任务，处理在途SQL、scope冻结、独立定时器和看门狗计时，验证失败恢复与科学输出不变。",
+      "status": "done",
+      "fate": "landed",
+      "fate_note": "10月9日完成实现、Linux回归和有界集成，随后补缺失定时器等兜底；10月13日复验真实生产冻结。未把未实测的45分钟/GPU等场景写成通过。",
+      "closes_into": {
+        "daily": []
+      },
+      "report_coverage": "curated",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 2,
+        "span": [
+          "2026-10-09",
+          "2026-10-13"
+        ],
+        "unreviewed_days": [],
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
+      },
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-09-trading-window-freeze.md",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "交易日早盘自动冻结验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-trading-window-freeze.md#L1-L65"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-09-trading-window-freeze-hardening.md",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "早盘自动冻结容错验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-trading-window-freeze-hardening.md#L1-L65"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "深市 328 列全期计算：早盘暂停与恢复核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md#L1-L26"
+        }
+      ]
+    },
+    {
+      "id": "research-journal",
+      "track": "delivery",
+      "label": "研究日志与证据图谱建设",
+      "short": "研究日志",
+      "purpose": "建立固定版本证据、逐日多任务记录与链条图谱，完成交互、内容审阅及每日维护规则，使工作与原始来源可追溯。",
+      "status": "active",
+      "fate": "landed",
+      "fate_note": "10月20日完成首轮采集和竖向图谱，10月21日继续缩放及图例高亮。当前分类修订和历史审计分开记录，日志维护自身不反复制造研究成果。",
+      "closes_into": {
+        "daily": []
+      },
+      "report_coverage": "curated",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 2,
+        "span": [
+          "2026-10-20",
+          "2026-10-21"
+        ],
+        "unreviewed_days": [],
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
+      },
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-20-journal-column.md",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "新栏目「研究日志」实施计划",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column.md#L1-L45"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-20-journal-column-v2.md",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "研究日志第二轮：转竖向推进流，补逐点注解与去留标记",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column-v2.md#L1-L45"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "902b03b440425600c64ac4ba0030eeab3a36d9e9",
+          "title": "支持研究日志链条图的 Ctrl 滚轮纵向缩放",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/902b03b440425600c64ac4ba0030eeab3a36d9e9"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "title": "支持研究日志点击图例高亮对应交接线",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/0910a201154aa02b6889ad77899943a2eb656d1c"
+        }
+      ]
+    },
+    {
+      "id": "cross-stock-sync",
+      "track": "factor",
+      "label": "C3.3跨股票同步预查",
+      "short": "跨股同步",
+      "purpose": "独立预查全市场跨股票的同量/同步委托关系，保存统计实现、性能及单日试跑边界；与单只股票盘口深度匹配分开。",
+      "status": "done",
+      "fate": "dropped",
+      "fate_note": "后补计划称9月11日放弃C3.3；9月18日提交停止说明并清理相关执行材料。保留已发生的实现和单日试跑，不声称全历史/机制显著性通过；决定日自述与补记日分别说明。",
+      "closes_into": {
+        "daily": []
+      },
+      "report_coverage": "curated",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "days": 5,
+        "span": [
+          "2026-09-08",
+          "2026-09-18"
+        ],
+        "unreviewed_days": [
+          "2026-09-11"
+        ],
+        "scope": "研究归属及原始来源已复核；待核列表表示日期或具体断言尚未闭合，不替代运行验收。"
+      },
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
+          "lines": [
+            1,
+            32
+          ],
+          "title": "C3.3 跨股票同步行为深入预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md#L1-L32"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "931697771c6e5ec0b95a662a08d40b319e192abc",
+          "title": "实现 C3.3 全市场六模块汇总与完整单日验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/931697771c6e5ec0b95a662a08d40b319e192abc"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "9e26b6ed8b131a9d387fe62078ef8aeae62b6076",
+          "title": "docs: cancel C3.3 prescreen and remove its execution evidence",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/9e26b6ed8b131a9d387fe62078ef8aeae62b6076"
+        }
+      ]
     }
   ],
   "handoffs": [
     {
-      "from": "onboarding",
-      "to": "lv2-snapshot",
-      "type": "延续",
-      "confidence": "inferred",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "6月23—24日环境和交易规则提交后，6月25日进入 lv2_snapshot_workspace 的快照实现。"
-      },
-      "note": "上手后开始开发快照。这里只按记录顺序相连，不把规则整理写成快照实现的技术依赖。"
-    },
-    {
       "from": "lv2-snapshot",
       "to": "literature",
       "type": "依赖解除",
-      "confidence": "confirmed",
       "date": "2026-06-30",
+      "source_date": "2026-06-30",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "94492df7f1e937c20fa9727351ad5ad90326ec7f",
+          "path": "26 Summer/❗思瑞投资/因子/factor_lab/configs/default.yaml",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "首个因子框架的快照输入配置",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/94492df7f1e937c20fa9727351ad5ad90326ec7f/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/factor_lab/configs/default.yaml#L1-L20"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+          "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "源数据说明书：A股 Level-2 逐笔事件流（用于\"聪明钱\"/算法交易痕迹因子研究）",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md#L1-L46"
+        }
+      ],
+      "note": "6月30日快照分区供factor_lab首个OFI框架读取；纯文献收集不依赖快照完成。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "6月30日新增快照数据摘要并由 factor_lab 使用快照输入；不把6月29日纯文献收集算作快照开发。"
-      },
-      "note": "快照数据说明和输入被首个因子框架使用；文献收集本身不依赖完成快照。"
+        "on": "2026-10-21",
+        "basis": "6月30日快照分区供factor_lab首个OFI框架读取；纯文献收集不依赖快照完成。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "literature",
       "to": "algobench",
       "type": "延续",
+      "date": "2026-07-06",
+      "source_date": "2026-07-03",
       "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "80513f65e40b4c89ef2d2e23b36a75283cfafd59",
+          "path": "26 Summer/❗思瑞投资/因子/algobench/README.md",
+          "lines": [
+            3,
+            18
+          ],
+          "title": "algobench",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/80513f65e40b4c89ef2d2e23b36a75283cfafd59/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/README.md#L3-L18"
+        }
+      ],
+      "note": "论文痕迹台架明确复用lowlat事件、生命周期与snapshot订单簿；承接方法和公共代码。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "7月1—3日复现 lowlat/ClusterLOB，7月6日将六篇论文方法落入 algobench。"
-      },
-      "note": "后续 algobench 把论文中的算法痕迹度量写成统一指标。"
+        "on": "2026-10-21",
+        "basis": "论文痕迹台架明确复用lowlat事件、生命周期与snapshot订单簿；承接方法和公共代码。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "algobench",
       "to": "formal-engine",
       "type": "延续",
+      "date": "2026-07-16",
+      "source_date": "2026-07-14",
       "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "a214f26e0756739d7aedfe9b0eb909f2c3203ef3",
+          "path": "因子/algobench/src/algobench/formal_engine.py",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "正式因子引擎实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46"
+        }
+      ],
+      "note": "7月16日在同一研究代码基础扩展生命周期、配对与评分；不承接主动关注度预测结论。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "7月14日研究工作区入独立仓，7月15—16日同一 algobench 实施正式因子引擎。"
-      },
-      "note": "论文指标和关注度研究之后，代码继续扩成正式订单配对与评分流程。"
+        "on": "2026-10-21",
+        "basis": "7月16日在同一研究代码基础扩展生命周期、配对与评分；不承接主动关注度预测结论。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "doris-migration",
       "to": "formal-engine",
       "type": "依赖解除",
+      "date": "2026-07-16",
+      "source_date": "2026-07-16",
       "confidence": "confirmed",
+      "evidence_kind": "code_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9e4260f4425b3b158b6d71fdf7a9b410ace8bf38",
+          "path": "lv2_snapshot_workspace/src/snapshot/io.py",
+          "lines": [
+            1,
+            205
+          ],
+          "title": "Doris 唯一网关的实际实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9e4260f4425b3b158b6d71fdf7a9b410ace8bf38/lv2_snapshot_workspace/src/snapshot/io.py#L1-L205"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "a214f26e0756739d7aedfe9b0eb909f2c3203ef3",
+          "path": "因子/algobench/src/algobench/formal_engine.py",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "正式因子引擎实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46"
+        }
+      ],
+      "note": "7月16日正式面板接入已实现的Doris网关和日级调度；7月15日草稿不是运行放行。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "7月15日服务器/Doris 总计划为7月16日正式引擎提供数据访问；后续7月30日恢复不作为首次交接。"
-      },
-      "note": "服务器的 Doris 逐笔输入供正式因子计算使用；7 月 15 日草稿后来改过，不能当成迁移已经验收。"
+        "on": "2026-10-21",
+        "basis": "7月16日正式面板接入已实现的Doris网关和日级调度；7月15日草稿不是运行放行。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "formal-engine",
       "to": "gates",
       "type": "延续",
+      "date": "2026-07-27",
+      "source_date": "2026-07-25",
       "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-07-27-开盘前三分钟连续评分可行性重构实施计划.md",
+          "lines": [
+            7,
+            34
+          ],
+          "title": "开盘前三分钟连续评分可行性重构 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-07-27-%E5%BC%80%E7%9B%98%E5%89%8D%E4%B8%89%E5%88%86%E9%92%9F%E8%BF%9E%E7%BB%AD%E8%AF%84%E5%88%86%E5%8F%AF%E8%A1%8C%E6%80%A7%E9%87%8D%E6%9E%84%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L7-L34"
+        }
+      ],
+      "note": "7月27日在正式评分与Response流程上调整候选、数量与连续价格规则。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "7月27—29日计划在正式 Scorer/Response 上调整数量门、Tick 与价格门。"
-      },
-      "note": "在正式配对和评分流程上继续调整数量、价格规则及评分尺度。"
+        "on": "2026-10-21",
+        "basis": "7月27日在正式评分与Response流程上调整候选、数量与连续价格规则。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "gates",
       "to": "fixed-history",
       "type": "延续",
+      "date": "2026-08-03",
+      "source_date": "2026-08-02",
       "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-02-2026年固定参数全区间因子评价实施计划.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "2026-01-05 至最新完整交易日固定参数全因子统一评价实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-02-2026%E5%B9%B4%E5%9B%BA%E5%AE%9A%E5%8F%82%E6%95%B0%E5%85%A8%E5%8C%BA%E9%97%B4%E5%9B%A0%E5%AD%90%E8%AF%84%E4%BB%B7%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L5-L43"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-03-fixed-history-through-latest-complete-design.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "固定参数历史评价覆盖至最新完整日：设计",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-03-fixed-history-through-latest-complete-design.md#L5-L43"
+        }
+      ],
+      "note": "固定open3m规则和不可变种子后扩展历史区间；定标日前回溯不自动成为纯样本外。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "8月2日固定参数全区间计划后，8月3日以不可变种子补齐历史前缀。"
-      },
-      "note": "保留固定规则，先复用已完成日期，再补算更早历史。"
+        "on": "2026-10-21",
+        "basis": "固定open3m规则和不可变种子后扩展历史区间；定标日前回溯不自动成为纯样本外。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "fixed-history",
       "to": "open5m",
       "type": "延续",
+      "date": "2026-08-06",
+      "source_date": "2026-08-04",
       "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md",
+          "lines": [
+            5,
+            21
+          ],
+          "title": "Open5m 2025–2026H1 Formal Evaluation and Performance Design",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md#L5-L21"
+        }
+      ],
+      "note": "复用区间组织和计算/评价框架；Open5m另建窗口、标签和参数身份，旧面板只作比较。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "8月6日 Open5m 正式评价计划复用已有历史区间、registry 和输出。"
-      },
-      "note": "开盘五分钟研究继续使用历史输入和评价流程。"
+        "on": "2026-10-21",
+        "basis": "复用区间组织和计算/评价框架；Open5m另建窗口、标签和参数身份，旧面板只作比较。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "ml-count",
       "to": "ml-exec",
       "type": "延续",
+      "date": "2026-08-11",
+      "source_date": "2026-08-10",
       "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "path": "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+          "lines": [
+            1,
+            25
+          ],
+          "title": "首次入库的 127 个 total-only 模型计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2318d2ff29815213e6f108cb3308629dfa601869/PLAN/2026-08-04-51%E4%B8%AAcount%E5%9B%A0%E5%AD%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BB%93%E6%9E%84%E8%AF%8A%E6%96%AD%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L25"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "title": "8 月 10 日两份模型计划首次入库",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2318d2ff29815213e6f108cb3308629dfa601869"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/data.py",
+          "lines": [
+            107,
+            178
+          ],
+          "title": "模型输入的冻结来源检查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178"
+        }
+      ],
+      "note": "8月10日可追溯入库的总量模型计划进入8月11日实现；8月4日、6日编写日期仍待核。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "8月4日 ML 计划与8月6日全量原始因子计划，延续为8月11日 algobench.ml 冻结研究和家族适配。"
-      },
-      "note": "早期总量因子模型计划继续发展为多模型执行与调度流程。"
+        "on": "2026-10-21",
+        "basis": "8月10日可追溯入库的总量模型计划进入8月11日实现；8月4日、6日编写日期仍待核。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "open5m",
       "to": "ml-exec",
       "type": "依赖解除",
+      "date": "2026-08-11",
+      "source_date": "2026-08-10",
       "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/data.py",
+          "lines": [
+            107,
+            178
+          ],
+          "title": "模型输入的冻结来源检查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178"
+        }
+      ],
+      "note": "模型输入检查只读冻结的Open5m来源、manifest和354日完整性；不等于所有模型已运行完成。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "ML 规范计划明确只读取冻结的 Open5m 因子历史输出，数据验收是执行前置。"
-      },
-      "note": "模型流程读取已固定的开盘五分钟因子历史输入，避免边选模型边改输入。"
+        "on": "2026-10-21",
+        "basis": "模型输入检查只读冻结的Open5m来源、manifest和354日完整性；不等于所有模型已运行完成。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "open5m",
       "to": "cancel-phase",
       "type": "派生",
+      "date": "2026-08-19",
+      "source_date": "2026-08-10",
       "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md",
+          "lines": [
+            5,
+            85
+          ],
+          "title": "Open5m 沪深 A 股撤单时间差分布研究实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md#L5-L85"
+        }
+      ],
+      "note": "撤单分布直接复用五分钟生命周期、日历与事件入口，不读取收益或推断账户身份。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "8月19日撤单延迟计划明确复用 Open5m 日期契约、生命周期与事件标准化。"
-      },
-      "note": "撤单等待节奏从开盘五分钟的订单生命周期数据中单独展开研究。"
+        "on": "2026-10-21",
+        "basis": "撤单分布直接复用五分钟生命周期、日历与事件入口，不读取收益或推断账户身份。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "open5m",
       "to": "depth-match",
       "type": "派生",
+      "date": "2026-09-05",
+      "source_date": "2026-09-04",
       "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md",
+          "lines": [
+            5,
+            30
+          ],
+          "title": "C7.1 精确盘口深度匹配规律预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md#L5-L30"
+        }
+      ],
+      "note": "C7.1复用现有机制预查和事件几何组件，已有股数汇总只作核验旁证。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "9月5日 C7.1 计划直接复用 L2、提交前盘口和订单量分布旁证，未声称由撤单相位结果派生；来源改为 open5m。"
-      },
-      "note": "深度匹配使用提交前盘口、L2 订单和股数分布等输入，另行检验委托量与深度的关系。"
-    },
-    {
-      "from": "wangly-env",
-      "to": "old-factor-bank",
-      "type": "依赖解除",
-      "confidence": "confirmed",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "9月4日环境引导与结果转移在先，9月7日旧因子300秒计划使用已核验服务器环境。"
-      },
-      "note": "老因子计算使用已配置的服务器环境，环境和取数检查是开跑前提。"
+        "on": "2026-10-21",
+        "basis": "C7.1复用现有机制预查和事件几何组件，已有股数汇总只作核验旁证。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "old-factor-bank",
       "to": "sse-v2",
       "type": "派生",
+      "date": "2026-09-23",
+      "source_date": "2026-09-17",
       "confidence": "confirmed",
+      "evidence_kind": "code_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-22-sse-replay-implementation.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "2026-09-22 沪市原生回放与因子输入验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-22-sse-replay-implementation.md#L3-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-22-sse-cancel-phase-raw-bank-assessment.md",
+          "lines": [
+            3,
+            56
+          ],
+          "title": "2026-09-22 沪市 cancel-phase 与旧因子计算条件评估",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-22-sse-cancel-phase-raw-bank-assessment.md#L3-L56"
+        }
+      ],
+      "note": "旧库原定义与实际评分器进入沪市可见输入的适用性核验；不表示全部沪市原式已可无损恢复。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "9月23日沪市委托输入审计与重建代码用于相同因子面板；老因子注册和可识别性约束仍在。"
-      },
-      "note": "相同因子移向沪市时，需要另做原始委托还原和输入可观测性检查。"
+        "on": "2026-10-21",
+        "basis": "旧库原定义与实际评分器进入沪市可见输入的适用性核验；不表示全部沪市原式已可无损恢复。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "old-factor-bank",
       "to": "szse-model328",
       "type": "延续",
+      "date": "2026-10-12",
+      "source_date": "2026-10-10",
       "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+          "lines": [
+            5,
+            107
+          ],
+          "title": "深市 328 列模型输入因子全期重算 PLAN",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
+        }
+      ],
+      "note": "10月12日清单精确选择256个旧输出及其必要依赖，并非原284列全搬或只留325个分裂列。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "10月12日重算计划明确从冻结模型映射提取256个老因子与其余输入，沿用老因子合同。"
-      },
-      "note": "深市 328 列中包含老因子，继续沿用其定义和输入核验。"
+        "on": "2026-10-21",
+        "basis": "10月12日清单精确选择256个旧输出及其必要依赖，并非原284列全搬或只留325个分裂列。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "open5m",
       "to": "grouped-calibration",
       "type": "延续",
+      "date": "2026-10-08",
+      "source_date": "2026-08-27",
       "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "深市老因子分组定标：定档预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59"
+        }
+      ],
+      "note": "10月8日分组预检明确复用连续核历史脚本和股票日中心；200日预检不是601日最终参数。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "10月8日定档预检明确复用旧的连续核历史定标脚本和六核日级中心；来源由深度匹配改为 open5m。"
-      },
-      "note": "分组定标继续估计老因子连续评分所需的六类尺度，比较不同股票和市场状态。"
+        "on": "2026-10-21",
+        "basis": "10月8日分组预检明确复用连续核历史脚本和股票日中心；200日预检不是601日最终参数。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "grouped-calibration",
       "to": "szse-model328",
       "type": "延续",
+      "date": "2026-10-12",
+      "source_date": "2026-10-12",
       "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-12-old-factor-recompute-preparation.md",
+          "lines": [
+            3,
+            37
+          ],
+          "title": "深市全期结构参数 v2 发布与交接",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-12-old-factor-recompute-preparation.md#L3-L37"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+          "lines": [
+            5,
+            107
+          ],
+          "title": "深市 328 列模型输入因子全期重算 PLAN",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
+        }
+      ],
+      "note": "结构runtime_v2于10月12日02:38封存交接，重算计划绑定核表和哈希。此为旧回放版本的历史交接。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "10月12日计划明确绑定已验收六核逐股票日参数表与正式结构参数 v2。"
-      },
-      "note": "深市 328 列计算绑定已验收的六核表和结构参数，参数生成与因子生产分步核验。"
+        "on": "2026-10-21",
+        "basis": "结构runtime_v2于10月12日02:38封存交接，重算计划绑定核表和哈希。此为旧回放版本的历史交接。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "szse-model328",
       "to": "storage-cleanup",
       "type": "派生",
-      "confidence": "confirmed",
       "date": "2026-10-16",
+      "source_date": "2026-10-16",
+      "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-16-szse-model328-storage-closeout.md",
+          "lines": [
+            3,
+            51
+          ],
+          "title": "深市328列计算与提速任务的存储收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-szse-model328-storage-closeout.md#L3-L51"
+        }
+      ],
+      "note": "10月16日清理深市328生产/性能任务的自有暂存并保护恢复来源，不包含全部沪市和账户治理。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "10月16日深市328列存储收尾计划对应深市生产与性能试验，不将10月14日沪市热清理作为此边交接点。"
-      },
-      "note": "深市生产及性能试验产生的暂存，在结果归档可恢复后按范围清理。"
+        "on": "2026-10-21",
+        "basis": "10月16日清理深市328生产/性能任务的自有暂存并保护恢复来源，不包含全部沪市和账户治理。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "szse-model328",
       "to": "report328",
       "type": "收口",
+      "date": "2026-10-18",
+      "source_date": "2026-10-18",
       "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-18-szse-model328-factor-performance.md",
+          "lines": [
+            3,
+            38
+          ],
+          "title": "深市328列因子的601日收益评价",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-model328-factor-performance.md#L3-L38"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-18-szse-model328-report.md",
+          "lines": [
+            3,
+            39
+          ],
+          "title": "深市328列因子的601日收益评价报告",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-18-szse-model328-report.md#L3-L39"
+        }
+      ],
+      "note": "10月18日同一批328列单因子评价被发布为可浏览报告，不是新模型训练结果。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "10月18日研究提交10bca944与看板提交1a0fefd8，分别完成收益评价记录与相同328列报告发布。"
-      },
-      "note": "10 月 18 日的报告发布这批 328 列全期因子的单因子评价。"
+        "on": "2026-10-21",
+        "basis": "10月18日同一批328列单因子评价被发布为可浏览报告，不是新模型训练结果。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "ml-exec",
       "to": "ml-330",
       "type": "延续",
+      "date": "2026-09-20",
+      "source_date": "2026-08-20",
       "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/open5m_330_runtime.py",
+          "lines": [
+            24,
+            57
+          ],
+          "title": "330 研究独立执行合同及公共基础复用",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_runtime.py#L24-L57"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/open5m_330_data.py",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "330 来源只读对齐实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_data.py#L1-L30"
+        }
+      ],
+      "note": "330另建输入和运行身份，仅复用ML公共合同、权重与守护基础，不沿用整套127模型结果。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "9月20—21日 LightGBM/因果单次拟合沿用 ML 研究执行与模型输入规范。"
-      },
-      "note": "330 候选研究沿用既有模型输入和执行基础，再增加自动选择及因果时序修正。"
+        "on": "2026-10-21",
+        "basis": "330另建输入和运行身份，仅复用ML公共合同、权重与守护基础，不沿用整套127模型结果。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "lv2-snapshot",
       "to": "replay",
       "type": "延续",
+      "date": "2026-10-17",
+      "source_date": "2026-06-26",
       "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-17-szse-replay-rule-verification.md",
+          "lines": [
+            7,
+            28
+          ],
+          "title": "深市单日回放规则核验实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-17-szse-replay-rule-verification.md#L7-L28"
+        }
+      ],
+      "note": "10月17日重新核验OrderBook状态和数量操作的规则及因子影响；早期样本对照不能提前通过新审计。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "10月17日逐笔回放及快照对齐检查，承接的是订单簿回放；沪市G1是并行工作，未据此认定因果承接。"
-      },
-      "note": "后续回到深市逐笔回放，重新检查订单簿、成交价格和快照对齐对因子的影响。",
-      "date": "2026-10-17"
+        "on": "2026-10-21",
+        "basis": "10月17日重新核验OrderBook状态和数量操作的规则及因子影响；早期样本对照不能提前通过新审计。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "dashboard-build",
       "to": "report-publish",
       "type": "延续",
+      "date": "2026-07-23",
+      "source_date": "2026-07-07",
       "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "1b792246376fa7a0cdd20025642d3be0c9a85544",
+          "title": "md解释 26.7.7 22:24",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/1b792246376fa7a0cdd20025642d3be0c9a85544"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "11d42ebed84aa734e189b30d63c782f7cb816f1b",
+          "title": "fix(docs): render daily report formulas",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/11d42ebed84aa734e189b30d63c782f7cb816f1b"
+        }
+      ],
+      "note": "后续报告直接继续使用原站点构建与内容管线，有源码/产物连续性。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "7月7—13日建站后，7月23日以后继续在同一看板仓发布和维护报告。"
-      },
-      "note": "建站后在同一看板继续发布、解释和修订研究报告。"
+        "on": "2026-10-21",
+        "basis": "后续报告直接继续使用原站点构建与内容管线，有源码/产物连续性。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "dashboard-build",
       "to": "visual-b",
       "type": "延续",
+      "date": "2026-08-11",
+      "source_date": "2026-07-13",
       "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "docs/plans/2026-08-11-research-desk-visual-refresh.md",
+          "lines": [
+            5,
+            85
+          ],
+          "title": "Research Desk Visual Refresh Implementation Plan",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/docs/plans/2026-08-11-research-desk-visual-refresh.md#L5-L85"
+        }
+      ],
+      "note": "研究编辑台直接修改既有站点壳层和样式，保留原路由与构建基础。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "8月11日 c9ecdcf2 直接修改已有看板视觉与壳层。"
-      },
-      "note": "在已有看板上应用选定的研究编辑台版式。"
-    },
-    {
-      "from": "visual-b",
-      "to": "report-tags",
-      "type": "延续",
-      "confidence": "inferred",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "9月7日7896f7d9在已有研究编辑台上新增标签与归类。"
-      },
-      "note": "标签与浏览功能加入现有看板；连线只表示页面演进，版式并不是标签算法的技术前提。"
-    },
-    {
-      "from": "report-tags",
-      "to": "model-report",
-      "type": "延续",
-      "confidence": "inferred",
-      "review": {
-        "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "9月19日模型报告使用已有看板阅读/展示与导航；本边记录交付演进，不表示标签算法是模型研究前提。"
-      },
-      "note": "模型报告使用现有看板的阅读与展示功能；连线只表示交付顺序，不表示模型研究依赖标签。"
+        "on": "2026-10-21",
+        "basis": "研究编辑台直接修改既有站点壳层和样式，保留原路由与构建基础。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     },
     {
       "from": "ml-330",
       "to": "model-report",
       "type": "收口",
-      "confidence": "confirmed",
       "date": "2026-09-21",
+      "source_date": "2026-09-21",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-21-causal-single-fit-recompute.md",
+          "lines": [
+            1,
+            9
+          ],
+          "title": "2026-09-21 固定时点选股与持仓估值模型重算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-21-causal-single-fit-recompute.md#L1-L9"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "content/assets/model-report-2026-09-18/README.md",
+          "lines": [
+            3,
+            30
+          ],
+          "title": "2026-09-18 模型试验图表数据",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/content/assets/model-report-2026-09-18/README.md#L3-L30"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "bc1098eb8bc950290a83e37b92ad6da1c730d67d",
+          "title": "Publish causal Open5m 328-factor model recompute",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/bc1098eb8bc950290a83e37b92ad6da1c730d67d"
+        }
+      ],
+      "note": "仅9月21日因果328单次复算替换报告数据；9月19日初版及全部133候选未被算作本次交接。",
       "review": {
         "by": "Codex",
-        "on": "2026-10-20",
-        "basis": "模型报告9月19日初版早于330研究；9月21日bc1098eb发布因果重算，83498922恢复展示，交接明确定位9月21日。"
-      },
-      "note": "9 月 21 日模型报告换成重算结果；9 月 19 日初版不属于这次重算的产出。"
+        "on": "2026-10-21",
+        "basis": "仅9月21日因果328单次复算替换报告数据；9月19日初版及全部133候选未被算作本次交接。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "old-factor-bank",
+      "to": "ml-330",
+      "type": "依赖解除",
+      "date": "2026-09-20",
+      "source_date": "2026-09-17",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml",
+          "lines": [
+            24,
+            42
+          ],
+          "title": "330 列研究的三类封存因子来源",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/open5m_330_data.py",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "330 来源只读对齐实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_data.py#L1-L30"
+        }
+      ],
+      "note": "330合同只读封存老因子来源；这是因子输入关系，不是模型执行框架关系。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "330合同只读封存老因子来源；这是因子输入关系，不是模型执行框架关系。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "cancel-phase",
+      "to": "ml-330",
+      "type": "依赖解除",
+      "date": "2026-09-20",
+      "source_date": "2026-09-09",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml",
+          "lines": [
+            24,
+            42
+          ],
+          "title": "330 列研究的三类封存因子来源",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42"
+        }
+      ],
+      "note": "330输入绑定撤单相位买卖各24列的封存来源与命名空间。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "330输入绑定撤单相位买卖各24列的封存来源与命名空间。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "depth-match",
+      "to": "ml-330",
+      "type": "依赖解除",
+      "date": "2026-09-20",
+      "source_date": "2026-09-08",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml",
+          "lines": [
+            24,
+            42
+          ],
+          "title": "330 列研究的三类封存因子来源",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42"
+        }
+      ],
+      "note": "330输入明确读取独立24列深度匹配的封存来源。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "330输入明确读取独立24列深度匹配的封存来源。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "ml-330",
+      "to": "szse-model328",
+      "type": "依赖解除",
+      "date": "2026-10-12",
+      "source_date": "2026-09-21",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+          "lines": [
+            5,
+            107
+          ],
+          "title": "深市 328 列模型输入因子全期重算 PLAN",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-21-causal-single-fit-recompute.md",
+          "lines": [
+            1,
+            9
+          ],
+          "title": "2026-09-21 固定时点选股与持仓估值模型重算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-21-causal-single-fit-recompute.md#L1-L9"
+        }
+      ],
+      "note": "9月21日r03冻结模型的全部输入映射、顺序与哈希决定328重算范围；模型预测分数不是因子输入。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "9月21日r03冻结模型的全部输入映射、顺序与哈希决定328重算范围；模型预测分数不是因子输入。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "cancel-phase",
+      "to": "szse-model328",
+      "type": "依赖解除",
+      "date": "2026-10-12",
+      "source_date": "2026-09-09",
+      "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+          "lines": [
+            5,
+            107
+          ],
+          "title": "深市 328 列模型输入因子全期重算 PLAN",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
+        }
+      ],
+      "note": "328生产直接保留相位买卖各24列的原定义与分母，不能把来源全归老库。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "328生产直接保留相位买卖各24列的原定义与分母，不能把来源全归老库。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "depth-match",
+      "to": "szse-model328",
+      "type": "依赖解除",
+      "date": "2026-10-12",
+      "source_date": "2026-09-08",
+      "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+          "lines": [
+            5,
+            107
+          ],
+          "title": "深市 328 列模型输入因子全期重算 PLAN",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
+        }
+      ],
+      "note": "328生产直接保留24列深度匹配原注册合同与必要依赖。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "328生产直接保留24列深度匹配原注册合同与必要依赖。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "open5m",
+      "to": "cross-stock-sync",
+      "type": "派生",
+      "date": "2026-09-08",
+      "source_date": "2026-09-03",
+      "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
+          "lines": [
+            1,
+            32
+          ],
+          "title": "C3.3 跨股票同步行为深入预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md#L1-L32"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "decisions/2026-09-03-actual-only-new-factor-prescreen.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "新因子预查改为只统计真实分布",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26"
+        }
+      ],
+      "note": "C3.3从已有候选机制预查独立展开跨股同步问题；不因同日推进深度匹配就将两者串成因果。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "C3.3从已有候选机制预查独立展开跨股同步问题；不因同日推进深度匹配就将两者串成因果。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "dashboard-build",
+      "to": "research-journal",
+      "type": "延续",
+      "date": "2026-10-20",
+      "source_date": "2026-07-07",
+      "confidence": "confirmed",
+      "evidence_kind": "code_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-20-journal-column.md",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "新栏目「研究日志」实施计划",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column.md#L1-L45"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-20-journal-column-v2.md",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "研究日志第二轮：转竖向推进流，补逐点注解与去留标记",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column-v2.md#L1-L45"
+        }
+      ],
+      "note": "研究日志在既有静态构建和站点路由上新增独立证据与任务链内容。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "研究日志在既有静态构建和站点路由上新增独立证据与任务链内容。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "wangly-env",
+      "to": "depth-match",
+      "type": "依赖解除",
+      "date": "2026-09-08",
+      "source_date": "2026-09-04",
+      "confidence": "confirmed",
+      "evidence_kind": "direct_file",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-04-wangly-environment-bootstrap.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "wangly 计算环境引导 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-04-wangly-environment-bootstrap.md#L5-L43"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-08-depth-match-full-history-completion.md",
+          "lines": [
+            3,
+            118
+          ],
+          "title": "2026-09-08 盘口深度匹配全历史交付",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-08-depth-match-full-history-completion.md#L3-L118"
+        }
+      ],
+      "note": "C7.1在wangly以核对后的环境和guard执行；仅表示环境前提，不表示全量结果已回传wenjie。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "C7.1在wangly以核对后的环境和guard执行；仅表示环境前提，不表示全量结果已回传wenjie。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "doris-efficiency",
+      "to": "grouped-calibration",
+      "type": "依赖解除",
+      "date": "2026-10-09",
+      "source_date": "2026-10-09",
+      "confidence": "confirmed",
+      "evidence_kind": "code_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-09-general-compute-efficiency.md",
+          "lines": [
+            3,
+            108
+          ],
+          "title": "后续计算任务的通用取数与效率方案",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-general-compute-efficiency.md#L3-L108"
+        }
+      ],
+      "note": "10月9日公共有界L2 reader实际接入分组runner；此前预检不追溯归因于本次优化。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "10月9日公共有界L2 reader实际接入分组runner；此前预检不追溯归因于本次优化。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "trading-window-freeze",
+      "to": "szse-model328",
+      "type": "依赖解除",
+      "date": "2026-10-13",
+      "source_date": "2026-10-13",
+      "confidence": "confirmed",
+      "evidence_kind": "operational_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "深市 328 列全期计算：早盘暂停与恢复核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md#L1-L26"
+        }
+      ],
+      "note": "10月13日生产回执核验328任务的早盘暂停与恢复；这是运行保障，不是因子科学输入。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "10月13日生产回执核验328任务的早盘暂停与恢复；这是运行保障，不是因子科学输入。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "replay",
+      "to": "corrected-replay-344",
+      "type": "依赖解除",
+      "date": "2026-10-20",
+      "source_date": "2026-10-20",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [
+            3,
+            127
+          ],
+          "title": "正确盘口 344 列重新定参",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127"
+        }
+      ],
+      "note": "修正回放合同与真实worker来源成为344重新定参前提；旧参数包不具备当前来源。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "修正回放合同与真实worker来源成为344重新定参前提；旧参数包不具备当前来源。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "grouped-calibration",
+      "to": "corrected-replay-344",
+      "type": "延续",
+      "date": "2026-10-20",
+      "source_date": "2026-10-12",
+      "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [
+            3,
+            127
+          ],
+          "title": "正确盘口 344 列重新定参",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        }
+      ],
+      "note": "只复用归约方法和公共采集接口；新范围采用全局六核、八组各601日，旧分组参数值不直接复用。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "只复用归约方法和公共采集接口；新范围采用全局六核、八组各601日，旧分组参数值不直接复用。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
+    },
+    {
+      "from": "szse-model328",
+      "to": "corrected-replay-344",
+      "type": "延续",
+      "date": "2026-10-20",
+      "source_date": "2026-10-18",
+      "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [
+            3,
+            127
+          ],
+          "title": "正确盘口 344 列重新定参",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127"
+        }
+      ],
+      "note": "复用旧精确列校验与消费者抽取方法，同时新建344独立清单，不宣称新范围绑定旧模型。",
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-21",
+        "basis": "复用旧精确列校验与消费者抽取方法，同时新建344独立清单，不宣称新范围绑定旧模型。",
+        "scope": "原始引用支持本条承接，不代表全部阶段验收通过。"
+      }
     }
-  ]
+  ],
+  "evidence_snapshot": {
+    "as_of": "2026-10-21",
+    "repos": {
+      "sirui-quant-research": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+      "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+      "internship-dashboard": "0910a201154aa02b6889ad77899943a2eb656d1c"
+    },
+    "audit": "docs/journal-review/chain-audit-2026-10-21.md"
+  }
 }
