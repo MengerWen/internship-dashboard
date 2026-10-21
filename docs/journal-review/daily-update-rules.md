@@ -8,6 +8,10 @@
 
 数据库投影记录使用表名、原生消息/轮次ID、时间字段及原记录内容哈希定位，不填写虚构JSONL行号。Claude桌面元数据和末轮摘要仅用于定位、找原件，不能替代完整正文或运行回执。会话创建日、归档日和元数据更新时间不作为真实工作日。尚有正文缺口时可以发布已核实的增补，但须保留来源不完整状态。
 
+材料采集覆盖冻结的全部本地Git引用，区分所选主版本祖先、其他分支、检查点和历史仓库链接。另运行`python scripts/collect_journal_git_versions.py --materials 本轮材料快照 --output 本轮本机目录/git-text-versions.json`，保留同一路径的早期文本，避免只读最终版而丢失构思。相同Git对象可复用已核对的本机副本；所有版本及副本都保留去向，Git作者/提交时间不代替实际工作日。
+
+文件修改以原生FileChange完成记录、直接补丁成功或Claude Write/Edit明确成功回执核对；外层exec的Script completed不证明其中的写入，删除日期也不是材料形成日期。跨日写入使用返回/原生完成时间。当前工作目录、归档目录和文件名不单独决定研究归属；初期目录在项目外的会话须回查内容与承接，确认后登记include_session_ids和理由。其他研究项目、一般问答和本次审查自身均有单独去向，不充当本项目科研成果。
+
 自 2026 年 10 月 21 日起执行。每天北京时间（Asia/Shanghai）上午 9 点，在本聊天回顾前一自然日的研究工作，将有证据的新进展归入研究日志。更新对象是本仓库的 `content/journal/` 与 `content/chains.json`；线上入口为[研究日志](https://internship-dashboard.mengerwenjie.workers.dev/#/journal)。
 
 ## 日期与补漏
