@@ -63,8 +63,8 @@
 - `notes:模型/09-21 分析模型结果+成交假设.md` → strategy-research；材料ID `e6f102138801a5746e180cea`。
 - `notes:模型/09-22 详细讲解成交假设.md` → strategy-research；材料ID `b3e01ad0b69b454aefb2e7bf`。
 - `notes:模型/MarS.md` → strategy-research；材料ID `0aa0dbac7a15a5926f5b720e`。
-- `notes:模型/prompt/codex_prompt_补全PLAN冻结合同.md` → ml-count；材料ID `3fb53896a4a2099f1ade74a5`。
-- `notes:模型/prompt/train, validation, test.md` → ml-count；材料ID `c8d191dad4259bffdbb6ac45`。
+- `notes:模型/prompt/codex_prompt_补全PLAN冻结合同.md` → ml-exec；材料ID `3fb53896a4a2099f1ade74a5`。
+- `notes:模型/prompt/train, validation, test.md` → ml-exec；材料ID `c8d191dad4259bffdbb6ac45`。
 - `notes:模型/prompt/具体prompt.md` → model-methods；材料ID `0f094902876ebf92321cdcba`。
 - `notes:模型/prompt/分层实现.md` → ml-exec；材料ID `e9b2601d4e2978734c6c8502`。
 - `notes:模型/prompt/提速.md` → ml-exec；材料ID `8b20150db5ba6bd203050e36`。
@@ -149,22 +149,22 @@
 - `research:PLAN/2026-10-10-sse-sequence-map-and-formal-reference.md` → sse-v2；材料ID `3b5758decf7669430333f746`。
 - `research:PLAN/2026-10-10-szse-old-factor-recompute-preparation.md` → grouped-calibration；材料ID `fdf95fc51a07055816dc95f3`。
 - `research:PLAN/2026-10-11-f40-remaining-stage-optimization.md` → grouped-calibration；材料ID `39c67d71285c7a950f1bbbe8`。
-- `research:decisions/2026-08-27-fast-cancel-scales.md` → open5m；材料ID `25adc5391e4e28c98cc147e2`。
+- `research:decisions/2026-08-27-fast-cancel-scales.md` → old-factor-calibration；材料ID `25adc5391e4e28c98cc147e2`。
 - `research:decisions/2026-10-10-sse-opening-gap-clock.md` → sse-v2；材料ID `dc3fae8b7f2f7a313dea9a9f`。
 - `research:decisions/2026-10-10-structural-day-publication.md` → grouped-calibration；材料ID `8a4bdb6a33461a389d0ae74a`。
 - `research:decisions/2026-10-11-exact-date-quantile-reduction.md` → grouped-calibration；材料ID `8b8b45dc641e0a8164e52fa7`。
 - `research:docs/evidence/2026-08-14-boosting-checkpoint-repair/CONTRACT_DECISION.md` → ml-exec；材料ID `cc423b26adce5fd220325b31`。
 - `research:docs/evidence/2026-08-14-boosting-checkpoint-repair/ROOT_CAUSE.md` → ml-exec；材料ID `3fb8bffc6781183b89f479a6`。
-- `research:reports/2026-08/2026-08-27-continuous-kernel-factor-calibration-research.md` → open5m；材料ID `483ff4db34e2355351ef3f57`。
-- `research:reports/2026-08/2026-08-27-l2-three-second-gate-real-data-findings.md` → open5m；材料ID `38594579f67b71f4878ccafc`。
-- `research:reports/2026-08/2026-08-27-three-second-candidate-gate-research.md` → open5m；材料ID `1b117b78cd860f7e05de66c4`。
+- `research:reports/2026-08/2026-08-27-continuous-kernel-factor-calibration-research.md` → old-factor-calibration；材料ID `483ff4db34e2355351ef3f57`。
+- `research:reports/2026-08/2026-08-27-l2-three-second-gate-real-data-findings.md` → old-factor-calibration；材料ID `38594579f67b71f4878ccafc`。
+- `research:reports/2026-08/2026-08-27-three-second-candidate-gate-research.md` → old-factor-calibration；材料ID `1b117b78cd860f7e05de66c4`。
 - `research:reports/2026-08/2026-08-27-旧因子源码审计与调整.md` → old-factor-bank；材料ID `a58932bbb7bea408f58408fc`。
 - `research:reports/2026-08/2026-08-28-旧因子跨期反转与流动性折价假设诊断.md` → old-factor-bank；材料ID `66e86e0436af209f76738f34`。
 - `research:reports/2026-08/2026-08-29-五种方向投影计算与精简审计.md` → old-factor-bank；材料ID `24dc1fa49bcf388390ceb108`。
 - `research:reports/2026-08/ALL_ORDER_DENOMINATOR_RESEARCH_REPORT.md` → open5m；材料ID `2f966ee3b48b1e9109a3540f`。
 - `research:reports/2026-09/2026-09-05-cancel-phase-30s-acceptance.md` → cancel-phase；材料ID `2e3855bc8930877e24953651`。
 - `research:reports/2026-09/2026-09-05-cancel-phase-single-day-acceptance.md` → cancel-phase；材料ID `144507f4837ba7423f687323`。
-- `research:reports/2026-09/2026-09-05-open5m-selected-200-calibration-completion.md` → open5m；材料ID `f0055005b6d071955629c212`。
+- `research:reports/2026-09/2026-09-05-open5m-selected-200-calibration-completion.md` → old-factor-calibration；材料ID `f0055005b6d071955629c212`。
 - `research:reports/2026-09/2026-09-07-old-factor-contract-and-design-review.md` → old-factor-bank；材料ID `db1fc73810ee29701f2cfd0e`。
 - `research:reports/2026-09/2026-09-08-depth-match-full-history-completion.md` → depth-match；材料ID `7f15c0c6e29c058c3fd39f73`。
 - `research:reports/2026-09/2026-09-08-depth-match-single-day-acceptance.md` → depth-match；材料ID `8a084d05d2f957f4d7fe228c`。
