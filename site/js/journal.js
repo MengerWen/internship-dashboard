@@ -54,6 +54,15 @@
       }));
       $("view-journal").addEventListener("click", e => {
         $("view-journal").classList.toggle("is-keyboard", e.detail === 0);
+        const handoff = e.target.closest("[data-journal-handoff]");
+        if (handoff) {
+          const type = handoff.dataset.journalHandoff;
+          const active = this.selection?.kind === "handoff" && this.selection.type === type;
+          this.chain = ""; this.selected = null;
+          this.selection = active ? null : {kind: "handoff", type};
+          this.render(); this.writeHash();
+          return;
+        }
         const retry = e.target.closest("[data-journal-evidence]");
         if (retry) this.loadEvidence(retry.dataset.journalEvidence, true);
         const point = e.target.closest("[data-journal-point]");
@@ -74,6 +83,7 @@
       $("view-journal").addEventListener("keydown", e => {
         $("view-journal").classList.add("is-keyboard");
         if (e.key === "Escape") { this.clearSelection(); return; }
+        if (e.target.closest("[data-journal-handoff]")) return;
         if (!e.target.closest("#journal-figure")) return;
         const day = e.target.closest("[data-journal-day]");
         if (day && ["Enter", " "].includes(e.key)) { e.preventDefault(); this.select(day.dataset.journalDay); return; }
@@ -224,7 +234,7 @@
       const headerFocused = focus?.classList.contains("journal-chain-label");
       const focusedNav = document.activeElement?.dataset.journalNav;
       this.visible = this.visibleDays();
-      if (!this.chain && !this.visible.some(d => d.date === this.selected)) { this.selected = null; this.selection = null; }
+      if (this.selected && !this.chain && !this.visible.some(d => d.date === this.selected)) { this.selected = null; this.selection = null; }
       $("journal-window").value = this.window;
       $("journal-chain").value = this.chain;
       this.syncDensityControl();
@@ -250,6 +260,7 @@
     },
     renderAtlas() {
       if (this.mode !== "atlas" || !$("view-journal").classList.contains("is-active")) return;
+      const focusedHandoff = document.activeElement?.dataset.journalHandoff;
       const days = this.visibleDays(true);
       const scroller = document.querySelector(".journal-scroller");
       const head = document.querySelector(".journal-head-scroller");
@@ -340,26 +351,29 @@
       head.scrollLeft = scroller.scrollLeft;
       scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
-      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示当天各采集仓库的提交总数，不表示单条链的提交数或工时。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" aria-label="任务关系线型">' + [["继续开展", ""], ["扩展研究", "4 3"], ["提供输入", "1 3"], ["汇入报告", "7 2 1 2"]].map(([label, dash]) => `<span><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</span>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
+      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示当天各采集仓库的提交总数，不表示单条链的提交数或工时。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
       this.atlas = {y, positions, days, height, width, top, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
+      if (focusedHandoff) document.querySelector(`[data-journal-handoff="${CSS.escape(focusedHandoff)}"]`)?.focus({preventScroll: true});
     },
     highlightAtlas() {
       const sel = this.selection, a = this.atlas;
       if (!a) return;
+      const handoffFocus = sel?.kind === "handoff";
       const day = this.days.find(d => d.date === sel?.date);
       const live = new Set(sel?.kind === "chain" || sel?.kind === "point" ? [sel.chain] : day?.chains || []);
       document.querySelectorAll(".journal-chain-label").forEach(label => {
         const lit = live.has(label.dataset.journalChain);
         label.classList.toggle("is-selected", lit);
-        label.classList.toggle("is-dimmed", Boolean(sel) && !lit);
+        label.classList.toggle("is-dimmed", Boolean(sel) && !handoffFocus && !lit);
         label.setAttribute("aria-pressed", String(lit));
       });
       document.querySelectorAll(".journal-unit").forEach(g => {
-        const lit = g.dataset.chains.split(" ").some(id => live.has(id));
+        const lit = handoffFocus ? g.classList.contains("journal-handoff") && g.dataset.type === sel.type : g.dataset.chains.split(" ").some(id => live.has(id));
         g.classList.toggle("is-dimmed", Boolean(sel) && !lit);
-        g.classList.toggle("is-focused", sel?.kind === "chain" && lit);
+        g.classList.toggle("is-focused", (sel?.kind === "chain" || handoffFocus) && lit);
+        g.classList.toggle("is-handoff-context", handoffFocus && g.classList.contains("journal-chain-unit"));
       });
       document.querySelectorAll(".journal-day-hit").forEach(hit => hit.setAttribute("aria-pressed", String(hit.dataset.journalDay === sel?.date)));
       document.querySelectorAll(".journal-date-label").forEach(label => label.classList.toggle("is-selected", label.dataset.date === sel?.date));
