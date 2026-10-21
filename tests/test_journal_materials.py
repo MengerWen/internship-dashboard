@@ -2,10 +2,34 @@
 from pathlib import Path
 import tempfile
 import unittest
+import subprocess
+import os
 from scripts.collect_journal_materials import collect, file_kind
 
 
 class MaterialTests(unittest.TestCase):
+    def test_deleted_document_and_unmerged_branch_survive_current_directory_scan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            def run(*args):
+                env = dict(os.environ, GIT_AUTHOR_DATE='2026-08-01T12:00:00+08:00', GIT_COMMITTER_DATE='2026-08-01T12:00:00+08:00')
+                return subprocess.run(['git','-C',tmp,'-c','user.name=Fixture','-c','user.email=fixture@example.invalid',*args], check=True, capture_output=True, env=env)
+            run('init','-b','main')
+            (root/'idea.md').write_text('# 尚未实施的构思\n',encoding='utf-8');run('add','idea.md');run('commit','-qm','create idea')
+            (root/'idea.md').unlink();run('add','-u');run('commit','-qm','remove idea')
+            run('checkout','-b','experiment');(root/'branch.md').write_text('# 分支试验\n',encoding='utf-8');run('add','branch.md');run('commit','-qm','unmerged experiment');run('checkout','main')
+            target = run('rev-parse','HEAD').stdout.decode().strip()
+            run('update-index','--add','--cacheinfo','160000,'+target+',external-repo');run('commit','-qm','link repository')
+            result = collect({'sources':[{'id':'r','path':tmp,'repo':'fixture'}],'exclude_directory_names':['.git']},'2026-06-01','2026-10-21')
+            self.assertEqual(len(result['commits']),4)
+            historical = next(f for f in result['files'] if f['path']=='idea.md')
+            self.assertEqual(historical['git_state'],'historical-deleted')
+            self.assertIn('尚未实施',historical['text'])
+            self.assertEqual(next(f for f in result['files'] if f['path']=='branch.md')['git_state'], 'historical-other-ref')
+            self.assertTrue(any(not c['selected_revision_ancestor'] for c in result['commits']))
+            self.assertTrue(any(f['kind']=='repository-link' for f in result['files']))
+            self.assertEqual(result['failures'],[])
+
     def test_documents_without_journal_dates_and_ignored_assets_are_inventoried(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
