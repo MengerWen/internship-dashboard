@@ -23,6 +23,29 @@ test('跨链份额显示精确计量，缺少提交证据不冒充当天总量',
   assert.match(journal.weightLabel(day, 'a'), /1\.5.*1 条跨链/);
   assert.match(journal.weightLabel(day, 'zero'), /无已归属提交/);
   assert(journal.pointRadius(day, 'a') < journal.pointRadius({chain_weights: {a: {value: 100}}}, 'a'));
+  assert(journal.pointRadius({chain_weights: {a: {value: 20.5}}}, 'a') > journal.pointRadius({chain_weights: {a: {value: 20}}}, 'a'));
+});
+
+test('旧密度按比例迁移，保存后再次打开不重复放大', () => {
+  const stored = new Map();
+  const scoped = {window: {}, localStorage: {setItem: (key, value) => stored.set(key, value)}};
+  vm.runInNewContext(fs.readFileSync('site/js/journal.js', 'utf8'), scoped);
+  const view = Object.assign({}, scoped.window.JournalView, {window: '3m'});
+  view.density = view.densityFromPreferences({density: 11});
+  assert.equal(view.density, 23);
+  assert.equal(view.densityFromPreferences({density: 7}), 7 * 23 / 11);
+  assert.equal(view.densityFromPreferences({density: 44}), 44);
+  view.savePreferences();
+  const saved = JSON.parse(stored.get('journal-atlas-preferences'));
+  assert.equal(saved.window, '3m');
+  assert.equal(view.densityFromPreferences(saved), 23);
+  assert.equal(view.densityFromPreferences({...saved, density: 11}), 11);
+});
+
+test('缺少或无效的密度偏好回到新标准间距', () => {
+  for (const value of [undefined, null, {}, {density: '11'}, {density: 0}, {density: 45}]) {
+    assert.equal(journal.densityFromPreferences(value), 23);
+  }
 });
 
 test('完整归属明细将提交标题、理由、路径和依据层级作为文本显示', () => {

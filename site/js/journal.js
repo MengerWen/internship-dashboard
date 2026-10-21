@@ -3,6 +3,7 @@
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const $ = id => document.getElementById(id);
   const densityRange = {min: 4, max: 44};
+  const densityPreferences = {version: 2, standard: 23, legacyStandard: 11};
   // 国办发明电〔2025〕7号：https://www.gov.cn/zhengce/content/202511/content_7047090.htm
   // 按年维护官方放假调休安排；未收录年份只标周末，不推算农历节日。
   const mainlandCalendar = {
@@ -35,7 +36,8 @@
       let preferences = {};
       try { preferences = JSON.parse(localStorage.getItem("journal-atlas-preferences") || "{}"); } catch (_) { /* 无可用设置时使用默认值。 */ }
       this.window = ["1m", "3m"].includes(preferences?.window) ? preferences.window : "all";
-      this.density = Number.isFinite(preferences?.density) && preferences.density >= densityRange.min && preferences.density <= densityRange.max ? preferences.density : 11;
+      this.density = this.densityFromPreferences(preferences);
+      if (Number.isFinite(preferences?.density) && preferences?.densityVersion !== densityPreferences.version) this.savePreferences();
       this.chain = "";
       this.query = "";
       this.evidence = new Map();
@@ -111,15 +113,21 @@
       });
       this.resizeObserver.observe($("view-journal"));
     },
+    densityFromPreferences(preferences) {
+      const density = preferences?.density;
+      if (!Number.isFinite(density) || density < densityRange.min || density > densityRange.max) return densityPreferences.standard;
+      if (preferences?.densityVersion === densityPreferences.version) return density;
+      return Math.max(densityRange.min, Math.min(densityRange.max, density * densityPreferences.standard / densityPreferences.legacyStandard));
+    },
     savePreferences() {
-      try { localStorage.setItem("journal-atlas-preferences", JSON.stringify({density: this.density, window: this.window})); } catch (_) { /* 离线或禁用存储时仍可操作。 */ }
+      try { localStorage.setItem("journal-atlas-preferences", JSON.stringify({density: this.density, window: this.window, densityVersion: densityPreferences.version})); } catch (_) { /* 离线或禁用存储时仍可操作。 */ }
     },
     syncDensityControl() {
       const control = $("journal-density"), custom = $("journal-density-custom");
-      const preset = [7, 11, 17].includes(this.density);
+      const preset = Array.from(control.options).some(option => option !== custom && Number(option.value) === this.density);
       custom.hidden = preset;
       custom.value = preset ? "" : String(this.density);
-      custom.textContent = `自定义（${Math.round(this.density / 11 * 100)}%）`;
+      custom.textContent = `自定义（${Math.round(this.density / densityPreferences.standard * 100)}%）`;
       control.value = String(this.density);
     },
     zoomAtlas(event) {
@@ -226,7 +234,7 @@
     },
     pointRadius(day, cid) {
       const value = this.pointWeight(day, cid);
-      return 2.4 + .58 * Math.log2(1 + (value ?? 0));
+      return (3 + 2.25 * Math.log2(1 + (value ?? 0))) / 2;
     },
     weightLabel(day, cid) {
       const weight = day.chain_weights?.[cid], value = this.pointWeight(day, cid);
@@ -234,6 +242,13 @@
       if (!value) return "当日无已归属提交";
       const number = Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
       return `归属提交量 ${number}${weight.shared ? `（含 ${weight.shared} 条跨链提交的份额）` : ""}`;
+    },
+    weightLegendHtml() {
+      const samples = [1, 5, 20, 100].map(value => {
+        const r = this.pointRadius({chain_weights: {sample: {value}}}, "sample");
+        return `<span class="journal-weight-sample"><span class="journal-weight-mark"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="${23 - r}" r="${r}"/></svg></span><span>${value}</span></span>`;
+      }).join("");
+      return `<div class="journal-point-legends" role="group" aria-label="圆点图例"><div class="journal-weight-legend" role="group" aria-label="任务归属提交量的点径参照"><span class="journal-weight-title">归属提交量（份）</span><div class="journal-weight-scale">${samples}</div><span class="journal-weight-note">点径连续变化，采用对数刻度</span></div><div class="journal-report-legend" role="group" aria-label="汇报关联"><span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4"/></svg>未关联汇报</span><span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle class="has-report" cx="6" cy="6" r="4"/></svg>有相关汇报</span></div></div>`;
     },
     reportLinks(day) {
       return (day.reports_covering || (day.report ? [day.report] : [])).map(d => `<a href="#/daily/${esc(d)}">${esc(d)}</a>`).join(" ");
@@ -298,7 +313,7 @@
       const dateWidth = 86, padding = 18, gap = 12, top = 18;
       const ordered = this.registry.tracks.flatMap(t => this.registry.chains.filter(c => c.track === t.id));
       const groups = this.registry.tracks.filter(t => ordered.some(c => c.track === t.id));
-      const width = Math.max(scroller.clientWidth, dateWidth + 2 * padding + gap * Math.max(0, groups.length - 1) + ordered.length * 22);
+      const width = Math.max(scroller.clientWidth, dateWidth + 2 * padding + gap * Math.max(0, groups.length - 1) + ordered.length * 28);
       const colWidth = (width - dateWidth - 2 * padding - gap * Math.max(0, groups.length - 1)) / Math.max(1, ordered.length);
       const positions = new Map();
       ordered.forEach((c, i) => positions.set(c.id, dateWidth + padding + (i + .5) * colWidth + groups.findIndex(t => t.id === c.track) * gap));
@@ -373,7 +388,8 @@
         }
         parts.push("</g>");
       });
-      ordered.forEach(chain => active.get(chain.id).forEach(day => parts.push(`<rect class="journal-point-hit" data-journal-point="${esc(chain.id)}" data-date="${day.date}" x="${positions.get(chain.id) - 9}" y="${y(day.date) - (this.density + 6) / 2}" width="18" height="${this.density + 6}" role="button" tabindex="-1" aria-label="${day.date}，${esc(chain.label)}，${esc(this.pointNote(day, chain.id).note || day.headline)}，${esc(this.weightLabel(day, chain.id))}"/>`)));
+      const pointHitWidth = Math.min(28, colWidth);
+      ordered.forEach(chain => active.get(chain.id).forEach(day => parts.push(`<rect class="journal-point-hit" data-journal-point="${esc(chain.id)}" data-date="${day.date}" x="${positions.get(chain.id) - pointHitWidth / 2}" y="${y(day.date) - this.density / 2}" width="${pointHitWidth}" height="${this.density}" role="button" tabindex="-1" aria-label="${day.date}，${esc(chain.label)}，${esc(this.pointNote(day, chain.id).note || day.headline)}，${esc(this.weightLabel(day, chain.id))}"/>`)));
       parts.push('<g class="journal-selection-overlay" aria-hidden="true"></g></svg><div class="journal-annotations"></div></div>');
       scroller.innerHTML = parts.join("");
       scroller.scrollLeft = previousScroll;
@@ -381,7 +397,7 @@
       scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
       document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示该任务当天的归属提交量，点径采用对数压缩刻度。单任务提交计1份，明确的跨链提交等分；待核记录不计入。没有已归属提交时保留最小定位点，不表示当天没有做这项工作。准确数值见点卡，逐条依据见下方“任务归属明细”。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
-      document.querySelector("#journal-figure figcaption").insertAdjacentHTML("afterbegin", '<div class="journal-weight-legend" aria-label="任务归属提交量的点径参照">归属提交量 ' + [1, 5, 20, 100].map(value => `<span><svg width="22" height="20" viewBox="0 0 22 20" aria-hidden="true"><circle cx="11" cy="10" r="${this.pointRadius({chain_weights: {sample: {value}}}, "sample")}"/></svg>${value}</span>`).join("") + '</div>');
+      document.querySelector("#journal-figure figcaption").insertAdjacentHTML("afterbegin", this.weightLegendHtml());
       this.atlas = {y, positions, days, height, width, top, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
