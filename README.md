@@ -1,5 +1,7 @@
 # 量化实习成果看板
 
+研究日志的来源目录独立于既有日卡。`scripts/collect_journal_materials.py` 按 `scripts/journal_materials.json` 枚举原始目录、未提交材料和完整 Git 变更；`scripts/collect_journal_sessions.py` 逐消息保留真实会话 ID，并检查后续用户消息中的项目引用；`scripts/collect_journal_actions.py` 定位历史文件读写动作和回执。三者仅读取来源，全文产物写入被 Git 忽略的 `data/`。文件名、mtime、提交日期和消息日期不能混为实际工作日期，读文件动作也不证明文件在当天创建。目录枚举与内容审阅、实际运行及验收分别登记。
+
 这是一个零前端框架的实习成果展示站点。汇报正文由 `content/` 下的 Markdown 构建为静态网页；汇报标签通过 Cloudflare Worker 在线保存，可在网页中随时整理。
 
 ## 本地预览
