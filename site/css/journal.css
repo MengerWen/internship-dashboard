@@ -243,3 +243,46 @@ html:has(#view-journal.is-active) { scrollbar-gutter: stable; }
 .journal-attribution-group summary { cursor: pointer; line-height: 1.7; }
 .journal-attribution-group li { margin-block: 12px; overflow-wrap: anywhere; }
 .journal-attribution-group li p { margin-block: 4px; }
+
+/* 当天说明留在原链条图里，浮窗的位移不改变日期与点位坐标。 */
+.journal-note-leaders { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: visible; }
+.journal-floating-notes { z-index: 2; }
+.journal-view .journal-floating-note { padding: 0 13px 11px; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 2px; box-shadow: 0 4px 13px rgba(38,41,33,.13); transform-origin: 50% 100%; }
+.journal-view .journal-floating-note.is-focused { border-color: var(--focus); box-shadow: 0 7px 22px rgba(38,41,33,.13); z-index: 3; }
+.journal-view .journal-floating-note.is-dragging { z-index: 4; box-shadow: 0 12px 27px rgba(38,41,33,.13); }
+.journal-view .journal-floating-head { display: flex; width: 100%; gap: 7px; align-items: center; min-height: 40px; padding: 10px 0 6px; border: 0; border-radius: 0; background: transparent; text-align: left; cursor: grab; touch-action: none; }
+.journal-view .journal-floating-head:active { cursor: grabbing; background: transparent; }
+.journal-floating-head strong { flex: 1; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.journal-note-letter { flex: none; width: 19px; height: 19px; border: 1px solid var(--line-soft); border-radius: 50%; font: 12px/18px var(--font-mono); text-align: center; }
+.journal-floating-note.is-focused .journal-note-letter { background: var(--text); color: var(--surface); border-color: var(--text); }
+.journal-note-grip { color: var(--text); font-size: 12px; }
+.journal-view .journal-note-copy { font-size: 13px; line-height: 1.65; margin: 2px 0 8px; }
+.journal-note-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 5px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.journal-note-meta b { font-weight: 400; }
+.journal-note-meta time { flex: none; }
+.journal-note-extra { display: none; margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--line-soft); font-size: 12px; line-height: 1.5; }
+.journal-floating-note.is-focused .journal-note-extra { display: block; }
+.journal-note-route-halo { fill: none; stroke: var(--bg); stroke-width: 4px; stroke-linecap: round; }
+.journal-note-route-line { fill: none; stroke: var(--text); stroke-width: 1.15px; stroke-linecap: round; stroke-linejoin: round; opacity: .75; }
+.journal-note-route circle { fill: var(--surface); stroke: var(--text); stroke-width: 1px; }
+.journal-note-route.is-focused .journal-note-route-line { stroke: var(--focus); stroke-width: 1.8px; opacity: 1; }
+.journal-note-route.is-focused circle { fill: var(--focus); stroke: var(--focus); }
+.journal-active-point { fill: var(--bg); stroke: var(--text); stroke-width: 1.6px; }
+.journal-active-point.has-report { fill: var(--text); }
+.journal-point-letter rect { fill: var(--bg); }
+.journal-atlas .journal-point-letter text { fill: var(--text); font: 12px var(--font-mono); }
+.journal-point-letter.is-focused rect { fill: var(--text); }
+.journal-atlas .journal-point-letter.is-focused text { fill: var(--bg); }
+.has-floating-notes .journal-unit:not(.is-dimmed) { opacity: .5; }
+.journal-note-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; font-size: 12px; }
+.journal-note-tools button { min-height: 34px; }
+.journal-note-hint { margin-left: 6px; }
+.journal-selected-date select { font-size: 13px; font-variant-numeric: tabular-nums; font-weight: 700; }
+.journal-selected-date > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 859px) {
+  .journal-note-tools { margin-left: 0; }
+  .journal-view .journal-note-tools button { min-height: 44px; }
+  .journal-view .journal-note-copy { font-size: 14px; }
+  .journal-note-hint { display: none; }
+  .journal-selected-date select { min-height: 44px; }
+}

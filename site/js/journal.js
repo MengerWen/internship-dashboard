@@ -33,6 +33,10 @@
       this.reports = new Map(manifest.daily.map(d => [d.date, d]));
       this.selected = null;
       this.selection = null;
+      this.floatingNotes = new window.JournalFloatingNotes(cid => {
+        this.select(this.selected, false, cid);
+        if (document.querySelector(".journal-scroller").clientWidth < 600) this.scrollAtlasDay(this.selected);
+      });
       let preferences = {};
       try { preferences = JSON.parse(localStorage.getItem("journal-atlas-preferences") || "{}"); } catch (_) { /* 无可用设置时使用默认值。 */ }
       this.window = ["1m", "3m"].includes(preferences?.window) ? preferences.window : "all";
@@ -85,6 +89,7 @@
       $("view-journal").addEventListener("keydown", e => {
         $("view-journal").classList.add("is-keyboard");
         if (e.key === "Escape") { this.clearSelection(); return; }
+        if (e.target.closest("input, select, textarea, .journal-note-tools, .journal-floating-head")) return;
         if (e.target.closest("[data-journal-handoff]")) return;
         if (!e.target.closest("#journal-figure")) return;
         const day = e.target.closest("[data-journal-day]");
@@ -178,7 +183,7 @@
         if (!this.visibleDays(true).some(d => d.date === key)) this.window = "all";
       }
       this.render();
-      if (key) requestAnimationFrame(() => $("journal-detail").scrollIntoView({block: "start"}));
+      if (key) requestAnimationFrame(() => this.mode === "atlas" ? this.scrollAtlasDay(key) : $("journal-detail").scrollIntoView({block: "start"}));
     },
     visibleDays(context = false) {
       const end = this.days.at(-1)?.date;
@@ -200,18 +205,27 @@
     },
     select(key, scroll = false, cid = "") {
       if (!this.days.some(d => d.date === key)) return;
+      const sameDay = this.mode === "atlas" && this.selected === key && !this.chain && ["day", "point"].includes(this.selection?.kind);
       this.selected = key;
       this.chain = "";
       this.selection = cid ? {kind: "point", date: key, chain: cid} : {kind: "day", date: key};
       this.query = ""; $("journal-find").value = "";
       if (!this.visibleDays(true).some(d => d.date === key)) this.window = "all";
       if (scroll) this.mode = "atlas";
+      if (sameDay && !scroll) { this.highlightAtlas(); this.writeHash(); return; }
       this.render(); this.writeHash();
       if (scroll) {
-        $("journal-detail").scrollIntoView({block: "start"});
+        this.scrollAtlasDay(key);
         const scroller = document.querySelector(".journal-scroller");
         if (cid) scroller.scrollLeft = Math.max(0, this.atlas.positions.get(cid) - scroller.clientWidth / 2);
       }
+    },
+    scrollAtlasDay(key) {
+      const canvas = document.querySelector(".journal-canvas");
+      if (!canvas || !this.atlas) return;
+      const header = document.querySelector(".journal-atlas-header").offsetHeight;
+      const target = Math.max(header + 170, window.innerHeight * .78);
+      window.scrollBy({top: canvas.getBoundingClientRect().top + this.atlas.y(key) - target, behavior: "instant"});
     },
     focusChain(cid) {
       if (!cid) { this.clearSelection(); return; }
@@ -343,11 +357,13 @@
       }
     },
     renderAtlas() {
-      if (this.mode !== "atlas" || !$("view-journal").classList.contains("is-active")) return;
+      if (this.mode !== "atlas" || !$("view-journal").classList.contains("is-active")) { this.floatingNotes.clear(); return; }
+      this.floatingNotes.capture();
       const selectedDay = this.days.find(day => day.date === this.selected);
       const context = $("journal-day-context");
       context.hidden = !selectedDay;
-      context.innerHTML = selectedDay ? `<time>${selectedDay.date}</time>${this.dayMetaHtml(selectedDay)}` : "";
+      context.innerHTML = selectedDay ? `<label class="journal-selected-date"><span class="sr-only">选择工作日期</span><select aria-label="选择工作日期">${this.visibleDays(true).map(d => `<option value="${d.date}" ${d.date === selectedDay.date ? "selected" : ""}>${d.date}</option>`).join("")}</select></label>${this.dayMetaHtml(selectedDay)}` : "";
+      context.onchange = e => { if (e.target.matches(".journal-selected-date select")) this.select(e.target.value, true); };
       const focusedHandoff = document.activeElement?.dataset.journalHandoff;
       const days = this.visibleDays(true);
       const scroller = document.querySelector(".journal-scroller");
@@ -440,10 +456,11 @@
       scroller.innerHTML = parts.join("");
       scroller.scrollLeft = previousScroll;
       head.scrollLeft = scroller.scrollLeft;
-      scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; };
+      scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; this.floatingNotes.onScroll(); };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
       document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示该任务当天的归属提交量，点径采用对数压缩刻度。单任务提交计1份，明确的跨链提交等分；待核记录不计入。没有已归属提交时保留最小定位点，不表示当天没有做这项工作。准确数值见点卡，逐条依据见下方“任务归属明细”。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
       document.querySelector("#journal-figure figcaption").insertAdjacentHTML("afterbegin", this.weightLegendHtml());
+      document.querySelector("#journal-figure figcaption p:nth-of-type(2)").textContent = "点击日期看当天各项工作，点击列头链名看整条链；点击圆点或浮窗标题聚焦该项说明。拖动浮窗标题调整位置，双击恢复自动排布；标题上的方向键可微调位置。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。在图上用上下键换日、左右键切换当天任务。";
       this.atlas = {y, positions, days, height, width, top, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
@@ -454,7 +471,8 @@
       if (!a) return;
       const handoffFocus = sel?.kind === "handoff";
       const day = this.days.find(d => d.date === sel?.date);
-      const live = new Set(sel?.kind === "chain" || sel?.kind === "point" ? [sel.chain] : day?.chains || []);
+      const live = new Set(sel?.kind === "chain" ? [sel.chain] : day?.chains || []);
+      $("view-journal").classList.toggle("has-floating-notes", Boolean(day) && ["day", "point"].includes(sel?.kind));
       document.querySelectorAll(".journal-chain-label").forEach(label => {
         const lit = live.has(label.dataset.journalChain);
         label.classList.toggle("is-selected", lit);
@@ -471,6 +489,8 @@
       document.querySelectorAll(".journal-date-label").forEach(label => label.classList.toggle("is-selected", label.dataset.date === sel?.date));
       const svg = document.querySelector(".journal-atlas"), overlay = svg.querySelector(".journal-selection-overlay");
       const annotations = document.querySelector(".journal-annotations");
+      overlay.replaceChildren();
+      if (!day || !["day", "point"].includes(sel.kind)) this.floatingNotes.clear();
       if (!sel) return;
       if (sel.kind === "chain") {
         const scroller = document.querySelector(".journal-scroller");
@@ -506,35 +526,20 @@
         return;
       }
       if (!day) return;
-      const ids = sel.kind === "point" ? [sel.chain] : [...day.chains].sort((x, z) => a.positions.get(x) - a.positions.get(z));
+      const ids = [...day.chains].sort((x, z) => a.positions.get(x) - a.positions.get(z));
+      if (!ids.length) { this.floatingNotes.clear(); return; }
       const cy = a.y(day.date);
-      const stack = document.querySelector(".journal-scroller").clientWidth < 600;
-      const cardWidth = stack ? Math.min(270, document.querySelector(".journal-scroller").clientWidth - 20) : Math.min(236, (a.right - a.dateWidth - 10 * Math.max(0, ids.length - 1)) / Math.max(1, ids.length));
-      annotations.innerHTML = ids.map(cid => this.annotationHtml(day, cid, cardWidth)).join("");
-      const cards = [...annotations.children], xs = [];
-      cards.forEach((card, i) => xs.push(stack ? Math.min(a.width - cardWidth - 10, document.querySelector(".journal-scroller").scrollLeft + 10) : Math.max(a.positions.get(ids[i]) - cardWidth / 2, i ? xs[i - 1] + cardWidth + 10 : 10)));
-      if (!stack && xs.length) {
-        // 从右向左逐张避让，保留左侧已有位置，避免整排左移后裁掉首张卡片。
-        for (let i = xs.length - 1; i >= 0; i--) {
-          const right = i === xs.length - 1 ? a.width - 10 : xs[i + 1] - 10;
-          xs[i] = Math.min(xs[i], right - cardWidth);
-        }
-      }
-      const totalHeight = stack ? cards.reduce((sum, card) => sum + card.offsetHeight + 10, -10) : Math.max(0, ...cards.map(card => card.offsetHeight));
-      let bandY = cy + 22;
-      if (bandY + totalHeight > a.height - 10) bandY = Math.max(8, cy - totalHeight - 22);
+      const focused = sel.kind === "point" ? sel.chain : this.noteFocusDate === day.date && ids.includes(this.noteFocus) ? this.noteFocus : ids.reduce((best, cid) => this.pointWeight(day, cid) > this.pointWeight(day, best) ? cid : best, ids[0]);
+      this.noteFocus = focused; this.noteFocusDate = day.date;
       const paths = [`<path class="journal-selection-line" d="M${a.dateWidth},${cy} H${a.right}"/>`];
-      cards.forEach((card, i) => {
-        card.style.left = xs[i] + "px"; card.style.top = bandY + "px";
-        const cx = a.positions.get(ids[i]);
-        paths.push(`<circle class="journal-selection-ring" data-date="${day.date}" data-chain="${esc(ids[i])}" cx="${cx}" cy="${cy}" r="${a.radius(day, ids[i]) + 3}"/>`);
-        const edgeY = bandY > cy ? bandY : bandY + card.offsetHeight;
-        paths.push(`<path class="journal-annotation-leader" d="M${cx},${cy} V${cy + (bandY > cy ? 12 : -12)} H${xs[i] + cardWidth / 2} V${edgeY}"/>`);
-        if (stack) bandY += card.offsetHeight + 10;
+      ids.forEach((cid, i) => {
+        const cx = a.positions.get(cid), radius = a.radius(day, cid), active = cid === focused;
+        if (this.pointNote(day, cid).outcome !== "dropped") paths.push(`<circle class="journal-active-point${day.reports_covering?.length ? " has-report" : ""}" cx="${cx}" cy="${cy}" r="${radius}"/>`);
+        if (active) paths.push(`<circle class="journal-selection-ring" data-date="${day.date}" data-chain="${esc(cid)}" cx="${cx}" cy="${cy}" r="${radius + 4}"/>`);
+        paths.push(`<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 8}" y="${cy + 10}" width="16" height="17" rx="2"/><text x="${cx}" y="${cy + 23}" text-anchor="middle">${String.fromCharCode(65 + i)}</text></g>`);
       });
       overlay.innerHTML = paths.join("");
-      const expanded = Math.max(a.height, bandY + (stack ? 10 : totalHeight + 10));
-      svg.setAttribute("height", expanded); svg.setAttribute("viewBox", `0 0 ${a.width} ${expanded}`);
+      this.floatingNotes.render({atlas: a, ids, focused, day, svg, annotations, canvas: annotations.parentElement, scroller: document.querySelector(".journal-scroller"), context: $("journal-day-context"), points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: cid => this.chains.get(cid)?.short || cid, note: cid => this.pointNote(day, cid), weight: cid => this.pointWeight(day, cid), onReveal: () => this.scrollAtlasDay(day.date)});
     },
     annotationHtml(day, cid, width, extra = "") {
       const note = this.pointNote(day, cid), dropped = note.outcome === "dropped";
