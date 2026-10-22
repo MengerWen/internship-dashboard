@@ -212,7 +212,7 @@
       const {context, ids, focused, mode} = this.config;
       context.querySelector(".journal-note-tools")?.remove();
       const controls = document.createElement("div"); controls.className = "journal-note-tools";
-      controls.innerHTML = `<button type="button" data-note-action="toggle" aria-pressed="${this.open}">${this.open ? "收起说明" : "展开说明"}</button><button type="button" data-note-action="arrange" ${this.open ? "" : "disabled"}>重新排布</button>${this.narrow || mode === "chain" ? `<button type="button" data-note-action="prev" aria-label="${mode === "chain" ? "上一个事件" : "上一项工作"}">上一项</button><span aria-live="polite">${ids.indexOf(focused) + 1} / ${ids.length}</span><button type="button" data-note-action="next" aria-label="${mode === "chain" ? "下一个事件" : "下一项工作"}">下一项</button>` : '<span class="journal-note-hint">点击聚焦 · 拖动浮窗</span>'}`;
+      controls.innerHTML = `<button type="button" data-note-action="toggle" aria-pressed="${this.open}">${this.open ? "收起说明" : "展开说明"}</button><button type="button" data-note-action="arrange" ${this.open ? "" : "disabled"}>重新排布</button>${ids.length > 1 && (this.narrow || mode === "chain") ? `<button type="button" data-note-action="prev" aria-label="${mode === "chain" ? "上一个事件" : "上一项工作"}">上一项</button><span aria-live="polite">${ids.indexOf(focused) + 1} / ${ids.length}</span><button type="button" data-note-action="next" aria-label="${mode === "chain" ? "下一个事件" : "下一项工作"}">下一项</button>` : '<span class="journal-note-hint">点击聚焦 · 拖动浮窗</span>'}`;
       controls.onclick = event => {
         document.getElementById("view-journal").classList.toggle("is-keyboard", event.detail === 0);
         const action = event.target.closest("[data-note-action]")?.dataset.noteAction;

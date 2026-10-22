@@ -35,7 +35,10 @@
       this.selection = null;
       this.floatingNotes = new window.JournalFloatingNotes(cid => {
         if (this.selection?.kind === "chain") { this.focusChainEvent(cid); return; }
-        this.select(this.selected, false, cid);
+        if (this.selection?.kind === "day") {
+          this.noteFocus = cid; this.noteFocusDate = this.selected;
+          this.highlightAtlas();
+        } else this.select(this.selected, false, cid);
         if (document.querySelector(".journal-scroller").clientWidth < 600) this.scrollAtlasDay(this.selected);
       });
       let preferences = {};
@@ -74,8 +77,7 @@
         if (retry) this.loadEvidence(retry.dataset.journalEvidence, true);
         const point = e.target.closest("[data-journal-point]");
         if (point) {
-          if (this.selection?.kind === "chain" && point.dataset.journalPoint === this.chain) this.focusChainEvent(point.dataset.date);
-          else this.select(point.dataset.date, false, point.dataset.journalPoint);
+          this.select(point.dataset.date, false, point.dataset.journalPoint);
           return;
         }
         const day = e.target.closest("[data-journal-day]");
@@ -224,7 +226,7 @@
       this.query = ""; $("journal-find").value = "";
       if (!this.visibleDays(true).some(d => d.date === key)) this.window = "all";
       if (scroll) this.mode = "atlas";
-      if (sameDay && !scroll) { this.highlightAtlas(); this.writeHash(); return; }
+      if (sameDay && !scroll) { this.highlightAtlas(); this.renderDetail(); this.writeHash(); return; }
       this.render(); this.writeHash();
       if (scroll) {
         this.scrollAtlasDay(key);
@@ -303,7 +305,7 @@
         const link = /^https:\/\/github\.com\//.test(ref.url || "") ? `<a class="journal-source-link" href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer"><span class="journal-link-kind">${kind}</span><span class="journal-source-title">${title}</span></a>` : title;
         return `<li>${link}<small>${esc(ref.label || "来源登记")}</small></li>`;
       }).join("")}</ul>`;
-      return `<div class="journal-point-evidence"><div class="journal-evidence-heading">${badge}${e.kinds?.length ? `<span class="journal-evidence-types">${e.kinds.map(esc).join(" / ")}</span>` : ""}</div><details class="journal-point-sources"><summary>查看依据${counts ? `<small>${esc(counts)}</small>` : ""}</summary><section><h5>产物</h5>${e.artifacts?.length ? refs(e.artifacts) : `<p>${e.status === "pending" ? "产物来源尚待核对。" : "当前未关联文件或提交。"}</p>`}</section><section><h5>交流与决定</h5>${e.discussions?.length ? refs(e.discussions) : '<p>尚未关联原始会话。</p>'}</section>${e.commit_count > 2 || e.document_count > 2 || e.session_count > 2 ? '<p class="journal-point-source-note">这里列出部分入口，完整提交见下方原始记录，文档和会话见来源登记。</p>' : ""}</details></div>`;
+      return `<div class="journal-point-evidence"><div class="journal-evidence-heading">${badge}${e.kinds?.length ? `<span class="journal-evidence-types">${e.kinds.map(esc).join(" / ")}</span>` : ""}</div><details class="journal-point-sources"><summary>查看依据${counts ? `<small>${esc(counts)}</small>` : ""}</summary><section><h5>产物</h5>${e.artifacts?.length ? refs(e.artifacts) : `<p>${e.status === "pending" ? "产物来源尚待核对。" : "当前未关联文件或提交。"}</p>`}</section><section><h5>交流与决定</h5>${e.discussions?.length ? refs(e.discussions) : '<p>尚未关联原始会话。</p>'}</section>${e.commit_count > 2 || e.document_count > 2 || e.session_count > 2 ? `<p class="journal-point-source-note">这里列出部分入口，${this.selection?.kind === "point" ? "完整提交可点击日期后查看原始记录" : "完整提交见下方原始记录"}，文档和会话见来源登记。</p>` : ""}</details></div>`;
     },
     weightLegendHtml() {
       const samples = [1, 5, 20, 100].map(value => {
@@ -509,7 +511,7 @@
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
       document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示该任务当天的归属提交量，点径采用对数压缩刻度。单任务提交计1份，明确的跨链提交等分；待核记录不计入。没有已归属提交时保留最小定位点，不表示当天没有做这项工作。准确数值见点卡，逐条依据见下方“任务归属明细”。实心点表示有可查产物，空心点表示当前仅见交流记录，虚线轮廓表示证据待核。文档落盘但无提交时仍为实心；有产物和交流时两组依据分别保留。相关汇报在日期与说明中另列文字入口；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
       document.querySelector("#journal-figure figcaption").insertAdjacentHTML("afterbegin", this.weightLegendHtml());
-      document.querySelector("#journal-figure figcaption p:nth-of-type(2)").textContent = "点击日期看当天各项工作，点击列头链名看整条链；点击圆点或浮窗标题聚焦该项说明。拖动浮窗标题调整位置，双击恢复自动排布；标题上的方向键可微调位置。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。在图上用上下键换日、左右键切换当天任务。";
+      document.querySelector("#journal-figure figcaption p:nth-of-type(2)").textContent = "点击日期展开当天各项工作，点击列头链名展开整条链；点击圆点只查看该点的工作说明。整日或整链展开后，点击浮窗标题聚焦其中一项。拖动浮窗标题调整位置，双击恢复自动排布；标题上的方向键可微调位置。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。在图上用上下键换日、左右键切换当天任务。";
       this.atlas = {y, positions, days, height, width, top, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
@@ -520,7 +522,7 @@
       if (!a) return;
       const handoffFocus = sel?.kind === "handoff";
       const day = this.days.find(d => d.date === sel?.date);
-      const live = new Set(sel?.kind === "chain" ? [sel.chain] : day?.chains || []);
+      const live = new Set(["chain", "point"].includes(sel?.kind) ? [sel.chain] : day?.chains || []);
       $("view-journal").classList.toggle("has-floating-notes", sel?.kind === "chain" || Boolean(day) && ["day", "point"].includes(sel?.kind));
       document.querySelectorAll(".journal-chain-label").forEach(label => {
         const lit = live.has(label.dataset.journalChain);
@@ -565,12 +567,12 @@
         return;
       }
       if (!day) return;
-      const ids = [...day.chains].sort((x, z) => a.positions.get(x) - a.positions.get(z));
+      const ids = (sel.kind === "point" ? day.chains.filter(cid => cid === sel.chain) : [...day.chains]).sort((x, z) => a.positions.get(x) - a.positions.get(z));
       if (!ids.length) { this.floatingNotes.clear(); return; }
       const cy = a.y(day.date);
       const focused = sel.kind === "point" ? sel.chain : this.noteFocusDate === day.date && ids.includes(this.noteFocus) ? this.noteFocus : ids.reduce((best, cid) => this.pointWeight(day, cid) > this.pointWeight(day, best) ? cid : best, ids[0]);
       this.noteFocus = focused; this.noteFocusDate = day.date;
-      const paths = [`<path class="journal-selection-line" d="M${a.dateWidth},${cy} H${a.right}"/>`];
+      const paths = sel.kind === "day" ? [`<path class="journal-selection-line" d="M${a.dateWidth},${cy} H${a.right}"/>`] : [];
       ids.forEach((cid, i) => {
         const cx = a.positions.get(cid), radius = a.radius(day, cid), active = cid === focused;
         if (this.pointNote(day, cid).outcome !== "dropped") paths.push(`<circle class="journal-active-point is-${this.pointEvidence(day, cid).status}" data-evidence="${this.pointEvidence(day, cid).status}" cx="${cx}" cy="${cy}" r="${radius}"/>`);
@@ -578,7 +580,7 @@
         paths.push(`<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 8}" y="${cy + 10}" width="16" height="17" rx="2"/><text x="${cx}" y="${cy + 23}" text-anchor="middle">${String.fromCharCode(65 + i)}</text></g>`);
       });
       overlay.innerHTML = paths.join("");
-      this.floatingNotes.render({atlas: a, ids, focused, day, svg, annotations, canvas: annotations.parentElement, scroller: document.querySelector(".journal-scroller"), context: $("journal-day-context"), points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: cid => this.chains.get(cid)?.short || cid, note: cid => this.pointNote(day, cid), weight: cid => this.pointWeight(day, cid), evidence: (cid, brief) => this.pointEvidenceHtml(day, cid, brief), reports: this.reportLinks(day), onReveal: () => this.scrollAtlasDay(day.date)});
+      this.floatingNotes.render({mode: sel.kind, group: `${sel.kind}:${day.date}${sel.kind === "point" ? ":" + sel.chain : ""}`, atlas: a, ids, focused, day, svg, annotations, canvas: annotations.parentElement, scroller: document.querySelector(".journal-scroller"), context: $("journal-day-context"), points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: cid => this.chains.get(cid)?.short || cid, note: cid => this.pointNote(day, cid), weight: cid => this.pointWeight(day, cid), evidence: (cid, brief) => this.pointEvidenceHtml(day, cid, brief), reports: this.reportLinks(day), onReveal: () => this.scrollAtlasDay(day.date)});
     },
     annotationHtml(day, cid, width, extra = "") {
       const note = this.pointNote(day, cid), dropped = note.outcome === "dropped";
@@ -607,6 +609,11 @@
       if (this.chain) { this.renderChainCard(); return; }
       const day = this.days.find(d => d.date === this.selected);
       if (!day || !this.visible.length) { $("journal-detail").innerHTML = ""; return; }
+      if (this.selection?.kind === "point") {
+        const cid = this.selection.chain, note = this.pointNote(day, cid);
+        $("journal-detail").innerHTML = `<article class="journal-day-card journal-point-card" data-selected-date="${day.date}" data-selected-point="${esc(cid)}"><header class="journal-day-header"><div class="journal-day-meta"><button type="button" class="journal-chain-link" data-journal-day="${day.date}" aria-label="查看 ${day.date} 当天全部工作"><time>${day.date}</time></button><span>${esc(day.weekday)}</span><span>${esc(this.weightLabel(day, cid))}</span></div><h2>${this.chainButton(cid)}</h2></header><p>${esc(note.note || "注解待补")}</p>${note.outcome === "dropped" ? '<span class="journal-fate-badge">本条方案未采用</span>' : ""}${note.outcome_note ? `<p>${esc(note.outcome_note)}</p>` : ""}${this.pointEvidenceHtml(day, cid)}${this.reportLinks(day) ? `<p>相关汇报：${this.reportLinks(day)}</p>` : ""}</article>`;
+        return;
+      }
       const all = this.visibleDays(true), index = all.indexOf(day);
       const lineage = day.chains.map(cid => {
         const dates = this.days.filter(d => d.chains.includes(cid)), i = dates.indexOf(day);
@@ -628,7 +635,7 @@
         if (e.target.open) this.loadEvidence(day.date);
       });
       if (day.has_body) this.app.loadFragment(`journal/${day.date}.html`, `journal-body-${day.date}`).then(html => {
-        if (this.selected === day.date && !this.chain) { $("journal-body").innerHTML = html; this.prepareDayBody($("journal-body")); this.app.enhanceContent($("journal-body")); }
+        if (this.selected === day.date && this.selection?.kind === "day") { $("journal-body").innerHTML = html; this.prepareDayBody($("journal-body")); this.app.enhanceContent($("journal-body")); }
       }).catch(() => { if ($("journal-body")) $("journal-body").textContent = "正文读取失败，请刷新重试。"; });
     },
     async loadEvidence(key, retry = false) {
