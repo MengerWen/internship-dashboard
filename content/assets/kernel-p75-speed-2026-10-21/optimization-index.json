@@ -1,0 +1,251 @@
+{
+  "measurement_revision": "7e7c48e8c8dced00171451bf28a43d201ad2965c",
+  "execution_revision": "64bbcf065c7b10a46267d5d9c5d5ffcef2cd71ff",
+  "note": "Referenced public implementations include unchanged capabilities reused by integration changes; changed files are listed separately.",
+  "changes": [
+    {
+      "title": "唯一代码市场识别",
+      "commit": "1c3d47834fdb9ce248aac4b20914df80a0152c5b",
+      "changed_files_at_commit": [
+        "lv2_snapshot_workspace/src/snapshot/events.py",
+        "lv2_snapshot_workspace/src/snapshot/order_semantics.py",
+        "lv2_snapshot_workspace/tests/test_market_detection.py"
+      ],
+      "referenced_implementation_path": "lv2_snapshot_workspace/src/snapshot/events.py",
+      "referenced_functions": [
+        "datetime_series"
+      ],
+      "file_sha256_at_execution": "57c6c86f24d1c96f600b07013364f70af1482903d41b2af8b2872a93b74d9d92"
+    },
+    {
+      "title": "数值可观测分类",
+      "commit": "a159829ef3e7e783f9867011fb14f6774f975476",
+      "changed_files_at_commit": [
+        "PLAN/2026-10-21-kernel-p75-60s.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible_numeric.py",
+        "scripts/tests/test_szse_visible_numeric.py"
+      ],
+      "referenced_implementation_path": "lv2_snapshot_workspace/src/snapshot/replay/visible_numeric.py",
+      "referenced_functions": [
+        "numeric_visible_evidence",
+        "prepare_visible_numeric_kernel"
+      ],
+      "file_sha256_at_execution": "1fe5f9bc43c317e122abf9ecc0c2f6f9285b6d3a674e47be8935c9027b64184b"
+    },
+    {
+      "title": "频道证据分组与并行排序",
+      "commit": "9265508a1acb2ac93799a22a37703e6308b2efae",
+      "changed_files_at_commit": [
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "scripts/tests/test_channel_closed_calibration_inputs.py"
+      ],
+      "referenced_implementation_path": "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+      "referenced_functions": [
+        "ChannelClosureEvidence",
+        "from_frame_groups"
+      ],
+      "file_sha256_at_execution": "4f5ea9759ab98f9a4846c906dd97e13c534bf1330afc29bfa53a2907e59ad08b"
+    },
+    {
+      "title": "按需完整后态",
+      "commit": "8842f04c835982aa303cfa5081da8058798bad48",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_replay_post_materialization.py",
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/src/algobench/event_windows.py"
+      ],
+      "referenced_implementation_path": "因子/algobench/src/algobench/event_prestate.py",
+      "referenced_functions": [
+        "_PostStateFrame"
+      ],
+      "file_sha256_at_execution": "e3580769eb4f6e5948a07a50d642dbc667c2ae665a89533b5efcc9dc4a08a967"
+    },
+    {
+      "title": "共享首次编译",
+      "commit": "3940d0ac21812883c626f8044e74c1bbccbfefe1",
+      "changed_files_at_commit": [
+        "lv2_snapshot_workspace/src/snapshot/replay/visible_numeric.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_startup_overlap.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_calibration_szse_history.py",
+      "referenced_functions": [
+        "calibration_compute_executor"
+      ],
+      "file_sha256_at_execution": "ead59001531886a9291c4349cc5f994095b32a1698c214cf015592e0d7b778c2"
+    },
+    {
+      "title": "六核复用原生对象发布与回读",
+      "commit": "e29862abd1b96451334e36c6e3af4da93abc1367",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_object_publication.py"
+      ],
+      "referenced_implementation_path": "因子/algobench/src/algobench/artifact_io.py",
+      "referenced_functions": [
+        "ObjectPublication",
+        "publish_file"
+      ],
+      "file_sha256_at_execution": "f5c5eafadf4ec0a54c5fa44bed1dcf2dc234bc7f4d2fad9548078f1e766ca1c3"
+    },
+    {
+      "title": "时间列和委托类型复用",
+      "commit": "7d773b598567194e148da06a4cca0d527a3f4efb",
+      "changed_files_at_commit": [
+        "lv2_snapshot_workspace/src/snapshot/events.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible_numeric.py",
+        "lv2_snapshot_workspace/src/snapshot/sessions.py",
+        "lv2_snapshot_workspace/tests/test_datetime_reuse.py",
+        "因子/algobench/src/algobench/event_windows.py",
+        "因子/lowlat/src/lowlat/events.py"
+      ],
+      "referenced_implementation_path": "lv2_snapshot_workspace/src/snapshot/events.py",
+      "referenced_functions": [
+        "datetime_series"
+      ],
+      "file_sha256_at_execution": "57c6c86f24d1c96f600b07013364f70af1482903d41b2af8b2872a93b74d9d92"
+    },
+    {
+      "title": "完整范围页准备流水线",
+      "commit": "8db04f2a7ea07f65415ce011e8ac3067f88ad8f4",
+      "changed_files_at_commit": [
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_channel_input_overlap.py"
+      ],
+      "referenced_implementation_path": "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+      "referenced_functions": [
+        "iter_channel_closed_inputs",
+        "_stock_evidence"
+      ],
+      "file_sha256_at_execution": "34a6e8f597c9636f8eb9e42c970c4b645acbe7ffa50f07483daba0081f70b863"
+    },
+    {
+      "title": "连续频道证明提前调度",
+      "commit": "2332ef9184aca3586511d7a68c8dd7e78e9f828b",
+      "changed_files_at_commit": [
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "scripts/tests/test_channel_input_overlap.py"
+      ],
+      "referenced_implementation_path": "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+      "referenced_functions": [
+        "iter_channel_closed_inputs"
+      ],
+      "file_sha256_at_execution": "34a6e8f597c9636f8eb9e42c970c4b645acbe7ffa50f07483daba0081f70b863"
+    },
+    {
+      "title": "本地调度证据封口",
+      "commit": "6af3fccfb80d8da3966ee01239cd33069fcf4862",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_scheduler_publication.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_calibration_szse_history.py",
+      "referenced_functions": [
+        "run_calibration_scheduler"
+      ],
+      "file_sha256_at_execution": "ead59001531886a9291c4349cc5f994095b32a1698c214cf015592e0d7b778c2"
+    },
+    {
+      "title": "原生分类数组归约",
+      "commit": "90a6558c2abf1d3295e07f6ab1244d441528a9b6",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_summary_text.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_calibration_szse_history.py",
+      "referenced_functions": [
+        "_StreamingCalibrationSummarySink"
+      ],
+      "file_sha256_at_execution": "ead59001531886a9291c4349cc5f994095b32a1698c214cf015592e0d7b778c2"
+    },
+    {
+      "title": "有界窗口批量展开",
+      "commit": "8a72bfe8ea8f4d3c674d684eeeb5820c696eb98a",
+      "changed_files_at_commit": [
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_primitives.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_pair_time_windows.py"
+      ],
+      "referenced_implementation_path": "因子/algobench/src/algobench/formal_primitives.py",
+      "referenced_functions": [
+        "_ragged_window_pairs"
+      ],
+      "file_sha256_at_execution": "3983c909f5050c947bbb6861eb2e4b5277ff3afb2f47898e9eceffc20794e79a"
+    },
+    {
+      "title": "本地查询遥测追加",
+      "commit": "3b58d7c16d663efc18e17cdaf58a5a5579c07854",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_scheduler_publication.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_calibration_szse_history.py",
+      "referenced_functions": [
+        "append_calibration_query_telemetry"
+      ],
+      "file_sha256_at_execution": "ead59001531886a9291c4349cc5f994095b32a1698c214cf015592e0d7b778c2"
+    },
+    {
+      "title": "有界成功过程日志",
+      "commit": "f6d4c3b68dc0ef420d35c36870caa7b91b64064d",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_scheduler_publication.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_calibration_szse_history.py",
+      "referenced_functions": [
+        "run_calibration_scheduler"
+      ],
+      "file_sha256_at_execution": "ead59001531886a9291c4349cc5f994095b32a1698c214cf015592e0d7b778c2"
+    },
+    {
+      "title": "日级组件并行与已验证哈希复用",
+      "commit": "7e7c48e8c8dced00171451bf28a43d201ad2965c",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_kernel_object_publication.py",
+        "scripts/tests/test_kernel_scheduler_publication.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_calibration_szse_history.py",
+      "referenced_functions": [
+        "publish_completed_date"
+      ],
+      "file_sha256_at_execution": "ead59001531886a9291c4349cc5f994095b32a1698c214cf015592e0d7b778c2"
+    },
+    {
+      "title": "P75完整冷启动准入",
+      "commit": "6313f84755fe024ed946936ab00cf3e88e95c027",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_campaign.py",
+        "scripts/tests/test_kernel_calibration_terminal_progress.py",
+        "scripts/tests/test_kernel_p75_admission.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_campaign.py",
+      "referenced_functions": [
+        "check_performance_admission"
+      ],
+      "file_sha256_at_execution": "f78a7050923d29df3946c7a9447de9f2fa6f1342aae97ad7c58d8601dc4f2e67"
+    },
+    {
+      "title": "队列和内存预算绑定",
+      "commit": "97ae136ea86363cb9f9b276052c42af6bcd15c60",
+      "changed_files_at_commit": [
+        "scripts/run_open5m_kernel_campaign.py",
+        "scripts/tests/test_kernel_p75_admission.py"
+      ],
+      "referenced_implementation_path": "scripts/run_open5m_kernel_campaign.py",
+      "referenced_functions": [
+        "check_performance_admission"
+      ],
+      "file_sha256_at_execution": "f78a7050923d29df3946c7a9447de9f2fa6f1342aae97ad7c58d8601dc4f2e67"
+    }
+  ]
+}
