@@ -9,7 +9,17 @@
       "correctness_contract": "保持页字节、行数和超时预算，完整读取后解析",
       "source_paths": [
         "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r11",
+          "r12"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "与唯一代码映射同批进入r12；完整日87.473→82.974秒，减少4.499秒（5.14%）。但取数与调度墙钟64.790→67.196秒，未证明该段加快。24.727秒是原剖析热点成本，含等待，不能当作节省量。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "02",
@@ -19,7 +29,17 @@
       "correctness_contract": "原始稳定行序、代码汇合和空值资格一致",
       "source_paths": [
         "lv2_snapshot_workspace/src/snapshot/page_processing.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r11",
+          "r12"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "与有界读取同批进入r12；整日观察值见第1项。4.879秒是修改前的字符串映射与补零累计成本，未保留同输入修改后独立计时，不能据此认领4.879秒收益。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "03",
@@ -30,7 +50,17 @@
       "source_paths": [
         "lv2_snapshot_workspace/src/snapshot/query_plan.py",
         "scripts/run_open5m_real_data_calibration.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r13",
+          "r14"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "与有界F40解码同批进入r14；完整日85.582→84.065秒，减少1.517秒（1.77%），取数与调度62.189→62.594秒。输入顺序改变已生效，整日略降；没有隔离优先区间的单项收益。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "04",
@@ -40,7 +70,18 @@
       "correctness_contract": "提前见证在完整日重核；变化时拒绝提交",
       "source_paths": [
         "lv2_snapshot_workspace/src/snapshot/replay/inputs.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r08",
+          "r09",
+          "r10"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "后继见证随时间列、配对对齐和JSON改动进入r09：完整日97.962→85.116秒，减少12.846秒（13.11%）。再加入终端数量闭合及独立发布的r10为85.333秒，比r09增加0.217秒；两个子步骤都没有独立整日归因。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "05",
@@ -50,7 +91,19 @@
       "correctness_contract": "单个输入future，沿用重股堆和内存准入",
       "source_paths": [
         "lv2_snapshot_workspace/src/snapshot/scheduler.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r18",
+          "r19",
+          "r20",
+          "r21"
+        ],
+        "measurement_kind": "相邻完整日测量",
+        "outcome": "接入持续派发后，r18→r19完整日68.220→58.734秒，减少9.486秒（13.90%）；取数与调度61.011→53.047秒，guard平均有效核数8.97→10.21。r20关闭中等股票额外分片后为57.469秒，但同配置r21升到68.510秒，说明这一版本仍未稳定通过60秒门。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "06",
@@ -60,7 +113,21 @@
       "correctness_contract": "八组支持和实际消费依赖完整",
       "source_paths": [
         "因子/algobench/src/algobench/formal_engine.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "baseline",
+          "r03",
+          "r04",
+          "r05",
+          "r06",
+          "r07"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "冻结范围与后态投影、原生发布及频道交付共同进入r03，基线→r03完整日178.268→106.979秒，减少71.289秒（39.99%），不能把全部收益归给范围裁剪。后续后态依赖投影r04→r05为96.150→95.165秒；数值边界r05→r06为95.165→97.306秒；仅准备延后块r06→r07为97.306→89.410秒。各轮均还含其他合入项。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "07",
@@ -70,7 +137,17 @@
       "correctness_contract": "完整规范事件和原生账本另行保留；通用默认不变",
       "source_paths": [
         "lv2_snapshot_workspace/src/snapshot/replay/szse.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r14",
+          "r15"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "与范围回读、流式归档和原生交接同批进入r15，完整日84.065→90.157秒，增加6.092秒（7.25%）。规范化与回放worker累计477.422→465.680秒，但整日仍慢6.092秒；没有三表投影的独立整日收益值。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "08",
@@ -80,7 +157,18 @@
       "correctness_contract": "扫描相同档位；完整列表按原输入生成；前后态差分相同",
       "source_paths": [
         "因子/algobench/src/algobench/event_prestate_accel.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r22",
+          "r23",
+          "r24"
+        ],
+        "measurement_kind": "相邻完整日测量",
+        "outcome": "r22→r23完整日65.833→58.128秒，减少7.705秒（11.70%），同版r24为57.796秒；r23/r24连续通过。规范化与回放worker累计523.489→482.389/478.235秒。每输出行减少256字节有分配合同验证；整日秒数还受现场负载及另行编译准备影响，未做隔离交叉试验。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "09",
@@ -90,7 +178,17 @@
       "correctness_contract": "只有身份和序列逐项一致才复用已对齐列",
       "source_paths": [
         "因子/algobench/src/algobench/formal_engine.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r08",
+          "r09"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "进入r09，同批完整日97.962→85.116秒。单股000001原剖析中该入口0.027秒、三次整数装箱0.007秒，只有修改前成本，没有同输入修改后独立测量；不按股票数外推收益。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "10",
@@ -100,7 +198,17 @@
       "correctness_contract": "时间单位、精度、时区和错误合同保留",
       "source_paths": [
         "因子/algobench/src/algobench/formal_datetime.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r08",
+          "r09"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "进入r09，同批完整日97.962→85.116秒。0.050秒缓存预扫和0.040秒盘口冲击转换来自修改前单股剖析，两者可能包含重叠调用，不能相加或乘以股票数作为节省量。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "11",
@@ -110,7 +218,17 @@
       "correctness_contract": "原float64比较、候选顺序、拒绝计数及跨批续接",
       "source_paths": [
         "因子/algobench/src/algobench/formal_pairing.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r10",
+          "r11"
+        ],
+        "measurement_kind": "相邻完整日测量",
+        "outcome": "r10→r11完整日85.333→87.473秒，增加2.140秒（2.51%），取数与调度63.546→64.790秒，结构worker累计124.059→128.477秒。该轮未取得整日提速；2.817 CPU秒只是旧窗口展开热点，没有独立修改后探针可支持净收益。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "12",
@@ -121,7 +239,21 @@
       "source_paths": [
         "因子/algobench/src/algobench/formal_bbo_matching.py",
         "因子/algobench/src/algobench/formal_simple_paths.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "baseline",
+          "r01",
+          "r04",
+          "r05",
+          "r07",
+          "r08"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "BBO融合后的r01为278.448秒，但开启cProfile，不能与普通基线178.268秒判断快慢；循环外绑定与后态投影共同使r04→r05由96.150降到95.165秒。F31投影与zstd共同使r07→r08由89.410升到97.962秒，结构worker累计153.672降到145.118秒。局部成本减少与整日变慢须同时记录。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "13",
@@ -131,7 +263,17 @@
       "correctness_contract": "连续锚分片、整数计数和精确max归约",
       "source_paths": [
         "因子/algobench/src/algobench/formal_parallel_structural_pairs.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r12",
+          "r13"
+        ],
+        "measurement_kind": "同输入局部探针及相邻完整日",
+        "outcome": "同一002361输入：串行13.466396秒，4/8/16分片7.988152/7.077318/6.009929秒，分别减少40.68%/47.44%/55.37%，16分片约2.24倍。接入整日r12→r13为82.974→85.582秒，反而增加2.608秒；worker累计669.055→612.494秒，局部收益没有直接兑现为整日下降。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "14",
@@ -141,7 +283,20 @@
       "correctness_contract": "同份完整字节解码、清单绑定和完整SHA回读",
       "source_paths": [
         "因子/algobench/src/algobench/formal_f40_stages.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r14",
+          "r15",
+          "r16",
+          "r17",
+          "r18"
+        ],
+        "measurement_kind": "分阶段测量，整日受组合影响",
+        "outcome": "r14→r15归约发布17.650→33.818秒，未立即取得整日收益；r16首成员64.294秒才进入，r17主线程先启动上传后降到2.594秒，但r17完整日仍为130.866秒。r18上传并发调好后，归约发布降至4.917秒、完整日68.220秒；最终首成员约1.5秒进入。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "15",
@@ -151,7 +306,17 @@
       "correctness_contract": "同归档格式；GOMAXPROCS=1；计算与归档总槽位16",
       "source_paths": [
         "因子/algobench/src/algobench/formal_f40_stages.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r17",
+          "r18"
+        ],
+        "measurement_kind": "同对象局部探针及相邻完整日",
+        "outcome": "同对象单并发8→16MiB分片，上传27.725864→20.961086秒，减少6.764777秒（24.40%）；16→32MiB未再下降。完整解码、编码及上传2→4并发，11.410841→7.480029秒，减少3.930812秒（34.45%）。r17→r18完整日130.866→68.220秒，减少62.646秒（47.87%）；其中日包提交49.697→3.376秒，也有明显现场波动，不能把62.646秒全视为上传参数的因果收益。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "16",
@@ -161,7 +326,17 @@
       "correctness_contract": "所有连续区间、身份、长度和有序SHA；不抽样",
       "source_paths": [
         "因子/algobench/src/algobench/artifact_io.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r14",
+          "r15"
+        ],
+        "measurement_kind": "同对象局部探针，整日未隔离",
+        "outcome": "同一241,079,042字节对象，完整串行回读10.103093→8×8MiB范围回读0.160392秒，减少9.942701秒（98.41%），完整SHA相同。接入r15后整日仍由84.065增至90.157秒；对象探针收益没有消除当时的归档启动等待。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "17",
@@ -171,7 +346,21 @@
       "correctness_contract": "缺失与错误区分；每份发布记录完整读回",
       "source_paths": [
         "scripts/run_open5m_selected_date_calibration.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r03",
+          "r04",
+          "r08",
+          "r09",
+          "r14",
+          "r15"
+        ],
+        "measurement_kind": "未独立测量",
+        "outcome": "原生控制回读与内核准备、规范数值列共同使r03→r04完整日106.979→96.150秒；原生JSON随其他改动进入r09。r15首次记录选日父入口：子进程90.157秒，父入口101.202秒，交接差额11.045秒。没有旧版同口径父入口对照，不能宣称交接单项节省多少秒。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "18",
@@ -181,7 +370,20 @@
       "correctness_contract": "日包和事实都验证通过后写完整收据",
       "source_paths": [
         "scripts/run_open5m_real_data_calibration.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r16",
+          "r17",
+          "r18",
+          "r23",
+          "r24"
+        ],
+        "measurement_kind": "阶段计时，整日未独立归因",
+        "outcome": "与上传进程启动顺序共同进入r17；收据绑定r16→r17为0.210→0.331秒，未在这次记录中下降；完整日110.521→130.866秒。最终r23/r24绑定为0.183/0.196秒。一次签收的合同已验证，未保留同输入旧版双签收隔离测速，不单独认领整日收益。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     },
     {
       "id": "19",
@@ -191,11 +393,22 @@
       "correctness_contract": "完整Parquet字节、身份和行数与默认转换相同",
       "source_paths": [
         "因子/algobench/src/algobench/formal_f40_stages.py"
-      ]
+      ],
+      "result_evidence": {
+        "runs": [
+          "r21",
+          "r22"
+        ],
+        "measurement_kind": "相邻完整日测量",
+        "outcome": "r21→r22完整日68.510→65.833秒，减少2.677秒（3.91%），guard CPU810.539→786.667 CPU秒，但65.833秒仍未通过门限。r22也慢于更早同配置旧版r20的57.469秒，故这次单次对照不能证明稳定的净提速。",
+        "independent_causal_speedup_proved": false,
+        "result_asset": "optimization-results.json"
+      }
     }
   ],
   "notes": [
     "提交表示相关能力所在版本，最终测量统一绑定0582d483。",
-    "局部探针与完整日期计时分开；共享编译准备不计入58秒单日进程。"
+    "局部探针与完整日期计时分开；共享编译准备不计入58秒单日进程。",
+    "每项结果同时记录相邻完整日、局部探针或未独立测量；相邻变化不分摊到各提交。"
   ]
 }
