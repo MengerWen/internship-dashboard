@@ -1,5 +1,6 @@
 import importlib.util
 from collections import Counter
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -13,6 +14,29 @@ SPEC.loader.exec_module(collector)
 
 
 class EvidenceTests(unittest.TestCase):
+    def test_since_includes_shanghai_midnight_and_normalizes_author_timezone(self):
+        with tempfile.TemporaryDirectory() as folder:
+            def git(*args, env=None):
+                return subprocess.run(["git", "-C", folder, *args], check=True,
+                                      capture_output=True, env=env)
+            git("init")
+            git("config", "user.name", "Fixture")
+            git("config", "user.email", "fixture@example.invalid")
+            for subject, author, committer in [
+                ("previous-day", "2026-10-20T15:59:59+00:00", "2026-10-22T12:00:00+08:00"),
+                ("early-morning", "2026-10-21T00:01:00+08:00", "2026-10-21T00:01:00+08:00"),
+                ("utc-midnight", "2026-10-20T16:05:00+00:00", "2026-10-22T12:01:00+08:00"),
+            ]:
+                (Path(folder) / "work.txt").write_text(subject)
+                git("add", "work.txt")
+                env = {**os.environ, "GIT_AUTHOR_DATE": author, "GIT_COMMITTER_DATE": committer}
+                git("commit", "-m", subject, env=env)
+            days = collector.collect_commits(folder, "HEAD", "2026-10-21")
+            self.assertEqual(set(days), {"2026-10-21"})
+            self.assertEqual(days["2026-10-21"]["commits"], 2)
+            self.assertEqual({i["subject"] for i in days["2026-10-21"]["items"]},
+                             {"early-morning", "utc-midnight"})
+
     def test_parent_whitelist_counts_only_matching_commits(self):
         with tempfile.TemporaryDirectory() as folder:
             repo = Path(folder)

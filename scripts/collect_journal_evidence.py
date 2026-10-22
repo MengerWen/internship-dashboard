@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
-from datetime import date
+from datetime import date, datetime
 import json
 from pathlib import Path
 import re
 import subprocess
 import sys
+from zoneinfo import ZoneInfo
 
 import frontmatter
 
@@ -35,11 +36,12 @@ def encode(value):
 
 def collect_commits(repo, revision, since, only_under=None):
     # NUL 分隔路径，避免中文转义、空格与特殊文件名破坏解析。
-    raw = git(repo, "log", revision, "--date=short", "--since=" + since,
-              "--format=%x1e%ad%x00%H%x00%s", "--name-only", "-z")
+    # Git 的日期过滤按提交时间裁剪；工作日按作者时间换算到北京时间后判断。
+    raw = git(repo, "log", revision, "--format=%x1e%aI%x00%H%x00%s", "--name-only", "-z")
     days = defaultdict(lambda: {"commits": 0, "paths": Counter(), "items": [], "outcome_candidates": [], "revert_count": 0})
     for record in raw.split("\x1e")[1:]:
-        day, sha, rest = record.split("\0", 2)
+        timestamp, sha, rest = record.split("\0", 2)
+        day = datetime.fromisoformat(timestamp).astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat()
         subject, *paths = rest.split("\0")
         paths = [p.strip("\n") for p in paths if p.strip("\n")]
         if only_under:
