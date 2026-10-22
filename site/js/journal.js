@@ -127,7 +127,7 @@
         if (width <= 0 || Math.abs(width - (this.measuredWidth || 0)) < 1) return;
         this.measuredWidth = width;
         cancelAnimationFrame(this.resizeFrame);
-        this.resizeFrame = requestAnimationFrame(() => this.renderAtlas());
+        this.resizeFrame = requestAnimationFrame(() => { this.renderAtlas(); this.revealPointNote(); });
       });
       this.resizeObserver.observe($("view-journal"));
     },
@@ -197,7 +197,10 @@
       }
       this.render();
       if (this.chain) requestAnimationFrame(() => this.mode === "atlas" && this.revealChainNote(this.chainNoteDate));
-      if (key) requestAnimationFrame(() => this.mode === "atlas" ? this.scrollAtlasDay(key) : $("journal-detail").scrollIntoView({block: "start"}));
+      if (key) requestAnimationFrame(() => {
+        if (this.mode === "atlas") { this.scrollAtlasDay(key); this.revealPointNote(); }
+        else $("journal-detail").scrollIntoView({block: "start"});
+      });
     },
     visibleDays(context = false) {
       const end = this.days.at(-1)?.date;
@@ -226,8 +229,9 @@
       this.query = ""; $("journal-find").value = "";
       if (!this.visibleDays(true).some(d => d.date === key)) this.window = "all";
       if (scroll) this.mode = "atlas";
-      if (sameDay && !scroll) { this.highlightAtlas(); this.renderDetail(); this.writeHash(); return; }
+      if (sameDay && !scroll) { this.highlightAtlas(); this.renderDetail(); this.writeHash(); this.revealPointNote(); return; }
       this.render(); this.writeHash();
+      this.revealPointNote();
       if (scroll) {
         this.scrollAtlasDay(key);
         const scroller = document.querySelector(".journal-scroller");
@@ -255,7 +259,14 @@
       this.highlightAtlas(); this.writeHash(); this.revealChainNote(date);
     },
     revealChainNote(date) {
-      const card = document.querySelector(`.journal-chain-note[data-date="${CSS.escape(date)}"]`);
+      this.revealFloatingNote(`.journal-chain-note[data-date="${CSS.escape(date)}"]`, date);
+    },
+    revealPointNote() {
+      if (this.selection?.kind !== "point") return;
+      this.revealFloatingNote(`.journal-floating-note[data-note-id="${CSS.escape(this.selection.chain)}"]`, this.selection.date);
+    },
+    revealFloatingNote(selector, date) {
+      const card = document.querySelector(selector);
       if (!card || card.hidden || !this.floatingNotes.open) return;
       const top = document.querySelector(".journal-atlas-header").getBoundingClientRect().bottom + 16;
       const y = card.offsetTop + card.parentElement.getBoundingClientRect().top;

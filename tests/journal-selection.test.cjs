@@ -21,7 +21,7 @@ function fixture() {
   };
   get('view-journal').addEventListener = (name, handler) => listeners.set(name, handler);
   let rendered;
-  const context = {window: {JournalFloatingNotes: class {
+  const context = {CSS: {escape: value => value}, window: {JournalFloatingNotes: class {
     constructor(onFocus) { this.onFocus = onFocus; }
     render(config) { rendered = config; }
     clear() {}
@@ -92,4 +92,18 @@ test('同一天从日期切到单点，再切回日期，浮窗与详情同步�
   assert.equal(f.rendered().group, 'day:2026-10-20');
   assert(f.get('journal-detail').innerHTML.includes('甲任务进展'));
   assert(f.get('journal-detail').innerHTML.includes('整天的其他工作'));
+});
+
+test('单点说明被吸顶栏挡住时，校正滚动位置并同时保留点位', () => {
+  const context = {window: {scrollBy: options => scrolls.push(options)}, innerHeight: 720,
+    document: {querySelector: selector => selector === '.card' ? card : {getBoundingClientRect: () => ({bottom: 300})}}};
+  const scrolls = [], card = {hidden: false, offsetTop: 1400, offsetHeight: 240, parentElement: {getBoundingClientRect: () => ({top: -1300})}};
+  vm.runInNewContext(fs.readFileSync('site/js/journal.js', 'utf8'), context);
+  const view = Object.assign({}, context.window.JournalView, {floatingNotes: {open: true}, atlas: {y: () => 1670}});
+  view.revealFloatingNote('.card', '2026-10-20');
+  assert.equal(scrolls.length, 1);
+  assert.equal(scrolls[0].top, -228);
+  card.parentElement.getBoundingClientRect = () => ({top: -1072});
+  view.revealFloatingNote('.card', '2026-10-20');
+  assert.equal(scrolls.length, 1, '点与卡片都已可见时，不额外滚动');
 });
