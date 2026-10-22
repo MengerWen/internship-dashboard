@@ -34,6 +34,7 @@
       this.selected = null;
       this.selection = null;
       this.floatingNotes = new window.JournalFloatingNotes(cid => {
+        if (this.selection?.kind === "chain") { this.focusChainEvent(cid); return; }
         this.select(this.selected, false, cid);
         if (document.querySelector(".journal-scroller").clientWidth < 600) this.scrollAtlasDay(this.selected);
       });
@@ -72,7 +73,11 @@
         const retry = e.target.closest("[data-journal-evidence]");
         if (retry) this.loadEvidence(retry.dataset.journalEvidence, true);
         const point = e.target.closest("[data-journal-point]");
-        if (point) { this.select(point.dataset.date, false, point.dataset.journalPoint); return; }
+        if (point) {
+          if (this.selection?.kind === "chain" && point.dataset.journalPoint === this.chain) this.focusChainEvent(point.dataset.date);
+          else this.select(point.dataset.date, false, point.dataset.journalPoint);
+          return;
+        }
         const day = e.target.closest("[data-journal-day]");
         if (day) { e.preventDefault(); this.select(day.dataset.journalDay, !day.closest("#journal-figure")); return; }
         const chain = e.target.closest("[data-journal-chain]");
@@ -96,6 +101,12 @@
         if (day && ["Enter", " "].includes(e.key)) { e.preventDefault(); this.select(day.dataset.journalDay); return; }
         if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) return;
         e.preventDefault();
+        if (this.selection?.kind === "chain") {
+          const events = this.atlas.active.get(this.chain) || [], current = events.findIndex(d => d.date === this.chainNoteDate);
+          const step = ["ArrowUp", "ArrowLeft"].includes(e.key) ? -1 : 1;
+          if (events.length) this.focusChainEvent(events[(Math.max(0, current) + step + events.length) % events.length].date);
+          return;
+        }
         const dates = this.visibleDays(true), index = dates.findIndex(d => d.date === this.selected);
         if (["ArrowUp", "ArrowDown"].includes(e.key)) {
           const next = dates[index < 0 ? 0 : index + (e.key === "ArrowUp" ? -1 : 1)];
@@ -183,6 +194,7 @@
         if (!this.visibleDays(true).some(d => d.date === key)) this.window = "all";
       }
       this.render();
+      if (this.chain) requestAnimationFrame(() => this.mode === "atlas" && this.revealChainNote(this.chainNoteDate));
       if (key) requestAnimationFrame(() => this.mode === "atlas" ? this.scrollAtlasDay(key) : $("journal-detail").scrollIntoView({block: "start"}));
     },
     visibleDays(context = false) {
@@ -233,6 +245,22 @@
       this.selected = null;
       this.selection = this.chain ? {kind: "chain", chain: this.chain} : null;
       this.render(); this.writeHash();
+      if (this.mode === "atlas") this.revealChainNote(this.chainNoteDate);
+    },
+    focusChainEvent(date) {
+      if (!this.atlas?.active.get(this.chain)?.some(d => d.date === date)) return;
+      this.chainNoteDate = date; this.selection = {kind: "chain", chain: this.chain, date};
+      this.highlightAtlas(); this.writeHash(); this.revealChainNote(date);
+    },
+    revealChainNote(date) {
+      const card = document.querySelector(`.journal-chain-note[data-date="${CSS.escape(date)}"]`);
+      if (!card || card.hidden || !this.floatingNotes.open) return;
+      const top = document.querySelector(".journal-atlas-header").getBoundingClientRect().bottom + 16;
+      const y = card.offsetTop + card.parentElement.getBoundingClientRect().top;
+      const box = {top: y, bottom: y + card.offsetHeight};
+      const pointY = card.parentElement.getBoundingClientRect().top + this.atlas.y(date);
+      const first = Math.min(box.top, pointY - 20), last = Math.max(box.bottom, pointY + 20);
+      if (first < top || last > innerHeight - 16) window.scrollBy({top: (last - first < innerHeight - top - 28 ? first : box.top) - top - 12, behavior: "instant"});
     },
     clearSelection() {
       this.chain = ""; this.selected = null; this.selection = null;
@@ -493,7 +521,7 @@
       const handoffFocus = sel?.kind === "handoff";
       const day = this.days.find(d => d.date === sel?.date);
       const live = new Set(sel?.kind === "chain" ? [sel.chain] : day?.chains || []);
-      $("view-journal").classList.toggle("has-floating-notes", Boolean(day) && ["day", "point"].includes(sel?.kind));
+      $("view-journal").classList.toggle("has-floating-notes", sel?.kind === "chain" || Boolean(day) && ["day", "point"].includes(sel?.kind));
       document.querySelectorAll(".journal-chain-label").forEach(label => {
         const lit = live.has(label.dataset.journalChain);
         label.classList.toggle("is-selected", lit);
@@ -511,39 +539,26 @@
       const svg = document.querySelector(".journal-atlas"), overlay = svg.querySelector(".journal-selection-overlay");
       const annotations = document.querySelector(".journal-annotations");
       overlay.replaceChildren();
-      if (!day || !["day", "point"].includes(sel.kind)) this.floatingNotes.clear();
+      if (!sel || !["day", "point", "chain"].includes(sel.kind)) this.floatingNotes.clear();
       if (!sel) return;
       if (sel.kind === "chain") {
         const scroller = document.querySelector(".journal-scroller");
         const cx = a.positions.get(sel.chain), dates = a.active.get(sel.chain) || [];
+        if (!dates.length) { this.floatingNotes.clear(); return; }
         const unit = [...svg.querySelectorAll(".journal-chain-unit")].find(g => g.dataset.chains === sel.chain);
         if (unit) svg.insertBefore(unit, svg.querySelector(".journal-point-hit"));
-        const onRight = cx < a.width / 2;
-        const noteWidth = Math.min(330, scroller.clientWidth - 50, onRight ? a.right - cx - 24 : cx - a.dateWidth - 24);
-        const left = onRight ? cx + 22 : cx - noteWidth - 22;
-        if (this.mode === "atlas" && scroller.clientWidth < 600) {
-          scroller.scrollLeft = Math.max(0, Math.min(a.width - scroller.clientWidth, Math.min(left, cx) - 10));
-          document.querySelector(".journal-head-scroller").scrollLeft = scroller.scrollLeft;
-        }
-        annotations.innerHTML = dates.map(d => this.annotationHtml(d, sel.chain, noteWidth, "journal-chain-annotation")).join("");
-        const cards = [...annotations.children];
-        let nextY = 8;
-        const ys = cards.map((card, i) => {
-          const desired = Math.max(a.y(dates[i].date) - 12, nextY);
-          card.style.left = left + "px";
-          nextY = desired + card.offsetHeight + 8;
-          return desired;
-        });
-        const shift = Math.min(Math.max(0, nextY - a.height + 10), ys[0] || 0);
-        const lines = [];
-        cards.forEach((card, i) => {
-          const cy = ys[i] - shift;
-          card.style.top = cy + "px";
-          lines.push(`<path class="journal-annotation-leader" d="M${cx},${a.y(dates[i].date)} H${onRight ? left - 8 : left + noteWidth + 8} V${cy + 12} H${onRight ? left : left + noteWidth}"/>`);
-        });
-        const expanded = Math.max(a.height, nextY - shift + 10);
-        svg.setAttribute("height", expanded); svg.setAttribute("viewBox", `0 0 ${a.width} ${expanded}`);
-        overlay.innerHTML = lines.join("");
+        const middle = (Math.max(0, document.querySelector(".journal-atlas-header").getBoundingClientRect().bottom) + innerHeight) / 2 - svg.getBoundingClientRect().top;
+        const focused = dates.some(d => d.date === this.chainNoteDate) ? this.chainNoteDate : dates.reduce((best, d) => Math.abs(a.y(d.date) - middle) < Math.abs(a.y(best.date) - middle) ? d : best).date;
+        this.chainNoteDate = focused;
+        const lookup = new Map(dates.map(d => [d.date, d])), context = $("journal-day-context");
+        context.hidden = false;
+        context.innerHTML = `<strong>${esc(this.chains.get(sel.chain)?.short)}</strong><label class="journal-selected-date"><span class="sr-only">选择链条事件</span><select aria-label="选择链条事件">${dates.map(d => `<option value="${d.date}" ${d.date === focused ? "selected" : ""}>${d.date}</option>`).join("")}</select></label>`;
+        context.onchange = e => { if (e.target.matches("select")) this.focusChainEvent(e.target.value); };
+        overlay.innerHTML = dates.map((d, i) => {
+          const cy = a.y(d.date), r = a.radius(d, sel.chain), active = d.date === focused;
+          return `${active ? `<circle class="journal-selection-ring" data-date="${d.date}" data-chain="${esc(sel.chain)}" cx="${cx}" cy="${cy}" r="${r + 4}"/>` : ""}<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 39}" y="${cy - 8}" width="24" height="17" rx="2"/><text x="${cx - 27}" y="${cy + 5}" text-anchor="middle">${String(i + 1).padStart(2, "0")}</text></g>`;
+        }).join("");
+        this.floatingNotes.render({mode: "chain", group: `chain:${sel.chain}`, chain: sel.chain, atlas: a, ids: dates.map(d => d.date), focused, day: dates[0], dayFor: id => lookup.get(id), anchor: id => ({x: cx, y: a.y(id), radius: a.radius(lookup.get(id), sel.chain)}), svg, annotations, canvas: annotations.parentElement, scroller, context, points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: id => `${id.slice(5)} ${lookup.get(id).weekday}`, note: id => this.pointNote(lookup.get(id), sel.chain), weight: id => this.pointWeight(lookup.get(id), sel.chain), evidence: (id, brief) => this.pointEvidenceHtml(lookup.get(id), sel.chain, brief), reports: id => this.reportLinks(lookup.get(id)), onReveal: () => this.revealChainNote(this.chainNoteDate)});
         return;
       }
       if (!day) return;

@@ -4,7 +4,8 @@
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const overlap = (a, b, gap = 0) => a.x < b.x + b.w + gap && a.x + a.w + gap > b.x && a.y < b.y + b.h + gap && a.y + a.h + gap > b.y;
 
-  function attachment(rect, x, y) {
+  function attachment(rect, x, y, sideways = false) {
+    if (sideways) return {x: x < rect.x ? rect.x : rect.x + rect.w, y: clamp(y, rect.y + 16, rect.y + rect.h - 16), edge: x < rect.x ? "left" : "right"};
     const portX = clamp(x, rect.x + 16, rect.x + rect.w - 16);
     if (y >= rect.y + rect.h) return {x: portX, y: rect.y + rect.h, edge: "bottom"};
     if (y <= rect.y) return {x: portX, y: rect.y, edge: "top"};
@@ -49,6 +50,38 @@
     if (Math.abs(a.x - b.x) < .1) return a.x > l + .1 && a.x < r - .1 && Math.max(a.y, b.y) > t + .1 && Math.min(a.y, b.y) < bottom - .1;
     if (Math.abs(a.y - b.y) < .1) return a.y > t + .1 && a.y < bottom - .1 && Math.max(a.x, b.x) > l + .1 && Math.min(a.x, b.x) < r - .1;
     return false;
+  }
+
+  function placeChainCards(cards, {bounds, points = [], manual = new Map()}) {
+    const placed = [];
+    for (const [index, card] of cards.entries()) {
+      const saved = manual.get(card.id);
+      if (saved) {
+        placed.push({...card, x: clamp(saved.x, bounds.left, bounds.right - card.w), y: clamp(saved.y, bounds.top, Math.max(bounds.top, bounds.bottom - card.h))});
+        continue;
+      }
+      let best, bestCost = Infinity;
+      const preferredSide = index % 2 ? -1 : 1, rhythm = [0, 24, 8, 40][index % 4];
+      for (const side of [preferredSide, -preferredSide]) for (let gap = 28; gap <= bounds.right - bounds.left; gap += 28) {
+        const x = side > 0 ? card.anchorX + gap : card.anchorX - gap - card.w;
+        if (x < bounds.left || x + card.w > bounds.right) continue;
+        for (let shift = 0; shift <= 600; shift += 20) for (const direction of shift ? [-1, 1] : [1]) {
+          const y = clamp(card.anchorY - card.h * .42 + shift * direction, bounds.top, Math.max(bounds.top, bounds.bottom - card.h));
+          const candidate = {...card, x, y};
+          if (placed.some(other => overlap(candidate, other, 16))) continue;
+          const covered = points.reduce((n, p) => n + Number(p.x > x && p.x < x + card.w && p.y > y && p.y < y + card.h), 0);
+          const cost = Math.abs(y + card.h * .42 - card.anchorY) * 3.8 + gap * .35 + Math.abs(gap - 28 - rhythm) * .8 + (side === preferredSide ? 0 : 20) + covered * 5;
+          if (cost < bestCost) { best = candidate; bestCost = cost; }
+        }
+      }
+      if (!best) {
+        const right = bounds.right - card.anchorX >= card.anchorX - bounds.left;
+        best = {...card, x: clamp(right ? card.anchorX + 28 : card.anchorX - card.w - 28, bounds.left, bounds.right - card.w), y: Math.max(bounds.top, card.anchorY - card.h * .42)};
+        while (placed.some(other => overlap(best, other, 16))) best.y += 20;
+      }
+      placed.push(best);
+    }
+    return {cards: placed, height: Math.max(bounds.bottom, ...placed.map(r => r.y + r.h + 10))};
   }
 
   function routeLeader(start, end, obstacles, {left = 0, right, top = 0, bottom, used = []}) {
@@ -124,9 +157,13 @@
     constructor(onFocus) {
       this.onFocus = onFocus; this.manual = new Map(); this.previous = new Map(); this.open = true; this.frame = 0;
     }
+    anchor(id) {
+      const c = this.config;
+      return c.anchor ? c.anchor(id) : {x: c.atlas.positions.get(id), y: c.atlas.y(c.day.date), radius: c.atlas.radius(c.day, id)};
+    }
     capture() {
       if (!this.layer?.isConnected) return;
-      this.previous = new Map([...this.layer.children].filter(n => !n.hidden).map(n => [n.dataset.annotationChain, {x: n.offsetLeft, y: n.offsetTop}]));
+      this.previous = new Map([...this.layer.children].filter(n => !n.hidden).map(n => [n.dataset.noteId, {x: n.offsetLeft, y: n.offsetTop}]));
     }
     clear() {
       cancelAnimationFrame(this.frame); this.frame = 0; this.previous.clear();
@@ -137,29 +174,32 @@
       this.config = null;
     }
     render(config) {
-      const oldFocus = document.activeElement?.closest(".journal-floating-note")?.dataset.annotationChain;
+      const oldFocus = document.activeElement?.closest(".journal-floating-note")?.dataset.noteId;
       this.capture(); cancelAnimationFrame(this.frame); this.frame = 0;
       const signature = `${config.atlas.width}:${config.atlas.height}:${config.atlas.y(config.day.date)}`;
-      if (this.date !== config.day.date) { this.open = true; this.previous.clear(); this.manual.clear(); }
+      const group = config.group || config.day.date;
+      if (this.date !== group) { this.open = true; this.previous.clear(); this.manual.clear(); }
       else if (signature !== this.signature) { this.manual.clear(); this.previous.clear(); }
-      this.date = config.day.date; this.signature = signature; this.config = config; this.layer = config.annotations;
+      this.date = group; this.signature = signature; this.config = config; this.layer = config.annotations;
       this.narrow = config.scroller.clientWidth < 600;
-      if (this.narrow) {
-        const x = config.atlas.positions.get(config.focused), {scroller, atlas} = config;
+      if (this.narrow || config.mode === "chain") {
+        const x = this.anchor(config.focused).x, {scroller, atlas} = config;
         if (x < scroller.scrollLeft + 24 || x > scroller.scrollLeft + scroller.clientWidth - 24) scroller.scrollLeft = clamp(x - scroller.clientWidth / 2, 0, atlas.width - scroller.clientWidth);
         document.querySelector(".journal-head-scroller").scrollLeft = scroller.scrollLeft;
       }
       this.layer.classList.add("journal-floating-notes");
       this.layer.innerHTML = config.ids.map((cid, index) => {
         const note = config.note(cid), amount = config.weight(cid), focused = cid === config.focused;
-        const shared = config.day.chain_weights?.[cid]?.shared || 0;
-        return `<article class="journal-annotation journal-floating-note${focused ? " is-focused" : ""}" data-annotation-chain="${esc(cid)}" data-date="${config.day.date}" aria-label="${esc(config.name(cid))}的工作说明" ${this.narrow && !focused ? "hidden" : ""}>
-          <button type="button" class="journal-floating-head" data-note="${esc(cid)}" aria-pressed="${focused}" aria-label="${esc(config.name(cid))}，点击聚焦，拖动调整位置，方向键移动"><span class="journal-note-letter">${String.fromCharCode(65 + index)}</span><strong>${esc(config.name(cid))}</strong><span class="journal-note-grip" aria-hidden="true">⠿</span></button>
+        const day = config.dayFor ? config.dayFor(cid) : config.day, chain = config.chain || cid;
+        const shared = day.chain_weights?.[chain]?.shared || 0, label = config.mode === "chain" ? String(index + 1).padStart(2, "0") : String.fromCharCode(65 + index);
+        const reports = typeof config.reports === "function" ? config.reports(cid) : config.reports;
+        return `<article class="journal-annotation journal-floating-note${config.mode === "chain" ? " journal-chain-note" : ""}${focused ? " is-focused" : ""}" data-note-id="${esc(cid)}" data-annotation-chain="${esc(chain)}" data-date="${day.date}" aria-label="${esc(config.name(cid))}的工作说明" ${this.narrow && !focused ? "hidden" : ""}>
+          <button type="button" class="journal-floating-head" data-note="${esc(cid)}" aria-pressed="${focused}" aria-label="${esc(config.name(cid))}，点击聚焦，拖动调整位置，方向键移动"><span class="journal-note-letter">${label}</span><strong>${esc(config.name(cid))}</strong><span class="journal-note-grip" aria-hidden="true">⠿</span></button>
           <p class="journal-note-copy">${esc(note.note || "注解待补")}</p>
           ${config.evidence ? config.evidence(cid, !focused) : ""}
-          <div class="journal-note-meta"><span>归属提交量 <b>${amount === null ? "待核" : esc(amount)}</b></span><time>${config.day.date.slice(5)}</time></div>
+          <div class="journal-note-meta"><span>归属提交量 <b>${amount === null ? "待核" : esc(amount)}</b></span><time>${day.date.slice(5)}</time></div>
           ${note.outcome === "dropped" ? '<span class="journal-fate-badge">本条方案未采用</span>' : ""}
-          <div class="journal-note-extra">${config.reports ? `相关汇报：${config.reports}` : "未关联汇报"}${shared ? `<br>含 ${shared} 条跨链提交的份额` : ""}${amount === 0 ? "<br>当日无已归属提交；当天有工作记录" : ""}${note.outcome_note ? `<br>${esc(note.outcome_note)}` : ""}</div>
+          <div class="journal-note-extra">${reports ? `相关汇报：${reports}` : "未关联汇报"}${shared ? `<br>含 ${shared} 条跨链提交的份额` : ""}${amount === 0 ? "<br>当日无已归属提交；当天有工作记录" : ""}${note.outcome_note ? `<br>${esc(note.outcome_note)}` : ""}</div>
         </article>`;
       }).join("");
       this.leaders = config.canvas.querySelector(".journal-note-leaders");
@@ -169,10 +209,10 @@
       if (oldFocus) this.layer.querySelector(`[data-note="${CSS.escape(oldFocus)}"]`)?.focus({preventScroll: true});
     }
     tools() {
-      const {context, ids, focused} = this.config;
+      const {context, ids, focused, mode} = this.config;
       context.querySelector(".journal-note-tools")?.remove();
       const controls = document.createElement("div"); controls.className = "journal-note-tools";
-      controls.innerHTML = `<button type="button" data-note-action="toggle" aria-pressed="${this.open}">${this.open ? "收起说明" : "展开说明"}</button><button type="button" data-note-action="arrange" ${this.open ? "" : "disabled"}>重新排布</button>${this.narrow ? `<button type="button" data-note-action="prev" aria-label="上一项工作">上一项</button><span>${ids.indexOf(focused) + 1} / ${ids.length}</span><button type="button" data-note-action="next" aria-label="下一项工作">下一项</button>` : '<span class="journal-note-hint">点击聚焦 · 拖动浮窗</span>'}`;
+      controls.innerHTML = `<button type="button" data-note-action="toggle" aria-pressed="${this.open}">${this.open ? "收起说明" : "展开说明"}</button><button type="button" data-note-action="arrange" ${this.open ? "" : "disabled"}>重新排布</button>${this.narrow || mode === "chain" ? `<button type="button" data-note-action="prev" aria-label="${mode === "chain" ? "上一个事件" : "上一项工作"}">上一项</button><span aria-live="polite">${ids.indexOf(focused) + 1} / ${ids.length}</span><button type="button" data-note-action="next" aria-label="${mode === "chain" ? "下一个事件" : "下一项工作"}">下一项</button>` : '<span class="journal-note-hint">点击聚焦 · 拖动浮窗</span>'}`;
       controls.onclick = event => {
         document.getElementById("view-journal").classList.toggle("is-keyboard", event.detail === 0);
         const action = event.target.closest("[data-note-action]")?.dataset.noteAction;
@@ -190,11 +230,12 @@
       const c = this.config, a = c.atlas, y = a.y(c.day.date), viewport = c.scroller.clientWidth;
       const left = this.narrow ? c.scroller.scrollLeft + 10 : Math.max(a.dateWidth + 10, c.scroller.scrollLeft + 10), right = Math.min(a.width - 10, c.scroller.scrollLeft + viewport - 10);
       const cards = [...this.layer.children].filter(n => !n.hidden).map((node, index) => {
-        const cid = node.dataset.annotationChain, width = this.narrow ? Math.min(270, right - left) : Math.min(right - left, 178 + (c.note(cid).note?.length || 0) % 4 * 9 + (cid === c.focused ? 20 : 0));
+        const cid = node.dataset.noteId, width = this.narrow ? Math.min(270, right - left) : Math.min(right - left, (c.mode === "chain" ? 204 : 178) + (c.note(cid).note?.length || 0) % 4 * 9 + (cid === c.focused ? 20 : 0));
         node.style.width = width + "px";
-        return {id: cid, node, w: node.offsetWidth, h: node.offsetHeight, anchorX: a.positions.get(cid), index};
+        const anchor = this.anchor(cid);
+        return {id: cid, node, w: node.offsetWidth, h: node.offsetHeight, anchorX: anchor.x, anchorY: anchor.y, radius: anchor.radius, index};
       });
-      const result = placeCards(cards, {bounds: {left, right, top: 10, bottom: a.height}, anchorY: y, points: c.points, manual: this.manual});
+      const result = (c.mode === "chain" && !this.narrow ? placeChainCards : placeCards)(cards, {bounds: {left, right, top: 10, bottom: a.height}, anchorY: c.mode === "chain" ? this.anchor(c.focused).y : y, points: c.points, manual: this.manual});
       this.layer.hidden = !this.open; this.leaders.hidden = !this.open;
       this.rects = result.cards;
       const expanded = this.open ? result.height : a.height;
@@ -204,8 +245,8 @@
       for (const rect of this.rects) {
         const {node} = rect, previous = this.previous.get(rect.id);
         node.getAnimations().forEach(animation => animation.cancel()); node.style.left = rect.x + "px"; node.style.top = rect.y + "px";
-        node.style.transformOrigin = y < rect.y ? "50% 0%" : "50% 100%";
-        if (canAnimate) node.animate([{transform: `translate(${previous ? previous.x - rect.x : rect.anchorX - rect.x - rect.w / 2}px,${previous ? previous.y - rect.y : y - rect.y - rect.h * .7}px) scale(${previous ? 1 : .94})`, opacity: previous ? 1 : 0}, {transform: "translate(0,0) scale(1)", opacity: 1}], {duration: 280, delay: previous ? 0 : Math.min(rect.index * 24, 120), easing: "cubic-bezier(.23,1,.32,1)"});
+        node.style.transformOrigin = rect.anchorY < rect.y ? "50% 0%" : "50% 100%";
+        if (canAnimate) node.animate([{transform: `translate(${previous ? previous.x - rect.x : rect.anchorX - rect.x - rect.w / 2}px,${previous ? previous.y - rect.y : rect.anchorY - rect.y - rect.h * .7}px) scale(${previous ? 1 : .94})`, opacity: previous ? 1 : 0}, {transform: "translate(0,0) scale(1)", opacity: 1}], {duration: 280, delay: previous ? 0 : Math.min(rect.index * 24, 120), easing: "cubic-bezier(.23,1,.32,1)"});
       }
       this.drawLeaders();
       this.layer.dataset.motion = canAnimate ? "moving" : "idle";
@@ -228,12 +269,26 @@
       const rects = moving ? this.rects.map(r => { const b = r.node.getBoundingClientRect(); return {...r, x: b.left - box.left, y: b.top - box.top, w: b.width, h: b.height}; }) : this.rects;
       const used = [], paths = [];
       for (const r of [...rects].sort((x, z) => Number(z.id === c.focused) - Number(x.id === c.focused))) {
-        const anchorX = a.positions.get(r.id), port = attachment(r, anchorX, y), direction = port.y < y ? -1 : 1;
-        const start = {x: anchorX, y: y + direction * (a.radius(c.day, r.id) + 3)};
+        const anchorX = r.anchorX, anchorY = r.anchorY, port = attachment(r, anchorX, anchorY, c.mode === "chain" && !this.narrow), direction = port.y < anchorY ? -1 : 1;
+        if (c.mode === "chain" && this.narrow && ["top", "bottom"].includes(port.edge)) {
+          const clearance = Math.max(...c.ids.map(id => this.anchor(id).radius)) + 16;
+          const options = [clamp(anchorX + clearance, r.x + 16, r.x + r.w - 16), clamp(anchorX - clearance, r.x + 16, r.x + r.w - 16)];
+          port.x = options.sort((x, z) => Math.abs(z - anchorX) - Math.abs(x - anchorX))[0];
+        }
+        const start = c.mode === "chain" ? {x: anchorX + (port.x < anchorX ? -1 : 1) * (r.radius + 3), y: anchorY} : {x: anchorX, y: anchorY + direction * (r.radius + 3)};
         const end = {x: port.x + (port.edge === "left" ? -7 : port.edge === "right" ? 7 : 0), y: port.y + (port.edge === "top" ? -7 : port.edge === "bottom" ? 7 : 0)};
-        const others = c.ids.filter(cid => cid !== r.id).map(cid => { const radius = a.radius(c.day, cid) + 3; return {x: a.positions.get(cid) - radius, y: y - radius, w: radius * 2, h: radius * 2, margin: 0}; });
+        const others = c.ids.filter(cid => cid !== r.id).map(cid => {
+          const p = this.anchor(cid), radius = p.radius + 3;
+          // 紧凑密度下圆周可能重叠，仍为各事件中心保留独立通道。
+          const gap = c.mode === "chain" ? Math.min(...c.ids.filter(id => id !== cid).map(id => Math.abs(this.anchor(id).y - p.y))) : Infinity;
+          const halfHeight = Math.min(radius, Math.max(1, gap / 2 - 1));
+          return {x: p.x - radius, y: p.y - halfHeight, w: radius * 2, h: halfHeight * 2, margin: 0};
+        });
         // 动画期间窗口会经过彼此；最终位置再计算完整避障路径。
-        const route = moving ? [start, end] : routeLeader(start, end, [...rects, ...others], {left: 1, right: a.width - 1, top: 1, bottom: Number(c.svg.getAttribute("height")) - 1, used});
+        const area = c.mode === "chain" ? {left: Math.max(1, Math.min(start.x, end.x) - 32), right: Math.min(a.width - 1, Math.max(start.x, end.x) + 32), top: Math.max(1, Math.min(start.y, end.y) - 32), bottom: Math.min(Number(c.svg.getAttribute("height")) - 1, Math.max(start.y, end.y) + 32), used} : {left: 1, right: a.width - 1, top: 1, bottom: Number(c.svg.getAttribute("height")) - 1, used};
+        const obstacles = [...rects, ...others].filter(o => c.mode !== "chain" || overlap(o, {x: area.left, y: area.top, w: area.right - area.left, h: area.bottom - area.top}, 8));
+        let route = moving ? [start, end] : routeLeader(start, end, obstacles, area);
+        if (!route && c.mode === "chain") route = routeLeader(start, end, [...rects, ...others], {left: 1, right: a.width - 1, top: 1, bottom: Number(c.svg.getAttribute("height")) - 1, used});
         if (!route) continue;
         route.push(port); used.push(route);
         const path = roundedPath(route), active = r.id === c.focused;
@@ -243,7 +298,7 @@
       this.leaders.innerHTML = paths.reverse().join("");
     }
     wire(card) {
-      const head = card.querySelector(".journal-floating-head"), cid = card.dataset.annotationChain;
+      const head = card.querySelector(".journal-floating-head"), cid = card.dataset.noteId;
       card.querySelectorAll(".journal-point-sources").forEach(details => details.addEventListener("toggle", () => {
         if (!card.isConnected || !this.config) return;
         this.capture(); this.layout();
@@ -285,6 +340,6 @@
     }
     onScroll() { if (!this.config) return; this.capture(); this.layout(); }
   }
-  if (typeof module !== "undefined" && module.exports) module.exports = {attachment, placeCards, segmentHits, routeLeader, roundedPath};
+  if (typeof module !== "undefined" && module.exports) module.exports = {attachment, placeCards, placeChainCards, segmentHits, routeLeader, roundedPath};
   if (typeof window !== "undefined") window.JournalFloatingNotes = FloatingNotes;
 })();

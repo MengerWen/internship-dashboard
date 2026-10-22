@@ -1,6 +1,6 @@
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
-const {placeCards, attachment, segmentHits, routeLeader, roundedPath} = require('../site/js/journal-notes.js');
+const {placeCards, placeChainCards, attachment, segmentHits, routeLeader, roundedPath} = require('../site/js/journal-notes.js');
 
 const bounds = {left: 96, right: 1248, top: 10, bottom: 1000};
 const cards = [170, 280, 308, 510, 650, 678, 790, 1050, 1194].map((anchorX, i) => ({id: `task-${i}`, anchorX, w: 180 + i % 3 * 17, h: 112 + i % 4 * 13}));
@@ -68,4 +68,26 @@ test('浮窗间距仅15px时，连接端口仍有可用通路', () => {
 test('圆角路径保留起终点，重复点不产生无效数值', () => {
   const d = roundedPath([{x: 10, y: 20}, {x: 10, y: 80}, {x: 10, y: 80}, {x: 90, y: 80}]);
   assert(d.startsWith('M10,20')); assert(d.endsWith('L90,80')); assert(!/NaN|Infinity/.test(d));
+});
+
+test('竖向密集事件分别保留日期锚点，浮窗在链条两侧避让', () => {
+  const events = Array.from({length: 19}, (_, i) => ({id: `2026-09-${i + 1}`, anchorX: 600, anchorY: 280 + i * 14, radius: 2, w: 204 + i % 3 * 9, h: 112 + i % 4 * 14}));
+  const before = JSON.stringify(events), result = placeChainCards(events, {bounds});
+  assert.equal(JSON.stringify(events), before);
+  assert(result.cards.some(r => r.x > 600) && result.cards.some(r => r.x + r.w < 600));
+  for (const [i, r] of result.cards.entries()) {
+    assert.equal(r.anchorY, events[i].anchorY);
+    assert(r.x >= bounds.left && r.x + r.w <= bounds.right);
+    assert(r.x >= 628 || r.x + r.w <= 572, '链线周围保留阅读空间');
+    assert(r.y >= bounds.top && r.y + r.h <= result.height);
+    for (const b of result.cards.slice(i + 1)) assert(r.x + r.w <= b.x || b.x + b.w <= r.x || r.y + r.h <= b.y || b.y + b.h <= r.y);
+  }
+});
+
+test('边缘链条使用可用侧，侧边端口朝向自己的真实日期点', () => {
+  for (const anchorX of [110, 1220]) {
+    const result = placeChainCards(Array.from({length: 4}, (_, i) => ({id: String(i), anchorX, anchorY: 100 + i * 15, w: 210, h: 130})), {bounds});
+    for (const r of result.cards) assert(anchorX === 110 ? r.x > anchorX : r.x + r.w < anchorX);
+  }
+  assert.deepEqual(attachment({x: 300, y: 100, w: 200, h: 120}, 250, 400, true), {x: 300, y: 204, edge: 'left'});
 });
