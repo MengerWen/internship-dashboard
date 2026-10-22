@@ -588,7 +588,7 @@
         const cx = a.positions.get(cid), radius = a.radius(day, cid), active = cid === focused;
         if (this.pointNote(day, cid).outcome !== "dropped") paths.push(`<circle class="journal-active-point is-${this.pointEvidence(day, cid).status}" data-evidence="${this.pointEvidence(day, cid).status}" cx="${cx}" cy="${cy}" r="${radius}"/>`);
         if (active) paths.push(`<circle class="journal-selection-ring" data-date="${day.date}" data-chain="${esc(cid)}" cx="${cx}" cy="${cy}" r="${radius + 4}"/>`);
-        paths.push(`<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 8}" y="${cy + 10}" width="16" height="17" rx="2"/><text x="${cx}" y="${cy + 23}" text-anchor="middle">${String.fromCharCode(65 + i)}</text></g>`);
+        if (sel.kind === "day") paths.push(`<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 8}" y="${cy + 10}" width="16" height="17" rx="2"/><text x="${cx}" y="${cy + 23}" text-anchor="middle">${String.fromCharCode(65 + i)}</text></g>`);
       });
       overlay.innerHTML = paths.join("");
       this.floatingNotes.render({mode: sel.kind, group: `${sel.kind}:${day.date}${sel.kind === "point" ? ":" + sel.chain : ""}`, atlas: a, ids, focused, day, svg, annotations, canvas: annotations.parentElement, scroller: document.querySelector(".journal-scroller"), context: $("journal-day-context"), points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: cid => this.chains.get(cid)?.short || cid, note: cid => this.pointNote(day, cid), weight: cid => this.pointWeight(day, cid), evidence: (cid, brief) => this.pointEvidenceHtml(day, cid, brief), reports: this.reportLinks(day), onReveal: () => this.scrollAtlasDay(day.date)});

@@ -194,7 +194,7 @@
         const shared = day.chain_weights?.[chain]?.shared || 0, label = config.mode === "chain" ? String(index + 1).padStart(2, "0") : String.fromCharCode(65 + index);
         const reports = typeof config.reports === "function" ? config.reports(cid) : config.reports;
         return `<article class="journal-annotation journal-floating-note${config.mode === "chain" ? " journal-chain-note" : ""}${focused ? " is-focused" : ""}" data-note-id="${esc(cid)}" data-annotation-chain="${esc(chain)}" data-date="${day.date}" aria-label="${esc(config.name(cid))}的工作说明" ${this.narrow && !focused ? "hidden" : ""}>
-          <button type="button" class="journal-floating-head" data-note="${esc(cid)}" aria-pressed="${focused}" aria-label="${esc(config.name(cid))}，点击聚焦，拖动调整位置，方向键移动"><span class="journal-note-letter">${label}</span><strong>${esc(config.name(cid))}</strong><span class="journal-note-grip" aria-hidden="true">⠿</span></button>
+          <button type="button" class="journal-floating-head" data-note="${esc(cid)}" aria-pressed="${focused}" aria-label="${esc(config.name(cid))}，点击聚焦，拖动调整位置，方向键移动">${config.mode === "point" ? "" : `<span class="journal-note-letter">${label}</span>`}<strong>${esc(config.name(cid))}</strong><span class="journal-note-grip" aria-hidden="true">⠿</span></button>
           <p class="journal-note-copy">${esc(note.note || "注解待补")}</p>
           ${config.evidence ? config.evidence(cid, !focused) : ""}
           <div class="journal-note-meta"><span>归属提交量 <b>${amount === null ? "待核" : esc(amount)}</b></span><time>${day.date.slice(5)}</time></div>
