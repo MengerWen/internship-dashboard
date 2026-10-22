@@ -1,0 +1,201 @@
+{
+  "measured_revision": "0582d483220c382684a6a106b51551fe37d91713",
+  "items": [
+    {
+      "id": "01",
+      "title": "有界大块页面读取",
+      "functions": "_BudgetRaw / BufferedReader",
+      "related_commit": "38ad3a8ef3221b31a59a2a04a763985dd78b508b",
+      "correctness_contract": "保持页字节、行数和超时预算，完整读取后解析",
+      "source_paths": [
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py"
+      ]
+    },
+    {
+      "id": "02",
+      "title": "唯一代码映射",
+      "functions": "group_code_page",
+      "related_commit": "de48b6359f136a960a88f389525920996587f493",
+      "correctness_contract": "原始稳定行序、代码汇合和空值资格一致",
+      "source_paths": [
+        "lv2_snapshot_workspace/src/snapshot/page_processing.py"
+      ]
+    },
+    {
+      "id": "03",
+      "title": "重股票优先区间",
+      "functions": "QueryPlan.for_research / structural_query_plan",
+      "related_commit": "1c3e5efebfbd9c027b23d8f77a0ddcdcc24fdfa1",
+      "correctness_contract": "原三表、股票总体与截止；不提高SQL并发",
+      "source_paths": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "scripts/run_open5m_real_data_calibration.py"
+      ]
+    },
+    {
+      "id": "04",
+      "title": "原生频道及数量闭合",
+      "functions": "iter_channel_closed_inputs",
+      "related_commit": "462f4d011a7673714d679f20833e65b094f14fa0",
+      "correctness_contract": "提前见证在完整日重核；变化时拒绝提交",
+      "source_paths": [
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py"
+      ]
+    },
+    {
+      "id": "05",
+      "title": "空闲槽持续派发",
+      "functions": "DailyScheduler / _stream_with_idle_dispatch",
+      "related_commit": "5c94b36aefc52116bccc2c6993453e991892cdcf",
+      "correctness_contract": "单个输入future，沿用重股堆和内存准入",
+      "source_paths": [
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py"
+      ]
+    },
+    {
+      "id": "06",
+      "title": "按冻结范围准备共享产物",
+      "functions": "build_shared_artifacts / StructuralCalibrationConsumer",
+      "related_commit": "ec2d9cd5f893f222f5b40e12625cf3b951d5a3a0",
+      "correctness_contract": "八组支持和实际消费依赖完整",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "id": "07",
+      "title": "回放三表投影",
+      "functions": "ReplayPlan.from_events",
+      "related_commit": "e4f5d2f152d2dd2f673db20234aa4d88bcb2ed52",
+      "correctness_contract": "完整规范事件和原生账本另行保留；通用默认不变",
+      "source_paths": [
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py"
+      ]
+    },
+    {
+      "id": "08",
+      "title": "TopN标量缓冲",
+      "functions": "build_event_prestate_accelerated",
+      "related_commit": "0582d483220c382684a6a106b51551fe37d91713",
+      "correctness_contract": "扫描相同档位；完整列表按原输入生成；前后态差分相同",
+      "source_paths": [
+        "因子/algobench/src/algobench/event_prestate_accel.py"
+      ]
+    },
+    {
+      "id": "09",
+      "title": "直接配对列式对齐",
+      "functions": "_prepare_direct_pair_inputs",
+      "related_commit": "2a7f080344169cb85349f615f537d2fc2b3deb66",
+      "correctness_contract": "只有身份和序列逐项一致才复用已对齐列",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "id": "10",
+      "title": "已解析时间关闭缓存预扫",
+      "functions": "formal_datetime.to_datetime",
+      "related_commit": "4bc929d97cd5505ec55332a7dab5ffb4205ec049",
+      "correctness_contract": "时间单位、精度、时区和错误合同保留",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_datetime.py"
+      ]
+    },
+    {
+      "id": "11",
+      "title": "候选数量谓词编译扫描",
+      "functions": "_iter_grouped_time_pair_windows",
+      "related_commit": "3b698e70c0a0edff59d7debe7bd5ee23948345db",
+      "correctness_contract": "原float64比较、候选顺序、拒绝计数及跨批续接",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "id": "12",
+      "title": "BBO数值动作与F31支持投影",
+      "functions": "BboResponseCollector / simple_path_quality",
+      "related_commit": "bc3381460f8c16e23f14ddbe827b063b0b9a2ee3",
+      "correctness_contract": "完整候选、组件、资格、正数计数与逐事件max",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_simple_paths.py"
+      ]
+    },
+    {
+      "id": "13",
+      "title": "只读撤单锚分片",
+      "functions": "produce_parallel_structural_pairs / merge_shards",
+      "related_commit": "fcfb010a18010e48ed260ba27a365e2997731c76",
+      "correctness_contract": "连续锚分片、整数计数和精确max归约",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_parallel_structural_pairs.py"
+      ]
+    },
+    {
+      "id": "14",
+      "title": "流式F40归档",
+      "functions": "StreamingF40Archive / archive_f40_sources",
+      "related_commit": "4776d85d63a5fc34ae5054bcfee9964319c9587c",
+      "correctness_contract": "同份完整字节解码、清单绑定和完整SHA回读",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_f40_stages.py"
+      ]
+    },
+    {
+      "id": "15",
+      "title": "有界分片上传",
+      "functions": "mc pipe --part-size 16MiB --concurrent 4",
+      "related_commit": "a88a8f0e60b5acb83b588884ea88becc4277e924",
+      "correctness_contract": "同归档格式；GOMAXPROCS=1；计算与归档总槽位16",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_f40_stages.py"
+      ]
+    },
+    {
+      "id": "16",
+      "title": "完整范围SHA回读",
+      "functions": "ObjectPublication / _parallel_object_sha256",
+      "related_commit": "6b726ea79024e91499b5029b5bbaddc2716573c3",
+      "correctness_contract": "所有连续区间、身份、长度和有序SHA；不抽样",
+      "source_paths": [
+        "因子/algobench/src/algobench/artifact_io.py"
+      ]
+    },
+    {
+      "id": "17",
+      "title": "原生控制记录与有界证据交接",
+      "functions": "ObjectPublication / selected-date calibration",
+      "related_commit": "14636c473ecdbb758184506c0c26f97e494b3667",
+      "correctness_contract": "缺失与错误区分；每份发布记录完整读回",
+      "source_paths": [
+        "scripts/run_open5m_selected_date_calibration.py"
+      ]
+    },
+    {
+      "id": "18",
+      "title": "完整日一次签收",
+      "functions": "commit_day_artifacts / final receipt binding",
+      "related_commit": "afe15a37c7c4e570c2ee6a9a4767c67c2b76f3b1",
+      "correctness_contract": "日包和事实都验证通过后写完整收据",
+      "source_paths": [
+        "scripts/run_open5m_real_data_calibration.py"
+      ]
+    },
+    {
+      "id": "19",
+      "title": "逐股Arrow单线程",
+      "functions": "write_f40_source",
+      "related_commit": "74f5b5a4cf1a7efddf7e34e20191aca7b739672e",
+      "correctness_contract": "完整Parquet字节、身份和行数与默认转换相同",
+      "source_paths": [
+        "因子/algobench/src/algobench/formal_f40_stages.py"
+      ]
+    }
+  ],
+  "notes": [
+    "提交表示相关能力所在版本，最终测量统一绑定0582d483。",
+    "局部探针与完整日期计时分开；共享编译准备不计入58秒单日进程。"
+  ]
+}

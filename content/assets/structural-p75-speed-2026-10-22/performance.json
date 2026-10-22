@@ -1,0 +1,435 @@
+{
+  "schema_version": "structural-p75-report-performance-v1",
+  "work_date": "2026-10-22",
+  "measured_revision": "0582d483220c382684a6a106b51551fe37d91713",
+  "scientific_code_sha256": "7e4956f0a62bf629a81f80dc47cec5cd96cc498f8f25ae0559c741bf586ae771",
+  "timing_conditions": {
+    "date": "2026-04-22",
+    "boundary": "new single-day child process creation through exit, including fresh complete-day input, calculation, merge, publication and complete readback",
+    "shared_compilation_cache_prepared": true,
+    "shared_compilation_preparation_seconds": 9.870395416393876,
+    "empty_cache_cold_start_under_60_verified": false,
+    "parent_collection_and_publication_under_60": false,
+    "selected_date_command_under_60": false,
+    "runs": [
+      "r23",
+      "r24"
+    ]
+  },
+  "compilation_preparation": {
+    "kind": "shared-compilation-preparation",
+    "seconds": 9.870395416393876,
+    "raw_data_read": false,
+    "revision": "0582d483220c382684a6a106b51551fe37d91713"
+  },
+  "baseline": {
+    "revision": "1ceb00e62f210e50cc2479b459ee9469311febae",
+    "internal_business_wall_seconds": 173.0341272726655,
+    "single_day_process_wall_seconds": 178.26780926808715,
+    "resource_scope": {
+      "average_effective_cores": 8.319735961943909,
+      "cpu_system_seconds": 135.623396,
+      "cpu_throttled_seconds": 2.404326,
+      "cpu_usage_seconds": 1493.844136,
+      "cpu_user_seconds": 1358.22074,
+      "io_read_bytes": 24928256,
+      "io_read_operations": 1233502,
+      "io_write_bytes": 696585885,
+      "io_write_operations": 1723005,
+      "memory_current_end_bytes": 98938880,
+      "memory_peak_bytes": 16231817216,
+      "swap_peak_bytes": 0,
+      "wall_seconds": 179.55427225492895
+    },
+    "guard_manifest_path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/structural-p75-opt-base-r01_20261022T104057Z_192ef514db364c65855aa9ac65d9d214.json",
+    "included_kernel_compile_seconds": 9.843967963010073
+  },
+  "final_p75": {
+    "r23": {
+      "collection_timing": {
+        "boundary": "before child launch through child exit, daily publication validation and manifest write",
+        "child_command_wall_seconds": 58.1281662825495,
+        "collection_and_publication_wall_seconds": 63.31888207234442,
+        "collection_day_concurrency": 1,
+        "date": "2026-04-22"
+      },
+      "internal_business_wall_seconds": 56.77702641673386,
+      "whole_selected_date_command_wall_seconds": 71.07790670357645,
+      "resource_scope": "entire selected-date command including parent setup and handoff",
+      "resource_usage": {
+        "average_effective_cores": 9.591699936412382,
+        "cpu_system_seconds": 24.426097,
+        "cpu_throttled_seconds": 0.0,
+        "cpu_usage_seconds": 682.595173,
+        "cpu_user_seconds": 658.169076,
+        "io_read_bytes": 31002624,
+        "io_read_operations": 1402772,
+        "io_write_bytes": 234,
+        "io_write_operations": 2425519,
+        "memory_current_end_bytes": 38477824,
+        "memory_peak_bytes": 14224687104,
+        "swap_peak_bytes": 0,
+        "wall_seconds": 71.1651925649494
+      },
+      "guard_manifest_path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/structural-p75-opt-r23_20261022T151146Z_e8a2f94078f34b4ba7c311eff5f55c53.json",
+      "rows": {
+        "cancel": 2631192,
+        "events": 25851605,
+        "order": 15211764,
+        "trade": 8008649
+      },
+      "stock_days": 2889,
+      "evidence_stock_days": 2883,
+      "no_evidence_stock_days": 6,
+      "execution_settings": {
+        "bbo_whole_day_actions": false,
+        "compute_workers": 12,
+        "pair_cancel_workers": 16,
+        "pair_overlap_min_rows": 0,
+        "pair_parallel_min_rows": 1000000,
+        "parser_threads": 4,
+        "range_priority_codes": [
+          "002361",
+          "002580"
+        ],
+        "streaming_compute_workers_after_extraction": 16,
+        "streaming_f40_archive": true,
+        "structural_cpu_slot_capacity": 16
+      },
+      "stage_telemetry": {
+        "all_worker_seconds": 607.6844303775579,
+        "date_merge_and_write_seconds": 3.9904609490185976,
+        "normalize_and_replay_worker_seconds": 482.38903937116265,
+        "replay_kernel_compile_seconds": 0.0,
+        "setup_and_metadata_seconds": 0.482860442250967,
+        "source_read_and_scheduler_seconds": 51.564804723486304,
+        "structural_collection_worker_seconds": 123.2514862343669
+      },
+      "publication_step_seconds": {
+        "day_pack_commit_seconds": 2.249616801738739,
+        "f40_persistent_commit_seconds": 1.7098472155630589,
+        "f40_prepare_seconds": 2.0961107295006514,
+        "f40_publication_remaining_wait_seconds": 1.3167783301323652,
+        "f40_stream_cpu_slot_wait_seconds": 0.019269727170467377,
+        "f40_stream_first_member_seconds": 1.4679052606225014,
+        "f40_stream_last_member_seconds": 49.96952606923878,
+        "f40_stream_process_start_seconds": 0.0034781470894813538,
+        "f40_stream_upload_finished_seconds": 52.97705647163093,
+        "receipt_bind_seconds": 0.1830687988549471,
+        "support_merge_seconds": 1.73946382291615
+      },
+      "correctness": {
+        "checks": {
+          "all_required_supports_nonempty": true,
+          "all_stock_days_accounted": true,
+          "collected_support_inventory": [
+            "f16.queue_improvement_ratio",
+            "f16.price_priority_ticks",
+            "f31.bottleneck_quality",
+            "f40.episode_gap_seconds",
+            "f40.episode_gap_events",
+            "lambda42.best_R",
+            "f85.two_sided_best_depth",
+            "lambda_RV.v32",
+            "p03.depletion"
+          ],
+          "day_pack_verified": true,
+          "f40_source_capture": true,
+          "labels_or_returns_read": false,
+          "scratch_has_no_orphans": true,
+          "synthetic_data_used": false
+        },
+        "empty_fail_closed_supports": [],
+        "passed": true,
+        "schema_version": "open5m-structural-calibration-correctness-v2"
+      }
+    },
+    "r24": {
+      "collection_timing": {
+        "boundary": "before child launch through child exit, daily publication validation and manifest write",
+        "child_command_wall_seconds": 57.79642050154507,
+        "collection_and_publication_wall_seconds": 62.542311768978834,
+        "collection_day_concurrency": 1,
+        "date": "2026-04-22"
+      },
+      "internal_business_wall_seconds": 56.706370582804084,
+      "whole_selected_date_command_wall_seconds": 70.44134006462991,
+      "resource_scope": "entire selected-date command including parent setup and handoff",
+      "resource_usage": {
+        "average_effective_cores": 9.67129465841663,
+        "cpu_system_seconds": 30.183999,
+        "cpu_throttled_seconds": 0.0,
+        "cpu_usage_seconds": 683.425647,
+        "cpu_user_seconds": 653.241648,
+        "io_read_bytes": 2039808,
+        "io_read_operations": 1426300,
+        "io_write_bytes": 234,
+        "io_write_operations": 2379688,
+        "memory_current_end_bytes": 19943424,
+        "memory_peak_bytes": 13674213376,
+        "swap_peak_bytes": 0,
+        "wall_seconds": 70.66537326574326
+      },
+      "guard_manifest_path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/structural-p75-opt-r24_20261022T151258Z_2c0f0b7f042c4143aac08445b5b81522.json",
+      "rows": {
+        "cancel": 2631192,
+        "events": 25851605,
+        "order": 15211764,
+        "trade": 8008649
+      },
+      "stock_days": 2889,
+      "evidence_stock_days": 2883,
+      "no_evidence_stock_days": 6,
+      "execution_settings": {
+        "bbo_whole_day_actions": false,
+        "compute_workers": 12,
+        "pair_cancel_workers": 16,
+        "pair_overlap_min_rows": 0,
+        "pair_parallel_min_rows": 1000000,
+        "parser_threads": 4,
+        "range_priority_codes": [
+          "002361",
+          "002580"
+        ],
+        "streaming_compute_workers_after_extraction": 16,
+        "streaming_f40_archive": true,
+        "structural_cpu_slot_capacity": 16
+      },
+      "stage_telemetry": {
+        "all_worker_seconds": 604.7125097177923,
+        "date_merge_and_write_seconds": 4.283450070768595,
+        "normalize_and_replay_worker_seconds": 478.23517907597125,
+        "replay_kernel_compile_seconds": 0.0,
+        "setup_and_metadata_seconds": 0.6120723113417625,
+        "source_read_and_scheduler_seconds": 51.093076054006815,
+        "structural_collection_worker_seconds": 124.41349395923316
+      },
+      "publication_step_seconds": {
+        "day_pack_commit_seconds": 2.0835039019584656,
+        "f40_persistent_commit_seconds": 1.6626647748053074,
+        "f40_prepare_seconds": 1.644680231809616,
+        "f40_publication_remaining_wait_seconds": 1.934915781021118e-05,
+        "f40_stream_cpu_slot_wait_seconds": 0.029863152652978897,
+        "f40_stream_first_member_seconds": 1.5187106616795063,
+        "f40_stream_last_member_seconds": 49.71632636152208,
+        "f40_stream_process_start_seconds": 0.003599420189857483,
+        "f40_stream_upload_finished_seconds": 51.821085618808866,
+        "receipt_bind_seconds": 0.19626938365399837,
+        "support_merge_seconds": 2.1986421458423138
+      },
+      "correctness": {
+        "checks": {
+          "all_required_supports_nonempty": true,
+          "all_stock_days_accounted": true,
+          "collected_support_inventory": [
+            "f16.queue_improvement_ratio",
+            "f16.price_priority_ticks",
+            "f31.bottleneck_quality",
+            "f40.episode_gap_seconds",
+            "f40.episode_gap_events",
+            "lambda42.best_R",
+            "f85.two_sided_best_depth",
+            "lambda_RV.v32",
+            "p03.depletion"
+          ],
+          "day_pack_verified": true,
+          "f40_source_capture": true,
+          "labels_or_returns_read": false,
+          "scratch_has_no_orphans": true,
+          "synthetic_data_used": false
+        },
+        "empty_fail_closed_supports": [],
+        "passed": true,
+        "schema_version": "open5m-structural-calibration-correctness-v2"
+      }
+    }
+  },
+  "admission_dates": {
+    "2024-12-30": {
+      "baseline_internal_wall_seconds": 1866.2524808607996,
+      "final_internal_wall_seconds": 316.21252028271556,
+      "final_collection_timing": {
+        "boundary": "before child launch through child exit, daily publication validation and manifest write",
+        "child_command_wall_seconds": 317.7257591020316,
+        "collection_and_publication_wall_seconds": 321.7799214627594,
+        "collection_day_concurrency": 1,
+        "date": "2024-12-30"
+      },
+      "rows": {
+        "cancel": 1985590,
+        "events": 20105685,
+        "order": 11735155,
+        "trade": 6384940
+      },
+      "stock_days": 2848,
+      "evidence_stock_days": 2837,
+      "no_evidence_stock_days": 11,
+      "proof": {
+        "actual_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-final-admission-r01/daily_supports/date=2024-12-30",
+        "actual_pack_sha256": "e7e16c8cdb52f891425c8d808423c958b6ebb53a9a2c07db7540d851bb107138",
+        "actual_trace_sha256": "1e50354cad88f19c3e8f9196081f8296115bdb31f0d54d8dad539394e602412b",
+        "all_f40_source_identities_equal": true,
+        "array_hashes_equal": true,
+        "coverage_equal": true,
+        "date": "2024-12-30",
+        "disabled_r19_only_supports": [],
+        "f40_stock_count": 2837,
+        "lambda42_positive_count_totals": {
+          "best_quote_response_opposite_bbo": 15500556921,
+          "best_quote_response_own_bbo": 52037251592
+        },
+        "lambda42_positive_counts_equal": true,
+        "passed": true,
+        "positive_count_stock_count": 2837,
+        "proof": "passed publication receipts bind file bytes; array identities bind complete float64 values and weights",
+        "reference_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-601-v7-r01/daily_supports/date=2024-12-30",
+        "reference_pack_sha256": "912467708f1096ad155fbe4ee0c5f30f2b3d1741805bdb5a88c5d7e1db6b427c",
+        "reference_trace_sha256": "6498c86d9cdd46a0081a7769b0a021a7bd930c95c6599240a6b71ed740ce64e3",
+        "support_count": 2848
+      },
+      "comparison_guard_path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/structural-admission-compare-2024-12-30_20261022T152358Z_1847af991d6440a09a0cfc43d70d67e0.json"
+    },
+    "2025-04-02": {
+      "baseline_internal_wall_seconds": 85.48997648246586,
+      "final_internal_wall_seconds": 48.586788633838296,
+      "final_collection_timing": {
+        "boundary": "before child launch through child exit, daily publication validation and manifest write",
+        "child_command_wall_seconds": 49.90545989014208,
+        "collection_and_publication_wall_seconds": 57.0472123529762,
+        "collection_day_concurrency": 1,
+        "date": "2025-04-02"
+      },
+      "rows": {
+        "cancel": 1454996,
+        "events": 14852615,
+        "order": 9066461,
+        "trade": 4331158
+      },
+      "stock_days": 2863,
+      "evidence_stock_days": 2858,
+      "no_evidence_stock_days": 5,
+      "proof": {
+        "actual_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-final-admission-r01/daily_supports/date=2025-04-02",
+        "actual_pack_sha256": "7f1b40a973192caf99fbe0a5fd152ab2f5015d0cb2ea2de76e062f1ed93a8f76",
+        "actual_trace_sha256": "fdd6d2b7b4d3ee0d9335f626cc1586b1c6843da1dba988598c787f5ce1a8ac77",
+        "all_f40_source_identities_equal": true,
+        "array_hashes_equal": true,
+        "coverage_equal": true,
+        "date": "2025-04-02",
+        "disabled_r19_only_supports": [],
+        "f40_stock_count": 2858,
+        "lambda42_positive_count_totals": {
+          "best_quote_response_opposite_bbo": 53237431,
+          "best_quote_response_own_bbo": 70179112
+        },
+        "lambda42_positive_counts_equal": true,
+        "passed": true,
+        "positive_count_stock_count": 2858,
+        "proof": "passed publication receipts bind file bytes; array identities bind complete float64 values and weights",
+        "reference_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-601-v7-r01/daily_supports/date=2025-04-02",
+        "reference_pack_sha256": "e06a6272fbeff3a9fd058f1c1cf79e2beb22bb5dde1fcbf5defd50982ddb1339",
+        "reference_trace_sha256": "685d07a39893053e2cc02d087ad2ac62e74b6e8d8c59eedb29834167d6d923c6",
+        "support_count": 2869
+      },
+      "comparison_guard_path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/structural-admission-compare-2025-04-02_20261022T152406Z_8b89bdad30f545bd80bb157a94a0cbe5.json"
+    }
+  },
+  "correctness": {
+    "r23": {
+      "passed": true,
+      "date": "2026-04-22",
+      "support_count": 2894,
+      "disabled_r19_only_supports": [],
+      "f40_stock_count": 2883,
+      "array_hashes_equal": true,
+      "coverage_equal": true,
+      "all_f40_source_identities_equal": true,
+      "reference_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-p75-opt-baseline-r01/daily_supports/date=2026-04-22",
+      "actual_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-p75-opt-r23/daily_supports/date=2026-04-22",
+      "reference_pack_sha256": "84c4c30aa01fa8874c28e970fe08c35f6057a7e0dd1a48f38852c92e292334e2",
+      "actual_pack_sha256": "72ca82d117ee11584722b1248edfe98776cde906f2c0f929066a7b3b2b26c4df",
+      "proof": "passed publication receipts bind file bytes; array identities bind complete float64 values and weights",
+      "lambda42_positive_counts_equal": true,
+      "positive_count_stock_count": 2883,
+      "reference_trace_path": "/tmp/wangly-structural-p75-opt-20261022-baseline-r01/work/scheduler_progress.jsonl",
+      "reference_trace_sha256": "3d9d53e85440f8fb8bc1614a99d975da52cd471e8347eeb10b239604fccf1561",
+      "actual_trace_sha256": "34b52adbaf5f3abdd7a13d325cdfc76789c744db4004539adc1231839d9ddf67"
+    },
+    "r24": {
+      "passed": true,
+      "date": "2026-04-22",
+      "support_count": 2894,
+      "disabled_r19_only_supports": [],
+      "f40_stock_count": 2883,
+      "array_hashes_equal": true,
+      "coverage_equal": true,
+      "all_f40_source_identities_equal": true,
+      "reference_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-p75-opt-baseline-r01/daily_supports/date=2026-04-22",
+      "actual_day_root": "/home/wangly/hdd-store/outputs/sirui/corrected-replay-344-recalibration-20261020/structural-p75-opt-r24/daily_supports/date=2026-04-22",
+      "reference_pack_sha256": "84c4c30aa01fa8874c28e970fe08c35f6057a7e0dd1a48f38852c92e292334e2",
+      "actual_pack_sha256": "72ca82d117ee11584722b1248edfe98776cde906f2c0f929066a7b3b2b26c4df",
+      "proof": "passed publication receipts bind file bytes; array identities bind complete float64 values and weights",
+      "lambda42_positive_counts_equal": true,
+      "positive_count_stock_count": 2883,
+      "reference_trace_path": "/tmp/wangly-structural-p75-opt-20261022-baseline-r01/work/scheduler_progress.jsonl",
+      "reference_trace_sha256": "3d9d53e85440f8fb8bc1614a99d975da52cd471e8347eeb10b239604fccf1561",
+      "actual_trace_sha256": "4f0d2f56a1774ef4b7dad9e86a2fc7af8f440c9949c94bd1988a4a0f1a347868"
+    },
+    "archive-proof": {
+      "passed": true,
+      "date": "2026-04-22",
+      "independent_archive_extraction": true,
+      "all_member_hashes_verified": true,
+      "all_member_parquet_contents_validated": true,
+      "source_count": 2883,
+      "manifest_sha256": "3c9352d6c8a10926d1f728337163abc6e4105e906cb4aa7518b8485db00245e6",
+      "archive": {
+        "bytes": 238607250,
+        "compression": "zstd",
+        "file": "f40_sources.tar",
+        "sha256": "52368b6c574c083771580eb52d4431e8069d143c0a2637b6b80e932376285d15"
+      },
+      "seconds": 3.7289530634880066,
+      "raw_l2_read": false
+    }
+  },
+  "final_state": {
+    "formal_completed_date_count": 14,
+    "formal_progress_sha256": "a703969b5bb83db5c10befd471be09b76f8bae27b46df76ac8e08b35e29354d3",
+    "all_14_original_receipt_hashes_unchanged": true,
+    "full_period_resumed": false,
+    "f40_started": false,
+    "stop_after_verified_report": true
+  },
+  "tests": {
+    "linux": {
+      "passed": 41,
+      "warnings": 1,
+      "seconds": 22.09,
+      "guard_manifest_path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/structural-p75-linux-r27_20261022T151023Z_be14bab5281c4f2cbf79eb7a8347a334.json"
+    },
+    "windows_topn": {
+      "passed": 22,
+      "skipped_numba_unavailable": 5,
+      "seconds": 3.35
+    }
+  },
+  "combined_two_date_guard": {
+    "path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/structural-final-admission-r01_20261022T151653Z_ff2dfb7f7c314f46a40bf9db8b58fade.json",
+    "resource_usage": {
+      "average_effective_cores": 6.822420053815553,
+      "cpu_system_seconds": 77.287386,
+      "cpu_throttled_seconds": 0.156053,
+      "cpu_usage_seconds": 2638.361313,
+      "cpu_user_seconds": 2561.073927,
+      "io_read_bytes": 18202624,
+      "io_read_operations": 1983317,
+      "io_write_bytes": 470,
+      "io_write_operations": 3772357,
+      "memory_current_end_bytes": 31711232,
+      "memory_peak_bytes": 24679682048,
+      "swap_peak_bytes": 0,
+      "wall_seconds": 386.7192714884877
+    }
+  }
+}
