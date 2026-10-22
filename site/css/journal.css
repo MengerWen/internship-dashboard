@@ -67,7 +67,9 @@ html:has(#view-journal.is-active) { scrollbar-gutter: stable; }
 .journal-dot-halo { fill: var(--bg); stroke: none; }
 .journal-handoff-path { stroke: var(--text); stroke-width: 1; fill: none; opacity: .3; }
 .journal-dot { fill: var(--bg); stroke: var(--text); stroke-width: 1.6; }
-.journal-dot.has-report, .journal-seal { fill: var(--text); }
+.journal-dot.is-artifact, .journal-seal { fill: var(--text); }
+.journal-dot.is-discussion, .journal-active-point.is-discussion { stroke-width: 1px; }
+.journal-dot.is-pending { stroke-dasharray: 1.2 1.4; stroke-width: 1.2px; }
 .journal-cross { fill: none; stroke-width: 2; stroke-linecap: round; }
 .journal-seal { stroke: var(--text); stroke-width: 1.4; }
 .journal-seal.is-parked { fill: var(--bg); }
@@ -81,7 +83,7 @@ html:has(#view-journal.is-active) { scrollbar-gutter: stable; }
 .journal-unit.is-handoff-context { opacity: .32; }
 .journal-unit.is-focused .journal-chain-line, .journal-unit.is-focused .journal-dot, .journal-unit.is-focused .journal-handoff-path { stroke: var(--focus); }
 .journal-unit.is-focused .journal-chain-line { stroke-width: 3; }
-.journal-unit.is-focused .journal-seal, .journal-unit.is-focused .journal-dot.has-report { fill: var(--focus); }
+.journal-unit.is-focused .journal-seal, .journal-unit.is-focused .journal-dot.is-artifact { fill: var(--focus); }
 .journal-unit.is-focused .journal-handoff-path { opacity: 1; }
 .journal-handoff.is-focused .journal-handoff-path { stroke-width: 2.6; }
 .journal-day-hit, .journal-point-hit { fill: transparent; cursor: pointer; }
@@ -234,11 +236,30 @@ html:has(#view-journal.is-active) { scrollbar-gutter: stable; }
 .journal-weight-mark { display: flex; align-items: flex-end; height: 24px; }
 .journal-weight-mark svg { display: block; overflow: visible; }
 .journal-weight-legend circle { fill: var(--bg); stroke: var(--text); stroke-width: 1.3px; }
-.journal-report-legend { display: flex; flex-wrap: wrap; gap: 5px 18px; }
-.journal-report-legend span { display: inline-flex; align-items: center; gap: 6px; }
-.journal-report-legend svg { display: block; flex: none; }
-.journal-report-legend circle { fill: var(--bg); stroke: var(--text); stroke-width: 1.6px; }
-.journal-report-legend circle.has-report { fill: var(--text); }
+.journal-evidence-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.journal-evidence-status { display: inline-flex; align-items: center; gap: 6px; color: var(--text); font-size: 12px; line-height: 1.6; }
+.journal-evidence-status i { display: inline-block; flex: none; width: 9px; height: 9px; border: 1.4px solid currentColor; border-radius: 50%; background: var(--surface); }
+.journal-evidence-status.is-artifact i { background: currentColor; }
+.journal-evidence-status.is-pending i { border-style: dashed; }
+.journal-evidence-heading { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.journal-point-evidence { margin-top: 8px; color: var(--text); }
+.journal-evidence-types { font-size: 12px; line-height: 1.6; }
+.journal-point-sources { margin-top: 5px; font-size: 14px; }
+.journal-point-sources > summary { cursor: pointer; padding: 7px 0; min-height: 32px; }
+.journal-point-sources > summary small { display: block; font-size: 12px; margin: 2px 0 0; }
+.journal-point-sources section { padding: 10px 0; border-top: 1px solid var(--line-soft); }
+.journal-point-sources h5 { margin: 0 0 7px; font-size: 14px; font-weight: 700; }
+.journal-point-sources ul { margin: 0; padding: 0; list-style: none; }
+.journal-point-sources li { margin: 0 0 10px; }
+.journal-point-sources li small { display: block; font-size: 12px; margin-top: 3px; }
+.journal-point-sources .journal-source-link { min-height: 32px; align-items: baseline; }
+.journal-point-sources p { margin: 0; font-size: 14px; line-height: 1.7; }
+.journal-point-sources .journal-point-source-note { border-top: 1px solid var(--line-soft); padding-top: 9px; font-size: 12px; }
+.journal-floating-note > .journal-evidence-status { margin: 2px 0 8px; }
+.journal-floating-note .journal-point-sources[open] { max-height: min(38vh, 380px); overflow-y: auto; overscroll-behavior: contain; padding-right: 5px; }
+@media(max-width:859px) {
+  .journal-point-sources > summary, .journal-point-sources .journal-source-link { min-height: 44px; }
+}
 .journal-attribution-group { margin-block: 12px; }
 .journal-attribution-group summary { cursor: pointer; line-height: 1.7; }
 .journal-attribution-group li { margin-block: 12px; overflow-wrap: anywhere; }
@@ -268,7 +289,8 @@ html:has(#view-journal.is-active) { scrollbar-gutter: stable; }
 .journal-note-route.is-focused .journal-note-route-line { stroke: var(--focus); stroke-width: 1.8px; opacity: 1; }
 .journal-note-route.is-focused circle { fill: var(--focus); stroke: var(--focus); }
 .journal-active-point { fill: var(--bg); stroke: var(--text); stroke-width: 1.6px; }
-.journal-active-point.has-report { fill: var(--text); }
+.journal-active-point.is-artifact { fill: var(--text); }
+.journal-active-point.is-pending { stroke-dasharray: 1.2 1.4; stroke-width: 1.2px; }
 .journal-point-letter rect { fill: var(--bg); }
 .journal-atlas .journal-point-letter text { fill: var(--text); font: 12px var(--font-mono); }
 .journal-point-letter.is-focused rect { fill: var(--text); }

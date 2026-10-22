@@ -257,18 +257,39 @@
       const number = Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
       return `归属提交量 ${number}${weight.shared ? `（含 ${weight.shared} 条跨链提交的份额）` : ""}`;
     },
+    pointEvidence(day, cid) {
+      const evidence = day.chain_evidence?.[cid];
+      return evidence && ["artifact", "discussion", "pending"].includes(evidence.status) ? evidence : {status: "pending", kinds: [], artifacts: [], discussions: []};
+    },
+    evidenceLabel(day, cid) {
+      return {artifact: "有可查产物", discussion: "仅见交流", pending: "证据待核"}[this.pointEvidence(day, cid).status];
+    },
+    pointEvidenceHtml(day, cid, brief = false) {
+      const e = this.pointEvidence(day, cid);
+      const badge = `<span class="journal-evidence-status is-${e.status}"><i aria-hidden="true"></i>${this.evidenceLabel(day, cid)}</span>`;
+      if (brief) return badge;
+      const counts = [e.commit_count ? `${e.commit_count} 条提交` : "", e.document_count ? `${e.document_count} 份文档` : "", e.session_count ? `${e.session_count} 段交流` : ""].filter(Boolean).join("，");
+      const refs = items => `<ul>${items.map(ref => {
+        const kind = ref.kind === "session" ? "会话" : ref.kind === "commit" ? "提交" : "文档";
+        const title = esc(ref.title);
+        const link = /^https:\/\/github\.com\//.test(ref.url || "") ? `<a class="journal-source-link" href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer"><span class="journal-link-kind">${kind}</span><span class="journal-source-title">${title}</span></a>` : title;
+        return `<li>${link}<small>${esc(ref.label || "来源登记")}</small></li>`;
+      }).join("")}</ul>`;
+      return `<div class="journal-point-evidence"><div class="journal-evidence-heading">${badge}${e.kinds?.length ? `<span class="journal-evidence-types">${e.kinds.map(esc).join(" / ")}</span>` : ""}</div><details class="journal-point-sources"><summary>查看依据${counts ? `<small>${esc(counts)}</small>` : ""}</summary><section><h5>产物</h5>${e.artifacts?.length ? refs(e.artifacts) : `<p>${e.status === "pending" ? "产物来源尚待核对。" : "当前未关联文件或提交。"}</p>`}</section><section><h5>交流与决定</h5>${e.discussions?.length ? refs(e.discussions) : '<p>尚未关联原始会话。</p>'}</section>${e.commit_count > 2 || e.document_count > 2 || e.session_count > 2 ? '<p class="journal-point-source-note">这里列出部分入口，完整提交见下方原始记录，文档和会话见来源登记。</p>' : ""}</details></div>`;
+    },
     weightLegendHtml() {
       const samples = [1, 5, 20, 100].map(value => {
         const r = this.pointRadius({chain_weights: {sample: {value}}}, "sample");
         return `<span class="journal-weight-sample"><span class="journal-weight-mark"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="${23 - r}" r="${r}"/></svg></span><span>${value}</span></span>`;
       }).join("");
-      return `<div class="journal-point-legends" role="group" aria-label="圆点图例"><div class="journal-weight-legend" role="group" aria-label="任务归属提交量的点径参照"><span class="journal-weight-title">归属提交量（份）</span><div class="journal-weight-scale">${samples}</div><span class="journal-weight-note">点径连续变化，采用对数刻度</span></div><div class="journal-report-legend" role="group" aria-label="汇报关联"><span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4"/></svg>未关联汇报</span><span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle class="has-report" cx="6" cy="6" r="4"/></svg>有相关汇报</span></div></div>`;
+      return `<div class="journal-point-legends" role="group" aria-label="圆点图例"><div class="journal-weight-legend" role="group" aria-label="任务归属提交量的点径参照"><span class="journal-weight-title">归属提交量（份）</span><div class="journal-weight-scale">${samples}</div><span class="journal-weight-note">点径连续变化，采用对数刻度</span></div><div class="journal-evidence-legend" role="group" aria-label="工作点证据类型">${["artifact", "discussion", "pending"].map(status => this.pointEvidenceHtml({chain_evidence: {sample: {status}}}, "sample", true)).join("")}<span>相关汇报另列文字入口</span></div></div>`;
     },
     reportLinks(day) {
       return (day.reports_covering || (day.report ? [day.report] : [])).map(d => `<a href="#/daily/${esc(d)}">${esc(d)}</a>`).join(" ");
     },
     dayMetaHtml(day) {
-      return `<span>${esc(day.weekday)}</span><span>${day.reports_covering?.length || day.report ? "有相关汇报" : "未关联汇报"}</span><span>当天发布 ${day.reports_published?.length || 0} 篇</span>`;
+      const links = this.reportLinks(day);
+      return `<span>${esc(day.weekday)}</span><span>${links ? `相关汇报：${links}` : "未关联汇报"}</span><span>当天发布 ${day.reports_published?.length || 0} 篇</span>`;
     },
     chainButtons(day) {
       return day.chains.map(cid => `<button type="button" class="journal-chain-link" data-journal-chain="${esc(cid)}">${esc(this.chains.get(cid)?.short || cid)}${day.chain_confidence[cid] === "inferred" ? ' <small>待核</small>' : ""}</button>`).join(" ") || "未归类";
@@ -393,7 +414,7 @@
       });
       ordered.forEach(chain => header.push(`<button type="button" class="journal-chain-label${chain.fate === "dropped" ? " is-dropped" : ""}" data-journal-chain="${esc(chain.id)}" style="left:${positions.get(chain.id)}px;width:${Math.min(32, colWidth - 2)}px" aria-pressed="false" aria-label="${esc(chain.label)}${chain.fate === "dropped" ? "，未采用" : ""}"><span class="journal-chain-name">${esc(chain.short)}</span>${chain.fate === "dropped" ? '<small class="journal-fate-badge">未采用</small>' : ""}</button>`));
       head.innerHTML = header.join("") + "</div>";
-      const parts = [`<div class="journal-canvas" style="width:${width}px"><svg class="journal-atlas" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" tabindex="0" role="group" aria-label="工作日期与任务链条" aria-describedby="journal-atlas-desc" data-days="${days.length}" data-density="${this.density}"><desc id="journal-atlas-desc">日期从上到下，${ordered.length} 条链各占一列，按六个轨道分组。底纹表示周末和中国大陆公共假期，调休补班日除外。点的大小表示该任务当天的归属提交量，使用对数压缩刻度。实心点表示工作写进了汇报，日期旁的短刻度表示当天发布了汇报。叉号表示未采用。点击日期、列头链名或单个点查看说明；上下键换日，左右键换点，Esc 取消。清单与下方说明提供文字入口。</desc>`];
+      const parts = [`<div class="journal-canvas" style="width:${width}px"><svg class="journal-atlas" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" tabindex="0" role="group" aria-label="工作日期与任务链条" aria-describedby="journal-atlas-desc" data-days="${days.length}" data-density="${this.density}"><desc id="journal-atlas-desc">日期从上到下，${ordered.length} 条链各占一列，按六个轨道分组。底纹表示周末和中国大陆公共假期，调休补班日除外。点的大小表示该任务当天的归属提交量，使用对数压缩刻度。实心点表示有可查产物，空心点表示当前仅见交流，虚线轮廓表示证据待核；汇报另列文字入口，日期旁短刻度表示当天发布了汇报。叉号表示未采用。点击日期、列头链名或单个点查看说明；上下键换日，左右键换点，Esc 取消。清单与下方说明提供文字入口。</desc>`];
       for (let n = first; n <= last; n++) {
         const date = new Date(n * 86400000).toISOString().slice(0, 10);
         const restDay = this.restDayLabel(date);
@@ -441,7 +462,7 @@
             if (dropped) {
               const a = Math.max(3.4, r);
               parts.push(`<path class="journal-dot journal-cross" data-date="${day.date}" data-chain="${esc(chain.id)}" d="M${cx - a},${cy - a} L${cx + a},${cy + a} M${cx + a},${cy - a} L${cx - a},${cy + a}"/>`);
-            } else parts.push(`<circle class="journal-dot${day.reports_covering?.length ? " has-report" : ""}" data-date="${day.date}" data-chain="${esc(chain.id)}" data-weight="${this.pointWeight(day, chain.id) ?? ""}" cx="${cx}" cy="${cy}" r="${r}"/>`);
+            } else parts.push(`<circle class="journal-dot is-${this.pointEvidence(day, chain.id).status}" data-evidence="${this.pointEvidence(day, chain.id).status}" data-date="${day.date}" data-chain="${esc(chain.id)}" data-weight="${this.pointWeight(day, chain.id) ?? ""}" cx="${cx}" cy="${cy}" r="${r}"/>`);
           });
           if (chain.fate !== "dropped" && (chain.status === "done" || chain.fate === "parked") && chain.end === dates.at(-1).date) {
             const finalDay = dates.at(-1), side = Math.sqrt(Math.PI) * radius(finalDay, chain.id);
@@ -451,14 +472,14 @@
         parts.push("</g>");
       });
       const pointHitWidth = Math.min(28, colWidth);
-      ordered.forEach(chain => active.get(chain.id).forEach(day => parts.push(`<rect class="journal-point-hit" data-journal-point="${esc(chain.id)}" data-date="${day.date}" x="${positions.get(chain.id) - pointHitWidth / 2}" y="${y(day.date) - this.density / 2}" width="${pointHitWidth}" height="${this.density}" role="button" tabindex="-1" aria-label="${day.date}，${esc(chain.label)}，${esc(this.pointNote(day, chain.id).note || day.headline)}，${esc(this.weightLabel(day, chain.id))}"/>`)));
+      ordered.forEach(chain => active.get(chain.id).forEach(day => parts.push(`<rect class="journal-point-hit" data-journal-point="${esc(chain.id)}" data-date="${day.date}" x="${positions.get(chain.id) - pointHitWidth / 2}" y="${y(day.date) - this.density / 2}" width="${pointHitWidth}" height="${this.density}" role="button" tabindex="-1" aria-label="${day.date}，${esc(chain.label)}，${esc(this.pointNote(day, chain.id).note || day.headline)}，${esc(this.weightLabel(day, chain.id))}，${this.evidenceLabel(day, chain.id)}"/>`)));
       parts.push('<g class="journal-selection-overlay" aria-hidden="true"></g></svg><div class="journal-annotations"></div></div>');
       scroller.innerHTML = parts.join("");
       scroller.scrollLeft = previousScroll;
       head.scrollLeft = scroller.scrollLeft;
       scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; this.floatingNotes.onScroll(); };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
-      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示该任务当天的归属提交量，点径采用对数压缩刻度。单任务提交计1份，明确的跨链提交等分；待核记录不计入。没有已归属提交时保留最小定位点，不表示当天没有做这项工作。准确数值见点卡，逐条依据见下方“任务归属明细”。实心点表示有相关汇报，空心点表示未关联；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
+      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示该任务当天的归属提交量，点径采用对数压缩刻度。单任务提交计1份，明确的跨链提交等分；待核记录不计入。没有已归属提交时保留最小定位点，不表示当天没有做这项工作。准确数值见点卡，逐条依据见下方“任务归属明细”。实心点表示有可查产物，空心点表示当前仅见交流记录，虚线轮廓表示证据待核。文档落盘但无提交时仍为实心；有产物和交流时两组依据分别保留。相关汇报在日期与说明中另列文字入口；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
       document.querySelector("#journal-figure figcaption").insertAdjacentHTML("afterbegin", this.weightLegendHtml());
       document.querySelector("#journal-figure figcaption p:nth-of-type(2)").textContent = "点击日期看当天各项工作，点击列头链名看整条链；点击圆点或浮窗标题聚焦该项说明。拖动浮窗标题调整位置，双击恢复自动排布；标题上的方向键可微调位置。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。在图上用上下键换日、左右键切换当天任务。";
       this.atlas = {y, positions, days, height, width, top, dateWidth, right, radius, ordered, active};
@@ -534,16 +555,16 @@
       const paths = [`<path class="journal-selection-line" d="M${a.dateWidth},${cy} H${a.right}"/>`];
       ids.forEach((cid, i) => {
         const cx = a.positions.get(cid), radius = a.radius(day, cid), active = cid === focused;
-        if (this.pointNote(day, cid).outcome !== "dropped") paths.push(`<circle class="journal-active-point${day.reports_covering?.length ? " has-report" : ""}" cx="${cx}" cy="${cy}" r="${radius}"/>`);
+        if (this.pointNote(day, cid).outcome !== "dropped") paths.push(`<circle class="journal-active-point is-${this.pointEvidence(day, cid).status}" data-evidence="${this.pointEvidence(day, cid).status}" cx="${cx}" cy="${cy}" r="${radius}"/>`);
         if (active) paths.push(`<circle class="journal-selection-ring" data-date="${day.date}" data-chain="${esc(cid)}" cx="${cx}" cy="${cy}" r="${radius + 4}"/>`);
         paths.push(`<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 8}" y="${cy + 10}" width="16" height="17" rx="2"/><text x="${cx}" y="${cy + 23}" text-anchor="middle">${String.fromCharCode(65 + i)}</text></g>`);
       });
       overlay.innerHTML = paths.join("");
-      this.floatingNotes.render({atlas: a, ids, focused, day, svg, annotations, canvas: annotations.parentElement, scroller: document.querySelector(".journal-scroller"), context: $("journal-day-context"), points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: cid => this.chains.get(cid)?.short || cid, note: cid => this.pointNote(day, cid), weight: cid => this.pointWeight(day, cid), onReveal: () => this.scrollAtlasDay(day.date)});
+      this.floatingNotes.render({atlas: a, ids, focused, day, svg, annotations, canvas: annotations.parentElement, scroller: document.querySelector(".journal-scroller"), context: $("journal-day-context"), points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: cid => this.chains.get(cid)?.short || cid, note: cid => this.pointNote(day, cid), weight: cid => this.pointWeight(day, cid), evidence: (cid, brief) => this.pointEvidenceHtml(day, cid, brief), reports: this.reportLinks(day), onReveal: () => this.scrollAtlasDay(day.date)});
     },
     annotationHtml(day, cid, width, extra = "") {
       const note = this.pointNote(day, cid), dropped = note.outcome === "dropped";
-      return `<article class="journal-annotation ${extra}${dropped ? " is-dropped" : ""}" data-annotation-chain="${esc(cid)}" data-date="${day.date}" style="width:${width}px"><p><time>${day.date.slice(5)}</time> ${esc(this.chains.get(cid)?.short)}</p><strong>${esc(note.note || "注解待补")}</strong><small>${esc(this.weightLabel(day, cid))}</small>${dropped ? '<span class="journal-fate-badge">本条方案未采用</span>' : ""}</article>`;
+      return `<article class="journal-annotation ${extra}${dropped ? " is-dropped" : ""}" data-annotation-chain="${esc(cid)}" data-date="${day.date}" style="width:${width}px"><p><time>${day.date.slice(5)}</time> ${esc(this.chains.get(cid)?.short)}</p><strong>${esc(note.note || "注解待补")}</strong>${this.pointEvidenceHtml(day, cid, true)}<small>${esc(this.weightLabel(day, cid))}</small>${dropped ? '<span class="journal-fate-badge">本条方案未采用</span>' : ""}</article>`;
     },
     renderList() {
       $("journal-list").innerHTML = this.visible.length ? `<table><caption class="sr-only">按真实工作日期排列的日志</caption><thead><tr><th scope="col">日期</th><th scope="col">这天做了什么</th><th scope="col">链条</th><th scope="col">提交</th><th scope="col">汇报</th></tr></thead><tbody>${this.visible.map(d => `<tr class="${d.report ? "has-report" : ""}" data-date="${d.date}" ${d.date === this.selected ? 'aria-current="date"' : ""}><td><a href="#/journal/${d.date}" data-journal-day="${d.date}">${d.date}</a><small>${esc(d.weekday)}</small></td><td><a href="#/journal/${d.date}" data-journal-day="${d.date}">${esc(d.headline)}</a>${d.headline_source === "commit" ? '<small>待写</small>' : ""}</td><td>${this.chainButtons(d)}</td><td class="journal-number">${d.total_commits}</td><td>${this.reportLinks(d) || "—"}</td></tr>`).join("")}</tbody></table>` : '<p class="journal-empty">没有匹配的日期。请调整时间窗、链条或查找词。</p>';
@@ -575,7 +596,7 @@
       }).join("");
       const pointNotes = day.chains.map(cid => {
         const note = this.pointNote(day, cid);
-        return `<li><div class="journal-task-chain">${this.chainButton(cid)}</div><div class="journal-task-note">${esc(note.note || "注解待补")}${note.outcome === "dropped" ? ' <span class="journal-fate-badge">未采用</span>' : ""}${note.outcome_note ? `<p>${esc(note.outcome_note)}</p>` : ""}</div><small class="journal-task-weight">${esc(this.weightLabel(day, cid))}</small></li>`;
+        return `<li><div class="journal-task-chain">${this.chainButton(cid)}</div><div class="journal-task-note">${esc(note.note || "注解待补")}${note.outcome === "dropped" ? ' <span class="journal-fate-badge">未采用</span>' : ""}${note.outcome_note ? `<p>${esc(note.outcome_note)}</p>` : ""}${this.pointEvidenceHtml(day, cid)}</div><small class="journal-task-weight">${esc(this.weightLabel(day, cid))}</small></li>`;
       }).join("");
       $("journal-detail").innerHTML = `<nav class="journal-day-nav" aria-label="相邻工作日">${this.navButton(all[index - 1], "前一天")}${this.navButton(all[index + 1], "后一天")}</nav><article class="journal-day-card" data-selected-date="${day.date}">
         <header class="journal-day-header"><div class="journal-day-top"><div class="journal-day-meta"><time>${day.date}</time>${this.dayMetaHtml(day)}<span>${day.total_commits} 次提交</span></div>${day.report ? `<a class="journal-report-link" href="#/daily/${day.report}">阅读每日汇报</a>` : ""}</div><h2 class="${day.headline_source === "commit" ? "journal-draft" : ""}">${esc(day.headline)}${day.headline_source === "commit" ? " <small>待写</small>" : ""}</h2></header>

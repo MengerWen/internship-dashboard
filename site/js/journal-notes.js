@@ -156,9 +156,10 @@
         return `<article class="journal-annotation journal-floating-note${focused ? " is-focused" : ""}" data-annotation-chain="${esc(cid)}" data-date="${config.day.date}" aria-label="${esc(config.name(cid))}的工作说明" ${this.narrow && !focused ? "hidden" : ""}>
           <button type="button" class="journal-floating-head" data-note="${esc(cid)}" aria-pressed="${focused}" aria-label="${esc(config.name(cid))}，点击聚焦，拖动调整位置，方向键移动"><span class="journal-note-letter">${String.fromCharCode(65 + index)}</span><strong>${esc(config.name(cid))}</strong><span class="journal-note-grip" aria-hidden="true">⠿</span></button>
           <p class="journal-note-copy">${esc(note.note || "注解待补")}</p>
+          ${config.evidence ? config.evidence(cid, !focused) : ""}
           <div class="journal-note-meta"><span>归属提交量 <b>${amount === null ? "待核" : esc(amount)}</b></span><time>${config.day.date.slice(5)}</time></div>
           ${note.outcome === "dropped" ? '<span class="journal-fate-badge">本条方案未采用</span>' : ""}
-          <div class="journal-note-extra">${config.day.reports_covering?.length || config.day.report ? "有相关汇报" : "未关联汇报"}${shared ? `<br>含 ${shared} 条跨链提交的份额` : ""}${amount === 0 ? "<br>当日无已归属提交；当天有工作记录" : ""}${note.outcome_note ? `<br>${esc(note.outcome_note)}` : ""}</div>
+          <div class="journal-note-extra">${config.reports ? `相关汇报：${config.reports}` : "未关联汇报"}${shared ? `<br>含 ${shared} 条跨链提交的份额` : ""}${amount === 0 ? "<br>当日无已归属提交；当天有工作记录" : ""}${note.outcome_note ? `<br>${esc(note.outcome_note)}` : ""}</div>
         </article>`;
       }).join("");
       this.leaders = config.canvas.querySelector(".journal-note-leaders");
@@ -243,6 +244,15 @@
     }
     wire(card) {
       const head = card.querySelector(".journal-floating-head"), cid = card.dataset.annotationChain;
+      card.querySelectorAll(".journal-point-sources").forEach(details => details.addEventListener("toggle", () => {
+        if (!card.isConnected || !this.config) return;
+        this.capture(); this.layout();
+        if (!details.open) return;
+        const top = document.querySelector(".journal-atlas-header").getBoundingClientRect().bottom + 12;
+        const box = card.getBoundingClientRect();
+        if (box.top < top) window.scrollBy({top: box.top - top, behavior: "instant"});
+        else if (box.bottom > innerHeight - 16) window.scrollBy({top: Math.min(box.bottom - innerHeight + 16, box.top - top), behavior: "instant"});
+      }));
       let drag = null, moved = false;
       head.onclick = event => { if (moved) { moved = false; return; } document.getElementById("view-journal").classList.toggle("is-keyboard", event.detail === 0); if (this.config.focused !== cid) this.onFocus(cid); };
       head.onpointerdown = event => {

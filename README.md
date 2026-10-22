@@ -127,6 +127,8 @@ python scripts/collect_journal_attribution.py --check
 
 任务点按该任务当天的归属提交量计重，采用统一的对数点径刻度。逐条归属另存于 `content/journal/_attribution/`，由 `scripts/collect_journal_attribution.py` 读取完整Git清单和 `scripts/journal_attribution_rules.json` 生成。刷新证据后须复核新提交的目标、共享实现与跨链记录，补相应规则或逐SHA处置，再更新归属产物；候选规则不等于已经人工逐条读完差异。每条提交合计一份，明确跨任务才等分；待核、维护、历史导入和范围外记录不进入点径。详细分类、边界与待核项见[任务提交归属复核](docs/journal-review/task-attribution-2026-10-21.md)。
 
+工作点采用已选定的 A「空实分层」：实心表示有可查产物，空心表示当前仅见交流，虚线轮廓表示证据待核。`scripts/journal_point_evidence.py` 在构建时读取同日同任务的完整提交归属和已有固定来源登记；文档需有写入回执，交流需有带时间与哈希的原始消息定位。新来源应先进入来源登记，缺少依据的点不会按零提交自动认定为交流。浮窗及每日各项记录可展开产物、交流的独立入口，相关汇报另列文字链接。
+
 正式版的 `#/journal` 在宽屏默认图谱、窄屏默认清单；日期、链条和视图均可用深链打开。证据第一次展开才请求，离线版使用内联数据。浏览器验收使用 `node scripts/verify_journal.cjs`；可通过 `JOURNAL_BASE_URL` 和 `JOURNAL_OFFLINE_DIR` 指定隔离构建。
 
 本次实施与发布结果见 [2026-10-20 验收记录](docs/journal-review/acceptance-2026-10-20.md)。2026-10-22 按原始记录重审了全部日卡和链条，结论与修改见[研究日志复查](docs/journal-review/claude-review-2026-10-21.md)；日卡写法和链条边界见每日更新规则的“写法”“链条边界”两节。

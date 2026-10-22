@@ -605,6 +605,10 @@ class Builder:
         if missing:
             self.warnings.append(f"日志还有 {missing} 天缺少每日记录，已回落为待写条目")
         by_chain = {c["id"]: c for c in chains}
+        from scripts.journal_point_evidence import point_evidence
+        source_path = CONTENT_DIR.parent / "docs/journal-review/rebuild-2026-10-21/source-register.json"
+        source_register = self.read_json(source_path) if source_path.exists() else {}
+        source_documents = {d["id"]: d for d in source_register.get("documents", [])}
         daily = {p.key: p for p in self.daily_pages}
         attribution_fingerprints = {}
         for filename, field in [("journal_repos.json", "source_config_sha256"),
@@ -707,6 +711,9 @@ class Builder:
                 entry["attribution_summary"] = {k: v for k, v in attribution_summary.items() if k != "chains"}
             if meta.get("date_notes"):
                 entry["date_notes"] = {cid: str(note) for cid, note in meta["date_notes"].items() if cid in picked}
+            entry["chain_evidence"] = {cid: point_evidence(
+                key, cid, attribution, source_register.get("days", {}).get(key, {}),
+                source_documents, {r["repo"]: r.get("commit_url", "") for r in ev.get("repos", [])}) for cid in picked}
             self.journal_entries.append(entry)
             # 标题和摘要来自已有构建结果，不额外复制日报正文。
             ev = {**ev, "reports_covering": covering, "reports_published": published, "reports": [

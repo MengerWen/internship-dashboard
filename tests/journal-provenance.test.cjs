@@ -86,3 +86,20 @@ test('原始依据只接受 GitHub HTTPS 链接并转义标题和属性', () => 
   assert.ok(html.includes('&lt;源文件&gt;'));
   assert.ok(html.includes('abc&quot;'));
 });
+
+test('证据空实与汇报和提交量分开，零提交文档仍有产物', () => {
+  const day = {report: '2026-10-21', reports_covering: ['2026-10-21'], chain_weights: {a: {value: 0}},
+    chain_evidence: {a: {status: 'artifact', kinds: ['文档'], document_count: 1, artifacts: [{title: '<计划>', label: '文档写入记录', url: 'https://github.com/org/repo/blob/main/plan.md'}], discussions: []}}};
+  assert.equal(journal.pointEvidence(day, 'a').status, 'artifact');
+  assert.equal(journal.pointEvidence(day, 'missing').status, 'pending');
+  assert.match(journal.evidenceLabel(day, 'a'), /可查产物/);
+  const html = journal.pointEvidenceHtml(day, 'a');
+  assert(html.includes('is-artifact'));
+  assert(html.includes('&lt;计划&gt;'));
+  assert(html.includes('产物'));
+  assert(!html.includes('<计划>'));
+  day.chain_evidence.a = {status: 'discussion', kinds: ['会话'], artifacts: [], discussions: [{title: '比较方案', url: 'https://github.com/org/repo/blob/main/sources.md'}]};
+  assert.match(journal.evidenceLabel(day, 'a'), /仅见交流/);
+  assert(journal.pointEvidenceHtml(day, 'a').includes('比较方案'));
+  assert(!journal.weightLegendHtml().includes('未关联汇报'));
+});
