@@ -78,7 +78,7 @@ test('竖向密集事件分别保留日期锚点，浮窗在链条两侧避让',
   for (const [i, r] of result.cards.entries()) {
     assert.equal(r.anchorY, events[i].anchorY);
     assert(r.x >= bounds.left && r.x + r.w <= bounds.right);
-    assert(r.x >= 628 || r.x + r.w <= 572, '链线周围保留阅读空间');
+    assert(r.x >= 644 || r.x + r.w <= 556, '链线及事件编号周围保留阅读空间');
     assert(r.y >= bounds.top && r.y + r.h <= result.height);
     for (const b of result.cards.slice(i + 1)) assert(r.x + r.w <= b.x || b.x + b.w <= r.x || r.y + r.h <= b.y || b.y + b.h <= r.y);
   }

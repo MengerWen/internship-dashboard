@@ -554,9 +554,12 @@
         context.hidden = false;
         context.innerHTML = `<strong>${esc(this.chains.get(sel.chain)?.short)}</strong><label class="journal-selected-date"><span class="sr-only">选择链条事件</span><select aria-label="选择链条事件">${dates.map(d => `<option value="${d.date}" ${d.date === focused ? "selected" : ""}>${d.date}</option>`).join("")}</select></label>`;
         context.onchange = e => { if (e.target.matches("select")) this.focusChainEvent(e.target.value); };
+        let lastLabelY = -Infinity;
         overlay.innerHTML = dates.map((d, i) => {
           const cy = a.y(d.date), r = a.radius(d, sel.chain), active = d.date === focused;
-          return `${active ? `<circle class="journal-selection-ring" data-date="${d.date}" data-chain="${esc(sel.chain)}" cx="${cx}" cy="${cy}" r="${r + 4}"/>` : ""}<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 39}" y="${cy - 8}" width="24" height="17" rx="2"/><text x="${cx - 27}" y="${cy + 5}" text-anchor="middle">${String(i + 1).padStart(2, "0")}</text></g>`;
+          const numbered = active || cy - lastLabelY >= 18 && Math.abs(cy - a.y(focused)) >= 18;
+          if (numbered) lastLabelY = cy;
+          return `${active ? `<circle class="journal-selection-ring" data-date="${d.date}" data-chain="${esc(sel.chain)}" cx="${cx}" cy="${cy}" r="${r + 4}"/>` : ""}${numbered ? `<g class="journal-point-letter${active ? " is-focused" : ""}"><rect x="${cx - 39}" y="${cy - 7}" width="24" height="14" rx="2"/><text x="${cx - 27}" y="${cy + 4}" text-anchor="middle">${String(i + 1).padStart(2, "0")}</text></g>` : ""}`;
         }).join("");
         this.floatingNotes.render({mode: "chain", group: `chain:${sel.chain}`, chain: sel.chain, atlas: a, ids: dates.map(d => d.date), focused, day: dates[0], dayFor: id => lookup.get(id), anchor: id => ({x: cx, y: a.y(id), radius: a.radius(lookup.get(id), sel.chain)}), svg, annotations, canvas: annotations.parentElement, scroller, context, points: a.ordered.flatMap(c => a.active.get(c.id).map(d => ({x: a.positions.get(c.id), y: a.y(d.date)}))), name: id => `${id.slice(5)} ${lookup.get(id).weekday}`, note: id => this.pointNote(lookup.get(id), sel.chain), weight: id => this.pointWeight(lookup.get(id), sel.chain), evidence: (id, brief) => this.pointEvidenceHtml(lookup.get(id), sel.chain, brief), reports: id => this.reportLinks(lookup.get(id)), onReveal: () => this.revealChainNote(this.chainNoteDate)});
         return;

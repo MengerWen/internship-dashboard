@@ -62,7 +62,7 @@
       }
       let best, bestCost = Infinity;
       const preferredSide = index % 2 ? -1 : 1, rhythm = [0, 24, 8, 40][index % 4];
-      for (const side of [preferredSide, -preferredSide]) for (let gap = 28; gap <= bounds.right - bounds.left; gap += 28) {
+      for (const side of [preferredSide, -preferredSide]) for (let gap = 44; gap <= bounds.right - bounds.left; gap += 28) {
         const x = side > 0 ? card.anchorX + gap : card.anchorX - gap - card.w;
         if (x < bounds.left || x + card.w > bounds.right) continue;
         for (let shift = 0; shift <= 600; shift += 20) for (const direction of shift ? [-1, 1] : [1]) {
@@ -70,13 +70,13 @@
           const candidate = {...card, x, y};
           if (placed.some(other => overlap(candidate, other, 16))) continue;
           const covered = points.reduce((n, p) => n + Number(p.x > x && p.x < x + card.w && p.y > y && p.y < y + card.h), 0);
-          const cost = Math.abs(y + card.h * .42 - card.anchorY) * 3.8 + gap * .35 + Math.abs(gap - 28 - rhythm) * .8 + (side === preferredSide ? 0 : 20) + covered * 5;
+          const cost = Math.abs(y + card.h * .42 - card.anchorY) * 3.8 + gap * .35 + Math.abs(gap - 44 - rhythm) * .8 + (side === preferredSide ? 0 : 20) + covered * 5;
           if (cost < bestCost) { best = candidate; bestCost = cost; }
         }
       }
       if (!best) {
         const right = bounds.right - card.anchorX >= card.anchorX - bounds.left;
-        best = {...card, x: clamp(right ? card.anchorX + 28 : card.anchorX - card.w - 28, bounds.left, bounds.right - card.w), y: Math.max(bounds.top, card.anchorY - card.h * .42)};
+        best = {...card, x: clamp(right ? card.anchorX + 44 : card.anchorX - card.w - 44, bounds.left, bounds.right - card.w), y: Math.max(bounds.top, card.anchorY - card.h * .42)};
         while (placed.some(other => overlap(best, other, 16))) best.y += 20;
       }
       placed.push(best);
