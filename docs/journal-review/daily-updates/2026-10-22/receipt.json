@@ -48,8 +48,9 @@
     "read_failures": 0,
     "materials_changed_during_read": 0,
     "changed_material_routes": {
-      "support": 622,
-      "pending": 441
+      "support": 1047,
+      "reviewed-context": 12,
+      "pending": 4
     }
   },
   "inventory_issues": {
@@ -232,15 +233,48 @@
   },
   "collector_fix_commit": "2e26e2dfc15ee11871591ee60d6fde8cd3bf7e92",
   "collector_fix_remote_confirmed": true,
-  "daily_content_commit": null,
-  "push": "pending",
-  "publication": "pending",
-  "online_verification": "pending",
+  "daily_content_commit": "12dc6f43681d6c5567c23e006bf14d3b3976ab2b",
+  "push": {
+    "status": "confirmed",
+    "remote_main_at_confirmation": "12dc6f43681d6c5567c23e006bf14d3b3976ab2b"
+  },
+  "publication": {
+    "status": "build_success_deployment_observed_online_not_verified",
+    "build_id": "2a82179c-f75d-4884-8680-a427d42267ea",
+    "started_at": "2026-10-22T01:29:01Z",
+    "source_commit": "12dc6f43681d6c5567c23e006bf14d3b3976ab2b",
+    "build_conclusion": "success",
+    "build_completed_at": "2026-10-22T01:35:17Z",
+    "deployment": {
+      "id": "384538ea-77f4-4f36-9f00-d1c90bfc9126",
+      "created_on": "2026-10-22T01:35:07.499986Z",
+      "versions": [
+        {
+          "version_id": "7a27d9d9-bea7-4485-a58d-f41719e6612d",
+          "percentage": 100
+        }
+      ]
+    },
+    "build_version_matches_deployment": true,
+    "build_check_response_sha256": "363233151a8ce3e9500d3c64f8f61dd3bd293e6fd9ac1532430f9e5c5471bfa9"
+  },
+  "online_verification": {
+    "status": "blocked",
+    "reason": "Chrome既有/新标签和内置浏览器线上标签连接超时；本地实际操作通过"
+  },
   "model": {
     "configured": "gpt-6.1-sol",
     "effort": "xhigh",
     "start_turn_context_verified": true,
     "subagents": false,
-    "end_turn_context_verified": false
-  }
+    "end_turn_context_verified": true
+  },
+  "post_collection_source_change": {
+    "repo": "sirui-quant-research",
+    "head": "b777ea20c857de1a3d7f46b3fb783ff509d1ca23",
+    "author_time": "2026-10-22T09:22:37+08:00",
+    "disposition": "22日后续变更留下一轮，当前日卡继续使用冻结的21日原件"
+  },
+  "material_review_scope": "固定到21日的12份变化研究文档核对相关段落；1047项支持/参考；4份现场已出现的22日后续文件留下一轮，来源完整性仍open",
+  "preview_server_stopped": true
 }
