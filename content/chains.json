@@ -1008,8 +1008,8 @@
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
       },
-      "fate": "folded",
-      "fate_note": "六核参数包 10 月 10 日凌晨存档；结构参数 v2 10 月 12 日凌晨交接，七组用 601 日重估，z12 和 λRV 沿用 200 日的 R19 参数。10 月 20 日确认旧参数包缺少修正回放的来源，不能直接用于新的全量计算。",
+      "fate": "dropped",
+      "fate_note": "分组定参方案已停止采用，10 月 20 日的 344 列重新定参计划明确改用一套全局共享六核，不再生成股票日六核表或逐组估计。这条链的历史节点统一标为未采用；当时的预检、参数包和向 328 列计算交接的记录保留。公共采集与归约代码仍可复用，不代表分组方案继续沿用。旧参数包另因缺少修正回放来源，不能直接用于新的全量计算。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1059,6 +1059,15 @@
           ],
           "title": "冻结参数与当前盘口的适用性核验",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [53, 72],
+          "title": "344 列重新定参：改用全局共享六核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-20-corrected-replay-344-recalibration.md#L53-L72"
         }
       ]
     },
@@ -3207,13 +3216,25 @@
     {
       "from": "grouped-calibration",
       "to": "corrected-replay-344",
-      "type": "延续",
+      "type": "依赖解除",
       "date": "2026-10-20",
       "source_date": "2026-10-12",
       "confidence": "confirmed",
       "evidence_kind": "method_reuse",
-      "note": "只复用定参的归约方法和公共采集接口；新范围是全局六核、八组各 601 日，旧参数值不直接沿用。",
+      "note": "分组方案已停止；344 列改用全局六核，仅复用公共采集与归约代码，不沿用分组核表或旧参数值。",
       "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [
+            53,
+            72
+          ],
+          "title": "344 列重新定参：改用全局共享六核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-20-corrected-replay-344-recalibration.md#L53-L72"
+        },
         {
           "kind": "file",
           "repo": "sirui-quant-research",
@@ -3240,9 +3261,9 @@
         }
       ],
       "review": {
-        "by": "Claude",
-        "on": "2026-10-22",
-        "basis": "只复用定参的归约方法和公共采集接口；新范围是全局六核、八组各 601 日，旧参数值不直接沿用。",
+        "by": "Codex",
+        "on": "2026-10-23",
+        "basis": "分组方案已停止；344 列改用全局六核，仅复用公共采集与归约代码，不沿用分组核表或旧参数值。",
         "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
       }
     },
