@@ -49,7 +49,6 @@ class ProvenanceTests(unittest.TestCase):
                 pending.add((cid, day))
                 self.assertIn('## 日期待核', post.content)
                 self.assertIn(reason, post.content)
-        self.assertTrue(pending)
         declared = {(c['id'], day) for c in self.chains.values() for day in c['review']['unreviewed_days']}
         self.assertEqual(pending, declared)
 

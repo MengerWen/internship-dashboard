@@ -1,0 +1,5581 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-23",
+  "baseline_dashboard_revision": "21bebcb454b0d70ee676d24f65eb72fe0cd909ef",
+  "source_revisions": {
+    "sirui-quant-research": "2a0dac94c750eed237207a6bc7d288a81d428130",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "21bebcb454b0d70ee676d24f65eb72fe0cd909ef"
+  },
+  "counts": {
+    "chains": 38,
+    "days": 103,
+    "points": 317,
+    "before_crosses": 16,
+    "after_crosses": 21,
+    "after_circles": 296,
+    "circle_to_cross": 8,
+    "cross_to_circle": 3,
+    "changed_points": 11,
+    "unchanged_points": 306,
+    "fixed_chain_references_checked_before": 89,
+    "native_message_records_checked": 12,
+    "fixed_chain_references_checked_after": 90
+  },
+  "coverage_status": "registered-chain-and-point-review-with-historical-source-gaps",
+  "limitations": [
+    "复核全部已登记的 38 条链、103 个日期及 317 个日点，并核对去留决定；不等于对尚未登记的历史工作作了无遗漏证明。",
+    "既有 2026-10-23 独立来源清单仍列 36 份 Claude 正文缺口。本轮补读明确决定的原始消息，未重新执行全部历史来源清点，也未把这些缺口签收为已补齐。",
+    "圆点保留表示未发现足以将该点主要工作认定为被舍弃的决定，不保证每一个候选、参数或产物都进入最新版本。"
+  ],
+  "decision_rules": [
+    "整条独立方案已明确舍弃时，其历史研究、实现、试跑点统一标 ×；完成过实现不构成恢复圆点的理由。",
+    "保留链内的独立弃用方案只标对应点，不能扩大到整条链。",
+    "同时包含取舍和新工作的点，按该点所记录的主要方案判断，并写明保留与舍弃范围。",
+    "未执行、临时暂停、性能未达标、收益不佳或正常版本替换，单独不足以判为舍弃。"
+  ],
+  "changes": [
+    {
+      "date": "2026-07-09",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "搭评价流程并修正代码",
+      "after_note": "搭建硬评分评价体系（后弃用）",
+      "reason": "旧 anchors/evalv2 硬评分被 7 月 10 日的新主线明确停止，旧点应标为未采用。"
+    },
+    {
+      "date": "2026-07-10",
+      "chain": "algobench",
+      "before_outcome": "dropped",
+      "after_outcome": "landed",
+      "before_symbol": "×",
+      "after_symbol": "○",
+      "symbol_changed": true,
+      "before_note": "放弃旧方向，重写关注度因子计划",
+      "after_note": "转向关注度因子并修正 L3 尺度",
+      "reason": "该点主要记录新关注度计划和 L3 修正，属于保留工作；不能因提到放弃旧方向而打叉。"
+    },
+    {
+      "date": "2026-07-18",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "加自适应工作进程和故障降级重试",
+      "after_note": "试做自适应并发与降级（后取消）",
+      "reason": "自适应升降档方案被回滚，7 月 19 日用户明确完全取消 ladder。"
+    },
+    {
+      "date": "2026-07-29",
+      "chain": "gates",
+      "before_outcome": "dropped",
+      "after_outcome": "landed",
+      "before_symbol": "×",
+      "after_symbol": "○",
+      "symbol_changed": true,
+      "before_note": "取消价格硬筛选，保留数量门",
+      "after_note": "采用 10% 数量门和连续价格评分",
+      "reason": "最终采用的是 10% 数量门与连续价格评分；舍弃价格硬门不等于舍弃替代方案。"
+    },
+    {
+      "date": "2026-08-15",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "调整资源规则并补随机森林筛选",
+      "after_note": "实现随机森林两阶段筛选（后撤销）",
+      "reason": "随机森林两阶段筛选在 8 月 16 日被明确撤销；共享资源修复另行保留。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "建立跨股票同步预查和执行方案",
+      "after_note": "建立跨股票同步预查和执行方案",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "实现单日预查并保存性能诊断",
+      "after_note": "实现单日预查并保存性能诊断",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-10",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "改进跨股预查的暂存与输出",
+      "after_note": "改进跨股预查的暂存与输出",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-11",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "跑通单日预查后决定停止",
+      "after_note": "跑通单日预查后决定停止",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-10-15",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "停止机械撤单稳定性分析的后续生成",
+      "after_note": "停止机械撤单稳定性分析的后续生成",
+      "reason": "该点专指停止的逐股 bootstrap 稳定性研究；相位因子与机械撤单点值继续保留。"
+    },
+    {
+      "date": "2026-10-16",
+      "chain": "behavior-design",
+      "before_outcome": "dropped",
+      "after_outcome": "landed",
+      "before_symbol": "×",
+      "after_symbol": "○",
+      "symbol_changed": true,
+      "before_note": "V3 比例尺寸线写了又撤销",
+      "after_note": "撤回越界预检，继续研讨 V3 方向",
+      "reason": "撤回的是越界实施与运行，原始用户消息明确要求继续研究 V3。"
+    }
+  ],
+  "chains": [
+    {
+      "id": "onboarding",
+      "label": "上手：米筐环境与交易规则",
+      "fate": "landed",
+      "point_count": 4,
+      "cross_count": 0,
+      "circle_count": 4,
+      "reason": "米筐示例、规则资料和答疑已经完成，未发现舍弃这项工作的决定。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+          "path": "26 Summer/❗思瑞投资/米筐Ricequant/reports/buy_and_hold_report.csv/portfolio.csv",
+          "lines": [
+            1,
+            5
+          ],
+          "title": "米筐示例回测输出",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E7%B1%B3%E7%AD%90Ricequant/reports/buy_and_hold_report.csv/portfolio.csv#L1-L5"
+        },
+        {
+          "kind": "commit",
+          "repo": "Quant_Research-Trading",
+          "revision": "b852739ab5018ad30df1972dbbd5f7f96d9f613c",
+          "title": "沪深规则与异常交易监控资料提交",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/commit/b852739ab5018ad30df1972dbbd5f7f96d9f613c"
+        }
+      ]
+    },
+    {
+      "id": "doris-migration",
+      "label": "服务器迁移与 Doris 取数",
+      "fate": "landed",
+      "point_count": 8,
+      "cross_count": 2,
+      "circle_count": 6,
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/服务器迁移与Doris数据访问重构总计划_2026-07-15.md",
+          "lines": [
+            3,
+            100
+          ],
+          "title": "服务器迁移与 Doris 数据访问重构 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%81%E7%A7%BB%E4%B8%8EDoris%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E9%87%8D%E6%9E%84%E6%80%BB%E8%AE%A1%E5%88%92_2026-07-15.md#L3-L100"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9e4260f4425b3b158b6d71fdf7a9b410ace8bf38",
+          "path": "lv2_snapshot_workspace/src/snapshot/io.py",
+          "lines": [
+            1,
+            205
+          ],
+          "title": "Doris 唯一网关的实际实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9e4260f4425b3b158b6d71fdf7a9b410ace8bf38/lv2_snapshot_workspace/src/snapshot/io.py#L1-L205"
+        }
+      ]
+    },
+    {
+      "id": "wangly-env",
+      "label": "服务器环境与跨账户结果传输",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "跨账户传输和环境修复有独立交付；环境版本更新未取消这项目标。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-04-wangly-environment-bootstrap.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "wangly 计算环境引导 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-04-wangly-environment-bootstrap.md#L5-L43"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-04-wangly-result-transfer-acceptance.md",
+          "lines": [
+            3,
+            41
+          ],
+          "title": "wangly 到 wenjie 结果传输验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-04-wangly-result-transfer-acceptance.md#L3-L41"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-full-recompute-admission.md",
+          "lines": [
+            3,
+            40
+          ],
+          "title": "全量重算前核验与默认环境验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-full-recompute-admission.md#L3-L40"
+        }
+      ]
+    },
+    {
+      "id": "doris-efficiency",
+      "label": "Doris 公共取数入口与实测",
+      "fate": "landed",
+      "point_count": 2,
+      "cross_count": 0,
+      "circle_count": 2,
+      "reason": "公共入口实际用于后续任务；部分样本变慢不等于整个入口被舍弃。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-09-general-compute-efficiency.md",
+          "lines": [
+            3,
+            108
+          ],
+          "title": "后续计算任务的通用取数与效率方案",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-general-compute-efficiency.md#L3-L108"
+        }
+      ]
+    },
+    {
+      "id": "storage-cleanup",
+      "label": "存储盘点与清理",
+      "fate": "landed",
+      "point_count": 26,
+      "cross_count": 0,
+      "circle_count": 26,
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-11-server-storage-cleanup.md",
+          "lines": [
+            1,
+            38
+          ],
+          "title": "2026-09-11 双服务器存储检查与清理",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-11-server-storage-cleanup.md#L1-L38"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-12-calibration-storage-cleanup.md",
+          "lines": [
+            1,
+            38
+          ],
+          "title": "2026-10-12 深市定参完成后的存储清理",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-12-calibration-storage-cleanup.md#L1-L38"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-16-szse-model328-storage-closeout.md",
+          "lines": [
+            3,
+            51
+          ],
+          "title": "深市328列计算与提速任务的存储收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-szse-model328-storage-closeout.md#L3-L51"
+        }
+      ]
+    },
+    {
+      "id": "lv2-snapshot",
+      "label": "逐笔数据重建 100ms 盘口快照",
+      "fate": "landed",
+      "point_count": 5,
+      "cross_count": 0,
+      "circle_count": 5,
+      "reason": "快照任务与样本对照已交付；后续修正回放继续其数据工程目标。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "41a3f9522814fc622e5723b89ae93cc09c27ef17",
+          "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/README.md",
+          "lines": [
+            3,
+            99
+          ],
+          "title": "LV2 Snapshot Workspace",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/41a3f9522814fc622e5723b89ae93cc09c27ef17/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/lv2_snapshot_workspace/README.md#L3-L99"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+          "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "源数据说明书：A股 Level-2 逐笔事件流（用于\"聪明钱\"/算法交易痕迹因子研究）",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/lv2_snapshot_workspace/DATA_SUMMARY_for_smartmoney.md#L1-L46"
+        }
+      ]
+    },
+    {
+      "id": "replay",
+      "label": "深市订单簿回放正确性核验",
+      "fate": "landed",
+      "point_count": 5,
+      "cross_count": 0,
+      "circle_count": 5,
+      "reason": "回放核验和修正成为重新定参的输入，旧参数被拒收不等于回放研究被舍弃。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-17-szse-replay-rule-verification.md",
+          "lines": [
+            3,
+            88
+          ],
+          "title": "2026-06-30 深市盘口回放：交易规则核验与因子影响",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-17-szse-replay-rule-verification.md#L3-L88"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-18-szse-replay-production-multiday.md",
+          "lines": [
+            3,
+            88
+          ],
+          "title": "深市修复回放生产化与三个交易日复核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-replay-production-multiday.md#L3-L88"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-replay-and-stages-delivery.md",
+          "lines": [
+            3,
+            40
+          ],
+          "title": "回放依赖与正式执行阶段交付",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-replay-and-stages-delivery.md#L3-L40"
+        }
+      ]
+    },
+    {
+      "id": "literature",
+      "label": "论文复现与首个因子框架",
+      "fate": "folded",
+      "point_count": 6,
+      "cross_count": 0,
+      "circle_count": 6,
+      "reason": "论文方法、生命周期和基础框架被后续工程实际复用；没有证据将文献研究整体视作未采用。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "94492df7f1e937c20fa9727351ad5ad90326ec7f",
+          "path": "26 Summer/❗思瑞投资/因子/factor_lab/configs/default.yaml",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "首个因子框架的快照输入配置",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/94492df7f1e937c20fa9727351ad5ad90326ec7f/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/factor_lab/configs/default.yaml#L1-L20"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "80513f65e40b4c89ef2d2e23b36a75283cfafd59",
+          "path": "26 Summer/❗思瑞投资/因子/algobench/README.md",
+          "lines": [
+            3,
+            18
+          ],
+          "title": "algobench",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/80513f65e40b4c89ef2d2e23b36a75283cfafd59/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/README.md#L3-L18"
+        }
+      ]
+    },
+    {
+      "id": "algobench",
+      "label": "论文指标与主动关注度面板",
+      "fate": "folded",
+      "point_count": 9,
+      "cross_count": 1,
+      "circle_count": 8,
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+          "path": "26 Summer/❗思瑞投资/因子/PLAN/PLAN_12_主动算法关注度因子_未来1至3日IC_2026-07-10.md",
+          "lines": [
+            25,
+            42
+          ],
+          "title": "7 月 10 日停止旧硬评分，转向关注度研究",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/e63c0d3726d03245724fd15e59ecf8ff0000a825/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/PLAN/PLAN_12_%E4%B8%BB%E5%8A%A8%E7%AE%97%E6%B3%95%E5%85%B3%E6%B3%A8%E5%BA%A6%E5%9B%A0%E5%AD%90_%E6%9C%AA%E6%9D%A51%E8%87%B33%E6%97%A5IC_2026-07-10.md#L25-L42"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "80513f65e40b4c89ef2d2e23b36a75283cfafd59",
+          "path": "26 Summer/❗思瑞投资/因子/algobench/README.md",
+          "lines": [
+            3,
+            18
+          ],
+          "title": "algobench",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/80513f65e40b4c89ef2d2e23b36a75283cfafd59/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/README.md#L3-L18"
+        },
+        {
+          "kind": "file",
+          "repo": "Quant_Research-Trading",
+          "revision": "b4f413755c07c9e482e24b96330197045f125567",
+          "path": "26 Summer/❗思瑞投资/因子/algobench/configs/attention13_m202507.yaml",
+          "lines": [
+            23,
+            59
+          ],
+          "title": "主动关注度与单月评价配置",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/b4f413755c07c9e482e24b96330197045f125567/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/configs/attention13_m202507.yaml#L23-L59"
+        }
+      ]
+    },
+    {
+      "id": "formal-engine",
+      "label": "正式因子计算：订单配对与行为评分",
+      "fate": "folded",
+      "point_count": 13,
+      "cross_count": 0,
+      "circle_count": 13,
+      "reason": "配对、评分及共享计算继续进入后续正式流程。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "a214f26e0756739d7aedfe9b0eb909f2c3203ef3",
+          "path": "因子/algobench/src/algobench/formal_engine.py",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "正式因子引擎实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/a214f26e0756739d7aedfe9b0eb909f2c3203ef3/%E5%9B%A0%E5%AD%90/algobench/src/algobench/formal_engine.py#L1-L46"
+        }
+      ]
+    },
+    {
+      "id": "gates",
+      "label": "数量和价格筛选规则、历史区间扩展",
+      "fate": "folded",
+      "point_count": 6,
+      "cross_count": 0,
+      "circle_count": 6,
+      "reason": "保留 10% 数量门与连续价格评分；取消价格硬门是采用替代方案的决定。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-07-27-开盘前三分钟连续评分可行性重构实施计划.md",
+          "lines": [
+            7,
+            34
+          ],
+          "title": "开盘前三分钟连续评分可行性重构 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-07-27-%E5%BC%80%E7%9B%98%E5%89%8D%E4%B8%89%E5%88%86%E9%92%9F%E8%BF%9E%E7%BB%AD%E8%AF%84%E5%88%86%E5%8F%AF%E8%A1%8C%E6%80%A7%E9%87%8D%E6%9E%84%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L7-L34"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-02-2026年固定参数全区间因子评价实施计划.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "2026-01-05 至最新完整交易日固定参数全因子统一评价实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-02-2026%E5%B9%B4%E5%9B%BA%E5%AE%9A%E5%8F%82%E6%95%B0%E5%85%A8%E5%8C%BA%E9%97%B4%E5%9B%A0%E5%AD%90%E8%AF%84%E4%BB%B7%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L5-L43"
+        }
+      ]
+    },
+    {
+      "id": "fixed-history",
+      "label": "固定参数的历史补算与结果解释",
+      "fate": "folded",
+      "point_count": 6,
+      "cross_count": 0,
+      "circle_count": 6,
+      "reason": "历史补算与异常解释已经交付并提供后续对照；不把历史回看误称为样本外。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-03-fixed-history-through-latest-complete-design.md",
+          "lines": [
+            5,
+            43
+          ],
+          "title": "固定参数历史评价覆盖至最新完整日：设计",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-03-fixed-history-through-latest-complete-design.md#L5-L43"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md",
+          "lines": [
+            5,
+            21
+          ],
+          "title": "Open5m 2025–2026H1 Formal Evaluation and Performance Design",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md#L5-L21"
+        }
+      ]
+    },
+    {
+      "id": "open5m",
+      "label": "开盘五分钟新因子库",
+      "fate": "folded",
+      "point_count": 10,
+      "cross_count": 0,
+      "circle_count": 10,
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md",
+          "lines": [
+            5,
+            21
+          ],
+          "title": "Open5m 2025–2026H1 Formal Evaluation and Performance Design",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-open5m-2025-2026h1-performance-design.md#L5-L21"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-高频量价与微观结构新因子批量构建实施计划.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "Open5m“算法交易订单占比”新因子批量构建实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-%E9%AB%98%E9%A2%91%E9%87%8F%E4%BB%B7%E4%B8%8E%E5%BE%AE%E8%A7%82%E7%BB%93%E6%9E%84%E6%96%B0%E5%9B%A0%E5%AD%90%E6%89%B9%E9%87%8F%E6%9E%84%E5%BB%BA%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L30"
+        }
+      ]
+    },
+    {
+      "id": "old-factor-calibration",
+      "label": "旧因子全期定标",
+      "fate": "folded",
+      "point_count": 11,
+      "cross_count": 0,
+      "circle_count": 11,
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-27-2024-2026Q2因子定标与3.11秒硬门实施计划.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2024—2026Q2 旧因子连续核重新定标实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-27-2024-2026Q2%E5%9B%A0%E5%AD%90%E5%AE%9A%E6%A0%87%E4%B8%8E3.11%E7%A7%92%E7%A1%AC%E9%97%A8%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L30"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-08/2026-08-28-open5m-kernel-calibration-2024-2026q2.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2024—2026Q2 旧因子连续核重新定标验收报告",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-08/2026-08-28-open5m-kernel-calibration-2024-2026q2.md#L1-L30"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2026-09-08 正式200日定标交付",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-08-frozen-parameters-200-delivery.md#L1-L30"
+        }
+      ]
+    },
+    {
+      "id": "cancel-phase",
+      "label": "撤单等待时间、相位与机械撤单",
+      "fate": "landed",
+      "point_count": 18,
+      "cross_count": 1,
+      "circle_count": 17,
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md",
+          "lines": [
+            5,
+            85
+          ],
+          "title": "Open5m 沪深 A 股撤单时间差分布研究实施计划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-19-open5m-cancel-lag-distribution-design.md#L5-L85"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-01-cancel-phase-factor-library-implementation.md",
+          "lines": [
+            17,
+            59
+          ],
+          "title": "Cancel Phase Factor Library Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-01-cancel-phase-factor-library-implementation.md#L17-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/PRESCREEN_RESULT.json",
+          "lines": [
+            1,
+            25
+          ],
+          "title": "机械撤单全期结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-11-mechanical-cancel-final-evidence/PRESCREEN_RESULT.json#L1-L25"
+        }
+      ]
+    },
+    {
+      "id": "depth-match",
+      "label": "盘口深度匹配预查与 24 列因子",
+      "fate": "landed",
+      "point_count": 5,
+      "cross_count": 0,
+      "circle_count": 5,
+      "reason": "24 列结果被模型和 344 列清单继续使用；C7.2 的舍弃不归入 C7.1 整条深度匹配链。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md",
+          "lines": [
+            5,
+            30
+          ],
+          "title": "C7.1 精确盘口深度匹配规律预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-05-C7.1-exact-depth-market-pattern-prescreen.md#L5-L30"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-08-depth-match-full-history-completion.md",
+          "lines": [
+            3,
+            118
+          ],
+          "title": "2026-09-08 盘口深度匹配全历史交付",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-08-depth-match-full-history-completion.md#L3-L118"
+        }
+      ]
+    },
+    {
+      "id": "old-factor-bank",
+      "label": "旧因子修改与全期重算",
+      "fate": "folded",
+      "point_count": 22,
+      "cross_count": 0,
+      "circle_count": 22,
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md",
+          "lines": [
+            15,
+            369
+          ],
+          "title": "Open5m 旧因子改造与单日 300 秒验收 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-07-old-factor-bank-implementation-and-300s-gate.md#L15-L369"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-10-old-factor-formal-execution.md",
+          "lines": [
+            3,
+            93
+          ],
+          "title": "旧因子正式评分执行记录",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-10-old-factor-formal-execution.md#L3-L93"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "content/daily/2026-09-16.md",
+          "lines": [
+            15,
+            21
+          ],
+          "title": "开盘五分钟的订单行为",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/content/daily/2026-09-16.md#L15-L21"
+        }
+      ]
+    },
+    {
+      "id": "grouped-calibration",
+      "label": "按股票和市场状态分组定标",
+      "fate": "dropped",
+      "point_count": 10,
+      "cross_count": 10,
+      "circle_count": 0,
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-08-grouped-calibration-bucket-precheck.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "深市老因子分组定标：定档预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-08-grouped-calibration-bucket-precheck.md#L3-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-10-grouped-kernel-calibration-v1.md",
+          "lines": [
+            1,
+            31
+          ],
+          "title": "2026-10-10 深市六核分组定标 v1 结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-10-grouped-kernel-calibration-v1.md#L1-L31"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-12-old-factor-recompute-preparation.md",
+          "lines": [
+            3,
+            37
+          ],
+          "title": "深市全期结构参数 v2 发布与交接",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-12-old-factor-recompute-preparation.md#L3-L37"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [
+            53,
+            72
+          ],
+          "title": "344 列重新定参：改用全局共享六核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-20-corrected-replay-344-recalibration.md#L53-L72"
+        }
+      ]
+    },
+    {
+      "id": "szse-model328",
+      "label": "深市 328 列因子的计算与评价",
+      "fate": "landed",
+      "point_count": 9,
+      "cross_count": 0,
+      "circle_count": 9,
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-10-12-szse-model328-factor-recompute.md",
+          "lines": [
+            5,
+            107
+          ],
+          "title": "深市 328 列模型输入因子全期重算 PLAN",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-10-12-szse-model328-factor-recompute.md#L5-L107"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-18-szse-model328-factor-performance.md",
+          "lines": [
+            3,
+            38
+          ],
+          "title": "深市328列因子的601日收益评价",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-model328-factor-performance.md#L3-L38"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        }
+      ]
+    },
+    {
+      "id": "sse-v2",
+      "label": "沪市委托还原与公开可见因子",
+      "fate": "landed",
+      "point_count": 18,
+      "cross_count": 0,
+      "circle_count": 18,
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-09/2026-09-22-sse-replay-implementation.md",
+          "lines": [
+            3,
+            59
+          ],
+          "title": "2026-09-22 沪市原生回放与因子输入验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-09/2026-09-22-sse-replay-implementation.md#L3-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-16-sse-visible-g1-v2.md",
+          "lines": [
+            3,
+            53
+          ],
+          "title": "沪市G1三值判定：实现进度与速度验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-sse-visible-g1-v2.md#L3-L53"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-21-sse-visible-v3-implementation.md",
+          "lines": [
+            3,
+            126
+          ],
+          "title": "沪市可见口径 v3：实现与深市验收状态",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-21-sse-visible-v3-implementation.md#L3-L126"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "68790e00a005899842ebcadcce7fcd32dabcaf6b",
+          "path": "reports/2026-10/2026-10-21-sse-visible-v3-substitution-acceptance.md",
+          "lines": [
+            1,
+            105
+          ],
+          "title": "输入替换局部验收、版本边界与缓存阻塞",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/68790e00a005899842ebcadcce7fcd32dabcaf6b/reports/2026-10/2026-10-21-sse-visible-v3-substitution-acceptance.md#L1-L105"
+        }
+      ]
+    },
+    {
+      "id": "ml-exec",
+      "label": "127 输入多模型族研究",
+      "fate": "folded",
+      "point_count": 15,
+      "cross_count": 1,
+      "circle_count": 14,
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/data.py",
+          "lines": [
+            107,
+            178
+          ],
+          "title": "模型输入的冻结来源检查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/data.py#L107-L178"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-11-Open5m-ML实现前仓库审计.md",
+          "lines": [
+            1,
+            42
+          ],
+          "title": "Open5m ML 实现前仓库审计",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-11-Open5m-ML%E5%AE%9E%E7%8E%B0%E5%89%8D%E4%BB%93%E5%BA%93%E5%AE%A1%E8%AE%A1.md#L1-L42"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "path": "PLAN/2026-08-04-51个count因子机器学习与结构诊断实施计划.md",
+          "lines": [
+            1,
+            25
+          ],
+          "title": "51 个 count 输入的模型计划（8 月 11 日改为 127 个 total-only）",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2318d2ff29815213e6f108cb3308629dfa601869/PLAN/2026-08-04-51%E4%B8%AAcount%E5%9B%A0%E5%AD%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BB%93%E6%9E%84%E8%AF%8A%E6%96%AD%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92.md#L1-L25"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-08-06-2026年至今全量原始因子LightGBM实施与运行计划.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "2026 年至今全量原始因子 LightGBM Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-08-06-2026%E5%B9%B4%E8%87%B3%E4%BB%8A%E5%85%A8%E9%87%8F%E5%8E%9F%E5%A7%8B%E5%9B%A0%E5%AD%90LightGBM%E5%AE%9E%E6%96%BD%E4%B8%8E%E8%BF%90%E8%A1%8C%E8%AE%A1%E5%88%92.md#L1-L30"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "2318d2ff29815213e6f108cb3308629dfa601869",
+          "title": "8 月 10 日两份模型计划首次入库",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2318d2ff29815213e6f108cb3308629dfa601869"
+        }
+      ]
+    },
+    {
+      "id": "ml-330",
+      "label": "601 日 LightGBM：试跑、候选研究与因果复算",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "试跑、候选设施与因果复算分开记录；尚未跑完全部候选不构成已经放弃候选研究的证据。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml",
+          "lines": [
+            24,
+            42
+          ],
+          "title": "330 列研究的三类封存因子来源",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/configs/intraday_ml_open5m_330_lightgbm_v1.yaml#L24-L42"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-21-causal-single-fit-recompute.md",
+          "lines": [
+            1,
+            9
+          ],
+          "title": "2026-09-21 固定时点选股与持仓估值模型重算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-21-causal-single-fit-recompute.md#L1-L9"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "因子/algobench/src/algobench/ml/open5m_330_candidates.py",
+          "lines": [
+            1,
+            8
+          ],
+          "title": "open5m_330_candidates.py",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/%E5%9B%A0%E5%AD%90/algobench/src/algobench/ml/open5m_330_candidates.py#L1-L8"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "scripts/run_intraday_ml_open5m_330_study.py",
+          "lines": [
+            1,
+            10
+          ],
+          "title": "run_intraday_ml_open5m_330_study.py",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/scripts/run_intraday_ml_open5m_330_study.py#L1-L10"
+        }
+      ]
+    },
+    {
+      "id": "dashboard-build",
+      "label": "研究成果看板建站",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "站点功能持续使用，建站工作保留。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "1b792246376fa7a0cdd20025642d3be0c9a85544",
+          "title": "md解释 26.7.7 22:24",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/1b792246376fa7a0cdd20025642d3be0c9a85544"
+        }
+      ]
+    },
+    {
+      "id": "report-publish",
+      "label": "汇报发布与看板日常维护",
+      "fate": "landed",
+      "point_count": 34,
+      "cross_count": 0,
+      "circle_count": 34,
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "11d42ebed84aa734e189b30d63c782f7cb816f1b",
+          "title": "fix(docs): render daily report formulas",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/11d42ebed84aa734e189b30d63c782f7cb816f1b"
+        }
+      ]
+    },
+    {
+      "id": "visual-b",
+      "label": "研究编辑台版式改造",
+      "fate": "landed",
+      "point_count": 1,
+      "cross_count": 0,
+      "circle_count": 1,
+      "reason": "用户明确选择的 B 版式继续使用；没有将未选设计方向画成正式工作点。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "direction-approved.md",
+          "lines": [
+            15,
+            35
+          ],
+          "title": "设计方向批准记录",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/direction-approved.md#L15-L35"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "docs/plans/2026-08-11-research-desk-visual-refresh.md",
+          "lines": [
+            5,
+            85
+          ],
+          "title": "Research Desk Visual Refresh Implementation Plan",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/docs/plans/2026-08-11-research-desk-visual-refresh.md#L5-L85"
+        }
+      ]
+    },
+    {
+      "id": "report-tags",
+      "label": "汇报标签与报告浏览功能",
+      "fate": "landed",
+      "point_count": 2,
+      "cross_count": 0,
+      "circle_count": 2,
+      "reason": "在线标签、方向比较、筛选与排序继续使用。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "7896f7d9782ce572cdb13f867733be9c6bd3b75d",
+          "title": "feat: add persistent report tags and topic filtering",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/7896f7d9782ce572cdb13f867733be9c6bd3b75d"
+        }
+      ]
+    },
+    {
+      "id": "model-report",
+      "label": "LightGBM 模型报告及修订",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "报告修订保留前后版本与比较用途；新报告替换初稿不等于报告任务被放弃。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "a4f5af84182616227fe6d21c86c7a29e00631b63",
+          "title": "发布9月18日LightGBM模型设置、test结果与18张诊断图",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/a4f5af84182616227fe6d21c86c7a29e00631b63"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "content/assets/model-report-2026-09-18/README.md",
+          "lines": [
+            3,
+            30
+          ],
+          "title": "2026-09-18 模型试验图表数据",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/content/assets/model-report-2026-09-18/README.md#L3-L30"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "bc1098eb8bc950290a83e37b92ad6da1c730d67d",
+          "title": "Publish causal Open5m 328-factor model recompute",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/bc1098eb8bc950290a83e37b92ad6da1c730d67d"
+        }
+      ]
+    },
+    {
+      "id": "report328",
+      "label": "328 列因子的 601 日结果报告",
+      "fate": "landed",
+      "point_count": 1,
+      "cross_count": 0,
+      "circle_count": 1,
+      "reason": "历史评价报告已交付，仍承担新旧结果对照；不以此声称新样本外验证通过。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-18-szse-model328-report.md",
+          "lines": [
+            3,
+            39
+          ],
+          "title": "深市328列因子的601日收益评价报告",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-18-szse-model328-report.md#L3-L39"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-18-szse-model328-factor-performance.md",
+          "lines": [
+            3,
+            38
+          ],
+          "title": "深市328列因子的601日收益评价",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-18-szse-model328-factor-performance.md#L3-L38"
+        }
+      ]
+    },
+    {
+      "id": "corrected-replay-344",
+      "label": "修正回放下的 344 列重新定参",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "全局六核与八组结构定参仍在推进，和被舍弃的分组路线分开。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+          "lines": [
+            3,
+            127
+          ],
+          "title": "正确盘口 344 列重新定参",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md#L3-L127"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md",
+          "lines": [
+            3,
+            62
+          ],
+          "title": "冻结参数与当前盘口的适用性核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md#L3-L62"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "68790e00a005899842ebcadcce7fcd32dabcaf6b",
+          "path": "reports/2026-10/2026-10-21-kernel-p75-60s.md",
+          "lines": [
+            1,
+            66
+          ],
+          "title": "P75完整冷启动验收与身份边界",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/68790e00a005899842ebcadcce7fcd32dabcaf6b/reports/2026-10/2026-10-21-kernel-p75-60s.md#L1-L66"
+        }
+      ]
+    },
+    {
+      "id": "trading-window-freeze",
+      "label": "交易日早盘自动暂停与恢复",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "已实现并用于真实任务的暂停恢复机制继续保留。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-09-trading-window-freeze.md",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "交易日早盘自动冻结验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-trading-window-freeze.md#L1-L65"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-09-trading-window-freeze-hardening.md",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "早盘自动冻结容错验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-trading-window-freeze-hardening.md#L1-L65"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "深市 328 列全期计算：早盘暂停与恢复核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-13-szse-model328-trading-window-verification.md#L1-L26"
+        }
+      ]
+    },
+    {
+      "id": "research-journal",
+      "label": "研究日志与证据图谱",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "研究日志功能持续使用；来源缺口属于核对范围限制，不是放弃日志的决定。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-20-journal-column.md",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "新栏目「研究日志」实施计划",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column.md#L1-L45"
+        },
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "path": "PLAN/2026-10-20-journal-column-v2.md",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "研究日志第二轮：转竖向推进流，补逐点注解与去留标记",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/PLAN/2026-10-20-journal-column-v2.md#L1-L45"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "902b03b440425600c64ac4ba0030eeab3a36d9e9",
+          "title": "支持研究日志链条图的 Ctrl 滚轮纵向缩放",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/902b03b440425600c64ac4ba0030eeab3a36d9e9"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
+          "title": "支持研究日志点击图例高亮对应交接线",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/0910a201154aa02b6889ad77899943a2eb656d1c"
+        }
+      ]
+    },
+    {
+      "id": "cross-stock-sync",
+      "label": "C3.3 跨股票同步预查",
+      "fate": "dropped",
+      "point_count": 6,
+      "cross_count": 6,
+      "circle_count": 0,
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md",
+          "lines": [
+            1,
+            32
+          ],
+          "title": "C3.3 跨股票同步行为深入预检 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-08-C3.3-cross-stock-synchronization-prescreen.md#L1-L32"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "931697771c6e5ec0b95a662a08d40b319e192abc",
+          "title": "实现 C3.3 全市场六模块汇总与完整单日验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/931697771c6e5ec0b95a662a08d40b319e192abc"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "9e26b6ed8b131a9d387fe62078ef8aeae62b6076",
+          "title": "docs: cancel C3.3 prescreen and remove its execution evidence",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/9e26b6ed8b131a9d387fe62078ef8aeae62b6076"
+        }
+      ]
+    },
+    {
+      "id": "behavior-design",
+      "label": "算法行为构思：B/C/D/V 候选与可行性",
+      "fate": "landed",
+      "point_count": 19,
+      "cross_count": 0,
+      "circle_count": 19,
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3",
+          "path": "docs/journal-review/rebuild-2026-10-21/findings.md",
+          "lines": [
+            1,
+            54
+          ],
+          "title": "算法行为构思：B/C/D/V候选与可行性",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+        }
+      ]
+    },
+    {
+      "id": "mechanism-precheck",
+      "label": "C 系列候选机制的真实分布预查",
+      "fate": "landed",
+      "point_count": 4,
+      "cross_count": 0,
+      "circle_count": 4,
+      "reason": "用户仅舍弃 199 个随机对照世界，明确保留其余真实分布研究。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "decisions/2026-09-03-actual-only-new-factor-prescreen.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "新因子预查改为只统计真实分布",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/decisions/2026-09-03-actual-only-new-factor-prescreen.md#L1-L26"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6",
+          "path": "PLAN/2026-09-02-new-factor-mechanism-prescreen.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "新因子机制预查 Implementation Plan",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/PLAN/2026-09-02-new-factor-mechanism-prescreen.md#L1-L30"
+        }
+      ]
+    },
+    {
+      "id": "model-methods",
+      "label": "模型方法：时间划分、标签与损失函数",
+      "fate": "landed",
+      "point_count": 13,
+      "cross_count": 0,
+      "circle_count": 13,
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3",
+          "path": "docs/journal-review/rebuild-2026-10-21/findings.md",
+          "lines": [
+            1,
+            54
+          ],
+          "title": "模型方法：时间协议、标签与损失函数",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+        }
+      ]
+    },
+    {
+      "id": "strategy-research",
+      "label": "股票池、资金分配与成交假设",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "股票池、资金与成交假设研究提供后续方法选择；部分策略成本情景未通过不等于方法研究被取消。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3",
+          "path": "docs/journal-review/rebuild-2026-10-21/findings.md",
+          "lines": [
+            1,
+            54
+          ],
+          "title": "股票池、资金分配与成交假设",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+        }
+      ]
+    },
+    {
+      "id": "research-code",
+      "label": "研究仓代码结构整改",
+      "fate": "landed",
+      "point_count": 2,
+      "cross_count": 0,
+      "circle_count": 2,
+      "reason": "公共回放与执行阶段整改有实现和验收，未发现撤销这项目标的决定。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3",
+          "path": "docs/journal-review/rebuild-2026-10-21/findings.md",
+          "lines": [
+            1,
+            54
+          ],
+          "title": "研究仓代码结构审查与整改",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+        }
+      ]
+    },
+    {
+      "id": "fund-research",
+      "label": "量化私募与 NEXT 产品研究",
+      "fate": "landed",
+      "point_count": 3,
+      "cross_count": 0,
+      "circle_count": 3,
+      "reason": "两份原始研究材料仍可读取且内容哈希与原登记一致，未发现被明确撤销的决定。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "internship-dashboard",
+          "revision": "21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3",
+          "path": "docs/journal-review/rebuild-2026-10-21/findings.md",
+          "lines": [
+            1,
+            54
+          ],
+          "title": "量化私募与NEXT产品研究",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+        }
+      ]
+    }
+  ],
+  "points": [
+    {
+      "date": "2026-06-23",
+      "chain": "onboarding",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "配置米筐并跑通示例策略",
+      "after_note": "配置米筐并跑通示例策略",
+      "reason": "米筐示例、规则资料和答疑已经完成，未发现舍弃这项工作的决定。"
+    },
+    {
+      "date": "2026-06-24",
+      "chain": "onboarding",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "梳理交易规则重点并补充监控细则",
+      "after_note": "梳理交易规则重点并补充监控细则",
+      "reason": "米筐示例、规则资料和答疑已经完成，未发现舍弃这项工作的决定。"
+    },
+    {
+      "date": "2026-06-24",
+      "chain": "lv2-snapshot",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "接到 100ms 快照任务并读清数据结构",
+      "after_note": "接到 100ms 快照任务并读清数据结构",
+      "reason": "快照任务与样本对照已交付；后续修正回放继续其数据工程目标。"
+    },
+    {
+      "date": "2026-06-25",
+      "chain": "lv2-snapshot",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现 100ms 盘口并修正 3 秒对照",
+      "after_note": "实现 100ms 盘口并修正 3 秒对照",
+      "reason": "快照任务与样本对照已交付；后续修正回放继续其数据工程目标。"
+    },
+    {
+      "date": "2026-06-25",
+      "chain": "onboarding",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "交易规则答疑：跌停后还能不能涨",
+      "after_note": "交易规则答疑：跌停后还能不能涨",
+      "reason": "米筐示例、规则资料和答疑已经完成，未发现舍弃这项工作的决定。"
+    },
+    {
+      "date": "2026-06-26",
+      "chain": "lv2-snapshot",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "对照沪深样本快照并补图",
+      "after_note": "对照沪深样本快照并补图",
+      "reason": "快照任务与样本对照已交付；后续修正回放继续其数据工程目标。"
+    },
+    {
+      "date": "2026-06-29",
+      "chain": "literature",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "收集论文并转成 Markdown 笔记",
+      "after_note": "收集论文并转成 Markdown 笔记",
+      "reason": "论文方法、生命周期和基础框架被后续工程实际复用；没有证据将文献研究整体视作未采用。"
+    },
+    {
+      "date": "2026-06-30",
+      "chain": "lv2-snapshot",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写快照数据说明书供因子研究用",
+      "after_note": "写快照数据说明书供因子研究用",
+      "reason": "快照任务与样本对照已交付；后续修正回放继续其数据工程目标。"
+    },
+    {
+      "date": "2026-06-30",
+      "chain": "literature",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "搭建因子框架并跑第一个因子",
+      "after_note": "搭建因子框架并跑第一个因子",
+      "reason": "论文方法、生命周期和基础框架被后续工程实际复用；没有证据将文献研究整体视作未采用。"
+    },
+    {
+      "date": "2026-07-01",
+      "chain": "literature",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写三篇算法交易论文的复现计划",
+      "after_note": "写三篇算法交易论文的复现计划",
+      "reason": "论文方法、生命周期和基础框架被后续工程实际复用；没有证据将文献研究整体视作未采用。"
+    },
+    {
+      "date": "2026-07-02",
+      "chain": "literature",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "把 lowlat 讲解转成 md 笔记",
+      "after_note": "把 lowlat 讲解转成 md 笔记",
+      "reason": "论文方法、生命周期和基础框架被后续工程实际复用；没有证据将文献研究整体视作未采用。"
+    },
+    {
+      "date": "2026-07-03",
+      "chain": "literature",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "扩展低延迟复现并修正 ClusterLOB",
+      "after_note": "扩展低延迟复现并修正 ClusterLOB",
+      "reason": "论文方法、生命周期和基础框架被后续工程实际复用；没有证据将文献研究整体视作未采用。"
+    },
+    {
+      "date": "2026-07-06",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现六篇论文的算法痕迹指标",
+      "after_note": "实现六篇论文的算法痕迹指标",
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。"
+    },
+    {
+      "date": "2026-07-06",
+      "chain": "literature",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补充文献资料",
+      "after_note": "补充文献资料",
+      "reason": "论文方法、生命周期和基础框架被后续工程实际复用；没有证据将文献研究整体视作未采用。"
+    },
+    {
+      "date": "2026-07-07",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补充指标相关性分析",
+      "after_note": "补充指标相关性分析",
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。"
+    },
+    {
+      "date": "2026-07-07",
+      "chain": "dashboard-build",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "建站：每日汇报、展示页和离线页",
+      "after_note": "建站：每日汇报、展示页和离线页",
+      "reason": "站点功能持续使用，建站工作保留。"
+    },
+    {
+      "date": "2026-07-07",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布六篇论文指标的汇报",
+      "after_note": "发布六篇论文指标的汇报",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-08",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "调整重复撤挂单指标的参数与解释",
+      "after_note": "调整重复撤挂单指标的参数与解释",
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。"
+    },
+    {
+      "date": "2026-07-08",
+      "chain": "dashboard-build",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "加公式渲染、引用样式和下载",
+      "after_note": "加公式渲染、引用样式和下载",
+      "reason": "站点功能持续使用，建站工作保留。"
+    },
+    {
+      "date": "2026-07-08",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布 SRuns 阶段报告和展示页",
+      "after_note": "发布 SRuns 阶段报告和展示页",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-09",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "搭评价流程并修正代码",
+      "after_note": "搭建硬评分评价体系（后弃用）",
+      "reason": "旧 anchors/evalv2 硬评分被 7 月 10 日的新主线明确停止，旧点应标为未采用。"
+    },
+    {
+      "date": "2026-07-09",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布 evalv2 评价报告",
+      "after_note": "发布 evalv2 评价报告",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-09",
+      "chain": "onboarding",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "了解龙虎榜的内容和规则",
+      "after_note": "了解龙虎榜的内容和规则",
+      "reason": "米筐示例、规则资料和答疑已经完成，未发现舍弃这项工作的决定。"
+    },
+    {
+      "date": "2026-07-10",
+      "chain": "algobench",
+      "before_outcome": "dropped",
+      "after_outcome": "landed",
+      "before_symbol": "×",
+      "after_symbol": "○",
+      "symbol_changed": true,
+      "before_note": "放弃旧方向，重写关注度因子计划",
+      "after_note": "转向关注度因子并修正 L3 尺度",
+      "reason": "该点主要记录新关注度计划和 L3 修正，属于保留工作；不能因提到放弃旧方向而打叉。"
+    },
+    {
+      "date": "2026-07-10",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修订 7 月 9 日汇报",
+      "after_note": "修订 7 月 9 日汇报",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-11",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现关注度面板、股票池与断点续算",
+      "after_note": "实现关注度面板、股票池与断点续算",
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。"
+    },
+    {
+      "date": "2026-07-12",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "缩到单月样本并按日并行",
+      "after_note": "缩到单月样本并按日并行",
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。"
+    },
+    {
+      "date": "2026-07-13",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "完成关注度因子中期评价",
+      "after_note": "完成关注度因子中期评价",
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。"
+    },
+    {
+      "date": "2026-07-13",
+      "chain": "dashboard-build",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "支持 Mermaid 并修复日报时间",
+      "after_note": "支持 Mermaid 并修复日报时间",
+      "reason": "站点功能持续使用，建站工作保留。"
+    },
+    {
+      "date": "2026-07-13",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "首次 SSH 登录公司服务器",
+      "after_note": "首次 SSH 登录公司服务器",
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。"
+    },
+    {
+      "date": "2026-07-13",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补写快照报告并发布中期评价",
+      "after_note": "补写快照报告并发布中期评价",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-14",
+      "chain": "algobench",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修改一份关注度因子 Notebook",
+      "after_note": "修改一份关注度因子 Notebook",
+      "reason": "区分被舍弃的弱标签硬评分与继续使用的 EE/SRuns、关注度研究；只把旧评价体系日点标为未采用。"
+    },
+    {
+      "date": "2026-07-14",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "配置服务器登录并新建研究仓",
+      "after_note": "配置服务器登录并新建研究仓",
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。"
+    },
+    {
+      "date": "2026-07-14",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "梳理现有因子的构造逻辑",
+      "after_note": "梳理现有因子的构造逻辑",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-15",
+      "chain": "doris-migration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "写数据库迁移草稿（后被替换）",
+      "after_note": "写数据库迁移草稿（后被替换）",
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。"
+    },
+    {
+      "date": "2026-07-15",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写正式因子计算计划",
+      "after_note": "写正式因子计算计划",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-15",
+      "chain": "lv2-snapshot",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "回顾快照对齐逻辑（问答）",
+      "after_note": "回顾快照对齐逻辑（问答）",
+      "reason": "快照任务与样本对照已交付；后续修正回放继续其数据工程目标。"
+    },
+    {
+      "date": "2026-07-16",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现订单生命周期、配对与行为评分",
+      "after_note": "实现订单生命周期、配对与行为评分",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-16",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现统一取数入口和按日调度",
+      "after_note": "实现统一取数入口和按日调度",
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。"
+    },
+    {
+      "date": "2026-07-17",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "联调流程并修复内存保护",
+      "after_note": "联调流程并修复内存保护",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-17",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "改用 16 个工作进程并更新运行手册",
+      "after_note": "改用 16 个工作进程并更新运行手册",
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。"
+    },
+    {
+      "date": "2026-07-18",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复 STEP7A 并完善逐日股票池",
+      "after_note": "修复 STEP7A 并完善逐日股票池",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-18",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "加自适应工作进程和故障降级重试",
+      "after_note": "试做自适应并发与降级（后取消）",
+      "reason": "自适应升降档方案被回滚，7 月 19 日用户明确完全取消 ladder。"
+    },
+    {
+      "date": "2026-07-19",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "排查内存故障并测单日耗时",
+      "after_note": "排查内存故障并测单日耗时",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-20",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "复用中间结果并改进订单配对",
+      "after_note": "复用中间结果并改进订单配对",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-21",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "减少候选关系落盘并按日释放内存",
+      "after_note": "减少候选关系落盘并按日释放内存",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-21",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "整理历次提速措施总结",
+      "after_note": "整理历次提速措施总结",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-22",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "共用取数并支持两种收益窗口",
+      "after_note": "共用取数并支持两种收益窗口",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-22",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布计算提速全记录",
+      "after_note": "发布计算提速全记录",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-23",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复参数传递并继续日内研究",
+      "after_note": "修复参数传递并继续日内研究",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-23",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布因子构造说明并修正公式",
+      "after_note": "发布因子构造说明并修正公式",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-24",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "优化行为评分与冲击响应计算",
+      "after_note": "优化行为评分与冲击响应计算",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-24",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续整理提速总结",
+      "after_note": "继续整理提速总结",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-25",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修正不可观测股票与空结果处理",
+      "after_note": "修正不可观测股票与空结果处理",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-27",
+      "chain": "gates",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "重构开盘三分钟评分并试跑单日",
+      "after_note": "重构开盘三分钟评分并试跑单日",
+      "reason": "保留 10% 数量门与连续价格评分；取消价格硬门是采用替代方案的决定。"
+    },
+    {
+      "date": "2026-07-27",
+      "chain": "formal-engine",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "收尾 Task12 续跑和评分提速",
+      "after_note": "收尾 Task12 续跑和评分提速",
+      "reason": "配对、评分及共享计算继续进入后续正式流程。"
+    },
+    {
+      "date": "2026-07-28",
+      "chain": "gates",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "固定候选门参数并写 Tick 重定标计划",
+      "after_note": "固定候选门参数并写 Tick 重定标计划",
+      "reason": "保留 10% 数量门与连续价格评分；取消价格硬门是采用替代方案的决定。"
+    },
+    {
+      "date": "2026-07-29",
+      "chain": "gates",
+      "before_outcome": "dropped",
+      "after_outcome": "landed",
+      "before_symbol": "×",
+      "after_symbol": "○",
+      "symbol_changed": true,
+      "before_note": "取消价格硬筛选，保留数量门",
+      "after_note": "采用 10% 数量门和连续价格评分",
+      "reason": "最终采用的是 10% 数量门与连续价格评分；舍弃价格硬门不等于舍弃替代方案。"
+    },
+    {
+      "date": "2026-07-30",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "数据库恢复后修复断点续算",
+      "after_note": "数据库恢复后修复断点续算",
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。"
+    },
+    {
+      "date": "2026-07-30",
+      "chain": "gates",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "扩展固定数量门下的评价日期",
+      "after_note": "扩展固定数量门下的评价日期",
+      "reason": "保留 10% 数量门与连续价格评分；取消价格硬门是采用替代方案的决定。"
+    },
+    {
+      "date": "2026-07-30",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "总结 7 月 29 日的提速",
+      "after_note": "总结 7 月 29 日的提速",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-07-31",
+      "chain": "gates",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复长区间续算与历史基准",
+      "after_note": "修复长区间续算与历史基准",
+      "reason": "保留 10% 数量门与连续价格评分；取消价格硬门是采用替代方案的决定。"
+    },
+    {
+      "date": "2026-07-31",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布因子定义、指标与评价图",
+      "after_note": "发布因子定义、指标与评价图",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-02",
+      "chain": "gates",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "支持固定参数的历史区间评价",
+      "after_note": "支持固定参数的历史区间评价",
+      "reason": "保留 10% 数量门与连续价格评分；取消价格硬门是采用替代方案的决定。"
+    },
+    {
+      "date": "2026-08-02",
+      "chain": "fixed-history",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写到最新完整交易日的统一评价计划",
+      "after_note": "写到最新完整交易日的统一评价计划",
+      "reason": "历史补算与异常解释已经交付并提供后续对照；不把历史回看误称为样本外。"
+    },
+    {
+      "date": "2026-08-02",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布扩展区间报告并更新成果页",
+      "after_note": "发布扩展区间报告并更新成果页",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-03",
+      "chain": "fixed-history",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "复用已完成结果并补算更早日期",
+      "after_note": "复用已完成结果并补算更早日期",
+      "reason": "历史补算与异常解释已经交付并提供后续对照；不把历史回看误称为样本外。"
+    },
+    {
+      "date": "2026-08-03",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布固定参数历史报告并更新成果页",
+      "after_note": "发布固定参数历史报告并更新成果页",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-03",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论因子之后怎么做模型",
+      "after_note": "讨论因子之后怎么做模型",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-08-04",
+      "chain": "fixed-history",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对恢复来源和标签兼容性",
+      "after_note": "核对恢复来源和标签兼容性",
+      "reason": "历史补算与异常解释已经交付并提供后续对照；不把历史回看误称为样本外。"
+    },
+    {
+      "date": "2026-08-04",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写 51 个输入的模型计划",
+      "after_note": "写 51 个输入的模型计划",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-04",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论模型方法与研究计划",
+      "after_note": "讨论模型方法与研究计划",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-08-05",
+      "chain": "fixed-history",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论隔日标签并排查 2026Q2 异常",
+      "after_note": "讨论隔日标签并排查 2026Q2 异常",
+      "reason": "历史补算与异常解释已经交付并提供后续对照；不把历史回看误称为样本外。"
+    },
+    {
+      "date": "2026-08-05",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布长历史结果并修订因子说明",
+      "after_note": "发布长历史结果并修订因子说明",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-06",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "改到五分钟窗口并加快计算",
+      "after_note": "改到五分钟窗口并加快计算",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-06",
+      "chain": "fixed-history",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "拆分买卖方向并补写 2026Q2 异常报告",
+      "after_note": "拆分买卖方向并补写 2026Q2 异常报告",
+      "reason": "历史补算与异常解释已经交付并提供后续对照；不把历史回看误称为样本外。"
+    },
+    {
+      "date": "2026-08-06",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写 LightGBM 模型计划",
+      "after_note": "写 LightGBM 模型计划",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-06",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "给研究文档加标题折叠",
+      "after_note": "给研究文档加标题折叠",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-06",
+      "chain": "fund-research",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "研究私募 7 月产品业绩",
+      "after_note": "研究私募 7 月产品业绩",
+      "reason": "两份原始研究材料仍可读取且内容哈希与原登记一致，未发现被明确撤销的决定。"
+    },
+    {
+      "date": "2026-08-07",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "建新因子库并优化计算",
+      "after_note": "建新因子库并优化计算",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-07",
+      "chain": "fund-research",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写 7 月量化私募压力观察",
+      "after_note": "写 7 月量化私募压力观察",
+      "reason": "两份原始研究材料仍可读取且内容哈希与原登记一致，未发现被明确撤销的决定。"
+    },
+    {
+      "date": "2026-08-08",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复数量门并启动全期计算",
+      "after_note": "修复数量门并启动全期计算",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-08",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清除之前失败计算的结果",
+      "after_note": "清除之前失败计算的结果",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-08-09",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "加入带资源保护的续算入口",
+      "after_note": "加入带资源保护的续算入口",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-09",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写开盘因子计算提速说明",
+      "after_note": "写开盘因子计算提速说明",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-09",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "决定只用 total 口径并排除诊断列",
+      "after_note": "决定只用 total 口径并排除诊断列",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-10",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补开盘三分钟对照分析",
+      "after_note": "补开盘三分钟对照分析",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-10",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布因子报告并加图表放大",
+      "after_note": "发布因子报告并加图表放大",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-10",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "两份模型计划首次入库",
+      "after_note": "两份模型计划首次入库",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-10",
+      "chain": "fixed-history",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写 2026Q2 异常根因报告",
+      "after_note": "写 2026Q2 异常根因报告",
+      "reason": "历史补算与异常解释已经交付并提供后续对照；不把历史回看误称为样本外。"
+    },
+    {
+      "date": "2026-08-10",
+      "chain": "doris-migration",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "更新服务器 SSH 登录配置",
+      "after_note": "更新服务器 SSH 登录配置",
+      "reason": "统一取数和调度继续使用；旧迁移草稿、自适应并发方案分别在具体日点标为未采用。"
+    },
+    {
+      "date": "2026-08-10",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理服务器冗余结果并整理目录",
+      "after_note": "清理服务器冗余结果并整理目录",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-08-11",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现固定配置的模型流程，输入改为 127 个",
+      "after_note": "实现固定配置的模型流程，输入改为 127 个",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-11",
+      "chain": "visual-b",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "应用研究编辑台版式和窄屏样式",
+      "after_note": "应用研究编辑台版式和窄屏样式",
+      "reason": "用户明确选择的 B 版式继续使用；没有将未选设计方向画成正式工作点。"
+    },
+    {
+      "date": "2026-08-11",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修订新因子批量构建计划",
+      "after_note": "修订新因子批量构建计划",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-11",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续清理服务器文件",
+      "after_note": "继续清理服务器文件",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-08-12",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复停止失败、统一环境并加调度",
+      "after_note": "修复停止失败、统一环境并加调度",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-12",
+      "chain": "fund-research",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "完成 NEXT 全产品业绩分析",
+      "after_note": "完成 NEXT 全产品业绩分析",
+      "reason": "两份原始研究材料仍可读取且内容哈希与原登记一致，未发现被明确撤销的决定。"
+    },
+    {
+      "date": "2026-08-13",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "统一各模型族执行并测随机森林耗时",
+      "after_note": "统一各模型族执行并测随机森林耗时",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-13",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "分析新因子表现（问答）",
+      "after_note": "分析新因子表现（问答）",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-14",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复调度试跑和检查点隔离",
+      "after_note": "修复调度试跑和检查点隔离",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-14",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "评估因子逻辑复杂度（问答）",
+      "after_note": "评估因子逻辑复杂度（问答）",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-15",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "调整资源规则并补随机森林筛选",
+      "after_note": "实现随机森林两阶段筛选（后撤销）",
+      "reason": "随机森林两阶段筛选在 8 月 16 日被明确撤销；共享资源修复另行保留。"
+    },
+    {
+      "date": "2026-08-16",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "去掉随机森林并固定范围",
+      "after_note": "去掉随机森林并固定范围",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-17",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "按最长耗时路径判断能否运行",
+      "after_note": "按最长耗时路径判断能否运行",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-17",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "扫描并清理服务器冗余文件",
+      "after_note": "扫描并清理服务器冗余文件",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-08-18",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "撤销 AdaBoost 并并行归因",
+      "after_note": "撤销 AdaBoost 并并行归因",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-18",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "总结 L2 算法单的策略逻辑",
+      "after_note": "总结 L2 算法单的策略逻辑",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-19",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "跑完开发阶段并执行 Final 评价",
+      "after_note": "跑完开发阶段并执行 Final 评价",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-19",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "制定撤单等待时间分布研究计划",
+      "after_note": "制定撤单等待时间分布研究计划",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-08-19",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "评估西部金工撤单研报对项目的价值",
+      "after_note": "评估西部金工撤单研报对项目的价值",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-08-19",
+      "chain": "open5m",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续总结 L2 算法单策略逻辑",
+      "after_note": "继续总结 L2 算法单策略逻辑",
+      "reason": "五分钟因子库进入后续定参、计算与模型研究。"
+    },
+    {
+      "date": "2026-08-19",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "评估因子能否扩展到沪市",
+      "after_note": "评估因子能否扩展到沪市",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-08-20",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "汇总全部模型结果并取消 Bridge",
+      "after_note": "汇总全部模型结果并取消 Bridge",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-20",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "分析上半年 116 日撤单等待时间",
+      "after_note": "分析上半年 116 日撤单等待时间",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-08-20",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布模型结果与撤单延迟报告",
+      "after_note": "发布模型结果与撤单延迟报告",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-20",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "回看已有的沪深生命周期重建方法",
+      "after_note": "回看已有的沪深生命周期重建方法",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-08-21",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "复核模型报告并改为只用 LightGBM",
+      "after_note": "复核模型报告并改为只用 LightGBM",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-08-24",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "撤单延迟分析扩到深市 601 日",
+      "after_note": "撤单延迟分析扩到深市 601 日",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-08-24",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布历史撤单分布并压缩图表",
+      "after_note": "发布历史撤单分布并压缩图表",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-08-24",
+      "chain": "ml-exec",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写 14 个模型族的完整报告",
+      "after_note": "写 14 个模型族的完整报告",
+      "reason": "比较研究完成并保留 LightGBM 与诊断流程；随机森林筛选专属日点标为未采用，不把其他模型成果一并否定。"
+    },
+    {
+      "date": "2026-08-24",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论时间范围、超额和 OOF",
+      "after_note": "讨论时间范围、超额和 OOF",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-08-25",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论撤单定义、相位与研究口径",
+      "after_note": "讨论撤单定义、相位与研究口径",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-08-26",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "定下撤单新因子口径与多峰识别方法",
+      "after_note": "定下撤单新因子口径与多峰识别方法",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-08-26",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "确定全期只定一套参数",
+      "after_note": "确定全期只定一套参数",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-08-27",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "建全期定标入口并改用 3.11 秒门",
+      "after_note": "建全期定标入口并改用 3.11 秒门",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-08-27",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论人类撤单反应与算法代理的边界",
+      "after_note": "讨论人类撤单反应与算法代理的边界",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-08-27",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "逐项讲解旧因子并审查源码",
+      "after_note": "逐项讲解旧因子并审查源码",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-08-28",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "加快定标并记录全期结果",
+      "after_note": "加快定标并记录全期结果",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-08-28",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补入多峰圆周相位方法研究",
+      "after_note": "补入多峰圆周相位方法研究",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-08-28",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "诊断跨期反转并逐组细究旧因子",
+      "after_note": "诊断跨期反转并逐组细究旧因子",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-08-29",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "检查增量信息、L3 实现和方向",
+      "after_note": "检查增量信息、L3 实现和方向",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-08-29",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论算法分数和市场状态怎么结合",
+      "after_note": "讨论算法分数和市场状态怎么结合",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-08-31",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "提出 B/C 候选并研究订单响应归属",
+      "after_note": "提出 B/C 候选并研究订单响应归属",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-08-31",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续讨论撤单定义和口径",
+      "after_note": "继续讨论撤单定义和口径",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-08-31",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "澄清行为分数和模型输入的关系",
+      "after_note": "澄清行为分数和模型输入的关系",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-08-31",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "重审旧因子时间尺度",
+      "after_note": "重审旧因子时间尺度",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-08-31",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写新定标的逻辑与使用说明",
+      "after_note": "写新定标的逻辑与使用说明",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-01",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现撤单相位因子并共享统计",
+      "after_note": "实现撤单相位因子并共享统计",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-01",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "解释候选机制并修订研究口径",
+      "after_note": "解释候选机制并修订研究口径",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-01",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写 A_clean_max 方案并修订 f54",
+      "after_note": "写 A_clean_max 方案并修订 f54",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-02",
+      "chain": "mechanism-precheck",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现 C 系列机制预查并提速",
+      "after_note": "实现 C 系列机制预查并提速",
+      "reason": "用户仅舍弃 199 个随机对照世界，明确保留其余真实分布研究。"
+    },
+    {
+      "date": "2026-09-02",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写真实数据定标计划",
+      "after_note": "写真实数据定标计划",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-02",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "相位因子接入正式流程并独立命名",
+      "after_note": "相位因子接入正式流程并独立命名",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-02",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "形成 C 系列候选因子提案",
+      "after_note": "形成 C 系列候选因子提案",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-02",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "回退越界代码并完善修改文档",
+      "after_note": "回退越界代码并完善修改文档",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-02",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理失败和冗余的计算结果",
+      "after_note": "清理失败和冗余的计算结果",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-03",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "不再存完整候选表，改为流式汇总",
+      "after_note": "不再存完整候选表，改为流式汇总",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-03",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "提出 D 系列信息通道并逐项研判",
+      "after_note": "提出 D 系列信息通道并逐项研判",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-03",
+      "chain": "mechanism-precheck",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "按日期分片并改为只统计真实分布",
+      "after_note": "按日期分片并改为只统计真实分布",
+      "reason": "用户仅舍弃 199 个随机对照世界，明确保留其余真实分布研究。"
+    },
+    {
+      "date": "2026-09-03",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续完善旧因子修改方案",
+      "after_note": "继续完善旧因子修改方案",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "wangly-env",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "配置环境并验收跨账户传输",
+      "after_note": "配置环境并验收跨账户传输",
+      "reason": "跨账户传输和环境修复有独立交付；环境版本更新未取消这项目标。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "按 L1 市场状态选定标日期",
+      "after_note": "按 L1 市场状态选定标日期",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写半年撤单相位评价计划",
+      "after_note": "写半年撤单相位评价计划",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "更新机制预查报告",
+      "after_note": "更新机制预查报告",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "研判 C1.3 等候选",
+      "after_note": "研判 C1.3 等候选",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "cross-stock-sync",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "研判 C3.3 跨股票同步",
+      "after_note": "研判 C3.3 跨股票同步",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "depth-match",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "研判 C7.1 盘口深度匹配",
+      "after_note": "研判 C7.1 盘口深度匹配",
+      "reason": "24 列结果被模型和 344 列清单继续使用；C7.2 的舍弃不归入 C7.1 整条深度匹配链。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "mechanism-precheck",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "统计委托股数分布并汇总全时段形状",
+      "after_note": "统计委托股数分布并汇总全时段形状",
+      "reason": "用户仅舍弃 199 个随机对照世界，明确保留其余真实分布研究。"
+    },
+    {
+      "date": "2026-09-04",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对旧因子定义和修改记录",
+      "after_note": "核对旧因子定义和修改记录",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-05",
+      "chain": "depth-match",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "预查委托股数与盘口深度的匹配",
+      "after_note": "预查委托股数与盘口深度的匹配",
+      "reason": "24 列结果被模型和 344 列清单继续使用；C7.2 的舍弃不归入 C7.1 整条深度匹配链。"
+    },
+    {
+      "date": "2026-09-05",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "准备全历史撤单相位计算",
+      "after_note": "准备全历史撤单相位计算",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-05",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补充盘口匹配的预查结果",
+      "after_note": "补充盘口匹配的预查结果",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-05",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "优化定标代码",
+      "after_note": "优化定标代码",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-06",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "完成 601 日撤单相位与标签评价",
+      "after_note": "完成 601 日撤单相位与标签评价",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-06",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续解释 C 系列预查透露的机制",
+      "after_note": "继续解释 C 系列预查透露的机制",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-06",
+      "chain": "depth-match",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续 C7.1 深度匹配预查",
+      "after_note": "继续 C7.1 深度匹配预查",
+      "reason": "24 列结果被模型和 344 列清单继续使用；C7.2 的舍弃不归入 C7.1 整条深度匹配链。"
+    },
+    {
+      "date": "2026-09-07",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写老因子重算和 300 秒验收方案",
+      "after_note": "写老因子重算和 300 秒验收方案",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-07",
+      "chain": "report-tags",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "加入在线标签和主题筛选",
+      "after_note": "加入在线标签和主题筛选",
+      "reason": "在线标签、方向比较、筛选与排序继续使用。"
+    },
+    {
+      "date": "2026-09-07",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写成撤单相位 601 日报告",
+      "after_note": "写成撤单相位 601 日报告",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-07",
+      "chain": "mechanism-precheck",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写成机制预查报告",
+      "after_note": "写成机制预查报告",
+      "reason": "用户仅舍弃 199 个随机对照世界，明确保留其余真实分布研究。"
+    },
+    {
+      "date": "2026-09-07",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布撤单相位报告并补 9 月 4 日汇报",
+      "after_note": "发布撤单相位报告并补 9 月 4 日汇报",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-07",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理垃圾文件和冗余结果",
+      "after_note": "清理垃圾文件和冗余结果",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "depth-match",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "交付深度匹配 24 列全历史评价",
+      "after_note": "交付深度匹配 24 列全历史评价",
+      "reason": "24 列结果被模型和 344 列清单继续使用；C7.2 的舍弃不归入 C7.1 整条深度匹配链。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布深度匹配结果并改进报告导航",
+      "after_note": "发布深度匹配结果并改进报告导航",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复老库并核验 F40 精确匹配",
+      "after_note": "修复老库并核验 F40 精确匹配",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "建立跨股票同步预查和执行方案",
+      "after_note": "建立跨股票同步预查和执行方案",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "分别研判 C2、C4、C5、C6 和 C7",
+      "after_note": "分别研判 C2、C4、C5、C6 和 C7",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "审查相位因子的行为定义和收益表现",
+      "after_note": "审查相位因子的行为定义和收益表现",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "启动 200 日正式定标",
+      "after_note": "启动 200 日正式定标",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-08",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理定标前的冗余结果",
+      "after_note": "清理定标前的冗余结果",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补全相位买卖方向并写机械撤单预查计划",
+      "after_note": "补全相位买卖方向并写机械撤单预查计划",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "report-tags",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "加入买卖方向对照、筛选和排序",
+      "after_note": "加入买卖方向对照、筛选和排序",
+      "reason": "在线标签、方向比较、筛选与排序继续使用。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "实现单日预查并保存性能诊断",
+      "after_note": "实现单日预查并保存性能诊断",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理定标结果存储",
+      "after_note": "清理定标结果存储",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "depth-match",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "整理深度匹配报告的方向对照",
+      "after_note": "整理深度匹配报告的方向对照",
+      "reason": "24 列结果被模型和 344 列清单继续使用；C7.2 的舍弃不归入 C7.1 整条深度匹配链。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "处理定标内存问题并恢复续算",
+      "after_note": "处理定标内存问题并恢复续算",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-09",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布撤单因子的方向比较",
+      "after_note": "发布撤单因子的方向比较",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-10",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对配对与响应评分逐位一致",
+      "after_note": "核对配对与响应评分逐位一致",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-10",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "完成机械撤单 601 日计算并开始独立验收",
+      "after_note": "完成机械撤单 601 日计算并开始独立验收",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-10",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "改进跨股预查的暂存与输出",
+      "after_note": "改进跨股预查的暂存与输出",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-10",
+      "chain": "old-factor-calibration",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理定标暂存并交接正式计算",
+      "after_note": "清理定标暂存并交接正式计算",
+      "reason": "全局核的估计方法继续用于 344 列重新定参；旧数值需要更新不等于估计方法被舍弃。"
+    },
+    {
+      "date": "2026-09-10",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "归档清理旧定标暂存",
+      "after_note": "归档清理旧定标暂存",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-11",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "优化 F40 并核对正式 Python 环境",
+      "after_note": "优化 F40 并核对正式 Python 环境",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-11",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布机械撤单预查结果",
+      "after_note": "发布机械撤单预查结果",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-11",
+      "chain": "cross-stock-sync",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "跑通单日预查后决定停止",
+      "after_note": "跑通单日预查后决定停止",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-11",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "完成机械撤单独立验收和整包核对",
+      "after_note": "完成机械撤单独立验收和整包核对",
+      "reason": "分布、相位和机械撤单点值保留；仅 10 月 15 日停止的逐股不确定性分支标为未采用。"
+    },
+    {
+      "date": "2026-09-11",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "检查两个账户的存储并清理",
+      "after_note": "检查两个账户的存储并清理",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-11",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "纠正 C2 在混合订单流里的识别假设",
+      "after_note": "纠正 C2 在混合订单流里的识别假设",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-12",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理冗余文件并启动 601 日计算",
+      "after_note": "清理冗余文件并启动 601 日计算",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-12",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理旧试跑结果，保留生产来源",
+      "after_note": "清理旧试跑结果，保留生产来源",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-13",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "决定逐日校验后删中间明细",
+      "after_note": "决定逐日校验后删中间明细",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-14",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "评估三个新因子想法并继续 C7.3",
+      "after_note": "评估三个新因子想法并继续 C7.3",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-14",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "定下训练期和逐月验证划分",
+      "after_note": "定下训练期和逐月验证划分",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-09-14",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "改为 16 进程续算并调整保留范围",
+      "after_note": "改为 16 进程续算并调整保留范围",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-14",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理旧定标文件并排查 S3",
+      "after_note": "清理旧定标文件并排查 S3",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-15",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "确定只用 CPU 并讨论历史权重",
+      "after_note": "确定只用 CPU 并讨论历史权重",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-09-15",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "固定 16 路继续计算",
+      "after_note": "固定 16 路继续计算",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-15",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核查 wenjie 和 S3 的用量",
+      "after_note": "核查 wenjie 和 S3 的用量",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-15",
+      "chain": "wangly-env",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "迁移两套因子结果到 wenjie",
+      "after_note": "迁移两套因子结果到 wenjie",
+      "reason": "跨账户传输和环境修复有独立交付；环境版本更新未取消这项目标。"
+    },
+    {
+      "date": "2026-09-16",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论模型比较指标和交易时点",
+      "after_note": "讨论模型比较指标和交易时点",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-09-16",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "处理内存问题并补算重日",
+      "after_note": "处理内存问题并补算重日",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-17",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布 601 日老因子结果与筛选诊断",
+      "after_note": "发布 601 日老因子结果与筛选诊断",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-17",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补完收益评价并记录运行异常",
+      "after_note": "补完收益评价并记录运行异常",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-17",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "定下预测目标和损失函数",
+      "after_note": "定下预测目标和损失函数",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-09-17",
+      "chain": "strategy-research",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "比较等权、排名加权和风险调整",
+      "after_note": "比较等权、排名加权和风险调整",
+      "reason": "股票池、资金与成交假设研究提供后续方法选择；部分策略成本情景未通过不等于方法研究被取消。"
+    },
+    {
+      "date": "2026-09-18",
+      "chain": "ml-330",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "首次试跑 LightGBM 并看 test",
+      "after_note": "首次试跑 LightGBM 并看 test",
+      "reason": "试跑、候选设施与因果复算分开记录；尚未跑完全部候选不构成已经放弃候选研究的证据。"
+    },
+    {
+      "date": "2026-09-18",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "测软压缩拐点并定预处理",
+      "after_note": "测软压缩拐点并定预处理",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-09-18",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布 601 日标签软压缩预检",
+      "after_note": "发布 601 日标签软压缩预检",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-18",
+      "chain": "cross-stock-sync",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "提交停止说明并清理材料",
+      "after_note": "提交停止说明并清理材料",
+      "reason": "9 月 11 日原始用户决定明确放弃 C3.3，6 个历史点均应为未采用。"
+    },
+    {
+      "date": "2026-09-18",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对三套面板的列和含义",
+      "after_note": "核对三套面板的列和含义",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-19",
+      "chain": "model-report",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布初版模型设置、结果与诊断图",
+      "after_note": "发布初版模型设置、结果与诊断图",
+      "reason": "报告修订保留前后版本与比较用途；新报告替换初稿不等于报告任务被放弃。"
+    },
+    {
+      "date": "2026-09-19",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "补齐导师审阅用的源码清单",
+      "after_note": "补齐导师审阅用的源码清单",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-20",
+      "chain": "ml-330",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现候选因子输入和自动模型选择",
+      "after_note": "实现候选因子输入和自动模型选择",
+      "reason": "试跑、候选设施与因果复算分开记录；尚未跑完全部候选不构成已经放弃候选研究的证据。"
+    },
+    {
+      "date": "2026-09-20",
+      "chain": "model-report",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "细化 RankIC 和多空收益诊断",
+      "after_note": "细化 RankIC 和多空收益诊断",
+      "reason": "报告修订保留前后版本与比较用途；新报告替换初稿不等于报告任务被放弃。"
+    },
+    {
+      "date": "2026-09-20",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "明确逐候选验证、最终人工选模",
+      "after_note": "明确逐候选验证、最终人工选模",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-09-20",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "给全部展示页加导航高亮",
+      "after_note": "给全部展示页加导航高亮",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-09-20",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理 wenjie 本地磁盘",
+      "after_note": "清理 wenjie 本地磁盘",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-21",
+      "chain": "ml-330",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "按因果时序重算并控制内存",
+      "after_note": "按因果时序重算并控制内存",
+      "reason": "试跑、候选设施与因果复算分开记录；尚未跑完全部候选不构成已经放弃候选研究的证据。"
+    },
+    {
+      "date": "2026-09-21",
+      "chain": "model-report",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布修正后的 328 因子模型结果",
+      "after_note": "发布修正后的 328 因子模型结果",
+      "reason": "报告修订保留前后版本与比较用途；新报告替换初稿不等于报告任务被放弃。"
+    },
+    {
+      "date": "2026-09-21",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对泄露审查的源码覆盖",
+      "after_note": "核对泄露审查的源码覆盖",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-09-21",
+      "chain": "strategy-research",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "研究指数增强的股票池",
+      "after_note": "研究指数增强的股票池",
+      "reason": "股票池、资金与成交假设研究提供后续方法选择；部分策略成本情景未通过不等于方法研究被取消。"
+    },
+    {
+      "date": "2026-09-22",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "研究沪市逻辑订单和缺失字段",
+      "after_note": "研究沪市逻辑订单和缺失字段",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-09-22",
+      "chain": "strategy-research",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论主动吃档、资金分配和 MarS",
+      "after_note": "讨论主动吃档、资金分配和 MarS",
+      "reason": "股票池、资金与成交假设研究提供后续方法选择；部分策略成本情景未通过不等于方法研究被取消。"
+    },
+    {
+      "date": "2026-09-23",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对沪市委托还原与公司逐笔数据",
+      "after_note": "核对沪市委托还原与公司逐笔数据",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-09-23",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "提出分类、滚动与条件定标问题",
+      "after_note": "提出分类、滚动与条件定标问题",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-09-24",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "研究 Barra 分类与保留因子定标",
+      "after_note": "研究 Barra 分类与保留因子定标",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-09-28",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "从供应商公开规则提出 V1 至 V20",
+      "after_note": "从供应商公开规则提出 V1 至 V20",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-28",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "核查米筐风险模型并讨论分类",
+      "after_note": "核查米筐风险模型并讨论分类",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-09-29",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "确认 V1–V20 报告已写入",
+      "after_note": "确认 V1–V20 报告已写入",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-09-29",
+      "chain": "doris-efficiency",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "对照 Doris 分页与资源规则",
+      "after_note": "对照 Doris 分页与资源规则",
+      "reason": "公共入口实际用于后续任务；部分样本变慢不等于整个入口被舍弃。"
+    },
+    {
+      "date": "2026-09-29",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "按前收盘价分档、不按通道",
+      "after_note": "按前收盘价分档、不按通道",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-09-29",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "检查沪市还原完成度和可见性缺口",
+      "after_note": "检查沪市还原完成度和可见性缺口",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-09-29",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理 wenjie 本地磁盘",
+      "after_note": "清理 wenjie 本地磁盘",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-09-29",
+      "chain": "trading-window-freeze",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "对照早盘资源限制",
+      "after_note": "对照早盘资源限制",
+      "reason": "已实现并用于真实任务的暂停恢复机制继续保留。"
+    },
+    {
+      "date": "2026-10-07",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "说明怎么分组、怎么评价",
+      "after_note": "说明怎么分组、怎么评价",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-10-07",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "规定本地修改后逐项提交和推送",
+      "after_note": "规定本地修改后逐项提交和推送",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-10-07",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "评估旧因子在沪市的复用",
+      "after_note": "评估旧因子在沪市的复用",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-07",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "完成系统盘四类清理并验证写入",
+      "after_note": "完成系统盘四类清理并验证写入",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-08",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "检查分组档数和运行前条件",
+      "after_note": "检查分组档数和运行前条件",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-10-08",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "分析沪市残余委托并统一表结构",
+      "after_note": "分析沪市残余委托并统一表结构",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-08",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理双账户副本并保存分发记录",
+      "after_note": "清理双账户副本并保存分发记录",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-09",
+      "chain": "doris-efficiency",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现公共 L2 入口并实测",
+      "after_note": "实现公共 L2 入口并实测",
+      "reason": "公共入口实际用于后续任务；部分样本变慢不等于整个入口被舍弃。"
+    },
+    {
+      "date": "2026-10-09",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "完成 601 日预检并估计六核参数",
+      "after_note": "完成 601 日预检并估计六核参数",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-10-09",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对沪市适配和通道消息距离",
+      "after_note": "核对沪市适配和通道消息距离",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-09",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布 601 日分组定标预检报告",
+      "after_note": "发布 601 日分组定标预检报告",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-10-09",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "归档预检中间文件",
+      "after_note": "归档预检中间文件",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-09",
+      "chain": "trading-window-freeze",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现早盘冻结与恢复并完成集成验收",
+      "after_note": "实现早盘冻结与恢复并完成集成验收",
+      "reason": "已实现并用于真实任务的暂停恢复机制继续保留。"
+    },
+    {
+      "date": "2026-10-10",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对冻结模型用到哪些定标因子",
+      "after_note": "核对冻结模型用到哪些定标因子",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-10",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "存档核包并启动全期结构定标",
+      "after_note": "存档核包并启动全期结构定标",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-10-10",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "讨论活动归一化的取舍",
+      "after_note": "讨论活动归一化的取舍",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-10",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布六核参数阶段报告",
+      "after_note": "发布六核参数阶段报告",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-10-10",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理重复定参结果",
+      "after_note": "清理重复定参结果",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-10",
+      "chain": "old-factor-bank",
+      "before_outcome": "folded",
+      "after_outcome": "folded",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "验证 2,220 列单日结果不变",
+      "after_note": "验证 2,220 列单日结果不变",
+      "reason": "修改、全期计算与历史对照已经完成；修正回放要求重算没有否定这些工作记录。"
+    },
+    {
+      "date": "2026-10-11",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "优化 F40 定参并跟进进度",
+      "after_note": "优化 F40 定参并跟进进度",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-10-11",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "换用 Q_equity 时钟并核对覆盖缺口",
+      "after_note": "换用 Q_equity 时钟并核对覆盖缺口",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-12",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写计划并启动全期生产",
+      "after_note": "写计划并启动全期生产",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-12",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理定参副本并核验恢复",
+      "after_note": "清理定参副本并核验恢复",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-12",
+      "chain": "grouped-calibration",
+      "before_outcome": "dropped",
+      "after_outcome": "dropped",
+      "before_symbol": "×",
+      "after_symbol": "×",
+      "symbol_changed": false,
+      "before_note": "存档结构参数 v2 并交接",
+      "after_note": "存档结构参数 v2 并交接",
+      "reason": "整体分组方案已停止，改用全局六核；10 个历史点维持未采用。"
+    },
+    {
+      "date": "2026-10-12",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "读 HFT 精确报价代理文献",
+      "after_note": "读 HFT 精确报价代理文献",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-10-13",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对订单号并开始实施 v2",
+      "after_note": "核对订单号并开始实施 v2",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-13",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "通过五个压力日并在数据库恢复后续算",
+      "after_note": "通过五个压力日并在数据库恢复后续算",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-13",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "回收生产任务的文件缓存",
+      "after_note": "回收生产任务的文件缓存",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-13",
+      "chain": "trading-window-freeze",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核验生产任务的早盘暂停与恢复",
+      "after_note": "核验生产任务的早盘暂停与恢复",
+      "reason": "已实现并用于真实任务的暂停恢复机制继续保留。"
+    },
+    {
+      "date": "2026-10-13",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "评估 HFT 价格分层和已有 dm 机制",
+      "after_note": "评估 HFT 价格分层和已有 dm 机制",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-10-14",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核验归档后清理重复缓存",
+      "after_note": "核验归档后清理重复缓存",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-14",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "暂停并准备单日四分钟优化",
+      "after_note": "暂停并准备单日四分钟优化",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-14",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "实现委托还原 v2 并提速",
+      "after_note": "实现委托还原 v2 并提速",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-14",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布沪市委托 v2 提速报告",
+      "after_note": "发布沪市委托 v2 提速报告",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-10-14",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "逐项研究 V3 至 V9 的可行性",
+      "after_note": "逐项研究 V3 至 V9 的可行性",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-10-15",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "盘点副本并按保留期限清理",
+      "after_note": "盘点副本并按保留期限清理",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-15",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "逐列检查沪市因子的计算条件",
+      "after_note": "逐列检查沪市因子的计算条件",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-15",
+      "chain": "cancel-phase",
+      "before_outcome": "landed",
+      "after_outcome": "dropped",
+      "before_symbol": "○",
+      "after_symbol": "×",
+      "symbol_changed": true,
+      "before_note": "停止机械撤单稳定性分析的后续生成",
+      "after_note": "停止机械撤单稳定性分析的后续生成",
+      "reason": "该点专指停止的逐股 bootstrap 稳定性研究；相位因子与机械撤单点值继续保留。"
+    },
+    {
+      "date": "2026-10-15",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "细化 V3 比例上限的预查方向",
+      "after_note": "细化 V3 比例上限的预查方向",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-10-15",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写单日四分钟优化计划",
+      "after_note": "写单日四分钟优化计划",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-15",
+      "chain": "model-methods",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "解读机器学习组合归因论文",
+      "after_note": "解读机器学习组合归因论文",
+      "reason": "模型取舍、目标和时间切分的讨论仍用于后续研究；部分设置修订不否定整项方法研究。"
+    },
+    {
+      "date": "2026-10-16",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "清理失败暂存并补齐清理记录",
+      "after_note": "清理失败暂存并补齐清理记录",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-16",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "按验收配置继续剩余日期",
+      "after_note": "按验收配置继续剩余日期",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-16",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "登记可见口径并建三值判定",
+      "after_note": "登记可见口径并建三值判定",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-16",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布深市 328 列提速与存储复盘",
+      "after_note": "发布深市 328 列提速与存储复盘",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    },
+    {
+      "date": "2026-10-16",
+      "chain": "behavior-design",
+      "before_outcome": "dropped",
+      "after_outcome": "landed",
+      "before_symbol": "×",
+      "after_symbol": "○",
+      "symbol_changed": true,
+      "before_note": "V3 比例尺寸线写了又撤销",
+      "after_note": "撤回越界预检，继续研讨 V3 方向",
+      "reason": "撤回的是越界实施与运行，原始用户消息明确要求继续研究 V3。"
+    },
+    {
+      "date": "2026-10-17",
+      "chain": "replay",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "诊断快照偏移和回放对因子的影响",
+      "after_note": "诊断快照偏移和回放对因子的影响",
+      "reason": "回放核验和修正成为重新定参的输入，旧参数被拒收不等于回放研究被舍弃。"
+    },
+    {
+      "date": "2026-10-17",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核对 G1 缺失、定义差与恢复比例",
+      "after_note": "核对 G1 缺失、定义差与恢复比例",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-17",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "继续剩余日期计算",
+      "after_note": "继续剩余日期计算",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-18",
+      "chain": "replay",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "复核三日生产回放",
+      "after_note": "复核三日生产回放",
+      "reason": "回放核验和修正成为重新定参的输入，旧参数被拒收不等于回放研究被舍弃。"
+    },
+    {
+      "date": "2026-10-18",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "存档 601 日结果并完成单因子评价",
+      "after_note": "存档 601 日结果并完成单因子评价",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-18",
+      "chain": "report328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "发布 328 列因子的 601 日评价报告",
+      "after_note": "发布 328 列因子的 601 日评价报告",
+      "reason": "历史评价报告已交付，仍承担新旧结果对照；不以此声称新样本外验证通过。"
+    },
+    {
+      "date": "2026-10-18",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "报告存档后清理暂存",
+      "after_note": "报告存档后清理暂存",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-19",
+      "chain": "replay",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "审计成交价格并设正确回放为默认",
+      "after_note": "审计成交价格并设正确回放为默认",
+      "reason": "回放核验和修正成为重新定参的输入，旧参数被拒收不等于回放研究被舍弃。"
+    },
+    {
+      "date": "2026-10-19",
+      "chain": "research-code",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "整理公共 IO、入口和执行阶段",
+      "after_note": "整理公共 IO、入口和执行阶段",
+      "reason": "公共回放与执行阶段整改有实现和验收，未发现撤销这项目标的决定。"
+    },
+    {
+      "date": "2026-10-19",
+      "chain": "storage-cleanup",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "扫描 wenjie 和 wangly 的存储",
+      "after_note": "扫描 wenjie 和 wangly 的存储",
+      "reason": "清理是已执行的维护工作；清掉中间文件不等于否定此前研究。"
+    },
+    {
+      "date": "2026-10-19",
+      "chain": "szse-model328",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "比较老因子新旧参数表现",
+      "after_note": "比较老因子新旧参数表现",
+      "reason": "328 列历史计算与比较是已完成工作；不能沿用旧参数与研究没有整体增强均不等于该项比较被撤销。"
+    },
+    {
+      "date": "2026-10-20",
+      "chain": "replay",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "交付回放整改并拒收旧参数来源",
+      "after_note": "交付回放整改并拒收旧参数来源",
+      "reason": "回放核验和修正成为重新定参的输入，旧参数被拒收不等于回放研究被舍弃。"
+    },
+    {
+      "date": "2026-10-20",
+      "chain": "wangly-env",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "核验并重建两个账户的默认环境",
+      "after_note": "核验并重建两个账户的默认环境",
+      "reason": "跨账户传输和环境修复有独立交付；环境版本更新未取消这项目标。"
+    },
+    {
+      "date": "2026-10-20",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "按逻辑分类并实现公开可见 v3 候选",
+      "after_note": "按逻辑分类并实现公开可见 v3 候选",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-20",
+      "chain": "corrected-replay-344",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "定下 344 列范围和八组定参来源",
+      "after_note": "定下 344 列范围和八组定参来源",
+      "reason": "全局六核与八组结构定参仍在推进，和被舍弃的分组路线分开。"
+    },
+    {
+      "date": "2026-10-20",
+      "chain": "research-journal",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "建设研究日志并审阅历史记录",
+      "after_note": "建设研究日志并审阅历史记录",
+      "reason": "研究日志功能持续使用；来源缺口属于核对范围限制，不是放弃日志的决定。"
+    },
+    {
+      "date": "2026-10-20",
+      "chain": "research-code",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "拆分回放依赖并修复回归",
+      "after_note": "拆分回放依赖并修复回归",
+      "reason": "公共回放与执行阶段整改有实现和验收，未发现撤销这项目标的决定。"
+    },
+    {
+      "date": "2026-10-21",
+      "chain": "replay",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "完整日验收并保留回放来源",
+      "after_note": "完整日验收并保留回放来源",
+      "reason": "回放核验和修正成为重新定参的输入，旧参数被拒收不等于回放研究被舍弃。"
+    },
+    {
+      "date": "2026-10-21",
+      "chain": "corrected-replay-344",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "六核采集推进，结构参数改用新口径",
+      "after_note": "六核采集推进，结构参数改用新口径",
+      "reason": "全局六核与八组结构定参仍在推进，和被舍弃的分组路线分开。"
+    },
+    {
+      "date": "2026-10-21",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "沪深三项口径修正通过全市场对照",
+      "after_note": "沪深三项口径修正通过全市场对照",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-21",
+      "chain": "research-journal",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修复采集并补核来源",
+      "after_note": "修复采集并补核来源",
+      "reason": "研究日志功能持续使用；来源缺口属于核对范围限制，不是放弃日志的决定。"
+    },
+    {
+      "date": "2026-10-21",
+      "chain": "behavior-design",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "比较 V3 至 V9 的沪深适用性和顺序",
+      "after_note": "比较 V3 至 V9 的沪深适用性和顺序",
+      "reason": "候选研究持续开展；C7.2 取消不影响 C7.3，撤回越界 V3 预检不代表撤销 V3 研究。"
+    },
+    {
+      "date": "2026-10-22",
+      "chain": "corrected-replay-344",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "六核全期完成，结构提速后从14日续跑",
+      "after_note": "六核全期完成，结构提速后从14日续跑",
+      "reason": "全局六核与八组结构定参仍在推进，和被舍弃的分组路线分开。"
+    },
+    {
+      "date": "2026-10-22",
+      "chain": "sse-v2",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "修正公开因子并完成13日回放分层认证",
+      "after_note": "修正公开因子并完成13日回放分层认证",
+      "reason": "沪市移植目标仍在推进；旧时钟、输入口径、少数列的替换或停用不扩成整条路线被舍弃。"
+    },
+    {
+      "date": "2026-10-22",
+      "chain": "research-journal",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "上线错落浮窗、单点阅读与证据空实分层",
+      "after_note": "上线错落浮窗、单点阅读与证据空实分层",
+      "reason": "研究日志功能持续使用；来源缺口属于核对范围限制，不是放弃日志的决定。"
+    },
+    {
+      "date": "2026-10-22",
+      "chain": "report-publish",
+      "before_outcome": "landed",
+      "after_outcome": "landed",
+      "before_symbol": "○",
+      "after_symbol": "○",
+      "symbol_changed": false,
+      "before_note": "写成并提交六核和结构两份提速汇报",
+      "after_note": "写成并提交六核和结构两份提速汇报",
+      "reason": "发布与修订确实发生；报告涉及被弃用方案不代表发布工作本身未采用。"
+    }
+  ],
+  "verified_message_locators": [
+    {
+      "session_id": "019f4aa4-ea4e-73a2-bc36-d5451ddad36b",
+      "line": 9,
+      "line_sha256": "2c5eb50f9e996cfc5cc5a14d64fb59bf9fbd16a77237422fdab52886e5219164",
+      "timestamp": "2026-07-10T14:09:21.933+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "01a08ac6-785e-70e1-8c83-45f5bc239850",
+      "line": 1853,
+      "line_sha256": "23b62a88936c440ca178a4a056a957322457c0ce77f0e5a0664b8a0bac2835bb",
+      "timestamp": "2026-09-11T17:29:56.806+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "01a13e58-c642-7572-8a2c-057e75d1800b",
+      "line": 1463,
+      "line_sha256": "2b25e6027ff95ea20d046514ababead405771d4ddb6d3f413f3448ef57b08976",
+      "timestamp": "2026-10-15T17:34:07.548+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "019fa258-82b9-7253-8644-f7bb0b3f218e",
+      "line": 22007,
+      "line_sha256": "12ab1a12dca9c2b98fc15bab34fe9b0510f58d67fc3893dcd519a39047f02543",
+      "timestamp": "2026-07-29T13:05:46.689+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "01a00f26-1a42-7500-86a1-f169e34b3630",
+      "line": 14853,
+      "line_sha256": "c4817823469b87ca4ed4e4e720f44f8a7e4048fbb57d7106d4233cdd59be692b",
+      "timestamp": "2026-08-18T10:20:16.675+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "01a07ffb-9813-7a50-8f81-e336bc8b705f",
+      "line": 18,
+      "line_sha256": "653597dc3501aa4b7792d4bb365ccfd5696841abf28e80c1f08f644d071fc31d",
+      "timestamp": "2026-09-14T14:12:04.177+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "019f75ef-9cb7-7fd1-860c-84294420544d",
+      "line": 341,
+      "line_sha256": "00bdcd24814f87bce673220c78b861a2390b9bad846725cdd8bc5daaeb298d60",
+      "timestamp": "2026-07-19T00:32:34.205+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "019ffb57-851d-7d62-877f-e5960d2835e2",
+      "line": 8398,
+      "line_sha256": "aced789af81c27db1d6ed3de2cc62a766d05437a83d36fe3a0df842503f9f208",
+      "timestamp": "2026-08-16T16:43:36.998+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "019f75c4-4257-7c22-8449-82a302d520cb",
+      "line": 465,
+      "line_sha256": "a3c2b7e1dd3ab94475ccfdc6625ec5ebb8386613f90e18183121f6bbe5c41cdc",
+      "timestamp": "2026-07-18T23:36:57.839+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "28b8257a-0437-4400-9475-59df073a1d95",
+      "line": 843,
+      "line_sha256": "f2bbc34fb3ef108e4be9c31665ec3a3490f2ef851fd08fe3ce9b71a34539e00f",
+      "timestamp": "2026-10-16T17:47:41.621+08:00",
+      "role": "user"
+    },
+    {
+      "session_id": "28b8257a-0437-4400-9475-59df073a1d95",
+      "line": 982,
+      "line_sha256": "e6cfadede40c817d6f6d1366bd00515abb7de19093ced6f3c9a693132ff79ced",
+      "timestamp": "2026-10-16T18:08:40.406+08:00",
+      "role": "assistant"
+    },
+    {
+      "session_id": "01a13e58-c642-7572-8a2c-057e75d1800b",
+      "line": 1556,
+      "line_sha256": "98550ff88a7842549771bcb2c309e0a4b93b399f6f2cca0cd3ce3164f87c5919",
+      "timestamp": "2026-10-15T17:51:23.816+08:00",
+      "role": "user"
+    }
+  ],
+  "supplemental_local_materials": [
+    {
+      "chain": "strategy-research",
+      "source": "research",
+      "path": "reports/2026-09/2026-09-21-independent-strategy-index-selection.md",
+      "expected_sha256": "b64a24485585600db0f397116264a1f0f39bcd5edfabc1fed94ecf0607c0ae49",
+      "exists": true,
+      "current_sha256": "b64a24485585600db0f397116264a1f0f39bcd5edfabc1fed94ecf0607c0ae49",
+      "snapshot_matches": true
+    },
+    {
+      "chain": "strategy-research",
+      "source": "research",
+      "path": "reports/2026-09/2026-09-21-index-candidate-primary-sources.md",
+      "expected_sha256": "00a1bec0f98db590bd9c52e8f1b9a8f80709df353ecf248256f5d085370d8db6",
+      "exists": true,
+      "current_sha256": "00a1bec0f98db590bd9c52e8f1b9a8f80709df353ecf248256f5d085370d8db6",
+      "snapshot_matches": true
+    },
+    {
+      "chain": "strategy-research",
+      "source": "research",
+      "path": "reports/2026-09/2026-09-22-mars-execution-assumptions-research.md",
+      "expected_sha256": "2463cff2ad4620650709580c7afb8ad889d1ab19c55d7e6136a9ea1846332263",
+      "exists": true,
+      "current_sha256": "2463cff2ad4620650709580c7afb8ad889d1ab19c55d7e6136a9ea1846332263",
+      "snapshot_matches": true
+    },
+    {
+      "chain": "fund-research",
+      "source": "notes",
+      "path": "2026年7月量化私募压力测试与投资观察.md",
+      "expected_sha256": "52cf2629b567659086722271f9025dd027b2cc2ab41583c7cc7db13d9dcccdd7",
+      "exists": true,
+      "current_sha256": "52cf2629b567659086722271f9025dd027b2cc2ab41583c7cc7db13d9dcccdd7",
+      "snapshot_matches": true
+    },
+    {
+      "chain": "fund-research",
+      "source": "notes",
+      "path": "思瑞投资NEXT全产品业绩分析_2026-08-12.md",
+      "expected_sha256": "05feea0a2a587dddfe2e0e17e1501a9896ce6f43139351d8c479cd5f816b8f9b",
+      "exists": true,
+      "current_sha256": "05feea0a2a587dddfe2e0e17e1501a9896ce6f43139351d8c479cd5f816b8f9b",
+      "snapshot_matches": true
+    }
+  ],
+  "validation": {
+    "content_checks": {
+      "status": "passed",
+      "tests": 11,
+      "command": "python -m pytest tests/test_journal_build.py tests/test_journal_evidence.py tests/test_journal_provenance.py -q"
+    },
+    "full_build": {
+      "status": "passed",
+      "journal_days": 103,
+      "points_match_ledger": 317,
+      "existing_warnings": "未跟踪的 2026-10-10 草稿两条 mtime 时间来源警告"
+    },
+    "browser": {
+      "status": "passed",
+      "environment": "isolated-local-preview",
+      "ui_revision": "21bebcb454b0d70ee676d24f65eb72fe0cd909ef",
+      "all_points_match": 317,
+      "crosses": 21,
+      "circles": 296,
+      "c3_rejected_points": 6,
+      "restored_points_opened": 3,
+      "site_console_errors": 0
+    },
+    "push": "separate-git-receipt",
+    "production": "separate-publication-receipt"
+  }
+}
