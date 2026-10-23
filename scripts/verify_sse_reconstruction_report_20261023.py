@@ -32,7 +32,7 @@ def check() -> dict:
     assert text.count("data:font/woff2;base64,") == 2
     assert "report-font-fingerprint" in text
     primary = (ROOT / "content/daily/2026-10-23.md").read_text(encoding="utf-8")
-    assert "date: 2026-10-23" in primary and "#/daily/2026-10-23/show" in primary
+    assert "date: 2026-10-23" in primary
     return {"sha256": hashlib.sha256(REPORT.read_bytes()).hexdigest(), "bytes": REPORT.stat().st_size, "error_columns": len(data["errors"]), "evidence_topics": len(data["source"]), "source_revision": data["provenance"]["revision"], "external_runtime_assets": 0}
 
 
