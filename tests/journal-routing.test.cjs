@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
-function render({density = 14, width = 1000, middle = '2026-10-16', target = '2026-10-16', dropped = false, records, order = ['from', 'middle', 'to']} = {}) {
+function render({density = 14, width = 1000, source = '2026-10-16', middle = '2026-10-16', target = '2026-10-16', dropped = false, records, order = ['from', 'middle', 'to']} = {}) {
   const elements = new Map();
   const element = () => ({innerHTML: '', hidden: false, scrollLeft: 0, clientWidth: width, classList: {contains: () => true}, insertAdjacentHTML() {}});
   const get = name => {
@@ -12,11 +12,11 @@ function render({density = 14, width = 1000, middle = '2026-10-16', target = '20
   };
   const context = {window: {}, document: {activeElement: null, getElementById: get, querySelector: get}};
   vm.runInNewContext(fs.readFileSync('site/js/journal.js', 'utf8'), context);
-  records ||= {from: ['2026-10-16'], middle: [middle], to: [target]};
+  records ||= {from: [source], middle: [middle], to: [target]};
   const days = [...new Set(Object.values(records).flat())].sort().map(date => ({date, weekday: '工作日', chains: order.filter(id => records[id].includes(date))}));
   const view = Object.assign({}, context.window.JournalView, {
     mode: 'atlas', density, days, selection: null, selected: null,
-    registry: {tracks: [{id: 'track', label: '任务'}], chains: order.map(id => ({id, track: 'track', label: id, short: id, fate: id === 'middle' && dropped ? 'dropped' : ''})), handoffs: [{from: 'from', to: 'to', date: target, source_date: '2026-10-16', type: '派生'}]},
+    registry: {tracks: [{id: 'track', label: '任务'}], chains: order.map(id => ({id, track: 'track', label: id, short: id, fate: id === 'middle' && dropped ? 'dropped' : ''})), handoffs: [{from: 'from', to: 'to', date: target, source_date: source, type: '派生'}]},
     floatingNotes: {capture() {}}, visibleDays: () => days,
     pointRadius: () => 4, pointNote: (day, id) => id === 'middle' && dropped ? {outcome: 'dropped'} : {}, pointWeight: () => 1,
     pointEvidence: () => ({status: 'artifact'}), weightLabel: () => '', evidenceLabel: () => '',
@@ -54,6 +54,29 @@ test('同日横跨三列时，真实交接线绕过中间节点并保留关系',
   assert(distance >= 7.2, `交接线仍遮住中间节点，中心距离只有 ${distance.toFixed(2)}px`);
   assert(svg.includes('data-chains="from to"'));
   assert(svg.includes('stroke-dasharray="4 3"'));
+});
+
+test('相邻密集列的跨日期关系不拱到起点之前，也不沿时间轴折返', () => {
+  const source = '2026-07-07', target = '2026-07-23';
+  const records = {from: [source, '2026-07-08', '2026-07-13'], to: [source, '2026-07-08', '2026-07-09', '2026-07-10', '2026-07-13', '2026-07-22', target]};
+  const {svg, atlas} = render({width: 178, source, target, records, order: ['from', 'to']});
+  const path = /class="journal-handoff-path"[^>]*d="([^"]+)"/.exec(svg)[1], samples = samplePath(path);
+  assert(samples.every(p => p.y >= atlas.y(source) - .01 && p.y <= atlas.y(target) + .01), '连线不能绕到更早或更晚的日期，制造无意义的鼓包');
+  assert(samples.every((p, i) => !i || p.y >= samples[i - 1].y - .01), '跨日期的线应始终向下推进');
+  assert(!/[LQ]/.test(path), '不能用台阶拼接代替流畅的走势');
+});
+
+test('跨过一列连续记录时，转向摊开在日期跨度中，不拼水平台阶', () => {
+  const source = '2026-09-08', target = '2026-09-20';
+  const records = {from: [source, '2026-09-09'], middle: [source, '2026-09-09', '2026-09-10', '2026-09-11'], to: ['2026-09-18', target, '2026-09-21']};
+  const {svg, atlas} = render({width: 224, source, target, records});
+  const path = /class="journal-handoff-path"[^>]*d="([^"]+)"/.exec(svg)[1], samples = samplePath(path);
+  assert(!/[LQ]/.test(path), '长线不能用水平横杆与圆角拼成');
+  assert(samples.every((p, i) => !i || p.y >= samples[i - 1].y - .001), '避让不能沿日期折返');
+  for (const date of records.middle) {
+    const distance = Math.min(...samples.map(p => Math.hypot(p.x - atlas.positions.get('middle'), p.y - atlas.y(date))));
+    assert(distance >= 7.2, '缓变曲线仍需避开连续节点');
+  }
 });
 
 test('中段上下都有节点、端点附近还有一列密集点时，仍使用完整曲线', () => {

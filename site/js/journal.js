@@ -7,6 +7,11 @@
   const handoffGap = 4.2;
   function segmentHitsNode(a, b, point, gap = handoffGap) {
     const r = point.r + gap;
+    if (!point.square) {
+      const dx = b.x - a.x, dy = b.y - a.y, length2 = dx * dx + dy * dy;
+      const t = length2 ? Math.max(0, Math.min(1, ((point.x - a.x) * dx + (point.y - a.y) * dy) / length2)) : 0;
+      return (a.x + dx * t - point.x) ** 2 + (a.y + dy * t - point.y) ** 2 <= r * r;
+    }
     let low = 0, high = 1;
     for (const key of ["x", "y"]) {
       const delta = b[key] - a[key], start = point[key] - r, end = point[key] + r;
@@ -30,31 +35,24 @@
     const ab = mid(a, b), bc = mid(b, c), cd = mid(c, d), abc = mid(ab, bc), bcd = mid(bc, cd), center = mid(abc, bcd);
     return [...curveSegments(a, ab, abc, center, depth + 1), ...curveSegments(center, bcd, cd, d, depth + 1)];
   }
-  function smoothHandoff(points, clear) {
-    const path = points.filter((p, i) => !i || Math.hypot(p.x - points[i - 1].x, p.y - points[i - 1].y) > .01);
-    for (let i = path.length - 2; i > 0; i--) {
-      const a = path[i - 1], b = path[i], c = path[i + 1];
-      if (Math.abs((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x)) < .01) path.splice(i, 1);
-    }
-    let result = `M${path[0].x},${path[0].y}`;
-    path.slice(1, -1).forEach((p, i) => {
-      const a = path[i], b = path[i + 2], before = Math.hypot(p.x - a.x, p.y - a.y), after = Math.hypot(b.x - p.x, b.y - p.y);
-      const turn = (entry, exit) => {
-        const start = {x: p.x + (a.x - p.x) * entry / before, y: p.y + (a.y - p.y) * entry / before};
-        const end = {x: p.x + (b.x - p.x) * exit / after, y: p.y + (b.y - p.y) * exit / after};
-        return [start, {x: start.x + (p.x - start.x) * .5523, y: start.y + (p.y - start.y) * .5523}, {x: end.x + (p.x - end.x) * .5523, y: end.y + (p.y - end.y) * .5523}, end];
-      };
-      // 只在复杂拥挤区使用走廊；尽量舒展转向，并逐段检查圆弧不能切进节点。
-      const entry = Math.min(before * (i === 0 ? 1 : .5), 96), exit = Math.min(after * (i === path.length - 3 ? 1 : .5), 96);
-      let best;
-      for (let scaleA = 1; scaleA >= .08; scaleA *= .65) for (let scaleB = 1; scaleB >= .08; scaleB *= .65) {
-        const curve = turn(entry * scaleA, exit * scaleB), cost = entry * scaleA + exit * scaleB;
-        if ((!best || cost > best.cost) && clear(curve)) best = {curve, cost};
-      }
-      const [start, c1, c2, end] = best?.curve || turn(Math.min(entry, 1), Math.min(exit, 1));
-      result += ` L${start.x},${start.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${end.x},${end.y}`;
-    });
-    return result + ` L${path.at(-1).x},${path.at(-1).y}`;
+  function flowSweep(from, to, departure = 0, arrival = 0) {
+    const dx = to.x - from.x, dy = to.y - from.y;
+    if (Math.abs(dy) < .01) return [];
+    const a = departure * dx, b = arrival * dx;
+    const c3 = 10 * dx - 6 * a - 4 * b, c4 = -15 * dx + 8 * a + 7 * b, c5 = 6 * dx - 3 * a - 3 * b;
+    const point = t => ({x: from.x + a * t + c3 * t ** 3 + c4 * t ** 4 + c5 * t ** 5, y: from.y + dy * t});
+    const slope = t => a + 3 * c3 * t * t + 4 * c4 * t ** 3 + 5 * c5 * t ** 4;
+    // 五次缓变曲线在竖向段的交接处曲率为零；细分成三次曲线，误差小于 .02px。
+    const fit = (start, end, depth = 0) => {
+      const p = point(start), q = point(end), dt = end - start;
+      const c1 = {x: p.x + slope(start) * dt / 3, y: p.y + dy * dt / 3}, c2 = {x: q.x - slope(end) * dt / 3, y: q.y - dy * dt / 3};
+      const error = [.25, .5, .75].some(t => {
+        const u = 1 - t, x = p.x * u ** 3 + 3 * c1.x * u * u * t + 3 * c2.x * u * t * t + q.x * t ** 3;
+        return Math.abs(x - point(start + dt * t).x) > .02;
+      });
+      return error && depth < 7 ? [...fit(start, (start + end) / 2, depth + 1), ...fit((start + end) / 2, end, depth + 1)] : [[p, c1, c2, q]];
+    };
+    return fit(0, 1);
   }
   function routeHandoff(from, to, points, lanes, height) {
     const others = points.filter(p => p !== from && p !== to);
@@ -85,17 +83,40 @@
       }
       return curveSegments(...curve).every(([a, b]) => a.y >= 2.5 && b.y >= 2.5 && a.y <= height - 2.5 && b.y <= height - 2.5 && !nearby.some(p => segmentHitsNode(a, b, p, handoffGap + .15)));
     };
-    const dx = to.x - from.x;
-    const cubic = (start, end) => [from, {x: from.x + dx / 3, y: from.y + start}, {x: to.x - dx / 3, y: to.y + end}, to];
+    const dx = to.x - from.x, dy = to.y - from.y;
     const serialize = ([a, b, c, d]) => `M${a.x},${a.y} C${b.x},${b.y} ${c.x},${c.y} ${d.x},${d.y}`;
-    // 以弯曲程度排序整段曲线，优先小弧度；两端可独立调整，避开不同的密集区域。
-    const limit = Math.min(height * 1.4, Math.max(80, Math.abs(dx) / 2, Math.abs(to.y - from.y) / 3));
-    const offsets = [0, ...[8, 16, 24, 32, 40, 48, 64, 80, 96, 128, 192, 256, 384, 512].filter(n => n <= limit).flatMap(n => [-n, n])];
-    const candidates = offsets.flatMap(a => offsets.map(b => ({curve: cubic(a, b), cost: a * a - a * b + b * b})));
-    // 相邻列的长时间跨度也允许沿日期方向舒展，避免人为拉出水平肩部。
-    const dy = to.y - from.y;
-    candidates.push({curve: [from, {x: from.x, y: from.y + dy / 2}, {x: to.x, y: to.y - dy / 2}, to], cost: Math.abs(dx) < Math.abs(dy) ? 1 : Infinity});
+    const cubic = (ax, ay, bx, by) => [from, {x: from.x + dx * ax, y: from.y + dy * ay}, {x: from.x + dx * bx, y: from.y + dy * by}, to];
+    const vertical = Math.abs(dy) > Math.abs(dx);
+    const preferredCurve = vertical ? cubic(0, .45, 1, .55) : cubic(.4, 0, .6, 1);
+    if (clear(preferredCurve)) return serialize(preferredCurve);
+    const candidates = [];
+    if (dy) {
+      // 控制点始终在两个记录日之间；一条线向前推进，不靠回头或鼓包避让。
+      const ratios = [0, .25, .5, .75, 1];
+      for (const ax of ratios) for (const ay of ratios) for (const bx of ratios) for (const by of ratios) {
+        const curve = cubic(ax, ay, bx, by), [, b, c] = curve;
+        const length = Math.hypot(b.x - from.x, b.y - from.y) + Math.hypot(c.x - b.x, c.y - b.y) + Math.hypot(to.x - c.x, to.y - c.y);
+        const departure = vertical ? Math.abs(b.x - from.x) + Math.abs(to.x - c.x) : Math.abs(b.y - from.y) + Math.abs(to.y - c.y);
+        candidates.push({curve, cost: length + departure * .12});
+      }
+      for (const [ax, bx] of [[0, 1], [1, 0], [1 / 3, 2 / 3]]) for (let ay = 0; ay <= 1; ay += .125) for (let by = 0; by <= 1; by += .125) {
+        const curve = cubic(ax, ay, bx, by), [, b, c] = curve;
+        candidates.push({curve, cost: Math.hypot(b.x - from.x, b.y - from.y) + Math.hypot(c.x - b.x, c.y - b.y) + Math.hypot(to.x - c.x, to.y - c.y) + Math.abs(b.x - from.x) * .12 + Math.abs(to.x - c.x) * .12});
+      }
+    } else {
+      // 同日关系只允许浅弧，把必要的绕行摊开到整条线，不制造高耸的拱形。
+      const limit = Math.min(28, Math.abs(dx) * .18), offsets = [0];
+      for (let n = 4; n <= limit; n += 4) offsets.push(-n, n);
+      for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [1, 0]]) for (const a of offsets) for (const b of offsets) candidates.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b + Math.abs(ax - 1 / 3) + Math.abs(bx - 2 / 3)});
+    }
     for (const {curve} of candidates.sort((a, b) => a.cost - b.cost)) if (clear(curve)) return serialize(curve);
+    if (dy && Math.abs(dy) <= 28) {
+      const shallow = [], offsets = [-28, -24, -20, -16, -12, -8, -4, 0, 4, 8, 12, 16, 20, 24, 28];
+      for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [1, 0]]) for (const a of offsets) for (const b of offsets) {
+        shallow.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b});
+      }
+      for (const {curve} of shallow.sort((a, b) => a.cost - b.cost)) if (clear(curve)) return serialize(curve);
+    }
     const ports = point => {
       const available = lanes.filter(x => !others.some(p => segmentHitsNode(point, {x, y: point.y}, p)));
       // 极度压缩时，同列点的留白可能重叠；重叠区交给固定保护层裁掉。
@@ -103,8 +124,9 @@
       return [choices.filter(x => x < point.x).at(-1), choices.find(x => x > point.x)].filter(x => x !== undefined);
     };
     const preferred = (from.y + to.y) / 2;
-    let best;
+    const guides = [];
     for (const left of ports(from)) for (const right of ports(to)) {
+      if (left < Math.min(from.x, to.x) || left > Math.max(from.x, to.x) || right < Math.min(from.x, to.x) || right > Math.max(from.x, to.x)) continue;
       const lowX = Math.min(left, right), highX = Math.max(left, right);
       const blocked = points.filter(p => p.x + p.r + handoffGap >= lowX && p.x - p.r - handoffGap <= highX).map(p => [p.y - p.r - handoffGap, p.y + p.r + handoffGap]).sort((a, b) => a[0] - b[0]);
       const merged = [];
@@ -115,12 +137,41 @@
       const rails = [preferred, 3, height - 3, ...merged.flatMap(([a, b]) => [a - .3, b + .3])];
       for (const y of rails) {
         if (y < 3 || y > height - 3 || merged.some(([a, b]) => y >= a && y <= b)) continue;
+        const slack = Math.abs(dy) <= 28 ? 24 : 0;
+        if (y < Math.min(from.y, to.y) - slack || y > Math.max(from.y, to.y) + slack) continue;
         const cost = Math.abs(left - from.x) + Math.abs(right - to.x) + Math.abs(right - left) + Math.abs(y - from.y) + Math.abs(y - to.y) + Math.abs(y - preferred) * .01;
-        if (!best || cost < best.cost) best = {cost, path: [from, {x: left, y: from.y}, {x: left, y}, {x: right, y}, {x: right, y: to.y}, to]};
+        guides.push({cost, left, right, y});
       }
     }
-    // 无可用侧向出口时仍保留关系；保护层保证连线不绘入任何节点。
-    return smoothHandoff(best?.path || [from, {x: from.x, y: 3}, {x: to.x, y: 3}, to], clear);
+    if (dy > 0) for (const entry of [12, 8, 20, 28, 4, 2, 1]) {
+      const firstY = from.y + Math.min(entry, dy / 4), lastY = to.y - Math.min(entry, dy / 4);
+      for (const guide of guides.sort((a, b) => a.cost - b.cost)) {
+        if (guide.y < firstY || guide.y > lastY) continue;
+        const starts = [...new Set([firstY, ...[128, 64, 32, 16, 8, 2].map(n => Math.max(firstY, guide.y - n))])];
+        const ends = [...new Set([lastY, ...[128, 64, 32, 16, 8, 2].map(n => Math.min(lastY, guide.y + n))])];
+        const windows = starts.flatMap(start => ends.map(end => ({start, end}))).filter(w => w.end > w.start).sort((a, b) => (b.end - b.start) - (a.end - a.start));
+        for (const {start, end} of windows) {
+          const curves = [...flowSweep(from, {x: guide.left, y: firstY}, 2, 0), ...flowSweep({x: guide.left, y: firstY}, {x: guide.left, y: start}), ...flowSweep({x: guide.left, y: start}, {x: guide.right, y: end}), ...flowSweep({x: guide.right, y: end}, {x: guide.right, y: lastY}), ...flowSweep({x: guide.right, y: lastY}, to, 0, 2)];
+          if (curves.every(clear)) return curves.map((curve, i) => i ? serialize(curve).replace(/^M[^ ]+ /, '') : serialize(curve)).join(' ');
+        }
+      }
+    }
+    // 压缩后整列留白可能连成屏障；此时只允许整段弧线绕过，仍不拼接折角。
+    const arcs = [], offsets = [0, -16, 16, -32, 32, -48, 48, -64, 64, -80, 80, -96, 96, -128, 128, -192, 192, -256, 256];
+    for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [1, 0]]) for (const a of offsets) for (const b of offsets) arcs.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b});
+    for (const {curve} of arcs.sort((a, b) => a.cost - b.cost)) if (clear(curve)) return serialize(curve);
+    const swap = p => ({x: p.y, y: p.x});
+    for (const guide of guides.sort((a, b) => a.cost - b.cost)) {
+      for (const ratio of [.5, .35, .65, .25, .75]) {
+        const crest = {x: guide.y, y: from.x + dx * ratio};
+        const curves = [...flowSweep(swap(from), crest), ...flowSweep(crest, swap(to))].map(curve => curve.map(swap));
+        if (curves.every(clear)) return curves.map((curve, i) => i ? serialize(curve).replace(/^M[^ ]+ /, '') : serialize(curve)).join(' ');
+      }
+      const curves = [...flowSweep(swap(from), {x: guide.y, y: guide.left}, 2, 0), ...flowSweep({x: guide.y, y: guide.left}, {x: guide.y, y: guide.right}), ...flowSweep({x: guide.y, y: guide.right}, swap(to), 0, 2)].map(curve => curve.map(swap));
+      if (curves.every(clear)) return curves.map((curve, i) => i ? serialize(curve).replace(/^M[^ ]+ /, '') : serialize(curve)).join(' ');
+    }
+    // 节点本身重叠的极限情况下，固定保护层仍保留每个实际节点的留白。
+    return serialize(preferredCurve);
   }
   // 国办发明电〔2025〕7号：https://www.gov.cn/zhengce/content/202511/content_7047090.htm
   // 按年维护官方放假调休安排；未收录年份只标周末，不推算农历节日。
@@ -553,9 +604,13 @@
       const num = d => Date.parse(d + "T00:00:00Z") / 86400000;
       const first = num(days[0].date), last = num(days.at(-1).date);
       const dateWidth = 86, padding = 18, gap = 12, top = 18;
-      const ordered = this.registry.tracks.flatMap(t => this.registry.chains.filter(c => c.track === t.id));
+      const factorFlow = ["fixed-history", "open5m", "old-factor-bank", "old-factor-calibration", "depth-match", "cancel-phase", "szse-model328", "grouped-calibration", "corrected-replay-344", "sse-v2"];
+      const ordered = this.registry.tracks.flatMap(t => {
+        const chains = this.registry.chains.filter(c => c.track === t.id);
+        return t.id === "factor" ? chains.sort((a, b) => (factorFlow.includes(a.id) ? factorFlow.indexOf(a.id) : factorFlow.length) - (factorFlow.includes(b.id) ? factorFlow.indexOf(b.id) : factorFlow.length)) : chains;
+      });
       const groups = this.registry.tracks.filter(t => ordered.some(c => c.track === t.id));
-      const width = Math.max(scroller.clientWidth, dateWidth + 2 * padding + gap * Math.max(0, groups.length - 1) + ordered.length * 28);
+      const width = Math.max(scroller.clientWidth, dateWidth + 2 * padding + gap * Math.max(0, groups.length - 1) + ordered.length * 34);
       const colWidth = (width - dateWidth - 2 * padding - gap * Math.max(0, groups.length - 1)) / Math.max(1, ordered.length);
       const positions = new Map();
       ordered.forEach((c, i) => positions.set(c.id, dateWidth + padding + (i + .5) * colWidth + groups.findIndex(t => t.id === c.track) * gap));
