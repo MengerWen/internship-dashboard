@@ -60,10 +60,29 @@
     const others = points.filter(p => p !== from && p !== to);
     // 紧密压缩时，端点本身可能已处于同列相邻点的留白内，重叠区由保护层裁掉。
     const obstacles = others.filter(p => ![from, to].some(end => p.x === end.x && Math.abs(p.y - end.y) < p.r + handoffGap));
+    const columns = new Map();
+    obstacles.forEach(p => {
+      if (!columns.has(p.x)) columns.set(p.x, {x: p.x, r: 0, points: []});
+      const column = columns.get(p.x);
+      column.r = Math.max(column.r, p.r + handoffGap + .15); column.points.push(p);
+    });
     const clear = curve => {
       const lowX = Math.min(...curve.map(p => p.x)), highX = Math.max(...curve.map(p => p.x));
       const lowY = Math.min(...curve.map(p => p.y)), highY = Math.max(...curve.map(p => p.y));
-      const nearby = obstacles.filter(p => p.x + p.r + handoffGap + .15 >= lowX && p.x - p.r - handoffGap - .15 <= highX && p.y + p.r + handoffGap + .15 >= lowY && p.y - p.r - handoffGap - .15 <= highY);
+      const nearby = [];
+      for (const column of columns.values()) {
+        if (column.x + column.r < lowX || column.x - column.r > highX) continue;
+        for (const p of column.points) if (p.y + p.r + handoffGap + .15 >= lowY && p.y - p.r - handoffGap - .15 <= highY) nearby.push(p);
+      }
+      if (!nearby.length && lowY >= 2.5 && highY <= height - 2.5) return true;
+      const [a, b, c, d] = curve, dx = d.x - a.x;
+      // 横向匀速的候选弧线先在节点所在列快速排除明显碰撞，再做精细曲线检查。
+      if (dx && Math.abs(b.x - a.x - dx / 3) < 1e-6 && Math.abs(d.x - c.x - dx / 3) < 1e-6) {
+        for (const p of nearby) {
+          const t = (p.x - a.x) / dx, u = 1 - t;
+          if (t >= 0 && t <= 1 && Math.abs(a.y * u ** 3 + 3 * b.y * u * u * t + 3 * c.y * u * t * t + d.y * t ** 3 - p.y) <= p.r + handoffGap) return false;
+        }
+      }
       return curveSegments(...curve).every(([a, b]) => a.y >= 2.5 && b.y >= 2.5 && a.y <= height - 2.5 && b.y <= height - 2.5 && !nearby.some(p => segmentHitsNode(a, b, p, handoffGap + .15)));
     };
     const dx = to.x - from.x;
