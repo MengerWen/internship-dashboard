@@ -30,7 +30,7 @@
     const ab = mid(a, b), bc = mid(b, c), cd = mid(c, d), abc = mid(ab, bc), bcd = mid(bc, cd), center = mid(abc, bcd);
     return [...curveSegments(a, ab, abc, center, depth + 1), ...curveSegments(center, bcd, cd, d, depth + 1)];
   }
-  function roundedHandoff(points) {
+  function smoothHandoff(points, clear) {
     const path = points.filter((p, i) => !i || Math.hypot(p.x - points[i - 1].x, p.y - points[i - 1].y) > .01);
     for (let i = path.length - 2; i > 0; i--) {
       const a = path[i - 1], b = path[i], c = path[i + 1];
@@ -39,18 +39,44 @@
     let result = `M${path[0].x},${path[0].y}`;
     path.slice(1, -1).forEach((p, i) => {
       const a = path[i], b = path[i + 2], before = Math.hypot(p.x - a.x, p.y - a.y), after = Math.hypot(b.x - p.x, b.y - p.y);
-      // 小圆角只切入预留间隙，不侵入节点的保护范围。
-      const r = Math.min(1.4, before / 2, after / 2);
-      result += ` L${p.x + (a.x - p.x) * r / before},${p.y + (a.y - p.y) * r / before} Q${p.x},${p.y} ${p.x + (b.x - p.x) * r / after},${p.y + (b.y - p.y) * r / after}`;
+      const turn = (entry, exit) => {
+        const start = {x: p.x + (a.x - p.x) * entry / before, y: p.y + (a.y - p.y) * entry / before};
+        const end = {x: p.x + (b.x - p.x) * exit / after, y: p.y + (b.y - p.y) * exit / after};
+        return [start, {x: start.x + (p.x - start.x) * .5523, y: start.y + (p.y - start.y) * .5523}, {x: end.x + (p.x - end.x) * .5523, y: end.y + (p.y - end.y) * .5523}, end];
+      };
+      // 只在复杂拥挤区使用走廊；尽量舒展转向，并逐段检查圆弧不能切进节点。
+      const entry = Math.min(before * (i === 0 ? 1 : .5), 96), exit = Math.min(after * (i === path.length - 3 ? 1 : .5), 96);
+      let best;
+      for (let scaleA = 1; scaleA >= .08; scaleA *= .65) for (let scaleB = 1; scaleB >= .08; scaleB *= .65) {
+        const curve = turn(entry * scaleA, exit * scaleB), cost = entry * scaleA + exit * scaleB;
+        if ((!best || cost > best.cost) && clear(curve)) best = {curve, cost};
+      }
+      const [start, c1, c2, end] = best?.curve || turn(Math.min(entry, 1), Math.min(exit, 1));
+      result += ` L${start.x},${start.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${end.x},${end.y}`;
     });
     return result + ` L${path.at(-1).x},${path.at(-1).y}`;
   }
   function routeHandoff(from, to, points, lanes, height) {
     const others = points.filter(p => p !== from && p !== to);
-    const bend = Math.max(22, Math.abs(to.y - from.y) / 2);
-    const segments = curveSegments(from, {x: from.x, y: from.y + bend}, {x: to.x, y: to.y - bend}, to);
-    const clearCurve = segments.every(([a, b]) => a.y >= 2.5 && b.y >= 2.5 && a.y <= height - 2.5 && b.y <= height - 2.5 && !others.some(p => segmentHitsNode(a, b, p, handoffGap + .15)));
-    if (clearCurve) return `M${from.x},${from.y} C${from.x},${from.y + bend} ${to.x},${to.y - bend} ${to.x},${to.y}`;
+    // 紧密压缩时，端点本身可能已处于同列相邻点的留白内，重叠区由保护层裁掉。
+    const obstacles = others.filter(p => ![from, to].some(end => p.x === end.x && Math.abs(p.y - end.y) < p.r + handoffGap));
+    const clear = curve => {
+      const lowX = Math.min(...curve.map(p => p.x)), highX = Math.max(...curve.map(p => p.x));
+      const lowY = Math.min(...curve.map(p => p.y)), highY = Math.max(...curve.map(p => p.y));
+      const nearby = obstacles.filter(p => p.x + p.r + handoffGap + .15 >= lowX && p.x - p.r - handoffGap - .15 <= highX && p.y + p.r + handoffGap + .15 >= lowY && p.y - p.r - handoffGap - .15 <= highY);
+      return curveSegments(...curve).every(([a, b]) => a.y >= 2.5 && b.y >= 2.5 && a.y <= height - 2.5 && b.y <= height - 2.5 && !nearby.some(p => segmentHitsNode(a, b, p, handoffGap + .15)));
+    };
+    const dx = to.x - from.x;
+    const cubic = (start, end) => [from, {x: from.x + dx / 3, y: from.y + start}, {x: to.x - dx / 3, y: to.y + end}, to];
+    const serialize = ([a, b, c, d]) => `M${a.x},${a.y} C${b.x},${b.y} ${c.x},${c.y} ${d.x},${d.y}`;
+    // 以弯曲程度排序整段曲线，优先小弧度；两端可独立调整，避开不同的密集区域。
+    const limit = Math.min(height * 1.4, Math.max(80, Math.abs(dx) / 2, Math.abs(to.y - from.y) / 3));
+    const offsets = [0, ...[8, 16, 24, 32, 40, 48, 64, 80, 96, 128, 192, 256, 384, 512].filter(n => n <= limit).flatMap(n => [-n, n])];
+    const candidates = offsets.flatMap(a => offsets.map(b => ({curve: cubic(a, b), cost: a * a - a * b + b * b})));
+    // 相邻列的长时间跨度也允许沿日期方向舒展，避免人为拉出水平肩部。
+    const dy = to.y - from.y;
+    candidates.push({curve: [from, {x: from.x, y: from.y + dy / 2}, {x: to.x, y: to.y - dy / 2}, to], cost: Math.abs(dx) < Math.abs(dy) ? 1 : Infinity});
+    for (const {curve} of candidates.sort((a, b) => a.cost - b.cost)) if (clear(curve)) return serialize(curve);
     const ports = point => {
       const available = lanes.filter(x => !others.some(p => segmentHitsNode(point, {x, y: point.y}, p)));
       // 极度压缩时，同列点的留白可能重叠；重叠区交给固定保护层裁掉。
@@ -75,7 +101,7 @@
       }
     }
     // 无可用侧向出口时仍保留关系；保护层保证连线不绘入任何节点。
-    return roundedHandoff(best?.path || [from, {x: from.x, y: 3}, {x: to.x, y: 3}, to]);
+    return smoothHandoff(best?.path || [from, {x: from.x, y: 3}, {x: to.x, y: 3}, to], clear);
   }
   // 国办发明电〔2025〕7号：https://www.gov.cn/zhengce/content/202511/content_7047090.htm
   // 按年维护官方放假调休安排；未收录年份只标周末，不推算农历节日。

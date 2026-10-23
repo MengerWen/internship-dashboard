@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
-function render({density = 14, width = 1000, middle = '2026-10-16', target = '2026-10-16', dropped = false} = {}) {
+function render({density = 14, width = 1000, middle = '2026-10-16', target = '2026-10-16', dropped = false, records, order = ['from', 'middle', 'to']} = {}) {
   const elements = new Map();
   const element = () => ({innerHTML: '', hidden: false, scrollLeft: 0, clientWidth: width, classList: {contains: () => true}, insertAdjacentHTML() {}});
   const get = name => {
@@ -12,10 +12,11 @@ function render({density = 14, width = 1000, middle = '2026-10-16', target = '20
   };
   const context = {window: {}, document: {activeElement: null, getElementById: get, querySelector: get}};
   vm.runInNewContext(fs.readFileSync('site/js/journal.js', 'utf8'), context);
-  const days = [...new Set(['2026-10-16', middle, target])].sort().map(date => ({date, weekday: '工作日', chains: ['from', 'middle', 'to'].filter(id => date === ({from: '2026-10-16', middle, to: target})[id])}));
+  records ||= {from: ['2026-10-16'], middle: [middle], to: [target]};
+  const days = [...new Set(Object.values(records).flat())].sort().map(date => ({date, weekday: '工作日', chains: order.filter(id => records[id].includes(date))}));
   const view = Object.assign({}, context.window.JournalView, {
     mode: 'atlas', density, days, selection: null, selected: null,
-    registry: {tracks: [{id: 'track', label: '任务'}], chains: ['from', 'middle', 'to'].map(id => ({id, track: 'track', label: id, short: id, fate: id === 'middle' && dropped ? 'dropped' : ''})), handoffs: [{from: 'from', to: 'to', date: target, source_date: '2026-10-16', type: '派生'}]},
+    registry: {tracks: [{id: 'track', label: '任务'}], chains: order.map(id => ({id, track: 'track', label: id, short: id, fate: id === 'middle' && dropped ? 'dropped' : ''})), handoffs: [{from: 'from', to: 'to', date: target, source_date: '2026-10-16', type: '派生'}]},
     floatingNotes: {capture() {}}, visibleDays: () => days,
     pointRadius: () => 4, pointNote: (day, id) => id === 'middle' && dropped ? {outcome: 'dropped'} : {}, pointWeight: () => 1,
     pointEvidence: () => ({status: 'artifact'}), weightLabel: () => '', evidenceLabel: () => '',
@@ -53,6 +54,36 @@ test('同日横跨三列时，真实交接线绕过中间节点并保留关系',
   assert(distance >= 7.2, `交接线仍遮住中间节点，中心距离只有 ${distance.toFixed(2)}px`);
   assert(svg.includes('data-chains="from to"'));
   assert(svg.includes('stroke-dasharray="4 3"'));
+});
+
+test('中段上下都有节点、端点附近还有一列密集点时，仍使用完整曲线', () => {
+  const records = {
+    from: ['2026-10-15', '2026-10-16'], to: ['2026-10-15', '2026-10-16'],
+    middle: ['2026-10-13', '2026-10-14', '2026-10-15', '2026-10-16'],
+    near: ['2026-10-17', '2026-10-18', '2026-10-19', '2026-10-20', '2026-10-21']
+  };
+  for (const width of [390, 1280]) {
+    const {svg, atlas} = render({width, records, order: ['to', 'near', 'middle', 'from']});
+    const path = /class="journal-handoff-path"[^>]*d="([^"]+)"/.exec(svg)[1], samples = samplePath(path);
+    assert.match(path, /^M[^A-Z]+ C[^A-Z]+$/, '密集区应先调整两端弧度，而不是退回台阶');
+    for (const [id, dates] of Object.entries(records)) for (const date of dates) {
+      if (['from', 'to'].includes(id) && date === '2026-10-16') continue;
+      const distance = Math.min(...samples.map(p => Math.hypot(p.x - atlas.positions.get(id), p.y - atlas.y(date))));
+      assert(distance >= 7.2, `${width}px 时曲线侵入 ${id} / ${date} 的留白`);
+    }
+  }
+});
+
+test('绕点时整条线连续舒展，不在端点附近突然折向', () => {
+  const {svg, atlas} = render();
+  const path = /class="journal-handoff-path"[^>]*d="([^"]+)"/.exec(svg)[1];
+  assert.match(path, /^M[^A-Z]+ C[^A-Z]+$/, '这条简单关系应以一段完整曲线绕点，不能拼出直角台阶');
+  const points = samplePath(path), span = atlas.positions.get('to') - atlas.positions.get('from');
+  const angles = points.slice(1).map((p, i) => Math.atan2(p.y - points[i].y, p.x - points[i].x));
+  const turning = angles.slice(1).reduce((sum, angle, i) => sum + Math.abs(angle - angles[i]), 0);
+  assert(turning < Math.PI / 2, '平缓的同日连线不应先急转再折回');
+  assert(points.every(p => p.x >= atlas.positions.get('from') && p.x <= atlas.positions.get('to')), '绕行不能回头');
+  assert(Math.max(...points.map(p => Math.abs(p.y - atlas.y('2026-10-16')))) < span / 4, '绕点弧度应随跨度舒展');
 });
 
 test('不同日期与窄列宽下，曲线仍避让中间节点', () => {
