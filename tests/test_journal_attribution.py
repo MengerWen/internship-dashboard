@@ -1,5 +1,6 @@
 """提交计量的守恒、隔离和原始身份检查。"""
 import copy
+from datetime import date, timedelta
 from fractions import Fraction
 import json
 from pathlib import Path
@@ -52,7 +53,8 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(result["chains"], ["open5m"])
 
     def test_new_dates_require_review_even_when_the_title_matches_a_known_task(self):
-        result = classify({"repo": "sirui-quant-research", "date": "2026-10-22", "sha": "c" * 40,
+        unreviewed_day = (date.fromisoformat(self.rules["reviewed_through"]) + timedelta(days=1)).isoformat()
+        result = classify({"repo": "sirui-quant-research", "date": unreviewed_day, "sha": "c" * 40,
                            "subject": "继续344定参", "paths": ["scripts/run_corrected_replay_344.py"]}, self.rules)
         self.assertEqual(result["status"], "pending")
         self.assertEqual(result["chains"], [])
