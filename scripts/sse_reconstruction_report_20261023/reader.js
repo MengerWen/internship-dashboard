@@ -1,24 +1,24 @@
 const cases = [
   ['600 + 400','一笔委托如何拆成多条公开消息',1,'先部分成交、剩余部分再挂上盘口时，成交 T 与后续挂单 A 属于同一笔逻辑订单。'],
   ['只看到成交 T','为什么原始报单属性往往没有唯一解',2,'完全相同的公开成交记录，背后可以同时兼容多种不同的原始限价、市价类型或未公开撤余。'],
-  ['先配对还是先删','公开口径如何影响候选配对与 union',4,'如果在配对前就删掉纯成交候选单，会导致撤单错配给次优新单；必须先在全量候选中配对，再按公开规则计零。'],
+  ['先配对还是先删','配对改动怎样传到因子数值',4,'如果在配对前就删掉纯成交候选单，会导致撤单错配给次优新单；必须先在全量候选中配对，再按公开规则计零。'],
   ['113,500 为何归零','用真实盘口样本检验谁违背了公开定义',7,'在动作发生前的真实盘口上，必须按替换后的公开价格重新核对该价位的同侧挂单量，不能沿用原始隐藏价上的挂单量。'],
   ['472 项旧参考差异','如何确认深市原生默认逻辑没有被误伤',7,'先将参考基准升级到包含 10-21 三项决议的新版本，从而把“前期口径更新”与“代码回归 bug”彻底区分开。'],
   ['间距从 9 变 5','为什么先后顺序没变，换个时钟因子值还会变',8,'即便订单顺序和价量完全不变，公开消息时钟也会改变两件事之间的序号差（Δseq），进而通过衰减核与配对窗口影响得分。']
 ];
 const relatedCases = [[0,1],[0],[1],[0,3],[2],[3],[4,5],[3,4],[5],[5],[4,5]];
 
-function sceneMarkup(i) {
-  const s = scenes[i];
-  return `<header class="scene-head"><div class="copy"><h1 tabindex="-1">${s[1]}</h1><p class="lead">${s[2]}</p></div><div class="page-count">${String(i+1).padStart(2,'0')} / 11</div></header>
-    <div class="case-shortcuts"><span>用案例理解</span>${relatedCases[i].map(n=>btn('case-link',n,cases[n][0])).join('')}</div>
-    <div class="scene-body">${renderers[i]()}</div>
-    <div class="scene-caption"><b>这一步的作用</b><p>${s[4]}</p></div>`;
+function sceneResult(i) {
+ const r=DATA.step_results[i];
+ return `<div class="scene-caption"><b>结果与影响</b><div><p><strong>结果：</strong>${esc(r.result)}</p><p><strong>影响：</strong>${esc(r.effect)}</p><p class="fine">${esc(r.scope)}</p></div></div>`;
 }
-
+function sceneMarkup(i) {
+ const s=scenes[i];
+ return `<header class="scene-head"><div class="copy"><h1 tabindex="-1">${s[1]}</h1><p class="lead">${s[2]}</p></div><div class="page-count">${String(i+1).padStart(2,'0')} / 11</div></header>${sceneResult(i)}<div class="case-shortcuts"><span>用案例理解</span>${relatedCases[i].map(n=>btn('case-link',n,cases[n][0])).join('')}</div><div class="scene-body">${renderers[i]()}</div>`;
+}
 function deck() {
   app.innerHTML = `<div class="deck"><nav class="chapter-nav" aria-label="汇报章节"><p>全景 → 机制 → 证据 → 交接</p>${scenes.map((s,i)=>`<button type="button" data-action="scene" data-value="${i}" ${state.scene===i?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><span>${s[0]}</span></button>`).join('')}</nav>
-    <article class="page-shell">${sceneMarkup(state.scene)}<footer class="page-footer">${detailButton(scenes[state.scene][3],'本页技术与证据')}<div class="pager"><button class="secondary" data-action="page" data-value="-1" ${state.scene===0?'disabled':''}>← 上一页</button><button class="primary" data-action="page" data-value="1" ${state.scene===10?'disabled':''}>下一页 →</button></div><span class="fine">支持 ← → 翻页</span></footer></article></div>`;
+    <article class="page-shell">${sceneMarkup(state.scene)}<footer class="page-footer">${detailButton(scenes[state.scene][3],'本页详细依据与术语')}<div class="pager"><button class="secondary" data-action="page" data-value="-1" ${state.scene===0?'disabled':''}>← 上一页</button><button class="primary" data-action="page" data-value="1" ${state.scene===10?'disabled':''}>下一页 →</button></div><span class="fine">支持 ← → 翻页</span></footer></article></div>`;
   const nav = document.querySelector('.chapter-nav');
   const current = nav.querySelector('[aria-current]');
   if (nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0,current.offsetLeft-nav.offsetLeft-15);
@@ -34,9 +34,14 @@ function caseDiagram(i) {
   return renderers[cases[i][2]]();
 }
 
+function caseResult(i) {
+  if(i!==4) return sceneResult(cases[i][2]);
+  return `<div class="scene-caption"><b>结果与影响</b><div><p><strong>结果：</strong>旧参考的 472 处差异全部由此前“只计实际挂出余量”的定义更新及其下游传播造成；与新参考的 7,040 次比较全部一致。</p><p><strong>影响：</strong>这说明本次输入修正没有额外改变所测深市默认因子值。旧参考的差异应归入定义更新，不能当成此次代码改坏了。</p><p class="fine">旧参考为 5 股 × 344 列；新参考为 5 股 × 352 列，对照两份参考、修改前后各一轮。</p></div></div>`;
+}
+
 function laboratory() {
   const c=cases[state.case];
-  app.innerHTML = `<article class="lab"><header class="lab-header"><div><h1 tabindex="-1">六个案例，讲清关键判断</h1><p>消息机制、真实差异和误差统计分别标注；每个案例都能回到对应主线。</p></div><button class="secondary" data-action="return-story">返回分页主线</button></header><div class="case-layout"><nav class="case-list" aria-label="六个案例">${cases.map((c,i)=>btn('case',i,`<b>${c[0]}</b><small>${c[1]}</small>`,state.case===i)).join('')}</nav><section class="case-stage"><header class="case-head"><div><h2 tabindex="-1">${c[1]}</h2><p>${c[3]}</p></div><span class="tag ${state.case===3||state.case===4?'real':''}">${state.case===3?'真实盘口样本':state.case===4?'实测回归':'机制图解'}</span></header>${caseDiagram(state.case)}<div class="case-role"><b>这个案例在项目中的作用</b>${scenes[c[2]][4]}</div><div class="controls"><button class="primary" data-action="scene" data-value="${c[2]}">回到主线第 ${c[2]+1} 页</button>${detailButton(scenes[c[2]][3],'案例依据与技术细节')}</div></section></div></article>`;
+  app.innerHTML = `<article class="lab"><header class="lab-header"><div><h1 tabindex="-1">六个案例，讲清关键判断</h1><p>消息机制、真实差异和误差统计分别标注；每个案例都能回到对应主线。</p></div><button class="secondary" data-action="return-story">返回分页主线</button></header><div class="case-layout"><nav class="case-list" aria-label="六个案例">${cases.map((c,i)=>btn('case',i,`<b>${c[0]}</b><small>${c[1]}</small>`,state.case===i)).join('')}</nav><section class="case-stage"><header class="case-head"><div><h2 tabindex="-1">${c[1]}</h2><p>${c[3]}</p></div><span class="tag ${state.case===3||state.case===4?'real':''}">${state.case===3?'真实盘口样本':state.case===4?'实测回归':'机制图解'}</span></header>${caseResult(state.case)}${caseDiagram(state.case)}<div class="controls"><button class="primary" data-action="scene" data-value="${c[2]}">回到主线第 ${c[2]+1} 页</button>${detailButton(scenes[c[2]][3],'案例依据与技术细节')}</div></section></div></article>`;
 }
 
 function render() {
@@ -85,7 +90,7 @@ function glossary() {
     ['Qᵥ 与 t₀','Qᵥ 是订单的公开可见总量（初始主动成交量 + 剩余挂出量）；t₀ 是该订单首次在公开行情中产生作用的时刻，不能把它当成未知原始报单到达时间的证明。'],
     ['前态 / 后态','分别指同一个市场动作发生前一刻（prestate）与执行更新后（poststate）的订单及盘口状态；在计算市场响应和排队位置时，前后态绝不能混用。'],
     ['FactorInput','沪深共用因子引擎的标准输入接口，由 events（事件）、lifecycle（生命周期）、event_prestate（动作前态）和 event_poststate（动作后态）四张表组成。'],
-    ['px / act 双版本','针对纯成交订单追价行为的两种公开度量口径：px 跟踪公开实际成交价的变化，act 跟踪动作发生时相对对手盘最优价的可成交性（侵入程度）变化。'],
+    ['价格版 px / 可成交性版 act','同一笔没有余量挂出的成交订单，可以按实际成交价变化衡量追价，也可以按相对当时对手报价的可成交程度衡量主动性。两者是并行的计算口径，不是一个优于另一个的模型。'],
     ['union 合成得分','在逐笔订单层面将 L、P、C、R 四大行为族的候选得分合成为总分，再归约到股票日层面；它反映的是多维算法交易行为特征的合成强度，而非经过校准的算法交易概率。'],
     ['消息时钟与 Q_equity','这里的“时钟”指用来度量两个事件相隔多少条消息的序号（seq），而非物理秒数。Q_equity 基于整条通道内所有可见的 A 股消息统一编号，不能按单只股票各自压缩。'],
     ['θ 与结构门限','θ 是核函数中的衰减尺度（按 exp(−d/θ)，距离为 θ 时权重降至 1/e；半衰距离为 θ ln(2)）；结构门限则决定哪些订单链、配对候选和盘口冲击能跨过门槛进入统计。这两类参数都必须在沪市样本上独立标定。'],
@@ -94,7 +99,7 @@ function glossary() {
     ['W5 窗口与签收','W5 指开盘后 09:30–09:35 的前五分钟计算窗口；“签收”指特定代码版本在给定样本与口径下通过了验收标准，不能自动外推等同于全历史区间都已验收。'],
     ['交易时段冻结','指公司服务器上的批量计算任务在盘中规定交易时段自动暂停让路（guard 机制），这属于物理算力调度约束，跟因子公式里的“冻结参数”或“消息时钟”完全是两码事。']
   ];
-  openDialog('术语短解',`<div class="glossary">${terms.map(([name,desc])=>`<div><h3>${name}</h3><p>${desc}</p></div>`).join('')}</div>`);
+  openDialog('术语解释',`<div class="glossary">${terms.map(([name,desc])=>`<div><h3>${name}</h3><p>${desc}</p></div>`).join('')}</div>`);
 }
 
 function whitelist() {
@@ -124,7 +129,7 @@ function performance() {
 
 function calibrationIllustration() {
   if(state.calibration===1) return `<div class="kernel-map">${[['墙钟时间','wall_seconds','两个动作之间相隔多少秒'],['消息序号','events','两个事件在消息流里相隔多少步'],['委托数量','qty','委托量与成交量的规模尺度'],['价格档位','price_ticks','成交价或挂单价之间相差多少个 tick'],['最优报价距离','bbo_ticks','相对于本侧或对手侧 BBO 的档位距离'],['可成交性距离','marketability_ticks','相对于对手盘最优报价的主动侵入距离']].map(r=>`<div><b>${r[0]}</b><code>${r[1]}</code><span>${r[2]}</span></div>`).join('')}</div><p class="fine">注：上方卡片列出的是需要在沪市样本上独立标定的六个距离维度（此处不展示尚未签收的沪市 θ 数值）。简单来说，六核尺度决定了“两个事件隔多近才算相近”，而下一步的结构参数则决定“哪些候选关系能跨过门槛参与配对和打分”。</p>`;
-  if(state.calibration===2) return `<div class="handoff-flow"><span>采集结构观测值</span>→<span>episode 片段切分</span>→<span>anchor 锚点筛选</span>→<span>cost / match 配对</span>→<span>分位数门限归约</span></div><p class="fine">注意：由于这五步环环相扣，一旦上游核参数或门限发生变化，就必须从头重跑，绝不能直接拿旧门限下存留的中间缓存接着算。九组结构参数的完整统计规则可点击左下角“本页技术与证据”展开查看（其中 f85 与 z12 直接取加权中位数、不除以 ln(2)，与六核及 f16 的口径严格区分）。</p>`;
+  if(state.calibration===2) return `<div class="handoff-flow"><span>采集结构观测值</span>→<span>切分连续动作片段</span>→<span>筛选代表动作</span>→<span>计算配对代价并匹配</span>→<span>统计分位数门槛</span></div><p class="fine">注意：由于这五步环环相扣，一旦上游核参数或门限发生变化，就必须从头重跑，绝不能直接拿旧门限下存留的中间缓存接着算。九组结构参数的完整统计规则可点击左下角“本页详细依据与术语”展开查看（其中 f85 与 z12 直接取加权中位数、不除以 ln(2)，与距离尺度及排队优先度参数的统计规则区分）。</p>`;
   return '';
 }
 

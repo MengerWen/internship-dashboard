@@ -2,39 +2,39 @@
   "source": {
     "position": {
       "title": "这项工作补上了哪一环",
-      "body": "<p class=\"purpose\">深市已经有一套成熟的因子公式与计算链路。要把这套体系迁到沪市，得先把沪市公开逐笔消息整理成同一种可解释的输入格式，然后才能谈沪市独立定参和因子重算。</p><p>前期的深市工作已经理清了订单规则、即时撤余、订单生命周期、动作前后态以及因果顺序，并搭建好了订单配对、行为打分、六类核尺度以及结构定参的完整链路。这些工作既是我们向沪市迁移的基准，也为本次回环验证提供了可检验的深市真值。</p><p>但沪市的发布机制是“先发成交 T、再发剩余挂单 A”，这会直接改变订单的入场起点、可见数量和序号含义。如果直接把 A 消息当成原始委托，不仅会漏掉初始主动成交的部分，后续挂出的余量还可能被重复算成一笔新单。</p><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">承接自深市的内容</th><th scope=\"col\">在本项目中的用法</th><th scope=\"col\">不能直接照搬的部分</th></tr></thead><tbody><tr><td>深市订单规则</td><td>用于识别自动撤余、初始撮合段与终端闭合；作为回环验证的真值基准</td><td>沪市细分订单类型、保护价机制及消息发布规则，仍须按沪市自身规则定义</td></tr><tr><td>深市因子计算逻辑</td><td>直接复用候选筛选、配对匹配、衰减核、根分量、行为族与聚合归约逻辑</td><td>沪市未公开的原始价格、原始订单类型和隐藏数量，不能再参与打分</td></tr><tr><td>深市定参与生产流程</td><td>沿用“六核尺度 → 结构/F40 → 冻结参数 → 因子计算”的先后依赖顺序</td><td>深市的具体参数值、样本分组和性能表现，不能直接当成沪市的已验收结果</td></tr></tbody></table></div><p class=\"factline\">注：深市的 328 列是特定生产环境的投影子集；本项目的 352 个源列与 540 个候选标识则是公开口径下的完整验收范围。两边列数不同只是覆盖范围不同，并非互相替代。</p><p class=\"role\"><b>这一步为后续工作交付什么</b>交付一套口径清晰、全程可追溯的沪市公开输入与候选因子定义，让后续的参数标定清楚知道自己到底在刻画哪种交易行为。</p>"
+      "body": "<p class=\"purpose\">这项工作已经把沪市公开行情接到了因子计算程序。需要分别回答：输入能不能正确构造、因子定义改了多少、消息计数的近似又带来多少变化。</p><p>前期的深市工作已经理清了订单规则、即时撤余、订单生命周期、动作前后态以及因果顺序，并搭建好了订单配对、行为打分、六类核尺度以及结构定参的完整链路。这些工作既是我们向沪市迁移的基准，也为本次回环验证提供了可检验的深市真值。</p><p>但沪市的发布机制是“先发成交 T、再发剩余挂单 A”，这会直接改变订单的入场起点、可见数量和序号含义。如果直接把 A 消息当成原始委托，不仅会漏掉初始主动成交的部分，后续挂出的余量还可能被重复算成一笔新单。</p><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">承接自深市的内容</th><th scope=\"col\">在本项目中的用法</th><th scope=\"col\">不能直接照搬的部分</th></tr></thead><tbody><tr><td>深市订单规则</td><td>用于识别自动撤余、初始撮合段与终端闭合；作为回环验证的真值基准</td><td>沪市细分订单类型、保护价机制及消息发布规则，仍须按沪市自身规则定义</td></tr><tr><td>深市因子计算逻辑</td><td>直接复用候选筛选、配对匹配、衰减核、根分量、行为族与聚合归约逻辑</td><td>沪市未公开的原始价格、原始订单类型和隐藏数量，不能再参与打分</td></tr><tr><td>深市定参与生产流程</td><td>沿用“六核尺度 → 结构/F40 → 冻结参数 → 因子计算”的先后依赖顺序</td><td>深市的具体参数值、样本分组和性能表现，不能直接当成沪市的已验收结果</td></tr></tbody></table></div><p class=\"factline\">注：深市的 328 列是特定生产环境的投影子集；本项目的 352 个源列与 540 个候选标识则是公开口径下的完整验收范围。两边列数不同只是覆盖范围不同，并非互相替代。</p><p class=\"role\"><b>这一步为后续工作交付什么</b>交付一套口径清晰、全程可追溯的沪市公开输入与候选因子定义，让后续的参数标定清楚知道自己到底在刻画哪种交易行为。</p>"
     },
     "observable": {
       "title": "先划清“能还原什么”的边界",
-      "body": "<p class=\"purpose\">“还原公开盘口”、“提取公开订单事实”和“反推隐藏的原始报单属性”其实是三个不同层面的问题。只有把前两件事扎实跑通，因子计算才能彻底摆脱对不可见真值的依赖。</p><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">公开消息中的可见形态</th><th scope=\"col\">能够确凿还原的事实</th><th scope=\"col\">单靠公开消息仍无法唯一确定的信息</th></tr></thead><tbody><tr><td>先出挂单 A，后续跟 T 或 C</td><td>挂出价格、挂单数量、在簿可见存续状态及后续变化</td><td>背后真实的原始订单类型未必唯一</td></tr><tr><td>先出成交 T，再出余量 A</td><td>初始成交量＋剩余挂单量共同构成可见总量，并能把逻辑入场时间还原到首笔成交前</td><td>不同原始订单类型仍可能打出完全相同的公开记录</td></tr><tr><td>只有成交 T（无挂单 A）</td><td>订单身份、买卖方向、公开成交明细及首次生效位置；部分数量下界可由撮合规则推导出</td><td>部分原始限价、细分市价类型，以及未发布的即时撤余数量</td></tr><tr><td>零成交、零挂出即被系统自动撤销</td><td>公开行情中可能根本不会留下任何记录</td><td>无法凭空捏造这笔不可见订单的身份或委托数量</td></tr></tbody></table></div><div class=\"inline-demo\"><div class=\"order-demo\" id=\"inline-order\"><h2>一笔订单在行情里是怎么发出来的</h2><p class=\"demo-caption\">以下数量仅作示意，用来直观说明沪市的消息发布逻辑。</p><div class=\"buttons\" role=\"group\" aria-label=\"选择订单形态\"><button type=\"button\" data-order=\"rest\" aria-pressed=\"false\">先挂单</button><button type=\"button\" data-order=\"partial\" aria-pressed=\"true\">成交后挂余量</button><button type=\"button\" data-order=\"pure\" aria-pressed=\"false\">纯成交</button></div><div class=\"order-readout\" aria-live=\"polite\"><div class=\"order-path\"><div><b>T</b><span>先成交 600 股</span></div><div><b>A</b><span>再挂出余量 400 股</span></div></div><p class=\"order-answer\">公开可见数量 Qv = 600 + 400 = 1,000 股</p><p class=\"order-boundary\">订单的逻辑入场点应回推到首笔成交 T 之前；随后发出的余量 A 是同一笔订单的剩余部分，不能再当成第二笔新委托。</p></div><p class=\"demo-caption\">注：T 代表成交，A 代表公开挂单，C 代表公开撤单。</p></div></div><p>举个例子，同样一组纯成交记录，背后既可能是两个不同的原始限价，也可能是不同的市价单类型与保护价组合。既然公开信息本身就对应多种可能，代码写得再复杂，也不可能把“多解”凭空变成“唯一真值”。</p><details><summary>研究模型线尝试过什么？为什么没直接拿来当生产真值？</summary><p>独立研究线 v2 会输出可证明字段、价格/类型/数量的可行集、条件概率分布，以及每笔订单 20 个可复现抽样情景。我们在沪深两市各取 11 个交易日，前 8 日用于拟合、后 3 日作为样本外留出集，分市场独立估计。</p><p>但在深市 3 个留出日上，更复杂的 v2 在限价点估计上并未跑赢简单基线 v1。以 2026-06-30 为例，价格准确率从 82.7566% 微降至 82.5314%，MAE 从 2.8604 升至 2.9208 tick。对隐藏撤余的排序 AUC 虽然较高，但在低概率区间仍低估了实际发生率，且正样本本身很少。</p><p>即便把模型估计出的属性丢进前向撮合器里能重现已观察到的成交，也只能说明这组估计跟公开记录“不矛盾”（即兼容）。当多组不同的隐藏订单都能打出同一笔成交时，不能因为回放对得上，就把某一个点估计当成真实原始属性。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>严格区分“确凿证明”、“概率估计”与“完全未知”三类边界。当前生产因子链路只采用公开可验证的订单事实，不把研究模型的点估计当成真实原始委托塞进生产输入。</p>"
+      "body": "<p class=\"purpose\">公开成交和挂单能确定一部分事实，却不一定能还原唯一的原始报单。模型估计的效果必须另做检验，不能因为回放对得上就当成真值。</p><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">公开消息中的可见形态</th><th scope=\"col\">能够确凿还原的事实</th><th scope=\"col\">单靠公开消息仍无法唯一确定的信息</th></tr></thead><tbody><tr><td>先出挂单 A，后续跟 T 或 C</td><td>挂出价格、挂单数量、在簿可见存续状态及后续变化</td><td>背后真实的原始订单类型未必唯一</td></tr><tr><td>先出成交 T，再出余量 A</td><td>初始成交量＋剩余挂单量共同构成可见总量，并能把逻辑入场时间还原到首笔成交前</td><td>不同原始订单类型仍可能打出完全相同的公开记录</td></tr><tr><td>只有成交 T（无挂单 A）</td><td>订单身份、买卖方向、公开成交明细及首次生效位置；部分数量下界可由撮合规则推导出</td><td>部分原始限价、细分市价类型，以及未发布的即时撤余数量</td></tr><tr><td>零成交、零挂出即被系统自动撤销</td><td>公开行情中可能根本不会留下任何记录</td><td>无法凭空捏造这笔不可见订单的身份或委托数量</td></tr></tbody></table></div><div class=\"inline-demo\"><div class=\"order-demo\" id=\"inline-order\"><h2>一笔订单在行情里是怎么发出来的</h2><p class=\"demo-caption\">以下数量仅作示意，用来直观说明沪市的消息发布逻辑。</p><div class=\"buttons\" role=\"group\" aria-label=\"选择订单形态\"><button type=\"button\" data-order=\"rest\" aria-pressed=\"false\">先挂单</button><button type=\"button\" data-order=\"partial\" aria-pressed=\"true\">成交后挂余量</button><button type=\"button\" data-order=\"pure\" aria-pressed=\"false\">纯成交</button></div><div class=\"order-readout\" aria-live=\"polite\"><div class=\"order-path\"><div><b>T</b><span>先成交 600 股</span></div><div><b>A</b><span>再挂出余量 400 股</span></div></div><p class=\"order-answer\">公开可见数量 Qv = 600 + 400 = 1,000 股</p><p class=\"order-boundary\">订单的逻辑入场点应回推到首笔成交 T 之前；随后发出的余量 A 是同一笔订单的剩余部分，不能再当成第二笔新委托。</p></div><p class=\"demo-caption\">注：T 代表成交，A 代表公开挂单，C 代表公开撤单。</p></div></div><p>举个例子，同样一组纯成交记录，背后既可能是两个不同的原始限价，也可能是不同的市价单类型与保护价组合。既然公开信息本身就对应多种可能，代码写得再复杂，也不可能把“多解”凭空变成“唯一真值”。</p><details><summary>研究模型线尝试过什么？为什么没直接拿来当生产真值？</summary><p>独立研究线 v2 会输出可证明字段、价格/类型/数量的可行集、条件概率分布，以及每笔订单 20 个可复现抽样情景。我们在沪深两市各取 11 个交易日，前 8 日用于拟合、后 3 日作为样本外留出集，分市场独立估计。</p><p>但在深市 3 个留出日上，更复杂的 v2 在限价点估计上并未跑赢简单基线 v1。以 2026-06-30 为例，价格准确率从 82.7566% 微降至 82.5314%，MAE 从 2.8604 升至 2.9208 tick。对隐藏撤余的排序 AUC 虽然较高，但在低概率区间仍低估了实际发生率，且正样本本身很少。</p><p>即便把模型估计出的属性丢进前向撮合器里能重现已观察到的成交，也只能说明这组估计跟公开记录“不矛盾”（即兼容）。当多组不同的隐藏订单都能打出同一笔成交时，不能因为回放对得上，就把某一个点估计当成真实原始属性。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>严格区分“确凿证明”、“概率估计”与“完全未知”三类边界。当前生产因子链路只采用公开可验证的订单事实，不把研究模型的点估计当成真实原始委托塞进生产输入。</p>"
     },
     "definition": {
       "title": "公开口径定义如何落地到因子计算",
-      "body": "<p class=\"purpose\">核心思路是：把原本依赖“不可见原始申报意愿”的定义，改写为基于“公开可观测动作”的定义，同时严格保留每一列因子的科学标识（identity）。</p><dl class=\"definition-list\"><dt>Qv</dt><dd>初始公开成交量 ＋ 公开挂出余量；未公开发布的即时撤余部分不计入。</dd><dt>t0</dt><dd>订单首次产生公开市场作用的时刻；不再把它当成未知原始报单到达时间的证明。</dd><dt>pA / pX</dt><dd>pA 为公开挂出价；pX 为初始主动成交所触及的价格（相关分支取最深成交价）。</dd><dt>主动与挂出</dt><dd>将“是否发生初始主动成交”与“是否挂出剩余量”拆开记录，避免漏掉纯成交订单的主动行为。</dd><dt>排队影响</dt><dd>即时成交在逻辑入场时刻记 ahead=0；排队稀释只针对真正挂上盘口的剩余量计算。</dd></dl><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">实现范围</th><th scope=\"col\">当前口径说明</th></tr></thead><tbody><tr><td>352 个源列</td><td>包含 164 个公用列 ＋ 188 个分别计算 px / act 双版本的源列，合计 540 个候选标识</td></tr><tr><td>px / act 双版本</td><td>针对纯成交追价行为，px 侧重公开成交价的变化，act 侧重实际可成交性（主动侵入程度）的变化；两套版本并行保留</td></tr><tr><td>57 成员 union A</td><td>涵盖 L=5、P=10、C=13、R=29 四族；先在逐笔订单层面合成族得分与 union 得分，再归约到股票日层面</td></tr><tr><td>6 个代理成员</td><td>f14、f15、f16 priceprio、f32、f35、f51 作为公开代理指标保留独立含义，不并入 union A</td></tr><tr><td>停用边界</td><td>dm03 / dm04 共 4 列不生成沪市候选；f91 虽有公开候选实现，但原有的停用登记不会因迁移而自动解除</td></tr></tbody></table></div><details><summary>v3 → v4 → v5 的口径演进过程</summary><p>v3 搭建了公开替换层、双版本响应（px/act）、57 成员 union 以及逐列标识体系。v4 修正了纯成交撤退逻辑，将实际主动成交行为纳入对应分支，并改用入场前的盘口状态来评估剩余挂单的被动程度。</p><p>v5 重点修正了 priorityworse 的配对顺序：先在包含纯成交单的完整候选池中完成最优配对，配中之后再将纯成交单对应的该项分量计为 0。如果在配对前就直接把纯成交候选单删掉，旧单就可能退而求其次配给另一笔有挂出的新单，从而凭空多算出一笔分数。</p><p>此外，原始约 356 个源列中有 4 个 dm03/dm04 停用列，不纳入本次 352 列的验收范围。540 指的是“候选因子标识”的数量，不能直接等同于 540 个已获准上线的正式因子；union 合成得分也只是行为强度聚合，不代表经过概率校准的算法交易概率。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>确保后续定参所针对的公开交易行为与候选范围清晰无误；公开代理列与 px/act 双版本各自拥有独立标识，不会与深市原定义列混成同一个结果。</p>"
+      "body": "<p class=\"purpose\">先明确哪些因子仍可使用原定义，哪些需要公开信息替代；再用实测数值说明这些改动传到哪些计算和因子。</p><dl class=\"definition-list\"><dt>Qv</dt><dd>初始公开成交量 ＋ 公开挂出余量；未公开发布的即时撤余部分不计入。</dd><dt>t0</dt><dd>订单首次产生公开市场作用的时刻；不再把它当成未知原始报单到达时间的证明。</dd><dt>pA / pX</dt><dd>pA 为公开挂出价；pX 为初始主动成交所触及的价格（相关分支取最深成交价）。</dd><dt>主动与挂出</dt><dd>将“是否发生初始主动成交”与“是否挂出剩余量”拆开记录，避免漏掉纯成交订单的主动行为。</dd><dt>排队影响</dt><dd>即时成交在逻辑入场时刻记 ahead=0；排队稀释只针对真正挂上盘口的剩余量计算。</dd></dl><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">实现范围</th><th scope=\"col\">当前口径说明</th></tr></thead><tbody><tr><td>352 个源列</td><td>包含 164 个公用列 ＋ 188 个分别计算 px / act 双版本的源列，合计 540 个候选标识</td></tr><tr><td>px / act 双版本</td><td>针对纯成交追价行为，px 侧重公开成交价的变化，act 侧重实际可成交性（主动侵入程度）的变化；两套版本并行保留</td></tr><tr><td>57 成员 union A</td><td>涵盖 L=5、P=10、C=13、R=29 四族；先在逐笔订单层面合成族得分与 union 得分，再归约到股票日层面</td></tr><tr><td>6 个代理成员</td><td>f14、f15、f16 priceprio、f32、f35、f51 作为公开代理指标保留独立含义，不并入 union A</td></tr><tr><td>停用边界</td><td>dm03 / dm04 共 4 列不生成沪市候选；f91 虽有公开候选实现，但原有的停用登记不会因迁移而自动解除</td></tr></tbody></table></div><details><summary>v3 → v4 → v5 的口径演进过程</summary><p>v3 搭建了公开替换层、双版本响应（px/act）、57 成员 union 以及逐列标识体系。v4 修正了纯成交撤退逻辑，将实际主动成交行为纳入对应分支，并改用入场前的盘口状态来评估剩余挂单的被动程度。</p><p>v5 重点修正了 priorityworse 的配对顺序：先在包含纯成交单的完整候选池中完成最优配对，配中之后再将纯成交单对应的该项分量计为 0。如果在配对前就直接把纯成交候选单删掉，旧单就可能退而求其次配给另一笔有挂出的新单，从而凭空多算出一笔分数。</p><p>此外，原始约 356 个源列中有 4 个 dm03/dm04 停用列，不纳入本次 352 列的验收范围。540 指的是“候选因子标识”的数量，不能直接等同于 540 个已获准上线的正式因子；union 合成得分也只是行为强度聚合，不代表经过概率校准的算法交易概率。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>确保后续定参所针对的公开交易行为与候选范围清晰无误；公开代理列与 px/act 双版本各自拥有独立标识，不会与深市原定义列混成同一个结果。</p><h3>配对修正对因子的实测影响</h3><p>2026-06-30 同一批 2,888 只股票，排队优先度分量的差异股票占比：买侧 85.9072% → 25.7271%，卖侧 88.6427% → 25.6233%。132 个源列可能受到依赖传播影响，其中 130 个在本日实际变化；范围外 220 列在 px / act 两版均与 v4 逐位一致。直接分量所在的 P 行为组、综合得分及其用途会继续传导变化；不能据直接分量更接近深市，就宣称所有下游因子都改善。</p><p>同日价格版买侧，f54 综合行为强度的相对差中位数从 0.002849 变为 0.002890；f55 行为组广度从 0.017961 变为 0.018692。该次相对差使用 |公开值−深市值| / max(|深市值|, 列中位绝对尺度)，不与只换消息时钟实验的截面尺度误差混用。</p><p><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-22-sse-priorityworse-union-attribution.md\">配对修正、全市场因子变化与下游传播原始报告</a></p>"
     },
     "replay": {
       "title": "原生回放底座与引擎输入已全面接通",
-      "body": "<p class=\"purpose\">先验证公开盘口回放和订单事实提取的准确性，再把这套经过认证的数据表直接喂给沪深共用的因子引擎。</p><div class=\"steps\"><div><b>原生沪市回放 v2</b><p>归并初始成交与后续余量，还原同一笔逻辑订单；对截止时刻前同时间戳的撮合做闭合处理。</p></div><div><b>公开事实与四张核心表</b><p>生成 events、lifecycle、event_prestate、poststate 四张表，直接复用已认证的盘口状态。</p></div><div><b>公共因子引擎</b><p>直接读取标准 FactorInput 接口；正式生产分支不再绕道早期试验性的 sse_to_szse_tables 转换层。</p></div></div><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">原生回放认证维度</th><th scope=\"col\">已核实的样本范围与结果</th><th scope=\"col\">需要注意的边界限制</th></tr></thead><tbody><tr><td>总体规模</td><td>覆盖 13 个交易日、29,622 个股票日、1.805 亿条规范化事件</td><td>目前是 13 日认证，尚非全部 601 个交易日的全量认证</td></tr><tr><td>逐笔订单守恒</td><td>29,620 个完整可比股票日的 W5 守恒差异为 0；截断边界闭合 7,477 单</td><td>回放内部自洽，并不能反过来证明上游源消息绝对没有漏包</td></tr><tr><td>盘口与时间对齐</td><td>整秒唯一状态帧有 268,421 / 268,723 帧与外部快照完全一致</td><td>外部快照不含亚秒级时间戳，因此无法强行做逐事件精确对齐</td></tr><tr><td>队列与开盘竞价</td><td>两日队列核对 437,358 帧全等；实际开盘集合竞价价量 29,135 例全等</td><td>队列核对仅覆盖两个交易日；虚拟竞价帧仍存在 6 处价格、23 处数量差异</td></tr></tbody></table></div><p>在计算窗口内，只要任意一帧快照的交易阶段码（phase）不等于 3，我们就将该股票日整体剔除（而非只删掉异常行）。目前已观察到的 phase=8 样本，其盘面表现与盘中临时停牌一致，但交易所官方码表定义仍待最终核实。对于同一时间戳下相邻的全额撤单，统一按普通撤单处理，不靠时间巧合去臆测其订单类型来源。</p><p class=\"role\"><b>这一步为后续工作交付什么</b>把沪深两市的市场规则差异全部收敛在原生回放与公开适配层内部；往后的六核估计、结构支持度统计与因子打分，直接消费同一套因果自洽的盘口状态。</p>"
+      "body": "<p class=\"purpose\">先把每笔订单和当时盘口重建出来，再检查数量、外部快照与队列。每一层通过的日期、样本和时间粒度都单独列出。</p><div class=\"steps\"><div><b>原生沪市回放 v2</b><p>归并初始成交与后续余量，还原同一笔逻辑订单；对截止时刻前同时间戳的撮合做闭合处理。</p></div><div><b>公开事实与四张核心表</b><p>生成 events、lifecycle、event_prestate、poststate 四张表，直接复用已认证的盘口状态。</p></div><div><b>公共因子引擎</b><p>直接读取标准 FactorInput 接口；正式生产分支不再绕道早期试验性的 sse_to_szse_tables 转换层。</p></div></div><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">原生回放认证维度</th><th scope=\"col\">已核实的样本范围与结果</th><th scope=\"col\">需要注意的边界限制</th></tr></thead><tbody><tr><td>总体规模</td><td>覆盖 13 个交易日、29,622 个股票日、1.805 亿条规范化事件</td><td>目前是 13 日认证，尚非全部 601 个交易日的全量认证</td></tr><tr><td>逐笔订单守恒</td><td>29,620 个完整可比股票日的 W5 守恒差异为 0；截断边界闭合 7,477 单</td><td>回放内部自洽，并不能反过来证明上游源消息绝对没有漏包</td></tr><tr><td>盘口与时间对齐</td><td>整秒唯一状态帧有 268,421 / 268,723 帧与外部快照完全一致</td><td>外部快照不含亚秒级时间戳，因此无法强行做逐事件精确对齐</td></tr><tr><td>队列与开盘竞价</td><td>两日队列核对 437,358 帧全等；实际开盘集合竞价价量 29,135 例全等</td><td>队列核对仅覆盖两个交易日；虚拟竞价帧仍存在 6 处价格、23 处数量差异</td></tr></tbody></table></div><p>在计算窗口内，只要任意一帧快照的交易阶段码（phase）不等于 3，我们就将该股票日整体剔除（而非只删掉异常行）。目前已观察到的 phase=8 样本，其盘面表现与盘中临时停牌一致，但交易所官方码表定义仍待最终核实。对于同一时间戳下相邻的全额撤单，统一按普通撤单处理，不靠时间巧合去臆测其订单类型来源。</p><p class=\"role\"><b>这一步为后续工作交付什么</b>把沪深两市的市场规则差异全部收敛在原生回放与公开适配层内部；往后的六核估计、结构支持度统计与因子打分，直接消费同一套因果自洽的盘口状态。</p>"
     },
     "evidence": {
       "title": "把验收拆成三个独立问题来回答",
-      "body": "<p class=\"purpose\">公开口径定义与深市原始定义之间本来就允许存在差异；但检验“适配器写得对不对”时，必须要求同一套公开定义、在同一个时钟下走两条路径算出完全一致的结果。</p><div class=\"pairing\"><div><h3>路径 S：深市真值直接做公开投影</h3><p>从深市已认证的真值出发，经过公开事实提取与替换层，直接生成符合沪市公开口径的输入表。</p></div><div><h3>路径 H：模拟沪市发布再经适配器还原</h3><p>把同一份深市真值先改写成沪市 A/T/C 公开消息流，再走一遍沪市原生回放与适配器生成输入表。</p></div></div><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">对比实验</th><th scope=\"col\">用来回答什么问题</th><th scope=\"col\">截至 26.10.23 的实测结论</th></tr></thead><tbody><tr><td>深市原定义 vs 沪市公开定义</td><td>信息可见性变少、口径改写后，因子值本身会变多少？</td><td>历史 v5 全市场订单级 union 相关性约 0.9626（px）/ 0.9618（act）；这一步本来就不要求与原定义数值全等</td></tr><tr><td>S vs H（固定真值时钟）</td><td>沪市适配器在构造输入或调用引擎时有没有写错逻辑？</td><td>2,888 只股票的四张输入表除白名单字段外逐位全等；引擎输出 px 的 1,016,576 个值、act 的 10,560 个值差异全部为 0</td></tr><tr><td>S vs H（切换 Q_equity 时钟）</td><td>改用公开可观测的消息时钟后，会引入多大的数值近似误差？</td><td>全市场 px 有 272 / 352 列至少在一只股票上发生变化；误差分布已完整列出，是否可接受交由后续业务决策</td></tr></tbody></table></div><p>其中 000725 已提前单独跑完完整流程，px 与 act 各 352 列全部逐位一致。另外 5 只指定的深市代表股在本次修正前后两轮测试中，相对于 r2/v5 新参考基准的 352 列也全部逐位一致。而相对于旧参考基准出现的 472 处差异，经排查全部落在前期“排队稀释只计挂出余量”这一口径调整的影响范围内，范围之外差异为 0。</p><details><summary>参照路径 S 清理了哪些历史遗留问题？为什么因子输出没变也必须修？</summary><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">清理项</th><th scope=\"col\">问题根因与公开口径要求</th><th scope=\"col\">修正方式</th></tr></thead><tbody><tr><td>437 条残留的自动撤单</td><td>Qv≤0 的不可见订单不进事实表，导致对应的撤单过滤序号也一并丢失，使自动撤单漏网留在表里</td><td>单独传递完整的待剔除撤单元数据；将 events、前态、后态中残留的自动撤单彻底清零</td></tr><tr><td>金额基准标签残留</td><td>订单虽已替换为公开价格上的限价单 L，但金额基准标签仍残留着原始隐藏类型的 BBO 标签</td><td>在生命周期、前态、后态三处统一按生产规则改写为 submit_price</td></tr><tr><td>price_level_qty_pre</td><td>路径 S 把价格替换成公开价后，档位挂单量仍沿用了原始委托价上的挂单量</td><td>S 与 H 各自根据公开增量盘口，独立重算动作发生前该公开价格上的同侧挂单量</td></tr><tr><td>后态 price_tick</td><td>路径 S 可能残留原始委托价，而路径 H 在部分成交腿上误记为 0</td><td>两条路径各自从本身的公开成交记录中提取实际执行价</td></tr><tr><td>qty_ahead_pre</td><td>路径 S 对即时成交入场的订单仍记为 NA</td><td>逻辑入场时刻尚未挂入盘口排队，统一按定义设为 ahead=0</td></tr></tbody></table></div><p>以上修正均由 S、H 两条路径各自独立按定义重算，绝不从另一条路径偷拷数值。我们对 12 个独立盘口与成交样本进行了人工核验，全部符合定义；修正后全市场 px / act 因子向量相对于 v5 签收版的变化均为 0 列、0 股。这也把早期“输入层已完全符合公开定义”的结论补齐到了真正严密的逐字段闭环。</p></details><details><summary>白名单放行了哪些表示层差异？凭什么确定它们无害？</summary><p>白名单仅包含 3 个数据列（received_ts、vendor_aggressor_side_raw、仅保序且跨表一致重编号的 event_pos）和 7 个精确的 attrs 来源标记键（szse_replay_version、szse_replay_fix_a、szse_replay_fix_c、replay_options、order_event_semantics、original_submissions_established、legal_unrested_trade_legs）。</p><p>我们先做了静态代码扫描（共核对 368 处命中位置，包含构建、诊断、历史及评分代码），再抽取高、中、低活跃度分层的 10 只股票 × 10 项扰动 × px/act 双版本，跑了 200 次有效扰动实验、比对 70,400 个因子输出值，结果全部逐位不变。</p><p>需要说明的是，event_pos 确实会参与引擎内部的排序与定位——白名单证明的是“在保持严格先后顺序且四表同步改号的前提下，重新编号不会改变这 352 列的得分”，而不是说“引擎根本不读这列”。至于科学序号 seq 和本次 C2 修正的业务字段，一律不在白名单内，必须严格相等。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>用可复核的实测证据，把“输入实现 bug”、“公开口径定义差异”和“消息时钟近似误差”三件事彻底剥离开，避免把所有数值变化笼统地糊涂归结为“还原误差”。</p>"
+      "body": "<p class=\"purpose\">同一批数据分别检验三件事：改定义本身造成的差异、适配器是否额外算错、消息时钟是否改变数值。它们的结论不能互相替代。</p><div class=\"pairing\"><div><h3>路径 S：深市真值直接做公开投影</h3><p>从深市已认证的真值出发，经过公开事实提取与替换层，直接生成符合沪市公开口径的输入表。</p></div><div><h3>路径 H：模拟沪市发布再经适配器还原</h3><p>把同一份深市真值先改写成沪市 A/T/C 公开消息流，再走一遍沪市原生回放与适配器生成输入表。</p></div></div><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">对比实验</th><th scope=\"col\">用来回答什么问题</th><th scope=\"col\">截至 26.10.23 的实测结论</th></tr></thead><tbody><tr><td>深市原定义 vs 沪市公开定义</td><td>信息可见性变少、口径改写后，因子值本身会变多少？</td><td>历史 v5 全市场订单级 union 相关性约 0.9626（px）/ 0.9618（act）；这一步本来就不要求与原定义数值全等</td></tr><tr><td>S vs H（固定真值时钟）</td><td>沪市适配器在构造输入或调用引擎时有没有写错逻辑？</td><td>2,888 只股票的四张输入表除白名单字段外逐位全等；引擎输出 px 的 1,016,576 个值、act 的 10,560 个值差异全部为 0</td></tr><tr><td>S vs H（切换 Q_equity 时钟）</td><td>改用公开可观测的消息时钟后，会引入多大的数值近似误差？</td><td>全市场 px 有 272 / 352 列至少在一只股票上发生变化；误差分布已完整列出，是否可接受交由后续业务决策</td></tr></tbody></table></div><p>其中 000725 已提前单独跑完完整流程，px 与 act 各 352 列全部逐位一致。另外 5 只指定的深市代表股在本次修正前后两轮测试中，相对于 r2/v5 新参考基准的 352 列也全部逐位一致。而相对于旧参考基准出现的 472 处差异，经排查全部落在前期“排队稀释只计挂出余量”这一口径调整的影响范围内，范围之外差异为 0。</p><details><summary>参照路径 S 清理了哪些历史遗留问题？为什么因子输出没变也必须修？</summary><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">清理项</th><th scope=\"col\">问题根因与公开口径要求</th><th scope=\"col\">修正方式</th></tr></thead><tbody><tr><td>437 条残留的自动撤单</td><td>Qv≤0 的不可见订单不进事实表，导致对应的撤单过滤序号也一并丢失，使自动撤单漏网留在表里</td><td>单独传递完整的待剔除撤单元数据；将 events、前态、后态中残留的自动撤单彻底清零</td></tr><tr><td>金额基准标签残留</td><td>订单虽已替换为公开价格上的限价单 L，但金额基准标签仍残留着原始隐藏类型的 BBO 标签</td><td>在生命周期、前态、后态三处统一按生产规则改写为 submit_price</td></tr><tr><td>price_level_qty_pre</td><td>路径 S 把价格替换成公开价后，档位挂单量仍沿用了原始委托价上的挂单量</td><td>S 与 H 各自根据公开增量盘口，独立重算动作发生前该公开价格上的同侧挂单量</td></tr><tr><td>后态 price_tick</td><td>路径 S 可能残留原始委托价，而路径 H 在部分成交腿上误记为 0</td><td>两条路径各自从本身的公开成交记录中提取实际执行价</td></tr><tr><td>qty_ahead_pre</td><td>路径 S 对即时成交入场的订单仍记为 NA</td><td>逻辑入场时刻尚未挂入盘口排队，统一按定义设为 ahead=0</td></tr></tbody></table></div><p>以上修正均由 S、H 两条路径各自独立按定义重算，绝不从另一条路径偷拷数值。我们对 12 个独立盘口与成交样本进行了独立核验，全部符合定义；修正后全市场 px / act 因子向量相对于 v5 签收版的变化均为 0 列、0 股。这也把早期“输入层已完全符合公开定义”的结论补齐到了真正严密的逐字段闭环。</p></details><details><summary>白名单放行了哪些表示层差异？凭什么确定它们无害？</summary><p>白名单仅包含 3 个数据列（received_ts、vendor_aggressor_side_raw、仅保序且跨表一致重编号的 event_pos）和 7 个精确的 attrs 来源标记键（szse_replay_version、szse_replay_fix_a、szse_replay_fix_c、replay_options、order_event_semantics、original_submissions_established、legal_unrested_trade_legs）。</p><p>我们先做了静态代码扫描（共核对 368 处命中位置，包含构建、诊断、历史及评分代码），再抽取高、中、低活跃度分层的 10 只股票 × 10 项扰动 × px/act 双版本，跑了 200 次有效扰动实验、比对 70,400 个因子输出值，结果全部逐位不变。</p><p>需要说明的是，event_pos 确实会参与引擎内部的排序与定位——白名单证明的是“在保持严格先后顺序且四表同步改号的前提下，重新编号不会改变这 352 列的得分”，而不是说“引擎根本不读这列”。至于科学序号 seq 和本次 C2 修正的业务字段，一律不在白名单内，必须严格相等。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>用可复核的实测证据，把“输入实现 bug”、“公开口径定义差异”和“消息时钟近似误差”三件事彻底剥离开，避免把所有数值变化笼统地糊涂归结为“还原误差”。</p>"
     },
     "clock": {
       "title": "Q_equity 消息时钟的近似误差已完整量化",
-      "body": "<p class=\"purpose\">基于公开行情的消息时钟可以稳定重建，但它无法凭空找回那些未公开事件在通道里的原始序号位置。由此带来的因子数值变化，需要摆在明面上，按明确的误差尺度来评估。</p><p>当前的 Q_equity 时钟从整条通道内 A 股三张表的可见消息排序出发，为先成交订单补齐逻辑入场槽位，并合并后续余量 A 的槽位；注意它必须在全通道层面统一构建，不能按单只股票各自压缩成局部序号。实验中关闭了 κ 缩放，早期那种强行映射到深市流速的旧时钟方案仅留作历史对照。</p><p>为了单独测出时钟变化的影响，实验固定了公开盘口、价格、数量和墙钟时间（wall clock），只把科学序号替换成 Q_equity，并直接沿用冻结的 R19 参数，不做任何重估。</p><p class=\"formula\">截面尺度误差 = |H − S| ÷ scale(S)</p><p class=\"caption\">其中 scale(S) 取全市场截面 IQR / 1.349；若 IQR 为 0 则改用总体标准差，若仍为 0 则单独列出。下图展示的是各列在全市场股票上的 p99 截面尺度误差分档，而非单只股票除以自身因子值的相对百分比。</p><div class=\"bins\" role=\"img\" aria-label=\"p99 截面尺度误差分档，74、70、159、43、0列，另有6个零尺度列\"><div class=\"bin\"><span>≤ 10⁻⁴</span><div class=\"track\"><div class=\"fill\" style=\"width:46.5409%\"></div></div><span class=\"count\">74</span></div><div class=\"bin\"><span>10⁻⁴—10⁻³</span><div class=\"track\"><div class=\"fill\" style=\"width:44.0252%\"></div></div><span class=\"count\">70</span></div><div class=\"bin\"><span>10⁻³—10⁻²</span><div class=\"track\"><div class=\"fill\" style=\"width:100.0000%\"></div></div><span class=\"count\">159</span></div><div class=\"bin\"><span>10⁻²—10⁻¹</span><div class=\"track\"><div class=\"fill\" style=\"width:27.0440%\"></div></div><span class=\"count\">43</span></div><div class=\"bin\"><span>> 10⁻¹</span><div class=\"track\"><div class=\"fill\" style=\"width:0.0000%\"></div></div><span class=\"count\">0</span></div></div><p>在全部 352 列中，有 6 个零尺度结构列逐位不变（秩相关未定义）；其余 346 列的 Spearman 秩相关系数最低为 0.99993455，中位数达 0.99999966，且没有任何一列出现有限值与缺失值（NaN）之间的状态翻转。</p><p>p99 截面尺度误差最大的一列是 f43 买侧，为 0.052425 个截面尺度（极值 0.170156）。原因在于消息序号间距会直接进入 θ_events 衰减核、候选窗口筛选以及最强响应挑优，进而传导至行为族、union 合成与下游指标。需要强调的是，截面秩相关极高只能说明排序几乎没变，不能代替业务上对数值误差能否接受的拍板。</p><details><summary>为什么当因子值接近 0 时，不能只看除以 |S| 的相对误差？</summary><p>我们在误差表里同时保留了旧口径 |H−S| / max(|S|, 1e−12)。以 f131 买侧为例，旧口径下的最大相对误差高达 4.6034，但它的最大截面尺度误差其实只有 0.01624。这是因为 f131 度量的是 maker 与 taker 的归一化差值，当某只股票 maker / taker 归一化差值 S 非常接近 0 时，拿 |S| 当分母会把一点微小的绝对变动放大成好几倍的比值。</p><p>两种口径反映不同侧面的问题，因此我们同时披露。本次实验没有通过重新定参去“吸收”时钟误差；而且从机制上看，由于存在非线性变换、候选集离散跳变以及固定端点修正，也不能预先打包票说未来只要统一缩放一下 θ 就能把这部分差异完全抹平。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>为后续拍板采用哪种消息时钟、以及如何设定沪市独立定参方案提供详实的逐列误差底表。至于该误差水平是否可接受，仍作为待决策项留给下一阶段。</p>"
+      "body": "<p class=\"purpose\">消息时钟度量的是动作之间相隔多少条消息。这个间距会进入配对和评分，所以只换消息计数方式也可能改变因子值。</p><p>当前的 Q_equity 时钟从整条通道内 A 股三张表的可见消息排序出发，为先成交订单补齐逻辑入场槽位，并合并后续余量 A 的槽位；注意它必须在全通道层面统一构建，不能按单只股票各自压缩成局部序号。实验中关闭了 κ 缩放，早期那种强行映射到深市流速的旧时钟方案仅留作历史对照。</p><p>为了单独测出时钟变化的影响，实验固定了公开盘口、价格、数量和墙钟时间（wall clock），只把科学序号替换成 Q_equity，并直接沿用冻结的 R19 参数，不做任何重估。</p><p class=\"formula\">截面尺度误差 = |H − S| ÷ scale(S)</p><p class=\"caption\">其中 scale(S) 取全市场截面 IQR / 1.349；若 IQR 为 0 则改用总体标准差，若仍为 0 则单独列出。下图展示的是各列在全市场股票上的 p99 截面尺度误差分档，而非单只股票除以自身因子值的相对百分比。</p><div class=\"bins\" role=\"img\" aria-label=\"p99 截面尺度误差分档，74、70、159、43、0列，另有6个零尺度列\"><div class=\"bin\"><span>≤ 10⁻⁴</span><div class=\"track\"><div class=\"fill\" style=\"width:46.5409%\"></div></div><span class=\"count\">74</span></div><div class=\"bin\"><span>10⁻⁴—10⁻³</span><div class=\"track\"><div class=\"fill\" style=\"width:44.0252%\"></div></div><span class=\"count\">70</span></div><div class=\"bin\"><span>10⁻³—10⁻²</span><div class=\"track\"><div class=\"fill\" style=\"width:100.0000%\"></div></div><span class=\"count\">159</span></div><div class=\"bin\"><span>10⁻²—10⁻¹</span><div class=\"track\"><div class=\"fill\" style=\"width:27.0440%\"></div></div><span class=\"count\">43</span></div><div class=\"bin\"><span>> 10⁻¹</span><div class=\"track\"><div class=\"fill\" style=\"width:0.0000%\"></div></div><span class=\"count\">0</span></div></div><p>在全部 352 列中，有 6 个零尺度结构列逐位不变（秩相关未定义）；其余 346 列的 Spearman 秩相关系数最低为 0.99993455，中位数达 0.99999966，且没有任何一列出现有限值与缺失值（NaN）之间的状态翻转。</p><p>p99 截面尺度误差最大的一列是 f43 买侧，为 0.052425 个截面尺度（极值 0.170156）。原因在于消息序号间距会直接进入 θ_events 衰减核、候选窗口筛选以及最强响应挑优，进而传导至行为族、union 合成与下游指标。需要强调的是，截面秩相关极高只能说明排序几乎没变，不能代替业务上对数值误差能否接受的拍板。</p><details><summary>为什么当因子值接近 0 时，不能只看除以 |S| 的相对误差？</summary><p>我们在误差表里同时保留了旧口径 |H−S| / max(|S|, 1e−12)。以 f131 买侧为例，旧口径下的最大相对误差高达 4.6034，但它的最大截面尺度误差其实只有 0.01624。这是因为 f131 度量的是 maker 与 taker 的归一化差值，当某只股票 maker / taker 归一化差值 S 非常接近 0 时，拿 |S| 当分母会把一点微小的绝对变动放大成好几倍的比值。</p><p>两种口径反映不同侧面的问题，因此我们同时披露。本次实验没有通过重新定参去“吸收”时钟误差；而且从机制上看，由于存在非线性变换、候选集离散跳变以及固定端点修正，也不能预先打包票说未来只要统一缩放一下 θ 就能把这部分差异完全抹平。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>为后续拍板采用哪种消息时钟、以及如何设定沪市独立定参方案提供详实的逐列误差底表。至于该误差水平是否可接受，仍作为待决策项留给下一阶段。</p>"
     },
     "status": {
       "title": "真实沪市数据已跑通冒烟，正式生产条件尚待补齐",
-      "body": "<p class=\"purpose\">在真实沪市数据上跑通冒烟测试，证明了从原生回放到因子引擎的整条工程链路已经畅通。但由于冒烟测试暂时借用了深市参数，其产出仅用于验证工程链路，不能算作正式生产结果。</p><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">真实沪市冒烟（2026-06-30）</th><th scope=\"col\">成功跑完</th><th scope=\"col\">因交易阶段剔除</th><th scope=\"col\">运行失败</th></tr></thead><tbody><tr><td>px（正式股票池 2,310 只）</td><td>2,296</td><td>14</td><td>0</td></tr><tr><td>act（分层抽样 30 只）</td><td>29</td><td>1</td><td>0</td></tr></tbody></table></div><p>本次冒烟暂时借用了深市冻结的 R19 参数包：沪市主板借用深市主板（Main）参数，科创板借用创业板（ChiNext）参数，流动性分组缺失时回退到 global。这种做法只能用来检验代码链路能不能跑通，产出的数值不具备沪市独立参数的正式身份。</p><div class=\"twocol\"><div><h3>本阶段已交付</h3><ul><li>原生回放 v2、公开口径 v5 适配器及特殊交易阶段剔除规则。</li><li>真值时钟下全市场四张输入表与因子引擎的逐位对齐验证。</li><li>Q_equity 消息时钟的逐列误差底表、数据哈希与有限性验证。</li><li>独立的 XSHG 历史时点股票池（point-in-time universe）参考。</li></ul></div><div><h3>仍待决策或补齐</h3><ul><li>对 Q_equity 消息时钟近似误差的正式接受拍板。</li><li>沪市独立的六核尺度、结构参数与 F40 门限标定。</li><li>历史报价认证凭证与当前正式生产入口的绑定。</li><li>跨日准入规则、全历史重算的算力预算与磁盘空间准备。</li></ul></div></div><details><summary>运行耗时、资源占用与代码版本记录分别说明什么？</summary><p>经性能优化后，原生前态构造＋订单重建在 P75 分位交易日上的耗时从 103.01 秒降至 82.95 秒，最重交易日从 107.83 秒降至 90.57 秒；在 4 个测试日、9,163 个股票日上保持输出结果与已知异常完全等价。注意这只是回放与重建层的耗时，不代表全量因子计算或全历史定参的总耗时。</p><p>真实沪市单日冒烟批次耗时 456.83 秒，平均占用 15.96 核，内存峰值 46.04 GiB。最新一轮多路径收尾验证共执行 15 次 guard 任务，扣除冻结后的有效墙钟合计 91.56 分钟；主阶段内存峰值 76.64 GiB，swap 占用为 0，盘中交易时段冻结机制实际生效。</p><p>本轮交付的代码与报告均已合入 main 分支，本地提交、GitHub 远端推送、wenjie 服务器快进同步及业务运行各自留有明确版本号：核心业务验收对应 f6592c06，补充归约对应 8de2ca87，最终报告定稿对应 2a0dac94。全量因子向量仅在内存中做归约比对，本地磁盘只保留摘要证据表。</p><p>收尾运行收据显示当时系统盘剩余空间约 2.5 GiB，低于日常 3 GiB 的安全线，且有部分其他账户的空间增量尚未归因。该数字直接引自当时的运行收据，不代表本页面实时重新探测了当前服务器磁盘。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>工程链路与适配器正确性已经为后续工作打好底子；下一步正式跑批时必须挂上沪市独立标定的参数与完整的准入凭证，不能把这次冒烟测试直接改名当成正式生产产出。</p>"
+      "body": "<p class=\"purpose\">真实沪市数据上的试运行已经跑通，但借用的是深市参数；这里的成功数量说明程序能够运行，不代表正式沪市因子已经生产完成。</p><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">真实沪市冒烟（2026-06-30）</th><th scope=\"col\">成功跑完</th><th scope=\"col\">因交易阶段剔除</th><th scope=\"col\">运行失败</th></tr></thead><tbody><tr><td>px（正式股票池 2,310 只）</td><td>2,296</td><td>14</td><td>0</td></tr><tr><td>act（分层抽样 30 只）</td><td>29</td><td>1</td><td>0</td></tr></tbody></table></div><p>本次冒烟暂时借用了深市冻结的 R19 参数包：沪市主板借用深市主板（Main）参数，科创板借用创业板（ChiNext）参数，流动性分组缺失时回退到 global。这种做法只能用来检验代码链路能不能跑通，产出的数值不具备沪市独立参数的正式身份。</p><div class=\"twocol\"><div><h3>本阶段已交付</h3><ul><li>原生回放 v2、公开口径 v5 适配器及特殊交易阶段剔除规则。</li><li>真值时钟下全市场四张输入表与因子引擎的逐位对齐验证。</li><li>Q_equity 消息时钟的逐列误差底表、数据哈希与有限性验证。</li><li>独立的 XSHG 历史时点股票池（point-in-time universe）参考。</li></ul></div><div><h3>仍待决策或补齐</h3><ul><li>对 Q_equity 消息时钟近似误差的正式接受拍板。</li><li>沪市独立的六核尺度、结构参数与 F40 门限标定。</li><li>历史报价认证凭证与当前正式生产入口的绑定。</li><li>跨日准入规则、全历史重算的算力预算与磁盘空间准备。</li></ul></div></div><details><summary>运行耗时、资源占用与代码版本记录分别说明什么？</summary><p>经性能优化后，原生前态构造＋订单重建在 P75 分位交易日上的耗时从 103.01 秒降至 82.95 秒，最重交易日从 107.83 秒降至 90.57 秒；在 4 个测试日、9,163 个股票日上保持输出结果与已知异常完全等价。注意这只是回放与重建层的耗时，不代表全量因子计算或全历史定参的总耗时。</p><p>真实沪市单日冒烟批次耗时 456.83 秒，平均占用 15.96 核，内存峰值 46.04 GiB。最新一轮多路径收尾验证共执行 15 次 guard 任务，扣除冻结后的有效墙钟合计 91.56 分钟；主阶段内存峰值 76.64 GiB，swap 占用为 0，盘中交易时段冻结机制实际生效。</p><p>本轮交付的代码与报告均已合入 main 分支，本地提交、GitHub 远端推送、wenjie 服务器快进同步及业务运行各自留有明确版本号：核心业务验收对应 f6592c06，补充归约对应 8de2ca87，最终报告定稿对应 2a0dac94。全量因子向量仅在内存中做归约比对，本地磁盘只保留摘要证据表。</p><p>收尾运行收据显示当时系统盘剩余空间约 2.5 GiB，低于日常 3 GiB 的安全线，且有部分其他账户的空间增量尚未归因。该数字直接引自当时的运行收据，不代表本页面实时重新探测了当前服务器磁盘。</p></details><p class=\"role\"><b>这一步为后续工作交付什么</b>工程链路与适配器正确性已经为后续工作打好底子；下一步正式跑批时必须挂上沪市独立标定的参数与完整的准入凭证，不能把这次冒烟测试直接改名当成正式生产产出。</p>"
     },
     "next": {
       "title": "下一步如何衔接沪市独立定参与因子重算",
-      "body": "<p class=\"purpose\">严格沿着深市已经跑通的数学依赖顺序往下推进，在沪市自己的历史样本上重新标定参数，进而生成正式的沪市历史因子面板。</p><ol class=\"handoff-list\"><li><b>冻结公开口径定义与输入凭证</b><p>正式确认原生回放 v2、公开口径 v5、Q_equity 时钟、px/act 计算范围及异常剔除规则，并核对时点股票池、报价认证凭证与全量 L2 源数据。注意：已具备 601 日股票池名单，并不等于这 601 日的 L2 行情与中间特征都已经齐备。</p></li><li><b>沪市六核标定：先确定“多近才算相近”</b><p>在沪市样本上采集墙钟时间、消息序号间隔、委托数量、价格档位、BBO 距离和可成交性（marketability）距离，独立估计六类衰减核的尺度与支持集。流动性分组规则按沪市另行冻结的方案执行，不能直接照搬深市的分组切点与中心值。</p></li><li><b>结构支持度与 F40 分段：再确定“怎么配对与打分”</b><p>绑定新标定的沪市六核参数后，采集结构观测值与紧凑事实表，按顺序完成 episode、anchor、cost、match 及门限归约。一旦上游核参数或门限发生变动，绝不能偷懒复用旧参数下生成的中间阶段缓存。</p></li><li><b>冻结可审计的沪市参数包</b><p>将样本日期范围、回放与公开口径版本、权重、分位数规则、缺失回退策略以及输入与参数文件的 SHA-256 哈希完整绑定，并核查正式因子计算入口确实读取了这份参数包。</p></li><li><b>生成正式因子面板并开展独立效果评估</b><p>先在代表性股票日和单日全市场上跑通验证，再按准入范围扩展到全历史区间，输出附带列标识、输入版本、参数哈希与剔除记录的正式因子面板。至于后续拼接收益标签、计算 IC 以及做模型评估，则属于面板签收之后的独立研究步骤。</p></li></ol><details><summary>九组结构参数各自管什么？当前的统计规则是什么？</summary><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">参数组</th><th scope=\"col\">在因子计算中的作用</th><th scope=\"col\">当前标定统计规则</th></tr></thead><tbody><tr><td>f16_priority_scales</td><td>排队优先与价格优先的衡量尺度</td><td>合格正观测值的中位数 / ln(2)</td></tr><tr><td>f31_bottleneck_threshold</td><td>订单链路径的最低连接质量门限</td><td>正观测值的 P75 分位数</td></tr><tr><td>f40_matching_gates</td><td>episode 切分、anchor 筛选与路径门限</td><td>分别取 P99 / P99.9 / P50 分位数</td></tr><tr><td>lambda40</td><td>完整候选池下的最大配对质量下界</td><td>正观测值的 P05 分位数</td></tr><tr><td>lambda42</td><td>本侧 / 对手侧 BBO 变动响应门限</td><td>合并正观测值的 P05 分位数</td></tr><tr><td>f85_depth_scale</td><td>因果双侧盘口深度尺度</td><td>正观测值的加权中位数</td></tr><tr><td>lambda_RV</td><td>连续 32 秒价差归一化波动能量门限</td><td>正观测值的 P10 分位数</td></tr><tr><td>z12_depth_scales</td><td>买卖两侧前五档盘口深度尺度</td><td>逐股与分组正观测值的加权中位数</td></tr><tr><td>p03_depletion_scale</td><td>公开冲击后的盘口耗尽与恢复尺度</td><td>正观测值的中位数</td></tr></tbody></table></div><p>注意：f85 与 z12 直接取加权中位数，不再除以 ln(2)（早期方案文档中的写法已修订）；而六类基础核与 f16 仍保留 median / ln(2) 的口径。早期的旧消息时钟、旧版公开定义及旧数据来源绑定，一律不能带入下一轮正式定参。</p></details><p>算力与运行约束继续保持不变：限定在 wenjie 服务器、16 核 / 100G 内存上限下运行，并在盘中交易时段自动冻结暂停。原始逐笔数据保留在公司服务器内；断点续跑严格校验科学标识与文件哈希，高速暂存盘（hot scratch）用完即清，仅长期归档必要的参数包、正式因子面板及有界审计收据。</p><p class=\"role\"><b>这一步为后续工作交付什么</b>本项目到此交付的是一个经过严格验证、口径自洽的沪市公开计算入口；下一阶段将在此基础上交付沪市独立参数包与正式历史因子面板，完成之后再进入因子预测效果（IC / 回测）评估。</p>"
+      "body": "<p class=\"purpose\">下一步要用沪市样本估计距离尺度和配对门槛，固定参数后再计算历史因子面板。收益关系和回测属于面板形成后的研究。</p><ol class=\"handoff-list\"><li><b>冻结公开口径定义与输入凭证</b><p>正式确认原生回放 v2、公开口径 v5、Q_equity 时钟、px/act 计算范围及异常剔除规则，并核对时点股票池、报价认证凭证与全量 L2 源数据。注意：已具备 601 日股票池名单，并不等于这 601 日的 L2 行情与中间特征都已经齐备。</p></li><li><b>沪市六核标定：先确定“多近才算相近”</b><p>在沪市样本上采集墙钟时间、消息序号间隔、委托数量、价格档位、BBO 距离和可成交性（marketability）距离，独立估计六类衰减核的尺度与支持集。流动性分组规则按沪市另行冻结的方案执行，不能直接照搬深市的分组切点与中心值。</p></li><li><b>结构支持度与 F40 分段：再确定“怎么配对与打分”</b><p>绑定新标定的沪市六核参数后，采集结构观测值与紧凑事实表，按顺序完成 episode、anchor、cost、match 及门限归约。一旦上游核参数或门限发生变动，绝不能偷懒复用旧参数下生成的中间阶段缓存。</p></li><li><b>冻结可审计的沪市参数包</b><p>将样本日期范围、回放与公开口径版本、权重、分位数规则、缺失回退策略以及输入与参数文件的 SHA-256 哈希完整绑定，并核查正式因子计算入口确实读取了这份参数包。</p></li><li><b>生成正式因子面板并开展独立效果评估</b><p>先在代表性股票日和单日全市场上跑通验证，再按准入范围扩展到全历史区间，输出附带列标识、输入版本、参数哈希与剔除记录的正式因子面板。至于后续拼接收益标签、计算 IC 以及做模型评估，则属于面板签收之后的独立研究步骤。</p></li></ol><details><summary>九组结构参数各自管什么？当前的统计规则是什么？</summary><div class=\"table-wrap\"><table><thead><tr><th scope=\"col\">参数组</th><th scope=\"col\">在因子计算中的作用</th><th scope=\"col\">当前标定统计规则</th></tr></thead><tbody><tr><td>f16_priority_scales</td><td>排队优先与价格优先的衡量尺度</td><td>合格正观测值的中位数 / ln(2)</td></tr><tr><td>f31_bottleneck_threshold</td><td>订单链路径的最低连接质量门限</td><td>正观测值的 P75 分位数</td></tr><tr><td>f40_matching_gates</td><td>episode 切分、anchor 筛选与路径门限</td><td>分别取 P99 / P99.9 / P50 分位数</td></tr><tr><td>lambda40</td><td>完整候选池下的最大配对质量下界</td><td>正观测值的 P05 分位数</td></tr><tr><td>lambda42</td><td>本侧 / 对手侧 BBO 变动响应门限</td><td>合并正观测值的 P05 分位数</td></tr><tr><td>f85_depth_scale</td><td>因果双侧盘口深度尺度</td><td>正观测值的加权中位数</td></tr><tr><td>lambda_RV</td><td>连续 32 秒价差归一化波动能量门限</td><td>正观测值的 P10 分位数</td></tr><tr><td>z12_depth_scales</td><td>买卖两侧前五档盘口深度尺度</td><td>逐股与分组正观测值的加权中位数</td></tr><tr><td>p03_depletion_scale</td><td>公开冲击后的盘口耗尽与恢复尺度</td><td>正观测值的中位数</td></tr></tbody></table></div><p>注意：f85 与 z12 直接取加权中位数，不再除以 ln(2)（早期方案文档中的写法已修订）；而六类基础核与 f16 仍保留 median / ln(2) 的口径。早期的旧消息时钟、旧版公开定义及旧数据来源绑定，一律不能带入下一轮正式定参。</p></details><p>算力与运行约束继续保持不变：限定在 wenjie 服务器、16 核 / 100G 内存上限下运行，并在盘中交易时段自动冻结暂停。原始逐笔数据保留在公司服务器内；断点续跑严格校验科学标识与文件哈希，高速暂存盘（hot scratch）用完即清，仅长期归档必要的参数包、正式因子面板及有界审计收据。</p><p class=\"role\"><b>这一步为后续工作交付什么</b>本项目到此交付的是一个经过严格验证、口径自洽的沪市公开计算入口；下一阶段将在此基础上交付沪市独立参数包与正式历史因子面板，完成之后再进入因子预测效果（IC / 回测）评估。</p>"
     },
     "reference": {
       "title": "项目推进时间线与原始证据入口",
-      "body": "<p class=\"purpose\">顺着问题演进的脉络回看每个阶段解决了什么问题。各阶段历史报告保留当时的原始数字，当前整体状态则以最新一轮收尾验证为准。</p><div class=\"history\"><time>9 月底</time><div><b>摸清可识别性边界：哪些能唯一还原，哪些不能</b><p>确认公开盘口与大部分可见数量事实可精确还原，但部分原始委托价、市价细分类型及未发布即时撤余在数学上不可唯一识别。</p></div><time>10.14</time><div><b>完成独立研究线 v2：规则可行集、概率模型与留出验证</b><p>保留了条件分布与可行集工具，但样本外测试表明点估计并未跑赢简单基线，因此决定不把模型点估计当成生产真值。</p></div><time>10.21</time><div><b>公开口径 v3 与替换层进入全市场验收</b><p>建立逐列公开定义、px/act 双响应分支与 540 个候选标识；早期运行耗时瓶颈由后续性能优化接力解决。</p></div><time>10.22</time><div><b>推进公开口径 v4/v5、原生回放认证与性能优化</b><p>修正纯成交订单的计分与候选配对顺序（先配对、再计零），确立原生回放 v2 与异常交易阶段剔除规则。</p></div><time>10.23</time><div><b>完成真实沪市冒烟与适配器 C1–C5 收尾闭环</b><p>全市场输入层与引擎层在真值时钟下逐位对齐通过，Q_equity 时钟误差完整量化披露，为启动沪市独立定参铺平道路。</p></div></div><details><summary>查看各阶段核心原始报告（GitHub 固定版本链接）</summary><ol class=\"source-list\"><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-09/2026-09-29-sse-original-order-reconstruction-review.md\" target=\"_blank\" rel=\"noopener\">原始属性的可识别边界</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-14-sse-original-order-v2-validation.md\" target=\"_blank\" rel=\"noopener\">研究模型留出结果</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-21-sse-visible-v3-implementation.md\" target=\"_blank\" rel=\"noopener\">公开因子定义与候选身份</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-22-sse-native-replay-certification-r3.md\" target=\"_blank\" rel=\"noopener\">原生分层认证</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-22-sse-priorityworse-union-attribution.md\" target=\"_blank\" rel=\"noopener\">公开 v5 和剩余语义归因</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-23-sse-adapter.md\" target=\"_blank\" rel=\"noopener\">真实沪市冒烟</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-23-sse-adapter-closure.md\" target=\"_blank\" rel=\"noopener\">最新 C1–C5 收尾</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md\" target=\"_blank\" rel=\"noopener\">参数来源与 F85/z12 修订</a></li></ol></details><p class=\"caption\">本汇报名义截止日期为 2026-10-23，完整梳理了此前各阶段的推进脉络。各项统计数字均对应各自的样本范围与代码版本，不将局部模块的验收结果笼统折算成所谓的“项目总体完成度百分比”。</p>"
+      "body": "<p class=\"purpose\">按时间说明每一步解决的问题、已得到的结果和仍未完成的交付。各项数值分别保留原来的样本范围与版本。</p><div class=\"history\"><time>9 月底</time><div><b>摸清可识别性边界：哪些能唯一还原，哪些不能</b><p>确认公开盘口与大部分可见数量事实可精确还原，但部分原始委托价、市价细分类型及未发布即时撤余在数学上不可唯一识别。</p></div><time>10.14</time><div><b>完成独立研究线 v2：规则可行集、概率模型与留出验证</b><p>保留了条件分布与可行集工具，但样本外测试表明点估计并未跑赢简单基线，因此决定不把模型点估计当成生产真值。</p></div><time>10.21</time><div><b>公开口径 v3 与替换层进入全市场验收</b><p>建立逐列公开定义、px/act 双响应分支与 540 个候选标识；早期运行耗时瓶颈由后续性能优化接力解决。</p></div><time>10.22</time><div><b>推进公开口径 v4/v5、原生回放认证与性能优化</b><p>修正纯成交订单的计分与候选配对顺序（先配对、再计零），确立原生回放 v2 与异常交易阶段剔除规则。</p></div><time>10.23</time><div><b>完成真实沪市冒烟与适配器 C1–C5 收尾闭环</b><p>全市场输入层与引擎层在真值时钟下逐位对齐通过，Q_equity 时钟误差完整量化披露，为启动沪市独立定参铺平道路。</p></div></div><details><summary>查看各阶段核心原始报告（GitHub 固定版本链接）</summary><ol class=\"source-list\"><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-09/2026-09-29-sse-original-order-reconstruction-review.md\" target=\"_blank\" rel=\"noopener\">原始属性的可识别边界</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-14-sse-original-order-v2-validation.md\" target=\"_blank\" rel=\"noopener\">研究模型留出结果</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-21-sse-visible-v3-implementation.md\" target=\"_blank\" rel=\"noopener\">公开因子定义与候选身份</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-22-sse-native-replay-certification-r3.md\" target=\"_blank\" rel=\"noopener\">原生分层认证</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-22-sse-priorityworse-union-attribution.md\" target=\"_blank\" rel=\"noopener\">公开 v5 和剩余语义归因</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-23-sse-adapter.md\" target=\"_blank\" rel=\"noopener\">真实沪市冒烟</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-23-sse-adapter-closure.md\" target=\"_blank\" rel=\"noopener\">最新 C1–C5 收尾</a></li><li><a href=\"https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md\" target=\"_blank\" rel=\"noopener\">参数来源与 F85/z12 修订</a></li></ol></details><p class=\"caption\">本汇报名义截止日期为 2026-10-23，完整梳理了此前各阶段的推进脉络。各项统计数字均对应各自的样本范围与代码版本，不将局部模块的验收结果笼统折算成所谓的“项目总体完成度百分比”。</p>"
     }
   },
   "errors": [
@@ -6407,7 +6407,177 @@
       "errors": {
         "path": "reports/2026-10/2026-10-23-sse-adapter-closure-evidence/q-equity-errors.csv",
         "sha256": "99b54d4baa1aac7eb928ef034ddacfeaf232dc5cefdf53a8a8de72eb8df34205"
+      },
+      "priority_report": {
+        "path": "reports/2026-10/2026-10-22-sse-priorityworse-union-attribution.md",
+        "sha256": "68d6212fd5b6281bd133acc8349c7265142e27913fd323a7f1ac732449856b53"
+      },
+      "priority_values": {
+        "path": "reports/2026-10/2026-10-22-sse-priorityworse-union-attribution-evidence/delivery/priorityworse-before-after.csv",
+        "sha256": "294fbb93da8fb13c5eba296d4bff04a334ae8e0a3f78a0e829199c9aa31badf5"
       }
     }
-  }
+  },
+  "definition_impact": {
+    "date": "2026-06-30",
+    "stocks": 2888,
+    "potential_columns": 132,
+    "changed_source_columns": 130,
+    "unaffected_columns": 220,
+    "rows": [
+      {
+        "column": "f16_priorityworse_c__side_buy__den_all_orders__win_0930_0935",
+        "name": "排队优先度变差 · 买侧",
+        "before": {
+          "median": 0.09759792948076125,
+          "p99": 0.5949042459361388,
+          "maximum": 1.7488153250441918,
+          "affected_share": 0.8590720221606648,
+          "rank_correlation": 0.9786918943749613
+        },
+        "after": {
+          "median": 0.0,
+          "p99": 0.0655974238269244,
+          "maximum": 0.25591234524060846,
+          "affected_share": 0.25727146814404434,
+          "rank_correlation": 0.9995834392046479
+        }
+      },
+      {
+        "column": "f16_priorityworse_c__side_sell__den_all_orders__win_0930_0935",
+        "name": "排队优先度变差 · 卖侧",
+        "before": {
+          "median": 0.11744958930389167,
+          "p99": 0.5784093000278093,
+          "maximum": 1.216485044009821,
+          "affected_share": 0.8864265927977839,
+          "rank_correlation": 0.9822031937506837
+        },
+        "after": {
+          "median": 0.0,
+          "p99": 0.07469760125483489,
+          "maximum": 0.22090223464404093,
+          "affected_share": 0.2562326869806094,
+          "rank_correlation": 0.999524014055091
+        }
+      },
+      {
+        "column": "f54_algo_union_strength__side_buy__den_all_orders__win_0930_0935",
+        "name": "综合行为强度 f54 · 买侧",
+        "before": {
+          "median": 0.0028490646316064374,
+          "p99": 0.027891805665624988,
+          "maximum": 0.07413464319361117,
+          "affected_share": 0.9878808864265928,
+          "rank_correlation": 0.9996733377951286
+        },
+        "after": {
+          "median": 0.0028903030817499812,
+          "p99": 0.026871989437332475,
+          "maximum": 0.07299871038083248,
+          "affected_share": 0.9878808864265928,
+          "rank_correlation": 0.9996836103481699
+        }
+      },
+      {
+        "column": "f55_algo_family_breadth__side_buy__den_all_orders__win_0930_0935",
+        "name": "四类行为的平均强度 f55 · 买侧",
+        "before": {
+          "median": 0.017961152206306317,
+          "p99": 0.09243440016614343,
+          "maximum": 0.15191813682426542,
+          "affected_share": 0.9899584487534626,
+          "rank_correlation": 0.9989781036606237
+        },
+        "after": {
+          "median": 0.018691595345142135,
+          "p99": 0.0927652834979596,
+          "maximum": 0.1522977767055639,
+          "affected_share": 0.9899584487534626,
+          "rank_correlation": 0.9989444807276798
+        }
+      }
+    ],
+    "sample_repair": {
+      "stocks": 22,
+      "rematched_old_orders": 16194,
+      "pure_to_displayed": 15055,
+      "difference_reduction": 0.998914
+    }
+  },
+  "factor_names": {
+    "f16_priorityworse_c": "重新报单后的排队优先度变差（f16）",
+    "f43_qdformal_c": "排队量受冲击后的响应（f43）",
+    "f42_bq_own_c": "本侧最优报价变化响应（f42）",
+    "f42_bq_opp_c": "对手侧最优报价变化响应（f42）",
+    "f44_deplete_c": "盘口数量耗尽后的响应（f44）",
+    "f45_spread_nar_c": "买卖价差缩小后的响应（f45）",
+    "f45_spread_wid_c": "买卖价差扩大后的响应（f45）",
+    "f46_imbflip_c": "盘口买卖失衡翻转后的响应（f46）",
+    "f47_voljump_c": "波动突然增大后的响应（f47）",
+    "f104_stale_quote_refresh": "旧报价更新（f104）",
+    "f110_taker_buy_pressure": "主动买入压力（f110）",
+    "f111_taker_sell_pressure": "主动卖出压力（f111）",
+    "f131_maker_minus_taker": "提供与消耗流动性的归一化差值（f131）",
+    "f133_directional_taker_net": "方向性主动成交净压力（f133）",
+    "f54_algo_union_strength": "综合行为强度（f54）",
+    "f55_algo_family_breadth": "四类行为的平均强度（f55）"
+  },
+  "step_results": [
+    {
+      "result": "同样的公开信息和消息间距下，适配器两条计算路径得到相同因子值：价格版覆盖 2,888 只股票，可成交性版覆盖 30 只样本股，差异均为 0。",
+      "effect": "已经接通“沪市公开消息 → 订单与盘口 → 因子计算”。但改用公开定义会改变因子含义，换用公开消息时钟也会改变数值；正式参数、历史面板与收益预测能力仍需下一阶段验证。",
+      "scope": "以下把“因子定义的改变”“适配器实现的误差”“消息时钟的近似误差”分别交代，数值不混在一起。"
+    },
+    {
+      "result": "以图中示意订单为例：先成交 600 股，再挂出 400 股，公开可见总量是 1,000 股，逻辑上仍只有一笔委托。",
+      "effect": "只读后面的挂单会少记已成交的 600 股；把成交与挂单拆成两笔新单，会改变订单数、配对候选与按订单汇总的因子。这里只解释机制，不把示意股数当成实测结果。",
+      "scope": "与订单数量、首次入场时刻、主动成交和排队量有关的计算，都依赖这一步先把订单身份和数量记对。"
+    },
+    {
+      "result": "隐藏原价的模型估计没有改善本次留出结果。2026-06-30，v1 → v2 的限价准确率为 82.7566% → 82.5314%，平均绝对误差为 2.8604 → 2.9208 个最小价格变动单位。",
+      "effect": "后续因子采用可验证的成交价、挂出价和可见数量；不把猜出的原始限价、类型或隐藏撤余量当成真值输入。价量可以重建到哪一步、仍不知道什么，要一起保留。",
+      "scope": "这项比较评价的是隐藏属性估计，不是因子收益预测。研究按前 8 日拟合、后 3 日留出，沪深分别估计。"
+    },
+    {
+      "result": "已把原始消息整理成四类一致的信息：发生的动作、整笔订单的过程、动作前的盘口、动作后的盘口。固定同一公开定义和消息时钟后，2,888 只股票的业务输入字段通过逐项对照。",
+      "effect": "排队类因子能使用动作前的同价位排队量，市场响应类因子能比较动作前后变化；订单数量、时刻和价格的定义由此进入同一套计算程序。",
+      "scope": "仅放行已证明不影响本次 352 列输出的来源标记等表示差异；真正参与业务计算的字段仍须一致。"
+    },
+    {
+      "result": "依赖关系表明，132 个源列可能受这次配对修正影响；本日其中 130 个实际变化。范围外的 220 列在价格版和可成交性版中均与旧版逐位相同。",
+      "effect": "直接影响“重新报单后排队优先度是否变差”，再传到该分量所在的排队行为组（P）、综合得分及使用综合得分的下游指标。直接分量更接近深市，不代表所有下游因子也同步更接近。",
+      "scope": "下面给出同一日、同一批 2,888 只股票的改前 / 改后实测；范围是公开定义修正，区别于第 9 页只更换消息时钟的实验。"
+    },
+    {
+      "result": "13 个交易日、29,622 个股票日完成分层核验。完整可比样本的数量守恒差异为 0；外部整秒盘口有 268,421 / 268,723 帧一致，仍有 302 帧未全等。",
+      "effect": "这些检查为盘口数量、排队位置、入场时间等因子输入提供证据；未覆盖的日期、亚秒时点和隐藏原始属性，不能凭这些结果自动算作已经验证。",
+      "scope": "前五档队列 437,358 帧全等，但只覆盖 2 个交易日；开盘集合竞价价格和数量共 29,135 例全等。"
+    },
+    {
+      "result": "把三种变化分开后：改公开定义会改变综合行为得分；适配器本身在同一条件下输出差异为 0；换公开消息时钟则使 272 / 352 列至少在一只股票上变化。",
+      "effect": "同一套定义能被正确实现，不等于这套公开定义会与深市原定义数值相同。后续是否采用沪市参数和消息时钟，应根据各自的误差与业务要求判断。",
+      "scope": "定义差异的总体相关在 14,079,004 笔共同订单上计算；适配器与时钟实验的数据日为 2026-06-30。"
+    },
+    {
+      "result": "清除了 16 只股票的 437 条残留自动撤单，并修正金额标签、公开价位挂单量、成交价和即时排队量。全市场两版各 352 列对已验收 v5 的变化均为 0 列、0 股。",
+      "effect": "这次修正提高了输入定义与验证基准的可靠性，已有因子数值没有变化。它不能被描述成因子表现提升；深市默认计算也通过了修改前后的参考核对。",
+      "scope": "12 条独立盘口 / 成交样本均符合各自公开记录；五只代表股共 7,040 次新参考比较全部一致。"
+    },
+    {
+      "result": "只更换消息时钟，352 列中有 272 列至少一股发生变化，80 列逐位不变。误差最大的 99% 分位列是买侧 f43：0.052425 个全市场尺度；该列最大误差为 0.170156 个尺度。",
+      "effect": "先后顺序相同，事件相隔的消息数仍会改变，于是时间衰减权重、配对窗口和市场响应选择会变，进而传到综合得分。排序总体稳定，但这还不能决定误差是否可接受。",
+      "scope": "保持价量、盘口、实际时间和参数不变；这里的“尺度”是全市场股票间的典型差距，不是某只股票因子值的百分比。"
+    },
+    {
+      "result": "真实沪市 2026-06-30 试运行：价格版 2,296 / 2,310 只成功，14 只按交易阶段排除，运行失败 0；可成交性版 29 / 30 只成功，1 只排除，失败 0。",
+      "effect": "证明整条程序能在真实沪市数据上运行。试运行借用了深市参数；下一步须用沪市样本估计“多近算相近”和“哪些关系计入”的参数，随后才能正式批量计算因子。",
+      "scope": "本次试运行耗时 456.83 秒；平均约 15.96 核，峰值内存 46.04 GiB。没有把这些试算值当成正式沪市生产结果。"
+    },
+    {
+      "result": "截至 2026-10-23，订单与盘口重建、公开定义、适配器对照和时钟误差表已有结果；沪市独立参数、正式历史因子面板和收益预测检验尚未由本项目交付。",
+      "effect": "下一个交付物应是可复核的沪市参数包和按该参数计算的历史因子。拿到面板后，再检验因子与后续收益的关系，并开展回测。",
+      "scope": "已有 601 个交易日的股票池名单，只能说明研究范围已列出；它不等于这些日期的数据、正式参数和因子面板都已齐备。"
+    }
+  ]
 }

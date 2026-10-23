@@ -7,22 +7,77 @@ const state = {scene:0, view:'story', order:'partial', step:0, reveal:false, pip
 const esc = value => String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pct = (n,d=3) => n==null?'未定义':(n*100).toFixed(d)+'%';
 const num = n => n==null?'未定义':n!==0&&Math.abs(n)<1e-5?Number(n).toExponential(5):Number(n).toLocaleString('en-US',{maximumFractionDigits:7});
-const short = column => column.split('__')[0]+' · '+(column.includes('__side_buy')?'买侧':'卖侧');
+const short = column => (DATA.factor_names[column.split('__')[0]]||column.split('__')[0])+' · '+(column.includes('__side_buy')?'买侧':'卖侧');
 const btn = (action,value,label,active=false,cls='') => `<button type="button" class="${cls}" data-action="${action}" data-value="${value}"${['scene','case-link','return-story'].includes(action)?'':` aria-pressed="${active}"`}>${label}</button>`;
 const detailButton = (key,label='展开字段、限制与原始证据') => `<button type="button" class="secondary" data-action="evidence" data-value="${key}">${label}</button>`;
 const tags = label => `<span class="tag real">${label||'实测'}</span>`;
 const scenes = [
- ['项目定位','先看全局：这项工作为后续流程交付什么？','把沪市公开逐笔消息整理成因子引擎可直接读取的订单事实，并划清“哪些能精确还原、哪些需按公开口径重新定义”的边界。','position','为后续沪市独立定参交付经过严格验收的公开口径定义、适配器与输入接口契约；参数标定与正式因子面板生产则是下一阶段的任务。'],
- ['订单发布机制','同一笔委托，在行情里为什么会拆成多条消息？','点击“下一条消息”，逐步观察成交、剩余挂单与盘口变化。可以看到，公开挂单消息 A 的数量并不是原始委托总量。','observable','只有先搞清楚交易所实际对外发布了什么，才能判断“原始订单还原”到底有没有唯一解，也才能避免把成交后的剩余挂单误算成第二笔新委托。'],
- ['可还原的边界','完全相同的公开成交记录，背后可能对应几种原始委托？','纯成交订单往往看不见原始限价、细分类型或未发布的撤余量。即便撮合回放能对上盘口，也不代表把隐藏属性猜对了。','observable','将研究线的“隐藏属性概率推断”与生产线的“公开事实适配”彻底分开验收；后续生产因子统一基于明确、可复核的公开口径定义。'],
- ['接入因子引擎','从原始逐笔消息到因子得分，中间经过哪几层接口？','点击下方各个节点，查看每一层的具体产出与设计用意。沪深两市共用同一个因子引擎，市场制度差异由沪市适配器在输入层消化。','replay','向上游回放提取事件、生命周期、动作前态与动作后态，封装为统一的 FactorInput 接口；只有把输入事实接口对齐，同一套因子公式才能在沪市无缝重算。'],
- ['公开因子定义','少了隐藏的原始报单属性，因子怎么保持清晰的业务含义？','352 个源列按信息可见性分类处理；同时明确候选配对、排队稀释、金额基准与 union 合成的具体规则。','definition','不止于让代码“能跑出数”，更要确保算出的每一个数值都有清晰的金融与工程含义。这是冻结沪市定参口径前必须走完的一步。'],
- ['回放底座验证','怎么证明还原出的盘口状态与订单事实立得住？','我们按三层证据逐一核验：内部数量守恒、外部快照与队列逐档对齐、异常交易阶段剔除规则，并如实说明每层证据的覆盖边界。','replay','底座认证旨在明确“输入数据在什么粒度上可信”——既不能拿单日冒烟测试代替多日批量验证，也不能把整秒快照对齐夸大成亚秒级真值认证。'],
- ['S / H 双路径回环','怎么把“公开口径本身的变化”和“适配器实现 bug”彻底分开？','让同一份深市真值分别走 S（直接投影）与 H（模拟沪市发布再还原）两条路：先固定真值时钟检验适配器是否零误差，再单独切换 Q_equity 时钟测量近似误差。','evidence','在真值时钟下证明沪市适配器能丝毫不差地还原同一套公开定义；切换 Q_equity 消息时钟带来的近似误差则单独量化评估，不与适配器正确性混为一谈。'],
- ['参照路径清理','用来当标尺的参照路径 S，本身也得经得起逐字段检查','将残留的自动撤单、金额基准标签、价格档位挂单量以及即时入场排队量，全部拉回公开口径定义各自独立重算。','evidence','彻底清除参照路径 S 中不小心残留的深市隐藏信息。这属于清理测试基准，并未改动深市原生生产逻辑；深市原生回归与公开 v5 输出回归均已独立验证通过。'],
- ['消息时钟误差','事件先后顺序没变，为什么换个消息时钟因子值还会变？','因为消息序号之间的差值（Δseq）会直接进入衰减核与配对窗口。切换成公开消息时钟后，虽然订单价格和数量没变，但两件事之间的“序号间距”变了。','clock','为后续沪市定参提供完整的实测误差底表与时钟契约。这里客观呈现误差分布，不越俎代庖替业务拍板是否接受，也不把高秩相关直接等同于策略预测效果。'],
- ['衔接定参与重算','下一步不是回头再改还原逻辑，而是启动沪市独立定参','先冻结公开口径输入与消息时钟契约，再在沪市自己的历史样本上依次标定六核尺度与结构门限，参数包签收后正式批量计算因子面板。','next','直接复用深市已经验证成熟的计算逻辑与标定先后顺序；但沪市的参数数值、样本准入、报价凭证与最终面板签收，必须在沪市数据上独立完成。'],
- ['时间线与未结项','回头看完成了哪些闭环，往下走还有哪些待办？','把前期可识别性探索、公开口径迭代、回放底座认证、适配器收尾与后续生产准备串在同一条时间线上，账目一目了然。','reference','截至 2026-10-23，公开口径输入与真值时钟回环已完成实测签收；而沪市独立定参、正式历史面板重算与下游 IC 评估尚未启动，绝不提前虚报为“已完成”。']
+ [
+  "项目总结果",
+  "已经能用公开信息算因子，正式生产还需定参与历史面板",
+  "先看已经得到的结果，再看每一步怎样改变订单、计算过程和因子数值。",
+  "position"
+ ],
+ [
+  "先把订单记对",
+  "600 股成交＋400 股挂单，应合成一笔 1,000 股委托",
+  "本页用一个数量示意，解释为什么不能把行情中的每条消息都当成一笔新委托。",
+  "observable"
+ ],
+ [
+  "哪些能知道",
+  "公开事实能确定，部分原始报单属性仍只能估计",
+  "同样的成交记录可以来自不同原始报单。先分清哪些是事实，哪些是模型估计。",
+  "observable"
+ ],
+ [
+  "怎样接到因子",
+  "动作前后状态对齐后，同一套程序才能正确评分",
+  "先讲四类输入各自解决什么问题，再看它们服务于哪些因子计算。",
+  "replay"
+ ],
+ [
+  "定义怎样影响因子",
+  "配对修正改善了直接分量，下游因子并非一起改善",
+  "先用图解释配对为什么会错，再看同一批股票上的改前 / 改后数值。",
+  "definition"
+ ],
+ [
+  "输入核验结果",
+  "数量守恒通过；外部逐秒盘口仍有 302 帧未全等",
+  "分别看订单数量、外部盘口和样本准入，说明证据覆盖到哪里。",
+  "replay"
+ ],
+ [
+  "三种比较分开",
+  "改定义会改分数；适配器同条件对照为零差异",
+  "同一套深市数据做三组比较，分清数值变化来自哪里。S 和 H 只是两条比较路径的简称。",
+  "evidence"
+ ],
+ [
+  "输入修正的影响",
+  "修正输入问题后，已验收的因子值没有变化",
+  "用真实样本说明改了哪些输入，并单独回答这些修改有没有传到最终因子。",
+  "evidence"
+ ],
+ [
+  "换时钟影响多少",
+  "换消息时钟后，272 列有变化，80 列保持不变",
+  "这里的“时钟”是两次动作之间相隔多少条消息。价格、数量和实际时间都不改，只改变这个间距。",
+  "clock"
+ ],
+ [
+  "真实沪市与下一步",
+  "真实沪市试运行已跑通，参数仍需独立估计",
+  "先交代这次试运行的覆盖与结果，再说明正式生产还需要哪五步。",
+  "next"
+ ],
+ [
+  "交付与待办",
+  "已交付输入和误差证据，尚未交付正式面板与收益检验",
+  "把已完成结果与下一阶段交付分开，不用代码进度代替研究结论。",
+  "reference"
+ ]
 ];
 
 const orderCases = {
@@ -41,27 +96,53 @@ function orderDiagram(){
  return `<div class="segmented" aria-label="订单情形">${Object.entries(orderCases).map(([k,v])=>btn('order',k,v.label,state.order===k)).join('')}</div><div class="split"><div class="visual"><div class="scenario-title"><h3>内部动作与公开消息</h3><span class="tag">示意 · 非真实行情</span></div><div class="trace-lanes"><div class="trace-lane"><span class="label">原始动作</span><div class="trace-stream"><div class="event-empty">${c.submit}</div></div></div><div class="trace-lane"><span class="label">公开消息</span><div class="trace-stream">${c.tokens.length?c.tokens.map((t,i)=>`<div class="event-token ${step===i+1?'current':step<i+1?'future':''}"><b>${t[0]}</b><span>${t[1]}</span><span>${t[2]}</span><span>${step<i+1?'待发布':'已发布'}</span></div>`).join(''):'<div class="event-empty">T：无　　A：无</div>'}</div></div></div><div class="story-control"><button class="secondary" data-action="step" data-value="-1" ${step===0?'disabled':''}>上一步</button><button class="primary" data-action="step" data-value="1" ${step===c.max?'disabled':''}>${step===c.max?'已到最后一步':'下一条消息'}</button><span class="stage-count">${step} / ${c.max}</span></div><p class="readout" aria-live="polite">${c.notes[step]}</p></div><div class="visual"><table class="book"><caption>公开盘口 · 当前步骤</caption><thead><tr><th>档位</th><th>价格</th><th>股数</th></tr></thead><tbody>${rows.map(r=>`<tr class="${r[0].includes('卖')?'ask':'bid'} ${r[3]?'changed':''}"><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</tbody></table><div class="property-row"><div class="property"><b>t₀ 的含义</b>首次在公开行情中产生作用的时刻</div><div class="property"><b>Qᵥ 的含义</b>初始主动成交量 + 剩余公开挂出量</div></div><p class="fine">注：T = 成交消息，A = 公开挂单消息。图中价格与股数仅为拆解发布机制的示意。</p></div></div>`;
 }
 function ambiguityDiagram(){
- return `<div class="visual"><div class="same-evidence"><span>公开行情只给出这条记录</span><span class="print">T：10.00 × 600 股</span><span>后续没有 A 消息</span></div><div class="hypotheses">${[['买入限价 10.00','原始委托 600 股','刚好在 10.00 全量成交'],['买入限价 10.02','原始委托 600 股','对手盘只有 10.00，同样按 10.00 成交'],['带保护价的即时成交剩余撤销','原始委托 1,000 股','吃掉卖一 600 股后，剩余 400 股未公开即自动撤销']].map((r,i)=>`<div class="hypothesis ${state.reveal?'reveal':''}"><b>可能的原始报单 ${i+1}</b><p>${state.reveal?r[0]:'隐藏的原始类型 / 报单价'}</p><p>${state.reveal?r[1]:'隐藏的原始委托量'}</p><div class="value">${state.reveal?r[2]:'？'}</div></div>`).join('')}</div><div class="controls">${btn('reveal','',state.reveal?'重新遮住原始报单':'点此揭开三种完全兼容的原始报单',state.reveal,'primary')}<span class="fine">注：此处为撮合机制示意，实际各板块可用的订单类型受交易所规则约束。</span></div></div><div class="fork" style="margin-top:22px"><div class="branch"><span class="tag">研究探索线 · 推断隐藏属性</span><h3>模型到底能猜多准，用样本外实测说话</h3><div class="path-step">加入更多约束与正则的 v2，点估计并未跑赢简单 v1</div><p>深市留出日（2026-06-30）限价准确率：82.7566% → 82.5314%；MAE：2.8604 → 2.9208 ticks。</p></div><div class="branch selected"><span class="tag">生产实施线 · 锚定公开事实</span><h3>直接用公开可验证的物理量定义因子</h3><div class="path-step">可见总量 Qᵥ、首次生效时刻 t₀、挂出价 pA、最深成交价 pX</div><p>不再强求去猜不可见的原始报单属性，而是确保公开输入定义与因子业务含义严丝合缝。</p></div></div>`;
+ return `<div class="visual"><div class="same-evidence"><span>公开行情只给出这条记录</span><span class="print">T：10.00 × 600 股</span><span>后续没有 A 消息</span></div><div class="hypotheses">${[['买入限价 10.00','原始委托 600 股','刚好在 10.00 全量成交'],['买入限价 10.02','原始委托 600 股','对手盘只有 10.00，同样按 10.00 成交'],['带保护价的即时成交剩余撤销','原始委托 1,000 股','吃掉卖一 600 股后，剩余 400 股未公开即自动撤销']].map((r,i)=>`<div class="hypothesis ${state.reveal?'reveal':''}"><b>可能的原始报单 ${i+1}</b><p>${state.reveal?r[0]:'隐藏的原始类型 / 报单价'}</p><p>${state.reveal?r[1]:'隐藏的原始委托量'}</p><div class="value">${state.reveal?r[2]:'？'}</div></div>`).join('')}</div><div class="controls">${btn('reveal','',state.reveal?'重新遮住原始报单':'点此揭开三种完全兼容的原始报单',state.reveal,'primary')}<span class="fine">注：此处为撮合机制示意，实际各板块可用的订单类型受交易所规则约束。</span></div></div><div class="fork" style="margin-top:22px"><div class="branch"><span class="tag">研究探索线 · 推断隐藏属性</span><h3>模型到底能猜多准，用样本外实测说话</h3><div class="path-step">加入更多约束的 v2，仍未在留出数据上胜过简单 v1</div><p>深市留出日（2026-06-30）原始限价预测准确率：82.7566% → 82.5314%；平均绝对误差：2.8604 → 2.9208 个最小价格变动单位。</p></div><div class="branch selected"><span class="tag">生产实施线 · 锚定公开事实</span><h3>用公开可验证的价格和数量定义因子</h3><div class="path-step">可见总量、首次生效时刻、挂出价、最深成交价</div><p>这些公开事实用来构造输入；不知道的原始报单属性仍保留为未知，不把模型猜测当作真值。</p></div></div>`;
 }
-const pipes=[
- ['原生回放层','sse-native-resting-v2','严格按沪市 A / T / D 原生语义维护订单簿，将初始主动成交与后续剩余挂单归并为同一笔逻辑订单。','公开逐笔消息 → 订单与盘口状态'],
- ['公开事实提取','public_order_facts','完全依据公开市场效果提取 Qᵥ、t₀、公开价格与动作类型；零可见量的不可见订单一律不进事实表。','盘口状态 → 公开订单事实表'],
- ['统一输入接口','FactorInput','由事件、生命周期、动作前态、动作后态四张表共同承载同一套公开口径，直接作为生产标准输入。','四张语义对齐的核心表 → 引擎标准接口'],
- ['共用因子引擎','px / act','完全复用深市已验证的因子公式、时间窗口、配对算法与聚合逻辑；两市差异全部留在上游输入与独立定参中解决。','标准 FactorInput + 冻结参数包 → 因子向量']
+const pipes = [
+ [
+  "重建订单与盘口",
+  "按沪市公开消息处理",
+  "把同一笔委托的先成交、后挂出合起来，逐条更新买卖各档位的挂单量。",
+  "成交与挂单消息 → 一笔逻辑订单和当时盘口"
+ ],
+ [
+  "提取可确认的事实",
+  "只采用公开可见的信息",
+  "提取可见总量、首次生效时刻、成交价和挂出价。没有公开成交和挂单的订单，不凭空建立记录。",
+  "订单与盘口 → 可确认的价、量、时间和动作"
+ ],
+ [
+  "组织四类计算输入",
+  "技术接口名：FactorInput",
+  "把发生的动作、整笔订单过程、动作前状态和动作后状态放到四张对应的数据表中。",
+  "同一动作的身份与前后状态 → 因子计算输入"
+ ],
+ [
+  "计算行为得分",
+  "价格版 px / 可成交性版 act",
+  "复用已有的配对、打分和汇总程序；先让输入含义一致，再用沪市样本独立估计参数。",
+  "公开事实＋确定的参数 → 各股票的因子值"
+ ]
 ];
-function pipelineDiagram(){const p=pipes[state.pipe];return `<div class="pipeline">${pipes.map((p,i)=>btn('pipe',i,`<strong>${p[0]}</strong><small>${p[1]}</small>`,state.pipe===i,'pipe-node')).join('')}</div><div class="split"><div class="inspector"><h3>${p[0]}：为什么需要这一层</h3><p>${p[2]}</p><div class="boundary">${p[3]}</div><p class="fine" style="margin-top:15px">注：早期的 sse_to_szse_tables 只是过渡性的格式转换试验；当前正式适配器直接构造标准 FactorInput。</p></div><div class="visual"><h3>FactorInput 的四张核心表</h3><div class="schema">${[['events','记录每个时刻发生了什么公开动作'],['lifecycle','汇总每笔逻辑订单的完整生命周期与公开属性'],['event_prestate','记录动作发生前一刻的盘口档位、排队位置与参考基准'],['event_poststate','记录动作执行完毕后的最新成交价与盘口状态']].map(r=>`<div class="schema-row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('')}</div></div></div>`;}
-const families=[['46','直接可比','公开信息已足以支撑原公式定义，但仍需通过统一输入接口与逐列对账验收。'],['40','口径微调','在缺少原始隐藏属性的地方，明确改用公开价格、可见数量或可观测动作来替代。'],['254','公开代理','构造基于公开事实的代理候选列；在命名与标识上与深市原口径严格区分，不直接冒充原定义真值。'],['12','停用 / 排除','包含公开信息无法支撑或原本就已登记停用的列；原停用列不会因为迁移沪市而自动重新启用。']];
-function matchingDiagram(){const old=state.match==='v4';return `<div class="segmented">${btn('match','v4','v4 旧做法：配对前先删掉纯成交单',old)}${btn('match','v5','v5 现行做法：先在全量候选中配对，再计公开贡献',!old)}</div><div class="split"><div class="visual"><h3>同一笔撤单 O，面对两笔候选新单</h3><svg class="matching-graph" viewBox="0 0 680 260" role="img" aria-label="旧单 O 优先选择纯成交 N1；预先删除 N1 会错误转配给 N2"><path d="M200 130 L440 65" class="${old?'discarded':'chosen'}"/><path d="M200 130 L440 195" class="${old?'chosen':'inactive'}"/><rect x="25" y="93" width="175" height="75" rx="2" class="focus-node"/><rect x="440" y="25" width="215" height="80" rx="2" class="node"/><rect x="440" y="155" width="215" height="80" rx="2" class="node"/><text x="58" y="136">旧单 O</text><text x="464" y="58">N1：纯成交新单</text><text x="464" y="86">距离更近（最优配对）</text><text x="464" y="187">N2：有挂出新单</text><text x="464" y="215">距离较远（次优候选）</text></svg><p class="fine">注：上图为配对竞争机制示意，连线代表配对归属而非具体得分。</p></div><div class="inspector"><h3>${old?'如果提前把 N1 踢出候选池，配对就会错位':'先保留完整竞争关系完成配对，再按公开规则计分'}</h3><p>${old?'若在配对前直接删掉纯成交单 N1，原本排第二的 N2 就会递补配中，凭空多算出一笔原本不该存在的 priority-worse 得分。':'让 N1 正常参与竞争并胜出配中；随后在计分环节按纯成交单的公开规则将其 priority-worse 贡献记为 0，不再把配对机会转手让给 N2。'}</p><div class="equation">${old?'O 错配给 N2 → 凭空多算得分':'O 正常配给 N1 → 该项贡献记 0'}</div><p class="fine">这是 v5 专门收紧的配对边界，直接影响响应族（R 族）及 union 中依赖订单配对的因子列。</p></div></div>`;}
-function definitionDiagram(){return `<div class="family-map">${families.map((f,i)=>btn('family',i,`<strong>${f[0]} 列</strong><span>${f[1]}</span>`,state.family===i,'family')).join('')}</div><p class="readout" aria-live="polite">${families[state.family][2]} 352 个源列拆分为 164 个公用列 + 188 × 2（px / act 双版本）= 540 个候选标识；注意这代表待检验的候选标识总数，不能直接叫做 540 个已上线生产因子。</p><div class="union-output"><div><b>px 分支：看公开成交价</b><p>用实际打出的最深成交价衡量追价幅度</p></div><div class="connector">≠</div><div><b>act 分支：看实际可成交性</b><p>用入场时相对对手盘最优价的侵入程度衡量主动性</p></div></div>${matchingDiagram()}<p class="scope-note">union A 由 57 个核心成员组成（L=5 / P=10 / C=13 / R=29 四大行为族）；f14、f15、f16 priceprio 及 f32、f35、f51 等 6 个公开代理指标则单独保留，不混入 union A。此外，union 得分是行为强度合成值，并非经过校准的算法交易概率。</p>`;}
+function pipelineDiagram(){const p=pipes[state.pipe];return `<div class="pipeline">${pipes.map((p,i)=>btn('pipe',i,`<strong>${p[0]}</strong><small>${p[1]}</small>`,state.pipe===i,'pipe-node')).join('')}</div><div class="split"><div class="inspector"><h3>${p[0]}解决什么问题？</h3><p>${p[2]}</p><div class="boundary">${p[3]}</div></div><div class="visual"><h3>四类信息怎样影响因子？</h3><div class="schema">${[['发生的动作','用于确认何时出现报单、成交或撤单，防止订单漏计或重复计数。'],['整笔订单过程','用于汇总公开总量、主动成交和剩余挂出量，决定按订单打分的分母与权重。'],['动作前状态','用于判断当时价格是否可成交、同价位前面还有多少量，影响追价与排队计算。'],['动作后状态','用于观察成交价和盘口变化，影响市场响应与报价调整类因子。']].map(r=>`<div class="schema-row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('')}</div></div></div>`;}
+const families=[['46','直接可比','公开信息已足以支撑原公式定义，但仍需通过统一输入接口与逐列对账验收。'],['40','定义调整','在缺少原始隐藏属性的地方，明确改用公开价格、可见数量或可观测动作来替代。'],['254','公开信息替代','构造基于公开事实的代理候选列；在命名与标识上与深市原口径严格区分，不直接冒充原定义真值。'],['12','停用 / 排除','包含公开信息无法支撑或原本就已登记停用的列；原停用列不会因为迁移沪市而自动重新启用。']];
+function matchingDiagram(){const old=state.match==='v4';return `<div class="segmented">${btn('match','v4','修正前：先删掉没有余量挂出的新单',old)}${btn('match','v5','修正后：先保留候选完成配对，再按规则计分',!old)}</div><div class="split"><div class="visual"><h3>同一笔撤单 O，面对两笔候选新单</h3><svg class="matching-graph" viewBox="0 0 680 260" role="img" aria-label="旧单 O 优先选择纯成交 N1；预先删除 N1 会错误转配给 N2"><path d="M200 130 L440 65" class="${old?'discarded':'chosen'}"/><path d="M200 130 L440 195" class="${old?'chosen':'inactive'}"/><rect x="25" y="93" width="175" height="75" rx="2" class="focus-node"/><rect x="440" y="25" width="215" height="80" rx="2" class="node"/><rect x="440" y="155" width="215" height="80" rx="2" class="node"/><text x="58" y="136">旧单 O</text><text x="464" y="58">N1：纯成交新单</text><text x="464" y="86">距离更近（最优配对）</text><text x="464" y="187">N2：有挂出新单</text><text x="464" y="215">距离较远（次优候选）</text></svg><p class="fine">注：上图为配对竞争机制示意，连线代表配对归属而非具体得分。</p></div><div class="inspector"><h3>${old?'如果提前把 N1 踢出候选池，配对就会错位':'先保留完整竞争关系完成配对，再按公开规则计分'}</h3><p>${old?'若在配对前直接删掉纯成交单 N1，原本排第二的 N2 就会递补配中，凭空多算出一笔原本不该存在的排队优先度变差得分。':'让 N1 正常参与竞争并胜出配中；随后在计分环节按纯成交单的公开规则将其排队优先度变差的贡献记为 0，不再把配对机会转手让给 N2。'}</p><div class="equation">${old?'O 错配给 N2 → 凭空多算得分':'O 正常配给 N1 → 该项贡献记 0'}</div><p class="fine">这是 v5 专门收紧的配对边界，先影响排队优先度分量所在的 P 行为组，再影响综合得分（union）及使用综合得分的下游指标。</p></div></div>${definitionImpact()}`;}
+
+function definitionImpact(){
+ const d=DATA.definition_impact, direct=d.rows.slice(0,2), downstream=d.rows.slice(2);
+ return `<div class="visual" style="margin-top:22px"><h3>这次配对修正，实际影响了哪些因子？</h3><p>先看修正前的问题：对照深市原定义，旧版公开定义在 22 只诊断股票中有 <strong>16,194 笔旧单的匹配对象不同</strong>；其中 15,055 笔在深市匹配的是纯成交新单，旧版公开定义却改配到有挂出余量的新单。先完成配对、再按规则计零的离线诊断，使这组样本的订单绝对分差减少 99.8914%。这个归因比例只属于这 22 只样本。</p><table class="book"><caption>直接分量：与深市原定义有差异的股票占比明显缩小</caption><thead><tr><th>排队优先度变差分量</th><th>修正前</th><th>修正后</th></tr></thead><tbody>${direct.map(x=>`<tr><td>${x.name.includes('买')?'买侧':'卖侧'}：差异股票占比</td><td><span style="white-space:nowrap">${pct(x.before.affected_share,4)}</span></td><td><span style="white-space:nowrap">${pct(x.after.affected_share,4)}</span></td></tr><tr><td>${x.name.includes('买')?'买侧':'卖侧'}：股票排序相关</td><td><span style="white-space:nowrap">${x.before.rank_correlation.toFixed(6)}</span></td><td><span style="white-space:nowrap">${x.after.rank_correlation.toFixed(6)}</span></td></tr>`).join('')}</tbody></table><p style="margin-top:15px">修正后买侧仍有 743 / 2,888 只股票、卖侧仍有 740 / 2,888 只与深市原定义不同。因此，这个分量更接近深市了，但没有变成完全相同。</p><table class="book"><caption>下游指标：直接分量改善，不代表所有汇总指标也更接近深市</caption><thead><tr><th>指标</th><th>修正前<br>相对差中位数</th><th>修正后<br>相对差中位数</th></tr></thead><tbody>${downstream.map(x=>`<tr><td>${x.name}</td><td><span style="white-space:nowrap">${num(x.before.median)}</span></td><td><span style="white-space:nowrap">${num(x.after.median)}</span></td></tr>`).join('')}</tbody></table><p style="margin-top:15px">f54 汇总综合行为得分，f55 反映四类行为的平均强度。上面两项的相对差中位数反而略增。配对归属和组内最大得分会继续影响综合结果，因此不能把“修正了配对机制”写成“所有因子都更接近深市”。</p><p class="fine">样本：2026-06-30，同一批 2,888 只股票。表中直接分量两版相同，下游示例为价格版 px。这里比较公开定义与深市原定义，沿用该次验收的相对差口径；第 9 页比较的是消息时钟，误差分母不同，不直接横比。</p>${detailButton('definition','查看定义、影响范围与原始数值报告')}</div>`;
+}
+
+function definitionDiagram(){return `<div class="family-map">${families.map((f,i)=>btn('family',i,`<strong>${f[0]} 列</strong><span>${f[1]}</span>`,state.family===i,'family')).join('')}</div><p class="readout" aria-live="polite">${families[state.family][2]} 这里的“列”指一项具体的因子计算。原有 352 列中，164 列由两版共用，188 列分别按价格版和可成交性版计算，共得到 164 + 188 × 2 = 540 项候选结果；它们仍需验证后才能作为正式生产因子。</p><div class="union-output"><div><b>px 分支：看公开成交价</b><p>用实际打出的最深成交价衡量追价幅度</p></div><div class="connector">≠</div><div><b>act 分支：看实际可成交性</b><p>用入场时相对对手盘最优价的侵入程度衡量主动性</p></div></div>${matchingDiagram()}<p class="scope-note">综合得分使用 57 种核心行为证据，分为四组；另有 6 个公开信息替代指标单独保留。综合得分反映行为证据的强度，并不是“这笔订单有多大概率来自算法交易”的校准概率。成员清单与分组见详细依据。</p>`;}
 const proofs=[
- ['内部守恒检验','事件流与订单数量是否自洽','覆盖 13 个交易日 · 29,622 个股票日','共核验 180,519,830 条规范事件；31,372,036 个初始撮合段的时间跨度全部为 0；29,620 个完整 W5 股票日的数量守恒差异全部为 0。','内部守恒检验能够严格排除漏归并、重复计数与数量不守恒；但它本质上是自洽性检验，不能凭空提供隐藏报单属性的交易所真值。'],
- ['外部盘口对账','盘口价量与排队队列能否对上外部快照','29,135 组开盘竞价成交价 / 量全等','整秒唯一盘口状态有 268,421 / 268,723 帧与外部快照完全一致；前五档队列核对 437,358 帧全部一致（队列数据目前仅覆盖 2 个交易日）。','整秒快照与开盘竞价对账通过，不等于完成了亚秒级快照认证；同时，纯靠外部快照还不足以单独构成同价位严格 FIFO 顺序的强证明。'],
- ['异常样本剔除','哪些股票日不能直接放进计算池','按整只股票日剔除，而非只删异常行','开盘后 09:30–09:35 窗口内只要快照出现 phase ≠ 3，就将该股票日整体剔除。已观察到的 4 例 phase=8 样本表现与盘中临停吻合，但官方阶段码说明仍待最终核实。','同一时间戳下紧挨着的全额撤单仍按普通撤单处理，不靠时间巧合臆测来源；另外，“回放逻辑自洽跑通”与“上游源行情包毫无缺失”是两项不同的检查。']
+ ['内部守恒检验','事件流与订单数量是否自洽','覆盖 13 个交易日 · 29,622 个股票日','共核验 180,519,830 条标准化动作记录；31,372,036 组订单入场时的连续成交记录都发生在同一时点；29,620 个完整开盘五分钟样本的数量守恒差异全部为 0。','数量检查用来发现漏合并、重复计数或数量错误。所检查的守恒关系通过，并不能证明所有订单身份都正确，也不能证明隐藏的原始报单属性。'],
+ ['外部盘口对账','盘口价量与排队队列能否对上外部快照','29,135 组开盘竞价成交价 / 量全等','每个整数秒上可唯一确定的盘口状态有 268,421 / 268,723 帧与外部快照完全一致；前五档队列核对 437,358 帧全部一致（队列数据目前仅覆盖 2 个交易日）。','整秒快照与开盘竞价对账通过，不等于完成了亚秒级快照认证；同时，纯靠外部快照还不足以单独构成同价位订单严格按先到先成交的顺序的强证明。'],
+ ['异常样本剔除','哪些股票日不能直接放进计算池','按整只股票日剔除，而非只删异常行','在开盘后 09:30–09:35 内，只要盘口快照的交易阶段码不等于 3，就排除该股票当日的整个样本。4 例阶段码为 8 的样本表现与盘中临停吻合，官方代码含义仍待核实。','同一时间戳下紧挨着的全额撤单仍按普通撤单处理，不靠时间巧合臆测来源；另外，“回放逻辑自洽跑通”与“上游源行情包毫无缺失”是两项不同的检查。']
 ];
-function proofDiagram(){const p=proofs[state.proof];return `<div class="split"><div class="layer-list">${proofs.map((p,i)=>btn('proof',i,`<b>${p[0]}</b><span>${p[1]}</span>`,state.proof===i)).join('')}</div><div class="visual proof-detail">${tags()}<h3 style="margin-top:13px">${p[1]}</h3><div class="result">${p[2]}</div><p>${p[3]}</p><div class="boundary">${p[4]}</div></div></div><div class="metric-line"><div><b>7,477</b><span>截断边界已闭合的样本</span></div><div><b>6 / 23</b><span>虚拟集合竞价价格 / 数量差异数</span></div></div>`;}
+function proofDiagram(){const p=proofs[state.proof];return `<div class="split"><div class="layer-list">${proofs.map((p,i)=>btn('proof',i,`<b>${p[0]}</b><span>${p[1]}</span>`,state.proof===i)).join('')}</div><div class="visual proof-detail">${tags()}<h3 style="margin-top:13px">${p[1]}</h3><div class="result">${p[2]}</div><p>${p[3]}</p><div class="boundary">${p[4]}</div></div></div><div class="metric-line"><div><b>7,477</b><span>已补齐截断处信息的样本</span></div><div><b>6 / 23</b><span>集合竞价模拟价 / 模拟量与快照的差异数</span></div></div>`;}
 const fixes=[
- ['残留自动撤单','437 行','0 行','在 16 只股票中，零可见量订单本身已不进公开事实表，但因 removed_cancel_seq 过滤未生效，导致对应的系统自动撤单残留在路径 S 中。','按照 v6 自动撤单判定规则，从路径 S 的 events、前态和后态表中同步清除这批残留行；真实投资者的公开撤单不受影响。'],
- ['金额基准标签','same_side_bbo / opponent_bbo','submit_price','经公开替换层处理后，这些订单已统一表达为公开价格上的限价单 L，但金额基准字段却还留着原始隐藏市价类型的 BBO 标签。','将生命周期、前态和后态表中的该标签统一改写为 submit_price，让元数据标签与实际参与计算的公开价格保持一致。'],
+ ['残留自动撤单','437 行','0 行','16 只股票中，有些订单既未成交，也未挂出，已不进入公开订单记录；但本应一并排除的 437 条系统自动撤单，仍残留在参照路径 S 的输入里。','按已核实的自动撤单规则，从参照路径的动作、动作前状态和动作后状态中同步排除这些记录；投资者的公开撤单仍按原规则处理。'],
+ ['金额基准标签','本侧 / 对手侧最优报价','公开委托价','这些订单已经按公开价格表达为限价单，但金额计算基准的标签仍指向隐藏市价单使用的最优报价，与公开表示不一致。','把整笔订单过程、动作前和动作后状态中的金额基准，统一标为公开委托价（字段值 submit_price），让标签与实际计算一致。'],
  ['档位挂单量','113,500','0','真实样本 000333 / seq 4809671：公开卖单价为 782700，而动作发生前的卖一价是 783800；在比卖一还低的公开价格上，卖方盘口不可能挂着同侧卖单量。','原因是路径 S 换了公开价格后，仍去原始隐藏委托价上取同侧挂单量。修正后，S 与 H 各自按本侧、公开价格及动作前盘口独立重算；此样本上 H 算出的 0 才是对的。'],
  ['后态成交价','101900 / 0','102100','真实样本 000001 / seq 588089：修正前 S 残留了原始价 101900，H 误填为 0，两边都不对；这笔订单自己的公开成交记录明确支持 102100。','修正后，S 与 H 各自从本身的公开成交明细中提取后态 price_tick，绝不互相拷贝（例如另一样本 000333 / seq 590368 上则是 S 正确而 H 原先误记为 0）。'],
  ['即时入场排队量','NA','0','即时主动成交在逻辑入场那一刻并未挂上订单簿等待，前面不存在同价位先到的排队单，因此不能把排队量记成缺失值 NA。','qty_ahead_pre 字段：路径 S 原先填 NA 违背了即时入场定义，路径 H 填 0 符合定义；现统一由入场动作状态独立推导。'],
@@ -70,15 +151,35 @@ const fixes=[
 function fixesDiagram(){const f=fixes[state.fix];return `<div class="segmented">${fixes.map((f,i)=>btn('fix',i,f[0],state.fix===i)).join('')}</div><div class="split"><div class="visual"><h3>${f[0]}：定义决定取值</h3><div class="sample-compare"><div class="sample-value"><span>修正前 / 旧参照</span><b>${f[1]}</b></div><div class="sample-value fixed"><span>独立核对后</span><b>${f[2]}</b></div></div><p class="readout">${f[3]}</p><p class="fine">价格样本均为原始整数价格单位；此处不擅自换算为元。</p></div><div class="inspector"><h3>根因与修正方式</h3><p>${f[4]}</p><div class="boundary"><b>清理这些输入字段后，因子输出变了吗？</b><p>相对于 v5 全市场签收结果，px 与 act 在 2,888 只股票上的变化列数均为 0、受影响股票数均为 0；12 个独立抽检的盘口样本全部符合定义。</p></div></div></div><p class="scope-note">也就是说，这次清理更新的是参照路径 S 的构造方式，把此前“输入表逐字段全等”的证据链彻底补齐；而 v5 已经签收的因子数值在修正前后分毫未动，深市原生默认逻辑也通过了修正前后的新参考回归。</p>`;}
 const sortedErrors=DATA.errors.filter(r=>r.scaled_p99!=null).sort((a,b)=>b.scaled_p99-a.scaled_p99);
 if(!state.error)state.error=sortedErrors[0].column;
-const calibration=[
- ['1. 冻结输入','先锁定“在什么数据上算”','冻结公开口径定义、Q_equity 时钟契约、股票日准入规则以及报价 / 股票池（universe）凭证。早期六组报价契约虽有签收，当前正式生产入口仍需完成显式绑定。'],
- ['2. 六类核参数','在沪市样本上量出基础尺度','独立估计 wall_seconds、events、qty、price_ticks、bbo_ticks、marketability_ticks 六类衰减核尺度；严格基于沪市样本标定，不拿深市参数冒充。'],
- ['3. 结构尺度','标定配对门限与盘口锚点','在绑定新六核后，依次标定九组结构尺度（f16、f31、f40、λ40、λ42、f85、λRV、z12、p03）。结构定参属下一阶段独立任务，不提前计入本次还原交付。'],
- ['4. 冻结参数包','打包成可追溯、可复现的契约','生成附带代码版本、样本准入、统计口径与 SHA-256 哈希的正式参数包；确保沪市核参数、结构参数、报价凭证与股票池形成完整证据链。'],
- ['5. 正式因子面板','批量重算面板，再接 IC 评估','基于冻结输入与沪市参数包批量计算历史因子，核验覆盖率、缺失率与运行耗时；面板正式签收后，再往下衔接收益标签、IC 与回测评估。']
+const calibration = [
+ [
+  "1. 确定样本",
+  "先确定哪些数据可以计算",
+  "固定公开定义、消息计数方式与样本排除规则，逐日核对股票池和报价数据。股票池名单存在，不等于数据已全部齐备。"
+ ],
+ [
+  "2. 估计相近尺度",
+  "多远、多大还算相关",
+  "用沪市样本分别估计时间、消息间距、数量、价格及报价距离的尺度。它们决定相隔较远的动作应降低多少权重，不能直接照搬深市参数。"
+ ],
+ [
+  "3. 确定配对门槛",
+  "哪些动作应该被连在一起",
+  "在基础尺度确定后，估计订单链切分、代表动作选择、配对质量及盘口响应的门槛。这些值会改变哪些候选被计入，从而影响行为得分。"
+ ],
+ [
+  "4. 固定参数与版本",
+  "让同一输入可以复算",
+  "把样本范围、参数数值、数据与代码版本一起固定，并记录文件校验值。上游参数改变后，依赖它的中间计算也要重算。"
+ ],
+ [
+  "5. 批量计算并研究",
+  "先得到因子，再检验收益关系",
+  "先验证代表样本和单日全市场，再按准入范围扩展历史计算。正式面板通过核对后，才接收益标签、相关性检验和回测。"
+ ]
 ];
-function nextDiagram(){const c=calibration[state.calibration];return `<div class="visual"><h3>真实沪市冒烟：已经证明了哪一层？</h3><div class="coverage-strip" aria-label="px 2296成功，14排除，0失败"><span style="flex:2296"></span><span class="excluded" style="flex:14"></span></div><div class="metric-line"><div><b>2,296 / 2,310</b><span>px 成功 / 股票池；14 因 phase 排除</span></div><div><b>29 / 30</b><span>act 成功；1 排除；失败 0</span></div><div><b>456.83 秒</b><span>批次；约 15.96 核 / 46.04 GiB</span></div></div><p class="fine">实测交易日：2026-06-30。本次冒烟临时借用了深市冻结的 R19 参数包，仅用于验证从回放到引擎的工程链路畅通，不能代替沪市独立定参或当成正式因子产出（当时使用的临时输入路径现已退役，此处仅引用既有验收记录）。</p></div><div class="calibration">${calibration.map((c,i)=>btn('calibration',i,`<span>0${i+1}</span><b>${c[0]}</b><small>${c[1]}</small>`,state.calibration===i)).join('')}</div><div class="inspector"><h3>${c[0]}：${c[1]}</h3><p>${c[2]}</p>${calibrationIllustration()}${state.calibration===2?'<p class="fine">例如 f40：episode P99、anchor P99.9、path P50；f85 和 z12 为正值加权中位数，不再除 ln 2。旧 10-10 计划的输入版本与部分统计口径已过时。</p>':''}<p class="fine">目前已有 XSHG 601 个交易日（2024-01-02 至 2026-06-30）、共 1,370,521 个股票日的时点股票池（universe）名单；但“股票池名单就绪”不代表全部日期的正式凭证与沪市独立参数包已经签收。</p></div>`;}
-const history=[['9 月底','划清可识别性边界','理清公开可证事实与隐藏原始属性的理论边界；研究线概率推断与生产线公开口径方案分头推进。'],['10-14','独立研究线 v2 验证','搭建规则可行集、条件概率模型并完成样本外留出验证；实测表明复杂点估计并未跑赢简单基线。'],['10-21','公开口径 v3 与三项决议','建立公开替换层与候选标识体系；敲定排队稀释只计挂出余量、f16 即时成交入场、DM 分母三项核心决议。'],['10-22','原生回放 v2 与公开口径 v5','完成 13 日原生回放分层认证；修正纯成交单在配对与响应打分中的先后次序（v5）。'],['10-23','真实沪市冒烟与收尾闭环','清理参照路径 S 残留项、完成白名单扰动证明、跑通全市场真值时钟逐位回环，并完整量化 Q_equity 时钟误差。']];
-function overviewDiagram(){return `<div class="stage-road"><div class="road-node"><small>前序基础 · 深市</small><strong>规则、公式与共用引擎</strong><p>已在深市跑通订单生命周期、排队计算与因子公式，并通过深市默认向量回归确保既有生产结果不受影响。</p><div class="node-links">${btn('scene',3,'查看四表共用接口')}${btn('scene',7,'查看深市默认回归')}</div></div><div class="road-node current"><small>当前阶段 · 沪市原始委托还原</small><strong>公开订单事实 → 标准输入</strong><p>承认部分隐藏报单属性在公开行情下没有唯一解；将公开订单事实、适配器实现正确性与消息时钟误差拆开逐一验收。</p><div class="node-links">${btn('scene',1,'从一笔订单看起')}${btn('scene',6,'查看 S / H 双路径回环')}</div></div><div class="road-node"><small>下一阶段 · 沪市定参与重算</small><strong>沪市独立定参 → 正式面板</strong><p>锁定公开口径与准入范围后，在沪市样本上独立标定六核与结构参数，参数签收后再批量生产因子面板并评估 IC。</p><div class="node-links">${btn('scene',9,'查看后续五步衔接方案')}</div></div></div><div class="status-grid"><div class="status-item"><b>输入层与引擎适配已闭环签收</b><p>固定真值时钟下，全市场 2,888 只股票的四张输入表逐位全等；px 全市场、act 30 只抽样股的因子值差异全部为 0。</p></div><div class="status-item"><b>Q_equity 时钟误差已单独量化</b><p>切换公开消息时钟后共 272 列发生数值变化；完整的截面尺度误差分布与秩相关均已披露，是否接受待业务拍板。</p></div><div class="status-item"><b>沪市独立定参与正式面板待启动</b><p>真实沪市单日冒烟借用了深市 R19 参数验证工程链路；沪市正式参数包、历史因子面板与 IC 评估将在下一阶段独立推进。</p></div></div>`;}
-function historyDiagram(){const h=history[state.history];return `<div class="timeline">${history.map((h,i)=>btn('history',i,`<strong>${h[0]}</strong><b>${h[1]}</b><small>${h[2]}</small>`,state.history===i)).join('')}</div><div class="inspector"><h3>${h[0]} · ${h[1]}</h3><p>${h[2]}</p><div class="pending-list"><span>已完成：公开输入、适配器真值回环</span><span>已量化待决定：Q_equity 时钟误差</span><span>待落实：正式报价凭证与冻结契约</span><span>待开展：沪市独立定参、面板与 IC</span></div></div><div class="next-band"><p><b>代码版本与运行留痕</b><br>核心业务验收版本 f6592c06；补充归约 8de2ca87；报告与证据定稿 2a0dac94。本地提交、GitHub 远端、wenjie 服务器同步与实际跑批均留有独立记录。</p><div class="controls"><button class="secondary" data-action="performance">查看耗时、算力边界与存储状态</button>${detailButton('reference','查看原始报告与完整版本记录')}</div></div><p class="fine">注：本汇报完全基于截至 2026-10-23 的实测证据整理；沪市独立定参、全历史因子面板重算与下游 IC 评估均属后续独立阶段工作。</p>`;}
+function nextDiagram(){const c=calibration[state.calibration];return `<div class="visual"><h3>真实沪市试运行：成功多少、排除多少？</h3><div class="coverage-strip" aria-label="px 2296成功，14排除，0失败"><span style="flex:2296"></span><span class="excluded" style="flex:14"></span></div><div class="metric-line"><div><b>2,296 / 2,310</b><span>价格版成功 / 股票池；14 只按交易阶段排除</span></div><div><b>29 / 30</b><span>可成交性版成功；1 排除；失败 0</span></div><div><b>456.83 秒</b><span>批次；约 15.96 核 / 46.04 GiB</span></div></div><p class="fine">实测交易日：2026-06-30。本次试运行临时借用了固定版本的深市参数，用于确认订单与盘口重建、输入构造和因子计算能够完整运行。这些试算值尚不能作为正式沪市因子；沪市参数仍需独立估计。</p></div><div class="calibration">${calibration.map((c,i)=>btn('calibration',i,`<span>0${i+1}</span><b>${c[0]}</b><small>${c[1]}</small>`,state.calibration===i)).join('')}</div><div class="inspector"><h3>${c[0]}：${c[1]}</h3><p>${c[2]}</p>${calibrationIllustration()}<p class="fine">目前已有 沪市 601 个交易日（2024-01-02 至 2026-06-30）、共 1,370,521 个股票日的各日股票池名单；但“股票池名单就绪”不代表全部日期的所需行情数据和沪市独立参数已经核验就绪。</p></div>`;}
+const history=[["9 月底", "确认能知道什么", "公开盘口和可见数量可以重建；部分原始价格、类型和隐藏余量不能唯一确定。"], ["10-14", "检验隐藏属性估计", "模型的限价点估计没有在三个留出日胜过简单基线，因此不把模型猜测当作生产真值。"], ["10-21", "明确公开信息下怎样评分", "确定如何计算挂出余量、即时成交和订单数量分母，建立公开信息下的因子定义。"], ["10-22", "修正配对并量化因子变化", "排队优先度的差异股票占比明显下降；部分下游汇总因子没有同步更接近深市。"], ["10-23", "跑通真实沪市并完成对照", "真实沪市价格版 2,296 只成功；适配器同条件零差异，消息时钟误差单独列出。"]];
+function overviewDiagram(){return `<div class="visual"><h3>三个结果，分别回答三个问题</h3><table class="book"><thead><tr><th>改变了什么</th><th>实测结果</th><th>对因子意味着什么</th></tr></thead><tbody><tr><td>从深市原始属性改为公开可见定义</td><td>1,407.9 万笔共同订单的综合得分相关：价格版 0.962589；可成交性版 0.961794</td><td>信息减少后，行为定义和得分确实会变；不能把公开定义直接当成原定义的等价结果。</td></tr><tr><td>同一定义、同一时钟，走两条适配路径</td><td>价格版 1,016,576 个因子值、可成交性版 10,560 个值，不等项均为 0</td><td>在所测日期和范围中，适配器没有额外引入因子数值差异。</td></tr><tr><td>保持其他条件不变，只换消息时钟</td><td>272 / 352 列至少一股变化；误差最大的列，99% 分位为 0.052425 个全市场尺度</td><td>排序总体稳定，但仍要根据逐列误差决定能否接受。</td></tr></tbody></table><p class="fine" style="margin-top:15px">综合得分是把一笔订单的多种行为证据合在一起的分数（技术名 union）。价格版 px 用公开执行价衡量追价；可成交性版 act 用当时相对对手报价的可成交程度衡量主动性。相关性不代表收益预测能力。</p></div><div class="boundary"><b>真实沪市也已经试跑：2,296 只成功，14 只排除，失败 0。</b><p>这是 2026-06-30 的价格版结果，临时借用深市参数。正式生产还需沪市独立参数和历史面板验收。</p></div><div class="controls">${btn('scene',4,'看定义改动怎样影响因子',false,'secondary')}${btn('scene',6,'看适配器为什么是零差异',false,'secondary')}${btn('scene',8,'看时钟误差的实际数值',false,'secondary')}${btn('scene',9,'看正式生产还差什么',false,'secondary')}</div>`;}
+function historyDiagram(){const h=history[state.history];return `<div class="timeline">${history.map((h,i)=>btn('history',i,`<strong>${h[0]}</strong><b>${h[1]}</b><small>${h[2]}</small>`,state.history===i)).join('')}</div><div class="inspector"><h3>${h[0]} · ${h[1]}</h3><p>${h[2]}</p><div class="pending-list"><span>已完成：公开输入与同条件适配器对照</span><span>已量化待决定：公开消息时钟误差</span><span>待落实：正式行情证据与固定版本约定</span><span>待开展：沪市定参、历史面板与收益检验</span></div></div><div class="next-band"><p><b>代码版本与运行留痕</b><br>核心业务验收版本 f6592c06；补充归约 8de2ca87；报告与证据定稿 2a0dac94。本地提交、GitHub 远端、wenjie 服务器同步与实际跑批均留有独立记录。</p><div class="controls"><button class="secondary" data-action="performance">查看耗时、算力边界与存储状态</button>${detailButton('reference','查看原始报告与完整版本记录')}</div></div><p class="fine">注：本汇报完全基于截至 2026-10-23 的实测证据整理；沪市独立定参、全历史因子面板重算与下游 IC 评估均属后续独立阶段工作。</p>`;}
 const renderers=[overviewDiagram,orderDiagram,ambiguityDiagram,pipelineDiagram,definitionDiagram,proofDiagram,routeDiagram,fixesDiagram,clockDiagram,nextDiagram,historyDiagram];
