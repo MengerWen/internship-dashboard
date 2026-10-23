@@ -91,3 +91,51 @@ test('边缘链条使用可用侧，侧边端口朝向自己的真实日期点',
   }
   assert.deepEqual(attachment({x: 300, y: 100, w: 200, h: 120}, 250, 400, true), {x: 300, y: 204, edge: 'left'});
 });
+
+test('按日展开保持点与卡片的左右次序，上下仍可错落，输入次序不变', () => {
+  const shuffled = [cards[7], cards[1], cards[5], cards[0], cards[8], cards[3], cards[2], cards[6], cards[4]];
+  for (const anchorY of [18, 860]) {
+    const result = placeCards(shuffled, {bounds, anchorY});
+    checkPlacement(result, anchorY);
+    assert.deepEqual(result.cards.map(r => r.id), shuffled.map(r => r.id));
+    const horizontal = [...result.cards].sort((a, b) => a.anchorX - b.anchorX);
+    for (let i = 1; i < horizontal.length; i++) {
+      assert(horizontal[i - 1].x + horizontal[i - 1].w / 2 < horizontal[i].x + horizontal[i].w / 2, '左边的点对应的卡片中心应在左边');
+    }
+    assert(new Set(result.cards.map(r => r.y)).size > 1, '保序不能强制卡片排成同一横行');
+  }
+});
+
+test('按链条展开在密集及短图面中保持上下次序，左右仍可错落', () => {
+  const events = Array.from({length: 19}, (_, i) => ({id: String(i), anchorX: 600, anchorY: 40 + i * 14, w: 204 + i % 3 * 9, h: 100 + i % 4 * 55}));
+  for (const bottom of [300, 1000]) {
+    const result = placeChainCards([...events].reverse(), {bounds: {...bounds, bottom}});
+    assert.deepEqual(result.cards.map(r => r.id), events.map(r => r.id).reverse());
+    const vertical = [...result.cards].sort((a, b) => a.anchorY - b.anchorY);
+    for (let i = 1; i < vertical.length; i++) {
+      assert(vertical[i - 1].y + vertical[i - 1].h / 2 < vertical[i].y + vertical[i].h / 2, '上面的点对应的卡片中心应在上面');
+    }
+    for (const [i, a] of result.cards.entries()) {
+      assert(a.x >= bounds.left && a.x + a.w <= bounds.right);
+      assert(a.y >= bounds.top && a.y + a.h <= result.height);
+      for (const b of result.cards.slice(i + 1)) assert(a.x + a.w <= b.x || b.x + b.w <= a.x || a.y + a.h <= b.y || b.y + b.h <= a.y);
+    }
+    assert(result.cards.some(r => r.x > 600) && result.cards.some(r => r.x + r.w < 600));
+    assert(new Set(vertical.slice(-6).map(r => r.x)).size > 1, '图底增加留白后仍需利用左右空间，不能把后续事件全部塞进同一列');
+  }
+});
+
+test('手动摆放可越过自动次序，重新排布后恢复对应轴顺序', () => {
+  const manual = new Map([['task-0', {x: 1000, y: 100}]]);
+  const moved = placeCards(cards, {bounds, anchorY: 800, manual});
+  assert.equal(moved.cards[0].x, 1000);
+  assert.equal(moved.cards[0].y, 100);
+  const automatic = moved.cards.filter(r => r.id !== 'task-0');
+  for (let i = 1; i < automatic.length; i++) assert(automatic[i - 1].x + automatic[i - 1].w / 2 < automatic[i].x + automatic[i].w / 2);
+  const reset = placeCards(cards, {bounds, anchorY: 800});
+  assert(reset.cards[0].x < moved.cards[0].x);
+  const events = [0, 1, 2].map(i => ({id: String(i), anchorX: 600, anchorY: 100 + i * 20, w: 210, h: 130}));
+  const chain = placeChainCards(events, {bounds, manual: new Map([['0', {x: 700, y: 800}]])});
+  assert.equal(chain.cards[0].y, 800);
+  assert(chain.cards[1].y < chain.cards[0].y, '手动位置不强迫其余事件跟随下移');
+});

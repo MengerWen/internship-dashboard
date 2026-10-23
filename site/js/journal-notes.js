@@ -14,7 +14,13 @@
 
   function placeCards(cards, {bounds, anchorY, points = [], manual = new Map()}) {
     const placed = [], lifts = [38, 106, 152, 64, 166, 94];
-    for (const [index, card] of cards.entries()) {
+    // 仅约束当天卡片的横向次序，上下仍自由错落；手动位置不参与保序。
+    const ordered = [...cards].sort((a, b) => a.anchorX - b.anchorX);
+    const automatic = ordered.filter(card => !manual.has(card.id));
+    const halfWidth = Math.max(0, ...automatic.map(card => card.w / 2));
+    const step = Math.min(8, Math.max(0, bounds.right - bounds.left - halfWidth * 2) / Math.max(1, automatic.length - 1));
+    let minCenter = bounds.left + halfWidth, remaining = automatic.length;
+    for (const [index, card] of ordered.entries()) {
       const rect = {...card}, saved = manual.get(card.id);
       if (saved) {
         rect.x = clamp(saved.x, bounds.left, bounds.right - rect.w);
@@ -22,8 +28,10 @@
       } else {
         let best = null, bestCost = Infinity;
         const preferred = lifts[index % lifts.length];
+        const maxCenter = bounds.right - halfWidth - step * --remaining;
+        const orderedX = x => clamp(x + rect.w / 2, minCenter, maxCenter) - rect.w / 2;
         for (const direction of [-1, 1]) for (let lift = 28; lift <= 460; lift += 24) for (let side = -224; side <= 224; side += 28) {
-          const x = clamp(card.anchorX - rect.w * .45 + side, bounds.left, bounds.right - rect.w);
+          const x = orderedX(card.anchorX - rect.w * .45 + side);
           const y = direction < 0 ? anchorY - rect.h - lift : anchorY + lift;
           const candidate = {...rect, x, y};
           if (y < bounds.top || y + rect.h > bounds.bottom || placed.some(other => overlap(candidate, other, 14))) continue;
@@ -35,14 +43,15 @@
         }
         if (!best) {
           // 极短时间窗仍保留原日期坐标，只在图底增加容纳说明的留白。
-          best = {...rect, x: clamp(card.anchorX - rect.w / 2, bounds.left, bounds.right - rect.w), y: Math.max(bounds.top, anchorY + 28)};
+          best = {...rect, x: orderedX(card.anchorX - rect.w / 2), y: Math.max(bounds.top, anchorY + 28)};
           while (placed.some(other => overlap(best, other, 14))) best.y += 24;
         }
         rect.x = best.x; rect.y = best.y;
+        minCenter = rect.x + rect.w / 2 + step;
       }
       placed.push(rect);
     }
-    return {cards: placed, height: Math.max(bounds.bottom, ...placed.map(rect => rect.y + rect.h + 10))};
+    return {cards: cards.map(card => placed.find(rect => rect.id === card.id)), height: Math.max(bounds.bottom, ...placed.map(rect => rect.y + rect.h + 10))};
   }
 
   function segmentHits(a, b, rect) {
@@ -54,7 +63,9 @@
 
   function placeChainCards(cards, {bounds, points = [], manual = new Map()}) {
     const placed = [];
-    for (const [index, card] of cards.entries()) {
+    // 事件按真实纵坐标排布，只保持上下次序，左右仍按避让和距离选择。
+    let minCenter = -Infinity;
+    for (const [index, card] of [...cards].sort((a, b) => a.anchorY - b.anchorY).entries()) {
       const saved = manual.get(card.id);
       if (saved) {
         placed.push({...card, x: clamp(saved.x, bounds.left, bounds.right - card.w), y: clamp(saved.y, bounds.top, Math.max(bounds.top, bounds.bottom - card.h))});
@@ -62,13 +73,14 @@
       }
       let best, bestCost = Infinity;
       const preferredSide = index % 2 ? -1 : 1, rhythm = [0, 24, 8, 40][index % 4];
+      const maxShift = Math.max(600, ...placed.map(r => r.y + r.h + 16 - card.anchorY + card.h * .42));
       for (const side of [preferredSide, -preferredSide]) for (let gap = 44; gap <= bounds.right - bounds.left; gap += 28) {
         const x = side > 0 ? card.anchorX + gap : card.anchorX - gap - card.w;
         if (x < bounds.left || x + card.w > bounds.right) continue;
-        for (let shift = 0; shift <= 600; shift += 20) for (const direction of shift ? [-1, 1] : [1]) {
-          const y = clamp(card.anchorY - card.h * .42 + shift * direction, bounds.top, Math.max(bounds.top, bounds.bottom - card.h));
+        for (let shift = 0; shift <= maxShift; shift += 20) for (const direction of shift ? [-1, 1] : [1]) {
+          const y = Math.max(bounds.top, card.anchorY - card.h * .42 + shift * direction);
           const candidate = {...card, x, y};
-          if (placed.some(other => overlap(candidate, other, 16))) continue;
+          if (y + card.h / 2 < minCenter || placed.some(other => overlap(candidate, other, 16))) continue;
           const covered = points.reduce((n, p) => n + Number(p.x > x && p.x < x + card.w && p.y > y && p.y < y + card.h), 0);
           const cost = Math.abs(y + card.h * .42 - card.anchorY) * 3.8 + gap * .35 + Math.abs(gap - 44 - rhythm) * .8 + (side === preferredSide ? 0 : 20) + covered * 5;
           if (cost < bestCost) { best = candidate; bestCost = cost; }
@@ -76,12 +88,13 @@
       }
       if (!best) {
         const right = bounds.right - card.anchorX >= card.anchorX - bounds.left;
-        best = {...card, x: clamp(right ? card.anchorX + 44 : card.anchorX - card.w - 44, bounds.left, bounds.right - card.w), y: Math.max(bounds.top, card.anchorY - card.h * .42)};
+        best = {...card, x: clamp(right ? card.anchorX + 44 : card.anchorX - card.w - 44, bounds.left, bounds.right - card.w), y: Math.max(bounds.top, card.anchorY - card.h * .42, minCenter - card.h / 2)};
         while (placed.some(other => overlap(best, other, 16))) best.y += 20;
       }
       placed.push(best);
+      minCenter = best.y + best.h / 2 + 8;
     }
-    return {cards: placed, height: Math.max(bounds.bottom, ...placed.map(r => r.y + r.h + 10))};
+    return {cards: cards.map(card => placed.find(rect => rect.id === card.id)), height: Math.max(bounds.bottom, ...placed.map(r => r.y + r.h + 10))};
   }
 
   function routeLeader(start, end, obstacles, {left = 0, right, top = 0, bottom, used = []}) {
