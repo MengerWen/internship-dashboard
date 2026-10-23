@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const {execFileSync} = require('node:child_process');
 
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8030/';
-const output = path.resolve('artifacts/journal-axis-order');
+const output = path.resolve(process.env.JOURNAL_ARTIFACT_DIR || 'artifacts/journal-axis-order');
 const baselineCommit = execFileSync('git', ['rev-parse', 'HEAD'], {encoding: 'utf8'}).trim();
 const before = {module: {exports: {}}};
 vm.runInNewContext(execFileSync('git', ['show', `${baselineCommit}:site/js/journal-notes.js`], {encoding: 'utf8'}), before);
@@ -42,7 +42,7 @@ function inspect() {
     page.on('pageerror', e => errors.push(e.message));
     await page.route('**/api/report-tags', r => r.fulfill({json: {data: {tags: [], assignments: {}}, revision: 0, canEdit: false}}));
     await page.goto(base + '#/journal/2026-10-20?view=atlas');
-    await page.waitForSelector('.journal-floating-note');
+    await page.waitForSelector('.journal-floating-note',{state:'attached'});
     await page.evaluate(() => document.fonts.ready);
     for (const [width, density] of process.env.JOURNAL_INTERACTIONS_ONLY ? [] : [[1440, 14], [1024, 14], [768, 14], [1440, 7]]) {
       await page.setViewportSize({width, height: 1000});
@@ -76,7 +76,9 @@ function inspect() {
     const head = page.locator('.journal-floating-note.is-focused .journal-floating-head');
     const oldX = await head.evaluate(n => n.parentElement.offsetLeft);
     await head.press('ArrowRight');
-    assert.equal(await head.evaluate(n => n.parentElement.offsetLeft), oldX + 12);
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const movedX = await head.evaluate(n => n.parentElement.offsetLeft);
+    assert.equal(movedX, oldX + 12);
     await head.dblclick();
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     const resetState = await page.evaluate(inspect);

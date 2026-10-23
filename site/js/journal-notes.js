@@ -18,8 +18,32 @@
     const ordered = [...cards].sort((a, b) => a.anchorX - b.anchorX);
     const automatic = ordered.filter(card => !manual.has(card.id));
     const halfWidth = Math.max(0, ...automatic.map(card => card.w / 2));
-    const step = Math.min(8, Math.max(0, bounds.right - bounds.left - halfWidth * 2) / Math.max(1, automatic.length - 1));
-    let minCenter = bounds.left + halfWidth, remaining = automatic.length;
+    // 先为整组选横向位置。放得下一行时预留每张卡片的宽度，避免逐张贴点后挤成高塔。
+    const fits = automatic.reduce((width, card) => width + card.w, 0) + Math.max(0, automatic.length - 1) * 14 <= bounds.right - bounds.left;
+    const offsets = [];
+    automatic.forEach((card, i) => {
+      offsets.push(fits ? (offsets[i - 1] || 0) + (i ? (automatic[i - 1].w + card.w) / 2 + 14 : 0) : i * Math.max(0, bounds.right - bounds.left - halfWidth * 2) / Math.max(1, automatic.length - 1));
+    });
+    const leftCenter = bounds.left + (fits ? automatic[0]?.w / 2 || 0 : halfWidth);
+    const rightCenter = fits ? bounds.right - (automatic.at(-1)?.w / 2 || 0) - (offsets.at(-1) || 0) : leftCenter;
+    const groups = [];
+    automatic.forEach((card, i) => {
+      groups.push({sum: card.anchorX - offsets[i], count: 1, start: i});
+      while (groups.length > 1 && groups.at(-2).sum / groups.at(-2).count > groups.at(-1).sum / groups.at(-1).count) {
+        const last = groups.pop(), previous = groups.at(-1);
+        previous.sum += last.sum; previous.count += last.count;
+      }
+    });
+    const positions = new Map();
+    for (const group of groups) for (let i = group.start; i < group.start + group.count; i++) {
+      positions.set(automatic[i].id, clamp(group.sum / group.count, leftCenter, rightCenter) + offsets[i] - automatic[i].w / 2);
+    }
+    if (automatic.length > 1) {
+      const occupiedLeft = Math.min(...positions.values());
+      const occupiedRight = Math.max(...automatic.map(card => positions.get(card.id) + card.w));
+      const shift = (bounds.left + bounds.right - occupiedLeft - occupiedRight) / 2;
+      for (const [id, x] of positions) positions.set(id, x + shift);
+    }
     for (const [index, card] of ordered.entries()) {
       const rect = {...card}, saved = manual.get(card.id);
       if (saved) {
@@ -28,10 +52,8 @@
       } else {
         let best = null, bestCost = Infinity;
         const preferred = lifts[index % lifts.length];
-        const maxCenter = bounds.right - halfWidth - step * --remaining;
-        const orderedX = x => clamp(x + rect.w / 2, minCenter, maxCenter) - rect.w / 2;
-        for (const direction of [-1, 1]) for (let lift = 28; lift <= 460; lift += 24) for (let side = -224; side <= 224; side += 28) {
-          const x = orderedX(card.anchorX - rect.w * .45 + side);
+        for (const direction of [-1, 1]) for (let lift = 28; lift <= 460; lift += 24) {
+          const x = positions.get(card.id);
           const y = direction < 0 ? anchorY - rect.h - lift : anchorY + lift;
           const candidate = {...rect, x, y};
           if (y < bounds.top || y + rect.h > bounds.bottom || placed.some(other => overlap(candidate, other, 14))) continue;
@@ -43,11 +65,10 @@
         }
         if (!best) {
           // 极短时间窗仍保留原日期坐标，只在图底增加容纳说明的留白。
-          best = {...rect, x: orderedX(card.anchorX - rect.w / 2), y: Math.max(bounds.top, anchorY + 28)};
+          best = {...rect, x: positions.get(card.id), y: Math.max(bounds.top, anchorY + 28)};
           while (placed.some(other => overlap(best, other, 14))) best.y += 24;
         }
         rect.x = best.x; rect.y = best.y;
-        minCenter = rect.x + rect.w / 2 + step;
       }
       placed.push(rect);
     }

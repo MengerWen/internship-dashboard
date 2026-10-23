@@ -139,3 +139,17 @@ test('手动摆放可越过自动次序，重新排布后恢复对应轴顺序',
   assert.equal(chain.cards[0].y, 800);
   assert(chain.cards[1].y < chain.cards[0].y, '手动位置不强迫其余事件跟随下移');
 });
+
+test('同日点集中在一侧时，放得下的四张卡片利用空侧横向展开', () => {
+  for (const mirrored of [false, true]) {
+    const clustered = [900, 928, 1110, 1240].map((x, i) => ({id: String(i), anchorX: mirrored ? bounds.left + bounds.right - x : x, w: [216, 196, 178, 196][i], h: i === 0 ? 240 : 154}));
+    const result = placeCards(clustered, {bounds: {...bounds, bottom: 1900}, anchorY: 1684});
+    const horizontal = [...result.cards].sort((a, b) => a.anchorX - b.anchorX);
+    for (let i = 1; i < horizontal.length; i++) {
+      assert(horizontal[i - 1].x + horizontal[i - 1].w + 13 <= horizontal[i].x, '横向空间足够时，不应在同一侧纵向堆叠卡片');
+    }
+    const occupiedWidth = horizontal.at(-1).x + horizontal.at(-1).w - horizontal[0].x;
+    assert(occupiedWidth >= clustered.reduce((n, c) => n + c.w, 0) + 39, '整组卡片应利用空侧的可用宽度');
+    assert(Math.abs(horizontal[0].x - bounds.left - (bounds.right - horizontal.at(-1).x - horizontal.at(-1).w)) < 1, '点集中在一侧时，整组卡片两侧留白应平衡');
+  }
+});
