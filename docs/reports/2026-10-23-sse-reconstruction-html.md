@@ -37,4 +37,8 @@ python scripts/verify_sse_reconstruction_report_20261023.py --preview
 
 本项交付包括正式 HTML、重建源与验收材料。同日 Markdown 由另一任务维护，本项发布不修改或暂存该文件。提交范围、远端 SHA、Cloudflare 构建和上线后的交互验收另记在 `artifacts/sse-reconstruction-report-20261023/publication.json`，以实际回执区分提交、推送和上线。页面中的 GitHub、wenjie 与业务运行版本属于原研究验收历史，不能解释为这次文档工作重新运行了业务。
 
+正式 HTML 在 `6b60e65` 提交，登记验收脚本在 `9c8e323` 提交；另一任务完成的同日正文来自 `f7bd50a`。三项均已进入远端 main。发布使用 `9c8e323` 的隔离检出，完整构建得到 37 篇日报、103 天研究日志，0 条警告、0 个 mtime 降级。Cloudflare 版本 `07a75f33-dafe-485b-8c69-3be8d55b7276` 已部署。
+
+线上实际核对了主线第 1–7 页导航、案例 1→6 切换、Q_equity 证据窗口及“接近零的列为什么不能只除以 |S|”细节展开。截图为 `online-evidence.png`。浏览器连接存在掉线和工具超时，未将不完整的操作记为通过；线上并未声称重验全部 11 页、6 案例，完整覆盖仍以此前本地验收为准。
+
 `artifacts/sse-reconstruction-report-20261023/` 保留 `contract-check.json`、`browser-checks.json`、截图及清理回执。报告代码保持在主工作目录的 main，其他任务的未跟踪文件与成果未修改。
