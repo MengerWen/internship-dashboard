@@ -4,6 +4,79 @@
   const $ = id => document.getElementById(id);
   const densityRange = {min: 4, max: 44};
   const densityPreferences = {version: 2, standard: 14, legacyStandard: 11};
+  const handoffGap = 4.2;
+  function segmentHitsNode(a, b, point, gap = handoffGap) {
+    const r = point.r + gap;
+    let low = 0, high = 1;
+    for (const key of ["x", "y"]) {
+      const delta = b[key] - a[key], start = point[key] - r, end = point[key] + r;
+      if (Math.abs(delta) < 1e-8) {
+        if (a[key] < start || a[key] > end) return false;
+      } else {
+        const t1 = (start - a[key]) / delta, t2 = (end - a[key]) / delta;
+        low = Math.max(low, Math.min(t1, t2)); high = Math.min(high, Math.max(t1, t2));
+        if (low > high) return false;
+      }
+    }
+    return true;
+  }
+  function curveSegments(a, b, c, d, depth = 0) {
+    const distance = p => {
+      const dx = d.x - a.x, dy = d.y - a.y;
+      return Math.abs(dy * (p.x - a.x) - dx * (p.y - a.y)) / (Math.hypot(dx, dy) || 1);
+    };
+    if (depth >= 12 || Math.max(distance(b), distance(c)) < .15) return [[a, d]];
+    const mid = (p, q) => ({x: (p.x + q.x) / 2, y: (p.y + q.y) / 2});
+    const ab = mid(a, b), bc = mid(b, c), cd = mid(c, d), abc = mid(ab, bc), bcd = mid(bc, cd), center = mid(abc, bcd);
+    return [...curveSegments(a, ab, abc, center, depth + 1), ...curveSegments(center, bcd, cd, d, depth + 1)];
+  }
+  function roundedHandoff(points) {
+    const path = points.filter((p, i) => !i || Math.hypot(p.x - points[i - 1].x, p.y - points[i - 1].y) > .01);
+    for (let i = path.length - 2; i > 0; i--) {
+      const a = path[i - 1], b = path[i], c = path[i + 1];
+      if (Math.abs((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x)) < .01) path.splice(i, 1);
+    }
+    let result = `M${path[0].x},${path[0].y}`;
+    path.slice(1, -1).forEach((p, i) => {
+      const a = path[i], b = path[i + 2], before = Math.hypot(p.x - a.x, p.y - a.y), after = Math.hypot(b.x - p.x, b.y - p.y);
+      // 小圆角只切入预留间隙，不侵入节点的保护范围。
+      const r = Math.min(1.4, before / 2, after / 2);
+      result += ` L${p.x + (a.x - p.x) * r / before},${p.y + (a.y - p.y) * r / before} Q${p.x},${p.y} ${p.x + (b.x - p.x) * r / after},${p.y + (b.y - p.y) * r / after}`;
+    });
+    return result + ` L${path.at(-1).x},${path.at(-1).y}`;
+  }
+  function routeHandoff(from, to, points, lanes, height) {
+    const others = points.filter(p => p !== from && p !== to);
+    const bend = Math.max(22, Math.abs(to.y - from.y) / 2);
+    const segments = curveSegments(from, {x: from.x, y: from.y + bend}, {x: to.x, y: to.y - bend}, to);
+    const clearCurve = segments.every(([a, b]) => a.y >= 2.5 && b.y >= 2.5 && a.y <= height - 2.5 && b.y <= height - 2.5 && !others.some(p => segmentHitsNode(a, b, p, handoffGap + .15)));
+    if (clearCurve) return `M${from.x},${from.y} C${from.x},${from.y + bend} ${to.x},${to.y - bend} ${to.x},${to.y}`;
+    const ports = point => {
+      const available = lanes.filter(x => !others.some(p => segmentHitsNode(point, {x, y: point.y}, p)));
+      // 极度压缩时，同列点的留白可能重叠；重叠区交给固定保护层裁掉。
+      const choices = available.length ? available : lanes.filter(x => !others.some(p => p.x !== point.x && segmentHitsNode(point, {x, y: point.y}, p)));
+      return [choices.filter(x => x < point.x).at(-1), choices.find(x => x > point.x)].filter(x => x !== undefined);
+    };
+    const preferred = (from.y + to.y) / 2;
+    let best;
+    for (const left of ports(from)) for (const right of ports(to)) {
+      const lowX = Math.min(left, right), highX = Math.max(left, right);
+      const blocked = points.filter(p => p.x + p.r + handoffGap >= lowX && p.x - p.r - handoffGap <= highX).map(p => [p.y - p.r - handoffGap, p.y + p.r + handoffGap]).sort((a, b) => a[0] - b[0]);
+      const merged = [];
+      blocked.forEach(interval => {
+        if (merged.length && interval[0] <= merged.at(-1)[1]) merged.at(-1)[1] = Math.max(merged.at(-1)[1], interval[1]);
+        else merged.push(interval.slice());
+      });
+      const rails = [preferred, 3, height - 3, ...merged.flatMap(([a, b]) => [a - .3, b + .3])];
+      for (const y of rails) {
+        if (y < 3 || y > height - 3 || merged.some(([a, b]) => y >= a && y <= b)) continue;
+        const cost = Math.abs(left - from.x) + Math.abs(right - to.x) + Math.abs(right - left) + Math.abs(y - from.y) + Math.abs(y - to.y) + Math.abs(y - preferred) * .01;
+        if (!best || cost < best.cost) best = {cost, path: [from, {x: left, y: from.y}, {x: left, y}, {x: right, y}, {x: right, y: to.y}, to]};
+      }
+    }
+    // 无可用侧向出口时仍保留关系；保护层保证连线不绘入任何节点。
+    return roundedHandoff(best?.path || [from, {x: from.x, y: 3}, {x: to.x, y: 3}, to]);
+  }
   // 国办发明电〔2025〕7号：https://www.gov.cn/zhengce/content/202511/content_7047090.htm
   // 按年维护官方放假调休安排；未收录年份只标周末，不推算农历节日。
   const mainlandCalendar = {
@@ -472,17 +545,25 @@
         if (this.density >= 11 || new Date(d.date + "T00:00:00Z").getUTCDay() === 1) parts.push(`<text class="journal-date-label" data-date="${d.date}" x="${dateWidth - 12}" y="${y(d.date) + 4}" text-anchor="end">${d.date.slice(5)}</text>`);
         if (d.reports_published?.length) parts.push(`<path class="journal-report-tick" data-date="${d.date}" d="M${dateWidth - 6},${y(d.date)} h8"/>`);
       });
+      const points = ordered.flatMap(chain => active.get(chain.id).map(day => {
+        const dropped = this.pointNote(day, chain.id).outcome === "dropped", r = radius(day, chain.id);
+        const sealed = chain.fate !== "dropped" && (chain.status === "done" || chain.fate === "parked") && chain.end === day.date;
+        return {chain: chain.id, date: day.date, x: positions.get(chain.id), y: y(day.date), r: dropped ? Math.max(3.4, r) + 1 : sealed ? Math.max(r, Math.sqrt(Math.PI) * r / 2 + .7) : r, square: dropped || sealed};
+      }));
+      const columns = ordered.map(chain => ({x: positions.get(chain.id), r: Math.max(0, ...points.filter(p => p.chain === chain.id).map(p => p.r))}));
+      const lanes = [dateWidth + 4, ...columns.slice(1).map((column, i) => (columns[i].x + columns[i].r + column.x - column.r) / 2), width - 4].filter(x => points.every(p => Math.abs(x - p.x) > p.r + handoffGap));
+      const pointByKey = new Map(points.map(p => [`${p.chain}:${p.date}`, p]));
+      // 留白不随无关链条一起淡化，聚焦后的粗线也不能盖住点。
+      parts.push(`<defs><mask id="journal-handoff-clearance" maskUnits="userSpaceOnUse" x="0" y="0" width="${width}" height="${height}" style="mask-type:luminance"><rect width="${width}" height="${height}" fill="white"/>${points.map(p => p.square ? `<rect x="${p.x - p.r - 3.2}" y="${p.y - p.r - 3.2}" width="${2 * (p.r + 3.2)}" height="${2 * (p.r + 3.2)}" fill="black"/>` : `<circle cx="${p.x}" cy="${p.y}" r="${p.r + 3.2}" fill="black"/>`).join("")}</mask></defs>`);
       this.registry.handoffs.forEach(edge => {
         const from = active.get(edge.from), to = active.get(edge.to);
         if (!from?.length || !to?.length) return;
         const dates = this.handoffDates(edge, from, to);
         if (!dates) return;
         const {source, target} = dates;
-        const x1 = positions.get(edge.from), x2 = positions.get(edge.to), y1 = y(source), y2 = y(target);
         const dash = edge.type === "派生" ? "4 3" : edge.type === "依赖解除" ? "1 3" : edge.type === "收口" ? "7 2 1 2" : (edge.confidence === "inferred" ? "2 5" : "");
-        const bend = Math.max(22, Math.abs(y2 - y1) / 2);
-        const path = `M${x1},${y1} C${x1},${y1 + bend} ${x2},${y2 - bend} ${x2},${y2}`;
-        parts.push(`<g class="journal-unit journal-handoff" data-chains="${esc(edge.from)} ${esc(edge.to)}" data-type="${esc(edge.type)}" data-date="${target}" data-source-date="${source}"><path class="journal-halo" d="${path}"/><path class="journal-handoff-path" stroke-dasharray="${dash}" d="${path}"/></g>`);
+        const path = routeHandoff(pointByKey.get(`${edge.from}:${source}`), pointByKey.get(`${edge.to}:${target}`), points, lanes, height);
+        parts.push(`<g class="journal-unit journal-handoff" data-chains="${esc(edge.from)} ${esc(edge.to)}" data-type="${esc(edge.type)}" data-date="${target}" data-source-date="${source}" mask="url(#journal-handoff-clearance)"><path class="journal-halo" d="${path}"/><path class="journal-handoff-path" stroke-dasharray="${dash}" d="${path}"/></g>`);
       });
       ordered.forEach(chain => {
         const dates = active.get(chain.id), cx = positions.get(chain.id);
