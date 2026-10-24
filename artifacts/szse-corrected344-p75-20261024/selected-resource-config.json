@@ -1,0 +1,33 @@
+{
+  "schema_version": "szse-model328-resources-v1",
+  "cpu_cores": 16,
+  "memory_gib": 100,
+  "numpy_madvise_hugepage": false,
+  "mimalloc_allow_thp": false,
+  "measured_range_priority_codes_by_date": {"2025-11-18": ["301638"]},
+  "pair_batch_workers": 1,
+  "scheduler": {
+    "extract_workers": 1,
+    "compute_workers": 12,
+    "streaming_compute_workers_after_extraction": 16,
+    "compute_queue_depth": 24,
+    "parser_threads_per_stream": 4,
+    "materialized_day_limit": 1,
+    "worker_internal_threads": 1,
+    "streaming_memory_budget_bytes": 85899345920,
+    "streaming_memory_bytes_per_input_row": 20000,
+    "derived_publication_workers": 16
+  },
+  "hot_derived_limit_bytes": 8589934592,
+  "watchdog_idle_seconds": 600,
+  "watchdog_check_seconds": 30,
+  "date_slots": 1,
+  "release_worker_memory": true,
+  "worker_reclaim_threshold_mib": 1536,
+  "order_audit_workers": 12,
+  "derived_bucket_count": 8,
+  "f40_candidate_spool": false,
+  "persist_f40_matching_cache": false,
+  "f40_candidate_memory_mib": 1024,
+  "compress_day_manifests": true
+}

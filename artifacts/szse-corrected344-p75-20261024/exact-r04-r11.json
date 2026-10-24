@@ -1,0 +1,120 @@
+{
+  "schema_version": "corrected344-real-day-exactness-v1",
+  "runs": [
+    "r04",
+    "r11"
+  ],
+  "date": "2026-03-19",
+  "passed": true,
+  "values_exact": true,
+  "nan_positions_exact": true,
+  "sources": [
+    {
+      "source": "old",
+      "rows": 2884,
+      "columns": 272
+    },
+    {
+      "source": "cancel_buy",
+      "rows": 2884,
+      "columns": 24
+    },
+    {
+      "source": "cancel_sell",
+      "rows": 2884,
+      "columns": 24
+    },
+    {
+      "source": "depth",
+      "rows": 2884,
+      "columns": 24
+    }
+  ],
+  "scientific_evidence_sha256": "30d6ea6148ee6f2ccb443fab86324a24e32370d6284499f8d9cdc0be27578e1d",
+  "costs": [
+    {
+      "run": "r04",
+      "runner": {
+        "compute_panel": 357.2263693995774,
+        "post_compute_validation": 9.508608218282461,
+        "startup_validation": 20.131675228476524
+      },
+      "timing": {
+        "daily_compute": 274.1490884460509,
+        "daily_extraction": 24.613421507179737,
+        "day_bucket_merge_commit": 24.130525277927518,
+        "day_callback": 29.419290417805314,
+        "day_cleanup": 0.024873079732060432,
+        "day_commit": 29.419290417805314,
+        "day_manifest_finalize": 2.98489623516798,
+        "day_preflight": 1.4527420904487371,
+        "day_result_validation": 26.413624104112387,
+        "day_universe_prepare": 0.41395276598632336,
+        "factor_sum": 3838.4447357747704,
+        "shard_write": 2.748916804790497
+      },
+      "phases": {
+        "scorer_phase_seconds": {
+          "aggregation": 29.299073526635766,
+          "chain": 85.43989306502044,
+          "cluster": 70.94450688175857,
+          "local_best": 0.0,
+          "other_scorer": 570.4671538360417,
+          "pair_batch_read": 0.0,
+          "pair_column_derive": 0.0,
+          "pair_score": 0.0,
+          "proxy_context": 304.0970879867673,
+          "proxy_purpose": 99.85086626000702,
+          "proxy_reduction": 29.6658495683223,
+          "response": 120.17890617996454,
+          "response_query": 40.72937538102269,
+          "response_template_action_table": 19.17332618124783,
+          "response_template_bank": 91.60513113066554,
+          "response_template_event_table": 61.52010288089514
+        }
+      }
+    },
+    {
+      "run": "r11",
+      "runner": {
+        "compute_panel": 364.3491306360811,
+        "post_compute_validation": 8.848672488704324,
+        "startup_validation": 16.501586308702826
+      },
+      "timing": {
+        "daily_compute": 240.04100581631064,
+        "daily_extraction": 26.058255584910512,
+        "day_bucket_merge_commit": 28.209648782387376,
+        "day_callback": 41.084847120568156,
+        "day_cleanup": 0.02034461870789528,
+        "day_commit": 41.084847120568156,
+        "day_manifest_finalize": 38.889258328825235,
+        "day_preflight": 1.4180459883064032,
+        "day_result_validation": 2.1780702378600836,
+        "day_universe_prepare": 0.41625090315937996,
+        "factor_sum": 3295.930416032672,
+        "shard_write": 38.69982559233904
+      },
+      "phases": {
+        "scorer_phase_seconds": {
+          "aggregation": 27.24014030955732,
+          "chain": 83.6913880854845,
+          "cluster": 69.47263429872692,
+          "local_best": 0.0,
+          "other_scorer": 544.3786692228168,
+          "pair_batch_read": 0.0,
+          "pair_column_derive": 0.0,
+          "pair_score": 0.0,
+          "proxy_context": 195.97044286504388,
+          "proxy_purpose": 91.45362302288413,
+          "proxy_reduction": 29.007747096940875,
+          "response": 46.41601110063493,
+          "response_query": 39.93398887850344,
+          "response_template_action_table": 18.44659631513059,
+          "response_template_bank": 89.40342561528087,
+          "response_template_event_table": 58.61991627141833
+        }
+      }
+    }
+  ]
+}
