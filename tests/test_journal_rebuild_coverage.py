@@ -59,12 +59,15 @@ class RebuiltCoverageTests(unittest.TestCase):
             self.assertEqual(reports[0]['stage'], '构思（研究材料）')
         self.assertIn('没有运行真实L2预检', self.days['2026-10-14'].content)
 
-    def test_new_chain_spans_follow_actual_points_and_preserve_unresolved_date(self):
+    def test_new_chain_spans_follow_actual_points_and_preserve_confirmed_stop_date(self):
         for chain in self.chains.values():
             actual = sorted(d for d, p in self.days.items() if chain['id'] in {x['id'] for x in p['chains']})
             self.assertEqual(chain['review']['days'], len(actual))
             self.assertEqual(chain['review']['span'], [actual[0], actual[-1]])
-        self.assertIn('2026-09-11', self.chains['cross-stock-sync']['review']['unreviewed_days'])
+        cross_stock = self.chains['cross-stock-sync']
+        self.assertNotIn('2026-09-11', cross_stock['review']['unreviewed_days'])
+        self.assertEqual(cross_stock['fate'], 'dropped')
+        self.assertIn('9 月 11 日 17:29 的原始用户消息', cross_stock['fate_note'])
         self.assertFalse(self.days['2026-08-04'].get('date_notes'))
         self.assertIn('8月11日有明确的改数补丁', self.days['2026-08-04'].content)
 
