@@ -78,6 +78,7 @@ def report_data() -> dict:
         "ledger": local["ledger"],
         "groups": merged_groups,
         "sources": local["sources"],
+        "currentResearch": local["current_research"],
     }
 
 

@@ -297,10 +297,10 @@
     ["θ_qty", "数量", "新旧订单数量相差多少算“相近”", "沪市独立估计"],
     ["θ_price", "价格", "新旧报价相差几个价位算“近”", "沪市独立估计"],
     ["θ_bbo", "离最优报价的距离", "报价离最优价几个价位算“靠近盘口”", "沪市独立估计"],
-    ["θ_mkt", "离立即成交的距离", "报价离对手价还差几个价位，即离“马上能成交”有多远", "派生：取同包 θ_bbo"],
+    ["θ_mkt", "离立即成交的距离", "公开软分支订单首动作前，挂出价距对手可执行前沿几档", "每订单一次 · 独立估计"],
   ];
   const kHost = $('[data-slot="kernels"]');
-  if (kHost) kHost.innerHTML = KERNELS.map(([sym, what, use, how], i) => `<div class="kernel${i === 5 ? " derived" : ""}"><span class="sym">${sym}</span><span class="what">${what}</span><span class="use">${use}</span><span class="how">${how}${i === 5 ? ' · <a href="#sixth">原因</a>' : ""}</span></div>`).join("");
+  if (kHost) kHost.innerHTML = KERNELS.map(([sym, what, use, how], i) => `<div class="kernel${i === 5 ? " independent" : ""}"><span class="sym">${sym}</span><span class="what">${what}</span><span class="use">${use}</span><span class="how">${how}${i === 5 ? ' · <a href="#sixth">取样</a>' : ""}</span></div>`).join("");
 
   /* ---------- columns reconciliation ---------- */
   const recon = $('[data-chart="columns"]');
@@ -463,13 +463,13 @@
   /* ---------- speed bars ---------- */
   const speed = $('[data-chart="speed"]');
   if (speed) {
-    const rows = [["10-24 首版", "db6cdd45", 509.217, C.gray], ["10-25 上午", "c56482f8", 172.818, C.gray], ["10-25 审阅版", "143d9bb8", 100.234, C.teal]];
+    const rows = [["10-24 首版", "db6cdd45", 509.217, C.gray], ["10-25 上午", "c56482f8", 172.818, C.gray], ["10-25 独立核", "5820e273", DATA.currentResearch.p75_command_seconds, C.teal]];
     onResize((w) => {
       speed.innerHTML = "";
       const padL = 96, padR = 56, bh = 22, gap = 18, top = 26;
       const plotW = w - padL - padR, max = 540;
       const H = top + rows.length * (bh + gap) + 22;
-      const s = svg("svg", {viewBox: `0 0 ${w} ${H}`, role: "img", "aria-label": "单日完整命令耗时：509.2 秒、172.8 秒、100.2 秒；目标 60 秒"}, speed);
+      const s = svg("svg", {viewBox: `0 0 ${w} ${H}`, role: "img", "aria-label": "单日工程命令：509.2 秒、172.8 秒、82.01 秒；最新方法另有 P05 收尾复核 8.53 秒；历史目标 60 秒已停止冲刺"}, speed);
       const xOf = (v) => padL + plotW * v / max;
       [0, 100, 200, 300, 400, 500].forEach((v) => {
         svg("line", {x1: xOf(v), x2: xOf(v), y1: top - 6, y2: H - 22, stroke: C.soft}, s);
@@ -483,7 +483,7 @@
         text(s, xOf(v) + 6, y + 16, v.toFixed(1), {class: i === 2 ? "lbl strong big" : "lbl big"});
       });
       svg("line", {x1: xOf(60), x2: xOf(60), y1: top - 14, y2: H - 22, stroke: C.rust, "stroke-width": 2}, s);
-      text(s, xOf(60) + 5, top - 10, "目标 60 秒", {class: "lbl strong", fill: C.rust, style: `fill:${C.rust}`});
+      text(s, xOf(60) + 5, top - 10, "历史目标 60 秒", {class: "lbl strong", fill: C.rust, style: `fill:${C.rust}`});
     }).observe(speed);
   }
 

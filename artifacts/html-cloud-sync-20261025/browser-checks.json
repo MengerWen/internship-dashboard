@@ -1,0 +1,75 @@
+{
+  "browser": "Codex in-app browser",
+  "checks": [
+    {
+      "name": "term_dialog",
+      "visible": true,
+      "text": "深市逐笔委托\n\n深交所在每笔报单进入系统时就发布一条委托记录，包含价格、数量、方向和申报类型；之后的成交和撤单都能对回这笔委托。项目的因子最初就是在这种数据上开发和验收的。\n\n×"
+    },
+    {
+      "name": "Q_axis",
+      "checked": "true",
+      "result": "公开消息轴：消息间隔少了 91 条（约 0.08%），刚好落到门槛以内，两簇连成一簇。合并簇的分数仍为正（约 0.0057），但它结束得太晚，整簇失去观察资格；这只股票的 f26 变为 0。"
+    },
+    {
+      "name": "order_tab_直接挂单",
+      "selected": "true"
+    },
+    {
+      "name": "order_tab_只有成交",
+      "selected": "true"
+    },
+    {
+      "name": "order_tab_完全不可见",
+      "selected": "true"
+    },
+    {
+      "name": "order_tab_先成交，再挂余量",
+      "selected": "true"
+    },
+    {
+      "name": "order_reconstruction",
+      "text": "这是一笔订单：可见数量 Qv = 600 + 400 = 1,000 股；入场时刻在第一笔成交之前；价格取挂出价 10.03。"
+    },
+    {
+      "name": "mobile_geometry",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "name": "section_navigation",
+      "url": "http://127.0.0.1:8769/content/daily/2026-10-25.show.html#s5"
+    },
+    {
+      "name": "desktop_geometry",
+      "client": 1425,
+      "scroll": 1425,
+      "width": 1440
+    },
+    {
+      "name": "factor_search",
+      "query": "f26",
+      "matched_columns": 2
+    },
+    {
+      "name": "complete_error_table",
+      "rows": 352
+    },
+    {
+      "name": "embedded_sandbox",
+      "client": 1265,
+      "scroll": 1265,
+      "summary": "独立第六核的 P75 主命令 82.01 秒，完整恢复通过；60 秒性能冲刺已停止",
+      "url": "about:srcdoc#s6"
+    }
+  ],
+  "errors": [],
+  "embedded_errors": [],
+  "final_report_source_sha256": "8ca92e6d48cbfe5abaa7ff615eb7c9b641648a5dfdc5d281e15e5b06d306bccf",
+  "final_embedded_check": {
+    "client": 1265,
+    "scroll": 1265,
+    "url": "about:srcdoc#s6"
+  }
+}
