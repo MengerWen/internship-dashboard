@@ -1,0 +1,579 @@
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <span>思瑞投资 · 量化研究</span>
+    <span>每日汇报 2026.10.25 · 沪市委托还原与定参</span>
+  </div>
+</header>
+
+<section class="hero" id="top" aria-labelledby="page-title">
+  <div class="wrap">
+    <p class="eyebrow">SSE ORDER RECONSTRUCTION · OPEN 5 MIN</p>
+    <h1 id="page-title">沪市订单已能可靠还原，<em>下一步是用沪市数据重新定参</em></h1>
+    <div class="hero-grid">
+      <div>
+        <p class="lead">我们的 L2 订单行为因子原本在深市开发和验收。沪市不公布每笔原始报单，只公布挂单、成交和撤单，所以要先把这些公开消息拼回“一笔一笔的订单”，再用沪市自己的数据重新估计因子里的尺度参数。</p>
+        <p class="lead">截至今天：<strong>订单还原已经验收</strong>；<strong>单日定参试算已经跑通</strong>；<strong>601 日正式定参和正式因子计算都还没有启动</strong>。</p>
+      </div>
+      <dl class="hero-stats">
+        <div><dt>真实沪市股票日通过验收</dt><dd><b>1,335</b><span>13 个交易日 · 适配错误 0</span></dd></div>
+        <div><dt>独立账本逐字段核对</dt><dd><b>6,786 万次</b><span>差异 0</span></dd></div>
+        <div><dt>单日定参试算</dt><dd><b>100.2 秒</b><span>2,296 股 · 0 错误 · 目标 60 秒</span></dd></div>
+      </dl>
+    </div>
+
+    <ol class="track" aria-label="项目进度">
+      <li class="done"><span class="dot" aria-hidden="true"></span><b>还原沪市订单</b><span class="state">已验收</span><small>13 个真实交易日</small></li>
+      <li class="done"><span class="dot" aria-hidden="true"></span><b>确定公开口径</b><span class="state">已完成</span><small>public v5，352 列可算</small></li>
+      <li class="done current"><span class="dot" aria-hidden="true"></span><b>单日定参试算</b><span class="state">已通过</span><small>代表日 2026-06-30</small></li>
+      <li class="todo"><span class="dot" aria-hidden="true"></span><b>601 日正式定参</b><span class="state">未启动</span><small>待空间准入与运行授权</small></li>
+      <li class="todo"><span class="dot" aria-hidden="true"></span><b>正式因子计算</b><span class="state">未启动</span><small>参数签收之后</small></li>
+    </ol>
+
+    <div class="guard-box">
+      <p class="guard-title">读这份汇报时请注意四个边界</p>
+      <ul>
+        <li>“还原”指把公开消息拼成订单，<b>不代表</b>猜出了原始限价和原始订单类型。</li>
+        <li>验收覆盖 13 个代表日，<b>不等于</b> 601 个交易日已全部验收。</li>
+        <li>沪市因子按公开信息重新定义，<b>不追求</b>与深市逐笔同值。</li>
+        <li>试算估出的参数只用于检查流程，<b>不是</b>正式参数。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<nav class="toc" aria-label="章节导航">
+  <div class="wrap toc-row">
+    <a href="#s1"><span>01</span>为什么要还原</a>
+    <a href="#s2"><span>02</span>还原规则</a>
+    <a href="#s3"><span>03</span>怎样验收</a>
+    <a href="#s4"><span>04</span>因子值的变化</a>
+    <a href="#s5"><span>05</span>沪市定参</a>
+    <a href="#s6"><span>06</span>单日试算</a>
+    <a href="#s7"><span>07</span>f26 风险</a>
+    <a href="#s8"><span>08</span>下一步</a>
+    <a href="#glossary"><span>附</span>术语与来源</a>
+  </div>
+</nav>
+
+<main>
+
+<section id="s1" aria-labelledby="s1-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">01</span>
+      <div>
+        <p class="kicker">为什么沪市要先“还原订单”</p>
+        <h2 id="s1-title">沪市行情里，一笔订单可能被拆成几条消息，也可能完全看不到</h2>
+        <p class="sec-lead"><button type="button" class="term" data-term="szse">深市逐笔委托</button>在每笔报单进入交易所时就发布价格、数量、方向和类型。沪市只发布行情里“看得见”的结果：新增挂单 A、成交 T、撤单 C（<button type="button" class="term" data-term="atc">A / T / C</button>）。而我们的因子是按“一笔订单”计算的：它何时出现、挂在哪个价位、前面排着多少量、后来有没有撤单。所以在沪市，第一步是把公开消息拼回<button type="button" class="term" data-term="logical">逻辑订单</button>。</p>
+      </div>
+    </header>
+
+    <div class="demo" id="order-demo">
+      <div class="demo-tabs" role="tablist" aria-label="订单在沪市行情中的四种形态"></div>
+      <div class="demo-body">
+        <div class="demo-col">
+          <p class="col-label">① 交易所内部的原始报单 <span class="tag">行情看不到</span></p>
+          <div class="hidden-order" data-slot="origin"></div>
+          <p class="col-label">② 沪市行情公开的消息</p>
+          <ol class="msgs" data-slot="msgs" aria-live="polite"></ol>
+          <div class="step-row">
+            <button type="button" data-act="prev">上一条</button>
+            <button type="button" class="primary" data-act="next">播放下一条消息</button>
+            <span class="step-count" data-slot="count"></span>
+          </div>
+          <p class="step-note" data-slot="note"></p>
+        </div>
+        <div class="demo-col">
+          <p class="col-label">公开盘口（示意）</p>
+          <table class="book" aria-label="公开盘口">
+            <thead><tr><th scope="col">档位</th><th scope="col" class="r">价格</th><th scope="col" class="r">股数</th></tr></thead>
+            <tbody data-slot="book"></tbody>
+          </table>
+          <div class="verdict">
+            <div class="ok"><p class="col-label">③ 能确定的事实</p><p data-slot="known"></p></div>
+            <div class="no"><p class="col-label">仍然无法唯一确定</p><p data-slot="unknown"></p></div>
+          </div>
+        </div>
+      </div>
+      <p class="fig-note">价格和股数均为示意，用来说明沪市的消息发布方式，不是实测样本。</p>
+    </div>
+
+    <figure class="figure" id="mix-figure">
+      <figcaption>
+        <b>真实数据里，三成订单只留下成交</b>
+        <span>13 个真实沪市交易日的分层样本（1,335 个股票日），09:30–09:35 窗口内的 6,614,949 笔订单，按公开形态划分</span>
+      </figcaption>
+      <div class="mix" data-chart="mix"></div>
+      <p class="fig-note">“完全不可见”的订单在行情中没有任何记录，无法计数，因此不在这条横条里。</p>
+    </figure>
+
+    <p>如果不做还原，直接把每条 A 当成一笔新订单：先成交再挂余量的订单会少记已成交的部分；只有成交的订单（约占三成）会整笔消失，或被拆成多笔。订单数、首次出现时刻、排队位置以及按订单汇总的因子都会跟着出错。</p>
+  </div>
+</section>
+
+<section id="s2" aria-labelledby="s2-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">02</span>
+      <div>
+        <p class="kicker">还原到哪一步，用什么规则</p>
+        <h2 id="s2-title">只采用公开行情能证实的事实；猜不准的原始属性，不当成真值</h2>
+        <p class="sec-lead">同一组公开记录，背后常常对应好几种原始报单。代码写得再复杂，也不能把“多解”变成“唯一真值”。所以沪市因子改用<button type="button" class="term" data-term="public">公开口径</button>：每个输入都按下面的规则从公开消息里取，规则本身写死，不靠推测。</p>
+      </div>
+    </header>
+
+    <div class="table-wrap">
+      <table class="rules">
+        <caption>公开口径下，订单的五个基本要素怎样取值</caption>
+        <thead><tr><th scope="col">要素</th><th scope="col">沪市公开口径的取法</th><th scope="col">为什么这样取</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">价格</th><td>有公开挂单的，用挂出价；只有成交的，用成交中最深的那一档价格。</td><td>原始限价在只有成交时无法唯一确定，最深成交价是能证实的最近替代。</td></tr>
+          <tr><th scope="row">数量</th><td><button type="button" class="term" data-term="qv">可见数量 Qv</button> = 刚进场时的成交量 + 公开挂出的余量。</td><td>没有公布就被系统撤掉的剩余部分看不到，不计入。</td></tr>
+          <tr><th scope="row">时间</th><td>订单第一次在公开行情中产生作用的时刻；先成交的订单，入场点放在第一笔成交之前。</td><td>原始报单到达时间看不到；首次公开作用的时刻可以证实。</td></tr>
+          <tr><th scope="row">类型</th><td>统一按限价单处理，只服务于因子计算。</td><td>原始类型常常多解；这里不声称认出了原始类型。</td></tr>
+          <tr><th scope="row">排队</th><td>立即成交的部分，排在它前面的量记为 0；排队稀释只计算真正挂进盘口的余量。</td><td>立即成交的部分从未进入排队。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">为什么不用模型去猜原始限价？</p>
+      <p>我们试过。独立研究线 v2 用规则可行集和概率模型估计隐藏的原始属性，在深市（有真值可对照）的 3 个留出日上检验：以 2026-06-30 为例，原始限价的命中率从简单基线的 <b>82.76%</b> 降到 <b>82.53%</b>，平均误差从 <b>2.86</b> 升到 <b>2.92</b> 个最小价位。更复杂的模型没有更准。</p>
+      <p>另外，把估出的属性放回撮合器，能复现观测到的成交，也只说明估计与公开记录“不矛盾”。多组不同的隐藏订单可以打出同一串成交，回放对得上不能证明猜对了。</p>
+    </div>
+
+    <details class="more">
+      <summary>展开：公开口径从 v3 到 v5 修过什么</summary>
+      <div>
+        <p><b>v3</b> 建立了公开替换层：逐列给出公开定义，为“立即成交的订单”设立 <button type="button" class="term" data-term="pxact">px / act 两个版本</button>，并建立 <button type="button" class="term" data-term="union">综合行为强度（union）</button>与逐列身份登记。</p>
+        <p><b>v4</b> 修正了纯成交订单的撤退逻辑：把实际的主动成交计入对应分支，并改用入场前的盘口判断剩余挂单有多被动。</p>
+        <p><b>v5</b> 修正了“排队优先度变差”这一项的配对顺序：先在包含纯成交订单的完整候选池里完成配对，配中纯成交订单后，再把它这一项的分量记为 0。如果配对前就把纯成交订单删掉，旧单会退而配给另一笔有挂单的新单，凭空多算一份分数。这一修正的影响见第 04 节。</p>
+        <p>按 v5，沪市共有 352 个受支持的源列（另有 dm03/dm04 共 4 列按既有决定停用）。px、act 双版本加上公用列，合计 540 个候选标识；540 是候选标识数，不是已获准使用的正式因子数。</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="s3" aria-labelledby="s3-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">03</span>
+      <div>
+        <p class="kicker">怎样证明还原是对的</p>
+        <h2 id="s3-title">三个可能出错的环节各用一种独立检查覆盖，都没有发现错误</h2>
+        <p class="sec-lead">还原要经过三步：把沪市消息<button type="button" class="term" data-term="replay">回放</button>成盘口；用适配程序把盘口和消息整理成因子引擎的输入；在真实沪市数据上逐日运行。每一步都可能出错，所以分别检查，结论互不替代。</p>
+      </div>
+    </header>
+
+    <div class="checks">
+      <article class="check">
+        <p class="check-q"><span>检查 1</span>盘口重建得对不对？</p>
+        <h3>原生回放与交易所快照对照</h3>
+        <p class="check-big"><b>99.89%</b> 的整秒快照逐帧一致</p>
+        <ul>
+          <li>13 个交易日、29,622 个股票日、1.805 亿条事件</li>
+          <li>29,620 个完整可比股票日，订单数量守恒差异 0</li>
+          <li>整秒唯一状态帧 268,421 / 268,723 与外部快照一致；两日队列核对 437,358 帧全等</li>
+          <li>开盘集合竞价价量 29,135 例全等</li>
+        </ul>
+        <p class="check-limit">局限：外部快照只有整秒时间戳，无法逐事件对齐；队列只核对了两天；虚拟竞价帧仍有 6 处价格、23 处数量差异。</p>
+      </article>
+
+      <article class="check">
+        <p class="check-q"><span>检查 2</span>适配程序写得对不对？</p>
+        <h3>用深市真值做一次“模拟沪市”回环</h3>
+        <div class="sh" aria-hidden="true">
+          <div class="sh-src">同一份深市真值</div>
+          <div class="sh-paths">
+            <div><b>路径 S</b>直接按公开口径整理</div>
+            <div><b>路径 H</b>先改写成沪市式 A/T/C 消息，再走沪市回放和适配程序</div>
+          </div>
+          <div class="sh-out">比较两条路径的输入表和因子输出</div>
+        </div>
+        <p class="check-big"><b>0</b> 个因子值不同</p>
+        <ul>
+          <li>2,888 只股票的四张输入表，除 3 个表示层字段和 7 个来源标记外逐位相同</li>
+          <li>因子引擎输出：px 版 1,016,576 个值、act 版 10,560 个值，差异全部为 0</li>
+        </ul>
+        <p class="check-limit">两条路径的唯一区别是“是否经过沪市式发布再还原”，所以输出相同就说明适配程序没有额外算错。允许不同的 10 个字段经过 200 次扰动实验、70,400 个因子值比对，均不影响输出。</p>
+      </article>
+
+      <article class="check">
+        <p class="check-q"><span>检查 3</span>真实沪市数据接得对不对？</p>
+        <h3>13 个真实交易日，外加一套独立账本</h3>
+        <p class="check-big"><b>67,862,452</b> 次字段比较，差异 0</p>
+        <ul>
+          <li>2024—2026 年 13 个交易日，主板与科创板分层抽样</li>
+          <li>1,335 个股票日通过，4 个因交易阶段异常被事先排除，适配错误 0</li>
+          <li>6,614,949 笔窗口订单全部通过可见数量、首次公开时间和初始段闭合检查</li>
+          <li>其中 104 个股票日由<button type="button" class="term" data-term="ledger">独立账本</button>从原始字段重新计算后逐项对照</li>
+        </ul>
+        <p class="check-limit">这是输入层验收，没有计算真实沪市因子值；未来新日期如出现来源错误，按错误处理，不改记为“排除”。</p>
+      </article>
+    </div>
+
+    <figure class="figure">
+      <figcaption>
+        <b>可见数量精确守恒</b>
+        <span>同一样本中全部窗口订单的可见数量（股），按去向拆分</span>
+      </figcaption>
+      <div class="mix" data-chart="conservation"></div>
+      <p class="fig-note">14,256,112,167 = 8,420,838,682 成交 + 3,183,029,451 撤单 + 2,652,244,034 到 09:35 仍挂着的余量，没有差额。</p>
+    </figure>
+
+    <details class="more">
+      <summary>展开：13 个交易日逐日结果与独立账本明细</summary>
+      <div class="two-col">
+        <div class="table-wrap">
+          <table class="num-table">
+            <caption>逐日结果</caption>
+            <thead><tr><th scope="col">日期</th><th scope="col" class="r">通过股票日</th><th scope="col" class="r">按阶段排除</th><th scope="col" class="r">适配错误</th></tr></thead>
+            <tbody data-table="days"></tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table class="num-table">
+            <caption>独立账本比较项</caption>
+            <thead><tr><th scope="col">比较项</th><th scope="col" class="r">字段比较次数</th><th scope="col" class="r">差异</th></tr></thead>
+            <tbody data-table="ledger"></tbody>
+          </table>
+          <p class="fig-note">4 个被排除的股票日：688615（2024-10-08），600421、600599、600696（2026-06-01）。它们在构造输入前就按认证的交易阶段状态排除，没有把异常盘口补成正常盘口。</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="s4" aria-labelledby="s4-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">04</span>
+      <div>
+        <p class="kicker">换成公开口径后，因子值变了多少</p>
+        <h2 id="s4-title">差异来自定义和计时方式，不来自程序错误；计时方式的影响很小</h2>
+        <p class="sec-lead">拿沪市口径的因子和深市原定义比，数值会不同。把差异拆成三个来源分别量化，才知道哪些需要修、哪些是定义本身带来的。</p>
+      </div>
+    </header>
+
+    <ol class="sources">
+      <li>
+        <p class="src-name"><span>①</span>定义改变</p>
+        <p class="src-q">信息变少、口径改写后，因子值本身变多少？</p>
+        <p class="src-val">订单级综合行为强度相关性约 <b>0.963</b></p>
+        <p class="src-note">px 0.9626，act 0.9618。这是改定义的预期结果，不要求相等。</p>
+      </li>
+      <li class="good">
+        <p class="src-name"><span>②</span>程序实现</p>
+        <p class="src-q">适配程序有没有额外算错？</p>
+        <p class="src-val">差异 <b>0</b></p>
+        <p class="src-note">即第 03 节的检查 2。</p>
+      </li>
+      <li>
+        <p class="src-name"><span>③</span>计时方式</p>
+        <p class="src-q">改用沪市公开的消息时钟，数值偏多少？</p>
+        <p class="src-val">最差一列约 <b>0.05</b> 个截面尺度</p>
+        <p class="src-note">排序几乎不变：秩相关最低 0.99993。下图逐列展开。</p>
+      </li>
+    </ol>
+
+    <h3 class="sub">计时方式：只换消息时钟，352 列各偏了多少</h3>
+    <p>很多因子用“两个动作之间隔了多少条消息”衡量远近，而不只用秒数。深市可以用交易所的原始序号；沪市只能用公开的 A 股消息重新排一条序列，即<button type="button" class="term" data-term="clock">消息时钟 Q_equity</button>。实验固定盘口、价格、数量、真实时间和参数，只把序号换成 Q_equity，在 2026-06-30 的 2,888 只股票上逐列比较。误差用<button type="button" class="term" data-term="scaled">截面尺度误差</button>衡量：0.01 表示差异约为该因子在股票之间正常差异的 1%。</p>
+
+    <figure class="figure" id="clock-figure">
+      <figcaption>
+        <b>346 列的 p99 截面尺度误差，没有一列超过 0.1</b>
+        <span>每个点是一列（价格版 px）；横轴为对数刻度；悬停或用键盘聚焦可查看列名。另有 6 列结构恒为 0，不在图中。</span>
+      </figcaption>
+      <div class="chart-tools">
+        <label for="col-search">查找列</label>
+        <input id="col-search" type="search" placeholder="如 f43、f26、spread" autocomplete="off">
+        <span class="search-hint" aria-live="polite"></span>
+      </div>
+      <div class="chart" data-chart="clock" role="group" aria-label="352 列消息时钟误差分布"></div>
+      <div class="clock-legend" data-slot="bins"></div>
+    </figure>
+
+    <div class="two-col">
+      <div>
+        <p><b>272 / 352 列</b>至少在一只股票上有变化，但幅度很小：346 列的秩相关中位数为 0.99999966，没有任何一列出现“有值变缺失”的翻转。p99 误差最大的是 f43 买侧（排队量受冲击后的响应），为 0.052 个截面尺度，单只股票最大 0.170。原因是消息间隔直接进入它的衰减权重、候选窗口和最强响应挑选。</p>
+        <p>秩相关高只说明排序几乎没变；数值误差能否接受，需要按用途决定，列入第 08 节的待决事项。这个实验也没有用重新定参去“吸收”误差。</p>
+      </div>
+      <div class="worst" data-slot="worst"></div>
+    </div>
+
+    <details class="more">
+      <summary>展开：为什么不用“除以因子值”的相对误差</summary>
+      <div>
+        <p>因子值接近 0 时，除以 |S| 会把很小的绝对变化放大成很大的比值。以 f131 买侧（提供与消耗流动性的归一化差值）为例：按 |H−S| / |S| 算，最大相对误差高达 4.60；按截面尺度算，最大只有 0.016。两种口径都保留在误差表中；本页主要用截面尺度，因为它衡量的是“对股票排序和横截面比较有多大影响”。</p>
+        <p>截面尺度取全市场的四分位距 ÷ 1.349；四分位距为 0 时改用标准差，仍为 0 的 6 列单独列出。</p>
+      </div>
+    </details>
+    <details class="more" data-table-toggle="clock">
+      <summary>展开：全部 352 列的数据表</summary>
+      <div class="table-wrap tall"><table class="num-table" data-table="clock"></table></div>
+    </details>
+
+    <h3 class="sub">定义修正：v5 把排队类分量的差异股票从八成多降到约四分之一</h3>
+    <figure class="figure">
+      <figcaption>
+        <b>“排队优先度变差”分量与深市原值不同的股票占比</b>
+        <span>2026-06-30，同一批 2,888 只股票；v4 为修正前，v5 为修正后</span>
+      </figcaption>
+      <div class="chart" data-chart="priority"></div>
+    </figure>
+    <p>这项修正可能经依赖关系影响 132 个源列，当日实际变化的有 130 列；其余 220 列在 px、act 两版都与 v4 逐位一致。直接分量更接近深市，不代表所有下游因子都“改善”了：例如综合行为强度 f54 买侧，与深市的相对差中位数从 0.002849 变为 0.002890。</p>
+
+    <div class="callout plain">
+      <p class="callout-title">剩下的差异都已归因，但归因不等于消除</p>
+      <p>排队优先度分量仍有差异的股票，买侧 743 只、卖侧 740 只（去重 1,169 只），涉及 5,439 条订单贡献记录，全部找到了原因，未分类残差为 0。f76/f78 的 22 条因子记录来自 11 笔订单，原因是深市原生“市价类”订单的追价输入与公开定义不同。这些属于公开信息的边界：能精确核实的部分继续精确处理，无法唯一恢复的部分按公开定义计算，并保留与深市原定义可比的边界说明。</p>
+    </div>
+  </div>
+</section>
+
+<section id="s5" aria-labelledby="s5-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">05</span>
+      <div>
+        <p class="kicker">沪市参数怎么估</p>
+        <h2 id="s5-title">沿用深市最新的定参方法，用沪市 601 个交易日的数据重新估 340 列所需的参数</h2>
+        <p class="sec-lead">因子公式里有一批尺度参数，决定“多近算近”：例如两个动作隔几秒、隔几条消息、差几个价位算接近。这些参数之前是用深市数据估的。沪市的订单节奏和价位结构不同，必须用沪市数据重新估，这就是<button type="button" class="term" data-term="calib">定参</button>。定参只看行情本身，不读收益和 IC，避免按预测效果挑参数。</p>
+      </div>
+    </header>
+
+    <div class="two-col wide-left">
+      <div>
+        <h3 class="sub tight">范围：340 列</h3>
+        <p>340 列是沪市可算的列与深市正式列的交集。它由深市当前的 344 列去掉沪市停用的 dm03/dm04 四列得到；沪市 352 列里另有 12 列不进入本次范围。</p>
+        <div class="recon" data-chart="columns" role="img" aria-label="列数对账：深市 344 列去掉 4 列，沪市 352 列去掉 12 列，交集 340 列"></div>
+        <details class="more compact">
+          <summary>那 12 列是哪些？</summary>
+          <div><p>f97、f129、f130 的买卖 6 列：它们只由深度尺度 <button type="button" class="term" data-term="z12">Z12</button> 服务，因此整组 Z12 不估。另 6 列是结构上恒为 0 的方向：f110 卖、f111 买、f112 卖、f113 买、f114 卖、f115 买。</p></div>
+        </details>
+      </div>
+      <div>
+        <h3 class="sub tight">方法：与深市最新签收版本一致</h3>
+        <ul class="facts">
+          <li><b>六个核尺度</b>：每个尺度按“股票日 → 日期 → 全期”三层取中位数，得到全期唯一值。</li>
+          <li><b>八组结构参数</b>：沿用深市修正版（corrected-344）的取样资格、权重和精确算法。</li>
+          <li><b>F40 配对门</b>：四个阶段依次估计、只做一次匹配，与 10 月 24 日完成的深市流程相同。</li>
+          <li><b>样本期</b>：2024-01-02 至 2026-06-30，共 601 个交易日。</li>
+          <li><b>没有正样本就停止</b>：不用默认值填补，也不借用深市的数值。</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">要估的参数：六个核尺度 + 八组结构参数</h3>
+    <p>核尺度 θ 用在权重 exp(−距离 / θ) 里：距离越远，权重越小。θ 取样本距离的中位数除以 ln2，这样在中位距离处权重正好是 0.5（<button type="button" class="term" data-term="kernel">详细解释</button>）。</p>
+
+    <div class="kernels" data-slot="kernels"></div>
+
+    <div class="callout warn" id="sixth">
+      <p class="callout-title">第六个核尺度为什么不能独立估计，已批准怎样处理</p>
+      <div class="two-col">
+        <div>
+          <p><b>问题。</b>θ_mkt 衡量“报价离立即成交还差几个价位”。深市用一类特殊候选订单单独估它。沪市公开口径把所有订单都当作限价单处理后，这类特殊候选只剩“本来就能立即成交”的订单，距离恒为 0，没有正的距离样本可用。</p>
+          <p><b>已批准的处理。</b>θ_mkt 直接取同一个沪市参数包里独立估出的 θ_bbo，并在参数包里登记为“派生字段”。即：<b>五项独立估计 + 一项派生约束</b>。</p>
+        </div>
+        <div>
+          <p><b>依据。</b>在沪市公开候选中，新单入场时离对手价的距离，与普通的离最优报价距离是同一组数值；这个尺度同时服务 px、act、近盘口行为、链条和上下文多处计算。</p>
+          <p><b>不能误读为：</b>第六项被独立估出来了；或借用了深市数值。深市两个值恰好都是 2.885，是两次独立估计碰巧相等，不是绑定的理由。如果沪市 θ_bbo 本身没有正样本，仍然停止。</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="more" open>
+      <summary>八组结构参数：各自估什么、怎样取样</summary>
+      <div class="table-wrap">
+        <table class="groups">
+          <thead><tr><th scope="col">参数组</th><th scope="col">用途（一句话）</th><th scope="col">取样与取值</th><th scope="col">注意</th></tr></thead>
+          <tbody data-table="groups"></tbody>
+        </table>
+      </div>
+      <p class="fig-note">P50 是中位数，P05、P99 分别是分布的低端和高端位置。各组沿用深市自己的样本资格、权重和精确归约算法，不能统称为“取中位数”。共同输入只构建一次；除 λ42 按 px、act 分别估计外，其余七组在依赖一致时共享。</p>
+    </details>
+  </div>
+</section>
+
+<section id="s6" aria-labelledby="s6-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">06</span>
+      <div>
+        <p class="kicker">单日定参试算</p>
+        <h2 id="s6-title">完整流程在一个偏重的交易日上跑通，结果可从存储完整复原；速度还没达到 60 秒目标</h2>
+        <p class="sec-lead">正式定参要跑 601 天。先挑一个偏重的代表日，把整套流程完整跑一遍，检查结果对不对、能不能从存储完整复原、资源够不够。代表日是 13 个认证日里按事件条数排第 75 百分位的那天（<button type="button" class="term" data-term="p75">P75 日</button>）：2026-06-30，共 18,948,950 个事件。</p>
+      </div>
+    </header>
+
+    <dl class="tiles">
+      <div><dt>股票</dt><dd><b>2,296</b><span>通过 · 排除 0 · 错误 0</span></dd></div>
+      <div><dt>完整命令耗时</dt><dd><b>100.2 秒</b><span>目标 60 秒，尚未达到</span></dd></div>
+      <div><dt>内存峰值</dt><dd><b>约 57 GiB</b><span>上限 100 GiB · 16 核</span></dd></div>
+      <div><dt>本日 θ_bbo = θ_mkt</dt><dd><b>5.7708</b><span>仅工程试算值，不是正式参数</span></dd></div>
+    </dl>
+
+    <div class="two-col">
+      <div>
+        <h3 class="sub tight">结果对不对</h3>
+        <ul class="facts">
+          <li>逐股核统计、结构支持、px/act 支持身份，与已验收的基准逐项一致。</li>
+          <li>F40 事实归档的 SHA 与四阶段分位数一致。</li>
+          <li>从持久存储完整恢复了 41,328 个支持数组和 2,296 份 F40 事实。</li>
+          <li>结果登记为“仅工程验证”：601 日正式定参未启动，正式因子计算次数为 0。</li>
+        </ul>
+        <p class="fig-note">审阅版本 143d9bb8。用户已授权必要修复、小样本验收和这次单日试算，同时明确不启动 601 日正式定参和正式因子计算。</p>
+      </div>
+      <figure class="figure flat">
+        <figcaption>
+          <b>单日完整命令耗时</b>
+          <span>同一代表日、同为 16 核上限，单位：秒</span>
+        </figcaption>
+        <div class="chart" data-chart="speed"></div>
+        <p class="fig-note">三次计时条件不完全相同，只用于看趋势：首版自行构建消息时钟；后两次复用已校验的消息时钟索引；100.2 秒包含完整持久回读，但不含最后清理热输入。三者都不含首次冷取数和首次编译。</p>
+      </figure>
+    </div>
+
+    <div class="callout plain">
+      <p class="callout-title">为什么不能用这个耗时直接推算 601 日工期</p>
+      <p>正式定参要跑两遍：第一遍估六核，全期冻结后第二遍再估结构参数。单日试算时，两遍在同一个进程里把输入留在内存中交接；跨 601 天不能这样做，必须另行设计第二遍输入怎样保存和重读，并实测“取数、压缩、写入、上传、完整回读、恢复”的总成本和存储峰值。此前约 83 秒只覆盖旧口径输入重建的一部分，2 × 601 × 83 ≈ 27.7 小时只是条件外推，不是实测，也不是下限。</p>
+    </div>
+  </div>
+</section>
+
+<section id="s7" aria-labelledby="s7-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">07</span>
+      <div>
+        <p class="kicker">一个需要单独诊断的因子</p>
+        <h2 id="s7-title">f26 有两道硬门槛，0.08% 的计时差异就可能让一只股票的因子值归零</h2>
+        <p class="sec-lead"><button type="button" class="term" data-term="f26">f26</button> 把同一方向、间隔足够近的主动成交连成“簇”再打分。它有两道硬规则：相邻两笔的时间间隔和消息间隔都不超过门槛，才连成一簇；簇结束后还要留出一段后续观察时间（案例中约 8.97 秒），如果“结束时刻 + 观察时间”超过 09:35，整簇不计入。硬门槛附近，很小的变化也可能造成跳变。</p>
+      </div>
+    </header>
+
+    <div class="f26" id="f26">
+      <div class="f26-head">
+        <p>案例：300187，2024-10-08，卖侧（深市模拟公开实验）</p>
+        <div class="seg" role="radiogroup" aria-label="消息轴">
+          <button type="button" role="radio" aria-checked="true" data-axis="S">原始消息轴</button>
+          <button type="button" role="radio" aria-checked="false" data-axis="Q">公开消息轴</button>
+        </div>
+      </div>
+      <div class="f26-step">
+        <p class="f26-label"><span>第一步</span>关键的一对相邻成交：连不连成一簇？</p>
+        <p class="f26-time">时间间隔 7.63 秒，不超过时间门槛（约 8.97 秒），两种消息轴下都满足。</p>
+        <div class="chart" data-chart="gate"></div>
+      </div>
+      <div class="f26-step">
+        <p class="f26-label"><span>第二步</span>簇结束后，还剩足够的观察时间吗？</p>
+        <div class="chart" data-chart="timeline"></div>
+      </div>
+      <p class="f26-result" data-slot="f26-result" aria-live="polite"></p>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <p>这里改变的 91 条消息约占原间隔的 0.08%，只是解释这一条边为什么跨过门槛，不代表全市场的计时误差。它说明了一件统计量看不到的事：在 104 只股票的样本中，该列的 p99 误差只有约 0.002 个截面尺度，最大值却约 2.40 个尺度。此前跨日对照中，可定义的最低秩相关约 0.973，也来自 f26 卖侧。</p>
+        <p>这个例子来自深市模拟公开实验和当时的冻结参数，不是真实沪市定参后的结果。</p>
+      </div>
+      <div>
+        <h3 class="sub tight">诊断计划（随正式参数包交付）</h3>
+        <ol class="plan">
+          <li>在一份基准输入上统计：连接边离门槛有多近，簇结束时刻离观察截止有多近，并列出 09:35 前 5 / 10 / 20 / 30 秒内的分布。</li>
+          <li>时间核、消息核各放大、缩小 5%，共 4 次扰动；复用已构建的输入，只重算聚类和 f26。</li>
+          <li>深市用最近的冻结参数做同样诊断，看沪市是否额外脆弱。</li>
+        </ol>
+        <p class="fig-note">已确定：f26 诊断不单独阻断整包参数签收；但实现错误、使用了未来信息、参数没有生效，仍须修复。±5% 检验的是参数敏感性，不冒充约 0.08% 的时钟差异。</p>
+      </div>
+    </div>
+
+    <details class="more">
+      <summary>展开：方法评审对 f26 的补充建议（尚未实施）</summary>
+      <div>
+        <p>评审建议把“参数签收”和“因子使用”分开：参数包可以签收，但不能因此自动认定 f26 可以无条件入模或用于阈值决策。补充建议包括：</p>
+        <ul>
+          <li><b>联合边界检查。</b>两道门是“同时满足”。两个门都只差一点时，单独放大任一门都不会连上，同时放大才会连上，四次单独扰动会漏掉这类边。可在已提取的节点上廉价检查两个角点。</li>
+          <li><b>报告覆盖率与分子分母。</b>只比较各次都可观察的订单，会把因合簇而失去资格的订单排除在外。应同时报告受影响订单、主动量、正贡献和实际分母。</li>
+          <li><b>列明 f27。</b>f27 使用同一套主动成交簇，f26 稳定不能自动为 f27 背书。</li>
+          <li><b>输入要完整。</b>定参用的精简输入省略了逐笔成交子事件，不能直接替代 f26 诊断需要的完整输入。</li>
+        </ul>
+        <p>这些建议没有扩大当前的运行范围。<a href="https://github.com/MengerWen/internship-dashboard/blob/main/docs/reports/2026-10-25-sse-method-choice-review.md">查看完整方法评审</a></p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="s8" aria-labelledby="s8-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">08</span>
+      <div>
+        <p class="kicker">下一步</p>
+        <h2 id="s8-title">先提速并备齐全期准入条件，再申请启动 601 日正式定参</h2>
+      </div>
+    </header>
+
+    <div class="two-col">
+      <div>
+        <h3 class="sub tight">待办</h3>
+        <ul class="todo-list">
+          <li class="doing"><span class="st">进行中</span><div><b>单日继续提速</b><p>当前 100.2 秒，目标 60 秒。每个提速版本各自重新验收，不继承上一版的结论。</p></div></li>
+          <li><span class="st">待做</span><div><b>全期来源与空间准入</b><p>核对 601 日来源库存、可靠的存储配额和各阶段峰值，开跑前重查磁盘余量。</p></div></li>
+          <li><span class="st">待做</span><div><b>设计两遍输入的全期生命周期</b><p>第一遍估核、冻结后第二遍重放；实测保存与重读精简输入的总成本。</p></div></li>
+          <li><span class="st">待授权</span><div><b>601 日正式定参与参数签收</b><p>来源合格、正样本与缺失分类完整、精确分位数可复核、上下游参数身份一致、运行包完整回读后签收；f26 诊断随包交付。</p></div></li>
+          <li><span class="st">之后</span><div><b>正式因子计算与因子研究</b><p>参数签收后另行推进正式因子面板、收益与 IC。</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub tight">需要决定的事</h3>
+        <ol class="decide">
+          <li><b>消息时钟误差是否可以接受。</b>逐列误差表已备好（第 04 节）。秩相关高只说明排序几乎不变，数值误差能否接受按用途决定。</li>
+          <li><b>f26 签收后可用于什么。</b>研究用途可以先行；若要用于硬阈值、跨市场统一排名，或把 0 解释为“没有该行为”，需先说明尾部样本和覆盖率。</li>
+          <li><b>是否采纳方法评审的补充诊断。</b>联合边界检查、f27 资格变化等建议尚未实施，也未扩大运行范围。</li>
+        </ol>
+      </div>
+    </div>
+
+    <details class="more">
+      <summary>展开：项目怎样走到今天</summary>
+      <div>
+        <ol class="timeline">
+          <li><time>9 月底</time><div><b>摸清可还原的边界</b>公开盘口和大部分可见数量可以精确还原；部分原始限价、细分市价类型和未公布的即时撤余数量，数学上无法唯一确定。</div></li>
+          <li><time>10.14</time><div><b>研究线 v2 留出检验</b>模型对原始属性的点估计没有跑赢简单基线，决定不把模型估计当成生产真值。</div></li>
+          <li><time>10.21</time><div><b>公开口径 v3 进入全市场验收</b>建立逐列公开定义、px/act 双版本和 540 个候选标识。</div></li>
+          <li><time>10.22</time><div><b>公开口径 v4/v5 与原生回放认证</b>修正纯成交订单的计分和配对顺序；确立原生回放 v2 与异常交易阶段的剔除规则。</div></li>
+          <li><time>10.23</time><div><b>适配程序收尾</b>同一时钟下输入层和因子引擎逐位一致；消息时钟误差逐列量化。</div></li>
+          <li><time>10.24</time><div><b>真实沪市 13 日输入验收；定参接入与首版单日试算</b>第六核绑定获批；首版单日试算 509 秒，结果与存储恢复通过。</div></li>
+          <li><time>10.25</time><div><b>单日试算提速与方法评审</b>审阅版 100.2 秒；方法评审建议把参数签收和因子使用分开。</div></li>
+        </ol>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="glossary" class="appendix" aria-labelledby="gl-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <span class="num" aria-hidden="true">附</span>
+      <div>
+        <h2 id="gl-title">术语与证据来源</h2>
+        <p class="sec-lead">正文里带下划虚线的词都可以点开看解释。下面是完整列表。</p>
+      </div>
+    </header>
+    <dl class="glossary" data-slot="glossary"></dl>
+
+    <h3 class="sub">原始报告（GitHub 固定版本）</h3>
+    <ul class="sources-list" data-slot="sources"></ul>
+    <p class="fig-note">本页由 2026-10-25 汇报重构而来，数字取自原汇报及上列原始报告，样本范围和代码版本以原始报告为准；输入实测证据截至 2026-10-24，单日试算审阅截至 2026-10-25。重构时没有取数、回放、定参或计算因子。历史实验保留各自的日期与 352 列范围；340 列是下一阶段的定参范围。</p>
+  </div>
+</section>
+
+</main>
+
+<div class="pop" id="term-pop" role="dialog" aria-modal="false" hidden>
+  <p class="pop-title"></p>
+  <p class="pop-body"></p>
+  <button type="button" class="pop-close" aria-label="关闭">×</button>
+</div>
+<div class="tip" id="tip" role="tooltip" hidden></div>

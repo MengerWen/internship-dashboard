@@ -1,0 +1,52 @@
+{
+  "days": [
+    ["2024-01-02", 102, 0, 0],
+    ["2024-04-01", 103, 0, 0],
+    ["2024-07-01", 103, 0, 0],
+    ["2024-10-08", 102, 1, 0],
+    ["2025-01-02", 104, 0, 0],
+    ["2025-04-01", 104, 0, 0],
+    ["2025-07-01", 103, 0, 0],
+    ["2025-10-09", 104, 0, 0],
+    ["2026-01-05", 104, 0, 0],
+    ["2026-04-01", 103, 0, 0],
+    ["2026-05-06", 101, 0, 0],
+    ["2026-06-01", 101, 3, 0],
+    ["2026-06-30", 101, 0, 0]
+  ],
+  "ledger": [
+    ["动作前盘口", 27035688, 0],
+    ["动作后盘口", 26807272, 0],
+    ["逻辑进场前盘口", 3850016, 0],
+    ["逻辑进场后盘口", 3850016, 0],
+    ["挂余量合并后盘口", 228416, 0],
+    ["生命周期数量", 6091044, 0]
+  ],
+  "groups": [
+    {"code": "F16", "name": "排队与价格尺度", "use": "衡量排队位置改善、价格优先度变化“有多大”的尺度。"},
+    {"code": "F31", "name": "链条门槛", "use": "一串订单动作要连成“链条”所需的最低连接强度。"},
+    {"code": "F40", "name": "配对门", "use": "判断新单是否在替换某笔旧单的一组门槛，分四个阶段估计。"},
+    {"code": "λ40", "name": "配对罚项", "use": "配对时从候选权重中扣除的罚分，避免弱候选被配上。"},
+    {"code": "λ42", "name": "报价响应罚项", "use": "判断订单是否在响应最优报价变化时扣除的罚分；px、act 分别估计。"},
+    {"code": "F85", "name": "深度尺度", "use": "衡量盘口深度（买一量 + 卖一量）大小的尺度。"},
+    {"code": "λRV", "name": "波动底线", "use": "计算波动时使用的下限，避免低波动时比值被放大。"},
+    {"code": "p03", "name": "耗竭尺度", "use": "衡量一次冲击后同侧盘口深度被耗掉多少的尺度。"}
+  ],
+  "sources": [
+    ["真实沪市输入交付与收尾验收（2026-10-24）", "https://github.com/MengerWen/sirui-quant-research/blob/ca151e453d42900913063c2229b6b2d5482fcfd6/reports/2026-10/2026-10-24-sse-input-handoff.md", "ca151e45"],
+    ["剩余差异归因与跨日尾部（2026-10-24）", "https://github.com/MengerWen/sirui-quant-research/blob/4dd7637137af3eb6b7c80a009cf3c2be24d0c3fc/reports/2026-10/2026-10-24-sse-residual-polish.md", "4dd76371"],
+    ["沪市独立定参：接入、小样本与首版试算（2026-10-24）", "https://github.com/MengerWen/sirui-quant-research/blob/b40d2566c3375913a081c3082efb518539abd45f/reports/2026-10/2026-10-24-sse-calibration-pilot.md", "b40d2566"],
+    ["沪市 P75 定参性能验收（2026-10-25）", "https://github.com/MengerWen/sirui-quant-research/blob/0e06f3b86a636e822d3033079d2446f757e941cc/reports/2026-10/2026-10-25-sse-p75-calibration-performance.md", "0e06f3b8"],
+    ["沪市 public v5：方法选择与正式使用条件评审（2026-10-25）", "https://github.com/MengerWen/internship-dashboard/blob/main/docs/reports/2026-10-25-sse-method-choice-review.md", ""],
+    ["深市 601 日六核 v7 全期签收（2026-10-22）", "https://github.com/MengerWen/sirui-quant-research/blob/56037aaf52eb3d56178e1de14a9e50a5d4300672/reports/2026-10/2026-10-22-kernel-601-v7-complete.md", "56037aaf"],
+    ["深市 F40 全期完成（2026-10-24）", "https://github.com/MengerWen/sirui-quant-research/blob/3b070177115229f4bacfdb15a79989f67348af4a/reports/2026-10/2026-10-24-f40-full-period-completion.md", "3b070177"],
+    ["沪市适配器收尾与消息时钟误差（2026-10-23）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-23-sse-adapter-closure.md", "2a0dac94"],
+    ["沪市适配器（2026-10-23）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-23-sse-adapter.md", "2a0dac94"],
+    ["排队优先度配对修正与归因（2026-10-22）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-22-sse-priorityworse-union-attribution.md", "2a0dac94"],
+    ["原生回放分层认证 r3（2026-10-22）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-22-sse-native-replay-certification-r3.md", "2a0dac94"],
+    ["公开因子定义 v3 实现（2026-10-21）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-21-sse-visible-v3-implementation.md", "2a0dac94"],
+    ["冻结参数回放兼容性（2026-10-20）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-20-frozen-parameter-replay-compatibility.md", "2a0dac94"],
+    ["原始属性研究线 v2 留出验证（2026-10-14）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-10/2026-10-14-sse-original-order-v2-validation.md", "2a0dac94"],
+    ["沪市原始委托可识别边界评审（2026-09-29）", "https://github.com/MengerWen/sirui-quant-research/blob/2a0dac94c750eed237207a6bc7d288a81d428130/reports/2026-09/2026-09-29-sse-original-order-reconstruction-review.md", "2a0dac94"]
+  ]
+}
