@@ -254,13 +254,17 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 26,
+        "days": 27,
         "span": [
           "2026-08-08",
-          "2026-10-19"
+          "2026-10-24"
         ],
         "unreviewed_days": [],
-        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
+        "incremental_review": {
+          "on": "2026-10-25",
+          "scope": "只刷新实际日点跨度，保留历史审阅责任。"
+        }
       },
       "fate": "landed",
       "fate_note": "8 月起多次清理，每批都保留恢复和删除记录。不同文件系统和账户的释放量分开计，不相加成同一块盘的空间。",
@@ -1159,7 +1163,7 @@
       "label": "沪市委托还原与公开可见因子",
       "short": "沪市委托",
       "purpose": "根据沪市逐笔数据还原委托，核对订单号、序列和成交价格，逐项判断只用公开可见信息能算哪些因子。",
-      "status": "active",
+      "status": "done",
       "closes_into": {
         "daily": [
           "2026-10-14",
@@ -1169,20 +1173,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 19,
+        "days": 20,
         "span": [
           "2026-08-19",
-          "2026-10-23"
+          "2026-10-24"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-24",
-          "scope": "刷新实际日点数量与跨度；本轮新增日点和迟到事实按本轮来源核对，不重写此前历史审阅责任。"
+          "on": "2026-10-25",
+          "scope": "只刷新实际日点跨度，保留历史审阅责任。"
         }
       },
       "fate": "landed",
-      "fate_note": "10月23日原生v2到公开v5的适配器完成真实沪市冒烟和深市回环收尾；Q_equity误差接受标准、沪市独立定参及全历史生产仍待推进。",
+      "fate_note": "10月24日剩余分差归因闭合，13日输入适配和104股票日独立账本验收通过；公开定义所需前置项目收尾，后续进入340列独立定参。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1232,6 +1236,18 @@
           ],
           "title": "输入替换局部验收、版本边界与缓存阻塞",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/68790e00a005899842ebcadcce7fcd32dabcaf6b/reports/2026-10/2026-10-21-sse-visible-v3-substitution-acceptance.md#L1-L105"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-sse-input-handoff.md",
+          "lines": [
+            1,
+            116
+          ],
+          "title": "沪市13日输入交付与前置项目收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-sse-input-handoff.md#L1-L116"
         }
       ]
     },
@@ -1447,22 +1463,23 @@
           "2026-10-07",
           "2026-10-21",
           "2026-10-22",
-          "2026-10-23"
+          "2026-10-23",
+          "2026-10-24"
         ]
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 35,
+        "days": 36,
         "span": [
           "2026-07-07",
-          "2026-10-23"
+          "2026-10-24"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-24",
-          "scope": "刷新实际日点数量与跨度；本轮新增日点和迟到事实按本轮来源核对，不重写此前历史审阅责任。"
+          "on": "2026-10-25",
+          "scope": "只刷新实际日点跨度，保留历史审阅责任。"
         }
       },
       "fate": "landed",
@@ -1677,9 +1694,9 @@
       "label": "修正回放下的 344 列重新定参",
       "short": "344重定参",
       "purpose": "按修正后的回放和独立的 344 列清单，重新采集六个全局核和八组结构参数各 601 日的观测，最后固定参数并交给下游。",
-      "status": "active",
+      "status": "done",
       "fate": "landed",
-      "fate_note": "10月23日结构核心601日完成归约并冻结六组参数，F40定参前暂停；完整P75带采样最短62.54秒、无采样65.42秒，60秒目标未达到。",
+      "fate_note": "10月24日F40四阶段各601日完成，八组结构参数和正式运行包通过验收，原六组核心参数不变；参数包交给344列正式计算。",
       "closes_into": {
         "daily": [
           "2026-10-21",
@@ -1691,16 +1708,16 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 4,
+        "days": 5,
         "span": [
           "2026-10-20",
-          "2026-10-23"
+          "2026-10-24"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-24",
-          "scope": "刷新实际日点数量与跨度；本轮新增日点和迟到事实按本轮来源核对，不重写此前历史审阅责任。"
+          "on": "2026-10-25",
+          "scope": "只刷新实际日点跨度，保留历史审阅责任。"
         }
       },
       "source_refs": [
@@ -1739,6 +1756,18 @@
           ],
           "title": "P75完整冷启动验收与身份边界",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/68790e00a005899842ebcadcce7fcd32dabcaf6b/reports/2026-10/2026-10-21-kernel-p75-60s.md#L1-L66"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-f40-full-period-completion.md",
+          "lines": [
+            1,
+            62
+          ],
+          "title": "F40全期参数与运行包验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-f40-full-period-completion.md#L1-L62"
         }
       ]
     },
@@ -2175,6 +2204,110 @@
           ],
           "title": "量化私募与NEXT产品研究",
           "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+        }
+      ]
+    },
+    {
+      "id": "corrected-factor-344",
+      "track": "factor",
+      "label": "修正回放下的344列正式计算",
+      "short": "深市344计算",
+      "purpose": "使用修正回放和新冻结参数，计算并逐日验收深市344列正式因子，处理完整单日性能、来源缺口、存储与恢复。",
+      "status": "active",
+      "closes_into": {
+        "daily": [
+          "2026-10-24"
+        ]
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-25",
+        "days": 1,
+        "span": [
+          "2026-10-24",
+          "2026-10-24"
+        ],
+        "unreviewed_days": [],
+        "scope": "24日原始要求、固定材料、实现差异及原始回执；来源整体仍不完整。"
+      },
+      "fate": "landed",
+      "fate_note": "24日完整试算选定r08的388.55秒，300秒目标未通过；当晚启动正式逐日计算，首日盘点超时后确认产物可读并重启，恢复后进度待后续检查。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-corrected344-p75-factor-benchmark.md",
+          "lines": [
+            1,
+            104
+          ],
+          "title": "344列单日因子试算及停止选版",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-corrected344-p75-factor-benchmark.md#L1-L104"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "PLAN/2026-10-24-corrected344-production.md",
+          "lines": [
+            1,
+            35
+          ],
+          "title": "344列正式逐日计算计划与运行入口",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/PLAN/2026-10-24-corrected344-production.md#L1-L35"
+        }
+      ]
+    },
+    {
+      "id": "sse-calibration-340",
+      "track": "factor",
+      "label": "沪市340列独立定参",
+      "short": "沪市340定参",
+      "purpose": "在已验收的public v5输入上，为沪深共有340列独立产生沪市核尺度和八组结构参数，核对px/act、窗口敏感性、持久恢复与计算成本。",
+      "status": "active",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-25",
+        "days": 1,
+        "span": [
+          "2026-10-24",
+          "2026-10-24"
+        ],
+        "unreviewed_days": [],
+        "scope": "24日原始要求、固定材料、实现差异及原始回执；来源整体仍不完整。"
+      },
+      "fate": "landed",
+      "fate_note": "24日完成五股小样本及2296股代表日试算，主命令497.06秒；五核独立估计，第六字段绑定本期θ_bbo。601日正式定参和正式因子计算未启动。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-sse-input-handoff.md",
+          "lines": [
+            1,
+            116
+          ],
+          "title": "沪市13日输入交付与前置项目收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-sse-input-handoff.md#L1-L116"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-sse-calibration-pilot.md",
+          "lines": [
+            1,
+            91
+          ],
+          "title": "沪市340列小样本与完整代表日定参试算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-sse-calibration-pilot.md#L1-L91"
         }
       ]
     }
@@ -3489,6 +3622,102 @@
         "on": "2026-10-22",
         "basis": "200 日定标得到的 R19 参数交给旧因子全期正式计算。",
         "scope": "原始引用支持这条承接，不代表各阶段都已验收。"
+      }
+    },
+    {
+      "from": "corrected-replay-344",
+      "to": "corrected-factor-344",
+      "type": "依赖解除",
+      "date": "2026-10-24",
+      "source_date": "2026-10-24",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "601日六核、八组结构参数及正式运行包验收后，344列因子入口实际消费该冻结包。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-f40-full-period-completion.md",
+          "lines": [
+            1,
+            62
+          ],
+          "title": "F40全期参数与运行包验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-f40-full-period-completion.md#L1-L62"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-corrected344-p75-factor-benchmark.md",
+          "lines": [
+            1,
+            104
+          ],
+          "title": "344列单日因子试算及停止选版",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-corrected344-p75-factor-benchmark.md#L1-L104"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "PLAN/2026-10-24-corrected344-production.md",
+          "lines": [
+            1,
+            35
+          ],
+          "title": "344列正式逐日计算计划与运行入口",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/PLAN/2026-10-24-corrected344-production.md#L1-L35"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-25",
+        "basis": "601日六核、八组结构参数及正式运行包验收后，344列因子入口实际消费该冻结包。",
+        "scope": "实际输入与固定运行包承接；阶段完成状态分别核对。"
+      }
+    },
+    {
+      "from": "sse-v2",
+      "to": "sse-calibration-340",
+      "type": "依赖解除",
+      "date": "2026-10-24",
+      "source_date": "2026-10-24",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "13日公开输入与语义验收收尾后，340列独立定参使用同一public v5输入和Q_equity来源。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-sse-input-handoff.md",
+          "lines": [
+            1,
+            116
+          ],
+          "title": "沪市13日输入交付与前置项目收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-sse-input-handoff.md#L1-L116"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "6542955236311393e5879959d90933bc1049c5f4",
+          "path": "reports/2026-10/2026-10-24-sse-calibration-pilot.md",
+          "lines": [
+            1,
+            91
+          ],
+          "title": "沪市340列小样本与完整代表日定参试算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-sse-calibration-pilot.md#L1-L91"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-10-25",
+        "basis": "13日公开输入与语义验收收尾后，340列独立定参使用同一public v5输入和Q_equity来源。",
+        "scope": "实际输入与固定运行包承接；阶段完成状态分别核对。"
       }
     }
   ],

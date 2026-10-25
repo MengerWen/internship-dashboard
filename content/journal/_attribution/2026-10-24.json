@@ -1,0 +1,2309 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-24",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "2ecbeb7568630681aadf9ae3c585741c896e992e0a116a750622e0babdf1cd4b",
+  "rules_sha256": "cc5dc628f89af55f85b46abe6bc7b0fda56d531a1eea367f9a41afd25552360f",
+  "revisions": {
+    "sirui-quant-research": "6542955236311393e5879959d90933bc1049c5f4",
+    "Quant_Research-Trading": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "internship-dashboard": "d90a0e3c709f5d10d4184520b05be906c2fa5680"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "53417837ef9a8e65524dbd463bb337aa3dc740dc",
+      "date": "2026-10-24",
+      "subject": "补记10月23日结构完成、沪市适配与研究日志交付",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "每日日志内容或发布收据，只作维护，不循环计研究成果。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-10-22.md",
+        "content/journal/2026-10-23.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "2c47c0b0864a087c9eecd6c4628236715a9950bf",
+      "date": "2026-10-24",
+      "subject": "保存10月24日日志来源核对和线上发布收据",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "每日日志内容或发布收据，只作维护，不循环计研究成果。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-10-24.md",
+        "docs/journal-review/daily-updates/2026-10-24/receipt.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "d90a0e3c709f5d10d4184520b05be906c2fa5680",
+      "date": "2026-10-24",
+      "subject": "记录10月24日深市344因子P75全部试算与最快版本",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/szse-corrected344-p75-20261024/codec-probe-r01.json",
+        "artifacts/szse-corrected344-p75-20261024/exact-r04-r07.json",
+        "artifacts/szse-corrected344-p75-20261024/exact-r04-r11.json",
+        "artifacts/szse-corrected344-p75-20261024/pair-evidence-projection-probe.json",
+        "artifacts/szse-corrected344-p75-20261024/real-day-exactness-r04-r05.json",
+        "artifacts/szse-corrected344-p75-20261024/run-ledger.json",
+        "artifacts/szse-corrected344-p75-20261024/selected-r08-complete-process.json",
+        "artifacts/szse-corrected344-p75-20261024/selected-r08-guard.json",
+        "artifacts/szse-corrected344-p75-20261024/selected-resource-config.json",
+        "artifacts/szse-corrected344-p75-20261024/selected-version.json",
+        "artifacts/szse-corrected344-p75-20261024/server-selected-freeze-sync.json",
+        "artifacts/szse-corrected344-p75-20261024/shape-r08.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e4fcde36551a830fa1f7ebf1765010f70a1653f1",
+      "date": "2026-10-24",
+      "subject": "为F40计时入口显式配置本地进度路径",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-23-f40-daily-timing-baseline.md",
+        "scripts/benchmark_open5m_f40_daily.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4dc32d96c43135733decc8cb4b63019b5e641896",
+      "date": "2026-10-24",
+      "subject": "补充沪市剩余订单差异的完整诊断入口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-residual-polish.md",
+        "scripts/diagnose_sse_residual_gaps.py",
+        "scripts/tests/test_sse_residual_gaps.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9b32305e61bc64a789c5eb4d29bfb8214b67b99e",
+      "date": "2026-10-24",
+      "subject": "支持响应赢家中的多触发订单证据保存",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_sse_residual_gaps.py",
+        "scripts/tests/test_sse_residual_gaps.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "23aa640bbaf0e09867e926c5749fad0fd23a7c3f",
+      "date": "2026-10-24",
+      "subject": "交付F40四日定参耗时与资源基线",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/account-before.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/cleanup-plan.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/cleanup-receipt.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/daily-timings.csv",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/f40-stages.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/final-audit.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/guard.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/runtime-context.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/summary.json",
+        "reports/2026-10/2026-10-24-f40-daily-baseline-evidence/windows-tests.json",
+        "reports/2026-10/2026-10-24-f40-daily-timing-baseline.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3f597a1fdd0af48977aedec1ae2d1b3daff7043e",
+      "date": "2026-10-24",
+      "subject": "按类型与价格可见域闭合剩余订单分差",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_sse_residual_gaps.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e7a7adf5bbd83414d4c2a678afa6ab96e1b5ea55",
+      "date": "2026-10-24",
+      "subject": "按请求交易所选择报价验证缓存",
+      "status": "shared",
+      "chains": [
+        "corrected-replay-344",
+        "sse-v2"
+      ],
+      "reason": "同一提交交付报价路由修复及F40基线三项文件，按两个实际目标各分一半。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "revised_from": [
+        "sse-v2",
+        "corrected-replay-344"
+      ],
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-p75-under-60s.md",
+        "scripts/benchmark_open5m_f40_daily.py",
+        "scripts/tests/test_benchmark_open5m_f40_daily.py",
+        "因子/algobench/src/algobench/formal_quote_tick_cache.py",
+        "因子/algobench/tests/test_sse_quote_reference.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d0ef6e4bf45763d6a9f109a36c9ff0c70a3df31a",
+      "date": "2026-10-24",
+      "subject": "复用认证缓存补充跨日与真实沪市准入核验",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-residual-polish.md",
+        "scripts/run_sse_visible_v3_acceptance.py",
+        "scripts/tests/test_sse_crossday_polish.py",
+        "scripts/verify_sse_admission_polish.py",
+        "scripts/verify_sse_crossday_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e346934347a868c0b245a4810f9271312e785532",
+      "date": "2026-10-24",
+      "subject": "证明纯成交公开消息无法唯一确定原始优先级得分",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_sse_priorityworse_postmatch.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "815867af1de49981736197637020c62c38732bfe",
+      "date": "2026-10-24",
+      "subject": "复用对象发布并完整回读F40加工归档和日支持",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_f40_stage_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "74c570bf47e2feeffc86ed89413b89bf9a26f789",
+      "date": "2026-10-24",
+      "subject": "用有界对象清单核算F40测速产物容量",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_open5m_f40_daily.py",
+        "scripts/tests/test_benchmark_open5m_f40_daily.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b80d56aa287dab077a4c1e32b95252da0a5b05a4",
+      "date": "2026-10-24",
+      "subject": "按内存额度并行F40精确匹配并复用候选回放",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-p75-under-60s.md",
+        "scripts/benchmark_open5m_f40_daily.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_execution.py",
+        "因子/algobench/src/algobench/formal_f40_streaming.py",
+        "因子/algobench/tests/test_f40_memory_admission.py",
+        "因子/algobench/tests/test_f40_remaining_stage_efficiency.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7ec0b0c47d7bc1f4e4abdda6add3ee1cf5b12435",
+      "date": "2026-10-24",
+      "subject": "从认证来源核验沪市退役缓存的阶段与频道身份",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-residual-polish.md",
+        "scripts/tests/test_sse_admission_polish.py",
+        "scripts/verify_sse_admission_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b29401ea28ceab78767e27f56f69fe113f7f5346",
+      "date": "2026-10-24",
+      "subject": "统一F40工作进程线程预算和阶段收据发布",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_f40_memory_admission.py",
+        "因子/algobench/tests/test_f40_stage_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d64941031332d27c178c2a447b749b2696217e12",
+      "date": "2026-10-24",
+      "subject": "通过原生对象接口核验F40阶段控制记录",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_open5m_f40_daily.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/tests/test_benchmark_open5m_f40_daily.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "32dada7e5dc2680a09f4346336c889b7621164eb",
+      "date": "2026-10-24",
+      "subject": "归约沪市残差与跨日核验的逐股证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_sse_residual_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "36bfd10a3464cee134ea251cfcc99d5e59ad34b6",
+      "date": "2026-10-24",
+      "subject": "通过原生接口发布F40测速控制数据",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_open5m_f40_daily.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4bf059cc8b8e7297090c651ec997979d6bbd8b89",
+      "date": "2026-10-24",
+      "subject": "融合F40加工与anchor支持并流式发布加工归档",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-p75-under-30s.md",
+        "scripts/benchmark_open5m_f40_daily.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_f40_stage_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "075890d2dc0c9ec29aeb7423b8c2da6fd0da8c37",
+      "date": "2026-10-24",
+      "subject": "交付摘要仅保存派生统计与核验凭证",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_sse_residual_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76bf09f09cea91da1d323028472c60df39749dde",
+      "date": "2026-10-24",
+      "subject": "复用精确匹配并按计算路径补跑跨日重样本",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-residual-polish.md",
+        "scripts/run_sse_adapter_closure_market.py",
+        "scripts/tests/test_sse_crossday_polish.py",
+        "scripts/verify_sse_crossday_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dee94631fa4c91a256a55b17527045e7ab74c1bc",
+      "date": "2026-10-24",
+      "subject": "按F40得分上界减少候选权重运算",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-p75-under-30s.md",
+        "因子/algobench/src/algobench/formal_f40_candidates.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_f40_candidates.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d1216c381f576c84f8e6fb722e87e00e9d2b8c9d",
+      "date": "2026-10-24",
+      "subject": "重叠F40归档封口与精确支持归约",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-p75-under-30s.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/tests/test_f40_stage_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8848890220bac906db5471a1a8de9b68c491fd05",
+      "date": "2026-10-24",
+      "subject": "保留跨日复用结果的执行身份和完整资源凭证",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-residual-polish.md",
+        "scripts/summarize_sse_residual_polish.py",
+        "scripts/verify_sse_crossday_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "236983f45ccd68a1854bfc1bebf29ce7374988c7",
+      "date": "2026-10-24",
+      "subject": "复用F40阶段进程池并有界归还worker内存",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-p75-under-30s.md",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "27b2b3f9093f704dd72e22733d12ea07a9acf379",
+      "date": "2026-10-24",
+      "subject": "按已完整回读的发布对象核对F40测速空间",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_open5m_f40_daily.py",
+        "scripts/tests/test_benchmark_open5m_f40_daily.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c63c921eedbeebab5113dc791a49c352bec90c09",
+      "date": "2026-10-24",
+      "subject": "固定F40已验收的逐日计算与资源配置",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_open5m_f40_daily.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/tests/test_benchmark_open5m_f40_daily.py",
+        "因子/algobench/tests/test_f40_stage_publication.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "625fc4a7fa6d9b7c6fbcad79a25253fc182711e2",
+      "date": "2026-10-24",
+      "subject": "记录F40 P75日32.73秒验收与产物保留状态",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-p75-performance.md",
+        "PLAN/2026-10-24-f40-p75-under-30s.md",
+        "reports/2026-10/2026-10-24-f40-p75-performance-evidence/accepted.json",
+        "reports/2026-10/2026-10-24-f40-p75-performance-evidence/cleanup.json",
+        "reports/2026-10/2026-10-24-f40-p75-performance-evidence/guard.json",
+        "reports/2026-10/2026-10-24-f40-p75-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2d5b6e1da719e093302d24c455ce610f08c86e0f",
+      "date": "2026-10-24",
+      "subject": "核验跨日时钟极值并保留最大误差证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-residual-polish.md",
+        "scripts/diagnose_sse_clock_tail.py",
+        "scripts/summarize_sse_residual_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "92efec0fdae9c5838703015743bf58ae906f2dea",
+      "date": "2026-10-24",
+      "subject": "保留时钟尾部聚类的可用性与深度依据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_sse_clock_tail.py",
+        "scripts/summarize_sse_residual_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8891d9d611715ed2827980a12a0c6ed9fda5a8e8",
+      "date": "2026-10-24",
+      "subject": "按订单复用公开深度成交撤单索引",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-residual-polish.md",
+        "scripts/run_sse_visible_v3_acceptance.py",
+        "scripts/tests/test_sse_public_depth_index.py",
+        "scripts/verify_sse_crossday_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7c8ab240776b70bcc52c3d02ec419c04e2c4b66f",
+      "date": "2026-10-24",
+      "subject": "汇总时钟右删失与深度投影等值验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_sse_residual_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cc0a2a15fce157d2c93a958101d5c2673678085e",
+      "date": "2026-10-24",
+      "subject": "规范化交付凭证的可观测性布尔值",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_sse_residual_polish.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "502cf998e1bf798e007b9e5f17ed54a2711973db",
+      "date": "2026-10-24",
+      "subject": "接续全期F40定参并复用已冻结的六组核心参数",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f4b3fab9fe41c258a9c5d33071ab071231ea68cd",
+      "date": "2026-10-24",
+      "subject": "闭合沪市残差归因并交付跨日与准入证据",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-07-01-act_S-vs-act_H.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-07-01-native-vs-act_S.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-07-01-native-vs-px_S.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-07-01-px_S-vs-px_H.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-07-01-px_S-vs-px_Q.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-10-08-act_S-vs-act_H.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-10-08-native-vs-act_S.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-10-08-native-vs-px_S.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-10-08-px_S-vs-px_H.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/2024-10-08-px_S-vs-px_Q.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/admission-guard.json",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/admission-input-cleanup.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4dd7637137af3eb6b7c80a009cf3c2be24d0c3fc",
+      "date": "2026-10-24",
+      "subject": "保留交付凭证原字节及测试日志",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/.gitattributes",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/f76-f78-counterfactual.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/local-verification.json",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/priorityworse-groups.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/priorityworse-stock-closure.csv",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/tests-run.json",
+        "reports/2026-10/2026-10-24-sse-residual-polish-evidence/tests.txt",
+        "reports/2026-10/2026-10-24-sse-residual-polish.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2d6d0f5d8c00f087ba3f6e009e4555c1bb25d438",
+      "date": "2026-10-24",
+      "subject": "记录F40全期正式启动版本与容量准入",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/launch.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3a1cfa42b27eb15db6b6fc3f5fa51ab344dfe082",
+      "date": "2026-10-24",
+      "subject": "按完整验收与来源身份回收F40已消费的加工归档",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/retire_completed_f40_full_period_cache.py",
+        "scripts/tests/test_retire_completed_f40_full_period_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bababf6b763769854e746808f82f370063161248",
+      "date": "2026-10-24",
+      "subject": "持久保存F40资源摘要并核对超时控制写入",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0d5d74a19469bf7b6a34e82f8261529cf2e26e38",
+      "date": "2026-10-24",
+      "subject": "记录F40对象写入超时后的签收复核与恢复",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/recovery.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "84b462c63ba9252cb1b6b95d92a894182f2d9f0c",
+      "date": "2026-10-24",
+      "subject": "按已知日期盘点F40叶子目录并限制对象页宽",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/retire_completed_f40_full_period_cache.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b14ea530f384d7bde96d2a27651b3b3f2ca37a86",
+      "date": "2026-10-24",
+      "subject": "直接核对F40日期叶子与资源对象身份",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "148f5b00a08685d12e161bcb61958c84e2caf111",
+      "date": "2026-10-24",
+      "subject": "复用已签收的F40容量盘点并按日更新新增字节",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6ce9c9ea56d5072eb461b0a2ebdf4221b13aacaf",
+      "date": "2026-10-24",
+      "subject": "记录F40全量有界盘点的容量签收凭证",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/inventory-admission.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6faf0f9b1862a16954d8c6c486c449d4166b3858",
+      "date": "2026-10-24",
+      "subject": "保持F40持久控制目录与收据校验函数各自的作用域",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "08c1fe155ef69873c5ac97a89bbd4597ff6dd5f8",
+      "date": "2026-10-24",
+      "subject": "明确沪市公开输入交付语义并核对数量时间资格",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-input-handoff.md",
+        "docs/sse-public-input-handoff.md",
+        "因子/algobench/src/algobench/sse_public_adapter.py",
+        "因子/algobench/src/algobench/sse_visible_input.py",
+        "因子/algobench/tests/test_sse_input_handoff.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b73fa721ca54ad8c65b615a30670c36b6d1c851",
+      "date": "2026-10-24",
+      "subject": "补充真实沪市多日输入与独立账本验收入口",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/tests/test_sse_input_handoff_acceptance.py",
+        "scripts/verify_sse_input_handoff.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca151e453d42900913063c2229b6b2d5482fcfd6",
+      "date": "2026-10-24",
+      "subject": "签收沪市多日公开输入与因子移植前置验收",
+      "status": "assigned",
+      "chains": [
+        "sse-v2"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-v2": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        ".gitattributes",
+        "PLAN/2026-10-24-sse-input-handoff.md",
+        "docs/sse-public-input-handoff.md",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/acceptance.json",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/execution.json",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/multiday-guard.json",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/multiday.log",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/pilot-guard.json",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/pilot.json",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/provenance.json",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/runner-r03.log",
+        "reports/2026-10/2026-10-24-sse-input-handoff-evidence/runner-r03.log.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2fd528058da4fba17c4a330d0791a2a843a26bf8",
+      "date": "2026-10-24",
+      "subject": "从完整F40阶段接续发布并使用原生对象读写验收运行包",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/build_open5m_runtime_parameters.py",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/tests/test_build_open5m_runtime_publication.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ca5cb0f8b766348e2cff8efe68fae7a8e847aea7",
+      "date": "2026-10-24",
+      "subject": "限定完成阶段接续的数值身份与输入适配边界",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "scripts/complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f28c6a7a8e65797d968be621a692fe03e13617e8",
+      "date": "2026-10-24",
+      "subject": "将F40缓存退役凭证纳入最终留存容量盘点",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/complete_open5m_f40_calibration.py",
+        "scripts/tests/test_complete_open5m_f40_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3b070177115229f4bacfdb15a79989f67348af4a",
+      "date": "2026-10-24",
+      "subject": "签收F40全期八组参数、运行包与缓存退役证据",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-f40-full-period-completion.md",
+        "reports/2026-10/2026-10-24-f40-full-period-completion.md",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/cache-retirement-plan.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/cache-retirement-receipt.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/calculation-guard.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/delivery-audit.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/final-storage.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/finalization-guard.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/finalization-launch.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/finalization-monitoring.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/inventory-admission-r04.json",
+        "reports/2026-10/2026-10-24-f40-full-period-evidence/local-temporary-cleanup.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "478fbccd74aeacba2e5bc47ae02c2873ae2a9c5c",
+      "date": "2026-10-24",
+      "subject": "接通corrected-344冻结回放与P75单日因子验收",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "scripts/benchmark_corrected344_factors.py",
+        "scripts/run_open5m_depth_match_panel.py",
+        "scripts/run_open5m_raw_bank.py",
+        "scripts/tests/test_benchmark_corrected344_factors.py",
+        "因子/algobench/src/algobench/formal_cancel_source.py",
+        "因子/algobench/src/algobench/formal_depth_source.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_calibration_active_groups.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ec59750ad0603d18c9bbf15ace2a416356f23322",
+      "date": "2026-10-24",
+      "subject": "复用冻结范围身份加速全期参数收据校验",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/src/algobench/formal_runtime_corrected344.py",
+        "因子/algobench/tests/test_formal_calibration_active_groups.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b652b043bbfd9c4c0ed5f4f94c8cc60f46428307",
+      "date": "2026-10-24",
+      "subject": "核验JSON预检输入中的完整文件身份",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_corrected344_factors.py",
+        "scripts/tests/test_benchmark_corrected344_factors.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ea92127e02f9d377014ee2c1d280b92ffd01967d",
+      "date": "2026-10-24",
+      "subject": "按冻结注册表启动corrected-344正式因子消费者",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_formal_calibration_active_groups.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb0f72fbb634c4908b1c66423017d4ae619f904c",
+      "date": "2026-10-24",
+      "subject": "使用冻结注册表完整验收corrected-344旧因子来源",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "因子/algobench/tests/test_raw_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2181b13fae25f00365b263ebc341f541d40fc3aa",
+      "date": "2026-10-24",
+      "subject": "复用数值订单簿精确计算历史可见订单分类",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible_numeric.py",
+        "scripts/tests/test_szse_visible_numeric.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e66b3cb84ad1d7f8fe4fe82ec793c03505607902",
+      "date": "2026-10-24",
+      "subject": "按冻结窗口状态范围验收corrected-344因子",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/src/algobench/formal_window_state_comparison.py",
+        "因子/algobench/tests/test_formal_window_state_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a6c4e17bf19baf6ba45fdf2cf4798271a810edda",
+      "date": "2026-10-24",
+      "subject": "按冻结因子来源列数验收订单组件退役",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/release_model328_order_audits.py",
+        "scripts/tests/test_release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "39f9f0a3d197ffc94ac3ab786d5d733984643a89",
+      "date": "2026-10-24",
+      "subject": "复用评分进程池流水发布corrected-344单日日桶",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/configs/szse_corrected344_p75_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c142caf5a4486cb8b426daef73d9d29d5609f312",
+      "date": "2026-10-24",
+      "subject": "记录正式因子编排各阶段实际墙钟耗时",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal/panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0ec87365bc78ff75dd47c7aad321332059e15d7b",
+      "date": "2026-10-24",
+      "subject": "按规范内容复用注册表原始YAML身份哈希",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/src/algobench/formal/preregister.py",
+        "因子/algobench/tests/test_formal_registry_hash_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c6b4205db7b49aa5a802706d4c7cfd542599a06c",
+      "date": "2026-10-24",
+      "subject": "复用有界控制记录身份缓存和原生证据上传",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/src/algobench/artifact_io.py",
+        "因子/algobench/tests/test_formal_artifact_commit.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "229a55e0ea407c26745691a2baadf78ae7fc19b4",
+      "date": "2026-10-24",
+      "subject": "复用深市回放成交的订单位置索引",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "scripts/tests/test_szse_replay_production.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "796e362afb49ed2280954911331850397564920d",
+      "date": "2026-10-24",
+      "subject": "并行发布完整日桶与因子制品并等待全部事务",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/tests/test_formal_day_publication_overlap.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9403dea9bda57017e33daf19f326121e71f5e176",
+      "date": "2026-10-24",
+      "subject": "为冻结328范围回归显式绑定历史注册定义",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_formal_feature_scope.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3997a8c2207885e09c54774aba528fb0dc870f57",
+      "date": "2026-10-24",
+      "subject": "采用完整日末8桶资源配置并保存试算配置凭证",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/r06-resource-config.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5b42a0c5816ae8d93a5ddb98a6f2f619e8e5a462",
+      "date": "2026-10-24",
+      "subject": "让Linux独立订单验收继承已预载的forkserver内核",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_day_buckets.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a0a8eb7ff49d93bf58d3dcda0c0b59294ea9b16e",
+      "date": "2026-10-24",
+      "subject": "为完整四来源链路提供显式剖析诊断入口",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "scripts/benchmark_corrected344_factors.py",
+        "scripts/tests/test_benchmark_corrected344_factors.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0cede02f02561e8bd5cd7200b6cfe62127538002",
+      "date": "2026-10-24",
+      "subject": "复用数组归约生成响应和组件订单证据输出",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/pair-evidence-projection-probe.json",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_formal_pair_evidence_projection.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "db7b9f87408455971f96908f42bd0bf4248687b2",
+      "date": "2026-10-24",
+      "subject": "在日回调后立即发布辅助来源并等待全部终态",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "86e85266a1b8476ebd3accf464c826ef3824ab35",
+      "date": "2026-10-24",
+      "subject": "采用共享计算池的512MiB完整股票发布批次",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/configs/szse_corrected344_p75_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "318689a85d041b9bdfad4ed00a8549523a644e21",
+      "date": "2026-10-24",
+      "subject": "按市场冲击消费者投影初始队列证据并保留完整数量核账",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "scripts/tests/test_szse_queue_evidence_projection.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_impacts.py",
+        "因子/algobench/src/algobench/szse_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "be0054ea08bfb64a0dad644cdb9c9e5b45c5d016",
+      "date": "2026-10-24",
+      "subject": "按完整P75实测采用传统八桶发布配置",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/r09-resource-config.json",
+        "因子/algobench/configs/szse_corrected344_p75_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c135d92fc1dcf3b8e3e5fccef1de2442e473b9f",
+      "date": "2026-10-24",
+      "subject": "状态和用途因子共享后态报价标量投影",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/options.py",
+        "scripts/tests/test_replay_post_materialization.py",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/event_prestate.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/src/algobench/formal_window_states_v2.py",
+        "因子/algobench/tests/test_post_state_projection.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b1d78aa411634e5efac38a0ce9d5637db43b7ed",
+      "date": "2026-10-24",
+      "subject": "统一公开BBO定参与评分动作并传递运行尺度和报价单位",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_open5m_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_factor_input.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_response_actions.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_response_templates.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_sse_calibration_actions.py",
+        "因子/algobench/tests/test_sse_public_corrections.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab19270473956254c36b46e22d589bef5e05cc52",
+      "date": "2026-10-24",
+      "subject": "完整计算日并行发布辅助来源与主因子输出",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "因子/algobench/configs/szse_corrected344_p75_resources_v1.json",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_model328_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37eaf8f25b548288488462b621a4224ab7ba508e",
+      "date": "2026-10-24",
+      "subject": "绑定并记录P75计算进程的十六物理核亲和配置",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "scripts/benchmark_corrected344_factors.py",
+        "scripts/tests/test_benchmark_corrected344_factors.py",
+        "因子/algobench/configs/szse_corrected344_p75_resources_v1.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8ecded4c1bd71ef133314552ad9c478ffb0913f7",
+      "date": "2026-10-24",
+      "subject": "接入沪市340列五核派生合同与共享双变体定参采集试算",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/calibrate_kernel_scales.py",
+        "scripts/verify_sse_calibration_pilot.py",
+        "因子/algobench/configs/formal_kernel_calibration_sse_public_340_v1.yaml",
+        "因子/algobench/src/algobench/formal_calibration_lineage.py",
+        "因子/algobench/src/algobench/formal_sse_calibration.py",
+        "因子/algobench/tests/test_formal_sse_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e5e7ecb15904c37fa82771c86a2e2ebe4b7ec45e",
+      "date": "2026-10-24",
+      "subject": "复用已哈希热输入并从认证三表构建试算频道时钟",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/certify_sse_native_replay_r2.py",
+        "scripts/verify_sse_calibration_pilot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "db6cdd45572df9651a653e47c36f5a71a28084ff",
+      "date": "2026-10-24",
+      "subject": "按采集器投影候选列并核验试算产物的完整恢复",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/verify_sse_calibration_pilot.py",
+        "因子/algobench/src/algobench/formal_sse_calibration.py",
+        "因子/algobench/tests/test_formal_sse_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c6330810e97371e94ad8331b3854538871e8663f",
+      "date": "2026-10-24",
+      "subject": "冻结深市344因子最快完整实测版本并保存全部试算证据",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "lv2_snapshot_workspace/src/snapshot/replay/options.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/szse.py",
+        "lv2_snapshot_workspace/src/snapshot/replay/visible.py",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/codec-probe-r01.json",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/exact-r04-r07.json",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/exact-r04-r11.json",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/r12-resource-config.json",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/real-day-exactness-r04-r05.json",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/run-ledger.json",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/selected-r08-complete-process.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "78527c8440707b93e483df3e93a7108e19d583db",
+      "date": "2026-10-24",
+      "subject": "记录选定试算缓存条件与服务器停止核验",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-benchmark.md",
+        "reports/2026-10/2026-10-24-corrected344-p75-factor-evidence/server-selected-freeze-sync.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "680925fda3233ecd7bbb4e7a5d1da673b48b4da9",
+      "date": "2026-10-24",
+      "subject": "分别记录试算实际并发与归档暂存边界并保留独立恢复凭证",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/verify_sse_calibration_pilot.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "48fc733e019a917e5034541cbda3b51964beeeb6",
+      "date": "2026-10-24",
+      "subject": "为深市344列正式任务复用日级明细摘要与恢复验收",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/compact_accepted_day_details.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/tests/test_accepted_detail_retention.py",
+        "因子/algobench/src/algobench/formal_accepted_detail_retention.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2415fddec874ec84342904ba1760980af9539cc7",
+      "date": "2026-10-24",
+      "subject": "以r08评分配置启动深市344列正式逐日计算",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-production.md",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_corrected344_factor_production.sh",
+        "scripts/tests/test_corrected344_factor_production.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5f7a9b303b3754d1ac2ed6cf1b1db89f4d6768cd",
+      "date": "2026-10-24",
+      "subject": "在I/O控制器未提供计数时保留明确的不可用状态",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-corrected344-production.md",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_corrected344_factor_production.sh",
+        "scripts/tests/test_corrected344_factor_production.py",
+        "因子/algobench/src/algobench/formal_accepted_detail_retention.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b40d2566c3375913a081c3082efb518539abd45f",
+      "date": "2026-10-24",
+      "subject": "记录沪市定参小样本与P75完整试算、恢复和资源预算",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-sse-calibration-pilot-evidence.json",
+        "reports/2026-10/2026-10-24-sse-calibration-pilot.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9bf5f42ebbf6c27b65dff1d737f8d5d5f0731ad2",
+      "date": "2026-10-24",
+      "subject": "Add verified two-account S3 trial cleanup",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wangly-account-before.json",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wangly-corrected-trials.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wangly-discovery.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wangly-scope-samples.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wangly-spec.json",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wangly-task-trees.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wangly-trials-native.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wenjie-discovery.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wenjie-replay-trials.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wenjie-scope-samples.jsonl",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wenjie-spec.json",
+        "reports/2026-10/2026-10-24-dual-account-s3-cleanup-evidence/wenjie-task-trees.jsonl"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6542955236311393e5879959d90933bc1049c5f4",
+      "date": "2026-10-24",
+      "subject": "批量投影沪市公开逻辑入场及前后态以减少逐行查表",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "逐提交文件、相关实现差异及对应固定计划、报告和原始结果按实际目标归属；共享实现不重复分给下游消费者。",
+      "review_basis": "2026-10-25：本轮完整92条增量提交、相关差异、固定材料与实际回执；提交不单独证明运行成功。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-24-sse-p75-calibration-performance.md",
+        "因子/algobench/src/algobench/sse_public_adapter.py"
+      ]
+    }
+  ]
+}
