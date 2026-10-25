@@ -1,6 +1,6 @@
 # 2026-10-25 沪市委托还原验收与独立定参汇报
 
-正式页面为 `content/daily/2026-10-25.show.html`，同日 Markdown 提供日报标题、摘要和文字入口。页面采用既有分页主线与案例样式，共14个主题、6个案例；新增证据按输入验收、差异处理、340列定参、f26尾部四个问题组织。八组参数的细则可按需展开。
+正式页面为 `content/daily/2026-10-25.show.html`，同日 Markdown 提供日报标题、摘要和文字入口。页面已于同日重构为单页8节：为什么要还原、还原规则、三类验收、公开口径对因子值的影响、340列定参方法、单日试算、f26门槛风险与下一步。每节标题直接给出结论，正文术语可点开解释；八组参数细则、逐日验收结果和全部352列误差表可按需展开。最初的14主题、6案例分页版见提交 `6c52212`。
 
 报告区分输入交付、单日工程试算与全期正式定参：输入与单日工程试算已通过；340列、f26诊断用途及第六核绑定已确定；601日正式定参与因子计算尚未启动。没有将工程试算值写成全期冻结参数。
 
@@ -14,13 +14,18 @@
 
 ## 重建与检查
 
-沿用原作者源目录 `scripts/sse_reconstruction_report_20261023/`，构建入口输出10月25日页面：
+当前页面由 `scripts/sse_report_20261025/` 中的模板、样式、脚本和数据生成。352列误差、20项机制、因子名和八组参数取法仍读取原作者数据 `scripts/sse_reconstruction_report_20261023/data.json`，`update_provenance` 也保留在该文件中。构建时按页面实际用到的字符内嵌 Noto Serif SC 与 Libre Baskerville 子集：
 
 ```powershell
-python -X utf8 scripts/build_sse_reconstruction_report_20261023.py
-python -X utf8 scripts/build_sse_reconstruction_report_20261023.py --check
-python -X utf8 scripts/verify_sse_reconstruction_report_20261023.py --preview
+python -X utf8 scripts/build_sse_report_20261025.py
+python -X utf8 scripts/build_sse_report_20261025.py --check
 ```
+
+原生成与校验入口 `scripts/build_sse_reconstruction_report_20261023.py`、`scripts/verify_sse_reconstruction_report_20261023.py` 写同一文件，再次运行会把新版覆盖回旧版，已在重构提交 `c07b34e` 中移除。
+
+重构版检查：构建 `--check` 一致，内嵌脚本通过 `node --check`。使用项目现有 Playwright 与 Chromium，在1440与390像素宽度下逐项操作订单消息播放、术语解释、误差图查找与悬停、352列数据表、f26消息轴切换和章节导航，无控制台错误和全局横向溢出。按站点 `prepareIsolatedHtml` 的注入方式在 `sandbox="allow-scripts"` 的 srcdoc iframe 中加载，`content-enhance.js` 给表格加的 max-content 包装由页面样式中和。站点真实Builder的定向在线、离线构建均把展示页登记为 `daily/2026-10-25.show.html`；临时副本出现mtime回退提示，不在Git中。重构只改变展示方式与文字组织，数字取自原汇报和研究仓库的固定版本报告，没有访问服务器、查询Doris或运行计算。
+
+### 原版检查记录（6c52212）
 
 JavaScript语法、生成内容一致性、自包含资源和历史数据保留检查通过。站点真实Builder的定向在线、离线构建均把展示页登记为 `daily/2026-10-25.show.html`。定向构建不含其他日期、搜索索引和无关资产；临时副本不在Git中，时间来源出现mtime回退提示，不把它称为正式构建零警告。
 
