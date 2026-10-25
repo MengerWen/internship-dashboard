@@ -1,4 +1,4 @@
-"""Build the standalone 2026-10-23 SSE reconstruction report from frozen evidence."""
+"""Build the standalone 2026-10-25 SSE reconstruction and calibration report."""
 from __future__ import annotations
 
 import argparse
@@ -15,7 +15,7 @@ from fontTools.ttLib import TTFont
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "scripts/sse_reconstruction_report_20261023"
-OUTPUT = ROOT / "content/daily/2026-10-23.show.html"
+OUTPUT = ROOT / "content/daily/2026-10-25.show.html"
 FONT_FILES = {400: "NotoSerifSC-Regular.woff2", 700: "NotoSerifSC-Bold.woff2"}
 
 
@@ -68,9 +68,9 @@ def build() -> str:
     css = "\n".join((SOURCE / name).read_text(encoding="utf-8") for name in ["report.css", "reader.css"])
     css = re.sub(r"@font-face\{[^}]*\}\s*", "", css)
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False).replace("</", "<\\/")
-    title = "26.10.23 沪市原始委托还原：公开事实、适配验收与沪市定参衔接"
-    header = '<header class="topbar"><span class="report-name"><span class="reader-date">26.10.23</span>　沪市原始委托还原</span><nav class="view-nav" aria-label="阅读方式"><button type="button" data-action="view" data-value="story" aria-pressed="true">分页主线</button><button type="button" data-action="view" data-value="cases" aria-pressed="false">六个案例</button></nav><button type="button" class="plain" data-action="glossary">术语短解</button><button type="button" class="plain" data-action="sources">技术与证据</button></header><div id="reading-state" class="reading-state" role="status" aria-live="polite">主线 1 / 11：项目的位置</div>'
-    fallback = f'<h1>{title}</h1><p>截至 2026-10-23，公开输入与真值时钟下的适配器回环已有签收；Q_equity 误差已量化，接受决定与独立沪市定参、正式面板仍待推进。</p>' + "".join(f'<section><h2>{v["title"]}</h2>{v["body"]}</section>' for v in data["source"].values())
+    title = "26.10.25 沪市原始委托还原：输入验收、能力边界与独立定参计划"
+    header = '<header class="topbar"><span class="report-name"><span class="reader-date">26.10.25</span>　沪市原始委托还原与定参计划</span><nav class="view-nav" aria-label="阅读方式"><button type="button" data-action="view" data-value="story" aria-pressed="true">分页主线</button><button type="button" data-action="view" data-value="cases" aria-pressed="false">六个案例</button></nav><button type="button" class="plain" data-action="glossary">术语短解</button><button type="button" class="plain" data-action="sources">技术与证据</button></header><div id="reading-state" class="reading-state" role="status" aria-live="polite">主线 1 / 14：项目总结果</div>'
+    fallback = f'<h1>{title}</h1><p>补充至 2026-10-25：真实沪市 13 日分层输入验收已完成；340 列独立定参仍在计划审核，第六核建议待审；正式因子计算尚未启动。</p>' + "".join(f'<section><h2>{v["title"]}</h2>{v["body"]}</section>' for v in data["source"].values())
     all_text = title + header + js + payload + fallback
     faces = "\n".join(font_face(w, all_text) for w in (400, 700))
     document = f'''<!doctype html>
@@ -80,14 +80,14 @@ def build() -> str:
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="report-font-fingerprint" content="{font_fingerprint()}">
-<meta name="description" content="截至2026年10月23日的沪市原始委托还原项目汇报，以分页图解和六个案例说明公开定义、适配器验收、时钟误差及定参与因子计算衔接。">
+<meta name="description" content="沪市原始委托还原汇报，补充至2026年10月25日：公开输入验收、剩余差异与能力边界、340列独立定参计划及f26阈值和窗口尾部诊断。">
 <title>{title}</title>
 <style>
 {faces}
 {css}
 </style>
 </head>
-<body data-report="sse-reconstruction-20261023">
+<body data-report="sse-reconstruction-20261025">
 {header}
 <main id="app" aria-label="项目汇报"></main>
 <dialog id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-head"><h2 id="evidence-title">技术与证据</h2><button type="button" class="plain" data-action="close-dialog">关闭</button></div><div id="evidence-body"></div></dialog>
@@ -117,7 +117,7 @@ def main() -> None:
         print("Report matches the frozen sources")
     else:
         OUTPUT.write_text(document, encoding="utf-8", newline="\n")
-        print(f"Wrote {OUTPUT.name}: {len(document.encode('utf-8')):,} bytes; 11 chapters, 6 cases, 352 error rows")
+        print(f"Wrote {OUTPUT.name}: {len(document.encode('utf-8')):,} bytes; 14 chapters, 6 cases, 352 error rows")
 
 
 if __name__ == "__main__":

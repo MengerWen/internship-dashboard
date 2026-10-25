@@ -6,7 +6,7 @@ const cases = [
   ['472 项旧参考差异','如何确认深市原生默认逻辑没有被误伤',7,'先将参考基准升级到包含 10-21 三项决议的新版本，从而把“前期口径更新”与“代码回归 bug”彻底区分开。'],
   ['间距从 9 变 5','为什么先后顺序没变，换个时钟因子值还会变',8,'即便订单顺序和价量完全不变，公开消息时钟也会改变两件事之间的序号差（Δseq），进而通过衰减核与配对窗口影响得分。']
 ];
-const relatedCases = [[0,1],[0],[1],[0,3],[2],[3],[4,5],[3,4],[5],[5],[4,5]];
+const relatedCases = [[0,1],[0],[1],[0,3],[2],[3],[4,5],[3,4],[5],[],[],[],[],[4,5]];
 
 function sceneResult(i) {
  const r=DATA.step_results[i];
@@ -14,11 +14,11 @@ function sceneResult(i) {
 }
 function sceneMarkup(i) {
  const s=scenes[i];
- return `<header class="scene-head"><div class="copy"><h1 tabindex="-1">${s[1]}</h1><p class="lead">${s[2]}</p></div><div class="page-count">${String(i+1).padStart(2,'0')} / 11</div></header>${sceneResult(i)}<div class="case-shortcuts"><span>用案例理解</span>${relatedCases[i].map(n=>btn('case-link',n,cases[n][0])).join('')}</div><div class="scene-body">${renderers[i]()}</div>`;
+ return `<header class="scene-head"><div class="copy"><h1 tabindex="-1">${s[1]}</h1><p class="lead">${s[2]}</p></div><div class="page-count">${String(i+1).padStart(2,'0')} / ${scenes.length}</div></header>${sceneResult(i)}${relatedCases[i].length?`<div class="case-shortcuts"><span>用案例理解</span>${relatedCases[i].map(n=>btn('case-link',n,cases[n][0])).join('')}</div>`:''}<div class="scene-body">${renderers[i]()}</div>`;
 }
 function deck() {
   app.innerHTML = `<div class="deck"><nav class="chapter-nav" aria-label="汇报章节"><p>全景 → 机制 → 证据 → 交接</p>${scenes.map((s,i)=>`<button type="button" data-action="scene" data-value="${i}" ${state.scene===i?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><span>${s[0]}</span></button>`).join('')}</nav>
-    <article class="page-shell">${sceneMarkup(state.scene)}<footer class="page-footer">${detailButton(scenes[state.scene][3],'本页详细依据与术语')}<div class="pager"><button class="secondary" data-action="page" data-value="-1" ${state.scene===0?'disabled':''}>← 上一页</button><button class="primary" data-action="page" data-value="1" ${state.scene===10?'disabled':''}>下一页 →</button></div><span class="fine">支持 ← → 翻页</span></footer></article></div>`;
+    <article class="page-shell">${sceneMarkup(state.scene)}<footer class="page-footer">${detailButton(scenes[state.scene][3],'本页详细依据与术语')}<div class="pager"><button class="secondary" data-action="page" data-value="-1" ${state.scene===0?'disabled':''}>← 上一页</button><button class="primary" data-action="page" data-value="1" ${state.scene===scenes.length-1?'disabled':''}>下一页 →</button></div><span class="fine">支持 ← → 翻页</span></footer></article></div>`;
   const nav = document.querySelector('.chapter-nav');
   const current = nav.querySelector('[aria-current]');
   if (nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0,current.offsetLeft-nav.offsetLeft-15);
@@ -47,7 +47,7 @@ function laboratory() {
 function render() {
   if (state.view==='cases') laboratory(); else deck();
   document.querySelectorAll('[data-action="view"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.value===state.view)));
-  document.getElementById('reading-state').textContent=state.view==='cases'?`案例 ${state.case+1} / 6：${cases[state.case][0]}`:`主线 ${state.scene+1} / 11：${scenes[state.scene][0]}`;
+  document.getElementById('reading-state').textContent=state.view==='cases'?`案例 ${state.case+1} / 6：${cases[state.case][0]}`:`主线 ${state.scene+1} / ${scenes.length}：${scenes[state.scene][0]}`;
 }
 
 function normalizeEvidenceLinks() {
@@ -79,7 +79,7 @@ function openDialog(title,body) {
 
 function evidence(key) {
   if (key&&DATA.source[key]) {const s=DATA.source[key];openDialog(s.title,s.body);}
-  else openDialog('技术细节、限制与证据',`<p>按主题核对完整定义、样本范围、参数口径与固定版本报告。这里的业务状态截至 2026-10-23。</p>${Object.entries(DATA.source).map(([k,s])=>`<details><summary>${s.title}</summary>${s.body}</details>`).join('')}<details><summary>本页引用的数据身份</summary><p>报告版本：<code>${esc(DATA.provenance.revision)}</code></p>${Object.values(DATA.provenance.inputs).map(v=>`<p><code>${esc(v.path)}</code><br>SHA-256：<code>${esc(v.sha256)}</code></p>`).join('')}</details>`);
+  else openDialog('技术细节、限制与证据',`<p>按主题核对完整定义、样本范围、参数口径与固定版本报告。原图表保留各自实测日期；输入交付证据至 2026-10-24，当前计划状态核对至 2026-10-25。</p>${Object.entries(DATA.source).map(([k,s])=>`<details><summary>${s.title}</summary>${s.body}</details>`).join('')}<details><summary>本页引用的数据身份</summary><p>原图表证据版本：<code>${esc(DATA.provenance.revision)}</code></p>${Object.values(DATA.provenance.inputs).map(v=>`<p><code>${esc(v.path)}</code><br>SHA-256：<code>${esc(v.sha256)}</code></p>`).join('')}</details><details><summary>本次补充的来源与审核状态</summary><p>正式定参尚未启动；第六核为待审建议。</p>${Object.values(DATA.update_provenance.sources).map(v=>`<p>${v.url?`<a href="${esc(v.url)}" target="_blank" rel="noopener noreferrer">${esc(v.path)}</a>`:`<code>${esc(v.path)}</code>（本地审核稿）`}<br>版本：${esc(v.revision)}<br>SHA-256：<code>${esc(v.sha256)}</code></p>`).join('')}</details>`);
 }
 
 function glossary() {
@@ -93,7 +93,7 @@ function glossary() {
     ['价格版 px / 可成交性版 act','同一笔没有余量挂出的成交订单，可以按实际成交价变化衡量追价，也可以按相对当时对手报价的可成交程度衡量主动性。两者是并行的计算口径，不是一个优于另一个的模型。'],
     ['union 合成得分','在逐笔订单层面将 L、P、C、R 四大行为族的候选得分合成为总分，再归约到股票日层面；它反映的是多维算法交易行为特征的合成强度，而非经过校准的算法交易概率。'],
     ['消息时钟与 Q_equity','这里的“时钟”指用来度量两个事件相隔多少条消息的序号（seq），而非物理秒数。Q_equity 基于整条通道内所有可见的 A 股消息统一编号，不能按单只股票各自压缩。'],
-    ['θ 与结构门限','θ 是核函数中的衰减尺度（按 exp(−d/θ)，距离为 θ 时权重降至 1/e；半衰距离为 θ ln(2)）；结构门限则决定哪些订单链、配对候选和盘口冲击能跨过门槛进入统计。这两类参数都必须在沪市样本上独立标定。'],
+    ['θ 与结构门限','θ 是核函数中的衰减尺度（按 exp(−d/θ)，距离为 θ 时权重降至 1/e；半衰距离为 θ ln(2)）；结构门限则决定哪些订单链、配对候选和盘口冲击能跨过门槛进入统计。本次拟用沪市样本标定，θ_mkt 建议由同包 θ_bbo 派生，仍待审核。'],
     ['路径 S 与路径 H','双路径回环实验的两端：路径 S 把深市认证真值直接按公开口径改写成输入表（作为标尺）；路径 H 先把同一份深市真值转换成沪市 A/T/C 消息流，再走沪市原生回放与适配器还原出来。'],
     ['逐位一致（Bitwise Identical）','指两个有限浮点数在底层二进制位模式上完全相同（两边同为 NaN 时也视为一致）。这比“数值差不多”严格得多，但结论仍严格限定在所测的样本与列范围内。'],
     ['W5 窗口与签收','W5 指开盘后 09:30–09:35 的前五分钟计算窗口；“签收”指特定代码版本在给定样本与口径下通过了验收标准，不能自动外推等同于全历史区间都已验收。'],
@@ -112,7 +112,7 @@ function mechanism(column) {
 }
 
 function worst() {
-  openDialog('p99 截面尺度误差最大的前 20 列及传导机制',`<p>基于全市场 2,888 只股票的实测汇总。误差以路径 S 的全市场截面稳健尺度 scale(S) 为分母，分位数统计涵盖零误差股票；传导机制说明严格区分【事实】与【推测】。</p><div class="table-wrap"><table><thead><tr><th>因子列</th><th>受影响股票占比</th><th>p99 / 截面尺度</th><th>最大值 / 截面尺度</th><th>Spearman ρ</th><th>误差传导机制</th></tr></thead><tbody>${sortedErrors.slice(0,20).map(r=>`<tr><td>${short(r.column)}</td><td>${pct(r.affected_fraction,2)}</td><td>${num(r.scaled_p99)}</td><td>${num(r.scaled_max)}</td><td>${r.spearman.toFixed(9)}</td><td>${mechanism(r.column)}</td></tr>`).join('')}</tbody></table></div><p class="fine">注：标为【事实】的列，已在代码层面确凿定位到序号间距（Δseq）进入衰减核或窗口的具体路径（但未将单只股票的误差进一步拆解为各子项的独立加权贡献）；标为【推测】的合成列，则尚未做逐个根分量或参数的消融实验。</p>`);
+  openDialog('p99 截面尺度误差最大的前 20 列及传导机制',`<p>基于 2026-06-30 全市场 2,888 只股票的历史实测汇总。误差以路径 S 的全市场截面稳健尺度 scale(S) 为分母，分位数统计涵盖零误差股票；传导机制说明严格区分【事实】与【推测】。</p><div class="table-wrap"><table><thead><tr><th>因子列</th><th>受影响股票占比</th><th>p99 / 截面尺度</th><th>最大值 / 截面尺度</th><th>Spearman ρ</th><th>误差传导机制</th></tr></thead><tbody>${sortedErrors.slice(0,20).map(r=>`<tr><td>${short(r.column)}</td><td>${pct(r.affected_fraction,2)}</td><td>${num(r.scaled_p99)}</td><td>${num(r.scaled_max)}</td><td>${r.spearman.toFixed(9)}</td><td>${mechanism(r.column)}</td></tr>`).join('')}</tbody></table></div><p class="fine">注：标为【事实】的列，已在代码层面确凿定位到序号间距（Δseq）进入衰减核或窗口的具体路径（但未将单只股票的误差进一步拆解为各子项的独立加权贡献）；标为【推测】的合成列，则尚未做逐个根分量或参数的消融实验。</p>`);
 }
 
 function zeroScales() {
@@ -124,15 +124,15 @@ function rankDistribution() {
 }
 
 function performance() {
-  openDialog('运行耗时边界、代码版本留痕与磁盘存储说明',DATA.source.status.body+`<h3>单股 000725 与全市场跑批的计时明细</h3><p>000725 单股输入构造耗时 111.411 秒；五次引擎调用每次约 319–385 秒，包含逐位比对、归约统计与内存回收在内的单股完整阶段共耗时 1,915.664 秒。之所以先把 000725 单独完整跑完，就是为了实打实走完它的全部比对，避免大批量任务万一触发耗时上限截断时把“未跑完”误当成“验收通过”。</p><p>全市场主 guard 任务的有效计算墙钟为 3,340.953 秒（自然墙钟总耗时 6,040.937 秒，其中盘中交易时段自动冻结暂停了约 2,699.983 秒）。其余 2,887 只股票阶段平均并发占用 15.967 核；全部 15 次 guard 任务的有效计算墙钟合计 91.56 分钟。</p><div class="table-wrap"><table><thead><tr><th>工程与验证环节</th><th>对应状态与 Git 版本号</th></tr></thead><tbody><tr><td>本地代码提交</td><td>C2(a) 2ecaa8f4、C2(b) e07e0d6d、C2(c) cca9a6ef 分步独立提交；后续归因标签修正提交为 21520d85（未改动任何数值计算逻辑）。</td></tr><tr><td>GitHub 远端同步</td><td>研究代码已推送至 origin/main（原运行记录核对至 21520d85；最终报告与证据归档版本为 2a0dac94）。</td></tr><tr><td>wenjie 服务器同步</td><td>主跑批任务启动前快进同步至 f6592c06；主任务正常退出后，快进至 8de2ca87 执行补充归约统计。</td></tr><tr><td>实际跑批验证</td><td>C4 / C5 主实验在 f6592c06 下跑完，act 对比 v5 及最终汇总归约在 8de2ca87 下跑完；全部 15 次 guard 任务均以状态码 0 正常退出。</td></tr></tbody></table></div><p>注：我们把实际跑批时的代码版本与最终文档归档版本分开如实记录。整理本汇报时，并未重新连上服务器探测磁盘、读取真实沪市底层行情或重跑因子。</p>`);
+  openDialog('运行耗时边界、代码版本留痕与磁盘存储说明',DATA.source.status.body+`<h3>10 月 23 日历史实验：单股 000725 与全市场计时</h3><p>000725 单股输入构造耗时 111.411 秒；五次引擎调用每次约 319–385 秒，包含逐位比对、归约统计与内存回收在内的单股完整阶段共耗时 1,915.664 秒。之所以先把 000725 单独完整跑完，就是为了实打实走完它的全部比对，避免大批量任务万一触发耗时上限截断时把“未跑完”误当成“验收通过”。</p><p>全市场主 guard 任务的有效计算墙钟为 3,340.953 秒（自然墙钟总耗时 6,040.937 秒，其中盘中交易时段自动冻结暂停了约 2,699.983 秒）。其余 2,887 只股票阶段平均并发占用 15.967 核；全部 15 次 guard 任务的有效计算墙钟合计 91.56 分钟。</p><div class="table-wrap"><table><thead><tr><th>工程与验证环节</th><th>对应状态与 Git 版本号</th></tr></thead><tbody><tr><td>本地代码提交</td><td>C2(a) 2ecaa8f4、C2(b) e07e0d6d、C2(c) cca9a6ef 分步独立提交；后续归因标签修正提交为 21520d85（未改动任何数值计算逻辑）。</td></tr><tr><td>GitHub 远端同步</td><td>研究代码已推送至 origin/main（原运行记录核对至 21520d85；最终报告与证据归档版本为 2a0dac94）。</td></tr><tr><td>wenjie 服务器同步</td><td>主跑批任务启动前快进同步至 f6592c06；主任务正常退出后，快进至 8de2ca87 执行补充归约统计。</td></tr><tr><td>实际跑批验证</td><td>C4 / C5 主实验在 f6592c06 下跑完，act 对比 v5 及最终汇总归约在 8de2ca87 下跑完；全部 15 次 guard 任务均以状态码 0 正常退出。</td></tr></tbody></table></div><p>注：我们把实际跑批时的代码版本与最终文档归档版本分开如实记录。整理本汇报时，并未重新连上服务器探测磁盘、读取真实沪市底层行情或重跑因子。</p>`);
 }
 
 function calibrationIllustration() {
-  if(state.calibration===1) return `<div class="kernel-map">${[['墙钟时间','wall_seconds','两个动作之间相隔多少秒'],['消息序号','events','两个事件在消息流里相隔多少步'],['委托数量','qty','委托量与成交量的规模尺度'],['价格档位','price_ticks','成交价或挂单价之间相差多少个 tick'],['最优报价距离','bbo_ticks','相对于本侧或对手侧 BBO 的档位距离'],['可成交性距离','marketability_ticks','相对于对手盘最优报价的主动侵入距离']].map(r=>`<div><b>${r[0]}</b><code>${r[1]}</code><span>${r[2]}</span></div>`).join('')}</div><p class="fine">注：上方卡片列出的是需要在沪市样本上独立标定的六个距离维度（此处不展示尚未签收的沪市 θ 数值）。简单来说，六核尺度决定了“两个事件隔多近才算相近”，而下一步的结构参数则决定“哪些候选关系能跨过门槛参与配对和打分”。</p>`;
-  if(state.calibration===2) return `<div class="handoff-flow"><span>采集结构观测值</span>→<span>切分连续动作片段</span>→<span>筛选代表动作</span>→<span>计算配对代价并匹配</span>→<span>统计分位数门槛</span></div><p class="fine">注意：由于这五步环环相扣，一旦上游核参数或门限发生变化，就必须从头重跑，绝不能直接拿旧门限下存留的中间缓存接着算。九组结构参数的完整统计规则可点击左下角“本页详细依据与术语”展开查看（其中 f85 与 z12 直接取加权中位数、不除以 ln(2)，与距离尺度及排队优先度参数的统计规则区分）。</p>`;
-  return '';
+ if(state.calibration===1)return `<div class="kernel-map">${[['时间距离','wall_seconds'],['消息距离','events'],['数量距离','qty'],['价格距离','price_ticks'],['对手报价距离','bbo_ticks'],['可成交性尺度（拟派生）','marketability_ticks']].map(v=>`<div><b>${v[0]}</b><code>${v[1]}</code></div>`).join('')}</div><p class="fine">前五项按最近深市候选合同，在沪市做股票日→日期→全期三级中位数，再除以 ln(2)。第六项建议绑定本包 θ_bbo；没有正支持就停止，不补默认数。</p>`;
+ if(state.calibration===2)return `<div class="handoff-flow"><span>F40 连续片段</span>→<span>首个合法锚点</span>→<span>计算代价</span>→<span>一次精确匹配</span></div><p class="fine">上游参数变化时，依赖它的阶段须重算。F85 不除以 ln(2)；λRV 用 32 项平方的均值。八组完整规则可展开下表查看。</p>`;
+ if(state.calibration===3)return `<p class="fine">新增路径用独立参考验证；既有采集与精确归约能力按影响范围复核。f26 另出诊断，来源或实现错误仍不能通过。</p>`;
+ return '';
 }
-
 function updateLocation() {
   const hash=state.view==='cases'?`#view=cases&case=${state.case}&scene=${state.scene}`:`#scene=${state.scene}`;
   try {window.history.replaceState(null,'',hash);} catch (_) { /* Opaque srcdoc keeps its state in memory. */ }
@@ -144,7 +144,7 @@ function moveTop() {
 }
 
 function setScene(n) {
-  state.scene=Math.max(0,Math.min(10,n));state.view='story';
+  state.scene=Math.max(0,Math.min(scenes.length-1,n));state.view='story';
   render();updateLocation();moveTop();
 }
 
@@ -202,7 +202,7 @@ document.addEventListener('keydown',e=>{
 function readLocation() {
   const p=new URLSearchParams(location.hash.slice(1));
   const bounded=(key,max)=>{const n=Number(p.get(key));return Number.isInteger(n)&&n>=0&&n<=max?n:0;};
-  state.scene=bounded('scene',10);
+  state.scene=bounded('scene',scenes.length-1);
   if(p.get('view')==='cases')selectCase(bounded('case',5));
   else {state.view='story';render();}
 }
