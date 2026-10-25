@@ -70,7 +70,7 @@ def build() -> str:
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False).replace("</", "<\\/")
     title = "26.10.25 沪市原始委托还原：输入验收、能力边界与独立定参计划"
     header = '<header class="topbar"><span class="report-name"><span class="reader-date">26.10.25</span>　沪市原始委托还原与定参计划</span><nav class="view-nav" aria-label="阅读方式"><button type="button" data-action="view" data-value="story" aria-pressed="true">分页主线</button><button type="button" data-action="view" data-value="cases" aria-pressed="false">六个案例</button></nav><button type="button" class="plain" data-action="glossary">术语短解</button><button type="button" class="plain" data-action="sources">技术与证据</button></header><div id="reading-state" class="reading-state" role="status" aria-live="polite">主线 1 / 14：项目总结果</div>'
-    fallback = f'<h1>{title}</h1><p>补充至 2026-10-25：真实沪市 13 日分层输入验收已完成；340 列独立定参仍在计划审核，第六核建议待审；正式因子计算尚未启动。</p>' + "".join(f'<section><h2>{v["title"]}</h2>{v["body"]}</section>' for v in data["source"].values())
+    fallback = f'<h1>{title}</h1><p>补充至 2026-10-25：真实沪市 13 日分层输入验收已完成；第六核绑定已批准，340 列单日工程试算已通过；601 日正式定参与正式因子计算尚未启动。</p>' + "".join(f'<section><h2>{v["title"]}</h2>{v["body"]}</section>' for v in data["source"].values())
     all_text = title + header + js + payload + fallback
     faces = "\n".join(font_face(w, all_text) for w in (400, 700))
     document = f'''<!doctype html>

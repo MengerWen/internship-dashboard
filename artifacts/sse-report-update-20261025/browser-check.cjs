@@ -49,7 +49,7 @@ const result = { pages: [], cases: [], errors: [], previewServiceWarnings: [], e
       assert.equal(await page.locator('.method-details tbody tr').count(), 8);
       await page.locator('[data-action="evidence"][data-value="next"]').click();
       assert.equal(await page.locator('#evidence-dialog').isVisible(), true);
-      assert.match(await page.locator('#evidence-body').innerText(), /整体计划及第六核方法仍待审核/);
+      assert.match(await page.locator('#evidence-body').innerText(), /第六核绑定与代码修复、小样本、P75 试算已获批准并实施/);
       await page.locator('[data-action="close-dialog"]').click();
       await page.locator('[data-action="view"][data-value="cases"]').click();
       for (let i = 0; i < 6; i++) {

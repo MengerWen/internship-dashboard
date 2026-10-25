@@ -79,7 +79,7 @@ function openDialog(title,body) {
 
 function evidence(key) {
   if (key&&DATA.source[key]) {const s=DATA.source[key];openDialog(s.title,s.body);}
-  else openDialog('技术细节、限制与证据',`<p>按主题核对完整定义、样本范围、参数口径与固定版本报告。原图表保留各自实测日期；输入交付证据至 2026-10-24，当前计划状态核对至 2026-10-25。</p>${Object.entries(DATA.source).map(([k,s])=>`<details><summary>${s.title}</summary>${s.body}</details>`).join('')}<details><summary>本页引用的数据身份</summary><p>原图表证据版本：<code>${esc(DATA.provenance.revision)}</code></p>${Object.values(DATA.provenance.inputs).map(v=>`<p><code>${esc(v.path)}</code><br>SHA-256：<code>${esc(v.sha256)}</code></p>`).join('')}</details><details><summary>本次补充的来源与审核状态</summary><p>正式定参尚未启动；第六核为待审建议。</p>${Object.values(DATA.update_provenance.sources).map(v=>`<p>${v.url?`<a href="${esc(v.url)}" target="_blank" rel="noopener noreferrer">${esc(v.path)}</a>`:`<code>${esc(v.path)}</code>（本地审核稿）`}<br>版本：${esc(v.revision)}<br>SHA-256：<code>${esc(v.sha256)}</code></p>`).join('')}</details>`);
+  else openDialog('技术细节、限制与证据',`<p>按主题核对完整定义、样本范围、参数口径与固定版本报告。原图表保留各自实测日期；输入交付证据至 2026-10-24，授权、工程试算与正式运行边界核对至 2026-10-25。</p>${Object.entries(DATA.source).map(([k,s])=>`<details><summary>${s.title}</summary>${s.body}</details>`).join('')}<details><summary>本页引用的数据身份</summary><p>原图表证据版本：<code>${esc(DATA.provenance.revision)}</code></p>${Object.values(DATA.provenance.inputs).map(v=>`<p><code>${esc(v.path)}</code><br>SHA-256：<code>${esc(v.sha256)}</code></p>`).join('')}</details><details><summary>本次补充的来源与审核状态</summary><p>第六核绑定已批准，单日工程试算已通过；601 日正式定参及正式因子计算尚未启动。</p>${Object.values(DATA.update_provenance.sources).map(v=>`<p>${v.url?`<a href="${esc(v.url)}" target="_blank" rel="noopener noreferrer">${esc(v.path)}</a>`:`<code>${esc(v.path)}</code>（方法规划原稿；当前状态以本次审阅为准）`}<br>版本：${esc(v.revision)}<br>SHA-256：<code>${esc(v.sha256)}</code></p>`).join('')}</details>`);
 }
 
 function glossary() {
@@ -93,7 +93,7 @@ function glossary() {
     ['价格版 px / 可成交性版 act','同一笔没有余量挂出的成交订单，可以按实际成交价变化衡量追价，也可以按相对当时对手报价的可成交程度衡量主动性。两者是并行的计算口径，不是一个优于另一个的模型。'],
     ['union 合成得分','在逐笔订单层面将 L、P、C、R 四大行为族的候选得分合成为总分，再归约到股票日层面；它反映的是多维算法交易行为特征的合成强度，而非经过校准的算法交易概率。'],
     ['消息时钟与 Q_equity','这里的“时钟”指用来度量两个事件相隔多少条消息的序号（seq），而非物理秒数。Q_equity 基于整条通道内所有可见的 A 股消息统一编号，不能按单只股票各自压缩。'],
-    ['θ 与结构门限','θ 是核函数中的衰减尺度（按 exp(−d/θ)，距离为 θ 时权重降至 1/e；半衰距离为 θ ln(2)）；结构门限则决定哪些订单链、配对候选和盘口冲击能跨过门槛进入统计。本次拟用沪市样本标定，θ_mkt 建议由同包 θ_bbo 派生，仍待审核。'],
+    ['θ 与结构门限','θ 是核函数中的衰减尺度（按 exp(−d/θ)，距离为 θ 时权重降至 1/e；半衰距离为 θ ln(2)）；结构门限则决定哪些订单链、配对候选和盘口冲击能跨过门槛进入统计。使用沪市样本标定，θ_mkt 按已批准方法由同包 θ_bbo 派生；单日试算值尚不是全期冻结值。'],
     ['路径 S 与路径 H','双路径回环实验的两端：路径 S 把深市认证真值直接按公开口径改写成输入表（作为标尺）；路径 H 先把同一份深市真值转换成沪市 A/T/C 消息流，再走沪市原生回放与适配器还原出来。'],
     ['逐位一致（Bitwise Identical）','指两个有限浮点数在底层二进制位模式上完全相同（两边同为 NaN 时也视为一致）。这比“数值差不多”严格得多，但结论仍严格限定在所测的样本与列范围内。'],
     ['W5 窗口与签收','W5 指开盘后 09:30–09:35 的前五分钟计算窗口；“签收”指特定代码版本在给定样本与口径下通过了验收标准，不能自动外推等同于全历史区间都已验收。'],
@@ -128,7 +128,7 @@ function performance() {
 }
 
 function calibrationIllustration() {
- if(state.calibration===1)return `<div class="kernel-map">${[['时间距离','wall_seconds'],['消息距离','events'],['数量距离','qty'],['价格距离','price_ticks'],['对手报价距离','bbo_ticks'],['可成交性尺度（拟派生）','marketability_ticks']].map(v=>`<div><b>${v[0]}</b><code>${v[1]}</code></div>`).join('')}</div><p class="fine">前五项按最近深市候选合同，在沪市做股票日→日期→全期三级中位数，再除以 ln(2)。第六项建议绑定本包 θ_bbo；没有正支持就停止，不补默认数。</p>`;
+ if(state.calibration===1)return `<div class="kernel-map">${[['时间距离','wall_seconds'],['消息距离','events'],['数量距离','qty'],['价格距离','price_ticks'],['对手报价距离','bbo_ticks'],['可成交性尺度（由第五核派生）','marketability_ticks']].map(v=>`<div><b>${v[0]}</b><code>${v[1]}</code></div>`).join('')}</div><p class="fine">前五项按最近深市候选合同，在沪市做股票日→日期→全期三级中位数，再除以 ln(2)。第六项按已批准方法绑定本包 θ_bbo；没有正支持就停止，不补默认数。</p>`;
  if(state.calibration===2)return `<div class="handoff-flow"><span>F40 连续片段</span>→<span>首个合法锚点</span>→<span>计算代价</span>→<span>一次精确匹配</span></div><p class="fine">上游参数变化时，依赖它的阶段须重算。F85 不除以 ln(2)；λRV 用 32 项平方的均值。八组完整规则可展开下表查看。</p>`;
  if(state.calibration===3)return `<p class="fine">新增路径用独立参考验证；既有采集与精确归约能力按影响范围复核。f26 另出诊断，来源或实现错误仍不能通过。</p>`;
  return '';
