@@ -94,12 +94,14 @@
       // 控制点始终在两个记录日之间；一条线向前推进，不靠回头或鼓包避让。
       const ratios = [0, .25, .5, .75, 1];
       for (const ax of ratios) for (const ay of ratios) for (const bx of ratios) for (const by of ratios) {
+        // 控制点按行进方向排列，避免横向行进在中段停滞，把转弯挤成尖角。
+        if (ax > bx) continue;
         const curve = cubic(ax, ay, bx, by), [, b, c] = curve;
         const length = Math.hypot(b.x - from.x, b.y - from.y) + Math.hypot(c.x - b.x, c.y - b.y) + Math.hypot(to.x - c.x, to.y - c.y);
         const departure = vertical ? Math.abs(b.x - from.x) + Math.abs(to.x - c.x) : Math.abs(b.y - from.y) + Math.abs(to.y - c.y);
         candidates.push({curve, cost: length + departure * .12});
       }
-      for (const [ax, bx] of [[0, 1], [1, 0], [1 / 3, 2 / 3]]) for (let ay = 0; ay <= 1; ay += .125) for (let by = 0; by <= 1; by += .125) {
+      for (const [ax, bx] of [[0, 1], [.2, .8], [1 / 3, 2 / 3]]) for (let ay = 0; ay <= 1; ay += .125) for (let by = 0; by <= 1; by += .125) {
         const curve = cubic(ax, ay, bx, by), [, b, c] = curve;
         candidates.push({curve, cost: Math.hypot(b.x - from.x, b.y - from.y) + Math.hypot(c.x - b.x, c.y - b.y) + Math.hypot(to.x - c.x, to.y - c.y) + Math.abs(b.x - from.x) * .12 + Math.abs(to.x - c.x) * .12});
       }
@@ -107,12 +109,12 @@
       // 同日关系只允许浅弧，把必要的绕行摊开到整条线，不制造高耸的拱形。
       const limit = Math.min(28, Math.abs(dx) * .18), offsets = [0];
       for (let n = 4; n <= limit; n += 4) offsets.push(-n, n);
-      for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [1, 0]]) for (const a of offsets) for (const b of offsets) candidates.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b + Math.abs(ax - 1 / 3) + Math.abs(bx - 2 / 3)});
+      for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [.2, .8]]) for (const a of offsets) for (const b of offsets) candidates.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b + Math.abs(ax - 1 / 3) + Math.abs(bx - 2 / 3)});
     }
     for (const {curve} of candidates.sort((a, b) => a.cost - b.cost)) if (clear(curve)) return serialize(curve);
     if (dy && Math.abs(dy) <= 28) {
       const shallow = [], offsets = [-28, -24, -20, -16, -12, -8, -4, 0, 4, 8, 12, 16, 20, 24, 28];
-      for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [1, 0]]) for (const a of offsets) for (const b of offsets) {
+      for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [.2, .8]]) for (const a of offsets) for (const b of offsets) {
         shallow.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b});
       }
       for (const {curve} of shallow.sort((a, b) => a.cost - b.cost)) if (clear(curve)) return serialize(curve);
@@ -158,7 +160,7 @@
     }
     // 压缩后整列留白可能连成屏障；此时只允许整段弧线绕过，仍不拼接折角。
     const arcs = [], offsets = [0, -16, 16, -32, 32, -48, 48, -64, 64, -80, 80, -96, 96, -128, 128, -192, 192, -256, 256];
-    for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [1, 0]]) for (const a of offsets) for (const b of offsets) arcs.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b});
+    for (const [ax, bx] of [[1 / 3, 2 / 3], [0, 1], [0, .65], [.35, 1], [.2, .8]]) for (const a of offsets) for (const b of offsets) arcs.push({curve: [from, {x: from.x + dx * ax, y: from.y + a}, {x: from.x + dx * bx, y: to.y + b}, to], cost: a * a - a * b + b * b});
     for (const {curve} of arcs.sort((a, b) => a.cost - b.cost)) if (clear(curve)) return serialize(curve);
     const swap = p => ({x: p.y, y: p.x});
     for (const guide of guides.sort((a, b) => a.cost - b.cost)) {

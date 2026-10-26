@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
-function render({density = 14, width = 1000, source = '2026-10-16', middle = '2026-10-16', target = '2026-10-16', dropped = false, records, order = ['from', 'middle', 'to']} = {}) {
+function render({density = 14, width = 1000, source = '2026-10-16', middle = '2026-10-16', target = '2026-10-16', dropped = false, records, radii = {}, closed = [], order = ['from', 'middle', 'to']} = {}) {
   const elements = new Map();
   const element = () => ({innerHTML: '', hidden: false, scrollLeft: 0, clientWidth: width, classList: {contains: () => true}, insertAdjacentHTML() {}});
   const get = name => {
@@ -16,9 +16,9 @@ function render({density = 14, width = 1000, source = '2026-10-16', middle = '20
   const days = [...new Set(Object.values(records).flat())].sort().map(date => ({date, weekday: '工作日', chains: order.filter(id => records[id].includes(date))}));
   const view = Object.assign({}, context.window.JournalView, {
     mode: 'atlas', density, days, selection: null, selected: null,
-    registry: {tracks: [{id: 'track', label: '任务'}], chains: order.map(id => ({id, track: 'track', label: id, short: id, fate: id === 'middle' && dropped ? 'dropped' : ''})), handoffs: [{from: 'from', to: 'to', date: target, source_date: source, type: '派生'}]},
+    registry: {tracks: [{id: 'track', label: '任务'}], chains: order.map(id => ({id, track: 'track', label: id, short: id, fate: id === 'middle' && dropped ? 'dropped' : '', status: closed.includes(id) ? 'done' : 'active', end: records[id].at(-1)})), handoffs: [{from: 'from', to: 'to', date: target, source_date: source, type: '派生'}]},
     floatingNotes: {capture() {}}, visibleDays: () => days,
-    pointRadius: () => 4, pointNote: (day, id) => id === 'middle' && dropped ? {outcome: 'dropped'} : {}, pointWeight: () => 1,
+    pointRadius: (day, id) => radii[`${id}:${day.date}`] ?? 4, pointNote: (day, id) => id === 'middle' && dropped ? {outcome: 'dropped'} : {}, pointWeight: () => 1,
     pointEvidence: () => ({status: 'artifact'}), weightLabel: () => '', evidenceLabel: () => '',
     weightLegendHtml: () => '', highlightAtlas() {}
   });
@@ -107,6 +107,33 @@ test('绕点时整条线连续舒展，不在端点附近突然折向', () => {
   assert(turning < Math.PI / 2, '平缓的同日连线不应先急转再折回');
   assert(points.every(p => p.x >= atlas.positions.get('from') && p.x <= atlas.positions.get('to')), '绕行不能回头');
   assert(Math.max(...points.map(p => Math.abs(p.y - atlas.y('2026-10-16')))) < span / 4, '绕点弧度应随跨度舒展');
+});
+
+test('同日交接绕过大小不等的密集节点时，弧顶不能挤成尖角', () => {
+  const source = '2026-10-24', records = {
+    from: ['2026-10-20', '2026-10-21', '2026-10-22', '2026-10-23', source],
+    middle: [source, '2026-10-25'], to: [source, '2026-10-25']
+  };
+  const radii = {
+    'from:2026-10-20': 5.663, 'from:2026-10-21': 8.507, 'from:2026-10-22': 9.449,
+    'from:2026-10-23': 8.25, 'from:2026-10-24': 6.480,
+    'middle:2026-10-24': 7.125, 'middle:2026-10-25': 4.875,
+    'to:2026-10-24': 4.875, 'to:2026-10-25': 9.144
+  };
+  const {svg, atlas} = render({width: 224, source, target: source, records, radii, closed: ['from']});
+  const path = /class="journal-handoff-path"[^>]*d="([^"]+)"/.exec(svg)[1], points = samplePath(path);
+  let minimumRadius = Infinity;
+  for (let i = 1; i < points.length - 1; i++) {
+    const [a, b, c] = points.slice(i - 1, i + 2);
+    if (['from', 'to'].some(id => Math.hypot(b.x - atlas.positions.get(id), b.y - atlas.y(source)) < radii[`${id}:${source}`] + 4.2)) continue;
+    const cross = Math.abs((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
+    if (cross > 1e-10) minimumRadius = Math.min(minimumRadius, Math.hypot(b.x - a.x, b.y - a.y) * Math.hypot(c.x - b.x, c.y - b.y) * Math.hypot(c.x - a.x, c.y - a.y) / (2 * cross));
+  }
+  assert(minimumRadius >= 8, `可见弧线的转弯半径只有 ${minimumRadius.toFixed(2)}px，仍有近似尖角`);
+  for (const date of records.middle) {
+    const distance = Math.min(...points.map(p => Math.hypot(p.x - atlas.positions.get('middle'), p.y - atlas.y(date))));
+    assert(distance >= radii[`middle:${date}`] + 4.2, '平滑后仍须保留中间节点的留白');
+  }
 });
 
 test('不同日期与窄列宽下，曲线仍避让中间节点', () => {
