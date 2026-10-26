@@ -12,7 +12,16 @@
     <div class="hero-grid">
       <div>
         <p class="lead">我们的 L2 订单行为因子原本在深市开发和验收。沪市不公布每笔原始报单，只公布挂单、成交和撤单，所以要先把这些公开消息拼回“一笔一笔的订单”，再用沪市自己的数据重新估计因子里的尺度参数。</p>
-        <p class="lead">截至今天：<strong>订单还原和独立第六核已经验收</strong>；<strong>f26/f27 的有界观察资格研究已经完成</strong>；<strong>601 日正式定参和正式因子计算都还没有启动</strong>。</p>
+        <p class="lead">截至 10/25：<strong>订单还原和独立第六核已经验收</strong>；<strong>f26/f27 的有界观察资格研究已经完成</strong>；<strong>601 日正式定参和正式因子计算都还没有启动</strong>。</p>
+        <div class="callout" id="update-1026">
+          <p class="callout-title">10/26 更新：方法已定稿，正式定参与因子计算计划已交付</p>
+          <ul>
+            <li><b>f26/f27 不采用本页的前缀方案</b>，改为“相邻 v2”，三道验收门全部通过（见第 07 节）。</li>
+            <li><b>独立第六核</b>（第 05 节的公开入场方法）定为沪市正式方法。</li>
+            <li><b>审阅发现并修正一处实现偏差</b>：特殊/可成交通道的价格相似度原按尺度 1 计算，现改用 θ_mkt。沪市没有数值影响；深市需重估 f31、λ42 两组结构参数，并重算 344 列。</li>
+            <li><b>进展（10-26 13:40）</b>：深市旧版生产已停止，保留 323 日作对照；三日结构核对通过。沪市待服务器系统盘腾出空间后开始 601 日定参。</li>
+          </ul>
+        </div>
       </div>
       <dl class="hero-stats">
         <div><dt>真实沪市股票日通过验收</dt><dd><b>1,335</b><span>13 个交易日 · 适配错误 0</span></dd></div>
@@ -24,8 +33,8 @@
     <ol class="track" aria-label="项目进度">
       <li class="done"><span class="dot" aria-hidden="true"></span><b>还原沪市订单</b><span class="state">已验收</span><small>13 个真实交易日</small></li>
       <li class="done"><span class="dot" aria-hidden="true"></span><b>确定公开口径</b><span class="state">已完成</span><small>public v5，352 列可算</small></li>
-      <li class="done current"><span class="dot" aria-hidden="true"></span><b>独立定参工程与方法研究</b><span class="state">已完成</span><small>一次 P75 · 沪72 + 深16股票日</small></li>
-      <li class="todo"><span class="dot" aria-hidden="true"></span><b>601 日正式定参</b><span class="state">未启动</span><small>待空间准入与运行授权</small></li>
+      <li class="done"><span class="dot" aria-hidden="true"></span><b>独立定参工程与方法研究</b><span class="state">已完成</span><small>方法 10/26 定稿 · 验收通过</small></li>
+      <li class="todo current"><span class="dot" aria-hidden="true"></span><b>601 日正式定参</b><span class="state">计划已定</span><small>10/26 实施计划已交付，待开跑</small></li>
       <li class="todo"><span class="dot" aria-hidden="true"></span><b>正式因子计算</b><span class="state">未启动</span><small>参数签收之后</small></li>
     </ol>
 
@@ -452,6 +461,20 @@
       </div>
     </header>
 
+    <div class="callout" id="f26-update">
+      <p class="callout-title">10/26 更新：f26/f27 改用“相邻 v2”并通过验收；本节的前缀方案不再采用</p>
+      <div class="two-col">
+        <div>
+          <p><b>为什么不用前缀。</b>问题出在连接规则，不在观察规则。旧规则只看时间相邻，活跃股的“簇”会贯穿整个 5 分钟窗口：沪市 96.9%、深市 93.5% 的主动成交处在到 09:35 还没结束的簇里。登记原意是“局部、数量稳定的切片簇”。前缀只放宽了计入资格，度量对象仍然不对。</p>
+          <p><b>第一版修正已否决。</b>加数量门并做一对一匹配后，沪市仍有 27.66% 的节点到截止时未闭合，没有通过局部性验收。</p>
+        </div>
+        <div>
+          <p><b>采用的相邻 v2。</b>同侧紧邻两笔主动成交，间隔不超过 3.11 秒且数量相差不超过 10%，才连在一起；不跳过中间订单，也不新增需要定参的参数。三道验收门全部通过：到截止时仍未闭合的节点，沪市只有 0.66%，深市 0.58%；链长 P99 为 4，最长跨度 7.02 秒。</p>
+          <p><b>解读提醒。</b>按“数量彼此独立”的模型估算，实际连接中约六到九成可由偶然解释。f26/f27 度量的是“呈现切片特征的相邻主动成交”，不识别真实的拆单身份。</p>
+        </div>
+      </div>
+    </div>
+
     <div class="f26" id="f26">
       <div class="f26-head">
         <p>案例：300187，2024-10-08，卖侧（深市模拟公开实验）</p>
@@ -514,6 +537,19 @@
       </div>
     </header>
 
+    <div class="callout" id="plan-1026">
+      <p class="callout-title">10/26 更新：下一步已写成两市场实施计划，方法问题不再待决</p>
+      <div class="two-col">
+        <div>
+          <p><b>深市。</b>停止旧版生产（已完成，保留 323 日作对照）→ 三日核对实现偏差只影响 f31、λ42（已通过）→ 601 日重估这两组，生成新运行包 → P75 单日拆解核对 → 601 日 344 列全量重算，再与旧版逐列对照。</p>
+        </div>
+        <div>
+          <p><b>沪市。</b>腾出服务器系统盘空间 → 601 日输入库存与取数实测 → 第一遍估六核 → 第二遍估八组结构参数与 F40，生成运行包 → P75 验收 → 601 日 340 列正式生产。</p>
+          <p>下方“需要决定的事”第 3 项已不需要：前缀定义不再采用。</p>
+        </div>
+      </div>
+    </div>
+
     <div class="two-col">
       <div>
         <h3 class="sub tight">待办</h3>
@@ -546,6 +582,7 @@
           <li><time>10.23</time><div><b>适配程序收尾</b>同一时钟下输入层和因子引擎逐位一致；消息时钟误差逐列量化。</div></li>
           <li><time>10.24</time><div><b>真实沪市 13 日输入验收；定参接入与首版单日试算</b>第六核绑定获批；首版单日试算 509 秒，结果与存储恢复通过。</div></li>
           <li><time>10.25</time><div><b>独立第六核与 f26/f27 方法研究</b>独立方法 P75 主命令 82.01 秒，P05 收尾复核另计；完成闭合证书及截至 09:35 的观察前缀原型，正式任务未启动。</div></li>
+          <li><time>10.26</time><div><b>方法定稿，交付正式计划</b>f26/f27 改用相邻 v2 并通过验收；独立第六核定为正式方法；修正特殊通道价格相似度的实现偏差。两市场定参与因子计算计划交付，深市已开始执行。</div></li>
         </ol>
       </div>
     </details>
