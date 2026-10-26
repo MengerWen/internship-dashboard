@@ -11,13 +11,14 @@ function fixture() {
     return elements.get(id);
   };
   const overlay = {...element(), replaceChildren() { this.innerHTML = ''; }};
-  const svg = {querySelector: () => overlay};
+  const handoffs = [], markers = [];
+  const svg = {querySelector: () => overlay, querySelectorAll: selector => selector === '.journal-handoff.is-focused' ? handoffs.filter(g => g.classList['is-focused']) : markers};
   const annotations = {parentElement: {}};
   const labels = ['a', 'b'].map(id => ({dataset: {journalChain: id}, classList: {toggle(name, value) { this[name] = value; }}, setAttribute() {}}));
   const document = {
     getElementById: get, addEventListener() {},
     querySelector: selector => ({'.journal-atlas': svg, '.journal-annotations': annotations, '.journal-scroller': get('scroller'), '.journal-evidence': get('evidence')})[selector],
-    querySelectorAll: selector => selector === '.journal-chain-label' ? labels : []
+    querySelectorAll: selector => selector === '.journal-chain-label' ? labels : selector === '.journal-unit' ? handoffs : []
   };
   get('view-journal').addEventListener = (name, handler) => listeners.set(name, handler);
   let rendered;
@@ -33,8 +34,35 @@ function fixture() {
   view.atlas = {positions: new Map([['a', 100], ['b', 200]]), dateWidth: 50, right: 300, y: () => 80, radius: () => 4, ordered: [], active: new Map()};
   view.visible = [day]; view.selected = day.date; view.mode = 'atlas';
   view.writeHash = () => {}; view.render = () => {};
-  return {view, day, get, labels, overlay, listeners, rendered: () => rendered};
+  return {view, day, get, labels, overlay, handoffs, markers, listeners, rendered: () => rendered};
 }
+
+test('图例只高亮实际连接点，保留点形，切换或取消时清除旧高亮', () => {
+  const f = fixture();
+  const edge = (type, chains, sourceDate, date) => ({dataset: {type, chains, sourceDate, date}, classList: {
+    contains: name => name === 'journal-handoff', toggle(name, value) { this[name] = value; }
+  }});
+  f.handoffs.push(edge('延续', 'a b', '2026-10-19', '2026-10-20'), edge('延续', 'b a', '2026-10-20', '2026-10-21'), edge('收口', 'a b', '2026-10-20', '2026-10-21'));
+  const marker = (chain, date, tag, classes) => ({dataset: {chain, date}, outerHTML: `<${tag} class="${classes}" data-chain="${chain}" data-date="${date}"/>`, previousElementSibling: tag === 'circle' ? {classList: {contains: name => name === 'journal-dot-halo'}, outerHTML: '<circle class="journal-dot-halo"/>'} : null});
+  f.markers.push(marker('a', '2026-10-19', 'path', 'journal-dot journal-cross'), marker('a', '2026-10-20', 'circle', 'journal-dot is-pending'), marker('a', '2026-10-21', 'circle', 'journal-dot is-discussion'), marker('b', '2026-10-20', 'circle', 'journal-dot is-artifact'), marker('b', '2026-10-20', 'rect', 'journal-seal is-parked'), marker('b', '2026-10-21', 'rect', 'journal-seal'));
+  f.view.selection = {kind: 'handoff', type: '延续'};
+  f.view.highlightAtlas();
+  assert.match(f.overlay.innerHTML, /journal-cross/);
+  assert.match(f.overlay.innerHTML, /is-discussion/);
+  assert.match(f.overlay.innerHTML, /journal-seal is-parked/);
+  assert.match(f.overlay.innerHTML, /journal-dot-halo/);
+  assert.equal((f.overlay.innerHTML.match(/is-artifact/g) || []).length, 1, '共享端点只画一次');
+  assert(!f.overlay.innerHTML.includes('is-pending'), '同一链的其他日期不高亮');
+  assert(!f.overlay.innerHTML.includes('data-chain="b" data-date="2026-10-21"'), '未选线的收口点不混入');
+  f.view.selection = {kind: 'handoff', type: '收口'};
+  f.view.highlightAtlas();
+  assert.match(f.overlay.innerHTML, /is-pending/);
+  assert(!f.overlay.innerHTML.includes('journal-cross'));
+  assert(!f.overlay.innerHTML.includes('is-artifact'));
+  f.view.selection = null;
+  f.view.highlightAtlas();
+  assert.equal(f.overlay.innerHTML, '');
+});
 
 test('点选只渲染该点，日期选中仍渲染整日', () => {
   const f = fixture();

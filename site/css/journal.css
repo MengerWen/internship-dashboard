@@ -89,6 +89,8 @@ html:has(#view-journal.is-active) { scrollbar-gutter: stable; }
 .journal-unit.is-focused .journal-seal, .journal-unit.is-focused .journal-dot.is-artifact { fill: var(--focus); }
 .journal-unit.is-focused .journal-handoff-path { opacity: 1; }
 .journal-handoff.is-focused .journal-handoff-path { stroke-width: 2; }
+.journal-handoff-points .journal-dot, .journal-handoff-points .journal-seal { stroke: var(--focus); }
+.journal-handoff-points .journal-dot.is-artifact, .journal-handoff-points .journal-seal:not(.is-parked) { fill: var(--focus); }
 .journal-day-hit, .journal-point-hit { fill: transparent; cursor: pointer; }
 .journal-day-hit:focus-visible { fill: var(--surface); stroke: var(--focus); stroke-width: 1.5; outline: none; }
 .journal-point-hit:focus-visible { stroke: var(--focus); stroke-width: 2; }

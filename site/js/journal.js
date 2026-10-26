@@ -690,7 +690,7 @@
           });
           if (chain.fate !== "dropped" && (chain.status === "done" || chain.fate === "parked") && chain.end === dates.at(-1).date) {
             const finalDay = dates.at(-1), side = Math.sqrt(Math.PI) * radius(finalDay, chain.id);
-            parts.push(`<rect class="journal-seal${chain.fate === "parked" ? " is-parked" : ""}" x="${cx - side / 2}" y="${y(finalDay.date) - side / 2}" width="${side}" height="${side}"/>`);
+            parts.push(`<rect class="journal-seal${chain.fate === "parked" ? " is-parked" : ""}" data-date="${finalDay.date}" data-chain="${esc(chain.id)}" x="${cx - side / 2}" y="${y(finalDay.date) - side / 2}" width="${side}" height="${side}"/>`);
           }
         }
         parts.push("</g>");
@@ -703,9 +703,9 @@
       head.scrollLeft = scroller.scrollLeft;
       scroller.onscroll = () => { head.scrollLeft = scroller.scrollLeft; this.floatingNotes.onScroll(); };
       head.onscroll = () => { if (head.scrollLeft !== scroller.scrollLeft) scroller.scrollLeft = head.scrollLeft; };
-      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示该任务当天的归属提交量，点径采用对数压缩刻度。单任务提交计1份，明确的跨链提交等分；待核记录不计入。没有已归属提交时保留最小定位点，不表示当天没有做这项工作。准确数值见点卡，逐条依据见下方“任务归属明细”。实心点表示有可查产物，空心点表示当前仅见交流记录，虚线轮廓表示证据待核。文档落盘但无提交时仍为实心；有产物和交流时两组依据分别保留。相关汇报在日期与说明中另列文字入口；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
+      document.querySelector("#journal-figure figcaption").innerHTML = '<p>日期从上往下，每条链代表一项持续的工作。浅色底纹表示周末和中国大陆公共假期，调休补班日不着底纹。点的大小表示该任务当天的归属提交量，点径采用对数压缩刻度。单任务提交计1份，明确的跨链提交等分；待核记录不计入。没有已归属提交时保留最小定位点，不表示当天没有做这项工作。准确数值见点卡，逐条依据见下方“任务归属明细”。实心点表示有可查产物，空心点表示当前仅见交流记录，虚线轮廓表示证据待核。文档落盘但无提交时仍为实心；有产物和交流时两组依据分别保留。相关汇报在日期与说明中另列文字入口；日期旁短刻度表示当天发布了汇报。超过 3 天的记录空档用虚线。实心方块表示这段记录结束，空心方块表示暂搁；叉号与点线只标注未采用的具体方案。</p><p>点击日期看当天各项工作，点击列头链名看整条链，点击单个点看该项记录。点击图例突出对应的交接线和连接点，再次点击恢复。点击空白处或按 Esc 取消选中。上下键换日，左右键切换当天的点。</p><div class="journal-handoff-legend" role="group" aria-label="任务关系线型">' + [["延续", "继续开展", ""], ["派生", "扩展研究", "4 3"], ["依赖解除", "提供输入", "1 3"], ["收口", "汇入报告", "7 2 1 2"]].map(([type, label, dash]) => `<button type="button" data-journal-handoff="${type}" aria-pressed="${this.selection?.kind === "handoff" && this.selection.type === type}"><svg aria-hidden="true" viewBox="0 0 34 8"><path d="M1 4 H33" stroke-dasharray="${dash}"/></svg>${label}</button>`).join("") + '<span>仅按记录顺序关联的连线会注明</span></div>';
       document.querySelector("#journal-figure figcaption").insertAdjacentHTML("afterbegin", this.weightLegendHtml());
-      document.querySelector("#journal-figure figcaption p:nth-of-type(2)").textContent = "点击日期展开当天各项工作，点击列头链名展开整条链；点击圆点只查看该点的工作说明。整日或整链展开后，点击浮窗标题聚焦其中一项。拖动浮窗标题调整位置，双击恢复自动排布；标题上的方向键可微调位置。点击图例突出对应的交接线，再次点击恢复。点击空白处或按 Esc 取消选中。在图上用上下键换日、左右键切换当天任务。";
+      document.querySelector("#journal-figure figcaption p:nth-of-type(2)").textContent = "点击日期展开当天各项工作，点击列头链名展开整条链；点击圆点只查看该点的工作说明。整日或整链展开后，点击浮窗标题聚焦其中一项。拖动浮窗标题调整位置，双击恢复自动排布；标题上的方向键可微调位置。点击图例突出对应的交接线和连接点，再次点击恢复。点击空白处或按 Esc 取消选中。在图上用上下键换日、左右键切换当天任务。";
       this.atlas = {y, positions, days, height, width, top, dateWidth, right, radius, ordered, active};
       if (this.chain && !this.visible.length) document.querySelector("#journal-figure figcaption").insertAdjacentHTML("beforeend", '<p class="journal-window-empty" role="status">此时间窗内没有这条链的记录。下方链条卡展示它的全部历史；可将时间窗改为“全部”查看图谱。</p>');
       this.highlightAtlas();
@@ -737,6 +737,20 @@
       overlay.replaceChildren();
       if (!sel || !["day", "point", "chain"].includes(sel.kind)) this.floatingNotes.clear();
       if (!sel) return;
+      if (handoffFocus) {
+        const endpoints = new Set();
+        svg.querySelectorAll(".journal-handoff.is-focused").forEach(edge => {
+          const [from, to] = edge.dataset.chains.split(" ");
+          endpoints.add(`${from}:${edge.dataset.sourceDate}`);
+          endpoints.add(`${to}:${edge.dataset.date}`);
+        });
+        // 复用实际点形和纸色留白，避免整列淡化连带压低端点的高亮。
+        const markers = [...svg.querySelectorAll(".journal-chain-unit .journal-dot, .journal-chain-unit .journal-seal")]
+          .filter(point => endpoints.has(`${point.dataset.chain}:${point.dataset.date}`))
+          .map(point => `${point.previousElementSibling?.classList.contains("journal-dot-halo") ? point.previousElementSibling.outerHTML : ""}${point.outerHTML}`);
+        overlay.innerHTML = `<g class="journal-handoff-points">${markers.join("")}</g>`;
+        return;
+      }
       if (sel.kind === "chain") {
         const scroller = document.querySelector(".journal-scroller");
         const cx = a.positions.get(sel.chain), dates = a.active.get(sel.chain) || [];
