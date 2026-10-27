@@ -1,0 +1,3833 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-26",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "2946645737585f5e47787b3d23433bf1441f48f3d576c1ade945829abe833037",
+  "rules_sha256": "2458532a90a83aaa92043bde202c3ab7c886605688e5c5d371e60d45d2d3c7e8",
+  "revisions": {
+    "sirui-quant-research": "87e0f3802282e98ae568b9c64d27a6e5f83fc5ff",
+    "Quant_Research-Trading": "9bd647c1d60384f69b0f406a0e883c2c482769d8",
+    "internship-dashboard": "c64c55c6cf88d2bbf87c81fe173ef259650d7395"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "bcf18936c0ce4ad08cb889c532c380f4e715ac19",
+      "date": "2026-10-26",
+      "subject": "在10/25展示版补记10/26方法定稿与正式计划",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "远端26日两条报告补记分别更新文档版和展示版；按Git原件核对，名义25日报告不将26日编辑回填25日。",
+      "review_basis": "2026-10-27补核初始远端已有、本地未包含的两条提交；内容diff、生成数据与固定文件逐项核对。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-10-25.show.html",
+        "scripts/sse_report_20261025/data.json",
+        "scripts/sse_report_20261025/page.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c64c55c6cf88d2bbf87c81fe173ef259650d7395",
+      "date": "2026-10-26",
+      "subject": "在10/25日报文档版补记10/26后续更新",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "远端26日两条报告补记分别更新文档版和展示版；按Git原件核对，名义25日报告不将26日编辑回填25日。",
+      "review_basis": "2026-10-27补核初始远端已有、本地未包含的两条提交；内容diff、生成数据与固定文件逐项核对。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-10-25.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "e9473bc1f475c3b35fd7fb36cc93e230bf2645e1",
+      "date": "2026-10-26",
+      "subject": "补记10月25日正式计算、沪市研究与跨日清理",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "交接线曲率与同步高亮为独立功能；每日采集和收据自身排除。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-10-24.md",
+        "content/journal/2026-10-25.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c716f458c622e70b06a15e1616646974b7384af0",
+      "date": "2026-10-26",
+      "subject": "保存10月26日日志来源核对与发布收据",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "交接线曲率与同步高亮为独立功能；每日采集和收据自身排除。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-10-26.md",
+        "docs/journal-review/daily-updates/2026-10-26/receipt.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "b92fe53d4e4ad7ed99929e21d3c542ee0d73ab08",
+      "date": "2026-10-26",
+      "subject": "修复研究日志交接曲线中段的尖角",
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "交接线曲率与同步高亮为独立功能；每日采集和收据自身排除。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "research-journal": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "site/js/journal.js",
+        "tests/journal-routing.test.cjs"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "70636ceeb3d6cd90d43b7d2a907910d9d82cdd0b",
+      "date": "2026-10-26",
+      "subject": "研究日志选中交接线时同步高亮连接点",
+      "status": "assigned",
+      "chains": [
+        "research-journal"
+      ],
+      "reason": "交接线曲率与同步高亮为独立功能；每日采集和收据自身排除。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "research-journal": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DESIGN.md",
+        "site/css/journal.css",
+        "site/js/journal.js",
+        "tests/journal-selection.test.cjs"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "df78e773b92dbd34ca07d7ee0459f1325375dc84",
+      "date": "2026-10-26",
+      "subject": "以方法判定和方法修正计划取代含定参内容的旧计划",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-25-pre-factor-method-corrections.md",
+        "PLAN/2026-10-25-sse-calibration-kernel-role-review.md",
+        "decisions/2026-10-25-pre-factor-method-decisions.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ff4add54451fa3a5aed1c594831084cba600f220",
+      "date": "2026-10-26",
+      "subject": "特殊通道价格评分使用冻结第六核并隔离缓存身份",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-evidence/t1-local-tests.json",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_scoring_workspace.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f2af82a8a2ecb9aa78fc120a618170cca0624766",
+      "date": "2026-10-26",
+      "subject": "仅对特殊通道要求第六核距离输入",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pairing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb4fc70e97a8467f5b4ad2d7943f1f8ec5be8e86",
+      "date": "2026-10-26",
+      "subject": "提供数量稳定且一对一匹配的主动簇v2",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-evidence/t1-server-guard.json",
+        "scripts/sse_cluster_diagnostics.py",
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_aggressive_clusters_v2.py",
+        "因子/algobench/tests/test_formal_cluster_observation.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ad0c816363e36611e6aaaf9017be1fcd2fa985fc",
+      "date": "2026-10-26",
+      "subject": "提供固定观察期限并记录方法验收与待定边界",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-25-pre-factor-method-corrections.md",
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks.md",
+        "因子/algobench/src/algobench/formal_aggregation.py",
+        "因子/algobench/tests/test_fixed_factor_horizon.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e67e0506faceb5d248500554aab9d3f2eb47e257",
+      "date": "2026-10-26",
+      "subject": "否决主动簇mutual_best版本并改用相邻连接的f26/f27 v2",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-pre-factor-method-corrections-r2.md",
+        "decisions/2026-10-25-pre-factor-method-decisions.md",
+        "decisions/2026-10-26-f26-f27-adjacent-v2.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "65491a4055bedc1dada0b8da17ca17571a581ebf",
+      "date": "2026-10-26",
+      "subject": "更正相邻v2决定的实施状态标注",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "decisions/2026-10-26-f26-f27-adjacent-v2.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "07a82b5941a5e0672af0511627466cd0d4056a00",
+      "date": "2026-10-26",
+      "subject": "在 10/25 沪市第六核与 f26 研究报告中补记 10/26 后续结论",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-25-sse-marketability-f26-research.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "454d4838e0ce85ab60512c5d58c3f2ba6000cdfb",
+      "date": "2026-10-26",
+      "subject": "新增两市场定参与正式因子计算实施计划",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344",
+        "sse-calibration-340"
+      ],
+      "reason": "两市场独立定参的总计划或分线交接；分别审阅两条线的依赖和执行范围，等分一份。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2d48d10f3aa82ef1db2848e9bc49e709d8f8f057",
+      "date": "2026-10-26",
+      "subject": "登记两市场f26f27 v2并采用严格固定观察边界",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-25-pre-factor-method-corrections.md",
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "PLAN/factor_preregister_intraday_open5m_raw_bank_v6.yaml",
+        "decisions/2026-10-25-pre-factor-method-decisions.md",
+        "scripts/build_pre_factor_method_registrations.py",
+        "因子/algobench/configs/open5m_corrected_344_scope_v2.json",
+        "因子/algobench/configs/sse_public_340_scope_v2.json",
+        "因子/algobench/src/algobench/formal/preregister.py",
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_corrected344_manifest.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_feature_scope.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b235a5e75eb42ebdd6f89dfa105fd0960468a733",
+      "date": "2026-10-26",
+      "subject": "提供冻结样本的主动簇v2验收与并行节点诊断",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_cluster_checks.py",
+        "scripts/research_sse_marketability_f26.py",
+        "scripts/sse_cluster_diagnostics.py",
+        "因子/algobench/configs/sse_marketability_f26_research_v2.json",
+        "因子/algobench/tests/test_pre_factor_cluster_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "324e653d166fec2500814b4581ef0ea7e66e57a7",
+      "date": "2026-10-26",
+      "subject": "记录预因子v2局部性门失败与验收收尾证据",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        ".gitattributes",
+        "PLAN/2026-10-25-pre-factor-method-corrections.md",
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "decisions/2026-10-25-pre-factor-method-decisions.md",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-evidence/cluster-v2-gates.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-evidence/cluster-v2-guard.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-evidence/storage-closeout.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-evidence/v2-server-tests-guard.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a2e9be675ca86dc6f8e42a25cd7250a1a8ca833d",
+      "date": "2026-10-26",
+      "subject": "明确相邻簇方法计划的对照、统计与验收合同",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-pre-factor-method-corrections-r2.md",
+        "decisions/2026-10-25-pre-factor-method-decisions.md",
+        "decisions/2026-10-26-f26-f27-adjacent-v2.md",
+        "reports/2026-10/2026-10-26-pre-factor-cloud-review-evidence.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b18d7d63da1945e1b33a968a0b9e826eadaab6ef",
+      "date": "2026-10-26",
+      "subject": "要求特殊通道价格评分显式提供第六核尺度",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_formal_pair_reducers.py",
+        "因子/algobench/tests/test_special_lane_similarity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8e48569f6c69632b41d8ba831cd2c9700b2edcb7",
+      "date": "2026-10-26",
+      "subject": "实现同侧相邻数量门主动簇并登记两市场新范围",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/factor_preregister_intraday_open5m_raw_bank_v7.yaml",
+        "scripts/build_pre_factor_method_registrations.py",
+        "scripts/pre_factor_cluster_checks.py",
+        "scripts/sse_cluster_diagnostics.py",
+        "因子/algobench/configs/open5m_corrected_344_scope_v3.json",
+        "因子/algobench/configs/sse_public_340_scope_v3.json",
+        "因子/algobench/src/algobench/formal/preregister.py",
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/src/algobench/formal_corrected344_manifest.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_feature_scope.py",
+        "因子/algobench/src/algobench/formal_model328_manifest.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "78b1eec82277900124f896c337dd7b48eda236b4",
+      "date": "2026-10-26",
+      "subject": "提供相邻主动簇有界验收与精确独立尺寸基准",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_adjacent_checks.py",
+        "scripts/pre_factor_cluster_checks.py",
+        "scripts/research_sse_marketability_f26.py",
+        "因子/algobench/configs/sse_marketability_f26_research_v3.json",
+        "因子/algobench/tests/test_pre_factor_adjacent_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82b515d533596744c6f4294f7fab5eb164f60244",
+      "date": "2026-10-26",
+      "subject": "提供特殊通道历史评分对照及corrected344影响验收",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_special_lane_checks.py",
+        "scripts/research_sse_marketability_f26.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_pre_factor_special_lane_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "42e5187aeab4f53fa1fa490e08962a54363bd874",
+      "date": "2026-10-26",
+      "subject": "覆盖独立研究入口导入与分阶段范围上限",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_pre_factor_adjacent_checks.py",
+        "因子/algobench/tests/test_pre_factor_special_lane_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "608ef219267669c74b22197407ac9b4cec64395f",
+      "date": "2026-10-26",
+      "subject": "按认证公开输入契约选择候选投影回放入口",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_special_lane_checks.py",
+        "因子/algobench/tests/test_pre_factor_special_lane_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c30511fcd768c2a15da1b4b5a3368c5a3dff69ed",
+      "date": "2026-10-26",
+      "subject": "流式核对沪市价格边并复用已签收日期",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_special_lane_checks.py",
+        "scripts/research_sse_marketability_f26.py",
+        "因子/algobench/tests/test_pre_factor_special_lane_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f222c22274775f9940332803a0efb30dcd06e7a8",
+      "date": "2026-10-26",
+      "subject": "按冻结SHA定位跨账户参数来源并保留运行包身份",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "scripts/pre_factor_special_lane_checks.py",
+        "因子/algobench/src/algobench/formal_runtime_corrected344.py",
+        "因子/algobench/tests/test_corrected344_local_parameter_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d76d2d2b090b3fd237480d9772ede05db99522aa",
+      "date": "2026-10-26",
+      "subject": "记录正式因子半程实测与交易窗口冻结续跑",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-25-corrected344-factor-production.md",
+        "reports/2026-10/2026-10-26-corrected344-production-timing-snapshot.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "995c40123b7ec2196ecf59d2901b41dd34516a1a",
+      "date": "2026-10-26",
+      "subject": "对齐有界验收的正式窗口与tiny五股支持库存",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_special_lane_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "861b44125363389f5be2f0d587411a834768f1ef",
+      "date": "2026-10-26",
+      "subject": "仅为边分变化股票保留匹配图并复用完整市场验收",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_special_lane_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b3aa6488837bda5bb5dca027ad70db2131327835",
+      "date": "2026-10-26",
+      "subject": "保持独立尺寸诊断在完整整数数量域内可核对",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pre_factor_adjacent_checks.py",
+        "因子/algobench/tests/test_pre_factor_adjacent_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1f401ff92eb2c77773af462eb7ae46351aabc5e6",
+      "date": "2026-10-26",
+      "subject": "覆盖独立尺寸诊断的整型上界",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_pre_factor_adjacent_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e24a821e3876bf2cdbcb4734f3185d6682846918",
+      "date": "2026-10-26",
+      "subject": "保留缺值身份并稳定排序配对评分计划",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_special_lane_similarity.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a04dcced30588691e1fff649a3ba24b11ebedd9",
+      "date": "2026-10-26",
+      "subject": "交付预因子方法r2验收报告与运行证据",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-pre-factor-method-corrections-r2.md",
+        "PLAN/2026-10-26-pre-factor-method-execution.md",
+        "decisions/2026-10-25-pre-factor-method-decisions.md",
+        "decisions/2026-10-26-f26-f27-adjacent-v2.md",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/cluster-adjacent-execution.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/cluster-adjacent-guard.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/cluster-adjacent-summary.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/delivery-identity.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/execution-attempts.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/final-server-tests-guard.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/manifest.json",
+        "reports/2026-10/2026-10-26-pre-factor-method-checks-r2-evidence/model-audit.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d47f0f0095b8b876aab32272b8a33d41117c20e7",
+      "date": "2026-10-26",
+      "subject": "记录因子计算Z0停机、323日基线与双账户同步",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/model-verification.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/wangly-pre-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/wangly-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/wenjie-pre-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/wenjie-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z0-boundary-observation.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z0-final.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z0-staging.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z0-stop.json",
+        "reports/2026-10/2026-10-26-factor-computation-z0.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1a16b7ecbc0f6b1ba2c718a0fc932841149d2db7",
+      "date": "2026-10-26",
+      "subject": "记录Z1历史基线退役及验收阻塞",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-source-gate.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-v7-source-inventory.json",
+        "reports/2026-10/2026-10-26-factor-computation-z1-source-gate.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5c804ada8b7bd8c01e6446d6414bd421d9bdb4ac",
+      "date": "2026-10-26",
+      "subject": "记录沪市H0系统盘预算与未满足的准入条件",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-budget.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-storage-discovery.json",
+        "reports/2026-10/2026-10-26-factor-computation-h0.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a768bef9891c0315136950e45c8bfa1c988bb469",
+      "date": "2026-10-26",
+      "subject": "记录r05按新计划停止后的323日基线终态",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-25-corrected344-factor-production.md",
+        "reports/2026-10/2026-10-26-corrected344-production-stop-snapshot.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "070c8388fa25dcd8e366d31552b29cc69278b37a",
+      "date": "2026-10-26",
+      "subject": "增加Z1同流结构支持验收与退役基线换日规则",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-f40-reference-receipts.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-replacement-inventory.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-retained-layout.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-unit-r02.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-unit-r02.txt",
+        "reports/2026-10/2026-10-26-factor-computation-z1-implementation.md",
+        "scripts/run_open5m_t1_structural_check.py",
+        "scripts/tests/test_open5m_t1_structural_check.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5a388b9392642116e6c9793d49dbb062b9fbf9f3",
+      "date": "2026-10-26",
+      "subject": "使Z1定向测试独立定位脚本入口并保留运行凭证",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-r01-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-r01-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-unit-r03.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-unit-r03.txt",
+        "scripts/tests/test_open5m_t1_structural_check.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "009edb7f12db3a18a0b3d3fe3296512094c4800b",
+      "date": "2026-10-26",
+      "subject": "签收Z1十月八日对照并登记互异日期筛选规则",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-20241008-summary.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-f40-numerical-source-review.diff",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-r02-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-z1-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "808b54bb06212bef3669766410e15c2d39b025cc",
+      "date": "2026-10-26",
+      "subject": "完成Z1三日结构验收并签收十月三十日替代基线",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/model-verification.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-20241030-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-20241030-r01-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-20260319-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-20260319-r01-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-hot-cleanup-prepared.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-hot-cleanup-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-input-identities.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z1-storage-closeout.json",
+        "reports/2026-10/2026-10-26-factor-computation-z1-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "507ce7670663a1dfc88214b7039ea5e337caf14b",
+      "date": "2026-10-26",
+      "subject": "增加绑定范围v3与T1合同的两组结构采集和精确归约",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-baseline-cleanup.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-baseline-scope-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-baseline-scope-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-regression-baseline.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-v8-config.diff",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/run_open5m_real_data_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7b1862dae45b8dbd379525004bc6d8ea01fbd9e9",
+      "date": "2026-10-26",
+      "subject": "核对两组采集的逐股支持并记录服务器回归",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-linux-tests-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-linux-tests-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-wangly-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "scripts/run_open5m_t1_structural_check.py",
+        "scripts/run_open5m_t1_subset_check.py",
+        "scripts/tests/test_open5m_t1_subset_check.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76cf40c6444cb22c657da300e58049150ad2911f",
+      "date": "2026-10-26",
+      "subject": "在两组全期采集的日边界检查容量与工期外推",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "scripts/_open5m_t1_storage.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/tests/test_open5m_t1_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c4dd6c0de1ee26c00d713e14212e8c6ff168fada",
+      "date": "2026-10-26",
+      "subject": "签收两组结构采集的三日逐股实测与热副本清理",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-20241008-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-20241030-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-20260319-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-hot-cleanup-prepared.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-hot-cleanup-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-subset-results.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d4b250351961c49d3fd7f90bc212ba46d6f5b97d",
+      "date": "2026-10-26",
+      "subject": "增加沪市磁盘准入所需的完整IDE归档与恢复核对",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-ide-inventory-current.json",
+        "reports/2026-10/2026-10-26-factor-computation-h0.md",
+        "scripts/prepare_factor_computation_h0.py",
+        "scripts/tests/test_factor_computation_h0_archive.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3641d28046db8f1715892ff0adff1a866f59a24e",
+      "date": "2026-10-26",
+      "subject": "记录Z2五日签收与20GB容量外推停止",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r01-capacity-stop.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "213509d4e48da07203d767bba3ea6bccd8d61cc9",
+      "date": "2026-10-26",
+      "subject": "无损压缩结构采集进度并保留SHA绑定的诊断读取",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-archive-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-archive-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "scripts/_structural_progress_archive.py",
+        "scripts/compare_open5m_structural_observations.py",
+        "scripts/prepare_t1_progress_archives.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/tests/test_structural_progress_archive.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37fe574633b2f15d96434deffe4fd575bd800269",
+      "date": "2026-10-26",
+      "subject": "为日志压缩版本核验五个签收日的兼容续跑身份",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/prepare_t1_progress_archives.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "80d7ceef1210fc2fba97a82431f9c595f87146f8",
+      "date": "2026-10-26",
+      "subject": "签收五日日志无损压缩及兼容续跑准备",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-archive-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-archive-r02-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-archive-sync-preflight.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-archive-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-originals-release-plan.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f0c90dafd4013670410141ea6701725e44d42693",
+      "date": "2026-10-26",
+      "subject": "按无损恢复凭证条件释放五日日志并重新核验容量",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-release-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-release-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "scripts/release_t1_progress_originals.py",
+        "scripts/tests/test_release_t1_progress_originals.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0dca9bf15ae00995d2fbe0fb735c5b57ff5e40fc",
+      "date": "2026-10-26",
+      "subject": "签收五日日志释放与实测容量准入并恢复Z2",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-release-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-release-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-progress-release-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "280bdf7c1eccda697e5575f9e94e8976b60f6370",
+      "date": "2026-10-26",
+      "subject": "控制沪市IDE归档进度体积并保留完整恢复清单",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-current-preflight.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-unit-r03.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-unit-r03.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-h0.md",
+        "scripts/prepare_factor_computation_h0.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8fef5cad8105686ffdc02f7dd115d626cabb4962",
+      "date": "2026-10-26",
+      "subject": "使用正式六核依赖构造结构采集的兼容续跑身份",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r02-status.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-resume-dependencies-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-resume-dependencies-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "scripts/prepare_t1_progress_archives.py",
+        "scripts/tests/test_t1_resume_dependencies.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "89352b4e0a52614fa267c1a5abc1b1023204f9d6",
+      "date": "2026-10-26",
+      "subject": "签收沪市两份旧IDE完整归档及实际恢复核验",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-archive-server-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-h0.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8832e10ff8385db51d8b7391b71b5edf0d41ae0e",
+      "date": "2026-10-26",
+      "subject": "按完整恢复归档释放H0两份旧IDE安装",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-release-unit-r03.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-release-unit-r03.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-h0.md",
+        "scripts/release_factor_computation_h0.py",
+        "scripts/tests/test_factor_computation_h0_release.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f16c4a21c6e4e5ce3d709973976ed0264dcac428",
+      "date": "2026-10-26",
+      "subject": "签收沪市系统盘准入与深市十日恢复容量工期",
+      "status": "shared",
+      "chains": [
+        "corrected-replay-344",
+        "storage-cleanup"
+      ],
+      "reason": "同一交付明确包含H0磁盘验收和Z2十日实测两个独立结果，等分一份。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "revised_from": [
+        "storage-cleanup",
+        "corrected-replay-344"
+      ],
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-release-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-release-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-release-server-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-first10.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r03-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-bound-resume-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-bound-resume-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-h0.md",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "30580f274c3d81398b2915c002a292726aa91449",
+      "date": "2026-10-26",
+      "subject": "在归档回读后清理H0恢复验证热副本",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-hot-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-hot-unit-r02.log.json",
+        "scripts/release_factor_computation_h0.py",
+        "scripts/tests/test_factor_computation_h0_release.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ee8535b2f30c5ec5d8f50227d77cd4762b7efd45",
+      "date": "2026-10-26",
+      "subject": "签收H0恢复热副本清理与最终配额",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-hot-cleanup-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h0-hot-cleanup-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-h0.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "03742fe286d0b3b428982978735ec60bf11845a0",
+      "date": "2026-10-26",
+      "subject": "核对沪市601日日历股票池报价及官方快照字段",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-h1.md",
+        "scripts/inspect_factor_computation_sse_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5cff4c64488685cb92d92acc3d4552d5eb030ac2",
+      "date": "2026-10-26",
+      "subject": "绑定T1两组新估计与六组保留参数到scope v3运行包",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-runtime-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-runtime-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-runtime-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-runtime-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_runtime_corrected344.py",
+        "因子/algobench/src/algobench/formal_runtime_v2.py",
+        "因子/algobench/src/algobench/formal_structural_binding.py",
+        "因子/algobench/src/algobench/formal_t1_structural_binding.py",
+        "因子/algobench/tests/test_formal_t1_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8d7032c639a3b9400e7409282eba377024dc1266",
+      "date": "2026-10-26",
+      "subject": "Publish T1 runtime through the verified v3 conformance path",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-runtime-publication-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-runtime-publication-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-implementation.md",
+        "scripts/build_open5m_runtime_parameters.py",
+        "scripts/tests/test_build_open5m_runtime_publication.py",
+        "因子/algobench/src/algobench/formal_runtime_corrected344.py",
+        "因子/algobench/tests/test_formal_t1_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "986f61673d6d233100c3ba37bf7c80ed9a757fe3",
+      "date": "2026-10-26",
+      "subject": "Archive identified H1 synthetic test evidence with byte verified release",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-admission-stop.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inventory-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inventory-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-new-test-files.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md",
+        "scripts/archive_factor_computation_test_evidence.py",
+        "scripts/prepare_factor_computation_h0.py",
+        "scripts/tests/test_factor_computation_test_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "df62646267e02f5bd43d12210a135094d1498f56",
+      "date": "2026-10-26",
+      "subject": "Support nested fixture evidence within the pinned archive inventory",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/archive_factor_computation_test_evidence.py",
+        "scripts/tests/test_factor_computation_test_evidence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab3c1c3aa4b2524525ec19bd964aaa58aee74fcf",
+      "date": "2026-10-26",
+      "subject": "Recheck H1 capacity against measured writes and retain failed admission evidence",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inventory-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inventory-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md",
+        "scripts/inspect_factor_computation_sse_inputs.py",
+        "scripts/tests/test_factor_computation_sse_inventory.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b7c4e7283d93da184016a8861df22dda9ce7a7e4",
+      "date": "2026-10-26",
+      "subject": "Record verified H1 evidence archival and restored storage admission",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-prepare-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-prepare-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-prepared.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-release-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-release-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-test-evidence-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "607a718f48925845ce36164ab073cf5e457d5051",
+      "date": "2026-10-26",
+      "subject": "Inspect required SSE phase fields through the current bounded snapshot gateway",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inventory-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inventory-r02-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md",
+        "scripts/inspect_factor_computation_sse_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "233ed83dd5fc3ca6ebe1b45aaf016ff2fb59b014",
+      "date": "2026-10-26",
+      "subject": "Record the required SSE phase-source gap and preserve the stopped H1 evidence",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-phase-probe-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-phase-probe-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c2685f5ec09be0a3af59dced71b3ac8b19c5b16e",
+      "date": "2026-10-26",
+      "subject": "Verify retained Z3 reference artifacts and add strict bitwise panel comparison",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z3-bitwise-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z3-bitwise-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z3-r08-artifact-readback.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z3-r08-source-inventory.json",
+        "reports/2026-10/2026-10-26-factor-computation-z3.md",
+        "scripts/compare_open5m_registered_panels.py",
+        "scripts/tests/test_registered_panel_bitwise_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "099b03cc0a8b20a19a7b0ba6479fae3395e257d0",
+      "date": "2026-10-26",
+      "subject": "Record exact candidate gap counts and adjacent-cluster censoring evidence",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/production-audit-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/production-audit-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_parallel_structural_pairs.py",
+        "因子/algobench/src/algobench/formal_production_audit.py",
+        "因子/algobench/tests/test_formal_production_audit.py",
+        "因子/algobench/tests/test_parallel_structural_pairs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a856fba20ab808c7f6644cb56beaca9a5fedec38",
+      "date": "2026-10-26",
+      "subject": "Record Linux validation of production gap and censoring audits",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/production-audit-linux-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/production-audit-linux-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9096a4ed25543e10cce6fb68d58a0fbfbf6f77a9",
+      "date": "2026-10-26",
+      "subject": "Enforce frozen scope and parameter dependency gates for Z3 and Z5",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z3-gates-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z3-gates-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z3.md",
+        "scripts/compare_factor_computation_panels.py",
+        "scripts/tests/test_factor_computation_panel_gates.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5763a07c9bdf1cbccd0f74265dae1f27a24ff661",
+      "date": "2026-10-26",
+      "subject": "Bind corrected344 scoring and acceptance to registered scopes and Z3 contrast",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/scope-binding-unit-r05.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/scope-binding-unit-r05.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "scripts/benchmark_corrected344_factors.py",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal/run_spec.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_model328_manifest.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4732ef1aef1b80e96b6fa0ab3564c9e3071983eb",
+      "date": "2026-10-26",
+      "subject": "Record Linux validation of corrected344 scope and runtime bindings",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/scope-binding-linux-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/scope-binding-linux-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3f370ef08f58bbe182028bc14ac55c2c76d948d5",
+      "date": "2026-10-26",
+      "subject": "Preserve registered source gaps across all corrected344 factor sources",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/source-gap-unit-r03.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/source-gap-unit-r03.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-source-gap.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_open5m_cancel_phase_directions.py",
+        "scripts/run_open5m_depth_match_panel.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal_cancel_source.py",
+        "因子/algobench/src/algobench/formal_depth_source.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "674b8ef0a1d8a5e8778ef9d581a719d97fee4a6f",
+      "date": "2026-10-26",
+      "subject": "Record Linux validation of registered factor source gaps",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/source-gap-linux-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/source-gap-linux-preflight.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/source-gap-linux-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-source-gap.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "859802ce68746bc8f4f5d8b5360e608b4d69c2d7",
+      "date": "2026-10-26",
+      "subject": "Persist daily factor method audits and enforce monthly production gates",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/run_corrected344_factor_production.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_production_audit.py",
+        "因子/algobench/tests/test_formal_production_audit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9eb6495ab33995c17d815ddc7d8b586dac925ab5",
+      "date": "2026-10-26",
+      "subject": "Register adjacent f27 scoring for the current factor scope",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-linux-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-linux-r01-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/f27-registration-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/f27-registration-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/f27-registration-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/f27-registration-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_factor_computation_scope_binding.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a2042b29716ac995519be66facffcb5a955fc8fe",
+      "date": "2026-10-26",
+      "subject": "Record the approved SSE phase projection source",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a51a8c0110023a6b7abab90b6ea642b689cd6620",
+      "date": "2026-10-26",
+      "subject": "Declare f27 cluster scoring without cancel-repost artifacts",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-linux-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-linux-r02-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/f27-artifacts-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/f27-artifacts-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_factor_computation_scope_binding.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "03f76eb3cf711432171318c907562610b65acf53",
+      "date": "2026-10-26",
+      "subject": "Record full current-scope scoring and daily audit validation",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-linux-r03-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/daily-audit-linux-r03-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4a596175222c5d27f9683e318a766d7031d58573",
+      "date": "2026-10-26",
+      "subject": "Verify certified SSE phase projections and retain bounded daily sources",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md",
+        "scripts/factor_computation_sse_phases.py",
+        "scripts/inspect_factor_computation_sse_inputs.py",
+        "scripts/tests/test_factor_computation_sse_phases.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0444528daa485b7ff13799d77756f95e80701ca1",
+      "date": "2026-10-26",
+      "subject": "Account phase controls within the approved H2 reservation",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-capacity-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-capacity-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-q1-accepted.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md",
+        "scripts/factor_computation_sse_phases.py",
+        "scripts/inspect_factor_computation_sse_inputs.py",
+        "scripts/tests/test_factor_computation_sse_inventory.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5d3c27869b47593cc40330f1866da1fcf778b093",
+      "date": "2026-10-26",
+      "subject": "Add memory-only SSE inputs and certified three-day equality checks",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-memory-inputs-unit-r03.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-memory-inputs-unit-r03.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md",
+        "scripts/tests/test_factor_computation_sse_memory.py",
+        "scripts/verify_factor_computation_sse_inputs.py",
+        "因子/algobench/src/algobench/formal_sse_inputs.py",
+        "因子/algobench/tests/test_formal_sse_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "daff35ccaea893dac3e7a471ff9d9ae75418bbee",
+      "date": "2026-10-26",
+      "subject": "Record certified phase coverage and verified continuation",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-r01-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-r01-stopped.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/sse-phases-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "48572f9c561332d4567c11fd05c4e514a0ad8a49",
+      "date": "2026-10-26",
+      "subject": "记录沪市 H1 全期阶段码与三日输入验收",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inputs-complete.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-inputs-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/h1-phases-complete.json",
+        "reports/2026-10/2026-10-26-factor-computation-h1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "17bb11d1be582d8b9958f5990bce7735233b4fc9",
+      "date": "2026-10-26",
+      "subject": "交接两市场因子计划分线执行与服务器现场",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344",
+        "sse-calibration-340"
+      ],
+      "reason": "两市场独立定参的总计划或分线交接；分别审阅两条线的依赖和执行范围，等分一份。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 2
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-index.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-local-materials.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-performance-summary.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-unfinished-v3.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-unfinished-v3.patch",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-wangly-final.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-wangly-initial.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-wangly-materials-final.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-wangly-materials.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-wenjie-final.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/handoff-wenjie-initial.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1940803cc87b874192c94e5af2c7bb77ab8e5589",
+      "date": "2026-10-26",
+      "subject": "Add shared account SQL concurrency and bounded page scheduling",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/account_sql.py",
+        "lv2_snapshot_workspace/src/snapshot/bounded_page_io.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_account_sql.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "scripts/benchmark_factor_sql_concurrency.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a75294d7ea3c18b18cb368a1efeffc482e41038d",
+      "date": "2026-10-26",
+      "subject": "Bind SQL benchmark receipts to the verified wenjie publisher",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_factor_sql_concurrency.py",
+        "scripts/tests/test_factor_sql_concurrency.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f58cbc02b27f29ce38d5a10532f831a27f2c8972",
+      "date": "2026-10-26",
+      "subject": "Add verified T1 structural and runtime parameter delivery",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-closeout-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-closeout-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "scripts/finalize_open5m_t1_parameters.py",
+        "因子/algobench/tests/test_formal_t1_parameter_delivery.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a97302885873fc96730357799e04dec3a279f3bb",
+      "date": "2026-10-26",
+      "subject": "Retry transient T1 capacity reads without changing scientific identity",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-z2-storage-read-recovery.md",
+        "scripts/_open5m_t1_storage.py",
+        "scripts/run_open5m_t1_structural_check.py",
+        "scripts/tests/test_open5m_t1_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "deda17079d9096d3958fb705fc10260c913ef8de",
+      "date": "2026-10-26",
+      "subject": "Complete v3 production entrypoint and signed daily storage checks",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/v3-unit-r03.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/v3-unit-r03.log.json",
+        "scripts/compact_accepted_day_details.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/tests/test_accepted_detail_retention.py",
+        "scripts/tests/test_corrected344_factor_production.py",
+        "因子/algobench/src/algobench/formal_accepted_detail_retention.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a175b350323c2486d0c50cd04502324e842a6861",
+      "date": "2026-10-26",
+      "subject": "Record verified Z2 recovery with unchanged scientific identity",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r04-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-local-worktree-cleanup-precheck.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r03-storage-read-failure.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r04-resume-observation.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-retry-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-retry-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-retry-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-retry-unit-r02.log",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-retry-unit-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-storage-read-recovery.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5b4404738e05385e296dc4e4c1da10cdf80bb74d",
+      "date": "2026-10-26",
+      "subject": "Select shared SQL limit two from certified H1 concurrency measurements",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "AGENT.md",
+        "PLAN/2026-10-26-factor-computation.md",
+        "docs/agents/compute-efficiency.md",
+        "lv2_snapshot_workspace/src/snapshot/account_sql.py",
+        "lv2_snapshot_workspace/tests/test_account_sql.py",
+        "lv2_snapshot_workspace/tests/test_bounded_page_io.py",
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/sql-default-unit-r01.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/sql-default-unit-r01.log.json",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/sql-grades.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "09b63147f0531b079a1c4be04562f2519bc498b6",
+      "date": "2026-10-26",
+      "subject": "Record T1 scratch placement and verified published-day recovery",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r05-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r04-cleanup-failure.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r04-recovery-precheck.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r05-resume-observation.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-storage-read-recovery.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "65d1fa39a182fbef4098f5469f5770bec3ccca9e",
+      "date": "2026-10-26",
+      "subject": "Reconcile wangly storage summaries, retirements and Z4 admission bases",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-z4-storage-accounting.md",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/accounting-calculation.json",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/additional-server-records.jsonl",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/deletion-ledger.json",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/evidence-index.json",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/full-period-and-production-records.jsonl",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/historical-account-readings.json",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/historical-server-readings.json",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/known-task-inventory-r02.jsonl",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/latest-task-and-guard-inventory.jsonl",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/other-account-readings.json",
+        "reports/2026-10/2026-10-26-z4-storage-ledger-evidence/p75-task-inventories.jsonl"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f49961d2b2f35809d68980f91f73b3cf73f3c0ee",
+      "date": "2026-10-26",
+      "subject": "Add bounded shared day overlap and certified SSE memory prefetch",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/day_pipeline.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_day_pipeline.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "lv2_snapshot_workspace/tests/test_scheduler.py",
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/pipeline-kernel-r02.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/pipeline-kernel-r02.log.json",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/run_open5m_kernel_campaign.py",
+        "scripts/tests/test_kernel_calibration_terminal_progress.py",
+        "因子/algobench/src/algobench/formal_sse_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ce4cc6c283cdb16a8cc87e242f64b27edaa821b3",
+      "date": "2026-10-26",
+      "subject": "Bound production day overlap with independent acceptance and resource ownership",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/day_pipeline.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_day_pipeline.py",
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/pipeline-linux-r01.json",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/production-overlap-r02.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/production-overlap-r02.log.json",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/production-overlap-r03.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/production-overlap-r03.log.json",
+        "scripts/cleanup_calibration_storage.py",
+        "scripts/release_model328_order_audits.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ac95470ffa17d276773cc64907fb6de26036d475",
+      "date": "2026-10-26",
+      "subject": "Measure RAM day prefetch with the certified H1 comparison pipeline",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/prefetch-r01.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/prefetch-r01.log.json",
+        "scripts/benchmark_factor_day_prefetch.py",
+        "scripts/tests/test_factor_day_prefetch.py",
+        "scripts/verify_factor_computation_sse_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4bb6e2d84170fe0d4bec0f8a830bffbf6806adb7",
+      "date": "2026-10-26",
+      "subject": "Verify bounded kernel overlap with task-specific storage accounting",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/bounded-r01.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/bounded-r01.log.json",
+        "scripts/_factor_speed_storage.py",
+        "scripts/benchmark_factor_day_prefetch.py",
+        "scripts/benchmark_factor_kernel_days.py",
+        "scripts/tests/test_factor_kernel_days.py",
+        "scripts/tests/test_factor_speed_storage.py",
+        "scripts/verify_factor_computation_sse_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6a6adba8415c1ff6bd56d6aac5d3d8a80b6559b4",
+      "date": "2026-10-26",
+      "subject": "Bind overlap execution mode and exact final progress inventory",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/day_pipeline.py",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_day_pipeline.py",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/pipeline-receipt-r02.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/pipeline-receipt-r02.log.json",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f1bea731d868be064c57044615fabd60f7cd2fe2",
+      "date": "2026-10-26",
+      "subject": "Measure repeated production universe reads against frozen stock identities",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_factor_universe_reads.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cca9feee245366e731afa27af55b11ee96391ad1",
+      "date": "2026-10-26",
+      "subject": "Parallelize registered object HEAD reads without changing inventory totals",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/inventory-r01.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/inventory-r01.log.json",
+        "scripts/benchmark_factor_inventory.py",
+        "scripts/run_corrected344_factor_production.py",
+        "因子/algobench/src/algobench/formal_object_inventory.py",
+        "因子/algobench/tests/test_formal_object_inventory.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4596bd9f9f392c3ab85fbfb7b8ed4d254d9b6891",
+      "date": "2026-10-26",
+      "subject": "Bind bounded kernel validation to current replay metadata and wenjie publication",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-speed-evidence/kernel-adapter-r01.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/kernel-adapter-r01.log.json",
+        "scripts/benchmark_factor_kernel_days.py",
+        "scripts/run_open5m_kernel_calibration_szse_history.py",
+        "scripts/tests/test_factor_kernel_days.py",
+        "因子/algobench/configs/formal_kernel_calibration_open5m_day_pipeline_v1.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "831531529f167a0b687645cd0ec27d84e2587aef",
+      "date": "2026-10-26",
+      "subject": "Retry bounded benchmark storage reads through the shared transient-error policy",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-speed-evidence/storage-read-r01.log",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/storage-read-r01.log.json",
+        "scripts/_factor_speed_storage.py",
+        "scripts/tests/test_factor_speed_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "886f2a14def231e6e235b5362235da8335f56b01",
+      "date": "2026-10-26",
+      "subject": "Record bounded factor speed measurements, exactness evidence and production validation limits",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-production-audit.md",
+        "reports/2026-10/2026-10-26-factor-computation-speed.md",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/delivery-state.json",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/final-measurements.json",
+        "reports/2026-10/2026-10-26-factor-speed-evidence/prefetch-measurements.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3b54b7f561685b8d00eef889d5a10267476732bd",
+      "date": "2026-10-26",
+      "subject": "增加生产股票配对逐位基线与资源采证入口",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/benchmark_production_pair_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0e94cd09e9b46d584ce470418b9c2ac5cd5ec5b5",
+      "date": "2026-10-26",
+      "subject": "Record Z2 paused state and verified 355-day recovery boundary",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r05-user-stop.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f7bbf3d3cacaa1150a3b97f545e8501976e71850",
+      "date": "2026-10-26",
+      "subject": "按已签收日期累计Z2存储账目并定期全量核对",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-z2-storage-checkpoint-performance.md",
+        "scripts/_open5m_t1_storage.py",
+        "scripts/benchmark_t1_storage_checkpoint.py",
+        "scripts/tests/test_open5m_t1_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "11cc4297914e4b1088d91e7ad01d45f3d31aa518",
+      "date": "2026-10-26",
+      "subject": "核对存储基准的独占读取边界与验收预算",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-z2-storage-checkpoint-performance.md",
+        "scripts/benchmark_t1_storage_checkpoint.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ecd0fba55f7113407d59fe3e40616e2eb2c79f3d",
+      "date": "2026-10-26",
+      "subject": "以三日逐股对照绑定Z2执行版本续跑声明",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-z2-storage-checkpoint-performance.md",
+        "scripts/prepare_t1_execution_resume.py",
+        "scripts/tests/test_t1_execution_resume.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b4e93acaa3d1d437aa5a21fa576eb8f598646030",
+      "date": "2026-10-26",
+      "subject": "记录Z2存储提效验收及355日复用续跑",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r06-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r06-startup-status.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-finalizer-source-preflight.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-speed-preparation-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-speed-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-speed-validation-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-storage-speed-validation-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-storage-checkpoint-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5cb36189ba060a93098f86124e42f9cf86458cb4",
+      "date": "2026-10-26",
+      "subject": "核验并释放Z2提效验收热暂存",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-speed-scratch-cleanup-plan.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-speed-scratch-cleanup-result.json",
+        "reports/2026-10/2026-10-26-z2-storage-checkpoint-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "64906dfe67dca88aa39e96960d0dfef4887262fa",
+      "date": "2026-10-26",
+      "subject": "记录Z2续跑十日吞吐与实际CPU利用率",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r06-cpu-sample.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r06-first-dates-performance.json",
+        "reports/2026-10/2026-10-26-z2-storage-checkpoint-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0951de7819182802af352b2750c5820776a0ce78",
+      "date": "2026-10-26",
+      "subject": "按结构参数组按需构造市场冲击表",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r06-compute-pause-verified.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r06-compute-pause.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md",
+        "因子/algobench/src/algobench/formal_real_data_calibration.py",
+        "因子/algobench/tests/test_formal_t1_structural_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "72c6a3a2731f6cf22666ab7b1959850dc7535317",
+      "date": "2026-10-26",
+      "subject": "为T1认证日增加有界股票函数剖析",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md",
+        "scripts/run_open5m_t1_subset_check.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "43fb45a86d24fe858afcfd6b8047c87ed884d30f",
+      "date": "2026-10-26",
+      "subject": "为生产重股配对增加共享预算下的确定性分片",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/day_pipeline.py",
+        "lv2_snapshot_workspace/src/snapshot/resource_ledger.py",
+        "scripts/benchmark_production_pair_stock.py",
+        "scripts/compare_production_pair_stock.py",
+        "scripts/production_pair_burst_evidence.py",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_factor_day_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ac535c4a70d8a32daba48c48c9c7c2687361b61d",
+      "date": "2026-10-26",
+      "subject": "按当日成交活跃度自动优先派发重股",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_workload_priority.py",
+        "因子/algobench/tests/test_formal_workload_priority.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "94c6c26123a01037d3fc22279c74ec13690c66cf",
+      "date": "2026-10-26",
+      "subject": "增加连续交易日分片与跨日调度四组合对照入口",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/benchmark_production_pair_days.py",
+        "因子/algobench/tests/test_production_pair_day_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "77618ee950d56854b3a2fc2bca0bf6012df063db",
+      "date": "2026-10-26",
+      "subject": "为T1接入共享预算下的双日准备和有序签收",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/replay/inputs.py",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-profile-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-profile-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-profile-r02-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-profile-sync.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md",
+        "scripts/_open5m_t1_storage.py",
+        "scripts/run_open5m_real_data_calibration.py",
+        "scripts/run_open5m_selected_date_calibration.py",
+        "scripts/tests/test_open5m_t1_storage.py",
+        "因子/algobench/tests/test_open5m_t1_day_pipeline.py",
+        "因子/algobench/tests/test_run_open5m_real_data_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6edbc3b02b6d96391370048f7214016746ff3109",
+      "date": "2026-10-26",
+      "subject": "允许T1使用限定日期的采集测速入口",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_open5m_selected_date_calibration.py",
+        "因子/algobench/tests/test_open5m_t1_day_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f2250c65f670c08e3605fe9b15435a1956f59249",
+      "date": "2026-10-26",
+      "subject": "将T1计算续跑证明绑定到已审阅源码和三日逐股验收",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/prepare_t1_execution_resume.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3a291e1e23b04882753995bbd3e55511fae533a2",
+      "date": "2026-10-26",
+      "subject": "为同进程重股分片限定独占输入并验证完整图合并",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "94c3fe6b5a0713d47efef19f711fdd8eb445eed5",
+      "date": "2026-10-26",
+      "subject": "复用完整采集入口对照T1单日与双日签收吞吐",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md",
+        "scripts/benchmark_t1_collection_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b99d192169e471cccada15311c27a828f5f2a98f",
+      "date": "2026-10-26",
+      "subject": "明确T1续跑验收与未启用生产分片的源码边界",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/prepare_t1_execution_resume.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "597422e295157fd3fa994781b09654511de059eb",
+      "date": "2026-10-26",
+      "subject": "为每次因子采集隔离分片资源账本并保留旧预约诊断",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_factor_day_pipeline.py",
+        "因子/algobench/tests/test_formal_factor_day_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "331199478a912b71fb33d3ecf297cd7ea6414bfb",
+      "date": "2026-10-26",
+      "subject": "记录T1双日吞吐提升和8538股票日精确对照",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-resume-preparation.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-scratch-cleanup-plan.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-scratch-cleanup-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-validation-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-validation-r02-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-compute-validation-r03-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-day-pipeline-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-pipeline-benchmark-r01-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-pipeline-benchmark-r01-result.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "74255db68704f5e31cd5adec4ecd4621d6cd5ce6",
+      "date": "2026-10-26",
+      "subject": "记录生产分片等待归并匹配耗时及实际子进程CPU时间",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c093ebc6d9bb0bbc5776ef34095bbf4b5479ddd6",
+      "date": "2026-10-26",
+      "subject": "保留生产分片空响应表的列型并验证响应赢家逐位归并",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "34d58b74045c9570a11e77f4872f10cfad366793",
+      "date": "2026-10-26",
+      "subject": "记录T1双日续跑完整恢复及正式核利用率",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r07-cpu-sample.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r07-initial-status.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r07-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r07-startup-status.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2a03aac288f6bf2478e69ded241330cfc6bab4fd",
+      "date": "2026-10-26",
+      "subject": "记录r05已签收日重股长尾与共享计算分段证据",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/r05-longtail.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "322e27d46b9669aaff30236f1d6e85120dfa0cac",
+      "date": "2026-10-26",
+      "subject": "在股票逐位对照中核对撤单与深度匹配科学审计",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/compare_production_pair_stock.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0584e0880821f7d6fbaa7b124823b992ae9143a5",
+      "date": "2026-10-26",
+      "subject": "记录T1正式双日续跑首十日签收吞吐",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r07-first-dates-performance.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "95c977fbb7785bcc8a87dd848e2c48d9dc99c08e",
+      "date": "2026-10-26",
+      "subject": "恢复T1已完成本地日包并补齐中断容量签收",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r07-inventory-probe.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r07-reconciliation-failure.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md",
+        "scripts/prepare_t1_execution_resume.py",
+        "scripts/recover_open5m_t1_staged_day.py",
+        "scripts/tests/test_recover_t1_staged_day.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f2600bc53a444509e75ca23e8ed2581a3e581180",
+      "date": "2026-10-26",
+      "subject": "记录T1中断日恢复验收及r08双日续跑",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r08-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-recovery-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-recovery-test-cleanup-plan.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-recovery-test-cleanup-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-staged-recovery-final.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-staged-recovery-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a90e914df1f3e3fe1a406cd36b83a372d02d95fa",
+      "date": "2026-10-26",
+      "subject": "增加重股自动优先派发的有界取数验收入口",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/benchmark_production_stock_priority.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9c6f0100b5f6595f7042acb99eb5d91f37fc928e",
+      "date": "2026-10-26",
+      "subject": "让有界日级验收按实际CPU进展监测长时间配对计算",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/baseline-r01-watchdog.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/benchmark_production_pair_days.py",
+        "因子/algobench/tests/test_production_pair_day_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "54b0403466c2780da67ed2c8ce1fa09f8c01e35f",
+      "date": "2026-10-26",
+      "subject": "记录T1恢复后首十日吞吐与IO等待现场证据",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r08-cpu-sample.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r08-first-dates-performance.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r08-first3-latency.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r08-startup-status.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-host-io-sample.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-native-readback-probe.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0360fe8567ad030639fb47b2d476769d476ba7ed",
+      "date": "2026-10-26",
+      "subject": "把重股优先级准备纳入共享解析CPU预算",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_workload_priority.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c8fd23560d7f873daec7d920997aaa1ae6769911",
+      "date": "2026-10-26",
+      "subject": "限制分片继承的Arrow线程池并记录实际线程配置",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0052524a2bd678eaba141472bd711fa68331b3e5",
+      "date": "2026-10-26",
+      "subject": "记录T1第450日全量存储对账与阶段吞吐",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r08-checkpoint-450.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-checkpoint450-probe.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "323b28ba9badbe71135140f2470a39d094477db9",
+      "date": "2026-10-26",
+      "subject": "逐列核对股票逐订单审计片段及科学收据",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/compare_production_pair_stock.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "87e0f3802282e98ae568b9c64d27a6e5f83fc5ff",
+      "date": "2026-10-26",
+      "subject": "记录T1第500日全量签收和有界读取重试",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "完整提交、实现差异、固定材料和真实回执按本次目标核对；共用模块不向全部消费者重复计重。",
+      "review_basis": "2026-10-27：逐SHA读取完整差异与路径；方法、实施、运行和验收分开，未采用方案保留。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r08-checkpoint-500.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    }
+  ]
+}

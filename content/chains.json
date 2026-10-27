@@ -212,16 +212,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 2,
+        "days": 3,
         "span": [
           "2026-09-29",
-          "2026-10-09"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
-        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
+        "incremental_review": {
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
+        }
       },
       "fate": "landed",
-      "fate_note": "10 月 9 日公共入口接入分组定标：解析和分组环节降了 36.6%，完整读取的样本降 21.9%—30.4%；沪市自适应复测有变慢的样本，旧入口还没全部迁移。",
+      "fate_note": "26日账户共享SQL按预定规则选双路，认证三日取数缩短13.30%；内存预取工作流缩短21.22%，缓存条件及冷数据工期限制保留。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -235,6 +239,18 @@
           ],
           "title": "后续计算任务的通用取数与效率方案",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-09-general-compute-efficiency.md#L3-L108"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "87e0f3802282e98ae568b9c64d27a6e5f83fc5ff",
+          "path": "reports/2026-10/2026-10-26-factor-computation-speed.md",
+          "lines": [
+            1,
+            133
+          ],
+          "title": "2026-10-26-factor-computation-speed",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/87e0f3802282e98ae568b9c64d27a6e5f83fc5ff/reports/2026-10/2026-10-26-factor-computation-speed.md#L1-L133"
         }
       ]
     },
@@ -254,20 +270,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 28,
+        "days": 29,
         "span": [
           "2026-08-08",
-          "2026-10-25"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-25",
-          "scope": "只刷新实际日点跨度，保留历史审阅责任。"
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
         }
       },
       "fate": "landed",
-      "fate_note": "8 月起多次清理，每批都保留恢复和删除记录。不同文件系统和账户的释放量分开计，不相加成同一块盘的空间。",
+      "fate_note": "26日两份旧IDE归档恢复后释放系统盘，重核Z4已知留存；摘要扫描时点和其他写入覆盖尚待补齐。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -305,6 +321,18 @@
           ],
           "title": "深市328列计算与提速任务的存储收尾",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-16-szse-model328-storage-closeout.md#L3-L51"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "87e0f3802282e98ae568b9c64d27a6e5f83fc5ff",
+          "path": "reports/2026-10/2026-10-26-z4-storage-accounting.md",
+          "lines": [
+            1,
+            108
+          ],
+          "title": "2026-10-26-z4-storage-accounting",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/87e0f3802282e98ae568b9c64d27a6e5f83fc5ff/reports/2026-10/2026-10-26-z4-storage-accounting.md#L1-L108"
         }
       ]
     },
@@ -1472,20 +1500,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 37,
+        "days": 38,
         "span": [
           "2026-07-07",
-          "2026-10-25"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-25",
-          "scope": "只刷新实际日点跨度，保留历史审阅责任。"
+          "on": "2026-10-27",
+          "scope": "补核初始远端已有、本地未包含的26日报告提交。"
         }
       },
       "fate": "landed",
-      "fate_note": "持续进行。这里的提交可能只是改报告或规则，不代表研究计算在同一天重跑。",
+      "fate_note": "26日在25日报告的文档及展示中补入相邻v2、独立第六核正式方法与两市场计划；旧研究过程保留。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1696,30 +1724,31 @@
       "label": "修正回放下的 344 列重新定参",
       "short": "344重定参",
       "purpose": "按修正后的回放和独立的 344 列清单，重新采集六个全局核和八组结构参数各 601 日的观测，最后固定参数并交给下游。",
-      "status": "done",
+      "status": "active",
       "fate": "landed",
-      "fate_note": "10月24日F40四阶段各601日完成，八组结构参数和正式运行包通过验收，原六组核心参数不变；参数包交给344列正式计算。",
+      "fate_note": "26日按特殊通道修正重新估计两组，其他六组及原六核保留；三日8538股票日对照通过，两组采集当晚501/601日，最终归约与新运行包待完成。",
       "closes_into": {
         "daily": [
           "2026-10-21",
           "2026-10-22",
-          "2026-10-23"
+          "2026-10-23",
+          "2026-10-25"
         ]
       },
       "report_coverage": "curated",
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 5,
+        "days": 6,
         "span": [
           "2026-10-20",
-          "2026-10-24"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-25",
-          "scope": "只刷新实际日点跨度，保留历史审阅责任。"
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
         }
       },
       "source_refs": [
@@ -1770,6 +1799,18 @@
           ],
           "title": "F40全期参数与运行包验收",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-f40-full-period-completion.md#L1-L62"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "87e0f3802282e98ae568b9c64d27a6e5f83fc5ff",
+          "path": "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+          "lines": [
+            1,
+            60
+          ],
+          "title": "2026-10-26-factor-computation-z2-closeout",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/87e0f3802282e98ae568b9c64d27a6e5f83fc5ff/reports/2026-10/2026-10-26-factor-computation-z2-closeout.md#L1-L60"
         }
       ]
     },
@@ -1844,7 +1885,7 @@
       "purpose": "建立固定版本的证据、逐日多任务记录和链条图谱，并维护每日更新规则，让每项工作都能追到原始来源。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "10月23日修正浮窗轴向次序、两侧留白和交接线，复核历史去留标记；来源覆盖仍不完整。",
+      "fate_note": "26日平滑交接曲线中段，并使选中交接线及连接点同步高亮；每日来源覆盖仍不完整。",
       "closes_into": {
         "daily": []
       },
@@ -1852,16 +1893,16 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 4,
+        "days": 5,
         "span": [
           "2026-10-20",
-          "2026-10-23"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-24",
-          "scope": "刷新实际日点数量与跨度；本轮新增日点和迟到事实按本轮来源核对，不重写此前历史审阅责任。"
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
         }
       },
       "source_refs": [
@@ -2066,16 +2107,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 13,
+        "days": 14,
         "span": [
           "2026-08-03",
-          "2026-10-15"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
-        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
+        "incremental_review": {
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
+        }
       },
       "fate": "landed",
-      "fate_note": "方法建议和已定设置分开保留；讨论不等于候选模型已经跑完。",
+      "fate_note": "26日复核328列粗测、扩展验证与候选计划的边界；未开展新训练，讨论与运行结果分别保留。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2105,16 +2150,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 3,
+        "days": 4,
         "span": [
           "2026-09-17",
-          "2026-09-22"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
-        "scope": "已按原始提交和会话复核这条链的归属与起止日期。"
+        "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
+        "incremental_review": {
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
+        }
       },
       "fate": "landed",
-      "fate_note": "形成方法研究，没有真实交易验收。",
+      "fate_note": "26日重新查回严格成交、资金限制和股票池的历史指导；规则仍待明确，本日为资料回查与问答。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2218,22 +2267,27 @@
       "status": "active",
       "closes_into": {
         "daily": [
-          "2026-10-24"
+          "2026-10-24",
+          "2026-10-25"
         ]
       },
       "review": {
         "by": "Codex",
         "on": "2026-10-25",
-        "days": 2,
+        "days": 3,
         "span": [
           "2026-10-24",
-          "2026-10-25"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
-        "scope": "24日原始要求、固定材料、实现差异及原始回执；来源整体仍不完整。"
+        "scope": "24日原始要求、固定材料、实现差异及原始回执；来源整体仍不完整。",
+        "incremental_review": {
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
+        }
       },
       "fate": "landed",
-      "fate_note": "25日当晚最近一次检查已验收236日，仍在正式逐日计算；来源缺口日挂起。",
+      "fate_note": "26日旧r05停在323个验收日并保留基线；新版范围、源缺口和日/月检查入口已补齐。重股分片默认关闭，23:55原基线仍运行，正式重算和分片实测尚待后续。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2271,6 +2325,18 @@
           ],
           "title": "正式计算、原身份续跑及日级盘点",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/941c2ca1ae8e68116b411d6c306dd975a0f062ca/reports/2026-10/2026-10-25-corrected344-factor-production.md#L1-L40"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "87e0f3802282e98ae568b9c64d27a6e5f83fc5ff",
+          "path": "reports/2026-10/2026-10-26-production-pair-sharding.md",
+          "lines": [
+            1,
+            134
+          ],
+          "title": "2026-10-26-production-pair-sharding",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/87e0f3802282e98ae568b9c64d27a6e5f83fc5ff/reports/2026-10/2026-10-26-production-pair-sharding.md#L1-L134"
         }
       ]
     },
@@ -2290,16 +2356,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-10-25",
-        "days": 2,
+        "days": 3,
         "span": [
           "2026-10-24",
-          "2026-10-25"
+          "2026-10-26"
         ],
         "unreviewed_days": [],
-        "scope": "24日原始要求、固定材料、实现差异及原始回执；来源整体仍不完整。"
+        "scope": "24日原始要求、固定材料、实现差异及原始回执；来源整体仍不完整。",
+        "incremental_review": {
+          "on": "2026-10-27",
+          "scope": "本轮新消息、固定材料和真实结果逐项补核；保留历史审阅人及整体来源不完整状态。"
+        }
       },
       "fate": "landed",
-      "fate_note": "25日定参提速至82.43秒后暂停；独立第六核与f26/f27有界研究完成，单日工程主命令82.01秒。正式601日参数和默认定义的后续实施仍待推进。",
+      "fate_note": "26日相邻主动簇和特殊通道方法修正验收通过，完成601日阶段码及三日九表等价；缺失股票日明确保留，全期定参与生产尚待后续。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2337,6 +2407,18 @@
           ],
           "title": "独立第六核与观察资格有界研究及诊断更正",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/941c2ca1ae8e68116b411d6c306dd975a0f062ca/reports/2026-10/2026-10-25-sse-marketability-f26-research.md#L1-L224"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "87e0f3802282e98ae568b9c64d27a6e5f83fc5ff",
+          "path": "reports/2026-10/2026-10-26-pre-factor-method-checks-r2.md",
+          "lines": [
+            1,
+            199
+          ],
+          "title": "2026-10-26-pre-factor-method-checks-r2",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/87e0f3802282e98ae568b9c64d27a6e5f83fc5ff/reports/2026-10/2026-10-26-pre-factor-method-checks-r2.md#L1-L199"
         }
       ]
     }
