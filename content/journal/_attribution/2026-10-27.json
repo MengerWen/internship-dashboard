@@ -1,0 +1,5486 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-27",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "33b50b0abab48258ded2f05c5fc43946bb1bf3c1a3b5e9253016b3c326f531c5",
+  "rules_sha256": "72e54f09b0e2eff0bc992e05d3c54c44e5ef7d864449b6c6c41eb39bd2c57dbf",
+  "revisions": {
+    "sirui-quant-research": "1e93603c7fec3909d79b3cfb72b408d48e48e47e",
+    "Quant_Research-Trading": "9bd647c1d60384f69b0f406a0e883c2c482769d8",
+    "internship-dashboard": "79f784b4f4f83c1b8751b96e56ec4ee9f669b494"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "332958ffbfee50cb53fa8b86acb99dd40e8dc34a",
+      "date": "2026-10-27",
+      "subject": "补记10月26日两市场方法定稿与601日生产进展",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "前一轮每日维护与收据，不重复计入研究任务权重。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-10-26.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "79f784b4f4f83c1b8751b96e56ec4ee9f669b494",
+      "date": "2026-10-27",
+      "subject": "保存10月27日研究日志发布与来源核对收据",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "前一轮每日维护与收据，不重复计入研究任务权重。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-10-27.md",
+        "docs/journal-review/daily-updates/2026-10-27/github-push-receipts.json",
+        "docs/journal-review/daily-updates/2026-10-27/receipt.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c798bb95ff29dab201f30a74435dab46bfeade41",
+      "date": "2026-10-27",
+      "subject": "核验601日原始工作量清单与重股外推样本分布",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/full601-workload.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9f58f9643d8e2f665e735c47760ab0f80d78778e",
+      "date": "2026-10-27",
+      "subject": "为T1全量清单采用有界小页和独立读取等待",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-listing-unit.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-listing-unit.txt",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-key-range-probe.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-long-read-probe.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-reconciliation-failure.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-small-page-probe.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md",
+        "scripts/_open5m_t1_storage.py",
+        "scripts/prepare_t1_execution_resume.py",
+        "scripts/tests/test_open5m_t1_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6d7d5078ae034fe38c42c6a498bab8c121517f57",
+      "date": "2026-10-27",
+      "subject": "复用逐层清单和目录预取完成T1全量对账",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-listing-recovery-proof.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-listing-recovery-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r08-directory-probe.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-staged-recovery-r02-failure.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-tree-unit.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-tree-unit.txt",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md",
+        "scripts/_open5m_t1_storage.py",
+        "scripts/tests/test_open5m_t1_storage.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "22f3c4f5626487596de98fffdd291cc67b3ae213",
+      "date": "2026-10-27",
+      "subject": "记录第551日恢复签收与T1末段续跑",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r09-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-local-unit-cleanup-plan.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-local-unit-cleanup-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-tree-recovery-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-tree-recovery-sync.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "581b56046df8e59a00cefe47db5d71827b3932b3",
+      "date": "2026-10-27",
+      "subject": "核验清理T1恢复测试与只读盘点临时文件",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-native-unit-cleanup-plan.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-native-unit-cleanup-result.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5dc8d2669e26a5ae9301559371d4e03ad97bd9ed",
+      "date": "2026-10-27",
+      "subject": "记录T1末段复用验收与实际核利用率",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r09-cpu-sample.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-601-r09-startup-status.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "088293de775e14c3f9cbfa2e0388cec2e4f80341",
+      "date": "2026-10-27",
+      "subject": "记录T1末段核利用率波动的现场计数",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r09-resource-wait-sample.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "921c5ca99dc96fb56a20dbc61c1c46a3111bcc19",
+      "date": "2026-10-27",
+      "subject": "记录T1末期单股BBO长尾与跨日等待",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-r09-final-stock-tail.json",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc0aa2f43cefe872da47c367ab4b1b46042e6011",
+      "date": "2026-10-27",
+      "subject": "完成Z2全期参数交付与终态存储验收",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-26-factor-computation.md",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-final-delivery-audit.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-final-hot-cleanup-result.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-final-native-state.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-final-source-gap-verification.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-final-storage-audit-guard.json",
+        "reports/2026-10/2026-10-26-factor-computation-evidence/z2-final-storage-audit-launch.json",
+        "reports/2026-10/2026-10-26-factor-computation-z2-closeout.md",
+        "reports/2026-10/2026-10-26-z2-compute-pipeline-performance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ef8cac734416dee902b62a4e04689a10356773bb",
+      "date": "2026-10-27",
+      "subject": "记录重股不分片基线与Linux分片回归证据",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/linux-unit-r01.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/stock-baseline-001391-r02.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1833060ce1fa3c7b81a00d89b59cb8963690baf1",
+      "date": "2026-10-27",
+      "subject": "使生产分片保留与主扫描相同的赢家列集",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f772764b36ed1f84a20575f46e973be5d83b5bd7",
+      "date": "2026-10-27",
+      "subject": "逐位核对股票输出中的NaN浮点载荷",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/compare_production_pair_stock.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3c037d9323ee1c1fb71a01e57f6b4caa960a6670",
+      "date": "2026-10-27",
+      "subject": "在分片因子异常时保留原批次的科学状态",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "141c9dd6bbb2694f80710735b002bac2c552d7b9",
+      "date": "2026-10-27",
+      "subject": "使生产分片沿用原响应查询执行选项",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "faf5689a2808294aaf7a008a875ebc9f3c038130",
+      "date": "2026-10-27",
+      "subject": "按原始输入行数预约生产分片内存",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal_pair_shard_execution.py",
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0504333aa6f285758cbf86d23c39fb1404fd4c5e",
+      "date": "2026-10-27",
+      "subject": "按候选量划分连续撤单区间以均衡生产分片",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c789d5523a8b263edc3655a0e86e82710d657252",
+      "date": "2026-10-27",
+      "subject": "记录生产三片逐位结果与行数内存标定",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/linux-unit-r03.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/stock-300059-three-shards.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c788d99215d35511ebcae72a0d965c2748114ba1",
+      "date": "2026-10-27",
+      "subject": "保留跨进程不可序列化因子的原异常状态",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bcff168a93feb51371afb27b8d69771f0e1a5af1",
+      "date": "2026-10-27",
+      "subject": "在股票评分前锁定对照输入的完整行序身份",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/benchmark_production_pair_stock.py",
+        "因子/algobench/tests/test_production_stock_input.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a62bc0182adba5c49066303a2e986e3b2bfb7314",
+      "date": "2026-10-27",
+      "subject": "记录固定输入预检与跨进程异常的原生回归",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/linux-unit-r04.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f128f64b014998b169499ea9c0b0e630f549e96f",
+      "date": "2026-10-27",
+      "subject": "验证独立进程共享CPU与内存预约上限",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2319819c9674830ef623a7d377bddcc3ed367da4",
+      "date": "2026-10-27",
+      "subject": "逐项核对配对指纹与替换订单号科学收据",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/compare_production_pair_stock.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6d2687e4ac6422b516d1310f8fbb7f120e44ab1",
+      "date": "2026-10-27",
+      "subject": "保留r05逐日长尾计时及分片门槛覆盖证据",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/r05-threshold-audit.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/r05-top20-timings.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "379cfb3be2c4c65e5d34c93389db383291aba804",
+      "date": "2026-10-27",
+      "subject": "使有界日级对照绑定容量凭证并守护验证阶段",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/benchmark_production_pair_days.py",
+        "因子/algobench/tests/test_production_pair_day_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0ac839ad87cf686adf48cd98a250f65827e8c6a9",
+      "date": "2026-10-27",
+      "subject": "让当前T1生产配置由匹配的Z3-D完整签收",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding.md",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/tests/test_corrected344_factor_production.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1432586a0d2a5ded811daf5b762fb91b9b9c9bdf",
+      "date": "2026-10-27",
+      "subject": "记录001391同输入分片逐位结果与资源实测",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/input-identity-exception.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a15f70c065401e2caed5709fcecca83e9a63d682",
+      "date": "2026-10-27",
+      "subject": "按签收长尾将默认分片准入设为一亿候选对",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/configs/szse_model328_resources_v1.json",
+        "因子/algobench/src/algobench/formal_pair_shard_execution.py",
+        "因子/algobench/tests/test_production_pair_shards.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6a83cd54c6df3e83ff6bcbcf7e1054b8585b3a36",
+      "date": "2026-10-27",
+      "subject": "归档生产分片逐位验收、全期估算与最终分发状态",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/.gitattributes",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/final-code-identity.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/final-comparison-guard.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/final-native-source-files.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/final-strict-comparisons.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/full-period-estimate.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/linux-unit-r05.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/model-run-audit.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/priority-native.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/protected-source-invariants.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/stock-auto-shards.json",
+        "reports/2026-10/2026-10-26-production-pair-sharding-evidence/storage-closeout.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "548ebd7a330c09731ca5c6dfe8bef85c6285e981",
+      "date": "2026-10-27",
+      "subject": "把长时间计算的速度门改为全期墙钟时限",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "全期墙钟速度门作为公共计算规约，和各市场实际结果分开。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "AGENTS.md",
+        "docs/agents/compute-efficiency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "15479faccba6fa05e8c69e366cc3a15cd085212f",
+      "date": "2026-10-27",
+      "subject": "编排深市Z3完整单日验收与有界容量准入",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "scripts/run_factor_computation_z3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2722834323207a8b47354ed20e10cf6f3a4e7476",
+      "date": "2026-10-27",
+      "subject": "将Z3有界产物绑定订单签收命名空间",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "scripts/run_factor_computation_z3.py",
+        "scripts/tests/test_factor_computation_z3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "18fc956f0ead2a04507d866c00f85a65bd2afa90",
+      "date": "2026-10-27",
+      "subject": "以行序无关输入身份和类型逐位比较核验Z3",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "scripts/compare_open5m_registered_panels.py",
+        "scripts/tests/test_factor_computation_panel_gates.py",
+        "scripts/tests/test_factor_computation_z3.py",
+        "scripts/verify_factor_computation_z3.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal_exactness.py",
+        "因子/algobench/tests/test_input_row_multisets.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b2ba8b5bdc0ac57dc8764f3e1baa22cde7196071",
+      "date": "2026-10-27",
+      "subject": "新增按全期墙钟验收的有界生产测速入口",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "scripts/benchmark_factor_speed_gate.py",
+        "scripts/run_factor_computation_z3.py",
+        "scripts/tests/test_factor_speed_gate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d38a7447fc79a2ba6288fd3ffc69fe3bad640296",
+      "date": "2026-10-27",
+      "subject": "为守护子进程绑定项目模块搜索路径",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_factor_computation_z3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cd74c61d80493a0127b3d6a2b44797a044ebfa12",
+      "date": "2026-10-27",
+      "subject": "为Z3独立回读建立自有暂存目录",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/verify_factor_computation_z3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e339b44492e0c94a4ceb91679df47c8e9219533b",
+      "date": "2026-10-27",
+      "subject": "为历史范围单日核对记录特殊通道正gap边数",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4bf3cedf72887fa0354f51f1e2db5199673b50b6",
+      "date": "2026-10-27",
+      "subject": "绑定沪市六核与结构定参配置到v3范围",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-gate.md",
+        "scripts/calibrate_kernel_scales.py",
+        "scripts/tests/test_sse_h2_h3_config.py",
+        "因子/algobench/configs/formal_kernel_calibration_sse_public_entry_340_v2.yaml",
+        "因子/algobench/configs/formal_real_data_calibration_sse_public_340_v1.yaml",
+        "因子/algobench/src/algobench/formal_sse_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7fba833a330b9edf4df084f8217ef30075e6fc81",
+      "date": "2026-10-27",
+      "subject": "编排沪市两遍定参和来源校验运行包",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-gate.md",
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py",
+        "scripts/verify_sse_calibration_pilot.py",
+        "因子/algobench/src/algobench/formal_sse_calibration.py",
+        "因子/algobench/src/algobench/formal_sse_calibration_records.py",
+        "因子/algobench/src/algobench/formal_sse_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f19a9eb5e721d273bd30bbf720ecce1aadb646e1",
+      "date": "2026-10-27",
+      "subject": "核对冷日期代理和沪市停止门连接",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9411eed33aa39525f53c74f2cbb3d571540bf802",
+      "date": "2026-10-27",
+      "subject": "按主动簇参数接口连接D9计数",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1e9caf447d3f9029f90aa5a1457b6a1bab40df42",
+      "date": "2026-10-27",
+      "subject": "按原生与公开输入合同绑定响应模板尺度",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/initial-z3-resource-diagnostics.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/workload-selection-audit.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/z3-r02-comparison.json",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/tests/test_response_scorer_scales.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76216bb7e722008897883d2fc265e2eddaaba829",
+      "date": "2026-10-27",
+      "subject": "将独立测速留存包络纳入十四GiB容量准入",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "scripts/run_factor_computation_z3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "eeef75f96abbb22d99c51d8ba6002c8a4cb8eada",
+      "date": "2026-10-27",
+      "subject": "通过原生对象接口核验工程尺度来源",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "84c09300d5a6ee4b66b802ca6ac5845fdd6173f9",
+      "date": "2026-10-27",
+      "subject": "绑定定参恢复凭证并逐位核对全期速度输出",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f4137cb14362687df8c5fa8636d736353269ea9f",
+      "date": "2026-10-27",
+      "subject": "初始化测速订单目录并记录Z3三项不变量通过",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/profile-000001-r03.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/response-scales-local-checks.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/z3-r03-comparison.json",
+        "scripts/benchmark_factor_speed_gate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3e60583b87a5b4221aa65386f6aaa158ff342187",
+      "date": "2026-10-27",
+      "subject": "通过沪市对象接口读写有界定参派生产物",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/build_open5m_selected_date_calibration_result.py",
+        "scripts/calibrate_open5m_f40_stages.py",
+        "因子/algobench/src/algobench/artifact_io.py",
+        "因子/algobench/src/algobench/formal_f40_stages.py",
+        "因子/algobench/tests/test_sse_calibration_object_io.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "646b57046eb14b4cc3bc1d08c884070366ed3a38",
+      "date": "2026-10-27",
+      "subject": "为沪市两遍定参接入共享资源账本和有界跨日调度",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1762af4e6d67de288dd3e10744b5c8abe14b19a9",
+      "date": "2026-10-27",
+      "subject": "记录深市Z3逐位通过与三日基线现场",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3107cc6bf4ccaba4eaaa3edaba0dc62a98e153b6",
+      "date": "2026-10-27",
+      "subject": "记录定参稳态核利用率并完整比较F40阶段支持",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-gate.md",
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ab3c44b59a8e1460351731093ac6c95450b2aa4",
+      "date": "2026-10-27",
+      "subject": "将沪市F40高频进度写入本地控制根并提供P75正确性入口",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c108f4cc112c8e00eceda270996ff3d28c295ff0",
+      "date": "2026-10-27",
+      "subject": "复用沪市日输入准备并按单支持契约回读P75订单数组",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f59dedf45a0e10e60b1efaccb423d6abc427b3a5",
+      "date": "2026-10-27",
+      "subject": "增加沪市最重股票结构采集的有界调用成本诊断",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "38e1c4a733a91fea0c4163ce8cd8b37a98746750",
+      "date": "2026-10-27",
+      "subject": "绑定候选测速参照并按股票行段比较完整审计",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-baseline-r02-readback.json",
+        "scripts/benchmark_factor_speed_gate.py",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/tests/test_corrected344_factor_production.py",
+        "scripts/tests/test_factor_speed_gate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3c422503561961266ce849abf1cccc6c00d2ceea",
+      "date": "2026-10-27",
+      "subject": "核对沪市日级科学汇总及运行包解析覆盖",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a5bfc595ee637db7e9901c65f449f156f6b9634d",
+      "date": "2026-10-27",
+      "subject": "按整条沪市测速线核算控制与派生材料的容量准入",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ff6b23b484f750e52bac2f9c0582d6bd0f422432",
+      "date": "2026-10-27",
+      "subject": "按所属日进程树记录重叠取数和频道索引CPU",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a469eeffadce4e3c126de5b7dc6401ce0dbc25a5",
+      "date": "2026-10-27",
+      "subject": "缩减沪市右删失查表列并提供响应分块成本对照",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e5527dabcdf2331df3a1dd9caa21d851e036c0f3",
+      "date": "2026-10-27",
+      "subject": "将单股性能候选与已签收P75支持及监测计数对照",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ce49be2f02dcd925cb3a2c17d53f0ade82060fe0",
+      "date": "2026-10-27",
+      "subject": "按签名对象身份复核完整库存并保留历史核验路径",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/baseline-metadata.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/project_baseline_wall_clock.py",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-baseline-r02-projection.json",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/tests/test_corrected344_factor_production.py",
+        "scripts/tests/test_signed_factor_inventory.py",
+        "因子/algobench/src/algobench/formal_object_inventory.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7c7ae17573ffb1ae6cab73a197b4323cf1f0ac9d",
+      "date": "2026-10-27",
+      "subject": "为沪市F40预启动继承数值内核的进程池并分开计量启动",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/calibrate_open5m_f40_stages.py",
+        "scripts/run_sse_public340_calibration.py",
+        "因子/algobench/tests/test_sse_calibration_object_io.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9932a98470c159caa471882e1e36a82095db307d",
+      "date": "2026-10-27",
+      "subject": "Use strict nested scientific audit identities in speed comparisons",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_factor_speed_gate.py",
+        "scripts/build_szse_model328_performance_gate.py",
+        "scripts/tests/test_factor_speed_gate.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8380162c283c5924cc17e79e371393d495c770c1",
+      "date": "2026-10-27",
+      "subject": "Prepare the cached engine before diagnostic worker profiling",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+        "lv2_snapshot_workspace/tests/test_worker_profile_preparation.py",
+        "因子/algobench/src/algobench/formal/panel.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0c451af5f3e26bf49e4f1b8bd82da8ce4fa8470",
+      "date": "2026-10-27",
+      "subject": "Retain exact column identities through observable replay projection",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/tests/test_formal_event_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7bbddb1ba18b3ac81d9b607efd0188c7d65b2b5d",
+      "date": "2026-10-27",
+      "subject": "Compute single-node aggressive cluster statistics without array reductions",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_chains.py",
+        "因子/algobench/tests/test_singleton_cluster_statistics.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "795656ebd488111b3e535945faf139720ca44c7b",
+      "date": "2026-10-27",
+      "subject": "按601日收据选取D8日期并复用七股确定性验收入口",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "05cff938b99878be65e4f32ac7adcfe415ca5c4a",
+      "date": "2026-10-27",
+      "subject": "提供BBO动作访问时间桶并核对竞争最大值逐位一致",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/tests/test_formal_bbo_matching.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a9fe7e5322bc25cf0681e7fc00ed2786488fac05",
+      "date": "2026-10-27",
+      "subject": "登记两市场因子结构提速分工与验收计划",
+      "status": "shared",
+      "chains": [
+        "corrected-factor-344",
+        "pair-native-engine",
+        "sse-calibration-340"
+      ],
+      "reason": "同一计划明确为三条独立交付线制定范围与停止门，三等分。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "revised_from": [
+        "corrected-factor-344",
+        "sse-calibration-340",
+        "pair-native-engine"
+      ],
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 3
+        },
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 3
+        },
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 3
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-factor-speedup.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3f266cdf9496ba47908215937ac5e97d35c9c43b",
+      "date": "2026-10-27",
+      "subject": "Record SZSE speedup handoff and current accepted wall-clock breakdown",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/profile-000001-r04.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dfb967fb3789829ff78d840a62adc095a901da8a",
+      "date": "2026-10-27",
+      "subject": "提供两市场结构改写共用容差比较器与边界审阅结果",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/e1-synthetic.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/compare_factor_tolerance.py",
+        "scripts/tests/test_factor_tolerance_cli.py",
+        "因子/algobench/src/algobench/formal_tolerance.py",
+        "因子/algobench/tests/test_formal_tolerance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0cb5e28d77fb3bb398e2356f67ea2baba2c3e0a3",
+      "date": "2026-10-27",
+      "subject": "记录沪市18.98小时中间门与引擎交接基线",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/baseline-r01-projection.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/cpu-fork-r01-comparison.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/cpu-fork-r01-projection.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/historical-cpu-backtest.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/overlap-r01-comparison.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/overlap-r01-projection.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/sql-decision.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/workload.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-gate.md",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ac9664e93a31b3c34e8f6e281869366ce29562de",
+      "date": "2026-10-27",
+      "subject": "登记配对链路复用盘点与容差比较器Linux验收",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-e1-guard-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "92bdaa6da65296fdf966d6c7cc8a83a740a8811f",
+      "date": "2026-10-27",
+      "subject": "提供正式两遍日级剖析边界和进程归属记录",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_adapter_acceptance.py",
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "64f19a933c1f9e1440c60e2cf6bff1aec92394a2",
+      "date": "2026-10-27",
+      "subject": "确定配对原生引擎接口与有界资源设计",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a7b164541682ec200cedead594b3ae097923027b",
+      "date": "2026-10-27",
+      "subject": "接入默认关闭的配对原生多签名打分与稳定局部选择内核",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/build_pair_native.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "76aba2ab727b0eb268f237f9a6d74fd9dd791fb6",
+      "date": "2026-10-27",
+      "subject": "汇总全部沪市逐股与时钟进程的函数CPU剖析",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "329b581c1db2db73a179a804e4665ea6d1ddab8b",
+      "date": "2026-10-27",
+      "subject": "限制容差内浮点差异的逐行诊断驻留量",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_tolerance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ba22534f8d6ed4127be77d7673c503357f0ca330",
+      "date": "2026-10-27",
+      "subject": "提供配对数组打分与原生组件的有界合成性能对照",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1793184ec37d5dc142ecec9745b78b88f7d8e05f",
+      "date": "2026-10-27",
+      "subject": "复用日级逐位核对并汇总全日函数CPU成本",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/summarize_sse_day_profile.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc044f67187a3a941143e737ce9052d478cb7a5d",
+      "date": "2026-10-27",
+      "subject": "Profile complete diagnostic factor process trees with CPU timing",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/_factor_process_profile.py",
+        "scripts/profile_factor_processes.py",
+        "scripts/tests/test_factor_process_profile.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a9fa6dac9bd46274dba66d38c0fa4eb4a543c621",
+      "date": "2026-10-27",
+      "subject": "记录两市场原生打分组件的构建一致性与CPU对照",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-component-cpu-guard-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-component-cpu-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-components-guard-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-components-guard-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1c8bf085a6ce27a394d47524aa1ba81d859fbda9",
+      "date": "2026-10-27",
+      "subject": "区分Python内建操作并细分时钟和输入身份CPU",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_sse_day_profile.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a04c1a264fc0f67befbcdccc821773cab394c1e9",
+      "date": "2026-10-27",
+      "subject": "Save forkserver CPU profiles after worker finalizer reset",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/_factor_process_profile.py",
+        "scripts/tests/test_factor_process_profile.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "81ae162c3066a0ec7ecf131eaa7d3e2f9a24ed29",
+      "date": "2026-10-27",
+      "subject": "Record bit-exact SZSE clean point and inclusive speed forecast",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/project_baseline_wall_clock.py",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-cpu-r01-projection.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-cpu-r01-readback.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e1f73b70c3b19f13d6d2a79908b7eb4584fa20e7",
+      "date": "2026-10-27",
+      "subject": "融合BBO零惩罚响应核与多变体支持归约",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "01d19e9c23d877a174188c22a7926c6e5f05125a",
+      "date": "2026-10-27",
+      "subject": "交付沪市两遍全日函数CPU剖析和基线逐位核对",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/full-day-profile-summary-r02.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-gate.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6223387683b7f74186a2a1d97b2e54560ff12c58",
+      "date": "2026-10-27",
+      "subject": "Cache formal registry and 344 scope validation by dependency SHA",
+      "status": "assigned",
+      "chains": [
+        "corrected-replay-344"
+      ],
+      "reason": "两组参数601日采集、收尾、运行包和相关恢复；27日完成，未提前归26日。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-replay-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/sz2-registration-cache-local.json",
+        "因子/algobench/src/algobench/formal/preregister.py",
+        "因子/algobench/src/algobench/formal_corrected344_manifest.py",
+        "因子/algobench/tests/test_registration_validation_cache.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "adefbf967e5a28b3578234e09c8ad90476c6c412",
+      "date": "2026-10-27",
+      "subject": "按行字节密度扩展研究页并沿用上一完整日页宽",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共网关、冷日期SQL档位及详细剖析取证；共享实现只在本次目标计一份。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/src/snapshot/page_density.py",
+        "lv2_snapshot_workspace/src/snapshot/query_plan.py",
+        "lv2_snapshot_workspace/tests/test_query_plan.py",
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py",
+        "因子/algobench/src/algobench/formal_sse_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7bba2dfafa28647b2f81d561b71a9c8f7ee16a15",
+      "date": "2026-10-27",
+      "subject": "在BBO原生遍历中核对索引边界以复用输入扫描",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4f3c181df8dc523525660d2ec0fef1b6b2beb2da",
+      "date": "2026-10-27",
+      "subject": "限定单个正式范围页采集Doris会话剖析",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共网关、冷日期SQL档位及详细剖析取证；共享实现只在本次目标计一份。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/profile_sse_doris_page.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "79953fee043bd2d058d0941ae2dcad0e93629f95",
+      "date": "2026-10-27",
+      "subject": "Share complete order audit checks between owned memory and readback",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "因子/algobench/src/algobench/formal_raw_bank_diagnostics.py",
+        "因子/algobench/tests/test_formal_memory_order_audit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "221719b595f93225168a134876e7b952155f526b",
+      "date": "2026-10-27",
+      "subject": "核实Doris详细剖析访问并限制保存本查询元数据",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共网关、冷日期SQL档位及详细剖析取证；共享实现只在本次目标计一份。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/profile_sse_doris_page.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8f8794c64d24dbd48736a7fbe938470ba50714df",
+      "date": "2026-10-27",
+      "subject": "保留Arrow存储索引与nullable大整数的精确比较",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_tolerance.py",
+        "因子/algobench/tests/test_formal_tolerance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "87bd1ea1b8ea1ba7cfe48a12b4a0bb43bbd4cbbc",
+      "date": "2026-10-27",
+      "subject": "Summarize SZSE whole-day profile with CPU phases and worker coverage",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_szse_day_profile.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "14e0a3ec070b9ad90bf816b376ef79832aabb8ac",
+      "date": "2026-10-27",
+      "subject": "为边界翻转报告收集显式声明的跨行下游变化",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_tolerance.py",
+        "因子/algobench/tests/test_formal_tolerance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "de2202d5a0700a8505a968dd928045bea41c46ac",
+      "date": "2026-10-27",
+      "subject": "签收新页形状三路上限并记录Doris详细剖析认证阻塞",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共网关、冷日期SQL档位及详细剖析取证；共享实现只在本次目标计一份。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/doris-profile-summary.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/paging-v2-sql-decision.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/sql-grade-paging-v2-3.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/sql-grade-paging-v2-4.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-gate.md",
+        "scripts/profile_sse_doris_page.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dde1dc73158494d661426ea2b5d2dc1a2acc183a",
+      "date": "2026-10-27",
+      "subject": "Expose scorer priorities and complete lifecycle CPU in day profile",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_szse_day_profile.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "192f711ec3c9d4665fc4c0a6aacacf3455b9786a",
+      "date": "2026-10-27",
+      "subject": "复用代码字典并消除沪市身份与时钟的等值转换",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_adapter_acceptance.py",
+        "因子/algobench/src/algobench/formal_sse_inputs.py",
+        "因子/algobench/src/algobench/sse_channel_sequence.py",
+        "因子/algobench/tests/test_formal_sse_inputs.py",
+        "因子/algobench/tests/test_sse_channel_sequence.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d1295585f5f4839bb856df9cd5c022c72303b640",
+      "date": "2026-10-27",
+      "subject": "Publish complete SZSE day CPU profile and matrix optimization priorities",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/full-profile-p75-r03-meta.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/full-profile-p75-r03-summary.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9e71edf8d4db93460da567310dc8a9776f6764e8",
+      "date": "2026-10-27",
+      "subject": "签收BBO支持归约并记录大整数身份与全日剖析证据",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/nullable-integer-identity-probe.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-bbo-guard-r03.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r03.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-bbo-cpu-r03.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-bbo-guard-r02.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-bbo-guard-r03.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r02.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r03.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-e1-final-guard-r01.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-local-best-cpu-r02.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "789b254ada44a0542087edced51d4ea3e85dd8ea",
+      "date": "2026-10-27",
+      "subject": "覆盖运行包验收与全期盘点的完整墙钟和CPU外推",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ddf352e414e08f37e90b4daa3cc7fca0bc7e14b9",
+      "date": "2026-10-27",
+      "subject": "将收尾容量核对绑定已签收运行的完整身份",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a911000203644baa1662b00c13e433b917b1f6df",
+      "date": "2026-10-27",
+      "subject": "Build owned stock scoring matrices with one partial-axis lookup",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/sz6-score-matrix-component.json",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/tests/test_formal_scorer_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc65a6ae49b14057c9a7770c2293814b41b605b9",
+      "date": "2026-10-27",
+      "subject": "在单个原生循环中计算数量与价格完整门槛",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8d994035ea4e94f6ffc050b05b17051f0214aca1",
+      "date": "2026-10-27",
+      "subject": "记录原生门槛的双机核对与组件CPU证据",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/gates-windows-baseline.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r04.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-gates-guard-r04.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r04.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-gates-cpu-r04.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-gates-guard-r04.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3864e8d36dfea88c37eda20d274df399b738e404",
+      "date": "2026-10-27",
+      "subject": "按工作区上限切分原生评分并传递线程任务配置",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/src/algobench/formal_pairing.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "401873f0a76a5b6ad32f0ee9daacebf7bbfc3343",
+      "date": "2026-10-27",
+      "subject": "Integrate stock scoring matrices through formal execution",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal/run_spec.py",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_proxy_bank.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/tests/test_formal_run_specs.py",
+        "因子/algobench/tests/test_formal_scorer_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b2e2a7fe9d1235c7f25d106857c7444c0a83cd49",
+      "date": "2026-10-27",
+      "subject": "在原生候选遍历中计算F40门槛与权重",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-tiling-guard-r02.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_f40_candidates.py",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb87991eab948381f7e1f96d93e6169c96b9f744",
+      "date": "2026-10-27",
+      "subject": "记录F40原生候选的双机验收与组件CPU",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r05.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-f40-guard-r05.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r05.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-f40-cpu-r05.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-f40-guard-r05.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "151ab8dc3611252dd7bcd8cd4fff89174fee336b",
+      "date": "2026-10-27",
+      "subject": "将确定性矩形稀疏匹配迁入原生配对库",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "scripts/build_pair_native.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_sparse_assignment.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5724cd22bbba2f048cd7a484c0fb47fa8ddfeffc",
+      "date": "2026-10-27",
+      "subject": "Batch mechanism and purpose reductions on the stock matrix",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_aggregation.py",
+        "因子/algobench/src/algobench/formal_proxy_bank.py",
+        "因子/algobench/tests/test_formal_scorer_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "984b442552e7042cdca1334006ef484d67b4c8e5",
+      "date": "2026-10-27",
+      "subject": "无损压缩沪市日收据并按完整物理载荷核算包络",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-gate.md",
+        "scripts/benchmark_sse_h2_h3_speed.py",
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/summarize_sse_day_profile.py",
+        "scripts/tests/test_sse_public340_calibration.py",
+        "因子/algobench/src/algobench/artifact_io.py",
+        "因子/algobench/src/algobench/formal_sse_calibration_records.py",
+        "因子/algobench/tests/test_formal_object_publication.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "09e4f0cbfb126f38688e97abb1384da796b66aa6",
+      "date": "2026-10-27",
+      "subject": "记录稀疏匹配的精确边核对与CPU证据",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r06.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-matching-guard-r06.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r06.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-matching-cpu-r06.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-matching-guard-r06.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2f4b52d43b7398f9b3fb75b82c3de2318d186438",
+      "date": "2026-10-27",
+      "subject": "迁移split和merge跨批有界分组状态到原生循环",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9e6d78300c48ca6e093f929da6f1e03ae9cb742e",
+      "date": "2026-10-27",
+      "subject": "复用已签收H1字节账本核算固定投影占用",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1fd714cee19a2759c019846a492f3386fc9dd3bc",
+      "date": "2026-10-27",
+      "subject": "对已核实为空的新运行省去逐日缺失对象探测",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_public340_calibration.py",
+        "scripts/tests/test_sse_public340_calibration.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0d043dd8cde7097316046662d85b317801c36d70",
+      "date": "2026-10-27",
+      "subject": "记录split和merge原生状态的双机验收",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r07.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-groups-guard-r07.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r07.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-groups-cpu-r07.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-groups-guard-r07.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0908d9d7bb75f099f5da041704788a6a5430256a",
+      "date": "2026-10-27",
+      "subject": "迁移burst连通归并与几何统计到原生循环",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7630e0ac2ecf3897ac41fa11cd69fd7cdba71985",
+      "date": "2026-10-27",
+      "subject": "补充共享网关深市小样本行集合核对入口",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共网关、冷日期SQL档位及详细剖析取证；共享实现只在本次目标计一份。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_sse_h2_h3_speed.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5251b95a9ddc1c46a45f0919eae8d600cb26cd21",
+      "date": "2026-10-27",
+      "subject": "Retain complete order audit verification in bounded summaries",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/matrix-unit-r02-guard.json",
+        "scripts/benchmark_factor_speed_gate.py",
+        "scripts/build_open5m_raw_bank_acceptance.py",
+        "scripts/release_model328_order_audits.py",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal/run_spec.py",
+        "因子/algobench/src/algobench/formal_derived_fragments.py",
+        "因子/algobench/src/algobench/formal_engine.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bd3589b50a5e69adeaa3020e54a06426a8b12d71",
+      "date": "2026-10-27",
+      "subject": "原生化响应动作特征时间核与多签名通道",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_response_actions.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c80e2f4fa16931b406b39df3810de0df1044680",
+      "date": "2026-10-27",
+      "subject": "Bind matrix and memory-audit speed settings and record comparison CPU",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_factor_speed_gate.py",
+        "因子/algobench/configs/szse_model328_resources_speed_v2.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "086aa12c8dff62c3a4bb70b05fb7e0e3911ef9d5",
+      "date": "2026-10-27",
+      "subject": "Check signed-zero bits in stock matrix mechanism reductions",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_formal_scorer_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bd697de51fb4fbbc0c976e03a3f9361f7dcd35ce",
+      "date": "2026-10-27",
+      "subject": "记录burst及响应动作的双机正确性和CPU回退",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r08.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r09.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-burst-guard-r08.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-response-cpu-r09.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-response-guard-r09.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r08.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r09.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-burst-cpu-r08.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-burst-guard-r08.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-response-guard-r09.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cd472172218f7cf84b85e1a1b3e89b677fc64cc1",
+      "date": "2026-10-27",
+      "subject": "签收沪市SH1至SH5的18.07小时中间速度门",
+      "status": "assigned",
+      "chains": [
+        "sse-calibration-340"
+      ],
+      "reason": "沪市两遍定参与F40的有界优化和中间门；没有正式全期完成结论。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "sse-calibration-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-acceptance-r01-guard.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-cache-release-receipt.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-cache-retention-plan.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-gate-r02-guard.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-r02-COMPLETE.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-r02-comparison.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-r02-f40_timing.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-r02-final_capacity.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-r02-kernel_phase_timing.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-r02-projection-v2.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-r02-structural_phase_timing.json",
+        "reports/2026-10/2026-10-27-sse-h2-h3-speed-evidence/codec-retention-verify-r02-guard.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d924446884745192b1c9e7b93cf9e5eca59159e4",
+      "date": "2026-10-27",
+      "subject": "跨响应签名复用相同尺度的动作分量",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f97f35959bfc609f3535d11eeaf20df3e4ab62ef",
+      "date": "2026-10-27",
+      "subject": "Record response component reuse CPU verification",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r10.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-response-cpu-r10.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-response-guard-r10.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "153f2d13758f565b022cb1ba57e595b0aa7af049",
+      "date": "2026-10-27",
+      "subject": "Normalize verified audit summary rows in scientific comparisons",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_factor_speed_gate.py",
+        "因子/algobench/tests/test_formal_memory_order_audit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1095237b8d6dc4e992721662f3f0a8e421244971",
+      "date": "2026-10-27",
+      "subject": "Fuse response RMQ and exclusions with bounded action cache",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "86b49b736540f3b2f9e145dbabb637ea5e56fffe",
+      "date": "2026-10-27",
+      "subject": "Record native response query correctness and CPU evidence",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r11.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-response-query-cpu-r11.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-response-query-guard-r11.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r11.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-response-query-guard-r11.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9bd59211a516aa9567eeaf3b668e3c25b9ba30fa",
+      "date": "2026-10-27",
+      "subject": "Reduce response rule groups in the shared native engine",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_response_engine.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a4db07ccf21d6389a3b874c54f79c9f219550988",
+      "date": "2026-10-27",
+      "subject": "Record response rule selection contract and CPU measurements",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r12.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-response-group-guard-r12.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r12.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-response-group-cpu-r12.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-response-group-guard-r12.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ebf97716f338cf787d9cbbfc8c7cc506bb0d8f6f",
+      "date": "2026-10-27",
+      "subject": "Preserve complete BBO graphs in native hash and interval reducers",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_bbo_interval.py",
+        "因子/algobench/src/algobench/formal_bbo_matching.py",
+        "因子/algobench/src/algobench/formal_bbo_native.py",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "169373981933c1f8eb35e66e1febbfdfe1d6994d",
+      "date": "2026-10-27",
+      "subject": "Separate BBO state update timing from allocation costs",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "58fc7c0f0a2b7cab7c758889dfb477d583403295",
+      "date": "2026-10-27",
+      "subject": "Reuse certified SZSE book replay in the depth consumer",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/matrix-memory-first-day-comparison.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/shared-depth-unit-r09.json",
+        "scripts/run_open5m_depth_match_panel.py",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/depth_match_panel.py",
+        "因子/algobench/src/algobench/event_prestate_accel.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal/run_spec.py",
+        "因子/algobench/src/algobench/formal_depth_source.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b02f45140c7c543c770428de56e429a1bfc67f7d",
+      "date": "2026-10-27",
+      "subject": "记录 BBO 完整图等价检查与分配分离计时",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-bbo-graph-cpu-r13.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-bbo-graph-cpu-r14.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-bbo-graph-guard-r13.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-bbo-interval-profile-guard-r13.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-bbo-interval-profile-r13.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-bbo-state-guard-r14.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r13.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-bbo-graph-cpu-r14.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-bbo-graph-guard-r13.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-bbo-state-guard-r14.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r13.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e9562fddcca4b4a3f8350085fa284f8d0c60fefe",
+      "date": "2026-10-27",
+      "subject": "Cache verified runtime bindings and preload worker parameter state",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/startup-cache-unit.json",
+        "scripts/run_open5m_raw_bank.py",
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/src/algobench/formal_factor_day_pipeline.py",
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/src/algobench/formal_runtime_corrected344.py",
+        "因子/algobench/src/algobench/formal_worker_memory.py",
+        "因子/algobench/tests/test_corrected344_validation_cache.py",
+        "因子/algobench/tests/test_formal_factor_day_pipeline.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4060a66a7e0284337a105c7aa7c0a51639311981",
+      "date": "2026-10-27",
+      "subject": "Overlap bounded SZSE source days with canonical signing and shared CPU admission",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/unified-overlap-unit.json",
+        "scripts/benchmark_factor_speed_gate.py",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "因子/algobench/configs/szse_model328_resources_speed_v3.json",
+        "因子/algobench/src/algobench/formal_factor_day_overlap.py",
+        "因子/algobench/src/algobench/formal_factor_day_pipeline.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/tests/test_formal_factor_day_overlap.py",
+        "因子/algobench/tests/test_formal_factor_day_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "83f3bf2184ba042b5ce69629df648a9beeb1fe67",
+      "date": "2026-10-27",
+      "subject": "Compute whole-stock cluster and chain score columns in numeric matrices",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/stock-score-matrix-unit.json",
+        "因子/algobench/src/algobench/formal_engine.py",
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/src/algobench/formal_scorers.py",
+        "因子/algobench/src/algobench/formal_scoring_workspace.py",
+        "因子/algobench/src/algobench/formal_stock_score_matrix.py",
+        "因子/algobench/tests/test_formal_stock_score_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "efaf6eb79bcdb69d05759295e1f8032deab2afb0",
+      "date": "2026-10-27",
+      "subject": "融合逐股候选窗口门槛与存续判定",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "52582c8344bf3da383c5f58b3808cfa6cbce4ca2",
+      "date": "2026-10-27",
+      "subject": "Project only used chain columns and streamline book sequence checks",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/projection-columns-unit.json",
+        "因子/algobench/src/algobench/formal_contexts.py",
+        "因子/algobench/src/algobench/formal_scorers.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "18a679985a9f0b18d1db6dfb9d555ceed643b7c7",
+      "date": "2026-10-27",
+      "subject": "记录完整候选游标的两机等价与组件计时",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r15.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-candidate-cpu-r15.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-stock-candidate-guard-r15.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r15.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-stock-candidate-guard-r15.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f7e018c21d2e2c557e652fcb0d666b899f8e6ddb",
+      "date": "2026-10-27",
+      "subject": "Account for Arrow signing workers in the shared compute budget",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/signing-budget-unit.json",
+        "scripts/benchmark_factor_speed_gate.py",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_szse_model328_factor_benchmark.py",
+        "因子/algobench/src/algobench/formal_factor_day_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cb04c20030798e1e1624e916073d2ae8a3fc70f7",
+      "date": "2026-10-27",
+      "subject": "Bind parameter preload to the frozen production window",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+        "因子/algobench/src/algobench/formal_raw_bank_worker_startup.py",
+        "因子/algobench/tests/test_formal_raw_bank_startup.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0e536a2a1608603f34d076c953179fb199506a57",
+      "date": "2026-10-27",
+      "subject": "Attribute source worker CPU independently of canonical day completion",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/source-cpu-unit.json",
+        "scripts/run_corrected344_factor_production.py",
+        "因子/algobench/configs/szse_model328_resources_speed_v4.json",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_source_cpu.py",
+        "因子/algobench/tests/test_formal_source_cpu.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "138ad30503c9a4e0f76a8750aa1ab9e029f31207",
+      "date": "2026-10-27",
+      "subject": "在候选循环内完成多签名打分与局部最优归约",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2075253065308cb5831f9f9481765f43aaddf180",
+      "date": "2026-10-27",
+      "subject": "记录候选与局部最优无数组融合的 CPU 和等价证据",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r16.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-fused-local-cpu-r16.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-fused-local-guard-r16.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r16.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-local-guard-r16.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c093f05d2e126cbe4bcbe6732cc50697d2771aca",
+      "date": "2026-10-27",
+      "subject": "Bound streaming buckets and production signing by the shared resource limits",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/streaming-capacity-unit.json",
+        "scripts/run_corrected344_factor_production.py",
+        "因子/algobench/configs/szse_model328_resources_speed_v5.json",
+        "因子/algobench/tests/test_formal_factor_day_pipeline.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c54239709eac5e085f0119d2a73ccfd868f483dd",
+      "date": "2026-10-27",
+      "subject": "Preserve Python compensated sums in whole-stock score matrices",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/compensated-stock-scores-unit.json",
+        "因子/algobench/src/algobench/formal_stock_score_matrix.py",
+        "因子/algobench/tests/test_formal_stock_score_matrix.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "daded264d102b69b75b08bb8ccdc25d82d645a19",
+      "date": "2026-10-27",
+      "subject": "Fuse split and merge states into native candidate visitor",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ae255d203fc8c2ae6709af4c70881195e3af26d3",
+      "date": "2026-10-27",
+      "subject": "Budget bounded comparison coexistence and retained diagnostics",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-27-szse-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "scripts/run_factor_computation_z3.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d61757a534b4319d58d032f71ffc78557851e6ba",
+      "date": "2026-10-27",
+      "subject": "Record fused split and merge equivalence and CPU evidence",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r17.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-fused-groups-test-r17.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r17.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-groups-r17.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-groups-test-r17.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "79cad60a5e9d8be6cbc822fca587083ad6c9bf7e",
+      "date": "2026-10-27",
+      "subject": "Fuse burst connectivity and numeric state into native pair plan",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "31767b78335d67adad980038f4961dc7993b2f49",
+      "date": "2026-10-27",
+      "subject": "Record fused burst equivalence and component CPU",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r18.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-burst-r18.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1a11a505c9308145ebcb80e06ebacfe43879b278",
+      "date": "2026-10-27",
+      "subject": "Fuse standard pair transforms with stable native winner reduction",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_transforms.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "692bc0119a28a05e2f6fe1e53c7d6de03a496eeb",
+      "date": "2026-10-27",
+      "subject": "Record six fused pair transforms and component verification",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r19.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-transforms-r19.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f1efee8a177b2b1c6ce7770a00c9cd61a5f17c0b",
+      "date": "2026-10-27",
+      "subject": "Support exact generic response windows in the native index",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3aacb5b1ad93d28f82c66ddf172325b72b00722e",
+      "date": "2026-10-27",
+      "subject": "Fuse response profiles queries and stable winners into candidate visitor",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_response.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "939901d9d5ae0f6b7d6896c8bae64e3afaadb2a7",
+      "date": "2026-10-27",
+      "subject": "Use observable public action quotes in response comparison fixtures",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d56b082aee461d6cf314e97cf6aae74a2ad0cef9",
+      "date": "2026-10-27",
+      "subject": "限制跨日引擎缓存并验证逐出重建等价",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal/panel.py",
+        "因子/algobench/tests/test_formal_engine_cache_lifetime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc015954da371593c6bbe77f94736201fc72da37",
+      "date": "2026-10-27",
+      "subject": "Record fused response equivalence CPU and reference limits",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r18.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r21.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-fused-response-test-r22.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r21.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-response-r22.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-response-test-r21.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-response-test-r22.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9defac97ebb5d15dd61c70718b49734ce888e474",
+      "date": "2026-10-27",
+      "subject": "协调跨日对象发布与订单释放引用扫描",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "scripts/release_model328_order_audits.py",
+        "scripts/run_corrected344_factor_production.py",
+        "scripts/run_factor_computation_z3.py",
+        "因子/algobench/src/algobench/artifact_io.py",
+        "因子/algobench/src/algobench/object_reference_barrier.py",
+        "因子/algobench/tests/test_object_reference_barrier.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b0bb129892c18cac736d25933535b0df1b7f1cb",
+      "date": "2026-10-27",
+      "subject": "用本地系统接口核对发布锁目录身份",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/object_reference_barrier.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6e85e2d6580298703a9bf01a1833ce5e3918d8c6",
+      "date": "2026-10-27",
+      "subject": "按逐日消费者CPU与串行上界外推重叠速度门",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/overlap-wall-model-unit.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/project_baseline_wall_clock.py",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/project_overlap_wall_clock.py",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-baseline-r02-projection.json",
+        "scripts/tests/test_overlap_wall_clock_model.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b45df62771bc7e89c703a324798eb729505ce386",
+      "date": "2026-10-27",
+      "subject": "Fuse BBO windows supports and complete graph updates into pair visitor",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_bbo.py",
+        "因子/algobench/src/algobench/formal_pair_native_response.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1467b1cb2f23ec664a7b53ba93948f9b0b469cb7",
+      "date": "2026-10-27",
+      "subject": "Build response configuration from the prepared profile axis",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_native_response.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3de3bc86cdd61554afdff1257a06a8c4e198900d",
+      "date": "2026-10-27",
+      "subject": "Verify BBO graph growth and coherent event clock fixtures",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6a9e26174d0ed72b8b2f000367add6fecd7a7314",
+      "date": "2026-10-27",
+      "subject": "Record fused BBO supports complete graph and growth verification",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r23.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-bbo-matching-r25.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-bbo-r25.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-bbo-test-r25.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "632bb243457e714d3c0de7314bc6c95b64d1b93d",
+      "date": "2026-10-27",
+      "subject": "Fuse legacy queue transforms using shared order action primitives",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_transforms.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2fa27e2e01f7ab47c82e2e2656ff0967ce3304cc",
+      "date": "2026-10-27",
+      "subject": "Record legacy queue fusion and equivalent stable results",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r26.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fused-legacy-r26.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8d3e4a66f3f6fa0f19d821d2e3bd2b33122aa896",
+      "date": "2026-10-27",
+      "subject": "记录深市三日速度门及生产回放复用缺口",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/own-progress-costs-r01.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-sz1-sz7-r08-projection.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-sz1-sz7-r08-readback.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/task-storage-inventory-r02-summary.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "91e6662866ec57baa9a7a459160ec77f4558d5cb",
+      "date": "2026-10-27",
+      "subject": "Use the shared native interval reducer for F42 top-two selection",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_components.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_structural_calibration.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d67d7fcb0b31f16102dd55d16299d5f35362185e",
+      "date": "2026-10-27",
+      "subject": "按正式注册顺序复用主来源的深度回放",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/shared-depth-registration-unit.json",
+        "scripts/benchmark_factor_speed_gate.py",
+        "scripts/tests/test_factor_speed_gate.py",
+        "因子/algobench/src/algobench/formal_model328_sources.py",
+        "因子/algobench/src/algobench/formal_shared_depth_replay.py",
+        "因子/algobench/tests/test_formal_shared_depth_replay.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f63949b4c50ed0c99006514d84136faeb0abadf4",
+      "date": "2026-10-27",
+      "subject": "Record F42 interval equivalence and dual-server fusion checks",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r27.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-fused-catchup-test-r27.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r27.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-f42-interval-r27.json",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dea6b6224cc698dadd1a726f6ac6613ce94acfe4",
+      "date": "2026-10-27",
+      "subject": "Accumulate candidate audit evidence inside the native visitor",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_audit.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "28f9d74d1e9ec6932de035a793c928bb57a58a8b",
+      "date": "2026-10-27",
+      "subject": "Record native candidate audit identity and calibration checks",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r28.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-candidate-audit-r28.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "adde3c5cbb509c7182472be26382768d88bc61a4",
+      "date": "2026-10-27",
+      "subject": "保留三层首次冷取数成本用于速度门外推",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/overlap-wall-model-unit.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/project_overlap_wall_clock.py",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-sz1-sz7-r08-projection.json",
+        "scripts/tests/test_overlap_wall_clock_model.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "00fbf530036877978d5dfe87c06461edf6e36afc",
+      "date": "2026-10-27",
+      "subject": "Route formal stock streams through fused native reducers behind an explicit switch",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_stream.py",
+        "因子/algobench/src/algobench/formal_pair_reducers.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3c19aedcd5be9bdd3ef1c4513e7396bf0942611e",
+      "date": "2026-10-27",
+      "subject": "Exercise formal fusion with full response contexts and calibration sinks",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "56763b7c6b680d9575a4c99306a7e51fc5386435",
+      "date": "2026-10-27",
+      "subject": "Adapt whole-stock BBO execution telemetry and shared winner materialization",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/formal_pair_native_bbo.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_stream.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "27d445a15ed996e7e0c33488acd188560c2ec5f2",
+      "date": "2026-10-27",
+      "subject": "Record formal stream equivalence and fixed-partition parallel design",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-formal-stream-r31.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc1474357ed8068cb952c7df8ec831aae340f796",
+      "date": "2026-10-27",
+      "subject": "Process fixed native cancel partitions under the shared compute ledger",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_parallel.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_stream.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b55da245bd15e23acc5ba32345d3020631762f89",
+      "date": "2026-10-27",
+      "subject": "签收深市必做优化的三日中间速度门",
+      "status": "assigned",
+      "chains": [
+        "corrected-factor-344"
+      ],
+      "reason": "深市344列的股内分片、Z3分解和生产调度/矩阵优化；实现与验收逐项对应。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "corrected-factor-344": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-factor-computation-z3-speed-gate.md",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/accepted-r04-p75-release-post-audit.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/intermediate-post-audit-r01.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/intermediate-rollup.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/own-progress-costs-final.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/own-progress-costs-r02.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-sz1-sz7-r09-projection.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/speed-sz1-sz7-r09-readback.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/task-storage-inventory-r03-summary.json",
+        "reports/2026-10/2026-10-27-szse-speed-gate-evidence/task-storage-inventory-r04-summary.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "56be0eee621c2df1e9fc2b98f832fe0ba4521a8a",
+      "date": "2026-10-27",
+      "subject": "Record fixed native partition and dual-server determinism checks",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-build-r32.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-fixed-partitions-r32.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r32.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-fixed-partitions-r32.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "719a2cae26f7e193b4bc50d44b18e48e0700a0d4",
+      "date": "2026-10-27",
+      "subject": "Integrate SSE dual BBO collectors and complete special-gap audit coverage",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_audit.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_stream.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "23eac9ed75ced3f43743c3c34f2da94c59c97da9",
+      "date": "2026-10-27",
+      "subject": "Add in-memory formal single-stock native acceptance harness and SSE adapter evidence",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-build-r33.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-sse-dual-adapter-r33.txt",
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "732c8f200aa7d16f64c329b44371b6f223de4983",
+      "date": "2026-10-27",
+      "subject": "Validate frozen stock parameters before querying input and record sparse provenance needs",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "551ad4026754aedbc76ee098d0b30ddd9ba4b463",
+      "date": "2026-10-27",
+      "subject": "Bind stock acceptance to the runtime exact registered feature scope before input reads",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fe2de6472bd29909f5020d096a446483db626f24",
+      "date": "2026-10-27",
+      "subject": "Reuse stock child lookup for native winner materialization",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_stream.py",
+        "因子/algobench/src/algobench/formal_pair_stream.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f83dba4b856ec14ee45d31a5e9e46d41812d1157",
+      "date": "2026-10-27",
+      "subject": "Capture bounded cross-score evidence for pair selection boundaries",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_boundaries.py",
+        "scripts/benchmark_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41840bf0ad2fd3b930a81d5c73ddaf610f1f6481",
+      "date": "2026-10-27",
+      "subject": "Bound matching diagnostics to compact complete edge keys and scores",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_boundaries.py",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f263c8c019ff99717a3e4961218124a0d6f8e386",
+      "date": "2026-10-27",
+      "subject": "Add single-stock SSE H2 and dual-variant H3 native acceptance",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_sse_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b6b158e6dbe4c3b47d102d8fde3b6206f629e5a3",
+      "date": "2026-10-27",
+      "subject": "Cross-score BBO source choices and expose single-stock pair CPU profiles",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_boundaries.py",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f0a7e50ac47c243acc2812b9241b78482ed32fa1",
+      "date": "2026-10-27",
+      "subject": "Compare compressed stock supports on exact observation multiplicities",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_sse_stock.py",
+        "因子/algobench/src/algobench/formal_tolerance.py",
+        "因子/algobench/tests/test_formal_tolerance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9340ebf65e15398933c8c3c6cc139d0a9d93b6a7",
+      "date": "2026-10-27",
+      "subject": "Keep heavy-stock boundary diagnostics bounded and retain completed comparisons",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_boundaries.py",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "528f2f85af57851932a4387d72f3b006934ef3c9",
+      "date": "2026-10-27",
+      "subject": "Transfer complete native BBO graphs directly into final admitted arrays",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native_stream.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b184ee2da67b00e10976764f604c3b0f0b63686",
+      "date": "2026-10-27",
+      "subject": "Add real-stock bit identity and controlled pair-choice attribution checks",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_order.py",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "17d946e1282f4cd008ad5e5cb88e4f62e0c44d14",
+      "date": "2026-10-27",
+      "subject": "Resolve retained T1 parameter sources through verified local copies",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2f23634790381c32ee48d64baaa81786bca413c1",
+      "date": "2026-10-27",
+      "subject": "Validate cross-account proof copies without changing frozen references",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_sources.py",
+        "scripts/benchmark_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf2f6aac62c0454cdac3573aff1bae62ca05e223",
+      "date": "2026-10-27",
+      "subject": "Reuse bounded BBO support action maxima across candidate windows",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "因子/algobench/native/pair_engine.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5bd7912aaa115888af7f98ddc1b5e91b608c462b",
+      "date": "2026-10-27",
+      "subject": "Admit larger heavy-stock partitions with fewer concurrent workers",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_parallel.py",
+        "因子/algobench/src/algobench/formal_pair_native_stock.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7c16a3c7f2849e59c58053b617d482b842bca280",
+      "date": "2026-10-27",
+      "subject": "Limit BBO action memoization to repeated cancellations and reuse the active entry",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ff67c63abf076eb8f27ffff5afa55191f09a21f",
+      "date": "2026-10-27",
+      "subject": "Budget root graphs and preserve completed single-stock references before later phases",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_boundaries.py",
+        "scripts/benchmark_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_parallel.py",
+        "因子/algobench/src/algobench/formal_pair_native_stream.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "de93bc625494761865de33640b1c0556c432bff0",
+      "date": "2026-10-27",
+      "subject": "Queue deterministic stock parents and preserve attribution diagnostics on failure",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_order.py",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "669298774217d9ba822bdf12f176b3705567797a",
+      "date": "2026-10-27",
+      "subject": "Record verified SSE stock acceptance and response boundary evidence",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-export-r47.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-szse-300164-r34.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-szse-300164-r35.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-szse-300164-r36-summary.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-szse-300164-r37.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-szse-300164-r38-summary.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-szse-300164-r40.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-native-build-r34-BUILD.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-e4-export-r47.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-e4-sse-600206-r41.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-e4-sse-600584-r41.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wenjie-e4-sse-600584-r43.json.gz"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bd8e76ade0f0d8d0423422fc8654038deeced1b5",
+      "date": "2026-10-27",
+      "subject": "Specify bounded complete-graph merges for heavy pair partitions",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2dffd4ab34d9e63fb9f6f06658ae01bd0783171c",
+      "date": "2026-10-27",
+      "subject": "Merge complete BBO partition graphs incrementally with canonical source ordinals",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_stock.py",
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/src/algobench/formal_pair_native.py",
+        "因子/algobench/src/algobench/formal_pair_native_parallel.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d20513e90f0b8df7529f4842d8e9c632d9dd4710",
+      "date": "2026-10-27",
+      "subject": "Bound heavy-stock assignment workspace and retain pair checkpoints",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_stock.py",
+        "因子/algobench/src/algobench/formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6ece9419e73983060b964886f8755025d5b51da",
+      "date": "2026-10-27",
+      "subject": "Export pair decision boundaries and downstream differences for review",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/export_pair_native_review.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ded6b790d39fa820db0201d740775b1ef4e4b79",
+      "date": "2026-10-27",
+      "subject": "Verify real-stock input identity across process and order changes",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_order.py",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "477e02a5279052708ca46b49125d5905f3f83c26",
+      "date": "2026-10-27",
+      "subject": "Record P75 stock boundaries, downstream attribution and CPU limits",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-000988-r51/bbo.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-000988-r51/formal.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-000988-r51/manifest.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-000988-r51/response.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-002565-r51/bbo.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-002565-r51/formal.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-002565-r51/manifest.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-002565-r51/response.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300164-r51/bbo.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300164-r51/formal.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300164-r51/manifest.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300164-r51/response.csv"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "24dbd64b7fb0f657f082148d5376193b64bbe7e7",
+      "date": "2026-10-27",
+      "subject": "Record real-stock determinism and support bounded boundary review",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-determinism-export-r52.json",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-e4-determinism-r52.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/wangly-pair-engine-determinism-r52_20261027T145710Z_05c6e395a72e43c981e1f325f18756dd.json.gz",
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_order.py",
+        "scripts/export_pair_native_review.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1fd205442321adf3f38c4e87534ed47157afa656",
+      "date": "2026-10-27",
+      "subject": "Validate selected BBO source decisions separately from matching totals",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md",
+        "scripts/benchmark_pair_native_bbo_review.py",
+        "scripts/benchmark_pair_native_boundaries.py",
+        "scripts/benchmark_pair_native_order.py",
+        "scripts/benchmark_pair_native_stock.py",
+        "scripts/export_pair_native_review.py",
+        "因子/algobench/tests/test_formal_pair_native.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fa40d3f17a859db51dfb542c6c8609f2e95371a2",
+      "date": "2026-10-27",
+      "subject": "Bind boundary probes to input identities and distinguish fresh bounded comparisons",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/benchmark_pair_native_bbo_review.py",
+        "scripts/benchmark_pair_native_stock.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9efb965a1e650623ef0da6595e069a9da207e21b",
+      "date": "2026-10-27",
+      "subject": "Consolidate final engine design, component evidence and acceptance scope",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1e93603c7fec3909d79b3cfb72b408d48e48e47e",
+      "date": "2026-10-27",
+      "subject": "Preserve review CSV bytes across Windows and Linux checkouts",
+      "status": "assigned",
+      "chains": [
+        "pair-native-engine"
+      ],
+      "reason": "共用C++引擎、容差比较和独立单股验收的交付范围；不重复计到两个消费者。",
+      "review_basis": "2026-10-28：完整逐SHA路径和差异保存；固定报告、结果字段及27日原始回执交叉核对。",
+      "shares": {
+        "pair-native-engine": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/.gitattributes",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-000988-r51/bbo.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-000988-r51/formal.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-000988-r51/response.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-002565-r51/bbo.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-002565-r51/formal.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-002565-r51/response.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300164-r51/bbo.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300164-r51/formal.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300164-r51/response.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300502-r51/bbo.csv",
+        "reports/2026-10/2026-10-27-pair-native-engine-evidence/review-300502-r51/formal.csv"
+      ]
+    }
+  ]
+}
