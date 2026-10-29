@@ -1,5 +1,8 @@
 import unittest
+import subprocess
+import tempfile
 from datetime import datetime
+from pathlib import Path
 from unittest.mock import patch
 
 from build import Builder, CN_TZ, ROOT
@@ -53,6 +56,31 @@ class DailyTimesTest(unittest.TestCase):
         self.assertEqual(updated, "2026-07-13T22:51:49+08:00")
         self.assertEqual(source, "mtime")
         self.assertEqual(len(self.builder.warnings), 2)
+
+    def test_shallow_fetch_timeout_preserves_available_git_times(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / ".git").mkdir()
+            (root / ".git" / "shallow").write_text("fixture\n", encoding="utf-8")
+            path = root / "daily.md"
+            path.write_text("# 日报\n", encoding="utf-8")
+
+            def run(args, **kwargs):
+                if args[:2] == ["git", "rev-parse"]:
+                    return subprocess.CompletedProcess(args, 0, "true\n", "")
+                if args[:2] == ["git", "fetch"]:
+                    raise subprocess.TimeoutExpired(args, kwargs["timeout"])
+                return subprocess.CompletedProcess(args, 0, "2026-10-29T22:28:00+08:00\n", "")
+
+            with patch("build.ROOT", root), patch("build.subprocess.run", side_effect=run) as command:
+                times = self.builder.daily_times(path, {})
+                self.assertTrue(self.builder.ensure_git_available())
+
+            self.assertEqual(times, ("2026-10-29T22:28:00+08:00", "2026-10-29T22:28:00+08:00", "git"))
+            fetches = [call for call in command.call_args_list if call.args[0][:2] == ["git", "fetch"]]
+            self.assertEqual(len(fetches), 1)
+            self.assertTrue(self.builder.git_shallow)
+            self.assertTrue(any("60" in warning and "超时" in warning for warning in self.builder.warnings))
 
 
 if __name__ == "__main__":

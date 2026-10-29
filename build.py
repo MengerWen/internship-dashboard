@@ -165,18 +165,23 @@ class Builder:
         self.git_shallow = shallow.exists()
         if self.git_shallow:
             self.git_unshallow_attempted = True
-            result = subprocess.run(
-                ["git", "fetch", "--unshallow"],
-                cwd=ROOT,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                capture_output=True,
-                timeout=60,
-                check=False,
-            )
-            if result.returncode != 0:
-                self.warnings.append("检测到浅克隆,git fetch --unshallow 失败;时间可能降级为 mtime")
+            try:
+                result = subprocess.run(
+                    ["git", "fetch", "--unshallow"],
+                    cwd=ROOT,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    capture_output=True,
+                    timeout=60,
+                    check=False,
+                )
+                if result.returncode != 0:
+                    self.warnings.append("检测到浅克隆,git fetch --unshallow 失败;时间可能降级为 mtime")
+            except subprocess.TimeoutExpired:
+                self.warnings.append("git fetch --unshallow 超时（60秒）;使用现有历史,缺失时间降级为 mtime")
+            except OSError:
+                self.warnings.append("git fetch --unshallow 无法执行;使用现有历史,缺失时间降级为 mtime")
             self.git_shallow = shallow.exists()
             if self.git_shallow:
                 self.warnings.append("当前仍为浅克隆,首次提交时间可能不可得")
