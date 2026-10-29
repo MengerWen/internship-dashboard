@@ -89,8 +89,12 @@ def message(record, platform):
     if isinstance(content, str):
         text = content
     else:
-        text = "\n".join(c.get("text", "") for c in content
-                         if c.get("type") in ("text", "input_text", "output_text"))
+        blocks = [c.get("text", "") for c in content
+                  if c.get("type") in ("text", "input_text", "output_text")]
+        if platform == "claude" and role == "user":
+            # 桌面系统提示可能与用户正文分块共存；只排除提示块，原始行仍完整保留哈希。
+            blocks = [text for text in blocks if not text.strip().startswith(WRAPPERS)]
+        text = "\n".join(blocks)
     text = text.strip()
     evidence_kind = "message"
     if role == "user" and text.startswith("<send_user_message_question_reply>"):

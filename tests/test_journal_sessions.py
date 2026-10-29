@@ -92,6 +92,24 @@ class SessionEvidenceTests(unittest.TestCase):
         self.assertTrue(sessions.within('d:\\Research\\child', ['D:/research']))
         self.assertFalse(sessions.within('D:/research-private', ['D:/research']))
 
+    def test_claude_system_block_does_not_hide_separate_user_text(self):
+        record = {'type': 'user', 'sessionId': 'native', 'uuid': 'mixed',
+                  'cwd': 'D:/research', 'timestamp': '2026-10-28T15:37:04Z',
+                  'message': {'role': 'user', 'content': [
+                      {'type': 'text', 'text': '<system-reminder>系统提示</system-reminder>'},
+                      {'type': 'text', 'text': '<pasted_content>先写计划，暂不实施</pasted_content>'}]}}
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'mixed.jsonl'
+            path.write_text(json.dumps(record, ensure_ascii=False) + '\n', encoding='utf-8')
+            result = sessions.scan_file(path, 'claude', '2026-10-28', '2026-10-28')
+            self.assertEqual(len(result['messages']), 1)
+            msg = result['messages'][0]
+            self.assertEqual(msg['text'], '<pasted_content>先写计划，暂不实施</pasted_content>')
+            self.assertEqual(msg['session_id'], 'native')
+            index = {'sessions': [{'session_id': 'native', 'platform': 'claude', 'file': str(path), **result}]}
+            sessions.verify_ref({**msg, 'session_id': 'native', 'platform': 'claude',
+                                 'excerpt': '先写计划，暂不实施'}, index)
+
     def test_no_system_thinking_tools_or_compaction_as_human_evidence(self):
         def codex(role, text, **extra):
             return {'type': 'response_item', 'payload': {'type': 'message', 'role': role, 'content': [{'type': 'output_text', 'text': text}], **extra}}
