@@ -1,0 +1,199 @@
+按交易所规则确定集合竞价价格并区分沪深平价处理
+
+
+diff --git a/lv2_snapshot_workspace/src/snapshot/auction.py b/lv2_snapshot_workspace/src/snapshot/auction.py
+index e9ec6a56..4cc3d472 100644
+--- a/lv2_snapshot_workspace/src/snapshot/auction.py
++++ b/lv2_snapshot_workspace/src/snapshot/auction.py
+@@ -2,5 +2,7 @@ from __future__ import annotations
+ 
++from bisect import bisect_left, bisect_right
+ from dataclasses import dataclass
++from itertools import accumulate
+ 
+-from .orderbook import BUY, SELL, OrderBook, normalize_side
++from .orderbook import OrderBook
+ 
+@@ -9,59 +11,45 @@ from .orderbook import BUY, SELL, OrderBook, normalize_side
+ class IndicativeAuction:
+-    price_i: int # 指示性成交价
+-    matched_vol: int # 可撮合成交量
+-    imbalance: int # 剩余不平衡量
+-    '''
+-    大于 0：买方剩余更多
+-    小于 0：卖方剩余更多
+-    等于 0：买卖刚好平衡
+-    '''
+-    
++    price_i: int
++    matched_vol: int
++    imbalance: int
+ 
+-def indicative_auction(book: OrderBook, *, reference_price_i: int = 0) -> IndicativeAuction:
+-    """Compute call-auction indicative price/volume from current accumulated orders."""
+-    candidate_prices = sorted(set(book.bid_book) | set(book.ask_book)) # 拿出所有可能的成交价（当前买盘、卖盘里出现过的所有价格）
+-    if not candidate_prices:
+-        return IndicativeAuction(0, 0, 0)
+ 
+-    # 把市价单单独统计出来
+-    # 这些订单没有固定价格，但会参与集合竞价，所以要加进需求和供给里
+-    market_buy = 0
+-    market_sell = 0
+-    
+-    for state in book.orders.values():
+-        if state.remaining <= 0 or state.resting:
+-            continue
+-        if state.ord_type == "M":
+-            if normalize_side(state.side) == BUY:
+-                market_buy += state.remaining
+-            elif normalize_side(state.side) == SELL:
+-                market_sell += state.remaining
+-
+-    best: tuple[int, int, int, int] | None = None
+-    best_result: IndicativeAuction | None = None
+-    for p in candidate_prices:
+-        demand = market_buy + sum(qty for px, qty in book.bid_book.items() if px >= p)
+-        # 如果以 p 这个价格撮合，愿意买的有多少？
+-        supply = market_sell + sum(qty for px, qty in book.ask_book.items() if px <= p)
+-        # 如果以 p 这个价格撮合，愿意卖的有多少？
+-        
+-        # 能成交多少，取买卖两边较小的一边
+-        matched = min(demand, supply)
+-        imbalance = demand - supply
+-        
+-        distance = abs(p - reference_price_i) if reference_price_i else 0
+-        key = (matched, -abs(imbalance), -distance, p)
+-        '''
+-        1. 优先选成交量最大的价格
+-        2. 如果成交量一样，选买卖差距最小的价格
+-        3. 如果还一样，选离参考价更近的价格
+-        4. 如果还一样，选价格更高的那个
+-        '''
+-        if best is None or key > best:
+-            best = key
+-            best_result = IndicativeAuction(p, matched, imbalance)
+-    if best_result is not None and best_result.matched_vol == 0:
+-        return IndicativeAuction(0, 0, 0)
+-        # 如果买卖根本无法成交，比如最高买价低于最低卖价，那就不要硬给一个“虚拟成交价”，而是返回全 0
+-    
+-    return best_result or IndicativeAuction(0, 0, 0)
++def indicative_auction(book: OrderBook, *, reference_price_i: int = 0,
++                       market: str = 'XSHE', tick_size_i: int = 100) -> IndicativeAuction:
++    """按交易所规则计算已发布限价簿的虚拟撮合，股票价格单位为 1/10000 元。"""
++    if market not in ('XSHE','XSHG') or tick_size_i <= 0:
++        raise ValueError('auction market and positive price tick are required')
++    prices = sorted(set(book.bid_book) | set(book.ask_book))
++    if not prices:
++        return IndicativeAuction(0,0,0)
++    buy = [0, *accumulate(book.bid_book.get(p,0) for p in prices)]
++    sell = [0, *accumulate(book.ask_book.get(p,0) for p in prices)]
++    eligible = []
++    for i,p in enumerate(prices):
++        demand, supply = buy[-1]-buy[i], sell[i+1]
++        matched = min(demand,supply)
++        # 更优价的申报必须全部成交；同价至少一方全部成交由 min 保证。
++        better_buy, better_sell = buy[-1]-buy[i+1], sell[i]
++        if matched > 0 and max(better_buy,better_sell) <= matched:
++            eligible.append(IndicativeAuction(p,matched,demand-supply))
++    if not eligible:
++        return IndicativeAuction(0,0,0)
++    maximum = max(row.matched_vol for row in eligible)
++    eligible = [row for row in eligible if row.matched_vol == maximum]
++    smallest = min(abs(row.imbalance) for row in eligible)
++    eligible = [row for row in eligible if abs(row.imbalance) == smallest]
++    if len(eligible) == 1:
++        return eligible[0]
++    if market == 'XSHE':
++        if reference_price_i <= 0:
++            raise ValueError('ambiguous Shenzhen auction requires a positive reference price')
++        distance = min(abs(row.price_i-reference_price_i) for row in eligible)
++        closest = [row for row in eligible if abs(row.price_i-reference_price_i) == distance]
++        if len(closest) != 1:
++            raise ValueError('auction reference does not uniquely determine price')
++        return closest[0]
++    # 上交所取最小未成交量价位的中间价，再按最小价格单位四舍五入。
++    price = ((eligible[0].price_i+eligible[-1].price_i+tick_size_i)//(2*tick_size_i))*tick_size_i
++    demand = buy[-1]-buy[bisect_left(prices,price)]
++    supply = sell[bisect_right(prices,price)]
++    return IndicativeAuction(price,min(demand,supply),demand-supply)
+diff --git a/lv2_snapshot_workspace/src/snapshot/snapshot.py b/lv2_snapshot_workspace/src/snapshot/snapshot.py
+index 96cfe19c..603f732f 100644
+--- a/lv2_snapshot_workspace/src/snapshot/snapshot.py
++++ b/lv2_snapshot_workspace/src/snapshot/snapshot.py
+@@ -377,3 +377,5 @@ def _snapshot_row(book: OrderBook, stats: TradeStats, *, code: str, t: pd.Timest
+         # 全深度列表，保留了所有价位
+-        indic = indicative_auction(book, reference_price_i=int(row["last_px"]) if row["last_px"] else stats.prev_close_i)
++        market = 'XSHG' if str(code).startswith('6') else 'XSHE'
++        indic = indicative_auction(book, reference_price_i=int(row["last_px"]) if row["last_px"] else stats.prev_close_i,
++            market=market)
+         row["indic_px"] = indic.price_i
+diff --git a/lv2_snapshot_workspace/src/snapshot/validate.py b/lv2_snapshot_workspace/src/snapshot/validate.py
+index 3e4a72d9..889f5085 100644
+--- a/lv2_snapshot_workspace/src/snapshot/validate.py
++++ b/lv2_snapshot_workspace/src/snapshot/validate.py
+@@ -271,3 +271,4 @@ def validate_against_ref_eventwise(
+         elif phase in {"open_call", "close_call"}:
+-            call_captures[phase].append({"ts": ts, "sig": _call_signature(book, stats=stats, top_n=top_n)})
++            market = 'XSHG' if str(event['code']).startswith('6') else 'XSHE'
++            call_captures[phase].append({"ts": ts, "sig": _call_signature(book, stats=stats, top_n=top_n, market=market)})
+ 
+@@ -573,5 +574,5 @@ def _book_signature(book: OrderBook, *, top_n: int) -> tuple[int, ...]:
+ 
+-def _call_signature(book: OrderBook, *, stats: TradeStats, top_n: int) -> tuple[int, ...]:
++def _call_signature(book: OrderBook, *, stats: TradeStats, top_n: int, market='XSHE') -> tuple[int, ...]:
+     reference = stats.last_px or stats.prev_close_i
+-    indic = indicative_auction(book, reference_price_i=reference)
++    indic = indicative_auction(book, reference_price_i=reference, market=market)
+     values: dict[str, int] = {}
+diff --git a/scripts/tests/test_native_auction_rules.py b/scripts/tests/test_native_auction_rules.py
+new file mode 100644
+index 00000000..735c8b0c
+--- /dev/null
++++ b/scripts/tests/test_native_auction_rules.py
+@@ -0,0 +1,46 @@
++"""交易所集合竞价规则的手算反例。"""
++import pytest
++from snapshot.orderbook import OrderBook
++from snapshot.auction import indicative_auction
++
++
++def test_better_price_orders_must_all_fill_before_reference_tiebreak():
++    book = OrderBook()
++    book.apply_order(1,'B',100000,200,'L')
++    book.apply_order(2,'B',90000,500,'L')
++    book.apply_order(3,'S',80000,500,'L')
++    # 8 元虽然成交量也是 500，但高于 8 元的 700 股买单无法全部成交。
++    result = indicative_auction(book, reference_price_i=80000)
++    assert (result.price_i,result.matched_vol,result.imbalance) == (90000,500,200)
++
++
++def test_shanghai_uses_middle_price_of_equal_eligible_quotes():
++    book = OrderBook()
++    book.apply_order(1,'B',100000,100,'L')
++    book.apply_order(2,'S',80000,100,'L')
++    result = indicative_auction(book, reference_price_i=80000, market='XSHG')
++    assert (result.price_i,result.matched_vol,result.imbalance) == (90000,100,0)
++
++
++def test_shanghai_middle_price_rounds_half_up_to_the_stock_tick():
++    book = OrderBook()
++    book.apply_order(1,'B',100100,100,'L')
++    book.apply_order(2,'S',100000,100,'L')
++    assert indicative_auction(book, market='XSHG').price_i == 100100
++
++
++def test_shenzhen_auction_requires_its_reference_if_more_than_one_price_is_eligible():
++    book = OrderBook()
++    book.apply_order(1,'B',100000,100,'L')
++    book.apply_order(2,'S',80000,100,'L')
++    with pytest.raises(ValueError,match='reference'):
++        indicative_auction(book)
++
++
++def test_unpublished_continuous_market_orders_are_not_auction_liquidity():
++    book = OrderBook()
++    book.apply_order(1,'B',100000,100,'L')
++    book.apply_order(2,'S',100000,100,'L')
++    book.apply_order(3,'B',0,1000,'M')
++    result = indicative_auction(book)
++    assert (result.price_i,result.matched_vol,result.imbalance) == (100000,100,0)

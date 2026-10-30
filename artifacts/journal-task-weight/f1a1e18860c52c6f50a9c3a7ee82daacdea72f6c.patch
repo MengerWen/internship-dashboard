@@ -1,0 +1,35 @@
+取数前核对日期采集的共享CPU容量
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index 3b7d7870..391ab2a0 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -777,2 +777,5 @@ def reuse_depth_day_supports(pack, root):
+ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: float) -> None:
++    if "shared_compute_slots" in raw_config["structural_calibration"]["resource"]:
++        from run_open5m_selected_date_calibration import validate_collection_resources
++        validate_collection_resources(raw_config, 1)
+     from algobench.config import load_config
+@@ -821,5 +824,2 @@ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: fl
+     resources = section["resource"]
+-    if "shared_compute_slots" in resources:
+-        from run_open5m_selected_date_calibration import validate_collection_resources
+-        validate_collection_resources(raw, 1)
+     settings = SchedulerSettings.from_env(
+diff --git a/因子/algobench/tests/test_run_open5m_real_data_calibration.py b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+index 4709504f..d23564aa 100644
+--- a/因子/algobench/tests/test_run_open5m_real_data_calibration.py
++++ b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+@@ -297,2 +297,11 @@ def test_selected_child_directory_is_bound_to_owner_and_date(tmp_path, local_chi
+ 
++def test_day_collection_checks_cpu_capacity_before_loading_data(monkeypatch):
++    runner = _load()
++    monkeypatch.setenv("SIRUI_STRUCTURAL_CPU_SLOT_CAPACITY", "14")
++    config = {"structural_calibration": {"resource": {"compute_workers": 12,
++        "shared_compute_slots": 12, "parser_threads_per_stream": 2}}}
++    with pytest.raises(ValueError, match="matching local Linux CPU slots"):
++        runner._run(SimpleNamespace(), config, 0.)
++
++
+ def test_completed_scheduler_checkpoint_is_removed_without_touching_other_files(

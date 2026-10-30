@@ -1,0 +1,187 @@
+perf: vectorize C7 lagged depth lookup
+
+
+diff --git a/因子/algobench/src/algobench/event_prestate.py b/因子/algobench/src/algobench/event_prestate.py
+index 5e9f3d7a..f5ff8fe5 100644
+--- a/因子/algobench/src/algobench/event_prestate.py
++++ b/因子/algobench/src/algobench/event_prestate.py
+@@ -4,3 +4,3 @@ from __future__ import annotations
+ 
+-from bisect import bisect_left, bisect_right, insort
++from bisect import bisect_left, insort
+ from collections import deque
+@@ -1230,5 +1230,6 @@ def attach_lagged_opponent_depth(
+     result = orders.copy()
++    row_count = len(result)
+     checkpoint_groups = {
+-        tuple(key if isinstance(key, tuple) else (key,)): group.sort_values(
+-            ["ts", "seq", "event_pos"], kind="mergesort"
++        (str(key[0]), str(key[1]), int(key[2])): group.sort_values(
++            ["seq", "event_pos"], kind="mergesort"
+         ).reset_index(drop=True)
+@@ -1238,58 +1239,116 @@ def attach_lagged_opponent_depth(
+     }
+-    for offset in offsets:
+-        token = _lag_token(offset)
+-        depths: list[object] = []
+-        prices: list[object] = []
+-        second_prices: list[object] = []
+-        observable: list[bool] = []
+-        for order in result.itertuples(index=False):
+-            key = (str(order.date), str(order.code), int(order.channel_no))
+-            group = checkpoint_groups.get(key)
+-            if group is None or group.empty:
+-                depths.append(pd.NA)
+-                prices.append(pd.NA)
+-                second_prices.append(pd.NA)
+-                observable.append(False)
+-                continue
+-            target = pd.Timestamp(order.submit_ts) + pd.Timedelta(milliseconds=offset)
+-            target_ns = int(target.value)
+-            timestamps = (
+-                pd.to_datetime(group["ts"])
+-                .to_numpy(dtype="datetime64[ns]")
+-                .astype("int64")
+-                .tolist()
++    attached = {
++        offset: {
++            "depth": np.full(row_count, np.nan),
++            "price": np.full(row_count, np.nan),
++            "second": np.full(row_count, np.nan),
++            "observable": np.zeros(row_count, dtype=bool),
++        }
++        for offset in offsets
++    }
++    order_groups = result.groupby(
++        ["date", "code", "channel_no"], sort=False, dropna=False
++    ).indices
++    for raw_key, row_positions in order_groups.items():
++        key = (str(raw_key[0]), str(raw_key[1]), int(raw_key[2]))
++        group = checkpoint_groups.get(key)
++        if group is None or group.empty:
++            continue
++        positions = np.asarray(row_positions, dtype=np.intp)
++        selected_orders = result.iloc[positions]
++        checkpoint_ts = (
++            pd.to_datetime(group["ts"])
++            .to_numpy(dtype="datetime64[ns]")
++            .astype("int64")
++        )
++        checkpoint_seq = pd.to_numeric(group["seq"]).to_numpy(dtype=np.int64)
++        order_ts = (
++            pd.to_datetime(selected_orders["submit_ts"])
++            .to_numpy(dtype="datetime64[ns]")
++            .astype("int64")
++        )
++        order_seq = pd.to_numeric(selected_orders[seq_column]).to_numpy(
++            dtype=np.int64
++        )
++        sides = selected_orders["side"].astype(str).str.upper().to_numpy()
++        checkpoint_values = {
++            column: pd.to_numeric(group[column], errors="coerce").to_numpy(
++                dtype=float, na_value=np.nan
+             )
++            for column in (
++                "best_bid_tick",
++                "best_bid_qty",
++                "second_bid_tick",
++                "best_ask_tick",
++                "best_ask_qty",
++                "second_ask_tick",
++            )
++        }
++        for offset in offsets:
+             if offset == 0:
+-                seq = int(getattr(order, seq_column))
+-                keys = list(zip(timestamps, group["seq"].astype("int64"), strict=True))
+-                position = bisect_left(keys, (target_ns, seq)) - 1
++                starts = np.searchsorted(checkpoint_ts, order_ts, side="left")
++                ends = np.searchsorted(checkpoint_ts, order_ts, side="right")
++                checkpoint_positions = starts - 1
++                for order_position in np.flatnonzero(ends > starts):
++                    start = int(starts[order_position])
++                    end = int(ends[order_position])
++                    within = np.searchsorted(
++                        checkpoint_seq[start:end],
++                        order_seq[order_position],
++                        side="left",
++                    )
++                    checkpoint_positions[order_position] = start + within - 1
+             else:
+-                position = bisect_right(timestamps, target_ns) - 1
+-            if position < 0:
+-                depths.append(pd.NA)
+-                prices.append(pd.NA)
+-                second_prices.append(pd.NA)
+-                observable.append(False)
++                target_ts = order_ts + int(offset) * 1_000_000
++                checkpoint_positions = np.searchsorted(
++                    checkpoint_ts, target_ts, side="right"
++                ) - 1
++            valid = checkpoint_positions >= 0
++            if not valid.any():
+                 continue
+-            checkpoint = group.iloc[position]
+-            side = str(order.side).upper()
+-            prefix = "ask" if side == "B" else "bid" if side == "S" else ""
+-            if not prefix:
+-                depths.append(pd.NA)
+-                prices.append(pd.NA)
+-                second_prices.append(pd.NA)
+-                observable.append(False)
++            local = np.flatnonzero(valid)
++            destination = positions[local]
++            source = checkpoint_positions[local]
++            local_sides = sides[local]
++            buy = local_sides == "B"
++            sell = local_sides == "S"
++            valid_side = buy | sell
++            if not valid_side.any():
+                 continue
+-            depth_value = checkpoint[f"best_{prefix}_qty"]
+-            price_value = checkpoint[f"best_{prefix}_tick"]
+-            depths.append(depth_value)
+-            prices.append(price_value)
+-            second_prices.append(checkpoint[f"second_{prefix}_tick"])
+-            observable.append(pd.notna(depth_value) and int(depth_value) > 0)
+-        result[f"opponent_best_qty_{token}"] = pd.array(depths, dtype="Int64")
+-        result[f"opponent_best_price_tick_{token}"] = pd.array(prices, dtype="Int64")
++            destination = destination[valid_side]
++            source = source[valid_side]
++            buy = buy[valid_side]
++            depth = np.where(
++                buy,
++                checkpoint_values["best_ask_qty"][source],
++                checkpoint_values["best_bid_qty"][source],
++            )
++            price = np.where(
++                buy,
++                checkpoint_values["best_ask_tick"][source],
++                checkpoint_values["best_bid_tick"][source],
++            )
++            second = np.where(
++                buy,
++                checkpoint_values["second_ask_tick"][source],
++                checkpoint_values["second_bid_tick"][source],
++            )
++            attached[offset]["depth"][destination] = depth
++            attached[offset]["price"][destination] = price
++            attached[offset]["second"][destination] = second
++            attached[offset]["observable"][destination] = np.isfinite(depth) & (
++                depth > 0
++            )
++    for offset in offsets:
++        token = _lag_token(offset)
++        result[f"opponent_best_qty_{token}"] = pd.array(
++            attached[offset]["depth"], dtype="Int64"
++        )
++        result[f"opponent_best_price_tick_{token}"] = pd.array(
++            attached[offset]["price"], dtype="Int64"
++        )
+         result[f"opponent_second_price_tick_{token}"] = pd.array(
+-            second_prices, dtype="Int64"
++            attached[offset]["second"], dtype="Int64"
+         )
+-        result[f"lag_observable_{token}"] = observable
++        result[f"lag_observable_{token}"] = attached[offset]["observable"]
+         result[f"lag_descriptive_only_{token}"] = offset > 0

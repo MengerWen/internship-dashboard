@@ -1,0 +1,15 @@
+让工作进程内存测试使用完整执行资源上下文
+
+
+diff --git a/因子/algobench/tests/test_formal_worker_memory.py b/因子/algobench/tests/test_formal_worker_memory.py
+index 3c281023..7f848a24 100644
+--- a/因子/algobench/tests/test_formal_worker_memory.py
++++ b/因子/algobench/tests/test_formal_worker_memory.py
+@@ -13,2 +13,3 @@ def test_worker_reclaims_after_stock_arrays_leave_scope(monkeypatch, failed):
+     from algobench.formal_f40_execution import current_f40_execution
++    from algobench.formal_pair_batch_execution import current_pair_batch_execution
+     references = []
+@@ -35,2 +36,3 @@ def test_worker_reclaims_after_stock_arrays_leave_scope(monkeypatch, failed):
+     object.__setattr__(consumer, "f40_resources", current_f40_execution())
++    object.__setattr__(consumer, "pair_batch_resources", current_pair_batch_execution())
+     object.__setattr__(consumer, "release_worker_memory", True)

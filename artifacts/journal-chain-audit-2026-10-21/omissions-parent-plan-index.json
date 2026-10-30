@@ -1,0 +1,1406 @@
+[
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/FIX_PLAN_01_validation.md",
+    "line_count": 148,
+    "title": "修正计划 01：米筐校验闭环（交给 Codex 执行）",
+    "goal": "",
+    "first_follow_commit": "5201b75a5be007af0634b1d8d951a66e48c7df46",
+    "first_follow_author_date": "2026-06-25T13:56:06+08:00",
+    "last_follow_commit": "07041fe33870bab083498b0d7f617271ccd60a82",
+    "last_follow_author_date": "2026-06-25T14:01:24+08:00",
+    "git_history": [
+      "07041fe33870bab083498b0d7f617271ccd60a82\t2026-06-25T14:01:24+08:00\t完善fix_1 prompt: 避免浪费token 26.6.25 14:01",
+      "5201b75a5be007af0634b1d8d951a66e48c7df46\t2026-06-25T13:56:06+08:00\tfix_1 26.6.25 13:56"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 13,
+        "text": "- ❌ **不要运行裸 `build-range`**（不带日期界限）。它会遍历整个 manifest（595 天），`--skip-existing` 只会快速跳过已建的 26 天，其余 ~569 天会**从零重建（每天 ~1 分钟 → 约 9–11 小时）**，纯属浪费。"
+      },
+      {
+        "line": 15,
+        "text": "- ✅ 任何需要跑批的命令，必须用 `--skip-existing` 且用 `--max-days <已存在天数>` 或 `--end-date <最后一个已建日期>` **把范围钉死在已存在的天**（这些天读 parquet + 重比对，每天 < 1s）。"
+      },
+      {
+        "line": 53,
+        "text": "真实机制（已挖出）：**米筐\"标注在 T 的 3 秒快照\"实际反映的是 T 之后约 100ms 的状态，且有抖动（可到 ~150ms），因为快照有生成延迟。**"
+      },
+      {
+        "line": 93,
+        "text": "> 说明：100ms 网格采样 + 米筐 3s 抖动，会让\"按网格点直接采样\"天然损失一部分匹配（这是测量对齐问题，不是重建错误）。FIX-2 的事件级存在性检验绕开网格量化，直接证明重建正确。FIX-1 的网格采样对比作为**辅助指标**保留（用瞬间对齐：先按 `cum_vol==volume` 在 `[T, T+window]` 内定位我们的状态，再逐档比），并明确标注其残差来自网格/抖动。"
+      },
+      {
+        "line": 148,
+        "text": "> 注：当前 `outputs/reports/` 下的 `diffs.csv` 与 summary 里的 `book_diff_rows/stat_diff_rows` 是用有 bug 的 `compare_to_ref` 生成的（盘口从未比），属**陈旧/无效数据**，需按上面第 5 步在已存在天上重算覆盖；但**不要**借机重建快照或扩到新日期。"
+      }
+    ],
+    "chain": "lv2-snapshot",
+    "action": "归入既有",
+    "reason": "早期LV2快照项目计划；沪市样本也属于该阶段，不移到9月沪市重建链",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "5201b75a5be007af0634b1d8d951a66e48c7df46",
+    "first_date": "2026-06-25T13:56:06+08:00",
+    "last_commit": "07041fe33870bab083498b0d7f617271ccd60a82",
+    "last_date": "2026-06-25T14:01:24+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/FIX_PLAN_02_sse_c2_and_auction.md",
+    "line_count": 92,
+    "title": "修正计划 02：沪市墙钟对齐(c2=0.0) + 竞价零成交编码 + 展示口径（交给 Codex 执行）",
+    "goal": "",
+    "first_follow_commit": "e1f1ae23d55ee57a62ffd4a8f0fb77a1d30b6739",
+    "first_follow_author_date": "2026-06-26T09:13:36+08:00",
+    "last_follow_commit": "41a3f9522814fc622e5723b89ae93cc09c27ef17",
+    "last_follow_author_date": "2026-06-26T09:48:33+08:00",
+    "git_history": [
+      "41a3f9522814fc622e5723b89ae93cc09c27ef17\t2026-06-26T09:48:33+08:00\tfinish plan_3 (深沪) 26.6.26 9:48",
+      "e1f1ae23d55ee57a62ffd4a8f0fb77a1d30b6739\t2026-06-26T09:13:36+08:00\tmodify plan_3 26.6.26 9:13"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 5,
+        "text": "> 本次只修两处**非核心**问题（一处展示误导、一处竞价边界 tick），**不要动重建状态机的撮合/扣减逻辑**。"
+      }
+    ],
+    "chain": "lv2-snapshot",
+    "action": "归入既有",
+    "reason": "早期LV2快照项目计划；沪市样本也属于该阶段，不移到9月沪市重建链",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "e1f1ae23d55ee57a62ffd4a8f0fb77a1d30b6739",
+    "first_date": "2026-06-26T09:13:36+08:00",
+    "last_commit": "41a3f9522814fc622e5723b89ae93cc09c27ef17",
+    "last_date": "2026-06-26T09:48:33+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/FIX_PLAN_03_overlay_viz.md",
+    "line_count": 82,
+    "title": "修正计划 03：三方对比图可读性（交给 Codex 执行）",
+    "goal": "",
+    "first_follow_commit": "4636d02668171a48a9fe4da0706b5ecca89dcd96",
+    "first_follow_author_date": "2026-06-26T12:48:23+08:00",
+    "last_follow_commit": "4636d02668171a48a9fe4da0706b5ecca89dcd96",
+    "last_follow_author_date": "2026-06-26T12:48:23+08:00",
+    "git_history": [
+      "4636d02668171a48a9fe4da0706b5ecca89dcd96\t2026-06-26T12:48:23+08:00\t更新画图 26.6.26 12:48"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 11,
+        "text": "- ❌ 不重建快照、不扩日期、不跑 `build-range`。"
+      },
+      {
+        "line": 81,
+        "text": "- ❌ 不改任何数据、指标、对齐、校验逻辑；不重建快照；不扩日期。"
+      }
+    ],
+    "chain": "lv2-snapshot",
+    "action": "归入既有",
+    "reason": "早期LV2快照项目计划；沪市样本也属于该阶段，不移到9月沪市重建链",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "4636d02668171a48a9fe4da0706b5ecca89dcd96",
+    "first_date": "2026-06-26T12:48:23+08:00",
+    "last_commit": "4636d02668171a48a9fe4da0706b5ecca89dcd96",
+    "last_date": "2026-06-26T12:48:23+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/PLAN.md",
+    "line_count": 284,
+    "title": "LV2 逐笔 → 100ms 快照重建：实施计划",
+    "goal": "",
+    "first_follow_commit": "5ae67a0ee051766552ec31b8a6b1500d9a5a6ac3",
+    "first_follow_author_date": "2026-06-25T12:05:14+08:00",
+    "last_follow_commit": "1a0526f9d68a8ce189b043d7b5c2533239d49819",
+    "last_follow_author_date": "2026-06-25T12:26:27+08:00",
+    "git_history": [
+      "1a0526f9d68a8ce189b043d7b5c2533239d49819\t2026-06-25T12:26:27+08:00\tupdate plan 2 26.6.25 12:26",
+      "5239b1bc84e38b57efea4e4b2f0bbaf11ac03154\t2026-06-25T12:13:02+08:00\tupdate plan 1 26.6.25 12:12",
+      "5ae67a0ee051766552ec31b8a6b1500d9a5a6ac3\t2026-06-25T12:05:14+08:00\t创建plan 26.6.25 12:05"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 42,
+        "text": "### 1.2 维护的状态"
+      },
+      {
+        "line": 73,
+        "text": "### 1.4 100ms 快照生成（mentor：网格点取 `≤ t` 的最后状态）"
+      },
+      {
+        "line": 86,
+        "text": "- 算法：事件按 `seq` 顺序回放，双指针推进；到每个网格点 `t`，消费完所有 `ts ≤ t` 的事件后，快照 = 当前盘口（即 mentor 要的\"≤ t 最后状态\"）。`09:25:00` / `15:00:00` 因撮合成交盖在该时刻（已验证），\"≤ t\" 自动得到撮合后正常簿。"
+      },
+      {
+        "line": 89,
+        "text": "- 无事件的网格点 = 盘口不变 = 自动前向填充（沿用上一状态）。"
+      },
+      {
+        "line": 90,
+        "text": "- **对齐米筐的口径**：米筐历史快照是 **~3 秒 L1（5 档）** 节奏（见 §6A），不是 100ms。校验时按米筐每条快照的真实时间戳 `T`，取我们 `≤ T` 的 100ms 状态比对（边界含/不含在 Phase 2 用数据敲定，默认 `≤ T`）。我们产出 100ms 全深度，米筐只能校验前 5 档 + 竞价编码。"
+      },
+      {
+        "line": 149,
+        "text": "    orderbook.py     # OrderBook 引擎：order/trade/cancel 状态机 + 全深度（§1 规格）"
+      },
+      {
+        "line": 157,
+        "text": "    default.yaml     # 路径、grid_ms、top_n、session 范围、日期/代码范围、price_scale"
+      },
+      {
+        "line": 171,
+        "text": "> 因此 Phase 3 是\"000001 全部日期\"，全市场放到最后的 Phase 5。"
+      },
+      {
+        "line": 192,
+        "text": "- 跑 §5 全部校验，**重点是与米筐逐档对齐**：把我们的 100ms 快照按米筐时间戳口径对齐（取 ≤ 米筐戳的最后状态），逐档比对买卖价/量、last、累计量，输出匹配率与最大绝对误差、列出所有不一致点并归因。"
+      },
+      {
+        "line": 195,
+        "text": "**Phase 3 — 000001 全部日期（交付里程碑）**"
+      },
+      {
+        "line": 196,
+        "text": "- `cli.py` 支持\"单票 + 日期区间\"：读 `manifests/dates.tsv`，对 000001 逐日跑全部 595 天，逐日与米筐对齐校验、断点续跑（已存在且校验过的分区跳过）。"
+      },
+      {
+        "line": 206,
+        "text": "- 性能：纯 Python 状态机对全市场偏慢；先保证正确，再视情况用 Numba/数组化加速热循环（不要过早优化）；可按 code 多进程并行。"
+      },
+      {
+        "line": 222,
+        "text": "- 取数：`rqdatac.get_price(code, start_date=d, end_date=d, frequency='tick')`（见 §6A）。对每条米筐快照时间戳 `T`，取我们 `≤ T` 的 100ms 状态对齐。"
+      },
+      {
+        "line": 240,
+        "text": "4. **对齐口径**：网格点取 `≤ t` 的最后状态（§1.4）。"
+      },
+      {
+        "line": 241,
+        "text": "5. **交付顺序**：先 000001 全部日期，跑通跑对后再做别的股票（Phase 3 → Phase 5）。"
+      },
+      {
+        "line": 258,
+        "text": "- 快照时间戳为\"截至 T 的状态\"，与我们\"≤ t\"口径一致。`datetime` 为北京时间、tz-naive。"
+      }
+    ],
+    "chain": "lv2-snapshot",
+    "action": "归入既有",
+    "reason": "早期LV2快照项目计划；沪市样本也属于该阶段，不移到9月沪市重建链",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "5ae67a0ee051766552ec31b8a6b1500d9a5a6ac3",
+    "first_date": "2026-06-25T12:05:14+08:00",
+    "last_commit": "1a0526f9d68a8ce189b043d7b5c2533239d49819",
+    "last_date": "2026-06-25T12:26:27+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/PLAN_02_3s_and_threeway.md",
+    "line_count": 129,
+    "title": "计划 02：构建 3s 快照 + 三方对比验证（交给 Codex 执行）",
+    "goal": "",
+    "first_follow_commit": "f16e32a0da5e7852db52318c574960242c0fa9ad",
+    "first_follow_author_date": "2026-06-25T21:24:03+08:00",
+    "last_follow_commit": "bc6df330c698fce1100252efcf8ce16d2bfdae85",
+    "last_follow_author_date": "2026-06-25T21:50:44+08:00",
+    "git_history": [
+      "bc6df330c698fce1100252efcf8ce16d2bfdae85\t2026-06-25T21:50:44+08:00\tfinish fix_2: 3s 26.6.25 21:50",
+      "f16e32a0da5e7852db52318c574960242c0fa9ad\t2026-06-25T21:24:03+08:00\tfix_2 26.6.25 21:19"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 34,
+        "text": "3s 快照 = 用**完全相同的 `build_snapshots` 引擎**，把网格步长从 100ms 换成 **3000ms**，其余一切（\"≤t 最后状态\"规则、集合竞价指示性编码、全深度+5档宽表+统计字段、phase 判定）**全部复用**。"
+      }
+    ],
+    "chain": "lv2-snapshot",
+    "action": "归入既有",
+    "reason": "早期LV2快照项目计划；沪市样本也属于该阶段，不移到9月沪市重建链",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "f16e32a0da5e7852db52318c574960242c0fa9ad",
+    "first_date": "2026-06-25T21:24:03+08:00",
+    "last_commit": "bc6df330c698fce1100252efcf8ce16d2bfdae85",
+    "last_date": "2026-06-25T21:50:44+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/lv2_snapshot_workspace/PLAN_03_shanghai_stock.md",
+    "line_count": 117,
+    "title": "计划 03：沪市再跑一只票（沪深各一只）+ 沪深并排展示（交给 Codex 执行）",
+    "goal": "",
+    "first_follow_commit": "4898a11c43c99374822dbd0c9c767af663c299de",
+    "first_follow_author_date": "2026-06-25T22:52:34+08:00",
+    "last_follow_commit": "a00184664162f050d44e6b714a4dd2361fbc922c",
+    "last_follow_author_date": "2026-06-25T23:01:22+08:00",
+    "git_history": [
+      "a00184664162f050d44e6b714a4dd2361fbc922c\t2026-06-25T23:01:22+08:00\tpolish plan_3 26.6.25",
+      "4898a11c43c99374822dbd0c9c767af663c299de\t2026-06-25T22:52:34+08:00\tfix_3 26.6.25 22:52"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 11,
+        "text": "- ❌ **不要跑全 595 天 / 不要裸 `build-range`（不带日期界限）**。"
+      },
+      {
+        "line": 48,
+        "text": "- 日期：**前 7 个交易日**（`available_dates()[:7]`），沪深两只都跑这 7 天。"
+      },
+      {
+        "line": 56,
+        "text": "### 2.1 跑 7 天全流程（沪深两只，复用现有 CLI；建议用脚本循环这 7 个日期）"
+      },
+      {
+        "line": 105,
+        "text": "- ❌ 不跑全 595 天 / 不裸 `build-range`（不带日期界限）。本次仅前 7 个交易日。"
+      }
+    ],
+    "chain": "lv2-snapshot",
+    "action": "归入既有",
+    "reason": "早期LV2快照项目计划；沪市样本也属于该阶段，不移到9月沪市重建链",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "4898a11c43c99374822dbd0c9c767af663c299de",
+    "first_date": "2026-06-25T22:52:34+08:00",
+    "last_commit": "a00184664162f050d44e6b714a4dd2361fbc922c",
+    "last_date": "2026-06-25T23:01:22+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/PLAN_12_主动算法关注度因子_未来1至3日IC_2026-07-10.md",
+    "line_count": 1513,
+    "title": "主动算法关注度因子（未来 1～3 日 IC）Implementation Plan",
+    "goal": "**Goal:** 在现有深市 Level-2 订单流工程上，构建“数值越高＝主动算法关注度越高”的无方向股票日因子，并在全深市样本上检验其对未来 1、2、3 个交易日收益的 IC、RankIC 与 40 分组收益表现。",
+    "first_follow_commit": "41c0f59b5dc83a1b702a12de19c1287902159cbc",
+    "first_follow_author_date": "2026-07-10T16:15:20+08:00",
+    "last_follow_commit": "688c210b46188b14408bde307e39245873aa6cc2",
+    "last_follow_author_date": "2026-07-11T20:37:13+08:00",
+    "git_history": [
+      "688c210b46188b14408bde307e39245873aa6cc2\t2026-07-11T20:37:13+08:00\t再更新 26.7.11 20:37",
+      "f7c4336efdfb181258b744f0d99060c3c08ce6e2\t2026-07-11T17:28:30+08:00\t更新PLAN12 26.7.11 17:28",
+      "6dc1d7fe2c77c878baa92bb0cb69b6049367a5b5\t2026-07-10T18:16:44+08:00\t更新PLAN12 26.7.10 18:16",
+      "c97aeb68e586d10c639c10e4d82ce501545fe21b\t2026-07-10T17:00:33+08:00\t更新PLAN12 26.7.10 17:00",
+      "e55f2fc7954a496ba50b4dd4f43bd46fdc9fc2b4\t2026-07-10T16:46:16+08:00\t更新PLAN12 26.7.10 16:46",
+      "41c0f59b5dc83a1b702a12de19c1287902159cbc\t2026-07-10T16:15:20+08:00\t改方向，写计划 26.7.10 16:15"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 11,
+        "text": "> **Revision v1.1（2026-07-10 审阅修订）：** 增加零值堆积的预注册处理、标签缺失/停牌审计、固定 Newey-West lag、分期生成面板、完整 SRuns 参数冻结、tracked pyc 清理和唯一字段来源约束。修订不改变研究主线。"
+      },
+      {
+        "line": 13,
+        "text": "> **Revision v1.2（2026-07-10 数据衔接修订）：** 冻结“按 period 直接读取日 shards”的唯一数据契约；开发/验证/留出 labels 与 eval 分目录落盘；开发期快照不再占用最终全区间文件名；最终合并面板只在 Task 11.4 写一次。"
+      },
+      {
+        "line": 15,
+        "text": "> **Revision v1.3（2026-07-10 评价口径修订）：** 移除 zero/bottom/middle/top 尾部分组与 zero-vs-positive 切换规则，统一改为每日 40 分组收益；新增三类预注册图表（Group Return Comparison、Factor Distribution、Factor vs Future Return Scatter Plot）；整体删除原 Task 10 参数敏感性检查，检测参数一次冻结、本轮不做网格。"
+      },
+      {
+        "line": 17,
+        "text": "> **Revision v1.4（2026-07-10 图表补充）：** 在 40 分位分组图之外，新增等宽 0.01 × 100 箱分组收益图：上层为箱内平均未来收益，底层为共用横轴的样本量条形图（兼作因子分布展示）；不设最小样本阈值，空箱如实留白。预注册图表由三类扩为四类。"
+      },
+      {
+        "line": 19,
+        "text": "> **Revision v1.5（2026-07-11 验收口径修订）：** 删除 B/S 交换及方向交换不变性测试。主动买入与主动卖出痕迹仍统一计入无方向关注度，但不再要求对原始订单、成交或撤单事件交换买卖方向后，EE、SRuns 或最终关注度因子保持不变。本次修订不改变 12 个因子的定义、EE/SRuns 参数、旧路径与新路径数值对账要求及其他 Task 6 验收项。"
+      },
+      {
+        "line": 98,
+        "text": "## 2. 2026-07-10 已核实的工程现状"
+      },
+      {
+        "line": 109,
+        "text": "实施前必须重新运行 `git status --short --branch`；如果状态已变化，以现场状态为准，保留用户改动。"
+      },
+      {
+        "line": 113,
+        "text": "2026-07-10 使用 `D:\\MG\\rq\\python.exe` 和 `-p no:cacheprovider` 实测："
+      },
+      {
+        "line": 132,
+        "text": "`outputs/anchors/raw/rqdata/batch_manifest.jsonl` 的最新分片状态："
+      },
+      {
+        "line": 134,
+        "text": "| 数据集 | 行数 | 日期范围 | 失败批次 | 新主线用途 |"
+      },
+      {
+        "line": 137,
+        "text": "| `trading_calendar` | 608 | 2024-01-02～2026-07-09 | 0 | t+1/t+2/t+3 交易日映射 |"
+      },
+      {
+        "line": 138,
+        "text": "| `local_l2_availability` | 1,687,422 | 2024-01-02～2026-06-22 | 0 | 实际可计算股票日全集 |"
+      },
+      {
+        "line": 139,
+        "text": "| `daily_price` | 1,725,247 | 2024-01-02～2026-07-09 | 0 | 未复权行情及数据核对 |"
+      },
+      {
+        "line": 140,
+        "text": "| `turnover` | 1,727,772 | 2024-01-02～2026-07-09 | 0 | 暂不进主因子，可留待后续 |"
+      },
+      {
+        "line": 141,
+        "text": "| `market_cap` | 1,727,772 | 2024-01-02～2026-07-09 | 0 | 暂不做中性化，保留备用 |"
+      },
+      {
+        "line": 142,
+        "text": "| `st_status` | 1,760,160 | 2024-01-02～2026-07-09 | 0 | universe 标记和分层报告 |"
+      },
+      {
+        "line": 143,
+        "text": "| `margin_targets` | 1,183,148 | 2024-01-02～2026-07-09 | 0 | 不进入新主线 |"
+      },
+      {
+        "line": 144,
+        "text": "| `securities_margin` | 1,082,298 | 2024-01-02～2026-07-09 | 0 | 不进入新主线 |"
+      },
+      {
+        "line": 228,
+        "text": "- 同一代码批次、同一日期区间额外调用并缓存 `rqdatac.is_suspended`；"
+      },
+      {
+        "line": 264,
+        "text": "3. 每日组收益 = 组内标签有效样本的未来收益均值；period 汇总 = 对日期等权平均；"
+      },
+      {
+        "line": 441,
+        "text": "  -> 从 config 解析 period 日期范围"
+      },
+      {
+        "line": 457,
+        "text": "明确不采用“每完成一个 period 就覆盖重写同一个最终面板”的方案，因为它会产生重复全量 I/O、可变中间状态和跨阶段覆盖歧义。最终 `panel_stock_day_attention.parquet` 只在三个 period 均完成后由 Task 11.4 生成。"
+      },
+      {
+        "line": 470,
+        "text": "截至本 PLAN v1.1 审阅时，仓库中有 157 个已被 Git 跟踪的 pycache/pyc。它们虽然当前不一定处于 modified 状态，但运行测试后会反复制造无关 diff，必须在功能开发前一次性清理。"
+      },
+      {
+        "line": 472,
+        "text": "**Step 1：确认当前状态并统计**"
+      },
+      {
+        "line": 582,
+        "text": "    holdout: [\"2026-01-01\", \"2026-06-22\"]"
+      },
+      {
+        "line": 762,
+        "text": "- 日期和代码主键唯一；"
+      },
+      {
+        "line": 770,
+        "text": "范围固定为 2024-01-01～2026-07-09。完成后随机抽查至少 5 个含除权除息附近日期的股票序列，确认 adjusted series 不出现未复权机械跳变。"
+      },
+      {
+        "line": 877,
+        "text": "- 两个日期、三个代码生成两个日 shard；"
+      },
+      {
+        "line": 879,
+        "text": "- 中断后只重跑缺失日期；"
+      },
+      {
+        "line": 921,
+        "text": "- period 日期范围只从 `cfg.raw[\"evaluation\"][\"periods\"]` 读取；"
+      }
+    ],
+    "chain": "grouped-calibration",
+    "action": "归入既有",
+    "reason": "分组尺度/结构定标及性能验收",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "41c0f59b5dc83a1b702a12de19c1287902159cbc",
+    "first_date": "2026-07-10T16:15:20+08:00",
+    "last_commit": "688c210b46188b14408bde307e39245873aa6cc2",
+    "last_date": "2026-07-11T20:37:13+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/PLAN_13_主动算法关注度因子_2025-07单月IC_2026-07-12.md",
+    "line_count": 353,
+    "title": "主动算法关注度因子（2025-07 单月窗口 IC）Implementation Plan",
+    "goal": "**Goal:** 在 2025-07 单月（2025-07-01～2025-07-31，约 23 个交易日）的全深市样本上，计算扩展后的无方向\"主动算法关注度\"因子族（9 个痕迹集合 × count/qty/amount 三种权重 = 27 个因子），并对未来 1、2、3 个交易日收益输出 RankIC、40 分位分组收益、等宽 100 箱收益与四类预注册图表。单一评价窗口，不设 development/validation/holdout 分期。",
+    "first_follow_commit": "d25a5bfa84edf91a250ac6108a77b461a4609ca5",
+    "first_follow_author_date": "2026-07-12T00:35:26+08:00",
+    "last_follow_commit": "fe59a4c1e15cf8c49fce419f59d5f1337d2916ec",
+    "last_follow_author_date": "2026-07-12T18:56:17+08:00",
+    "git_history": [
+      "fe59a4c1e15cf8c49fce419f59d5f1337d2916ec\t2026-07-12T18:56:17+08:00\tplan13: shrink window to 2025-07 single month",
+      "7d17bfae74f0e41538594a38729307e93a808f42\t2026-07-12T16:52:46+08:00\t更新PLAN13 26.7.12 16:52",
+      "d25a5bfa84edf91a250ac6108a77b461a4609ca5\t2026-07-12T00:35:26+08:00\tPLAN13 26.7.12 00:35"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 9,
+        "text": "**Tech Stack:** Python 3.10+（固定解释器 `D:\\MG\\rq\\python.exe`）、pandas、NumPy、PyArrow、SciPy、statsmodels、PyYAML、pytest、Matplotlib；本地深市逐笔数据 `E:\\rql2_tick_20240102_20260622`；已落盘 RQData 缓存（价格缓存覆盖 2024-01-01～2026-07-09，含本窗口全部 t+3 标签所需日期）。"
+      },
+      {
+        "line": 15,
+        "text": "### 0.1 已完成、直接复用的成果（不重做）"
+      },
+      {
+        "line": 17,
+        "text": "| 成果 | 状态 | 位置 |"
+      },
+      {
+        "line": 26,
+        "text": "| 旧-新路径对账 checkpoint（六项检查） | ✅ PASS | RUN_NOTES 2026-07-11 |"
+      },
+      {
+        "line": 28,
+        "text": "| PLAN13 Task 2：五个新痕迹掩码（27 因子对账 PASS） | ✅ 已提交 `f64ee8c` | `attention.py`、RUN_NOTES 2026-07-12 |"
+      },
+      {
+        "line": 29,
+        "text": "| PLAN13 Task 3：按日并行运行器 + 2025-07-01 全市场基准 | ✅ 已提交 `752dd24` | `attention_parallel.py`、RUN_NOTES 2026-07-12 |"
+      },
+      {
+        "line": 34,
+        "text": "- 2025-07 以外的任何日期区间（更早与更晚区间均保留为将来预注册扩展，按日分片补算即可，见 §7）；"
+      },
+      {
+        "line": 40,
+        "text": "### 0.2 缩窗口到 2025-07 单月的理由（记录在案，2026-07-12 用户裁决）"
+      },
+      {
+        "line": 76,
+        "text": "- 窗口末尾（2025-07-29～31）的 t+1/t+2/t+3 标签自然使用 8 月初价格（价格缓存到 2026-07-09），不截断。"
+      },
+      {
+        "line": 163,
+        "text": "### 4.4 SRESP：已按门槛判定，本轮不纳入（2026-07-12）"
+      },
+      {
+        "line": 204,
+        "text": "## Task 1：新配置、扩展注册表与单 period 契约 ✅ 已完成"
+      },
+      {
+        "line": 206,
+        "text": "已提交 `0204cab`（`plan13: single-window config and expanded registry`）。配置生效（`labels/universe/evaluation` 复制自 `attention_ic_1d3d.yaml`，`methods.m3_ccp`/`m1_ee` 参数块逐字节一致）；period 机制收敛为单窗口，非法值 fail loudly；registry 契约断言见 `tests/test_attention13_config.py`。（注：窗口起止与 period 命名后经 2026-07-12 用户裁决收缩为 2025-07 单月，改配实施见 Task 4A。）"
+      },
+      {
+        "line": 208,
+        "text": "## Task 2：实现五个新痕迹掩码 ✅ 已完成"
+      },
+      {
+        "line": 210,
+        "text": "已提交 `f64ee8c`（`plan13: five lifecycle-derived attention masks`）。新掩码全部从 lifecycle 表推导，`fast_cancel_1s` 取 `flag_ee_step1`，阈值从 config 读取。3 股 × 3 日真实 smoke 旧-新对账全部 PASS：27 因子逐行 `max|Δ| = 0`、share ∈ [0,1]、§4.3 嵌套关系在真实数据成立、union 无双重计数（RUN_NOTES 2026-07-12 \"PLAN 13 Task 2\" 节）。"
+      },
+      {
+        "line": 212,
+        "text": "## Task 3：单日全市场基准 + 按日多进程运行器 ✅ 已完成（外推超预算，用户已裁决）"
+      },
+      {
+        "line": 214,
+        "text": "已提交 `752dd24`（`plan13: by-day parallel panel runner`）。详细证据：RUN_NOTES 2026-07-12 \"PLAN 13 Task 3\" 节与 `outputs/attention/benchmarks/`。"
+      },
+      {
+        "line": 224,
+        "text": "**外推与裁决**：原候选窗口（236 个交易日）串行 ≈ `528h`；机器 16 物理核 / 31.69 GiB 内存，70% 内存规则下上限 3 workers ≈ `176h`，假设 8 workers 也需 `66h`——均超 60h 预算，已按预注册流程停下报告。**用户裁决（2026-07-12）**：(a) 不缩因子口径、不改计算逻辑；(b) 批准以 **4 workers** 执行 Task 4（峰值 4 × 6.64 ≈ 26.6 GiB，超出 70% 内存规则系用户知情批准，依据：峰值为瞬时尖峰、按日故障隔离、shard 断点续跑，失败日期事后补算；开跑前需关闭其他大内存应用）；(c) **研究窗口收缩为 2025-07 单月**（理由记录于 §0.2，改配实施见 Task 4A）。"
+      },
+      {
+        "line": 242,
+        "text": "**执行参数（用户已定，2026-07-12）**：`--workers 4`；全窗口约 23 个交易日 ≈ 6 批 × 2.24 小时 ≈ **13.4 小时挂钟**，一个通宵覆盖。开跑前关闭其他大内存应用；失败日期凭断点续跑事后补算，不自动重试。"
+      },
+      {
+        "line": 246,
+        "text": "**Step 2：** 续跑窗口剩余日期："
+      },
+      {
+        "line": 252,
+        "text": "逐日使用真实 L2 availability，禁止笛卡尔积盲跑；中断用 resume 续跑（已完成日期凭指纹自动跳过，不加 `--force`）。"
+      },
+      {
+        "line": 254,
+        "text": "**Step 3（全窗验收）：** 内存无随日期累计增长迹象；error 行可追溯；resume 抽查 3 个日期不重算且 shard 字节不变；27 个因子 min/max 与零值率合理；§4.3 嵌套关系抽查成立。然后生成审计快照与 manifest："
+      },
+      {
+        "line": 260,
+        "text": "工程验收清单：`(code,date)` 唯一；行数与逐日 shard 合计一致；error 行可追溯；成功行全部 share ∈ [0,1]；§4.3 嵌套关系成立；manifest 可重建完成日期列表；第二次运行全命中 cache、除 manifest 检查外不重算。"
+      },
+      {
+        "line": 303,
+        "text": "3. 数据覆盖：日期、股票、股票日、错误率、零值率、最大 tie 占比；"
+      },
+      {
+        "line": 347,
+        "text": "- [x] 单日基准与并行对账通过；原候选窗口外推超 60h 预算，已按预注册流程停下报告，用户裁决：4 workers + 窗口收缩为 2025-07 单月（2026-07-12）；"
+      }
+    ],
+    "chain": "grouped-calibration",
+    "action": "归入既有",
+    "reason": "分组尺度/结构定标及性能验收",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "d25a5bfa84edf91a250ac6108a77b461a4609ca5",
+    "first_date": "2026-07-12T00:35:26+08:00",
+    "last_commit": "fe59a4c1e15cf8c49fce419f59d5f1337d2916ec",
+    "last_date": "2026-07-12T18:56:17+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/PLAN_ccp_sruns_rework.md",
+    "line_count": 244,
+    "title": "PLAN：`ccp__sruns` 因子重构 + 结果同步到量化展示网页",
+    "goal": "",
+    "first_follow_commit": "0032b09002b3755507bee56113c07567e71b908f",
+    "first_follow_author_date": "2026-07-08T12:24:08+08:00",
+    "last_follow_commit": "0032b09002b3755507bee56113c07567e71b908f",
+    "last_follow_author_date": "2026-07-08T12:24:08+08:00",
+    "git_history": [
+      "0032b09002b3755507bee56113c07567e71b908f\t2026-07-08T12:24:08+08:00\t`ccp__sruns`改进 26.7.8 12:24"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 4,
+        "text": "> 日期口径：今天是 2026-07-08，产出的日报文件名为 `2026-07-08`。"
+      },
+      {
+        "line": 23,
+        "text": "4. **07-07 评估已证明现行 `ccp__sruns` 是最弱指标**：跨日稳定性 0.324（25 指标最低）、命中订单占全样本 0.02%、独占单仅 592 笔、sub-200ms 纯度 21.6%（对比 EE1 52.9%）。出处：`D:\\MG\\！Internship\\BUILD\\汇报\\content\\daily\\2026-07-07.md` §5.2/§5.4a/§5.5/§5.1。"
+      },
+      {
+        "line": 202,
+        "text": "- 正文：`D:\\MG\\！Internship\\BUILD\\汇报\\content\\daily\\2026-07-08.md`，frontmatter：`title` / `date: 2026-07-08` / `stage: algo-footprint` / `summary`。文中表现数学公式时记得使用`$`和`$$`"
+      },
+      {
+        "line": 203,
+        "text": "- 图片：`D:\\MG\\！Internship\\BUILD\\汇报\\site\\assets\\algo-footprint-2026-07-08\\`，md 内引用路径 `assets/algo-footprint-2026-07-08/xxx.png`（对照 2026-07-07.md 的写法）。"
+      },
+      {
+        "line": 204,
+        "text": "- 展示版：参照 `templates/show-html-starter.html` 和 `2026-07-07.show.html` 做定制页（自包含、无外部 CDN）。表现数学公式时记得使用`$`和`$$`"
+      },
+      {
+        "line": 235,
+        "text": "- [ ] `2026-07-08.md` 完成，`build.py` 本地构建渲染无误，图片路径正确；"
+      },
+      {
+        "line": 236,
+        "text": "- [ ] 未执行 git push（留给用户）。"
+      }
+    ],
+    "chain": "wangly-env",
+    "action": "归入既有",
+    "reason": "服务器环境与代码/结果同步；计划不等于同步完成",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "0032b09002b3755507bee56113c07567e71b908f",
+    "first_date": "2026-07-08T12:24:08+08:00",
+    "last_commit": "0032b09002b3755507bee56113c07567e71b908f",
+    "last_date": "2026-07-08T12:24:08+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/ALGO_FOOTPRINT_DETECTION_PLAN_2026-07-01.md",
+    "line_count": 208,
+    "title": "订单流中的算法交易痕迹检测方案（Level-2.5 归因）",
+    "goal": "",
+    "first_follow_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_follow_author_date": "2026-07-01T11:24:00+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "1ca631cff8450fa8119d706f23a516bd0f17afd7\t2026-07-01T11:24:00+08:00\t转向：检测踪迹 26.7.1 11:23"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-01"
+      },
+      {
+        "line": 49,
+        "text": "> 统一底座：先从深市逐笔事件重建 **① 逐 `order_id` 生命周期表**（进场时间/价/量、每笔成交、撤单、存活时长、成交率、主动被动）和 **② 每个事件到达时的盘口状态**（距最优价、排队前量），作为下列所有检测的输入。"
+      },
+      {
+        "line": 119,
+        "text": "- 逻辑/技术：对 new→trade→(delete)→new 序列建**有限状态机**；或监测\"可见量被击穿后的瞬时同价回补\"。"
+      },
+      {
+        "line": 168,
+        "text": "阶段0 生命周期底座：深市逐笔→逐 order_id 生命周期表 + 事件到达时盘口状态（复用 lv2_snapshot_workspace 事件回放/重建）。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_date": "2026-07-01T11:24:00+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/ALGO_TRADING_TRACE_RESEARCH_PLAN_2026-07-01.md",
+    "line_count": 1134,
+    "title": "Order Book 算法交易痕迹研究计划",
+    "goal": "",
+    "first_follow_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_follow_author_date": "2026-07-01T11:24:00+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "1ca631cff8450fa8119d706f23a516bd0f17afd7\t2026-07-01T11:24:00+08:00\t转向：检测踪迹 26.7.1 11:23"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-01"
+      },
+      {
+        "line": 327,
+        "text": "输出股票-日期级指标："
+      },
+      {
+        "line": 1095,
+        "text": "- 这些行为在股票、日期、日内时段上的分布如何。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_date": "2026-07-01T11:24:00+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_ALGOBENCH_FIX1_2026-07-06.md",
+    "line_count": 115,
+    "title": "Codex 修复任务书：algobench FIX1（首轮审查发现的问题）",
+    "goal": "",
+    "first_follow_commit": "52a5ac3bb68cda75a378bf47c66724ead90e6368",
+    "first_follow_author_date": "2026-07-06T16:55:54+08:00",
+    "last_follow_commit": "52a5ac3bb68cda75a378bf47c66724ead90e6368",
+    "last_follow_author_date": "2026-07-06T16:55:54+08:00",
+    "git_history": [
+      "52a5ac3bb68cda75a378bf47c66724ead90e6368\t2026-07-06T16:55:54+08:00\t6docs fix_1 26.7.6 16:55"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-06"
+      },
+      {
+        "line": 4,
+        "text": "上游任务书：`CODEX_PLAN_ALGOBENCH_SIXPAPER_2026-07-06.md`（下称 PLAN）"
+      },
+      {
+        "line": 8,
+        "text": "包骨架、复用合同、配置化、测试与 Notebook 形式**均合格**；但六个方法中**四个存在实质性算法错误**（已被实测数值证实），**全量批跑与评测从未执行**（scorecard 全 0），若干 PLAN 承诺的交付物缺失。以下按优先级修复，**先修 A 级，再全量批跑，然后才有资格谈评测与 Notebook**。"
+      },
+      {
+        "line": 69,
+        "text": "1. 改为**两阶段**：`cli run` 只产 lifecycle+种子标签；新增 `cli gb-train`（或并入 `eval`）跨全部已缓存股票日**全局训练一个模型**，训练/验证按日期切分（跨日 OOS，报告 OOS PPV/NPV），再回写各股票日的 score_gb。"
+      },
+      {
+        "line": 83,
+        "text": "- **C3 包不可直接运行**：未 `pip install -e`，`python -m algobench.cli` 报 ModuleNotFoundError（README 命令与实际状态不符）。修：装上，或 CLI 入口加 conftest 同款 sys.path 注入。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "52a5ac3bb68cda75a378bf47c66724ead90e6368",
+    "first_date": "2026-07-06T16:55:54+08:00",
+    "last_commit": "52a5ac3bb68cda75a378bf47c66724ead90e6368",
+    "last_date": "2026-07-06T16:55:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_ALGOBENCH_FIX2_2026-07-06.md",
+    "line_count": 51,
+    "title": "Codex 修复任务书：algobench FIX2（FIX1 复核后的遗留项）",
+    "goal": "",
+    "first_follow_commit": "14d25bf0359553474596787ddfc553cba2106db7",
+    "first_follow_author_date": "2026-07-06T18:04:48+08:00",
+    "last_follow_commit": "14d25bf0359553474596787ddfc553cba2106db7",
+    "last_follow_author_date": "2026-07-06T18:04:48+08:00",
+    "git_history": [
+      "14d25bf0359553474596787ddfc553cba2106db7\t2026-07-06T18:04:48+08:00\t修复Notebook 26.7.6 18:04"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-06"
+      },
+      {
+        "line": 4,
+        "text": "上游：`CODEX_PLAN_ALGOBENCH_SIXPAPER_2026-07-06.md`（PLAN）、`CODEX_PLAN_ALGOBENCH_FIX1_2026-07-06.md`（FIX1）"
+      },
+      {
+        "line": 22,
+        "text": "实测 000001 一天 `kx__burst_count = 53908`——现在数的是\"处于 burst 状态的 L1 变动行数\"，一段持续的活跃期被逐事件重复计数，量纲与消息量强相关（会和 Mess 高度冗余）。修：对 `counts.ge(min_moves)` 的布尔序列做**游程合并**（连续 True 只记一次事件段），输出\"burst 事件段数\"；可另加 `kx__burst_seconds`（burst 状态总时长）作辅助列。"
+      },
+      {
+        "line": 50,
+        "text": "- [ ] 150 股票日跑完，RUN_NOTES 有完整记录，slow 状态股票日列出"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "14d25bf0359553474596787ddfc553cba2106db7",
+    "first_date": "2026-07-06T18:04:48+08:00",
+    "last_commit": "14d25bf0359553474596787ddfc553cba2106db7",
+    "last_date": "2026-07-06T18:04:48+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_ALGOBENCH_FIX3_2026-07-06.md",
+    "line_count": 44,
+    "title": "Codex 修复任务书：algobench FIX3（FIX2 复核后的收尾项）",
+    "goal": "",
+    "first_follow_commit": "dea971596a4649fcc1f7398ae8995d3e2af53d49",
+    "first_follow_author_date": "2026-07-07T14:33:43+08:00",
+    "last_follow_commit": "dea971596a4649fcc1f7398ae8995d3e2af53d49",
+    "last_follow_author_date": "2026-07-07T14:33:43+08:00",
+    "git_history": [
+      "dea971596a4649fcc1f7398ae8995d3e2af53d49\t2026-07-07T14:33:43+08:00\t修补Notebook 26.7.7 14:33"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-06"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "dea971596a4649fcc1f7398ae8995d3e2af53d49",
+    "first_date": "2026-07-07T14:33:43+08:00",
+    "last_commit": "dea971596a4649fcc1f7398ae8995d3e2af53d49",
+    "last_date": "2026-07-07T14:33:43+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_ALGOBENCH_SIXPAPER_2026-07-06.md",
+    "line_count": 320,
+    "title": "Codex 施工任务书：六篇论文算法痕迹方法统一复现与对比评测包 `algobench`",
+    "goal": "",
+    "first_follow_commit": "3bdfb3280379ebcab0bd2225a6d46bd42aa95a7a",
+    "first_follow_author_date": "2026-07-06T15:48:53+08:00",
+    "last_follow_commit": "3bdfb3280379ebcab0bd2225a6d46bd42aa95a7a",
+    "last_follow_author_date": "2026-07-06T15:48:53+08:00",
+    "git_history": [
+      "3bdfb3280379ebcab0bd2225a6d46bd42aa95a7a\t2026-07-06T15:48:53+08:00\t6docs plan 26.7.6 15:48"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-06"
+      },
+      {
+        "line": 28,
+        "text": "- 两份总纲（`PLAN\\复现论文：检测算法痕迹\\ALGO_FOOTPRINT_DETECTION_PLAN_2026-07-01.md` 的家族 A–E、`ALGO_TRADING_TRACE_RESEARCH_PLAN_2026-07-01.md` 的 M01–M08）仍是研究总图。**本文件是\"六篇论文方法的统一基准评测\"专项施工书**，把总纲里分散的方法收敛到一个可对比的试验台上。"
+      },
+      {
+        "line": 83,
+        "text": "│   └── default.yaml          # ★唯一配置源：频率、窗口、universe、日期、路径、各方法参数"
+      },
+      {
+        "line": 211,
+        "text": "- 模型：`sklearn.ensemble.HistGradientBoostingClassifier`（类不平衡用 `class_weight` 或对多数类欠采样，呼应论文 RUS-boost）；按日期切训练/验证（不同日之间做 out-of-sample，论文表 4 的跨日检验口径）。"
+      },
+      {
+        "line": 262,
+        "text": "**日期（10 个交易日，两段跨年窗口）**："
+      },
+      {
+        "line": 269,
+        "text": "**扩样接口（本步不实施，只保证 config 可承载）**：universe 扩到 100 只 / 日期加 2025-06~08（政策窗）时，除 config 外零代码改动。"
+      },
+      {
+        "line": 300,
+        "text": "- config 单一来源：所有窗口/阈值/路径/universe/日期只出现在 `configs/default.yaml`；代码中不许出现魔法数字（论文默认值写在 config 注释里，注明论文出处）。"
+      },
+      {
+        "line": 305,
+        "text": "- RUN_NOTES.md：每次批量运行记录（日期、config 哈希、耗时、异常股票日清单）。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "3bdfb3280379ebcab0bd2225a6d46bd42aa95a7a",
+    "first_date": "2026-07-06T15:48:53+08:00",
+    "last_commit": "3bdfb3280379ebcab0bd2225a6d46bd42aa95a7a",
+    "last_date": "2026-07-06T15:48:53+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_C1_ClusterLOB_2026-07-01.md",
+    "line_count": 320,
+    "title": "CODEX 施工任务书 · C1：ClusterLOB 逐单聚类（A股 Level-2 算法痕迹检测）",
+    "goal": "",
+    "first_follow_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_follow_author_date": "2026-07-01T11:24:00+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "1ca631cff8450fa8119d706f23a516bd0f17afd7\t2026-07-01T11:24:00+08:00\t转向：检测踪迹 26.7.1 11:23"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-01"
+      },
+      {
+        "line": 4,
+        "text": "上位计划：`ALGO_FOOTPRINT_DETECTION_PLAN_2026-07-01.md`（本任务 = 其中家族 C1，标 ★★★ 主线）"
+      },
+      {
+        "line": 21,
+        "text": "对每一笔**新到达的限价挂单** `x`（在时间 `t_x`、价格 `p_x`、方向 side），在**该事件被撮合引擎应用到订单簿之前**的簿状态上，计算 6 维特征向量："
+      },
+      {
+        "line": 34,
+        "text": "**关键实现约束**：`V/SBS/OBS` 需要**全深度订单簿**，不能用现有 5 档快照 parquet（见 §2.3）。`T^m/T^1/T'` 需要逐事件维护状态字典。全部特征是**因果的**（只用 `t_x` 之前的信息），不得引入未来函数。"
+      },
+      {
+        "line": 41,
+        "text": "MA_i(t)  = mean of last w values of feature_i (含当前 t，或截至 t-1，见下)"
+      },
+      {
+        "line": 125,
+        "text": "并结合 §1.1 的状态字典算 `T^m/T^1/T'`。输出一张**逐单特征表**（见 §4 产物①）。"
+      },
+      {
+        "line": 165,
+        "text": "    features.py            # 6 特征 V/T^m/T^1/T'/SBS/OBS（§1.1）+ 状态字典"
+      },
+      {
+        "line": 194,
+        "text": "train_dates: []               # 拟合聚类器/质心的日期"
+      },
+      {
+        "line": 195,
+        "text": "test_dates: []                # 样本外稳定性检验日期"
+      },
+      {
+        "line": 307,
+        "text": "| 6 特征工程 | ClusterLOB §3.2.1 | `V/T^m/T^1/T'/SBS/OBS`，全深度簿 + 状态字典 |"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_date": "2026-07-01T11:24:00+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_C1_FIX1_2026-07-03.md",
+    "line_count": 154,
+    "title": "CODEX 修订任务书 · C1-FIX1：ClusterLOB 复现审阅后的修改要求",
+    "goal": "",
+    "first_follow_commit": "e9e26660fbc51f468128da27e570dbf95b7a1620",
+    "first_follow_author_date": "2026-07-03T15:11:45+08:00",
+    "last_follow_commit": "e9e26660fbc51f468128da27e570dbf95b7a1620",
+    "last_follow_author_date": "2026-07-03T15:11:45+08:00",
+    "git_history": [
+      "e9e26660fbc51f468128da27e570dbf95b7a1620\t2026-07-03T15:11:45+08:00\tcc修改ClusterLOB plan 26.7.3 15:11"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-03"
+      },
+      {
+        "line": 4,
+        "text": "上位文件：`CODEX_PLAN_C1_ClusterLOB_2026-07-01.md`（原施工任务书）"
+      },
+      {
+        "line": 124,
+        "text": "**修改**：在 `book_state.replay_day` 主循环里，**每个事件 apply 之后**调用一次 mid 追踪（比较 apply 后 mid 与 state.last_mid，变了就记当前事件的 ts）。注意顺序：order 事件的特征计算仍用 apply **前**的簿与\"截至上一事件\"的 mid-change 时间，因果性不变。加单测：构造 trade 击穿 best 导致 mid 变化，断言下一笔 order 的 Tm 从 trade 时刻起算。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "e9e26660fbc51f468128da27e570dbf95b7a1620",
+    "first_date": "2026-07-03T15:11:45+08:00",
+    "last_commit": "e9e26660fbc51f468128da27e570dbf95b7a1620",
+    "last_date": "2026-07-03T15:11:45+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_C1_FIX2_2026-07-03.md",
+    "line_count": 81,
+    "title": "CODEX 任务书 · C1-FIX2：sklearn 正典重跑 + fallback 对拍 + 收尾清理",
+    "goal": "",
+    "first_follow_commit": "fc642074e109cf5cc278c764ed7671ff5131884b",
+    "first_follow_author_date": "2026-07-03T18:03:40+08:00",
+    "last_follow_commit": "fc642074e109cf5cc278c764ed7671ff5131884b",
+    "last_follow_author_date": "2026-07-03T18:03:40+08:00",
+    "git_history": [
+      "fc642074e109cf5cc278c764ed7671ff5131884b\t2026-07-03T18:03:40+08:00\tcodex+sklearn 26.7.3 18:03"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-03"
+      },
+      {
+        "line": 4,
+        "text": "上位文件：`CODEX_PLAN_C1_FIX1_2026-07-03.md`（已由 commit `d4837bd` 落实，经审阅通过）"
+      },
+      {
+        "line": 28,
+        "text": "**现状（2026-07-03 用户已修复并经 Claude 验证）**："
+      }
+    ],
+    "chain": "storage-cleanup",
+    "action": "归入既有",
+    "reason": "存储治理；补早于10/14的实际工作日期",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "fc642074e109cf5cc278c764ed7671ff5131884b",
+    "first_date": "2026-07-03T18:03:40+08:00",
+    "last_commit": "fc642074e109cf5cc278c764ed7671ff5131884b",
+    "last_date": "2026-07-03T18:03:40+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_H&S_LOWLATENCY_2026-07-01.md",
+    "line_count": 326,
+    "title": "Codex 施工任务书：用 Hasbrouck & Saar《低延迟交易》方法检测 A 股算法交易痕迹",
+    "goal": "",
+    "first_follow_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_follow_author_date": "2026-07-01T11:24:00+08:00",
+    "last_follow_commit": "032e474864dffafd291e2ecc51aec4c859ca1635",
+    "last_follow_author_date": "2026-07-01T15:34:17+08:00",
+    "git_history": [
+      "032e474864dffafd291e2ecc51aec4c859ca1635\t2026-07-01T15:34:17+08:00\tfix1 plan Low-latency trading 26.7.1 15:34",
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "1ca631cff8450fa8119d706f23a516bd0f17afd7\t2026-07-01T11:24:00+08:00\t转向：检测踪迹 26.7.1 11:23"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-01"
+      },
+      {
+        "line": 24,
+        "text": "- 权威总纲：`因子\\ALGO_FOOTPRINT_DETECTION_PLAN_2026-07-01.md`（五族 A/B/C/D/E）与 `因子\\ALGO_TRADING_TRACE_RESEARCH_PLAN_2026-07-01.md`（M01~M08）。"
+      },
+      {
+        "line": 131,
+        "text": "    book_replay.py     # 事件级盘口状态（复用 snapshot 引擎；供 HS2 报价改善 & 距最优价）"
+      },
+      {
+        "line": 196,
+        "text": "遍历事件流，用盘口状态标记\"报价改善\"事件：best_bid 上升 或 best_ask 下降（且由新挂限价单造成）。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "1ca631cff8450fa8119d706f23a516bd0f17afd7",
+    "first_date": "2026-07-01T11:24:00+08:00",
+    "last_commit": "032e474864dffafd291e2ecc51aec4c859ca1635",
+    "last_date": "2026-07-01T15:34:17+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_H&S_LOWLAT_EXPAND_SAMPLES_2026-07-03.md",
+    "line_count": 123,
+    "title": "Codex 工单：lowlat 样本扩展（受算力约束的分层横截面）",
+    "goal": "**目标规模（默认预算）**：",
+    "first_follow_commit": "34297bda9f25bb2bd30d6eed6b760e0940af35b3",
+    "first_follow_author_date": "2026-07-03T13:15:21+08:00",
+    "last_follow_commit": "34297bda9f25bb2bd30d6eed6b760e0940af35b3",
+    "last_follow_author_date": "2026-07-03T13:15:21+08:00",
+    "git_history": [
+      "34297bda9f25bb2bd30d6eed6b760e0940af35b3\t2026-07-03T13:15:21+08:00\t扩展lowlat 26.7.3 13:15"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-03"
+      },
+      {
+        "line": 5,
+        "text": "前置文档：`CODEX_PLAN_H&S_LOWLATENCY_2026-07-01.md`（原始方案）、`CODEX_PLAN_H&S_LOWLAT_MIGRATE_AND_FIX_2026-07-01.md`（迁移修正，已完成）"
+      },
+      {
+        "line": 13,
+        "text": "| 层级 | 股票 | 日期 | 跑什么 | 样本数 |"
+      },
+      {
+        "line": 41,
+        "text": "### 1.2 日期选择（5 天，跨时间分散）"
+      },
+      {
+        "line": 76,
+        "text": "   - 预案二：日期从 5 天减到 4 天（砍一个远期日）；"
+      },
+      {
+        "line": 85,
+        "text": "- 分批跑：按日期分 5 批（每批 15 票 × 1 日），每批结束后刷新 manifest + 增量运行 `aggregate`。这样任何时刻中断，已完成的批次都是完整可用的。"
+      },
+      {
+        "line": 120,
+        "text": "3. manifest：75（或裁剪后的 N）个样本全部 `done/skipped_no_data/failed` 有明确状态，failed 有原因。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "34297bda9f25bb2bd30d6eed6b760e0940af35b3",
+    "first_date": "2026-07-03T13:15:21+08:00",
+    "last_commit": "34297bda9f25bb2bd30d6eed6b760e0940af35b3",
+    "last_date": "2026-07-03T13:15:21+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_H&S_LOWLAT_MIGRATE_AND_FIX_2026-07-01.md",
+    "line_count": 189,
+    "title": "Codex 工单：把 `lowlat` 迁成独立包 + 修正 6 处问题",
+    "goal": "",
+    "first_follow_commit": "032e474864dffafd291e2ecc51aec4c859ca1635",
+    "first_follow_author_date": "2026-07-01T15:34:17+08:00",
+    "last_follow_commit": "032e474864dffafd291e2ecc51aec4c859ca1635",
+    "last_follow_author_date": "2026-07-01T15:34:17+08:00",
+    "git_history": [
+      "032e474864dffafd291e2ecc51aec4c859ca1635\t2026-07-01T15:34:17+08:00\tfix1 plan Low-latency trading 26.7.1 15:34"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-01"
+      },
+      {
+        "line": 5,
+        "text": "前置：`因子\\CODEX_PLAN_HASBROUCK_SAAR_LOWLATENCY_2026-07-01.md`（原始 H&S 方案，口径以它为准）"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "032e474864dffafd291e2ecc51aec4c859ca1635",
+    "first_date": "2026-07-01T15:34:17+08:00",
+    "last_commit": "032e474864dffafd291e2ecc51aec4c859ca1635",
+    "last_date": "2026-07-01T15:34:17+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/复现论文：检测算法痕迹/CODEX_PLAN_METAIMPACT_synthetic_metaorder_2026-07-01.md",
+    "line_count": 348,
+    "title": "CODEX 施工任务书 · METAIMPACT：合成元订单 + 平方根律测量（A股 Level-2 算法痕迹的物理定律层）",
+    "goal": "",
+    "first_follow_commit": "691497b3eecd56d649cbcb68c6d8698aeae6caae",
+    "first_follow_author_date": "2026-07-01T15:08:39+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "691497b3eecd56d649cbcb68c6d8698aeae6caae\t2026-07-01T15:08:39+08:00\t复现ClusterLOB, 低延迟，Generating realistic metaorders from public data计划 26.7.1 15:08"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-07-01"
+      },
+      {
+        "line": 4,
+        "text": "上位计划：`ALGO_FOOTPRINT_DETECTION_PLAN_2026-07-01.md`（本任务 = 其中的「物理定律一致性 / 合成注入回收」评价层 + 独立的元订单判别族）"
+      },
+      {
+        "line": 8,
+        "text": "姊妹任务：`CODEX_PLAN_C1_ClusterLOB_2026-07-01.md`（逐单聚类→pseudo-agent）、`CODEX_PLAN_HASBROUCK_SAAR_LOWLATENCY_2026-07-01.md`（HS3 策略链→pseudo-metaorder）。本包**消费**它们产出的 agent/metaorder 标签做「判别测试」（见 §2、§5 Arm B）。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "691497b3eecd56d649cbcb68c6d8698aeae6caae",
+    "first_date": "2026-07-01T15:08:39+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/挖因子：弯路/CODEX_PLAN_STEP1_factor_eval_framework.md",
+    "line_count": 324,
+    "title": "CODEX 实施任务书 · STEP 1：搭好\"因子→标签→评价\"完整框架（首因子 = 最简 OFI）",
+    "goal": "",
+    "first_follow_commit": "8b4e53832089b66e70a22b2bb7bae499a247e21a",
+    "first_follow_author_date": "2026-06-30T15:25:08+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "8b4e53832089b66e70a22b2bb7bae499a247e21a\t2026-06-30T15:25:08+08:00\t因子1+框架搭建计划 26.6.30 15:25"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 13,
+        "text": "   `D:\\MG\\_GitLinked\\Quant_Research-Trading\\26 Summer\\❗思瑞投资\\因子\\SHORT_TERM_ALPHA_FACTOR_DESIGN_AND_EVALUATION_2026-06-30.md`"
+      },
+      {
+        "line": 314,
+        "text": "3. 一段 `RUN_NOTES.md`：实际跑的 `(universe,dates)`、命令、耗时、遇到的数据坑（如某些日期快照缺失如何处理）、以及 Phase A 主指标数值快照。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "主代理逐项深读目标和关键章节后确认；执行记录模板仅是模板，不是运行结果",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "8b4e53832089b66e70a22b2bb7bae499a247e21a",
+    "first_date": "2026-06-30T15:25:08+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/挖因子：弯路/Claude_聪明钱因子_Brainstorm_v1.md",
+    "line_count": 237,
+    "title": "高频\"聪明钱\"因子 Brainstorm v1 —— 侧重检测订单流中的算法痕迹",
+    "goal": "",
+    "first_follow_commit": "aa08efcf40a893c537c8dcaa06412eec4ebf4301",
+    "first_follow_author_date": "2026-06-30T11:23:54+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "272dc14c8adee62b0fd147d4246b262803c201ae\t2026-06-30T14:40:06+08:00\t因子+判准 计划 26.6.30 14:40",
+      "aa08efcf40a893c537c8dcaa06412eec4ebf4301\t2026-06-30T11:23:54+08:00\t因子计划 26.6.30 11:23"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "> 日期：2026-06-30"
+      },
+      {
+        "line": 128,
+        "text": "- **启发**：研究地图 §D —— Zotikov (2019) 对 new→trade→update→delete 建有限状态机、刷新分片保留同一 ID；Frey-Sandås (2009)（冰山执行比例越大→冲击越小，属流动性非信息）。"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "aa08efcf40a893c537c8dcaa06412eec4ebf4301",
+    "first_date": "2026-06-30T11:23:54+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/挖因子：弯路/GPT_SMART_MONEY_FACTOR_BRAINSTORM_2026-06-30.md",
+    "line_count": 530,
+    "title": "高频聪明钱/算法痕迹因子 Brainstorm",
+    "goal": "",
+    "first_follow_commit": "aa08efcf40a893c537c8dcaa06412eec4ebf4301",
+    "first_follow_author_date": "2026-06-30T11:23:54+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "272dc14c8adee62b0fd147d4246b262803c201ae\t2026-06-30T14:40:06+08:00\t因子+判准 计划 26.6.30 14:40",
+      "aa08efcf40a893c537c8dcaa06412eec4ebf4301\t2026-06-30T11:23:54+08:00\t因子计划 26.6.30 11:23"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-06-30"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "aa08efcf40a893c537c8dcaa06412eec4ebf4301",
+    "first_date": "2026-06-30T11:23:54+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  },
+  {
+    "repo": "parent",
+    "fixed_head": "e63c0d3726d03245724fd15e59ecf8ff0000a825",
+    "path": "26 Summer/❗思瑞投资/因子/PLAN/挖因子：弯路/SHORT_TERM_ALPHA_FACTOR_DESIGN_AND_EVALUATION_2026-06-30.md",
+    "line_count": 1130,
+    "title": "高频聪明钱短期 Alpha 因子构建与评价方案",
+    "goal": "",
+    "first_follow_commit": "272dc14c8adee62b0fd147d4246b262803c201ae",
+    "first_follow_author_date": "2026-06-30T14:40:06+08:00",
+    "last_follow_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_follow_author_date": "2026-07-01T15:16:54+08:00",
+    "git_history": [
+      "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9\t2026-07-01T15:16:54+08:00\t整理“PLAN”架构 26.7.1 15:16",
+      "6fd1b6645b1742fc03aed57c3f6b2fdde2759ffe\t2026-06-30T15:04:01+08:00\t频率细则 26.6.30 15:03",
+      "272dc14c8adee62b0fd147d4246b262803c201ae\t2026-06-30T14:40:06+08:00\t因子+判准 计划 26.6.30 14:40"
+    ],
+    "history_scope": "固定HEAD的2026-06-01起完整name-status流递归追踪rename；非全部历史git --follow",
+    "declared_date_status_excerpts": [
+      {
+        "line": 3,
+        "text": "日期：2026-06-30"
+      },
+      {
+        "line": 779,
+        "text": "5. 按股票/日期的均值、标准差、偏度、峰度。"
+      },
+      {
+        "line": 826,
+        "text": "- 检查是否只在少数日期有效。"
+      },
+      {
+        "line": 979,
+        "text": "test : 2026-01-01 到 2026-06-22"
+      }
+    ],
+    "chain": "literature",
+    "action": "归入既有",
+    "reason": "论文复现与最初因子评价框架",
+    "review_level": "候选去向；来源路径/目标/标题规则归类，非逐项人工验收",
+    "status_caution": "计划正文的勾选/运行命令不是独立执行验收；证据不足保留未知",
+    "rule_based": true,
+    "candidate_only": true,
+    "first_commit": "272dc14c8adee62b0fd147d4246b262803c201ae",
+    "first_date": "2026-06-30T14:40:06+08:00",
+    "last_commit": "f62be7cd4c15cb57e2bfb544fda5631c68f1d9e9",
+    "last_date": "2026-07-01T15:16:54+08:00"
+  }
+]

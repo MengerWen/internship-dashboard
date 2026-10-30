@@ -1,0 +1,63 @@
+Validate every F40 archive member with bounded parallel decoding
+
+Use four content-validation workers with at most eight queued members and a 64 MiB queued-byte budget. Preserve complete member hashes, schema, row-count checks, and fail-closed receipt publication. Full-source probe improved 2.43-3.20 seconds to 0.81-0.90 seconds; 59 related tests and the asynchronous row-count failure regression passed.
+
+
+diff --git a/因子/algobench/src/algobench/formal_f40_stages.py b/因子/algobench/src/algobench/formal_f40_stages.py
+index eda7c274..921d7803 100644
+--- a/因子/algobench/src/algobench/formal_f40_stages.py
++++ b/因子/algobench/src/algobench/formal_f40_stages.py
+@@ -17,3 +17,4 @@ import shutil
+ import threading
+-from collections import OrderedDict
++from collections import OrderedDict, deque
++from concurrent.futures import ThreadPoolExecutor
+ 
+@@ -324,2 +325,6 @@ def _validate_f40_table(table, expected):
+ 
++def _validate_f40_source_bytes(data, row):
++    _validate_f40_table(pq.ParquetFile(pa.BufferReader(data)).read(use_threads=False), row)
++
++
+ def validate_f40_sources(manifest_path, *, read_only=False, release_cache=True):
+@@ -343,3 +348,5 @@ def validate_f40_sources(manifest_path, *, read_only=False, release_cache=True):
+         found = set()
+-        with f40_archive_reader(manifest_path, archive, release_cache=release_cache) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
++        pending = deque()
++        retained = 0
++        with ThreadPoolExecutor(max_workers=4) as validation, f40_archive_reader(manifest_path, archive, release_cache=release_cache) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
+             for entry in bundle:
+@@ -353,3 +360,13 @@ def validate_f40_sources(manifest_path, *, read_only=False, release_cache=True):
+                     raise ValueError("F40 compact source hash mismatch")
+-                _validate_f40_table(pq.ParquetFile(pa.BufferReader(data)).read(), row)
++                while pending and (len(pending) >= 8 or retained + len(data) > 64 * 1024**2):
++                    future, size = pending.popleft()
++                    future.result()
++                    retained -= size
++                if len(data) > 64 * 1024**2:
++                    _validate_f40_source_bytes(data, row)
++                else:
++                    pending.append((validation.submit(_validate_f40_source_bytes, data, row), len(data)))
++                    retained += len(data)
++            for future, _ in pending:
++                future.result()
+         if found != set(expected):
+diff --git a/因子/algobench/tests/test_formal_f40_stages.py b/因子/algobench/tests/test_formal_f40_stages.py
+index d589794f..be0adb5e 100644
+--- a/因子/algobench/tests/test_formal_f40_stages.py
++++ b/因子/algobench/tests/test_formal_f40_stages.py
+@@ -297,2 +297,14 @@ def test_segmented_archive_preserves_complete_facts_and_rejects_bad_parts(tmp_pa
+ 
++def test_parallel_content_validation_requires_every_members_declared_row_counts(tmp_path):
++    from algobench.formal_f40_stages import validate_f40_sources
++    path, source = write_source(tmp_path / "sources")
++    source["orders"] += 1
++    archive = archive_f40_sources(path.parent, tmp_path / "facts.tar", [source])
++    manifest = tmp_path / "manifest.json"
++    manifest.write_text(json.dumps({"sources": [source], "archive": archive}))
++    with pytest.raises(ValueError, match="row count mismatch"):
++        validate_f40_sources(manifest)
++    assert not manifest.with_name("f40_source_validation.json").exists()
++
++
+ def test_reduced_cost_support_and_positive_matching_equal_complete_candidates():

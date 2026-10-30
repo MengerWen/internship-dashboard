@@ -1,0 +1,55 @@
+Release verified day-bucket copies within the bounded publication queue
+
+Keep original recovery fragments until the full day manifest commits. Remove each encoded duplicate after successful remote byte readback and record its verified encoded size. This bounds staging by active publication workers. Windows day-bucket and artifact-commit regressions passed.
+
+
+diff --git a/因子/algobench/src/algobench/formal_day_buckets.py b/因子/algobench/src/algobench/formal_day_buckets.py
+index 6022684d..c081fd3d 100644
+--- a/因子/algobench/src/algobench/formal_day_buckets.py
++++ b/因子/algobench/src/algobench/formal_day_buckets.py
+@@ -257,2 +257,3 @@ def merge_day_fragments(
+         pq.write_table(table, staged, compression="zstd")
++        encoded_bytes = staged.stat().st_size
+         encoded = perf_counter()
+@@ -281,3 +282,3 @@ def merge_day_fragments(
+                 row_count=table.num_rows,
+-                byte_size=int(target.stat().st_size),
++                byte_size=encoded_bytes,
+                 logical_fingerprint=logical_fingerprint,
+@@ -287,2 +288,5 @@ def merge_day_fragments(
+             bytes=component.byte_size, total_seconds=perf_counter()-started)
++        # The target has already passed byte-for-byte readback. Source
++        # fragments remain available until the complete day manifest commits.
++        staged.unlink()
+         return component, digest, staged
+@@ -329,3 +333,3 @@ def merge_day_fragments(
+     for _, _, staged in published:
+-        staged.unlink()
++        staged.unlink(missing_ok=True)
+     for directory in sorted({staged.parent for _, _, staged in published}):
+diff --git a/因子/algobench/tests/test_formal_day_buckets.py b/因子/algobench/tests/test_formal_day_buckets.py
+index e56e7e34..b077208c 100644
+--- a/因子/algobench/tests/test_formal_day_buckets.py
++++ b/因子/algobench/tests/test_formal_day_buckets.py
+@@ -387,2 +387,21 @@ def test_publication_readback_failure_preserves_committed_day_and_hot_evidence(s
+ 
++def test_verified_bucket_staging_is_released_before_next_component(short_tmp_path, monkeypatch):
++    import algobench.formal_day_buckets as buckets
++    from algobench.prescreen_runtime import publish_file as publish
++    scratch, output = short_tmp_path / "s", short_tmp_path / "o"
++    fragments = _fragments(scratch, "bounded", "000001")
++    calls = []
++    def bounded_publish(source, target, **kwargs):
++        staged = list((scratch / "day-bucket-publication").rglob("*.parquet"))
++        assert staged == [source]
++        assert all(Path(fragment.path).is_file() for fragment in fragments)
++        calls.append(str(target))
++        return publish(source, target, **kwargs)
++    monkeypatch.setattr(buckets, "publish_file", bounded_publish)
++    merge_day_fragments(fragments, output_root=output, scratch_root=scratch, date=DAY,
++                        publication_workers=1)
++    assert len(calls) == len(fragments) and len(calls) > 1
++    assert not list((scratch / "day-bucket-publication").rglob("*.parquet"))
++
++
+ def test_direct_day_publication_does_not_cache_absent_object_leaves(short_tmp_path, monkeypatch):

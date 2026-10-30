@@ -1,0 +1,137 @@
+docs: define code distribution and server storage operations
+
+
+diff --git a/AGENT.md b/AGENT.md
+new file mode 100644
+index 00000000..a531e111
+--- /dev/null
++++ b/AGENT.md
+@@ -0,0 +1,73 @@
++# 代码分发、服务器同步与存储清理
++
++Codex、Claude Code 及其他 agents 在处理代码位置、服务器更新、结果保存、归档或清理时，必须执行本文件。`AGENTS.md` 指向本文件，`CLAUDE.md` 导入本文件；新增 agent 的入口也应指向同一正文。
++
++## 固定位置与用途
++
++| 对象 | 规范位置 | 操作要求 |
++| --- | --- | --- |
++| 本地开发副本 | `D:\MG\_GitLinked\Quant_Research-Trading\26 Summer\❗思瑞投资\sirui-quant-research` | 在 `main` 修改、检查、提交、推送；保留其他任务的修改 |
++| 正式代码历史 | 本地仓库 `origin` 对应的 GitHub 仓库 | 已推送 commit 是服务器分发依据；先核对仓库身份 |
++| wenjie 运行副本 | `sirui-server-wenjie:/home/wenjie/src/sirui-quant-research` | ext4 上唯一的常规研究运行检出；`sirui-server` 是 wenjie 的别名 |
++| wangly 运行副本 | `sirui-server-wangly:/home/wangly/src/sirui-quant-research` | ext4 上唯一的常规研究运行检出 |
++| 持久结果与运行证据 | `/home/<账户>/hdd-store/outputs/sirui/<唯一运行目录>` | 日志、配置、指标、模型、恢复材料随结果保存；记录账户及代码 SHA |
++| 正式结果索引 | `/home/<账户>/hdd-store/outputs/sirui/formal-results` | 只放指向实际结果目录的链接 |
++| 持久中间数据 | `/home/<账户>/hdd-store/scratch/sirui/<唯一任务目录>` | 记录所属任务、恢复用途、保留条件；验收后按授权清理 |
++| 历史代码归档 | `/home/<账户>/hdd-store/outputs/sirui/code-archives/<YYYY-MM-DD>/` | 保存源码快照、Git bundle、文件哈希和恢复说明；归档不可覆盖 |
++| 系统盘研究材料归档 | `/home/<账户>/hdd-store/outputs/sirui/system-disk-archive/<YYYY-MM-DD>/` | 保存旧运行日志、研究缓存、输入证据及完整性清单 |
++| Python 环境 | `/home/<账户>/hdd-store/.venvs/sirui` | 使用已核对可用的环境，不随源码清理；环境位置以实际部署记录为准 |
++| 必需的本地运行组件 | `/home/<账户>/src` 下已部署的 LightGBM、NCCL 等；明确登记的运行时目录 | 核对动态库路径和调用关系后维护；目录名或 `.cache` 标签不能作为删除依据 |
++| 短期计算暂存 | 经检查可用的 `/tmp/<账户>-<任务标识>` 或已授权的本地 scratch | 启动前检查容量、内存限制、属主与其他任务；设置空间上限，恢复点持久化到 S3 |
++
++`hdd-store` 是 S3FS 挂载。GitHub 保存正式源码历史，S3 保存历史源码归档和计算材料，ext4 保存少量正在使用的运行副本。S3FS 的目录操作和文件锁语义与本地磁盘不同；Git 检出、SQLite/WAL、频繁小文件操作不作为其常规运行用途。不得把运行仓库整体放到 S3FS 后直接开展新计算。
++
++两台服务器是不同账户。必须分别核对挂载、权限、配额和文件内容；不能根据相同的目录名称推断数据相同，不能为了整齐复制一整套结果。
++
++## 本地到 GitHub
++
++1. 检查本地仓库、分支、远端、暂存区、工作区及 `HEAD...origin/main`。普通任务直接使用主工作目录的 `main`。已有修改分别保留。
++2. 完成一个最小完整改动集合，执行与改动相称的检查，只暂存本项文件或片段。提交前核对暂存 diff；推送前核对全部待推送 commit。
++3. 提交、推送到 `origin/main`。通过 `git ls-remote origin refs/heads/main` 核对 GitHub 已包含目标 SHA；出现后续提交时，核对目标是远端 main 的祖先。
++4. 记录仓库远端、目标完整 SHA、检查结果及本地提交/GitHub 推送状态。每个独立仓库分别验收。根仓库提交不得夹带其他任务尚未授权的子模块指针变化。
++
++禁止把未提交源码通过 SCP、共享目录或 S3 当成正式版本分发。远端认证失败时先诊断认证或网络，保留本地成果。
++
++## 更新服务器运行副本
++
++仅更新任务指定的账户。源码同步不授权训练、全历史计算、服务重启或部署。
++
++1. 使用对应 SSH 别名，核对 `id -un`、`$HOME`、运行目录、Git 远端身份、分支、完整 SHA，以及 `git status --porcelain=v1 --untracked-files=all`。检查 ignored 文件、外部 worktree、子模块及需要保留的运行材料。
++2. 检查该账户的进程、子进程、工作目录、命令参数、映射和打开文件，确认没有任务依赖即将变化的检出。读取失败须解释并核对；不得以一次进程名称筛选代替引用检查。已有计算继续保留。
++3. 清洁、无运行依赖、在 `main` 且可以快进的检出，执行 `git fetch origin main`，核对目标 SHA 已在 GitHub main 中，然后 `git merge --ff-only <目标完整SHA>`。禁止 `reset --hard`、`clean`、强制切换或 stash 隐藏未保存成果。
++4. 历史 detached HEAD 或分叉检出不能快进时，采用下面的“历史检出迁移”流程；发现脏文件或正在运行的任务时，先保存成果或等待任务完成，再更新。
++5. 验收 `main`、`HEAD == 目标SHA`、远端正确、工作区清洁；核对 `AGENT.md`、`AGENTS.md`、`CLAUDE.md` 与目标 commit 一致。只做必要的版本、语法、环境检查，不启动业务计算。
++6. 分别报告本地提交、GitHub 推送、服务器同步、业务运行四项状态。同步完成时，业务运行记为“未启动”，直至得到任务范围内的运行授权并实际执行。
++
++### 历史检出迁移
++
++1. 核对无运行引用，记录原路径、HEAD、分支、全部 refs、common Git 目录、worktree 列表、工作区及 ignored 文件。保留独有提交，即使它们不属于当前 main。
++2. 将源码及必要未提交/ignored 成果打包到 S3 归档。Git 历史使用同时包含 `--all` 和显式 `HEAD` 的独立 bundle；detached HEAD 不能只依赖 `--all`。共享 Git 目录的各历史 HEAD 都要进入 bundle。
++3. 对每个原文件记录 SHA-256、大小、相对路径；记录符号链接目标。重新读取 S3 包，核对整个包哈希及每个成员的内容哈希；执行 `git bundle verify`、核对 bundle refs，并实际恢复检出核对 SHA 和源码。Git bundle 不包含工作区、ignored 文件、仓库配置或凭据，源码包负责需要保留的文件。
++4. 归档验收后，将旧检出改名为本任务的临时保留路径，保持属主和权限。使用已核对的 origin URL 新建规范路径上的 `main` 检出，再执行服务器验收。更新失败则保留旧目录并报告恢复位置；不覆盖旧成果。
++5. 新运行副本验收通过后，按已授权范围清除临时旧目录。历史 worktree 使用所属仓库的 `git worktree remove`，不得强制删除 dirty worktree。共享 Git 目录只有在没有剩余 worktree、独有 refs 已归档且恢复验证通过时才可清理。
++6. 历史路径仍被配置引用时，为旧路径保留归档说明，注明 S3 包、SHA、恢复方法；新任务引用规范运行目录。需要历史代码或数据时，先恢复到独立、资源受控的任务目录，按该任务另行验收，不在 S3 归档内运行。
++
++## 清理顺序与删除条件
++
++系统盘每个账户配额约 9.54 GiB，以当次 `quota -w` 为准。日常目标保留至少 3 GiB 空间；低于 2 GiB 时先检查占用来源。S3 容量、共享 `/tmp` 容量和个人系统盘配额分别记录。
++
++1. 先做只读清单：逐项记录路径、文件系统、属主、实际分配字节、最后变动时间、运行引用和用途。不递归统计整个 S3 桶；对指定任务目录分批检查，并对超时的本任务辅助进程做退出确认。
++2. 已停用的 IDE 旧版本、已完成安装的下载缓存、已标记 obsolete 且有完整替代版本的旧扩展，可以在授权范围内清理。保留当前版本及需要的回退版本、正在使用的 CLI、全部用户状态和配置。执行前重查进程、映射、打开文件和文件是否增长。
++3. 旧研究材料先归档、从 S3 回读校验，再移除系统盘副本。文件名含 cache、log、tmp 不能证明可删；结果、恢复输入、实际数据样本和研究证据都按成果处理。
++4. 旧源码检出按“历史检出迁移”保存提交与文件后清理。当前运行副本、Python/编译环境、动态库、SSH 密钥、凭据、IDE 会话/状态数据库、正在使用的恢复材料均受保护。
++5. 每次删除使用已经核对的绝对路径白名单。重查路径未被符号链接替换、仍属当前账户、文件系统与内容清单未变，拒绝跨文件系统递归删除。记录逐项结果；不使用通配符、整个 `.cache` 或整个 `src` 作为删除目标。
++6. 清理后复查配额、被删路径、保留项、运行副本和归档可读性，记录实际释放空间及遗留原因。权限拒绝、内容不明或仍被使用的材料继续保留，不能报告其已清理。
++
++归档包是自包含的审计材料，应附 `manifest.json`、校验值和 `RESTORE.md`。恢复时先校验包，再解包到新目录；核对链接目标后使用。原路径留下的小型说明只指向归档，不伪装成仍可执行的历史源码目录。
++
++## 依据
++
++- [Codex 的 AGENTS.md 发现规则](https://developers.openai.com/codex/guides/agents-md)：通过标准 `AGENTS.md` 入口要求读取本文件。
++- [Claude Code 的指令导入](https://code.claude.com/docs/en/memory)：通过 `CLAUDE.md` 的 `@AGENT.md` 导入。
++- [S3FS 限制](https://github.com/s3fs-fuse/s3fs-fuse#limitations)及 [SQLite WAL 文件系统要求](https://www.sqlite.org/wal.html)：运行目录和持久归档承担不同用途。
++- [Git bundle](https://git-scm.com/docs/git-bundle)：归档 Git 历史，并另存工作区文件。
+diff --git a/AGENTS.md b/AGENTS.md
+index c4b20817..37fd0dc1 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -1 +1,5 @@
++## 代码分发、存储与清理
++
++涉及代码位置、GitHub 分发、服务器同步、归档或清理时，必须先读取并执行本仓库根目录的 `AGENT.md`。
++
+ ## Windows 本地测试
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 43c994c2..b89717a6 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -1 +1,2 @@
+ @AGENTS.md
++@AGENT.md
+diff --git a/CONTEXT.md b/CONTEXT.md
+index 0d635580..16773579 100644
+--- a/CONTEXT.md
++++ b/CONTEXT.md
+@@ -52,21 +52,21 @@ _Avoid_: 机构持仓、真实机构关注度
+ **本地原仓库**:
+-研究代码唯一允许修改、提交和推送的权威工作副本，规范位置为 `D:\MG\！Internship\26 Summer\❗思瑞投资\sirui-quant-research`。服务器运行检出和历史源码归档均不得替代它成为代码来源。
++研究代码唯一允许修改、提交和推送的权威工作副本，规范位置为 `D:\MG\_GitLinked\Quant_Research-Trading\26 Summer\❗思瑞投资\sirui-quant-research`。服务器运行检出和历史源码归档均不得替代它成为代码来源。具体分发、归档和清理操作遵守根目录 `AGENT.md`。
+ 
+ **公司计算服务器**:
+-通过 SSH 别名 `sirui-server` 访问的真实数据计算环境，用于部署已经推送的精确版本并执行研究任务。
++通过 SSH 别名 `sirui-server-wenjie`、`sirui-server-wangly` 分别访问的真实数据计算环境，用于部署已经推送的精确版本并执行研究任务；`sirui-server` 是 wenjie 的别名。
+ 
+ **服务器运行检出**:
+-公司计算服务器上用于部署和运行的仓库副本，规范位置为 `/home/wenjie/src/sirui-quant-research`。它只接收已经推送的版本，不承担代码修改、提交或推送职责。
++公司计算服务器上用于部署和运行的 ext4 仓库副本，各账户的规范位置为 `/home/<账户>/src/sirui-quant-research`。它只接收已经推送的版本，不承担代码修改、提交或推送职责。
+ 
+ **历史源码归档**:
+-位于 `/home/wenjie/src/sirui-quant-research-archive-open3m-derived-20260806` 的只读审计材料，只用于追溯历史实现，不用于运行新任务。
++位于 `/home/<账户>/hdd-store/outputs/sirui/code-archives/<日期>/` 的源码包、Git bundle 和恢复清单，只用于追溯历史实现。使用前按 `AGENT.md` 恢复、核对，不在 S3 归档内运行新任务。
+ 
+ **输出区**:
+-位于 `/home/wenjie/hdd-store/outputs/sirui` 的持久结果区域，用于保存每次真实数据任务的运行目录、结果与证据。
++位于 `/home/<账户>/hdd-store/outputs/sirui` 的持久结果区域，用于保存每次真实数据任务的运行目录、结果与证据。
+ 
+ **暂存区**:
+-位于 `/home/wenjie/hdd-store/scratch/sirui` 的计算中间数据区域，与输出区和正式结果入口具有不同语义。
++位于 `/home/<账户>/hdd-store/scratch/sirui` 的持久计算中间数据区域，与输出区和正式结果入口具有不同语义；短期本地暂存按 `AGENT.md` 的资源约束使用。
+ 
+ **正式结果入口**:
+-位于 `/home/wenjie/hdd-store/outputs/sirui/formal-results` 的易读结果索引，只保存指向实际结果的符号链接，不直接承载计算输出。
++位于 `/home/<账户>/hdd-store/outputs/sirui/formal-results` 的易读结果索引，只保存指向实际结果的符号链接，不直接承载计算输出。
+ 
+@@ -78,3 +78,3 @@ _Avoid_: 机构持仓、真实机构关注度
+ **可部署状态**:
+-远程主分支可认证访问、服务器运行检出没有未提交修改，并且能够以快进方式到达预期业务运行版本的状态。不满足这些条件时必须停止部署，不得通过复制源码、重置、清理或隐藏修改绕过。
++远程主分支可认证访问、服务器运行检出没有未提交修改、没有运行依赖，并且能够以快进方式到达预期业务运行版本的状态。历史分叉检出须先按 `AGENT.md` 保存并验收可恢复归档，再建立规范的 main 运行副本；其他条件不满足时停止部署，不得通过复制未提交源码、重置、清理或隐藏修改绕过。
+ 

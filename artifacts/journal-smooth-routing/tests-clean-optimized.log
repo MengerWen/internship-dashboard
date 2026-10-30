@@ -1,0 +1,296 @@
+
+> test
+> node --test tests/tag-model.test.cjs tests/tag-api.test.mjs tests/journal-calendar.test.cjs tests/journal-provenance.test.cjs tests/journal-notes.test.cjs tests/journal-selection.test.cjs tests/journal-routing.test.cjs
+
+TAP version 13
+# Subtest: 2026 年七个官方假期的首尾日期均属于休息日
+ok 1 - 2026 年七个官方假期的首尾日期均属于休息日
+  ---
+  duration_ms: 4.368
+  type: 'test'
+  ...
+# Subtest: 六个调休补班周末不标底纹，普通周末仍标底纹
+ok 2 - 六个调休补班周末不标底纹，普通周末仍标底纹
+  ---
+  duration_ms: 0.1533
+  type: 'test'
+  ...
+# Subtest: 节前节后的普通工作日不标底纹，未收录年份不套用旧节日
+ok 3 - 节前节后的普通工作日不标底纹，未收录年份不套用旧节日
+  ---
+  duration_ms: 0.1328
+  type: 'test'
+  ...
+# Subtest: 九项工作与相邻点位的浮窗均避让，保留原锚点
+ok 4 - 九项工作与相邻点位的浮窗均避让，保留原锚点
+  ---
+  duration_ms: 5.5024
+  type: 'test'
+  ...
+# Subtest: 最早日期的说明放在下方，短图面通过留白容纳，不移动点位
+ok 5 - 最早日期的说明放在下方，短图面通过留白容纳，不移动点位
+  ---
+  duration_ms: 2.1072
+  type: 'test'
+  ...
+# Subtest: 拖动位置被限制在图面内
+ok 6 - 拖动位置被限制在图面内
+  ---
+  duration_ms: 0.151
+  type: 'test'
+  ...
+# Subtest: 连接点位于浮窗边界并向内留出角距
+ok 7 - 连接点位于浮窗边界并向内留出角距
+  ---
+  duration_ms: 0.598
+  type: 'test'
+  ...
+# Subtest: 引线绕开其他浮窗和相邻点位，不穿过矩形内部
+ok 8 - 引线绕开其他浮窗和相邻点位，不穿过矩形内部
+  ---
+  duration_ms: 1.2503
+  type: 'test'
+  ...
+# Subtest: 无可用通路时明确返回 null，不伪造穿窗连线
+ok 9 - 无可用通路时明确返回 null，不伪造穿窗连线
+  ---
+  duration_ms: 0.1859
+  type: 'test'
+  ...
+# Subtest: 浮窗间距仅15px时，连接端口仍有可用通路
+ok 10 - 浮窗间距仅15px时，连接端口仍有可用通路
+  ---
+  duration_ms: 0.383
+  type: 'test'
+  ...
+# Subtest: 圆角路径保留起终点，重复点不产生无效数值
+ok 11 - 圆角路径保留起终点，重复点不产生无效数值
+  ---
+  duration_ms: 0.2103
+  type: 'test'
+  ...
+# Subtest: 竖向密集事件分别保留日期锚点，浮窗在链条两侧避让
+ok 12 - 竖向密集事件分别保留日期锚点，浮窗在链条两侧避让
+  ---
+  duration_ms: 7.4896
+  type: 'test'
+  ...
+# Subtest: 边缘链条使用可用侧，侧边端口朝向自己的真实日期点
+ok 13 - 边缘链条使用可用侧，侧边端口朝向自己的真实日期点
+  ---
+  duration_ms: 7.4299
+  type: 'test'
+  ...
+# Subtest: 按日展开保持点与卡片的左右次序，上下仍可错落，输入次序不变
+ok 14 - 按日展开保持点与卡片的左右次序，上下仍可错落，输入次序不变
+  ---
+  duration_ms: 3.8144
+  type: 'test'
+  ...
+# Subtest: 按链条展开在密集及短图面中保持上下次序，左右仍可错落
+ok 15 - 按链条展开在密集及短图面中保持上下次序，左右仍可错落
+  ---
+  duration_ms: 19.2471
+  type: 'test'
+  ...
+# Subtest: 手动摆放可越过自动次序，重新排布后恢复对应轴顺序
+ok 16 - 手动摆放可越过自动次序，重新排布后恢复对应轴顺序
+  ---
+  duration_ms: 4.1873
+  type: 'test'
+  ...
+# Subtest: 点大小只读取对应任务的归属量，同日总量及其他任务不影响它
+ok 17 - 点大小只读取对应任务的归属量，同日总量及其他任务不影响它
+  ---
+  duration_ms: 1.0033
+  type: 'test'
+  ...
+# Subtest: 跨链份额显示精确计量，缺少提交证据不冒充当天总量
+ok 18 - 跨链份额显示精确计量，缺少提交证据不冒充当天总量
+  ---
+  duration_ms: 0.2404
+  type: 'test'
+  ...
+# Subtest: 旧密度按比例迁移，保存后再次打开不重复放大
+ok 19 - 旧密度按比例迁移，保存后再次打开不重复放大
+  ---
+  duration_ms: 2.1205
+  type: 'test'
+  ...
+# Subtest: 缺少或无效的密度偏好回到新标准间距
+ok 20 - 缺少或无效的密度偏好回到新标准间距
+  ---
+  duration_ms: 0.229
+  type: 'test'
+  ...
+# Subtest: 完整归属明细将提交标题、理由、路径和依据层级作为文本显示
+ok 21 - 完整归属明细将提交标题、理由、路径和依据层级作为文本显示
+  ---
+  duration_ms: 0.6057
+  type: 'test'
+  ...
+# Subtest: 人工核实的链成果不会混入同日其他链的报告
+ok 22 - 人工核实的链成果不会混入同日其他链的报告
+  ---
+  duration_ms: 0.7014
+  type: 'test'
+  ...
+# Subtest: 交接曲线采用已登记来源阶段，缺失日期不悄悄换成相邻日
+ok 23 - 交接曲线采用已登记来源阶段，缺失日期不悄悄换成相邻日
+  ---
+  duration_ms: 0.1717
+  type: 'test'
+  ...
+# Subtest: 原始依据只接受 GitHub HTTPS 链接并转义标题和属性
+ok 24 - 原始依据只接受 GitHub HTTPS 链接并转义标题和属性
+  ---
+  duration_ms: 0.204
+  type: 'test'
+  ...
+# Subtest: 证据空实与汇报和提交量分开，零提交文档仍有产物
+ok 25 - 证据空实与汇报和提交量分开，零提交文档仍有产物
+  ---
+  duration_ms: 0.7075
+  type: 'test'
+  ...
+# Subtest: 同日横跨三列时，真实交接线绕过中间节点并保留关系
+ok 26 - 同日横跨三列时，真实交接线绕过中间节点并保留关系
+  ---
+  duration_ms: 13.6111
+  type: 'test'
+  ...
+# Subtest: 中段上下都有节点、端点附近还有一列密集点时，仍使用完整曲线
+ok 27 - 中段上下都有节点、端点附近还有一列密集点时，仍使用完整曲线
+  ---
+  duration_ms: 38.4993
+  type: 'test'
+  ...
+# Subtest: 绕点时整条线连续舒展，不在端点附近突然折向
+ok 28 - 绕点时整条线连续舒展，不在端点附近突然折向
+  ---
+  duration_ms: 4.9482
+  type: 'test'
+  ...
+# Subtest: 不同日期与窄列宽下，曲线仍避让中间节点
+ok 29 - 不同日期与窄列宽下，曲线仍避让中间节点
+  ---
+  duration_ms: 29.9893
+  type: 'test'
+  ...
+# Subtest: 节点保护层独立于高亮状态，压缩后仍覆盖圆点和未采用标记
+ok 30 - 节点保护层独立于高亮状态，压缩后仍覆盖圆点和未采用标记
+  ---
+  duration_ms: 4.0308
+  type: 'test'
+  ...
+# Subtest: 点选只渲染该点，日期选中仍渲染整日
+ok 31 - 点选只渲染该点，日期选中仍渲染整日
+  ---
+  duration_ms: 4.8521
+  type: 'test'
+  ...
+# Subtest: 整链展开后点击链上的点，也切换到单点阅读
+ok 32 - 整链展开后点击链上的点，也切换到单点阅读
+  ---
+  duration_ms: 2.3881
+  type: 'test'
+  ...
+# Subtest: 整日浮窗内聚焦另一张卡，保留整日阅读范围
+ok 33 - 整日浮窗内聚焦另一张卡，保留整日阅读范围
+  ---
+  duration_ms: 1.2547
+  type: 'test'
+  ...
+# Subtest: 单点详情只介绍当前任务，不混入当天其他任务
+ok 34 - 单点详情只介绍当前任务，不混入当天其他任务
+  ---
+  duration_ms: 1.5502
+  type: 'test'
+  ...
+# Subtest: 同一天从日期切到单点，再切回日期，浮窗与详情同步变化
+ok 35 - 同一天从日期切到单点，再切回日期，浮窗与详情同步变化
+  ---
+  duration_ms: 1.5097
+  type: 'test'
+  ...
+# Subtest: 单点说明被吸顶栏挡住时，校正滚动位置并同时保留点位
+ok 36 - 单点说明被吸顶栏挡住时，校正滚动位置并同时保留点位
+  ---
+  duration_ms: 1.5346
+  type: 'test'
+  ...
+# Subtest: atomic updates, stale revisions and retry after lost response
+ok 37 - atomic updates, stale revisions and retry after lost response
+  ---
+  duration_ms: 19.4602
+  type: 'test'
+  ...
+# Subtest: reject malformed data before storage write
+ok 38 - reject malformed data before storage write
+  ---
+  duration_ms: 0.3821
+  type: 'test'
+  ...
+# Subtest: all authenticated emails can edit; anonymous and forged email headers cannot
+ok 39 - all authenticated emails can edit; anonymous and forged email headers cannot
+  ---
+  duration_ms: 3.5837
+  type: 'test'
+  ...
+# Subtest: CSRF, methods, unknown endpoints and oversized bodies are rejected
+ok 40 - CSRF, methods, unknown endpoints and oversized bodies are rejected
+  ---
+  duration_ms: 1.1503
+  type: 'test'
+  ...
+# Subtest: JWT verification requires pinned issuer, audience, expiration and signed email
+ok 41 - JWT verification requires pinned issuer, audience, expiration and signed email
+  ---
+  duration_ms: 67.2274
+  type: 'test'
+  ...
+# Subtest: multi-tag OR/AND, untagged, search and empty filters retain original order
+ok 42 - multi-tag OR/AND, untagged, search and empty filters retain original order
+  ---
+  duration_ms: 1.9339
+  type: 'test'
+  ...
+# Subtest: bulk add is non-destructive and removing the last tag makes a report untagged
+ok 43 - bulk add is non-destructive and removing the last tag makes a report untagged
+  ---
+  duration_ms: 1.0474
+  type: 'test'
+  ...
+# Subtest: rename keeps identity, merge deduplicates assignments and delete only removes its tag
+ok 44 - rename keeps identity, merge deduplicates assignments and delete only removes its tag
+  ---
+  duration_ms: 0.6561
+  type: 'test'
+  ...
+# Subtest: input rejects duplicate names, malicious IDs, invalid colors and dangling relations
+ok 45 - input rejects duplicate names, malicious IDs, invalid colors and dangling relations
+  ---
+  duration_ms: 0.5679
+  type: 'test'
+  ...
+# Subtest: suggestions explain literal keyword matches and never auto-assign
+ok 46 - suggestions explain literal keyword matches and never auto-assign
+  ---
+  duration_ms: 0.3744
+  type: 'test'
+  ...
+# Subtest: import unifies equal names without losing existing assignments or duplicating tags
+ok 47 - import unifies equal names without losing existing assignments or duplicating tags
+  ---
+  duration_ms: 0.3126
+  type: 'test'
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 362.8362

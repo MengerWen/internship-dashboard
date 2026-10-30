@@ -1,0 +1,244 @@
+为无历史消费者发布可验证的空清单
+
+
+diff --git a/scripts/build_hist_observations.py b/scripts/build_hist_observations.py
+index e9c454cc..5b4d7e90 100644
+--- a/scripts/build_hist_observations.py
++++ b/scripts/build_hist_observations.py
+@@ -53,2 +53,3 @@ from algobench.historical_baselines import (  # noqa: E402
+     HistoricalObservationPrimitives,
++    HistoricalObservationResult,
+     build_hist_observations,
+@@ -244,4 +245,8 @@ def main(argv: Sequence[str] | None = None) -> int:
+         source_output_root = args.source_output_root or args.output_root
+-        liquidity = pd.read_parquet(liquidity_path)
+-        if args.derived_root is None:
++        if included_kinds:
++            liquidity = pd.read_parquet(liquidity_path)
++        if not included_kinds:
++            result = HistoricalObservationResult(
++                *(pd.DataFrame() for _ in BASELINE_KINDS), window_spec, ())
++        elif args.derived_root is None:
+             result = finalize_hist_observation_primitives(
+@@ -280,3 +285,3 @@ def main(argv: Sequence[str] | None = None) -> int:
+             source_revision=args.source_revision,
+-            liquidity_membership_hash=file_sha256(liquidity_path),
++            liquidity_membership_hash=file_sha256(liquidity_path) if included_kinds else "",
+         )
+diff --git a/因子/algobench/src/algobench/historical_baselines.py b/因子/algobench/src/algobench/historical_baselines.py
+index aea61893..05a0cb20 100644
+--- a/因子/algobench/src/algobench/historical_baselines.py
++++ b/因子/algobench/src/algobench/historical_baselines.py
+@@ -47,5 +47,5 @@ _FORBIDDEN_COLUMN = re.compile(
+ 
+-def _normalise_baseline_kinds(values: Sequence[str]) -> tuple[str, ...]:
++def _normalise_baseline_kinds(values: Sequence[str], *, allow_empty: bool = False) -> tuple[str, ...]:
+     selected = tuple(str(value).strip() for value in values)
+-    if not selected:
++    if not selected and not allow_empty:
+         raise ValueError("historical baseline kinds cannot be empty")
+@@ -66,3 +66,3 @@ def baseline_kind_statuses(
+ 
+-    included = set(_normalise_baseline_kinds(included_kinds))
++    included = set(_normalise_baseline_kinds(included_kinds, allow_empty=True))
+     return {
+@@ -380,3 +380,3 @@ class HistoricalObservationResult:
+         object.__setattr__(
+-            self, "included_kinds", _normalise_baseline_kinds(self.included_kinds)
++            self, "included_kinds", _normalise_baseline_kinds(self.included_kinds, allow_empty=True)
+         )
+@@ -1632,3 +1632,3 @@ def write_frozen_hist_baseline_manifest(
+ 
+-    selected_kinds = _normalise_baseline_kinds(tuple(artifacts))
++    selected_kinds = _normalise_baseline_kinds(tuple(artifacts), allow_empty=True)
+     if set(artifacts) != set(selected_kinds):
+@@ -1840,3 +1840,3 @@ def _load_frozen_hist_baseline_store(
+         raise ValueError("frozen historical baseline manifest table inventory mismatch")
+-    selected_kinds = _normalise_baseline_kinds(tuple(tables))
++    selected_kinds = _normalise_baseline_kinds(tuple(tables), allow_empty=True)
+     if (
+diff --git a/因子/algobench/tests/test_formal_study_control.py b/因子/algobench/tests/test_formal_study_control.py
+index 0d3eee66..e9135c43 100644
+--- a/因子/algobench/tests/test_formal_study_control.py
++++ b/因子/algobench/tests/test_formal_study_control.py
+@@ -134,7 +134,6 @@ def _write_panel_and_evaluations(
+ 
+-def _write_historical_calibration(output_root: Path) -> None:
+-    study, _, _ = _study_inventory()
++def _write_historical_calibration(output_root: Path, *, study_config=STUDY_CONFIG, day_buckets=True) -> None:
++    study = load_formal_study(study_config)
+     specs = load_formal_evaluation_specs(study.evaluation_config)
+-    included = ("activity",)
+-    excluded = ("cancel_intensity", "lifetime", "response_latency")
++    included, excluded = _load_control()._historical_dependency_inventory(study.registry)
+     kind_status = baseline_kind_statuses(included)
+@@ -239,3 +238,3 @@ def _write_historical_calibration(output_root: Path) -> None:
+         ]
+-        for day in calibration_dates:
++        for day in calibration_dates if day_buckets else ():
+             manifest = bucket_root / f"date={day}" / "manifest.json"
+@@ -646,76 +645,6 @@ def _write_runtime_bundle_historical_calibration(
+     window = specs.factor_windows["open3m_v1"]
+-    included = ("activity",)
+-    excluded = ("cancel_intensity", "lifetime", "response_latency")
++    included, excluded = _load_control()._historical_dependency_inventory(study.registry)
+     kind_status = baseline_kind_statuses(included)
+ 
+-    observation_root = (
+-        output_root
+-        / "calibration"
+-        / window.window_id
+-        / "historical"
+-        / "observations"
+-    )
+-    observation_root.mkdir(parents=True)
+-    observation = observation_root / "activity.parquet"
+-    pd.DataFrame({"fixture": ["activity"]}).to_parquet(
+-        observation, index=False
+-    )
+-    (observation_root / "MANIFEST.json").write_text(
+-        json.dumps(
+-            {
+-                "status": "complete",
+-                "baseline_kinds": list(included),
+-                "excluded_baseline_kinds": list(excluded),
+-                "baseline_kind_status": kind_status,
+-                "tables": {
+-                    "activity": {
+-                        "path": observation.name,
+-                        "row_count": 1,
+-                        "sha256": _sha256(observation),
+-                    }
+-                },
+-            },
+-            sort_keys=True,
+-        ),
+-        encoding="utf-8",
+-    )
+-
+-    frozen_root = (
+-        output_root
+-        / "hist_baselines"
+-        / "hist_baseline_v1"
+-        / window.output_token
+-        / "frozen"
+-    )
+-    frozen_root.mkdir(parents=True)
+-    baseline = frozen_root / "activity.parquet"
+-    references = frozen_root / "activity_size_references.parquet"
+-    pd.DataFrame({"fallback_level": [1]}).to_parquet(
+-        baseline, index=False
+-    )
+-    pd.DataFrame({"fixture": ["activity"]}).to_parquet(
+-        references, index=False
+-    )
+-    (frozen_root / "MANIFEST.json").write_text(
+-        json.dumps(
+-            {
+-                "status": "complete",
+-                "baseline_kinds": list(included),
+-                "excluded_baseline_kinds": list(excluded),
+-                "baseline_kind_status": kind_status,
+-                "tables": {
+-                    "activity": {
+-                        "baseline_file": baseline.name,
+-                        "baseline_sha256": _sha256(baseline),
+-                        "baseline_rows": 1,
+-                        "size_reference_file": references.name,
+-                        "size_reference_sha256": _sha256(references),
+-                        "size_reference_rows": 1,
+-                    }
+-                },
+-            },
+-            sort_keys=True,
+-        ),
+-        encoding="utf-8",
+-    )
++    _write_historical_calibration(output_root, study_config=INTRADAY_STUDY_CONFIG, day_buckets=False)
+ 
+@@ -747,3 +676,2 @@ def _write_runtime_bundle_historical_calibration(
+                             "gate_calibration_candidates",
+-                            "hist_activity_observations",
+                         ],
+@@ -752,3 +680,2 @@ def _write_runtime_bundle_historical_calibration(
+                             "gate_calibration_candidates": {},
+-                            "hist_activity_observations": {},
+                         },
+@@ -768,3 +695,2 @@ def _write_runtime_bundle_historical_calibration(
+                     "calibration_sufficient",
+-                    "hist_activity_observations",
+                 ],
+@@ -1017,3 +943,3 @@ def test_prepare_and_complete_require_every_terminal_artifact(tmp_path: Path):
+         "fallback_level_counts"
+-    ] == {"1": 3, "2": 1, "6": 1}
++    ] == {"1": 1, "2": 1, "6": 1}
+     assert result["validations"]["automatic_retain_reject"] is False
+diff --git a/因子/algobench/tests/test_historical_empty_inventory.py b/因子/algobench/tests/test_historical_empty_inventory.py
+new file mode 100644
+index 00000000..30b158b0
+--- /dev/null
++++ b/因子/algobench/tests/test_historical_empty_inventory.py
+@@ -0,0 +1,54 @@
++from pathlib import Path
++import json
++
++import pandas as pd
++import pytest
++
++from algobench.formal_evaluation_specs import default_factor_window_spec
++from algobench.historical_baselines import (
++    BASELINE_KINDS, BaselineBuildConfig, HistoricalObservationResult,
++    baseline_kind_statuses, build_hist_observation_primitives,
++    write_hist_observations, write_frozen_hist_baseline_manifest,
++    _load_frozen_hist_baseline_store,
++)
++
++
++def test_empty_inventory_publishes_only_omission_manifests_and_roundtrips(tmp_path):
++    window = default_factor_window_spec()
++    result = HistoricalObservationResult(
++        *(pd.DataFrame() for _ in BASELINE_KINDS), window, ())
++    written = write_hist_observations(result, tmp_path / "observations")
++    assert len(written) == 1 and written[0].name == "MANIFEST.json"
++    observed = json.loads(written[0].read_text(encoding="utf-8"))
++    assert observed["tables"] == {} and observed["baseline_kinds"] == []
++    assert observed["excluded_baseline_kinds"] == list(BASELINE_KINDS)
++    assert all(value["status"] == "omitted" for value in observed["baseline_kind_status"].values())
++    write_frozen_hist_baseline_manifest(output_root=tmp_path, window_spec=window,
++        config=BaselineBuildConfig(), artifacts={})
++    assert _load_frozen_hist_baseline_store(str(tmp_path), window.window_id,
++        window.output_token, window.spec_hash) == ({}, {})
++    assert not list(tmp_path.rglob("*.parquet"))
++
++
++def test_empty_computation_request_still_fails_before_reading_inputs():
++    with pytest.raises(ValueError, match="cannot be empty"):
++        build_hist_observation_primitives(pd.DataFrame(), pd.DataFrame(), pd.DataFrame(),
++            window_spec=default_factor_window_spec(), included_kinds=())
++    for invalid in (("unknown",), ("activity", "activity")):
++        with pytest.raises(ValueError):
++            baseline_kind_statuses(invalid)
++
++
++def test_baseline_free_cli_does_not_read_observations_or_liquidity(tmp_path, monkeypatch):
++    import build_hist_observations as command
++    root = Path(__file__).resolve().parents[3]
++    def forbidden(*args, **kwargs):
++        raise AssertionError("baseline-free study must not read observation data")
++    monkeypatch.setattr(pd, "read_parquet", forbidden)
++    assert command.main(["--output-root", str(tmp_path),
++        "--registry", str(root / "PLAN/factor_preregister_2026q2_logic.yaml"),
++        "--window-id", default_factor_window_spec().window_id,
++        "--liquidity-membership", str(tmp_path / "absent.parquet")]) == 0
++    manifests = list(tmp_path.rglob("MANIFEST.json"))
++    assert len(manifests) == 1
++    assert json.loads(manifests[0].read_text(encoding="utf-8"))["tables"] == {}
+diff --git a/因子/algobench/tests/test_prepare_intraday_response_acceptance_runtime.py b/因子/algobench/tests/test_prepare_intraday_response_acceptance_runtime.py
+index 2272d188..437760e7 100644
+--- a/因子/algobench/tests/test_prepare_intraday_response_acceptance_runtime.py
++++ b/因子/algobench/tests/test_prepare_intraday_response_acceptance_runtime.py
+@@ -627,3 +627,3 @@ def test_runtime_bundle_reads_committed_source_without_copying_day_buckets(
+         set(day["selected_component_kinds"])
+-        == {"calibration_sufficient", "hist_activity_observations"}
++        == {"calibration_sufficient"}
+         for day in manifest["source_day_manifests"]

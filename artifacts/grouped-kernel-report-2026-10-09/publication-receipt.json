@@ -1,0 +1,142 @@
+{
+  "report_date": "2026-10-09",
+  "requested_tag": "interim",
+  "git_commit": "3744cff5e3b3a7a585b28dbdaee23256a052f3d3",
+  "url": "https://internship-dashboard.mengerwenjie.workers.dev/#/daily/2026-10-09",
+  "deployment": {
+    "id": "9aa4ff6e-06b3-4804-b3af-8b5485f9112b",
+    "source": "wrangler",
+    "strategy": "percentage",
+    "author_email": "mengerwenjie@gmail.com",
+    "annotations": {
+      "workers/message": "2026-10-09 interim grouped-kernel report; Git 3744cff5e3b3a7a585b28dbdaee23256a052f3d3",
+      "workers/triggered_by": "deployment"
+    },
+    "versions": [
+      {
+        "version_id": "a9a62c65-e938-4b4c-be00-16721afff195",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-10-10T02:22:04.069032Z"
+  },
+  "version": {
+    "id": "a9a62c65-e938-4b4c-be00-16721afff195",
+    "number": 103,
+    "metadata": {
+      "created_on": "2026-10-10T02:22:03.332847Z",
+      "source": "wrangler",
+      "author_id": "f6b1a5615e2af45a92793856756c55a0",
+      "author_email": "mengerwenjie@gmail.com",
+      "has_preview": false
+    },
+    "annotations": {
+      "workers/message": "2026-10-09 interim grouped-kernel report; Git 3744cff5e3b3a7a585b28dbdaee23256a052f3d3",
+      "workers/tag": "report-2026-10-09-interim",
+      "workers/triggered_by": "version_upload"
+    },
+    "resources": {
+      "script": {
+        "etag": "71ed49439616ae4753dd2f45c2c010487ee1c0f9266ebf64dbe2425d798a0e28",
+        "handlers": [
+          "fetch"
+        ],
+        "named_handlers": [
+          {
+            "name": "ReportTags",
+            "handlers": [
+              "class"
+            ]
+          },
+          {
+            "name": "handleRequest",
+            "handlers": [
+              "class"
+            ]
+          },
+          {
+            "name": "identity",
+            "handlers": [
+              "class"
+            ]
+          },
+          {
+            "name": "json",
+            "handlers": [
+              "class"
+            ]
+          },
+          {
+            "name": "updateState",
+            "handlers": [
+              "class"
+            ]
+          }
+        ],
+        "last_deployed_from": "wrangler"
+      },
+      "script_runtime": {
+        "migration_tag": "report-tags-v1",
+        "assets": {
+          "not_found_handling": "single-page-application",
+          "headers": {
+            "version": 2,
+            "rules": {
+              "/*": {
+                "set": {
+                  "x-frame-options": "DENY",
+                  "x-robots-tag": "noindex, nofollow"
+                },
+                "unset": []
+              }
+            }
+          },
+          "raw_headers": "/*\n  X-Robots-Tag: noindex, nofollow\n  X-Frame-Options: DENY\n",
+          "static_routing": {
+            "user_worker": [
+              "/api/*"
+            ]
+          },
+          "serve_directly": true,
+          "raw_run_worker_first": [
+            "/api/*"
+          ],
+          "base_path": "/"
+        },
+        "compatibility_date": "2026-07-07",
+        "usage_model": "standard"
+      },
+      "bindings": [
+        {
+          "name": "ACCESS_AUD",
+          "text": "4f1a77c1070db3b13ba049fd6d29a792bed71b628c6b3f5b7ab7d3815617da4d",
+          "type": "plain_text"
+        },
+        {
+          "name": "ACCESS_ISSUER",
+          "text": "https://mengerwenjie.cloudflareaccess.com",
+          "type": "plain_text"
+        },
+        {
+          "name": "ASSETS",
+          "type": "assets"
+        },
+        {
+          "class_name": "ReportTags",
+          "name": "REPORT_TAGS",
+          "namespace_id": "75a8c7d495e94e4a959c201301f408bf",
+          "type": "durable_object_namespace"
+        },
+        {
+          "name": "TAG_EDITORS",
+          "text": "*",
+          "type": "plain_text"
+        }
+      ]
+    }
+  },
+  "live_tag_status": "saved_and_verified_after_reload",
+  "attachment_hashes_verified": 18,
+  "live_tag_evidence": "Reloaded production report displays interim; all six theta headings render correctly with no headings in table cells",
+  "screenshot": "live-interim.jpg"
+}

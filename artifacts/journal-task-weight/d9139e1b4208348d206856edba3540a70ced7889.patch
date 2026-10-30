@@ -1,0 +1,43 @@
+仅传输订单验收使用的匹配和行数证据
+
+
+diff --git a/因子/algobench/src/algobench/formal_raw_bank_diagnostics.py b/因子/algobench/src/algobench/formal_raw_bank_diagnostics.py
+index ae7ce95f..ec52c24f 100644
+--- a/因子/algobench/src/algobench/formal_raw_bank_diagnostics.py
++++ b/因子/algobench/src/algobench/formal_raw_bank_diagnostics.py
+@@ -107,4 +107,9 @@ def verify_published_order_audits(output_root, manifest, *, workers=1, object_pu
+         evidence = {code: {fields[kind]: stocks[code][fields[kind]]} for code in selected if code in stocks}
++        if kind == "f40_matching_edges":
++            evidence = {code: {"f40_matching": [dict(matched_edge_count=rows[0]["matched_edge_count"])]
++                if len(rows) == 1 else rows} for code, stock in evidence.items()
++                for rows in (stock["f40_matching"],)}
++        row_counts = {code: dict(row_count=entry["row_count"]) for code, entry in selected.items()}
+         jobs.append((kind, name, path, published_hashes[name] if published_hashes else None,
+-                     selected, evidence, manifest["date"], object_publication, staging_root, maximum_component_bytes,
++                     row_counts, evidence, manifest["date"], object_publication, staging_root, maximum_component_bytes,
+                      component_sizes[name] if object_publication else None))
+diff --git a/因子/algobench/tests/test_formal_day_buckets.py b/因子/algobench/tests/test_formal_day_buckets.py
+index 0f7c7a8a..6afe5a82 100644
+--- a/因子/algobench/tests/test_formal_day_buckets.py
++++ b/因子/algobench/tests/test_formal_day_buckets.py
+@@ -46,3 +46,3 @@ DAY = "2024-01-02"
+ @pytest.mark.parametrize("publication_workers", [4, 8, 16])
+-def test_raw_bank_order_audit_uses_daily_bucket_identity_and_keeps_empty_stocks(short_tmp_path, publication_workers):
++def test_raw_bank_order_audit_uses_daily_bucket_identity_and_keeps_empty_stocks(short_tmp_path, publication_workers, monkeypatch):
+     from test_formal_f63_scale_audit import example as scale_example
+@@ -111,3 +111,15 @@ def test_raw_bank_order_audit_uses_daily_bucket_identity_and_keeps_empty_stocks(
+     manifest = dict(date=DAY, factor_window_token="win_0930_0935", stock_proxy_bank_telemetry=[stock])
++    import pickle
++    import algobench.formal_raw_bank_diagnostics as diagnostics
++    original_verify = diagnostics._verify_order_audit_component
++    job_sizes = []
++    stock["f40_matching"][0]["candidate_description"] = "x" * 2_000_000
++    def measured_verify(job):
++        job_sizes.append(len(pickle.dumps(job)))
++        return original_verify(job)
++    monkeypatch.setattr(diagnostics, "_verify_order_audit_component", measured_verify)
+     verified = verify_published_order_audits(root, manifest)
++    assert max(job_sizes) < 50_000
++    assert len(stock["f40_matching"][0]["candidate_description"]) == 2_000_000
++    monkeypatch.setattr(diagnostics, "_verify_order_audit_component", original_verify)
+     assert verified["row_counts"] == dict(raw_consensus_orders=3, f40_matching_edges=1, f63_scale_comparison=2,

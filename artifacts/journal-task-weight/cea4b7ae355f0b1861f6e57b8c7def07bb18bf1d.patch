@@ -1,0 +1,54 @@
+核对本地日期子任务的归属与日期身份
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index 14331b68..ba32c905 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -1023,2 +1023,13 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+ 
++def validate_daily_output_owner(args: argparse.Namespace, config: Mapping[str, object]) -> None:
++    if args.daily_output_root is None:
++        return
++    owner = args.daily_output_root
++    if config["structural_calibration"]["resource"].get("child_runs_in_scratch", False):
++        owner = args.scratch_root.parent
++    expected = owner / ".day_runs" / f"date={args.date}"
++    if args.output_root != expected or args.scratch_root.name != f"date={args.date}":
++        raise ValueError("daily output root must own this selected-run child directory")
++
++
+ def main(argv: Sequence[str] | None = None) -> int:
+@@ -1029,4 +1040,2 @@ def main(argv: Sequence[str] | None = None) -> int:
+         args.daily_output_root = args.daily_output_root.resolve()
+-        if args.output_root.parent.name != ".day_runs" or args.daily_output_root != args.output_root.parent.parent:
+-            raise ValueError("daily output root must own this selected-run child directory")
+     args.scratch_root = args.scratch_root.resolve()
+@@ -1039,2 +1048,3 @@ def main(argv: Sequence[str] | None = None) -> int:
+     raw = _load_raw_config(args.config)
++    validate_daily_output_owner(args, raw)
+     validate_run_contract(
+diff --git a/因子/algobench/tests/test_run_open5m_real_data_calibration.py b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+index 7000f062..4709504f 100644
+--- a/因子/algobench/tests/test_run_open5m_real_data_calibration.py
++++ b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+@@ -280,2 +280,19 @@ def test_scratch_orphans_are_reported_not_silently_accepted(tmp_path: Path) -> N
+ 
++@pytest.mark.parametrize("local_children", [False, True])
++def test_selected_child_directory_is_bound_to_owner_and_date(tmp_path, local_children):
++    runner = _load()
++    config = {"structural_calibration": {"resource": {"child_runs_in_scratch": local_children}}}
++    output = tmp_path / "output"
++    scratch = tmp_path / "scratch"
++    owner = scratch if local_children else output
++    args = SimpleNamespace(date="2026-04-22", daily_output_root=output,
++        output_root=owner / ".day_runs" / "date=2026-04-22",
++        scratch_root=scratch / "date=2026-04-22")
++    runner.validate_daily_output_owner(args, config)
++    for invalid in (owner / ".day_runs" / "date=2026-04-21", tmp_path / "unowned" / ".day_runs" / "date=2026-04-22"):
++        args.output_root = invalid
++        with pytest.raises(ValueError, match="own"):
++            runner.validate_daily_output_owner(args, config)
++
++
+ def test_completed_scheduler_checkpoint_is_removed_without_touching_other_files(

@@ -1,0 +1,46 @@
+为日调度器提供显式流式取数接口并验证证据传递
+
+
+diff --git a/lv2_snapshot_workspace/src/snapshot/scheduler.py b/lv2_snapshot_workspace/src/snapshot/scheduler.py
+index 7d771cc5..da0ab7e0 100644
+--- a/lv2_snapshot_workspace/src/snapshot/scheduler.py
++++ b/lv2_snapshot_workspace/src/snapshot/scheduler.py
+@@ -708,2 +708,3 @@ class DailyScheduler:
+         completed_code_sink=None,
++        streaming_loader: Callable | None = None,
+     ) -> None:
+@@ -711,3 +712,3 @@ class DailyScheduler:
+         self.loader = loader
+-        self.streaming_loader = (
++        self.streaming_loader = streaming_loader or (
+             iter_raw_day_by_code if loader is load_raw_day else None
+diff --git a/scripts/tests/test_channel_closed_calibration_inputs.py b/scripts/tests/test_channel_closed_calibration_inputs.py
+index e1dcd773..4d1e1d7e 100644
+--- a/scripts/tests/test_channel_closed_calibration_inputs.py
++++ b/scripts/tests/test_channel_closed_calibration_inputs.py
+@@ -82 +82,25 @@ def test_input_evidence_cannot_extend_the_calibration_cutoff():
+         replay_plan_for_input(block, item)
++
++
++def test_scheduler_passes_channel_evidence_to_the_real_consumer(monkeypatch, tmp_path):
++    from concurrent.futures import ThreadPoolExecutor
++    from snapshot.scheduler import DailyScheduler, SchedulerSettings, ConsumerOutput
++    import snapshot.query_plan as gateway
++    monkeypatch.setattr(gateway, 'iter_raw_day_by_code', lambda *a, **kw: iter(source_items()))
++    plan = QueryPlan.for_research('2026-06-30', ['000001', '000002'], tables=('order', 'trade', 'cancel'),
++        data_time_upper_bound='2026-06-30 09:35:00')
++    scheduler = DailyScheduler(SchedulerSettings.from_env(extract_workers=1, compute_workers=1,
++        compute_queue_depth=1, parser_threads_per_stream=1, materialized_day_limit=1),
++        streaming_loader=iter_channel_closed_inputs, compute_executor_factory=ThreadPoolExecutor)
++    seen = []
++    def consume(item):
++        block = build_calibration_event_block(item.order, item.trade, item.cancel,
++            date=item.date, code=item.code, include_preopen_context=True)
++        actual = replay_plan_for_input(block, item)
++        validate_replay_plan(ReplayOptions.corrected(), actual, events=block.frame)
++        seen.append(item.code)
++        return ConsumerOutput()
++    scheduler.register('closure_check', consume)
++    result = scheduler.run([plan], manifest_path=tmp_path/'scheduler.jsonl')
++    assert sorted(seen) == ['000001', '000002']
++    assert all(row.status == 'done' for row in result.tasks)

@@ -1,0 +1,88 @@
+校验本地日包后原子发布到结果文件系统
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index a099893e..14331b68 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -10,2 +10,3 @@ from datetime import date
+ from functools import partial
++import errno
+ import hashlib
+@@ -15,2 +16,3 @@ import os
+ from pathlib import Path
++import shutil
+ import subprocess
+@@ -397,2 +399,3 @@ def commit_day_pack(
+     temporary = pending_root / f"{day}-{os.getpid()}-{time.monotonic_ns()}.arrow"
++    published_pending = paths.pack_path.with_name(f".{temporary.name}.pending")
+     try:
+@@ -401,5 +404,17 @@ def commit_day_pack(
+         size = temporary.stat().st_size
+-        os.replace(temporary, paths.pack_path)
++        try:
++            os.replace(temporary, paths.pack_path)
++        except OSError as exc:
++            if exc.errno != errno.EXDEV:
++                raise
++            with temporary.open("rb") as source, published_pending.open("xb") as target:
++                shutil.copyfileobj(source, target, length=1024 * 1024)
++                target.flush()
++                os.fsync(target.fileno())
++            if published_pending.stat().st_size != size or _sha256_file(published_pending) != digest:
++                raise RuntimeError("staged day pack failed hash verification")
++            os.replace(published_pending, paths.pack_path)
+     finally:
+         temporary.unlink(missing_ok=True)
++        published_pending.unlink(missing_ok=True)
+     if _sha256_file(paths.pack_path) != digest:
+diff --git a/因子/algobench/tests/test_run_open5m_real_data_calibration.py b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+index 874dacb0..7000f062 100644
+--- a/因子/algobench/tests/test_run_open5m_real_data_calibration.py
++++ b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+@@ -3,2 +3,3 @@ from __future__ import annotations
+ import importlib.util
++import errno
+ import json
+@@ -193,4 +194,12 @@ def test_worker_payload_merge_is_compact_exact_and_equal_stock_day() -> None:
+ 
+-def test_day_pack_atomic_receipt_and_resume_identity(tmp_path: Path) -> None:
++@pytest.mark.parametrize("cross_device", [False, True])
++def test_day_pack_atomic_receipt_and_resume_identity(tmp_path: Path, monkeypatch, cross_device) -> None:
+     runner = _load()
++    replace = runner.os.replace
++    if cross_device:
++        def publish(source, target):
++            if Path(source).parent.name == "pending":
++                raise OSError(errno.EXDEV, "cross device")
++            return replace(source, target)
++        monkeypatch.setattr(runner.os, "replace", publish)
+     identity = {
+@@ -212,2 +221,4 @@ def test_day_pack_atomic_receipt_and_resume_identity(tmp_path: Path) -> None:
+     assert paths.pack_path.read_bytes().startswith(b"ARROW1")
++    assert not list(paths.pack_path.parent.glob("*.pending"))
++    assert not list((tmp_path / "scratch" / "pending").iterdir())
+     receipt = json.loads(paths.receipt_path.read_text(encoding="utf-8"))
+@@ -239,2 +250,22 @@ def test_day_pack_atomic_receipt_and_resume_identity(tmp_path: Path) -> None:
+ 
++def test_cross_device_publication_verifies_staged_bytes_before_replacing(tmp_path, monkeypatch):
++    runner = _load()
++    pack_path = runner.daily_artifact_paths(tmp_path / "out", "2026-04-22").pack_path
++    pack_path.parent.mkdir(parents=True)
++    pack_path.write_bytes(b"previous verified package")
++    monkeypatch.setattr(runner, "_write_day_pack_arrow", lambda pack, path: path.write_bytes(b"new package"))
++    replace = runner.os.replace
++    def publish(source, target):
++        if Path(source).parent.name == "pending":
++            raise OSError(errno.EXDEV, "cross device")
++        return replace(source, target)
++    monkeypatch.setattr(runner.os, "replace", publish)
++    monkeypatch.setattr(runner.shutil, "copyfileobj", lambda source, target, length: target.write(b"corrupt package"))
++    with pytest.raises(RuntimeError, match="staged day pack"):
++        runner.commit_day_pack({"date": "2026-04-22"}, output_root=tmp_path / "out", scratch_root=tmp_path / "scratch")
++    assert pack_path.read_bytes() == b"previous verified package"
++    assert not list(pack_path.parent.glob("*.pending"))
++    assert not list((tmp_path / "scratch" / "pending").iterdir())
++
++
+ def test_scratch_orphans_are_reported_not_silently_accepted(tmp_path: Path) -> None:

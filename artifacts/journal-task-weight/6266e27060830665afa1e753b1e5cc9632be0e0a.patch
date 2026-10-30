@@ -1,0 +1,148 @@
+Finalize shared factor sources while daily task payloads remain live
+
+Consume compact source results inside the existing day callback before scheduler retention cleanup. Validate populated cancellation records, empty stocks, callback failure and complete-manifest behavior. Windows source checks: 41 passed, 1 skipped; panel checks: 41 passed.
+
+
+diff --git a/scripts/run_open5m_raw_bank.py b/scripts/run_open5m_raw_bank.py
+index 8ad69faf..42dc99de 100644
+--- a/scripts/run_open5m_raw_bank.py
++++ b/scripts/run_open5m_raw_bank.py
+@@ -101,2 +101,3 @@ def compute_panel(args, specs, window, dates, registry_path, gate, *, cfg=None,
+                 settings_factory=raw_bank_settings_factory(args),
++                day_finalizer=getattr(args, '_day_finalizer', None),
+                 evaluation_ids=["intraday_open5m_vwap0944_0945_v1"], start=dates[0], end=dates[-1], dates=dates,
+@@ -284,4 +285,2 @@ def run(args):
+         outcome = compute_panel(args, specs, window, dates, registry_path, gate, cfg=cfg, effective_config=effective)
+-        if getattr(args, '_run_observer', None) is not None:
+-            args._run_observer(outcome.scheduler_run)
+         result["runner_phase_seconds"]["compute_panel"] = time.perf_counter()-phase_started
+@@ -331,3 +330,3 @@ def run(args):
+ 
+-def main(argv=None, *, scheduler_factory=None, run_observer=None):
++def main(argv=None, *, scheduler_factory=None, day_finalizer=None):
+     parser = argparse.ArgumentParser(description=__doc__)
+@@ -397,3 +396,3 @@ def main(argv=None, *, scheduler_factory=None, run_observer=None):
+     args = parser.parse_args(argv)
+-    args._scheduler_factory, args._run_observer = scheduler_factory, run_observer
++    args._scheduler_factory, args._day_finalizer = scheduler_factory, day_finalizer
+     if args.worker_reclaim_threshold_mib and not args.release_worker_memory:
+diff --git a/因子/algobench/src/algobench/formal_model328_sources.py b/因子/algobench/src/algobench/formal_model328_sources.py
+index e23f1148..e45b6302 100644
+--- a/因子/algobench/src/algobench/formal_model328_sources.py
++++ b/因子/algobench/src/algobench/formal_model328_sources.py
+@@ -4,3 +4,3 @@ from __future__ import annotations
+ from concurrent.futures import ThreadPoolExecutor
+-from dataclasses import asdict, replace
++from dataclasses import asdict
+ import json
+@@ -182,5 +182,6 @@ class ModelSources:
+             return scheduler
+-        def observe(run):
+-            if run is None:
+-                raise SourceFailure("shared factor stream has no scheduler evidence")
++        def finalize_auxiliary(date_record, day_tasks, settings):
++            from snapshot.scheduler import SchedulerRun
++            if date_record.date != day:
++                raise SourceFailure("shared factor stream date differs")
+             from .formal_cancel_source import finalize_direction_day
+@@ -188,3 +189,3 @@ class ModelSources:
+             def source_run(name):
+-                return replace(run, tasks=tuple(item for item in run.tasks if item.consumer == name))
++                return SchedulerRun(settings, (date_record,), tuple(item for item in day_tasks if item.consumer == name))
+             seconds = perf_counter() - started
+@@ -202,3 +203,3 @@ class ModelSources:
+                 auxiliary["depth"] = (panel, audit, accepted, measured)
+-        old_runner.main(argv, scheduler_factory=scheduler_factory, run_observer=observe)
++        old_runner.main(argv, scheduler_factory=scheduler_factory, day_finalizer=finalize_auxiliary)
+         acceptance = accept_old(root, active_scope_resources=observe_scope_resources(),
+diff --git a/因子/algobench/src/algobench/formal_panel.py b/因子/algobench/src/algobench/formal_panel.py
+index 700f4af7..ebf682ac 100644
+--- a/因子/algobench/src/algobench/formal_panel.py
++++ b/因子/algobench/src/algobench/formal_panel.py
+@@ -3484,2 +3484,3 @@ def run_formal_windows(
+     engines: Mapping[str, FormalFactorEngine] | None = None,
++    day_finalizer=None,
+     preregister_path: str | Path = DEFAULT_FORMAL_FACTOR_PREREGISTER,
+@@ -4425,2 +4426,6 @@ def run_formal_windows(
+ 
++            if day_finalizer is not None:
++                # The scheduler releases day payloads after this callback returns.
++                day_finalizer(date_record, day_tasks, settings)
++
+         scheduler_run = _run_scheduler(
+diff --git a/因子/algobench/tests/test_formal_model328_sources.py b/因子/algobench/tests/test_formal_model328_sources.py
+index df6685d9..52ae04ca 100644
+--- a/因子/algobench/tests/test_formal_model328_sources.py
++++ b/因子/algobench/tests/test_formal_model328_sources.py
+@@ -179,8 +179,21 @@ def test_old_source_shares_one_stream_with_missing_auxiliary_sources(tmp_path, m
+     monkeypatch.setattr(formal_raw_bank_startup, "raw_bank_scheduler_factory", lambda: Scheduler)
+-    def old_main(argv, *, scheduler_factory, run_observer):
++    def old_main(argv, *, scheduler_factory, day_finalizer):
+         settings = module.resource_settings(resources())
+         scheduler_factory(settings, telemetry_sink=lambda row: None)
+-        tasks = tuple(TaskRecord(name, DAY, code, "skipped_no_data", 0, 0., 0, ())
+-                      for name in registrations for code in instance.codes(DAY))
+-        run_observer(SchedulerRun(settings, (DateRecord(DAY, "done", 2, 0.),), tasks))
++        from test_formal_cancel_source import raw_input
++        from snapshot.scheduler import CodeDayInput
++        from algobench.formal_depth_source import empty_depth
++        _, original = raw_input()
++        frames = {name: getattr(original, name).copy() for name in ("order", "trade", "cancel")}
++        for frame in frames.values():
++            frame["data_time"] = pd.to_datetime(frame["data_time"]) + (pd.Timestamp(DAY) - pd.Timestamp(original.date))
++        raw = CodeDayInput(DAY, "000001", **frames)
++        tasks = []
++        for name, handler in registrations.items():
++            payload = handler(raw).payload if name == "cancel_directions" else empty_depth(DAY, raw.code)
++            tasks.append(TaskRecord(name, DAY, raw.code, "done", raw.input_rows, .1, 0, (), payload=payload))
++            tasks.append(TaskRecord(name, DAY, "000002", "skipped_no_data", 0, 0., 0, ()))
++        day_finalizer(DateRecord(DAY, "done", 2, .1), tuple(tasks), settings)
++        released = tuple(__import__("dataclasses").replace(item, payload=None) for item in tasks)
++        assert all(item.payload is None for item in released)
+         return 0
+@@ -204,3 +217,3 @@ def test_old_source_shares_one_stream_with_missing_auxiliary_sources(tmp_path, m
+         assert result["panel"].code.tolist() == ["000001", "000002"]
+-        assert result["panel"].iloc[:, 2:].isna().all().all()
++        assert result["panel"].iloc[1, 2:].isna().all()
+     assert not instance.pending_auxiliary
+diff --git a/因子/algobench/tests/test_formal_panel_runner.py b/因子/algobench/tests/test_formal_panel_runner.py
+index 3adb60dd..b67c82c8 100644
+--- a/因子/algobench/tests/test_formal_panel_runner.py
++++ b/因子/algobench/tests/test_formal_panel_runner.py
+@@ -1039,2 +1039,3 @@ def _run_multiwindow(
+     compress_day_manifests=False,
++    day_finalizer=None,
+ ):
+@@ -1080,2 +1081,3 @@ def _run_multiwindow(
+         compress_day_manifests=compress_day_manifests,
++        day_finalizer=day_finalizer,
+         formal_label_price_batch=(
+@@ -1183,2 +1185,28 @@ def test_multiwindow_runner_shares_query_and_finalizes_in_config_order(
+ 
++def test_day_finalizer_reads_live_payloads_before_scheduler_release(tmp_path, monkeypatch):
++    original = _MultiWindowScheduler.run
++    observed = []
++    def release_after_day(self, plans, *, manifest_path=None, on_day_complete=None):
++        run = original(self, plans, manifest_path=manifest_path, on_day_complete=on_day_complete)
++        for task in run.tasks:
++            task.payload = None
++        return run
++    monkeypatch.setattr(_MultiWindowScheduler, "run", release_after_day)
++    def finalize(date_record, tasks, settings):
++        assert date_record.date == DAY1 and all(task.payload is not None for task in tasks)
++        assert formal_panel_shard_path(tmp_path, DAY1, window_token="win_0930_1030").is_file()
++        observed.append(tuple(task.consumer for task in tasks))
++    result, _ = _run_multiwindow(tmp_path, monkeypatch, day_finalizer=finalize)
++    assert observed == [result.consumer_order]
++    assert all(task.payload is None for task in result.scheduler_run.tasks)
++
++
++def test_day_finalizer_failure_prevents_complete_run_commit(tmp_path, monkeypatch):
++    def finalize(*args):
++        raise RuntimeError("auxiliary source validation failed")
++    with pytest.raises(RuntimeError, match="auxiliary source validation"):
++        _run_multiwindow(tmp_path, monkeypatch, day_finalizer=finalize)
++    assert not list(tmp_path.glob("complete_manifest*.json"))
++
++
+ def test_intraday_only_label_free_query_prunes_target_interval(

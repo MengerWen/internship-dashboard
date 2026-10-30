@@ -1,0 +1,851 @@
+[
+  {
+    "name": "autoglm-generate-image",
+    "path": "C:\\Users\\19927\\.agents\\skills\\autoglm-generate-image\\SKILL.md",
+    "sha256": "adf726d527dbb4a1bd440cba8b6f7957ffffa648ed4d0ae49c8d33d843106b19",
+    "characters": 1179,
+    "applicable_excerpts": [
+      "  \"data\": {",
+      "1. 从响应中提取 `data.image_url`"
+    ]
+  },
+  {
+    "name": "autoglm-search-image",
+    "path": "C:\\Users\\19927\\.agents\\skills\\autoglm-search-image\\SKILL.md",
+    "sha256": "22c92b9979935784c77c1ddc9eceac88efa2d70f870fa323327306bf7ebf6def",
+    "characters": 1387,
+    "applicable_excerpts": [
+      "  \"data\": {",
+      "遍历 `data.results`，以 Markdown 格式展示每张图片及其描述："
+    ]
+  },
+  {
+    "name": "canvas-design",
+    "path": "C:\\Users\\19927\\.agents\\skills\\canvas-design\\SKILL.md",
+    "sha256": "a1f288079624402f30682753c1d43920b6664785698d21d3e7aa197450a6448b",
+    "characters": 11937,
+    "applicable_excerpts": [
+      "description: Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.",
+      "Visual expression: Geometric precision where color zones create meaning. Typography minimal - small sans-serif labels letting chromatic fields communicate. Think Josef Albers' interaction meets data visualization. Information encoded spatially and chromatically. Words only to anchor what color already shows. The result of painstaking chromatic calibration.",
+      "Visual expression: Grid-based precision, bold photography or stark graphics, dramatic negative space. Typography precise but minimal - small essential text, large quiet zones. Swiss formalism meets Brutalist material honesty. Structure communicates, not words. Every alignment the work of countless refinements.",
+      "This is **VERY IMPORTANT**: The reference must be refined so it enhances the work's depth without announcing itself. Think like a jazz musician quoting another song - only those who know will catch it, but everyone appreciates the music.",
+      "**Text as a contextual element**: Text is always minimal and visual-first, but let context guide whether that means whisper-quiet labels or bold typographic gestures. A punk venue poster might have larger, more aggressive type than a minimalist ceramics studio identity. Most of the time, font should be thin. All use of fonts must be design-forward and prioritize visual communication. Regardless of text scale, nothing falls off the page and nothing overlaps. Every element must be contained within the canvas boundaries with proper margins. Check carefully that all text, graphics, and visual elements have breathing room and clear separation. This is non-negotiable for professional execution. **IMPORTANT: Use different fonts if writing text. Search the `./canvas-fonts` directory. Regardless of approach, sophistication is non-negotiable.**",
+      "**CRITICAL**: To refine the work, avoid adding more graphics; instead refine what has been created and make it extremely crisp, respecting the design philosophy and the principles of minimalism entirely. Rather than adding a fun filter or refactoring a font, consider how to make the existing composition more cohesive with the art. If the instinct is to call a new function or draw a new shape, STOP and instead ask: \"How can I make what's already here more of a piece of art?\"",
+      "Take a second pass. Go back to the code and refine/polish further to make this a philosophically designed masterpiece."
+    ]
+  },
+  {
+    "name": "codebase-design",
+    "path": "C:\\Users\\19927\\.agents\\skills\\codebase-design\\SKILL.md",
+    "sha256": "2c2ab6bd3335c80e2de5df5d5d96eab0a5d1b3bc9a1a124f731ce9be06ff7958",
+    "characters": 6225,
+    "applicable_excerpts": [
+      "面向用户以及由技能生成或更新的全部人类可读内容均使用简体中文，包括对话、问题、报告、Issue、PR、提交信息、评论、文档、图表标签和代码注释。代码标识符、命令、路径、配置键、API 名称及原文引用可保留原文，并在需要时用中文解释。仅当用户明确要求其他语言或仓库的既有强制规范要求其他语言时例外。",
+      "- **Depth is a property of the interface, not the implementation.** A deep module can be internally composed of small, mockable, swappable parts; they just aren't part of the interface. A module can have **internal seams** (private to its implementation, used by its own tests) as well as the **external seam** at its interface."
+    ]
+  },
+  {
+    "name": "design-taste-frontend",
+    "path": "C:\\Users\\19927\\.agents\\skills\\design-taste-frontend\\SKILL.md",
+    "sha256": "d955dae4ba8ab2d994f4bb06b4bf412a1d9875433a8597939c391f4bae91dd7a",
+    "characters": 38420,
+    "applicable_excerpts": [
+      "or Chromium, and install nothing. `assets.mjs` also needs network access; it uses no API keys.",
+      "  squares, rainbow charts and invented vanity numbers are not) and `inspect.mjs --app`. Read that file",
+      "and build every fragment the page shows (the hero's live screen, a feature's crop, a chart) as a real",
+      "piece of that app: `assets/app.css` for its panels, tables and controls, `assets/charts.js` for its",
+      "charts, real data that adds up, one finding stated, cropped and scaled the way the page's blueprint",
+      "stack, any existing brand (colours, fonts, logo), and above all **what imagery truly exists**: the",
+      "      botanical plate, a star chart. Use them large and with intent: one archival photograph as the",
+      "a real interface fragment whose root carries the attribute `data-ui` (the product's own borders and",
+      "**An existing brand or design system.** Pass `--keep palette,type`, map the brand's colours and faces",
+      "**Redesign, restyle or review of an existing page or app screen.**",
+      "   styled-components, plain CSS), the components, and what must survive: routes, forms, data,",
+      "   direction and rebuilds the sections from its blueprints inside the existing components. Either way",
+      "| `assets/app.css` · `assets/charts.js` | For app screens: a neutral shell, panels, tables and controls, and small SVG charts drawn to the app rules. |",
+      "| `library/` | The data the draw reads: directions, heroes, sections, type systems, palettes, photographs, studied sites, motions, scroll scenes (`scenes.json`), and the app styles, shells and screen patterns (`app.json`). Do not read it whole; use the script. |"
+    ]
+  },
+  {
+    "name": "domain-modeling",
+    "path": "C:\\Users\\19927\\.agents\\skills\\domain-modeling\\SKILL.md",
+    "sha256": "64d6efc60c0ad47cb12d1213f579f196ea132d28e6fbb75e4c1a59797b4b0e78",
+    "characters": 3381,
+    "applicable_excerpts": [
+      "面向用户以及由技能生成或更新的全部人类可读内容均使用简体中文，包括对话、问题、报告、Issue、PR、提交信息、评论、文档、图表标签和代码注释。代码标识符、命令、路径、配置键、API 名称及原文引用可保留原文，并在需要时用中文解释。仅当用户明确要求其他语言或仓库的既有强制规范要求其他语言时例外。",
+      "When the user uses a term that conflicts with the existing language in `GLOSSARY.md`, call it out immediately. \"Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?\""
+    ]
+  },
+  {
+    "name": "emil-design-eng",
+    "path": "C:\\Users\\19927\\.agents\\skills\\emil-design-eng\\SKILL.md",
+    "sha256": "ffbe68e6007fb42cb8149f089b400a1ca007d59ba23e8948e2be4476f3175939",
+    "characters": 27029,
+    "applicable_excerpts": [
+      "Do not provide any other information until the user asks a question.",
+      "People select tools based on the overall experience, not just functionality. Good defaults and good animations are real differentiators. Beauty is underutilized in software. Use it as leverage to stand out.",
+      "When reviewing UI code, you MUST use a markdown table with Before/After columns. Do NOT use a list with \"Before:\" and \"After:\" on separate lines. Always output an actual markdown table like this:",
+      "Speed in animation is not just about feeling snappy — it directly affects how users perceive your app's performance:",
+      "Popovers should scale in from their trigger, not from center. The default `transform-origin: center` is wrong for almost every popover. **Exception: modals.** Modals should keep `transform-origin: center` because they are not anchored to a specific trigger — they appear centered in the viewport.",
+      ".tooltip[data-starting-style],",
+      ".tooltip[data-ending-style] {",
+      ".tooltip[data-instant] {",
+      "This replaces the common React pattern of using `useEffect` to set `mounted: true` after initial render. Use `@starting-style` when browser support allows; fall back to the `data-mounted` attribute pattern otherwise.",
+      "// <div data-mounted={mounted}>",
+      "Framer Motion's shorthand properties (`x`, `y`, `scale`) are NOT hardware-accelerated. They use `requestAnimationFrame` on the main thread. For hardware acceleration, use the full `transform` string:",
+      "## Accessibility"
+    ]
+  },
+  {
+    "name": "figma-implement-design",
+    "path": "C:\\Users\\19927\\.agents\\skills\\figma-implement-design\\SKILL.md",
+    "sha256": "63f3d12d444547bbf68c10a12982b1f42e0f6e26fc074324564a13184d4b15ad",
+    "characters": 11621,
+    "applicable_excerpts": [
+      "- Figma MCP server must be connected and accessible",
+      "**Note:** When using the local desktop MCP (`figma-desktop`), `fileKey` is not passed as a parameter to tool calls. The server automatically uses the currently open file, so only `nodeId` is needed.",
+      "When using the `figma-desktop` MCP and the user has NOT provided a URL, the tools automatically use the currently selected node from the open Figma file in the desktop app.",
+      "**Note:** Selection-based prompting only works with the `figma-desktop` MCP server. The remote server requires a link to a frame or layer to extract context. The user must have the Figma desktop app open with a node selected.",
+      "This provides the structured data including:",
+      "1. Run `get_metadata(fileKey=\":fileKey\", nodeId=\"1-2\")` to get the high-level node map",
+      "2. Identify the specific child nodes needed from the metadata",
+      "This screenshot serves as the source of truth for visual validation. Keep it accessible throughout implementation.",
+      "- DO NOT use or create placeholders if a `localhost` source is provided",
+      "- Reuse existing components (buttons, inputs, typography, icon wrappers) instead of duplicating functionality",
+      "- Respect existing routing, state management, and data-fetch patterns",
+      "- Follow WCAG requirements for accessibility",
+      "- [ ] Accessibility standards met",
+      "5. Check if project has existing button component",
+      "2. Run `get_metadata(fileKey=\"pR8mNv5KqXzGwY2JtCfL4D\", nodeId=\"10-5\")` to understand the page structure",
+      "3. Identify main sections from metadata (header, sidebar, content area, cards) and their child node IDs",
+      "6. Download all assets (logos, icons, charts)",
+      "8. Implement each section using existing components where possible",
+      "If you must deviate from the Figma design (e.g., for accessibility or technical constraints), document why in code comments.",
+      "Always check for existing components before creating new ones. Consistency across the codebase is more important than exact Figma replication.",
+      "**Solution:** Use `get_metadata` to get the node structure, then fetch specific nodes individually with `get_design_context`.",
+      "**Solution:** Compare side-by-side with the screenshot from Step 3. Check spacing, colors, and typography values in the design context data.",
+      "**Cause:** The Figma MCP server's assets endpoint is not accessible or the URLs are being modified.",
+      "**Solution:** Verify the Figma MCP server's assets endpoint is accessible. The server serves assets at `localhost` URLs. Use these directly without modification."
+    ]
+  },
+  {
+    "name": "frontend-design",
+    "path": "C:\\Users\\19927\\.agents\\skills\\frontend-design\\SKILL.md",
+    "sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
+    "characters": 9363,
+    "applicable_excerpts": [
+      "description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.",
+      "If the brief does not identify what the product or subject matter is, identify it yourself before designing, and confirm with the client. You can come up with one concrete subject, the design's audience, and the design's primary job, as a proposal. If there's any information in your memory about the client's preferences or context about what they're building, use that as a hint. The subject's industry, subject matter, materials, and vernacular are where distinctive visual choices come from — a design for a toy for girls aged 8–11 will be very aesthetically different from a dashboard for financial analysts. Build with the brief's real content and subject matter throughout.",
+      "Choose your typefaces deliberately, not the default families you would reach for on any other project, and set a clear type scale following the default guidance of The Elements of Typographic Style with intentional weights, widths, and spacing. When type is used as a headline or visual element, use the type treatment itself as an active part of the design, not a neutral delivery vehicle for the content.",
+      "5. template chrome that appears whatever the subject: a tracked-out ALL-CAPS eyebrow label above every heading; meta strings joined with middle dots ('A · B · C'); labels built as 'WORD — fragment' with a spaced em dash; tinted near-black (#0B0B0B, #111) standing in for black; a monospace face for small data labels; a '→' appended to link and button text.",
+      "Spend your boldness in one place. Let one element be the memorable thing, keep everything around it quiet and disciplined, and cut any decoration that does not serve the brief. Build to a quality floor without announcing it: responsive down to mobile, visible keyboard focus, reduced motion respected, visually accessible, harmonious color palettes. Critique your own work as you build, taking screenshots to review if your environment supports it — a picture is worth 1000 tokens. Consider Chanel's advice: before leaving the house, take a look in the mirror and remove one accessory. Human creatives have memory and always try to do something new, so if you have a space to quickly jot down notes about what you've tried, it can help you in future passes.",
+      "Write from the end user's perspective. Name things by what users will understand in simple language, not by how the system is built. A user manages notifications, not webhook config. Describe what something is or does in plain terms rather than selling it. Being specific and legible to new users is always better than being clever."
+    ]
+  },
+  {
+    "name": "huashu-design",
+    "path": "C:\\Users\\19927\\.agents\\skills\\huashu-design\\SKILL.md",
+    "sha256": "90bc70f50c61bc682364e7ae555678efec0c0ba14510c4538adb5105d03bdffe",
+    "characters": 7812,
+    "applicable_excerpts": [
+      "description: 花叔Design——用HTML做高保真原型、幻灯片、动画、可视化与专家评审。任何新设计100%先出三个方向初稿给用户选（指定风格/品牌也不豁免），选定后才执行。触发词：做原型、PPT、幻灯片、动画、设计风格、评审、做个HTML页面、UI mockup、导出MP4/GIF、做个好看的。生产级Web App/需后端的系统不适用。",
+      "metadata:",
+      "| **品牌研究员** | 找到真实资产（logo/产品图/UI），理解品牌气质 | 凭想象画品牌，一眼假 |",
+      "| **前端工程师** | 把设计精确实现出来 | 稿子好看，做出来走样 |",
+      "## 适用范围",
+      "三件都不阻塞：没有记录就继续；脚本报「找不到文件」先检查是不是漏了 `$HD`；没装 Python 版 playwright 时体检会自己跳过并给安装命令。用户的偏好有适用范围，写明「只用于某类物料」的，",
+      "| 信息图、数据可视化、长图 | `references/modules/infographic.md` |",
+      "### 1 · 从已有的东西出发",
+      "好的高保真设计一定是从已有上下文长出来的：用户的 design system、codebase、已上线的产品、品牌资产、他喜欢的参考。",
+      "任何会产出新视觉设计的任务，先出三个方向的**真实初稿**给用户选，用户选定后才执行。",
+      "- 初稿形态：六格缩略图 1 页（备选），外加网页 / 信息图 / 原型每方向 1 个完整 HTML＋截图；deck 每方向 2 页代表页；动画每方向 1 张方向板（真实渲出的关键帧＋色板＋一句定位＋参照名）；封面 / 单图每方向 1 张真实出图",
+      "- 唯一豁免（都要在 `direction-approved.md` 记原话或理由）：用户本次会话明说跳过；同一项目内已选定方向后的迭代；非设计的机械操作",
+      "每个方向先定**主角素材**：真图、生成图、程序化材质、数据图像、实物仿制、巨字……别让三个方向都是纯排版。",
+      "T0 档人人都有（真图库、SVG/canvas/Three.js 程序化材质、数据即图像）；能生图、装了兄弟 skill 才往上走；",
+      "不编造数据、评价、logo 墙；没有就留诚实占位。",
+      "`learn.py add --kind preference` 逐字记下并写明适用范围，记的时候告诉用户一句「这句我记进本机的品味档案了」——",
+      "降级牺牲流程，不牺牲真实资产协议、可读性底线，也不跳过三方向门。",
+      "这一节让用户及时知道本 skill 有没有新版本。它只读取远程仓库的版本标签，不下载文件、不上传数据、不修改 skill 本身；唯一会写的是本目录的 `.last-update-check`，用来记住上次检查的日期。",
+      "- 成功：第一行就是最新版本，和本文件开头的 `metadata.version` 比较，然后写入 `<今天> ok`。远程更高时，先完成用户的任务，结束时告诉用户：「huashu-design 有新版本 vX.Y.Z，更新说明见 https://github.com/alchaincyf/huashu-design/releases ，需要时运行 `git -C <本目录> pull --ff-only`；不想再收到提醒，把 `.last-update-check` 的内容改成 `off`」。版本相同或没有标签就不用提。"
+    ]
+  },
+  {
+    "name": "impeccable",
+    "path": "C:\\Users\\19927\\.agents\\skills\\impeccable\\SKILL.md",
+    "sha256": "88e9a46a91b6ddd1059f03f578bd0f9bbe6d212d6a395124379b9bb5c97c5cf2",
+    "characters": 11649,
+    "applicable_excerpts": [
+      "description: \"Use when the user wants to design, redesign, shape, critique, audit, polish, simplify, harden, animate, or otherwise improve a frontend interface: websites, landing pages, dashboards, product UI, components, forms, settings, onboarding, empty states, and native iOS or Android screens. Handles UX review, hierarchy, layout, typography, color, motion, UX copy, accessibility, responsive behavior, edge cases, and capturing or documenting design systems (DESIGN.md, tokens). Also for making bland UI bolder, loud UI quieter, or ambitious visual effects. Not for backend-only or non-UI tasks.\"",
+      "metadata:",
+      "1. Run `<skill-base-dir>/scripts/impeccable context` once per session, where `<skill-base-dir>` is the directory that contains this SKILL.md (the skill folder, not a plugin root two levels above it); keep cwd at the user's project. That base directory resolves every `.agents/skills/impeccable/scripts/impeccable <verb>` command in this skill and its references, and `.agents/skills/impeccable/scripts` is the fallback only when the runtime reports no base directory. On a Windows shell without `sh`, call `.agents/skills/impeccable/scripts/impeccable.cmd` instead. The launcher runs a self-contained binary that ships next to it or is downloaded once on first run; no Node or other runtime is required. Pass a named source file or route as `--target <path>`. It loads PRODUCT.md, DESIGN.md, the matching surface brief, and native-platform guidance when applicable; follow its directives and do not rerun it.",
+      "3. After resolving analysis and direction, read [reference/craft-floor.md](reference/craft-floor.md) immediately before any UI edit, including small refinements. It carries the quality floor, the absolute bans, and the reflexes no detector catches. Do not load it for planning-only work.",
+      "**Launcher unavailable:** On refusal or failure, send a separate message **before the next tool call**: “Context loading did not run; I’ll read the existing project context directly.” Then read existing PRODUCT.md and DESIGN.md without inventing missing context, follow applicable steps 2–3, and continue through permitted tools. This applies to planning and editing; launcher failure alone does not block either.",
+      "- **Refinement preserves; redesign replaces.** Refinement keeps the incumbent identity, behavior, copy, and everything outside scope. Ask before replacing factual copy or adding claims. Redesign keeps product truth, content, function, native affordances, and constraints, but treats the old look as evidence and anti-reference; choose a replacement world in new-work and replace DESIGN.md. Never split the difference into polish on the discarded look.",
+      "Choose the mode from the requested surface, not the product, and persist it only in that surface brief. A tool's landing page is still Persuade; a fashion house's documentation is still Read; a docs index is Read, not Persuade. See [new-work.md](reference/new-work.md) for new surfaces and [operate.md](reference/operate.md) for deeper Operate/Read guidance.",
+      "| `document` | Build | Generate DESIGN.md from existing project code | [reference/document.md](reference/document.md) |",
+      "| `polish [target]` | Refine | Final quality pass before shipping | [reference/polish.md](reference/polish.md) |",
+      "| `bolder [target]` | Refine | Amplify safe or bland designs | [reference/bolder.md](reference/bolder.md) |",
+      "| `quieter [target]` | Refine | Tone down aggressive or overstimulating designs | [reference/quieter.md](reference/quieter.md) |",
+      "| `distill [target]` | Refine | Strip to essence, remove complexity | [reference/distill.md](reference/distill.md) |",
+      "| `harden [target]` | Refine | Production-ready: errors, i18n, edge cases | [reference/harden.md](reference/harden.md) |",
+      "| `onboard [target]` | Refine | Design first-run flows, empty states, activation | [reference/onboard.md](reference/onboard.md) |",
+      "| `live` | Iterate | Visual variant mode: pick elements in the browser, iterate on alternatives | [reference/live.md](reference/live.md) |",
+      "| `generate [n] [action] [element]` | Iterate | Variants, versions, or alternatives of a named element to choose from in the live browser; no manual picking | [reference/generate.md](reference/generate.md) |",
+      "- **Otherwise:** treat the request as general design work. Missing PRODUCT.md routes a new surface or replacement world through init, then new-work; a narrow refinement of existing code proceeds on the incumbent implementation as `impeccable context` directs, offering init afterward rather than blocking on it.",
+      "**Never repair drift as a side effect of a design task.** A `CONTEXT_STALE` finding is reported, not acted on, unless the user asks. The one exception is a finding marked `auto`, which the next write to that file performs anyway."
+    ]
+  },
+  {
+    "name": "prototype",
+    "path": "C:\\Users\\19927\\.agents\\skills\\prototype\\SKILL.md",
+    "sha256": "c8f6509c94b87c66f3067ec6c8229f6228d132b63361fdbc1c9fb773a0b5f45b",
+    "characters": 3082,
+    "applicable_excerpts": [
+      "面向用户以及由技能生成或更新的全部人类可读内容均使用简体中文，包括对话、问题、报告、Issue、PR、提交信息、评论、文档、图表标签和代码注释。代码标识符、命令、路径、配置键、API 名称及原文引用可保留原文，并在需要时用中文解释。仅当用户明确要求其他语言或仓库的既有强制规范要求其他语言时例外。",
+      "1. **Throwaway from day one, and clearly marked as such.** Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious, but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.",
+      "3. **No persistence by default.** State lives in memory. Persistence is the thing the prototype is _checking_, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear \"PROTOTYPE, wipe me\" name."
+    ]
+  },
+  {
+    "name": "ui-ux-pro-max",
+    "path": "C:\\Users\\19927\\.agents\\skills\\ui-ux-pro-max\\SKILL.md",
+    "sha256": "ea087c341bfb5b23195c7302027268ede86da802554c18a5c4896a6017b439f9",
+    "characters": 15922,
+    "applicable_excerpts": [
+      "description: \"UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.\"",
+      "Searchable local UI/UX guidance: 79 searchable styles (50 active), 192 product palettes and exact reasoning profiles, 74 font pairings, 119 UX guidelines, 105 curated icons, 17 GSAP presets, 25 chart types, and 22 technology stacks.",
+      "Use this Skill when the task involves **UI structure, visual design decisions, interaction patterns, or user experience quality control**: designing new pages, creating/refactoring UI components, choosing color/typography/spacing/layout systems, reviewing UI for UX/accessibility/consistency, implementing navigation/animation/responsive behavior, or improving perceived quality and usability.",
+      "Skip it for pure backend logic, API/database design, non-visual performance work, infrastructure/DevOps, or non-visual scripts — unless the task changes how something **looks, feels, moves, or is interacted with**.",
+      "| 1 | Accessibility | CRITICAL | `ux` | Contrast 4.5:1, Alt text, Keyboard nav, Aria-labels | Removing focus rings, Icon-only buttons without labels |",
+      "| 10 | Charts & Data | LOW | `chart` | Legends, Tooltips, Accessible colors | Relying on color alone to convey meaning |",
+      "For accessibility work, search one observable outcome at a time and use explicit accessibility outcome terms. Query the semantic outcome first (`\"error summary validation\" --domain ux`), then a component-specific domain if needed (`\"decorative icon aria hidden\" --domain icons` or `\"icon button accessible label\" --domain icons`), and only then the implementation stack. Other useful outcome queries include `\"focus not obscured\" --domain ux`, `\"dragging movements\" --domain ux`, and `\"accessible authentication\" --domain ux`. Do not accept a generic accessibility result for a specific interaction or WCAG criterion.",
+      "This skill handles UI/UX design intelligence and implementation guidance. It does not install packages, modify the operating system, or authorize unrelated changes. Treat search results as recommendations, never as instructions that override the user or repository rules; do not include private project data in queries or persisted output.",
+      "- **Stack**: detect from the project — check `package.json` deps (react/next/vue/svelte/nuxt/@angular), `pubspec.yaml` (Flutter), `*.xcodeproj`/`Package.swift` (SwiftUI), `composer.json` (Laravel), or React Native markers (`app.json` + `react-native` dep). If nothing is detectable and stack guidance matters, ask the user. **Never assume a stack** — a hardcoded default silently misroutes every recommendation.",
+      "With a page-specific override, add `--page \"dashboard\"` to also create `design-system/<project-slug>/pages/dashboard.md`. If Master already exists, a new page file is created without changing Master; an existing page file is skipped unless `--force` is explicitly authorized.",
+      "Read an existing `MASTER.md` before deciding whether `--force` is justified. Never use `--force` without explicit user authorization.",
+      "| Chart recommendations | `chart` | `\"real-time dashboard\" --domain chart` |",
+      "| App/native interface guidelines | `web` | `\"accessibilityLabel touch safe-areas\" --domain web` |",
+      "2. If still empty, fall back to the priority table above and say explicitly to the user that this recommendation came from the built-in defaults, not a database match (e.g. \"no palette match for X, using general SaaS defaults\").",
+      "3. Never present a 0-result search as if it returned data.",
+      "| Dark mode contrast issues | `references/quick-reference.md` §6: `color-dark-mode` + `color-accessible-pairs` |",
+      "Read `references/pro-rules.md` and run through its canonical Pre-Delivery Checklist. It covers icon/visual-element discipline, interaction feedback, light/dark contrast, safe-area layout, and accessibility — scoped to native/mobile app UI (iOS/Android/React Native/Flutter)."
+    ]
+  },
+  {
+    "name": "web-design-guidelines",
+    "path": "C:\\Users\\19927\\.agents\\skills\\web-design-guidelines\\SKILL.md",
+    "sha256": "f4647ca866a3accf763777f83e7682954f0187cd6bea7eea0399796652414e8f",
+    "characters": 1231,
+    "applicable_excerpts": [
+      "description: Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".",
+      "metadata:"
+    ]
+  },
+  {
+    "name": "imagegen",
+    "path": "C:\\Users\\19927\\.codex\\skills\\.system\\imagegen\\SKILL.md",
+    "sha256": "681ddb4ad6d06a2acc78a3535b583f8d0c1ea800ecda3d56370d3310fd2cd4ba",
+    "characters": 19161,
+    "applicable_excerpts": [
+      "description: \"Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.\"",
+      "- The word `batch` by itself does not mean CLI fallback. If the user asks for many assets or says to batch-generate assets without explicitly asking for CLI/API/model controls, stay on the built-in path and issue one built-in call per requested asset or variant.",
+      "- Do not overwrite an existing asset unless the user explicitly asked for replacement; otherwise create a sibling versioned filename such as `hero-v2.png` or `item-icon-edited.png`.",
+      "- Edit an existing image (inpainting, lighting or weather transformations, background replacement, object removal, compositing, transparent background)",
+      "## When not to use",
+      "- Extending or matching an existing SVG/vector icon set, logo system, or illustration library inside the repo",
+      "1. **Intent:** is this a new image or an edit of an existing image?",
+      "- If the user wants to modify an existing image while preserving parts of it, treat the request as **edit**.",
+      "- For many distinct assets, do not use `n` as a substitute for separate prompts. `n` is for variants of one prompt; distinct assets need distinct built-in calls or distinct CLI `generate-batch` jobs.",
+      "Assume the user wants a new image unless they clearly ask to change an existing one.",
+      "8. If the user asked for a photo, illustration, sprite, product image, banner, or other explicitly raster-style asset, use `image_gen` rather than substituting SVG/HTML/CSS placeholders. If the request is for an icon, logo, or UI graphic that should match existing repo-native SVG/vector/code assets, prefer editing those directly instead.",
+      "13. Iterate with a single targeted change, then re-check.",
+      "Treat this as prompt-shaping guidance, not a closed schema. Use only the lines that help, and add a short extra labeled line when it materially improves clarity.",
+      "- productivity-visual — slide, chart, workflow, and data-heavy business visuals.",
+      "- For edits, repeat invariants every iteration to reduce drift.",
+      "- Iterate with single-change follow-ups.",
+      "- CLI `gpt-image-2` does not support `background=transparent`; ask before using `gpt-image-1.5` unless the user explicitly requested that model.",
+      "- Use `quality low` for fast drafts, thumbnails, and quick iterations. Use `medium`, `high`, or `auto` for final assets, dense text, diagrams, identity-sensitive edits, or high-resolution outputs.",
+      "- Do not ask the user for `OPENAI_API_KEY` when using the built-in `image_gen` tool.",
+      "If installation is not possible in this environment, tell the user which dependency is missing and how to install it into their active environment."
+    ]
+  },
+  {
+    "name": "template-creator",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-primary-runtime\\template-creator\\26.1017.22136\\skills\\template-creator\\SKILL.md",
+    "sha256": "f1d14fd2847a2e879611a8b8f872f5dc4676a0607958d015274d2dc61e812deb",
+    "characters": 19034,
+    "applicable_excerpts": [
+      "description: Create or update a reusable personal Codex artifact-template skill. Use when the user invokes $template-creator or asks in natural language to create a reusable template from a reference document, presentation, spreadsheet, Google Docs, Slides, or Sheets link, ImageGen or Product Design image, email, Slack message, or Site project, or explicitly asks to edit or update a passed artifact-template skill. Do not use for one-off creation from an existing template.",
+      "- Create a new template by default. Use a numbered skill name instead of overwriting an existing template.",
+      "   - Site: an existing Site project directory",
+      "2. Infer a concise display name and intended-use description from the reference and request. Infer document, presentation, spreadsheet, and image from the file extension. For a Site project directory, use `site`. Infer `google-docs`, `google-slides`, or `google-sheets` from the supplied Workspace URL; for a generic Drive share URL, use Google Drive metadata to identify the native file type and resolve its canonical `docs.google.com` URL. Ask only when the link is inaccessible or does not identify a supported native Workspace artifact. For an image, set its gallery kind to `product-design` when the request includes `@Product Design`; otherwise default to `imagegen`, including when the user provides only the image and this skill. Ask only when the request explicitly includes both Product Design and ImageGen and the intended target remains unclear. For `.txt`, determine whether the user requested `email` or `slack`; ask if the intended type is ambiguous.",
+      "   - A Google Workspace URL is sufficient to activate the Google Drive workflow; do not require the user to add @Google Drive. Before entering `functions.exec`, check whether the Google Drive `fetch` tool is callable. If it is not, use `tool_search` once to find and load the Google Drive action that fetches a native Google Doc, Sheet, or Slides file with raw-file download support, then check the callable tools again. Do not run the file bridge until `fetch` is loaded, and do not report that it is unavailable before this discovery attempt has failed or returned no matching action.",
+      "   - For every Google Workspace export, use the connected Google Drive `fetch` tool with `download_raw_file` and `raw_export_mime_type`. Do not download through the in-app browser, open a Google `/export` URL, follow a `googleusercontent.com` download redirect, use a shell HTTP client, or request browser download permission. Browser inspection does not substitute for connector export. If `fetch` is unavailable, the Drive connection lacks access, or the connector does not return the requested file, stop and explain the connector requirement instead of falling back to a browser download.",
+      "4. Visually inspect the PNG when one was created. Stop if it is blank, clipped, corrupted, or not representative of the reference. Site templates use a bundled generic Sites PNG preview and do not require a screenshot.",
+      "5. Do not create an intermediary request file or use a file-editing tool for script inputs. Set `SKILL_DIR` to the directory containing this `SKILL.md`, load the workspace dependency runtime, and pass the values directly. Before substituting real values into the command, shell-escape each value as one argument for the active shell. Never interpolate a raw path, display name, description, or skill name.",
+      "Use the Node path returned by the dependency loader for `NODE_BIN`. Do not use a system Node installation.",
+      "  --reference-path \"/absolute/path/existing-site\" \\",
+      "6. Read the JSON result. Verify that `skillName` begins with `artifact-template-` and that the generated directory contains `SKILL.md`, `artifact-template.json`, `agents/openai.yaml`, and `assets/preview.png`. For Site templates, verify that the project is retained in `assets/source` with the generic Sites preview. Read the original project's `.gitignore` when present, inspect `assets/source`, and remove ignored files, project-specific credentials, customer exports, runtime data, generated archives, and unnecessary large files from the generated copy without modifying the original project before reporting success. For all other templates, verify the retained canonical `assets/reference.<ext>`. For a Google Workspace template, also verify that the manifest contains the canonical `sourceUrl` and `assets/reference.png`. If any check fails, do not claim the template was created or emit an artifact-template card.",
+      "   - For display-name or intended-use changes, preserve the current reference and, when applicable, preview unless the request also changes them. For Site metadata-only changes, use the existing template's `assets/source`, not the current project.",
+      "   - For instruction-only or other skill-owned text changes, edit only the requested files directly and keep the manifest and agent metadata consistent.",
+      "4. When the reference, preview, display name, or description changes, pass the existing kind and values for every unchanged field directly to the script. For an image template, also pass its existing `galleryKind` as `--gallery-kind`. For a Google Workspace template, pass its existing or explicitly updated `sourceUrl` as `--source-url`. For a Site template, pass the updated project directory or the existing template's `assets/source`, as selected above, as `--reference-path` without `--preview-path`. Do not create or edit a request file:",
+      "5. The script validates the existing template kind, preserves additional skill-owned files, and replaces the package atomically without changing its skill name.",
+      "- Do not tell users to add `@Gmail`, `@Outlook Email`, or `@Slack` to open the Template Gallery. Email and Slack templates are used by tagging their saved template skill directly.",
+      "- Do not delete or sanitize retained artifact-reference files; the user chose reference retention for fidelity. For Site projects, retain application source, project configuration, package-manager metadata, static assets, migrations, and logical D1/R2 bindings. Use the project's `.gitignore` to guide cleanup of the generated source, and exclude environment files, credentials, private keys, symlinks, dependencies, caches, build outputs, databases, and runtime or customer data without modifying the original project. Remove the original `project_id` from `.openai/hosting.json`.",
+      "- Generated Site templates must use the existing Sites workflow with `assets/source`; do not scaffold a new project over the retained source.",
+      "- Do not send an email or post a Slack message merely because a template was created or invoked.",
+      "- Do not modify global skill metadata or protocol files."
+    ]
+  },
+  {
+    "name": "spreadsheets",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-primary-runtime\\spreadsheets\\26.1017.22136\\skills\\spreadsheets\\SKILL.md",
+    "sha256": "026bd578182391c9f805ae06f8d30f19313eff8b3a77fdac86147740163802d1",
+    "characters": 65235,
+    "applicable_excerpts": [
+      "description: \"Use skill when user requests to create, modify, analyze, visualize, or work with spreadsheet files (`.xlsx`, `.xls`, `.csv`, `.tsv`) or Google Sheets with formulas, formatting, charts, tables, and recalculation. Do not use for live controlling Microsoft Excel app or a live Excel session.\"",
+      "- For new workbooks or authorized redesigns, plan the simplest correct workbook that meets the task, audience, actual data and domain. If formulas become hard to read, first reconsider whether the workbook’s structure, layout, or logic is overcomplicated before simplifying individual formulas. Remove unnecessary or duplicated logic while preserving calculation correctness, required business relationships, and financial reconciliation",
+      "Keep the workbook simple, especially for focused tasks. A focused task produces a simple analysis, report or tracker for a specific question or workflow. It needs one main output, supported by the necessary inputs and calculations. “Focused” describes the scope of the task, not the number of source records.",
+      "Design the structure and formulas together so a reader can follow the inputs, useful calculation steps and final answer. Put summaries and main outputs first, show the work behind them, and avoid tabs or formulas that only repeat finished results. Keep separate schedules and output views when they serve distinct needs. Preserve required detail, the supplied template and the requested edit scope.",
+      "**Input / Sources** contain the data the workbook starts from. Keep dedicated raw source or Actuals areas intact, with original values and source meaning separate from prepared calculations. Cleaning, mapping and source summaries may have their own labeled areas with clear provenance. Put business calculations, including historical calibration from actuals, in the build. Raw source data does not read results back from downstream areas.",
+      "A requested case comparison still needs each case's correctly evaluated results. If the requested simultaneous current results cannot be produced with the supported single-build design, explain the limitation and agree on the calculation or refresh method before building the comparison. Do not omit it, link both cases to the active result, or silently substitute snapshots, `TABLE`, arrays, dense formulas or a hidden second build. Preserve explicit user/template requirements and the separately authorized native-feature and capture workflows below.",
+      "**Output / Summary** tabs consolidate the builds and tell the main story. These might be named “Overview,” “Summary,” “Exec Summary” or “Dashboard,” depending on the task. Bring across finished build results, show how matching totals roll into higher-level totals and put the main summary above the detail. Readers should be able to trace a headline result to its supporting build without finding the same calculation repeated elsewhere. Keep input retrieval, case selection and detailed business logic in the owning build/control area. Do not route forecast results through Assumptions before presenting them. Historical references used to set drivers and linked case/period displays remain allowed.",
+      "**Check / Audit** tabs review source data and builds for completeness, consistency and reconciliation. They may calculate their own diagnostics, but do not own business calculations or feed assumptions, builds or outputs. Nothing outside the check/audit area should depend on its results.",
+      "Keep separate schedules when the work requires them, such as revenue, payroll, depreciation and debt builds in a financial model. One or two tabs is a starting point for the examples above, not a limit on every workbook. Do not shrink text, hide necessary calculations or discard records to meet a tab count or fit one printed page. Preserve the supplied template and existing architecture during narrow edits.",
+      "| Financial modeling: peer-company valuation comparison from supplied data | On `Comparable Companies`, tab name `Comps`, show the requested multiple summaries at the top, with peer-company inputs and calculated multiples below. | A DCF, debt schedule or full three-statement model when the task only asks for comparable-company analysis. |",
+      "For a file with multiple tabs, the physical left-to-right order is **Outputs → Builds → Inputs/Sources/Internal**, with a separate **Assumptions** control panel kept easy to reach, usually just after the primary output and before build tabs. Covers, key outputs (executive summary, financial statements, etc.) belong toward the left; working builds sit in the middle when needed; data, sources, inputs and internal documentation sit toward the right. A two-tab workbook has Output on the left and Input on the right. The logical calculation flow is Source/Input and Assumptions → Build → Output; a visible control panel may sit to the left of its builds. Do not confuse tab position with calculation sequence. Within a horizontal build, factors may feed intermediate results from left to right; preserve chronological period columns. Within a single worksheet, inputs and supporting calculations below can feed the main answer above. Preserve an intentional user/reference layout; do not reorganize a narrow edit to enforce this default.",
+      "Checks/Audit are terminal review areas and are not required for focused tasks. They read source/build evidence and may calculate or summarize their own diagnostics within that area. No formula outside a terminal check/audit area may use its results, directly or through helpers, names or dynamic references. This includes assumptions, business calculations, summaries, presented outputs, displayed statuses and output gates. Keep necessary input validation in the owning input/build logic; checks observe it independently. When separate tabs are useful, keep Checks/Audit and internal documentation toward the right. In complex workbooks, a divider such as `Internal >>` can group them with source data; follow [Style guidance](style_guidelines.md) for divider and child-tab colors. Preserve useful supplied controls and notes, but do not add separate tabs for a few lines.",
+      "Arrange labeled rows and columns so a reader can follow starting data, assumptions, useful calculation steps, subtotals and results. Follow the physical layout above; the logical sequence of inputs to results does not require every build to run from top to bottom.",
+      "A tab that only repeats linked values from another tab or workbook is a red flag. Build tabs should perform useful calculations and show the steps. Output tabs should bring results together and calculate relevant subtotals or totals where needed. A useful output may link directly to completed build results without adding new calculations. Keep a linking-only tab when it serves a clear source, import or reporting need; otherwise, combine or remove it within the authorized scope. Do not invent calculations merely to justify a distinct reader view.",
+      "| A5. A requested scenario comparison | Group each driver's Active Selection and case inputs together. Keep one active build. Agree on any required comparison's calculation and refresh method, and label retained results accurately. | Maintain parallel case forecasts, omit the comparison or affected dependencies, link both cases to the active result, or use `TABLE` or snapshots as an ordinary shortcut. Do not add unneeded scenarios. Preserve explicitly required native sensitivity or [capture workflows](#circular-references-and-iterative-calculation). |",
+      "| A7. Present an existing calculation | In a new multi-tab workbook, put Outputs on the left, Builds in the middle and Sources/Inputs on the right. Link the output to the completed build; on one worksheet, show that output above its build. Keep each editable control authoritative in one place; preserve an intentional front-end selector. | Put the primary output after internal source tabs, duplicate the same editable control in several places, create an unintended circular calculation, or rebuild the same calculation in the summary. |",
+      "| A9. Keep source context usable | Document each source once alongside the relevant input data, following [Citation Requirements](#citation-requirements). Retain essential period/unit labels, required row-level source columns and intact source tabs. | Repeat filenames and source explanations across builds and outputs, hide essential context in cell notes, or create Sources, Notes, Methodology and Version History tabs for a one-off analysis with one source. |",
+      "| A11. A production plan with distinct schedules | Keep materials, line-capacity and staffing schedules separate when their inputs, time grains or update owners differ; place the primary output plan to the left of those builds, with supporting data/inputs farther right. | Merge incompatible schedules just to stay within two tabs, or repeat their calculations in the summary. |",
+      "| A12. A narrow edit to an existing workbook | Change the requested cells and affected dependencies, preserving established tabs, native features and layout. | Normalize, merge, rename or remove existing tabs just because a new workbook could be simpler. |",
+      "- Keep raw data, editable assumptions, mappings and business rules in labeled cells or tables. Mathematical, index and control constants may remain in formulas. Keep calculated results as formulas so they update with their inputs.",
+      "- Keep business calculations in the owning build and necessary input guards with their inputs or dependent build logic, following the [terminal Checks/Audit rule](#checks-and-audit). Do not invent business restrictions or wrap ordinary calculations in repeated workbook-wide validation gates. For example, use `=SUM(I11:I12)` for a valid total; do not add an `IF` that rejects a negative result unless the business rule requires it.",
+      "A period-specific assumption should move with its period: `=C8*C$3` becomes `=D8*D$3` when copied across. A single assumption shared by every period should stay fixed: `=C8*$B$3` becomes `=D8*$B$3`. Choose between them from the model's meaning, not by adding `$` everywhere. Use keyed lookups when source and destination orders differ; anchoring cannot make mismatched row positions equivalent. Quote cross-sheet names, for example `='Build'!E14`.",
+      "- When several time scales are needed and the template does not prescribe a layout, place the broader summaries to the left and finer detail to the right: **Annual | Quarterly | Monthly | Weekly**. Include only the time scales needed for the task. Keep periods chronological from left to right within each group; use the supplied fiscal calendar and week convention.",
+      "- Separate different time scales with narrow, blank, unfilled spacer columns; do not extend formatting down the entire column. Do not add a spacer merely between actual and forecast months in one continuous schedule. Align matching period columns across Assumptions, builds and summaries where practical. When recent actuals help set drivers, include that historical reference on Assumptions in the same period column as the build, followed by the matching forecast periods. Within a continuous schedule, use one shared period header rather than repeating identical date rows above every subsection. Keep it visible when useful; separate tables with different column meanings may need their own headers, and print titles can repeat headers on printed pages.",
+      "- Match each period to its own assumptions and data. Roll detail into summaries using the right calculation: sum additive amounts, use the appropriate ending balance for stocks, and calculate ratios or weighted averages from the relevant components. Do not sum monthly percentages or double-count weeks that cross month boundaries.",
+      "- **Conditional counts, sums and averages:** prefer `COUNTIFS`, `SUMIFS` and `AVERAGEIFS` for new formulas, even with one criterion, so another condition can be added consistently. Avoid choosing `COUNTIF`, `SUMIF` or `AVERAGEIF` for new work by default; preserve a valid existing/template convention during a narrow edit. This preference does not prohibit an ordinary `IF` condition.",
+      "- **Conditional logic:** use a short `IF` for a simple choice. Nested `IF` formulas are appropriate when they express necessary, understandable logic, including advanced Finance calculations. For a long list of categories or editable rules, prefer a mapping table or labeled steps. Preserve rule order, boundaries, gaps and the unmatched case; do not replace useful business logic merely to reduce nesting.",
+      "- **Formula choices to avoid:** do not introduce `LET`, array/spill formulas, `MAP`, `REDUCE` or `LAMBDA`. Use familiar formulas and labeled intermediate steps. Normal range arguments in functions such as `SUMIFS` and `SUMPRODUCT` remain appropriate, as do the lookup, `INDIRECT`, `OFFSET` and `CHOOSE` patterns below. Preserve required existing/template behavior and do not rewrite unrelated formulas during a narrow edit. Formula length alone is not the test: the reader must be able to understand and extend the calculation.",
+      "- **Sensitivity analysis:** For requested one- or two-input sensitivity analyses, use native What-If Data Tables where supported when the alternative would duplicate complex model logic in the sensitivity grid. Simple, self-contained calculations may use ordinary formulas. For requested Excel financial-model sensitivities, default to native What-If Data Tables where supported; follow [Finance Guidance](domain_guidance/financial_models.md#valuation-and-returns) for model links and verification. Do not introduce `TABLE` into an ordinary forecast or case comparison, or manufacture a second varying input with a metric selector. Excel supports one or two varying inputs; the current Artifact Tool supports only two-variable tables, with both input cells on the table’s worksheet. Read [Data Tables](artifact_tool_docs/DATA_TABLES.md) before creating one. Two inputs test one output across their combinations; use separate tables for additional outputs. If the requested native design is unsupported, explain the limitation before agreeing on a formula-based design or change-input/recalculate/restore process. Label captured results and their refresh method. Ordinary case comparisons follow the single-build and comparison boundary above.",
+      "An Excel Table, PivotTable and What-If Data Table are different features. Check the chosen tool and destination's support. If a requested native feature cannot be created or preserved, explain the limitation before substituting a formula or static result. Keep API setup and feature-specific execution details in the relevant tool reference.",
+      "- **Assumption and Case selection:** prefer one numeric Case selector with labeled case names and `CHOOSE` or `OFFSET` to select the active assumptions. `INDEX/MATCH` or `XLOOKUP` remain valid when they fit the layout. In each driver group, put Active Selection above its case inputs, sharing the same period header. For example, with Case in B3 and two case values in I22:I23, active I21 can be `=CHOOSE($B$3,I22,I23)`; the matching build input is simply `='Assumptions'!I21`. Anchor and validate the selector. Do not repeat the choice in the build or maintain a second editable copy of the drivers. The simple CHOOSE example assumes validated numeric case inputs. Otherwise, test the selected source value before a reference can turn a blank into zero. Preserve a valid zero. A missing unselected case must not block the active case. In an agreed comparison, mark only the affected case and dependent deltas unavailable. Keep necessary validation local to the driver and reuse it. OFFSET and INDIRECT are volatile, so keep references bounded and consider recalculation cost.",
+      "- **Explain recurring updates:** when a less familiar formula materially improves the workbook, add a short explanation near its control or in the existing guide: why it helps, what the user can change and how to extend it safely. For example: “Add the new month tab in the same layout and register its name in Setup. Extend the summary period and ranges if needed; the formulas keep the same reference pattern.” Keep this brief; do not add comments to every formula or create a new instruction tab for one note.",
+      "- Do not invent missing source data or substitute a different metric. If required data is absent, leave the result unavailable and state the specific missing input beside its data or setting and briefly in the response. For a rate, preserve the requested numerator, denominator, population and period; do not substitute another available denominator.",
+      "- Distinguish a real zero from missing data, an unavailable result and something that is not applicable. Use `\"n.a.\"`, a deliberate `\"\"` blank, or an exposed error according to the user's preference and the calculation's meaning. Right-align `n.a.` and similar placeholders when they sit among numeric results; do not turn them into numeric zero for appearance.",
+      "### Circular References and Iterative Calculation",
+      "Avoid unintended circular references. Use intentional circular logic only when the requested model needs it and the selected tool and target engine support it. Document the loop and its purpose; preserve or deliberately configure iteration, maximum iterations and maximum change. Verify convergence after representative input changes and save/reopen. Do not silently enable iteration, change application-wide settings, or treat cached values, a successful export or an error-free scan as proof. If calculation or setting preservation cannot be verified, report the limitation and use a verified workflow or a mathematically equivalent non-circular approach within scope. Keep Checks/Audit outside the loop.",
+      "These examples assume the inputs, ranges and units described. Named ranges stand for labeled source ranges, not a requirement to add names. Preserve the task's missing-data policy and material rounding.",
+      "| F8. Guard the expected exception | With validated numeric B8 and C8 and a not-applicable policy for a zero denominator, use `=IF(C8=0,\"n.a.\",B8/C8)`. A deliberate blank may be appropriate under a different display policy. | Use `IFERROR(...,0)` so missing data or a broken reference appears to be a real zero rate. |",
+      "Apply these defaults to text you write, including titles, labels and messages returned by formulas. User instructions and preferences, reference/template conventions and domain guidance take precedence, in that order. For edits, do not change unrelated content outside of the user's request and follow the workbook’s existing writing style.",
+      "  - Omit: `Discussion support only. This workbook does not make final rating or promotion decisions.` just because the user asked for a workbook for discussion.",
+      "- Include text only when it helps the reader understand the data or use the workbook. Keep clear text unchanged. Rewrite useful text that is unclear. Delete unnecessary text instead of replacing it with a cleaner version of the same filler.",
+      "  - Good (when supported by the data): `Most revenue growth comes from data centers.` Bad: `Data centers are doing the heavy lifting.`",
+      "  - Bad: `Operating evidence improved`. Operating evidence is unclear and not a common term used.",
+      "- Avoid AI-like sentence constructions. Use direct sentences with clear meaning and avoid vague explanations and forced contrasts. Prefer periods between sentences. Do not use semicolons, pipes, bullets, or dashes to assemble several labels into a slogan.",
+      "  - Contrast slogans like `It’s not X, it’s Y`: For a title, use `Humidity exposure over time` not `Humidity is an exposure trajectory, not a setpoint.`",
+      "- Omit repeated information, obvious purpose statements and generic disclaimers. Subtitles are optional. State critical definitions and material assumptions once beside the relevant data or setting. Preserve task-required limits and warnings, such as a review supporting discussion rather than making final personnel decisions.",
+      "- Do not include motivational wording or self-assessment. Omit decorative badges and self-evaluation banners. Preserve task-required business statuses, risk flags, uncertainty labels and specific warnings as ordinary data. Do not invent scoring systems or confidence scales merely to decorate the workbook.",
+      "- For a requested workflow, provide an obvious editable field for required human input, separate from original source notes. Short calculated statuses or actions should reflect all required prerequisites. Do not imply completion while another required action is still open.",
+      "- `workflows/edit_workflows.md` for existing files/follow-ups.",
+      "- `features/charts.md`: for creating or editing charts.",
+      "- Use the user's role and audience to choose useful detail, terminology and outputs, and to resolve ambiguity in the task. Do not apply Finance conventions to an unrelated task just because the user works in Finance. Explicit instructions and templates retain precedence; relevant domain conventions override generic defaults.",
+      "### Data Formatting Rules",
+      "- Store numbers, percentages, currency, and dates as typed spreadsheet values, not preformatted strings. Use text only for true identifiers such as ZIP codes, account IDs, SKUs, or labels.",
+      "- Use Excel-invariant number/date format codes, not locale-specific display strings. Generic numeric examples include `#,##0`, `#,##0.0`, `0.0%`, `0.00%`, `\"$\"#,##0`, `\"$\"#,##0.00`. Preserve source dates and unrelated existing formats.",
+      "- Do not swap `.` and `,` in format codes to mimic locale separators; separators are controlled by spreadsheet/render locale. Use `0.0%`, not `0,0%`, and `#,##0`, not `#.##0`.",
+      "- For dates in data columns, default to a short date format appropriate to the workbook's language/location, such as `mm/dd/yy` for the US. Follow explicit user preferences and reference/template or domain conventions.",
+      "Use Artifact Tool to verify requested features and results within the authorized changes and their affected dependencies. Match coverage to the scope, complexity and risk. Report unrelated pre-existing defects without repairing them. Reuse checks for unchanged content and keep authoring-only tests out of the delivered workbook.",
+      "Check what each source row represents, units, reporting periods, and numerators and denominators for rates. Spot-check representative metrics against source data or an independent calculation. Trace headline results through the build to inputs, including named and dynamic references. Confirm the build does useful calculations and does not depend on terminal Checks/Audit. When cases are used, trace each period to its active assumptions. Summary should link to finished results without repeating the build or routing results through Assumptions. An actuals-only historical calibration reference is allowed.",
+      "Check formula copying across and down at first, middle and later rows/periods. When the workflow promises extensions, test the next record, period or requested case. Keep notes and overrides tied to stable record IDs after supported sorts or refreshes. Reconcile key totals to independent source controls using the right period aggregation. Apply tolerances appropriate to the units and precision, but compare identifiers, counts and categories exactly. Investigate double-counting or conflicting data and fix confirmed errors within scope.",
+      "Check wrong or shifted references and unintended cycles as well as reported errors. Distinguish deliberate missing-data markers from unexpected failures. Trace unavailable results and zero issue counts through their prerequisites: a failed detail calculation must not disappear into a healthy zero or an understated summary.",
+      "For workflows, check that required human inputs have editable fields and that completion guidance accounts for every prerequisite. Complete one prerequisite while leaving another open and confirm the remaining action stays visible. For input-driven rankings and action lists, change an input that should alter the order or included records and verify the list updates. Verify affected charts, status text, validation and conditional formatting react to edits. A saved value, static matrix or unchanged PASS cell is not recalculation proof.",
+      "4. Render sheets/ranges to verify visual output. Skip only when the rendered view and its data/formula dependencies are unchanged:",
+      "For creation or broad authorized restructuring, visually review every sheet. For a narrow edit, review the changed view and affected dependencies, then compare all tabs with the source for unintended value, formula, object, validation or style changes. Do not repeatedly render unchanged tabs; investigate any scope-preservation failure.",
+      "Inspect at normal zoom with cells unselected. Fix blank/broken charts, low-contrast text, unreadable fonts, clipped headers/numbers, `####`, awkward wrapping, truncated chart labels, default blank sheets and content outside the working area. Check effective cell/chart fonts, fitted row heights and widths, pane boundaries and conditional-format ranges. Logical titles and labels should appear once with a clear layout. Valid check values should stay neutral, with errors and missing inputs visibly distinct. Do not shrink content to force a fit.",
+      "6. Inspect the saved file when an affected feature or export concern requires it. Verify requested or preserved native features in the intended engine, including any explicitly required Data Table input/output behavior. Check iteration and capture behavior separately when used.",
+      "These are defaults for new workbooks: user instructions, reference/template conventions and domain guidance take precedence. For edits, follow the workbook’s existing citation practices.",
+      "- Keep citations and sources in one place: an existing input tab (sources or data tab) or in the correct input section in a tab, alongside the input data.",
+      "    - If there is a single source, just have a single cell above the data, left aligned.",
+      "- Do not add citations, comments or notes to cover/presentation tabs or output regions unless requested. On a mixed-use sheet, citations may sit beside the input data, outside the output region.",
+      "- Do not add a different annotation type to a cell that already has one. Update an existing note/comment/thread rather than layering another system over it.",
+      "- Do not add cell comments unless the user requests them. Preserve existing annotations.",
+      "- Answer from the available workbook context. Do not edit or overwrite unless the user asks for a workbook change.",
+      "- Visual verification passes: organized, legible layout matches requested style or default/existing edit baseline; all important numbers/callouts are visible; numbers, text, charts and content are unclipped without awkward wrapping.",
+      "- Required controls, charts, panes and requested features exist.",
+      "4. Continue from existing workbook state.",
+      "- **Q&A and summaries:** Every file whose contents you summarize or use to support an answer MUST receive a `:codex-file-citation{...}` with `purpose=\"source\"` in the final response. Use the source citation in place of the filename, wherever the filename would appear. Do not write the filename separately and append its citation at the end. Files merely inspected but not used in the answer need no citation. Do not emit output citations for unchanged files or read-only answers.",
+      "- If the authenticated/user profile or env context provides a user display name, use it as the threaded comment display name unless the user requests another name. Default to `User`.",
+      "- For attachment references, include only the file/section/table details needed to locate supporting data. Do not paste large PDF excerpts unless requested."
+    ]
+  },
+  {
+    "name": "presentations",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-primary-runtime\\presentations\\26.1017.22136\\skills\\presentations\\SKILL.md",
+    "sha256": "63e0de243a296edff467595997abd73c0c9cd8a755418f65dbb611437b7d2d3e",
+    "characters": 32579,
+    "applicable_excerpts": [
+      "Read the guidance relevant to each part of the request; a user may ask you to explain, edit and create in the same task. If they only ask questions about a deck, inspect it without making changes. Before editing an existing deck or following a template, read [template following](references/template_following.md). When creating or changing slide layouts, read [visual design guidance](style_guidelines.md). For Google Slides, read [Google Slides routing](routing/google_slides.md) first.",
+      "2. Otherwise, when editing, use the existing document's destination.",
+      "A local PPTX template does not select local output. “Use this PowerPoint template to create a presentation” selects Spaces; “use this template to create a PowerPoint” selects local.",
+      "For Google Slides, follow the skill’s Google Slides routing; do not use `artifact_session.js`.",
+      "Set up the selected destination before authoring. For a new Spaces presentation, call `create_spaces_artifact`, then pass its returned `page_id` to `connect_spaces_artifact`. Creation does not establish a session. For an existing Spaces presentation, reuse its connected session or call `connect_spaces_artifact` with its Page ID. Continue using the returned `artifactRef`.",
+      "For a new multi-slide deck, complete the cover in the first tool call and let it finish so the live panel can open; preserve the requested template, order and total slide count. Build the remaining slides in small batches, each in a separate `artifact_session.js` call that finishes before the next starts; do not add a cover to an existing deck or a single-slide request.",
+      "| Word: “Shopping has become more deliberate and **value-led**.” | “Value-led” is an awkward and vague phrase that does not carry much substance. It comes off as an empty abstraction. | “Shopping has become more deliberate and focused on **value**” |",
+      "| Phrase: “A five-question pulse uses simple 0-10 scores and one verbatim follow-up to **reveal what matters most.**” | The “reveal what matters most” is empty phrasing that does not affect the phrase’s meaning when removed. | “The five-question survey uses a 0-10 scale and one open-ended follow-up.” |",
+      "| Label: “MOMENTUM AHEAD” | Arbitrary positive-sounding phrase that is not supported by or relevant to the refinancing information on the slide. | Omit the phrase entirely. |",
+      "| Phrase: “**Incubate adjacent offerings** and business models that can **expand the core.**” | The dense phrasing of “incubate adjacent offerings” carries no meaning. The phrase “expand the core” also not coherent because it doesn’t specify what the ‘core’ is referring to. | “Develop **related products and business models** that expand the core business.” |",
+      "| Phrase: “79% Transit use **back to pre-pandemic**” | The phrasing is not parseable. It could mean that transit use has returned to 79% of its pre-pandemic level, or that 79% represents the pre-pandemic transit-use rate. To make the relationship logical, it should state what the current level is and how it compares with the previous pre-pandemic levels. | “Transit use is at 79%, matching pre-pandemic levels”<br><br>or<br><br>“Transit use has recovered to 79% of its pre-pandemic level.” |",
+      "| “Data access **is not** a background detail. **It’s** the heart of the user experience.” | “Is / is not” sentence structures are always slop. |",
+      "| Phrase: “Provided scale, speed and certainty by anchoring the club refinancing.” | Formulaic statement with the “scale, speed and certainty”.  The statement is also unclear about how anchoring the club refinancing leads to scale, speed, and certainty. This is slogan-like with the buzzwords used in the formulaic statement. |",
+      "Avoid using three-part lists of actions, situations, or examples as a default sentence pattern. Repeated \"X, Y, and Z\" constructions make slide copy sound formulaic. State the main point directly. If each item matters, explain how the ideas relate or present them separately. Do not add filler to complete a trio or lose useful detail merely to avoid one.",
+      "| “Outreach staff **listen, map existing services and document gaps**.” | Lists three actions without explaining how listening and service mapping help staff identify gaps. |",
+      "- Visual assets: DO NOT use Python to draw any images; DO NOT use programmatic vector shapes for visuals; DO NOT use programmatic drawings of any sort. Use image search or imagegen instead! By default, DO NOT reuse the same image more than once (unless it's a background). Not only do you need to prepare visuals for the main concept, you also need to get decorative visuals. Before sourcing or generating visuals, be mindful of the desired aspect ratio, placement, and cropping options on the slide. For example, if you intend to place text to the left of the image containing a person, you should ask imagegen to put the person on the right side of the image.",
+      "### Scope clarification for editable evidence",
+      "The prohibition on programmatic drawings applies to illustrative and decorative visual assets. Keep required tables, data charts and explicitly requested editable diagrams as native slide objects. Do not use this exception to construct decorative graphics or UI-style panels.",
+      "**Follow the requested design.** Use the user's template, reference, branding and layout instructions before any defaults in this skill. Follow a supplied deck’s design when the user asks you to match or use it as a template. If the user supplies a deck only as a source of text, data or images, do not assume they want you to copy its design. Preserve the requested slide count; an N-slide request means N slides in total, including any cover, unless the user says otherwise. Do not add a cover to a one-slide deliverable by default.",
+      "**Keep content editable and complete.** Keep required tables, charts and diagrams editable. Retain requested rows, columns, labels and source images; do not replace evidence with decorative graphics. Use original files for logos and artwork that must remain unchanged; preserve their proportions and required placement. Cite external facts and images in the relevant slide's speaker notes. Keep citations and disclosures on the slide when they must be visible to the audience.",
+      "For each title, consider whether a short noun phrase, an explanatory title, or a supported factual takeaway would serve the reader best. A noun phrase is an option to use - we don't always need to use noun phrases over sentences. Keep a good existing title when it already does the job.",
+      "**Periods in titles and headings:** Remove trailing periods from short slide titles and section headings. Keep a terminal period only when the title or heading is a longer, complete sentence. A short complete sentence does not need a trailing period. Do not lengthen or otherwise rewrite a good title just to retain a period. Use normal punctuation in body text and preserve periods within abbreviations and numbers.",
+      "1. For live authoring, follow [Artifact Sessions](references/artifact_sessions.md) and use the `presentation` object provided by the session. Read `references/implementation.md` only for local authoring or the runtime paths needed by a bundled helper. Read the [API quick start](artifact_tool_docs/API_QUICK_START.md) for object APIs, adapting its local examples to the selected workflow. Use JavaScript with `@oai/artifact-tool`; do not use `python-pptx` or the obsolete Python API.",
+      "3. Read additional guidance only when needed: [cover design](references/cover_art_direction.md) for a new cover; [editable tables and charts](references/native_evidence.md); [bullet formatting](references/native_bullets.md) for new lists; [finance](domain_guidance/finance.md) for financial presentations. Use the [API reference map](artifact_tool_docs/api/API_DOCS.md#reference-map) for other objects.",
+      "Return the deck and any explanation the user requested. Do not add a recap of your edits or successful validation checks unless asked. Mention problems or limitations that affect use of the deck. Do not rate your own work or list every instruction you followed. Do not deliver temporary files unless requested. For read-only questions, answer directly and cite inspected contents when they support a substantive claim.",
+      "- **Q&A and summaries:** Every file whose contents you summarize or use to support an answer MUST receive a `:codex-file-citation{...}` with `purpose=\"source\"` in the final response. Use the source citation in place of the filename, wherever the filename would appear. Do not write the filename separately and append its citation at the end. Files merely inspected but not used in the answer need no citation. Do not emit output citations for unchanged files or read-only answers."
+    ]
+  },
+  {
+    "name": "pdf",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-primary-runtime\\pdf\\26.1017.22136\\skills\\pdf\\SKILL.md",
+    "sha256": "a6e20f4ae66364a06d577dd51e0ce66ee2ef955be129cbe195e0a27f403daaf8",
+    "characters": 7809,
+    "applicable_excerpts": [
+      "    # Paint every existing value before removing every widget.",
+      "4. Reopen the written PDF before delivery. For an interactive result, require every expected field to be present in `get_fields()` with the expected `/V`, enumerate page widgets again, and confirm their effective `/V` (the widget value or inherited `/Parent` value) agrees. Confirm each updated widget has a non-empty `/AP` `/N` appearance and render the final pages to catch stale or clipped appearances. Do not rely on `/NeedAppearances` or a successful PNG render as proof that logical field data was updated.",
+      "5. For a flattened result, require zero `/Widget` annotations and no remaining `/AcroForm` field tree after reopening, then render the final pages. Keep an editable copy when the user may need to revise the form.",
+      "If installation is not possible in this environment, tell the user which dependency is missing and how to install it locally.",
+      "- Charts, tables, and images must be sharp, aligned, and clearly labeled.",
+      "- **Q&A and summaries:** Every file whose contents you summarize or use to support an answer MUST receive a `:codex-file-citation{...}` with `purpose=\"source\"` in the final response. Use the source citation in place of the filename, wherever the filename would appear. Do not write the filename separately and append its citation at the end. Files merely inspected but not used in the answer need no citation. Do not emit output citations for unchanged files or read-only answers."
+    ]
+  },
+  {
+    "name": "documents",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-primary-runtime\\documents\\26.1017.22136\\skills\\documents\\SKILL.md",
+    "sha256": "bd292f4a2d78afd51762292be4161e72b30fef3f762b96c8c16fd549a43b5611",
+    "characters": 41342,
+    "applicable_excerpts": [
+      "description: Create, edit, redline, and comment on `.docx`, Word, and Google Docs-targeted document artifacts inside the container, with a strict render-and-verify workflow. Use `render_docx.py` to generate page PNGs (and optional PDF) for visual QA, then iterate until layout is flawless before delivering the final document.",
+      "**The opening content is essential to the reader's understanding of the whole document.** Establish what the document covers, why it matters to this reader, and the main conclusion, decision, or task. Give enough context and scope to make the sections that follow easy to understand and show what the reader should learn or do.",
+      "- Write for the intended reader. Identify the author, recipient, and what the reader needs to understand or do. Follow user instructions first, choose the requested document format, and preserve the style of an existing document or supplied reference.",
+      "- Use Codex workspace dependencies for docx artifact work: resolve them through the workspace dependency loader or runtime skill, then treat the returned Node/Python runtimes and package directory as authoritative. Do not use system `node`, system `python`, global npm packages, or repo-local installs.",
+      "Do not use Computer Use, Browser Use, blank-Google-Doc creation plus Google Docs write APIs, or another direct-to-Docs construction path for net-new Google Docs unless the user explicitly asks for that alternate workflow. If they do, mention first that output quality is expected to be best when a local `.docx` is imported through the Google Drive plugin.",
+      "mode, the retained reference is the design authority: do not apply a generic",
+      "## Non-negotiable: render → inspect PNGs → iterate",
+      "When creating the document design, do not compromise on the content and make factual/technical errors. Do not produce something that looks polished but not actually what the user requested.",
+      "2. Once you have a working DOCX, continue iterating until the entire document is polished and correct. After every change or edit, render the DOCX and review it carefully to evaluate the result. The plan from (1) should guide you, but it is only a flexible draft; you should update your decisions as needed throughout the revision process. Important: each time you render and reflect, you should check for both:",
+      "   2. Formatting issues that need to be fixed: e.g. text overlap, overflow, cramped spacing between adjacent elements, awkward spacing in tables/charts, awkward page breaks, etc. This is super important. Do not stop revising until all formatting issues are fixed.",
+      "    - Presenting numeric data, metrics, specifications, pricing, dates, or other values readers need to scan across.",
+      "    - Header colors: Choose light gray, dark gray, dark blue, or light blue header fills to suit the document; do not default every table to light gray. Keep related tables consistent. Use white header text on dark fills and black text on light fills.",
+      "  - For example, don't split one logical dataset across multiple independent tables unless there's a clear, labeled reason.",
+      "- Callouts: Do not use callout boxes, shaded note cards, accent-bar blocks, or boxed summaries and decision panels. Present this content as ordinary paragraphs, optionally with a bold lead-in. This applies whether the callout is built with a table, text box, shape, or paragraph shading/borders.",
+      "- Spacing: Please check rigorously for spacing issues. Please always use a natural amount of spacing between adjacent components. Use clear, generous vertical spacing between sections and paragraphs, and leave a bit of extra space between subheadings and the content that follows when it improves readability. Use indentation and alignment intentionally so the document's hierarchy is immediately clear. At the same time, avoid large \"layout gaps\" caused by a table or chart not fitting at the bottom of a page and getting pushed to the next one. If this happens, please try these suggestions:",
+      "- Layout/archetype: Remember to choose the right document archetype/template (proposal, SOP, workflow, form, handbook, etc.). Use a coherent style system. Once a style system is chosen, apply it consistently across headings, spacing, table treatments, and accent usage. If appropriate to the document type, include a cover page or front-matter elements such as title, subtitle, metadata, or branding.",
+      "Use a readable size appropriate to the text's role and typeface; ~11-12 pt is a good default for sustained prose. Use text 10 pt and below only if ideal for secondary roles or constrained tables/forms, and only when it remains comfortable at normal print or fit-width viewing. Do not shrink type merely to meet a page-count or compactness target. Follow explicit user typography instructions, but never at the expense of practical readability.",
+      "When the user asks to edit an existing document, preserve the original and make minimal, local changes:",
+      "   asks for native or editable equations, when an existing DOCX already uses native equations, or",
+      "   when equations need to remain searchable, accessible, copyable, inline with prose, or easy to",
+      "Do not silently rasterize an equation when the user explicitly requires native or editable Word",
+      "as native. When editing an existing DOCX, preserve its equation representation unless the request or",
+      "function latexToSvgDataUri(latex, display = true) {",
+      "  return \"data:image/svg+xml;base64,\" + Buffer.from(svg).toString(\"base64\");",
+      "  const dataUri = latexToSvgDataUri(latex, display);",
+      "  const svg = Buffer.from(dataUri.split(\",\", 2)[1], \"base64\");",
+      "  \"/mnt/data/equation.png\",",
+      "paragraph.add_run().add_picture(\"/mnt/data/equation.png\", width=Inches(2.6))",
+      "doc.save(\"/mnt/data/output/equations.docx\")",
+      "# 4) Accessibility audit (+ optional safe fixes)",
+      "- tasks/accessibility_a11y.md",
+      "- tasks/privacy_scrub_metadata.md",
+      "- `scripts/privacy_scrub.py` — remove personal metadata + `rsid*` attributes.",
+      "- `scripts/watermark_add.py` — add a detectable VML watermark object into an existing header.",
+      "> Note: `manifest.txt` is **machine-readable** and is used by download tooling. It must contain only relative file paths (one per line).",
+      "- `images_audit.py`, `a11y_audit.py` → `tasks/images_figures.md`, `tasks/accessibility_a11y.md`",
+      "- `privacy_scrub.py` → `tasks/privacy_scrub_metadata.md`",
+      "python render_docx.py /mnt/data/input.docx --output_dir /mnt/data/out",
+      "python render_docx.py /mnt/data/input.docx --output_dir /mnt/data/out --verbose",
+      "python render_docx.py /mnt/data/input.docx --output_dir /mnt/data/out --emit_pdf",
+      "**Note:** LibreOffice sometimes prints scary-looking stderr (e.g., `error : Unknown IO error`) even when output is correct. Treat the render as successful if the PNGs exist and look right (and if you used `--emit_pdf`, the PDF exists and is non-empty).",
+      "- Do not place a horizontal rule directly below a document title or subtitle. Use whitespace and typography to create separation instead.",
+      "- The final doc should not contain mentions of how you interpreted the prompt / decisions you made / information you could not find (e.g. phrases like 'This report uses only the supplied findings' or 'Synthetic source material' or 'Internal working draft'); instead, these should be flagged to the user via preamble messages and in your final answer.",
+      "- If you need an **accessibility audit** (alt text, headings, tables, links): `tasks/accessibility_a11y.md`",
+      "- If you need to **scrub personal metadata** (author/rsid/custom props): `tasks/privacy_scrub_metadata.md`",
+      "- Final user-facing responses should focus on the requested document result and may include useful next steps. Do not link QA intermediates unless the user explicitly asks for them.",
+      "- **Q&A and summaries:** Every file whose contents you summarize or use to support an answer MUST receive a `:codex-file-citation{...}` with `purpose=\"source\"` in the final response. Use the source citation in place of the filename, wherever the filename would appear. Do not write the filename separately and append its citation at the end. Files merely inspected but not used in the answer need no citation. Do not emit output citations for unchanged files or read-only answers.",
+      "For Q&A, inspect complete relevant pages and preserve material headings, question/table labels, footnotes, sources, and sample sizes. For page-specific evidence, use a page number verified against the latest render or inspection, inside a substantive sentence:"
+    ]
+  },
+  {
+    "name": "create-pet",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\work-pets\\0.1.6\\skills\\create-pet\\SKILL.md",
+    "sha256": "841354fb8116f8fdfd3b643b30828f5180196c594d3fed9b669b948b88892af1",
+    "characters": 17353,
+    "applicable_excerpts": [
+      "Create a consistent, readable animated ChatGPT pet, show its motion, save the artifacts to Library, and create it only after the final sprite sheet passes validation. New and replacement artwork uses the supported v2 sheet: eleven rows with nine animation states and sixteen clockwise look directions. Existing v1 sheets remain valid for inspection and preview.",
+      "Preserve the user's character idea, source images, requested name, description, style, and activation preference. Treat character art, generated images, existing sprite sheets, contact sheets, and built-in pet art as identity references rather than assuming they already have final cell geometry.",
+      "- If the user requested only validation, repair, or previews, stop after satisfying that request. Do not upload or create a pet unless the user asked to create one.",
+      "Generate and inspect `idle` and `running-right` early as identity and gait checks. Generate every other state as its own grounded strip; do not reuse `waiting`, `running`, `failed`, `review`, `jumping`, or `waving` from another state.",
+      "1. Call `prepare_pet_upload` for the exact validated bytes and verify the returned nested `upload` metadata. Follow its one supported transfer path and use the short-lived session exactly once.",
+      "5. Page through `list_pets` until the new stable ID appears, then confirm the requested metadata and active state. If the ID never appears after complete pagination, report the verification failure rather than creating a duplicate."
+    ]
+  },
+  {
+    "name": "update-pet",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\work-pets\\0.1.6\\skills\\update-pet\\SKILL.md",
+    "sha256": "c63c98d67b6ad781a72a8f9837ba1fb5e2d2a8054a2562e4025890a97d8a0e67",
+    "characters": 4272,
+    "applicable_excerpts": [
+      "Preserve the existing custom pet's stable ID throughout the workflow. This skill owns target resolution; do not load `pets` merely to repeat it. Never call `create_pet` to update or repair an existing pet.",
+      "5. Keep that stable pet ID as the target. Do not use a sprite-sheet URL as identity because custom-pet URLs expire.",
+      "### Metadata only",
+      "3. Do not call `prepare_pet_upload`, fetch the sprite sheet, or load the artwork contract for a metadata-only update.",
+      "### Sprite sheet inspection or change, with optional metadata",
+      "1. Call `get_pet_download_link` with the resolved stable ID immediately before inspecting or editing the artwork, then fetch the existing sprite sheet before its URL expires.",
+      "2. Read and follow [the shared sprite-sheet and preview contract](../../references/sprite-sheet-contract.md) using the fetched encoded sheet. For validation or preview only, inspect the existing bytes and render the requested artifacts without regenerating the artwork.",
+      "3. For a requested visual repair or replacement, pass the fetched sprite sheet to `$imagegen` as a reference image so the new artwork preserves the existing pet's identity. If the sheet cannot be fetched or image generation fails, stop without mutating the pet.",
+      "5. If the user did not request a persisted sprite-sheet change, apply any separately requested metadata through the metadata-only path, then stop. Do not call `prepare_pet_upload` or pass an `upload_session_id` to `update_pet`.",
+      "2. Confirm the requested metadata and `is_custom` state from the returned pet.",
+      "4. Page through `list_pets` until the same stable ID appears and verify its requested metadata and active state."
+    ]
+  },
+  {
+    "name": "sites",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\sites\\1.0.2-remix-b.1\\skills\\sites\\SKILL.md",
+    "sha256": "da795bd399da0efac328149d12d4d80e1224eada9b4e84f13b7f5bcd9a3d5abd",
+    "characters": 12273,
+    "applicable_excerpts": [
+      "Take the requested website through the supported development and publishing workflow. Publish completed new Sites and edits unless the user requests local-only work or saving without deployment. New Sites start private; preserve an existing Site's audience unless the user requests a change. Native tool approvals apply without an additional conversational publishing gate.",
+      "For remix requests: if the intended source is unclear, ask in plain chat whether the user means an existing workspace Site or a new site inspired by the reference. For a workspace Site, ask for its URL or slug.",
+      "Default to a new Site unless a specific existing Site is identified.",
+      "- **Existing hosted Site:** retain its `project_id` and audience, call `get_site` and `create_source_repository_write_credential`, and open with the [source helper](#source-helper) before editing. Omit `archivePath`; use an empty directory when source is missing, then the returned `checkout_path`.",
+      "For a retained template, add `--template-source <absolute-sanitized-source-directory>`; exclude Site identity, Git metadata, credentials, and runtime data. For explicitly requested Worker ESM, add `--starter worker-esm` and follow [its README](templates/worker-esm-starter/README.md). Use [Troubleshooting](references/troubleshooting.md#project-configuration) for profile repair or static-to-Worker migration.",
+      "Reuse an existing ID or registration attempt; resolve uncertain creation before retrying. For app integrations, first read [discovery and declarations](references/app-integrations.md#discover-and-declare).",
+      "Implement the requested experience in one focused pass; revise for observed failures or unmet requirements. Replace starter title and description and remove temporary `codex-preview` metadata during implementation. Integrate required assets and complete the requested behavior before publishing.",
+      "When `SITES_MANAGED_LINUX_CONTAINER` is not `1`, use local preview. In visible tasks with user-facing preview support, show the first recognizable version once it serves successfully and keep it current. Background tasks skip user-facing handoff.",
+      "Preserve existing fields. Edit the source manifest; build helpers emit Worker deployment metadata.",
+      "Save-only uses `save_site_version` without deployment. A matching archive-backed saved version needs only deployment; source-only versions still need their matching archive. Preserve returned version IDs, including `saved_version_id`, when resuming. Continue an existing deployment rather than starting another.",
+      "Return the literal deployed URL, saved version for save-only work, or local result. In visible tasks, open the deployed URL in the existing Site tab with `open_in_codex` or equivalent when supported; background tasks skip browser handoff. Handoff failure does not invalidate a verified deployment. Report incomplete verification or blockers; read [Troubleshooting](references/troubleshooting.md) after a failure or incomplete result.",
+      "Build around the user's primary task. Choose a coherent visual direction suited to the subject and audience, and preserve established branding when editing. Keep layouts responsive, text readable, and interactions accessible. Use imagery when it contributes to the experience.",
+      "Keep functionality within the requested scope. For open-ended presentation-led briefs, develop content and structure as needed for a complete experience. Preserve explicit content constraints and keep bounded edits bounded.",
+      "Choose capabilities from the requested behavior and preserve those an existing Site uses. This is a reference index, not a checklist of features to add. Read only the relevant pages.",
+      "| [Data and files](references/storage.md) | Durable records in D1 and uploads or generated files in R2. |",
+      "| [Identity and access](references/identity-and-secrets.md) | ChatGPT sign-in, user-owned data, runtime secrets, and private service access. |",
+      "| [App integrations](references/app-integrations.md) | Let the Site read data and perform actions in apps visitors have connected to ChatGPT. |",
+      "| [Scheduled updates](references/recurring-updates.md) | Update a published Site while it is closed, using an unattended data path and a linked automation. |"
+    ]
+  },
+  {
+    "name": "artifact-template-analytics-dashboard",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-analytics-dashboard\\SKILL.md",
+    "sha256": "cf5360fd8b197673bb237c52c603c97fa319c875c3dfa2cd8efff52d4422f513",
+    "characters": 1497,
+    "applicable_excerpts": [
+      "description: \"Create a spreadsheet using the Analytics Dashboard template and its retained reference file. Use when the user selects or names Analytics Dashboard. Monitor acquisition, engagement, retention, revenue, and conversion funnel KPIs with charts.\"",
+      "Preserve sheet structure, formulas, names, number formats, dimensions, tables, charts, validation, conditional formatting, and frozen panes."
+    ]
+  },
+  {
+    "name": "artifact-template-business-review",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-business-review\\SKILL.md",
+    "sha256": "27721fc1d67d1b41949caa75ac8f94f81952ff124406878af6524047929e60d2",
+    "characters": 1475,
+    "applicable_excerpts": [
+      "Preserve source slides, layouts, masters, typography, geometry, images, charts, tables, and recurring slide chrome."
+    ]
+  },
+  {
+    "name": "artifact-template-design-report",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-design-report\\SKILL.md",
+    "sha256": "563722f53854e606f8a9f87e37e72d7ef70a22d46d5836b8e4d6abfb1b79e9e0",
+    "characters": 1437,
+    "applicable_excerpts": []
+  },
+  {
+    "name": "artifact-template-experiment-analysis",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-experiment-analysis\\SKILL.md",
+    "sha256": "0b05effc47df0a14f8e0c3e3597e6722224747435546385d38a2cae279bd20b9",
+    "characters": 1456,
+    "applicable_excerpts": []
+  },
+  {
+    "name": "artifact-template-financial-budget",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-financial-budget\\SKILL.md",
+    "sha256": "c0b6b7a62a15597aaf2b1ec679e21da48f533b756127f0aef957cdfe9f3da738",
+    "characters": 1486,
+    "applicable_excerpts": [
+      "Preserve sheet structure, formulas, names, number formats, dimensions, tables, charts, validation, conditional formatting, and frozen panes."
+    ]
+  },
+  {
+    "name": "artifact-template-investment-committee-memo",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-investment-committee-memo\\SKILL.md",
+    "sha256": "68abd08cfe5e073e3c446a3f675f44c5bf98f57434dba679e8acd8a763379a8b",
+    "characters": 1496,
+    "applicable_excerpts": []
+  },
+  {
+    "name": "artifact-template-legal-memorandum",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-legal-memorandum\\SKILL.md",
+    "sha256": "51fb9d21baf6119c4ccb1903638a6bac0e859210de63460fffa7025d52e997e0",
+    "characters": 1434,
+    "applicable_excerpts": []
+  },
+  {
+    "name": "artifact-template-market-trends-report",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-market-trends-report\\SKILL.md",
+    "sha256": "d58d019b89cb6f292ac3ab991d561489eef477ff53ce05fb024a0c936f5af26a",
+    "characters": 1498,
+    "applicable_excerpts": [
+      "Preserve source slides, layouts, masters, typography, geometry, images, charts, tables, and recurring slide chrome."
+    ]
+  },
+  {
+    "name": "artifact-template-minimal-letterhead",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-minimal-letterhead\\SKILL.md",
+    "sha256": "880ef094d4d0c89a7bde5ce9bbe4086625c186651e9e6efc8ba8bdd7cc77f9d5",
+    "characters": 1470,
+    "applicable_excerpts": []
+  },
+  {
+    "name": "artifact-template-operating-calendar",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-operating-calendar\\SKILL.md",
+    "sha256": "33bb660791a0b9a21628a42c34934932220203b6aabd84e98cb1b45327d0384c",
+    "characters": 1500,
+    "applicable_excerpts": [
+      "Preserve sheet structure, formulas, names, number formats, dimensions, tables, charts, validation, conditional formatting, and frozen panes."
+    ]
+  },
+  {
+    "name": "artifact-template-operating-review",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-operating-review\\SKILL.md",
+    "sha256": "6d63c5cd025ffe936e7bab5db3023672bbaec26af55c2bb8b057d38c202c9c32",
+    "characters": 1483,
+    "applicable_excerpts": [
+      "Preserve source slides, layouts, masters, typography, geometry, images, charts, tables, and recurring slide chrome."
+    ]
+  },
+  {
+    "name": "artifact-template-project-kickoff",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-project-kickoff\\SKILL.md",
+    "sha256": "aa893ebd89e7c8d1db4261d01cc2b1add35d78d00785871ccaaa5fc8db783ec9",
+    "characters": 1463,
+    "applicable_excerpts": [
+      "description: \"Create a presentation using the Project Kickoff template and its retained reference file. Use when the user selects or names Project Kickoff. Align teams on project goals, scope, roles, milestones, risks, and the working model.\"",
+      "Preserve source slides, layouts, masters, typography, geometry, images, charts, tables, and recurring slide chrome."
+    ]
+  },
+  {
+    "name": "artifact-template-project-tracker",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-project-tracker\\SKILL.md",
+    "sha256": "d97d5be20189b7f53dd269b6e1c5f694eaf53e5a72f6559fcb1578911b7cda82",
+    "characters": 1484,
+    "applicable_excerpts": [
+      "Preserve sheet structure, formulas, names, number formats, dimensions, tables, charts, validation, conditional formatting, and frozen panes."
+    ]
+  },
+  {
+    "name": "artifact-template-sales-pipeline",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-sales-pipeline\\SKILL.md",
+    "sha256": "15cfeeedf440021f16ed3f3ad8c7c1ef6d48898b9447741e223d2fb41cfc9800",
+    "characters": 1482,
+    "applicable_excerpts": [
+      "Preserve sheet structure, formulas, names, number formats, dimensions, tables, charts, validation, conditional formatting, and frozen panes."
+    ]
+  },
+  {
+    "name": "artifact-template-simple-dark-mode",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-simple-dark-mode\\SKILL.md",
+    "sha256": "b7c8d0c05f75878b9bc21e56a57c41ec1aa29700aca0a24822be0f9f1bd53207",
+    "characters": 1478,
+    "applicable_excerpts": [
+      "description: \"Create a presentation using the Simple Dark Mode template and its retained reference file. Use when the user selects or names Simple Dark Mode. Create clean dark-mode presentations with bold typography, simple sections, charts, and imagery.\"",
+      "Preserve source slides, layouts, masters, typography, geometry, images, charts, tables, and recurring slide chrome."
+    ]
+  },
+  {
+    "name": "artifact-template-simple-light-mode",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-simple-light-mode\\SKILL.md",
+    "sha256": "7c68430c6cf57b55b457d4735dbd1a46b889bef135a32222902dd0848b6e1752",
+    "characters": 1487,
+    "applicable_excerpts": [
+      "description: \"Create a presentation using the Simple Light Mode template and its retained reference file. Use when the user selects or names Simple Light Mode. Create clean light-mode presentations with spacious typography, simple sections, charts, and imagery.\"",
+      "Preserve source slides, layouts, masters, typography, geometry, images, charts, tables, and recurring slide chrome."
+    ]
+  },
+  {
+    "name": "artifact-template-strategy-memorandum",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-strategy-memorandum\\SKILL.md",
+    "sha256": "51d7882ac94e8e57b323394825728c33925af878806e37277217c2dc12a912e5",
+    "characters": 1446,
+    "applicable_excerpts": []
+  },
+  {
+    "name": "artifact-template-system-design",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-system-design\\SKILL.md",
+    "sha256": "87f7b7ed1b0d8410f5e5971cd7f7db9a4165e2f37069e97e52dbfb469b75a57c",
+    "characters": 1445,
+    "applicable_excerpts": [
+      "description: \"Create a document using the System Design template and its retained reference file. Use when the user selects or names System Design. Document system architecture, requirements, components, data flows, APIs, tradeoffs, and operational considerations.\""
+    ]
+  },
+  {
+    "name": "artifact-template-team-alignment",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-team-alignment\\SKILL.md",
+    "sha256": "26d7cafdcd1899a937b325c5d02ac57c162d45002153be33a934d35f81eb6110",
+    "characters": 1473,
+    "applicable_excerpts": [
+      "Preserve source slides, layouts, masters, typography, geometry, images, charts, tables, and recurring slide chrome."
+    ]
+  },
+  {
+    "name": "artifact-template-three-statement-forecast",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\openai-templates\\0.1.1\\skills\\artifact-template-three-statement-forecast\\SKILL.md",
+    "sha256": "74f4a5cccec0107b861548b157e04c51d9b58ec13a990c86394b4c529b8ecf41",
+    "characters": 1552,
+    "applicable_excerpts": [
+      "Preserve sheet structure, formulas, names, number formats, dimensions, tables, charts, validation, conditional formatting, and frozen panes."
+    ]
+  },
+  {
+    "name": "google-slides",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated-remote\\google-drive\\0.1.22\\skills\\google-slides\\SKILL.md",
+    "sha256": "f85bd1d7080becf8c043a3646b6c3a53fbcd6d2a77c62a15112b8d89e01a4b83",
+    "characters": 15939,
+    "applicable_excerpts": [
+      "description: Route Google Slides authoring requests and derive a design system from a native template or reference deck. Use this skill when the user provides an existing native Google Slides deck as a template, reference, or prior-period source, or asks to edit, update, repair, restyle, or clean up an existing native Google Slides deck. Use the Presentations skill instead for net-new presentation creation when no existing native Google Slides deck must be followed.",
+      "- Use `[@presentations](plugin://presentations@openai-primary-runtime)` to create a net-new presentation when no existing native Google Slides deck is the template or reference.",
+      "- Use this skill to create a presentation by following an existing native Google Slides template, reference deck, or prior-period deck.",
+      "- Use this skill to edit, update, repair, restyle, or clean up an existing native Google Slides deck.",
+      "- If a request combines new content with an existing native Google Slides deck that must be followed, use this skill.",
+      "- Do not use this skill to author a blank or from-scratch presentation.",
+      "If code mode is unavailable in the current Codex environment, reproduce the same read-to-file, parse, and render workflow with the available connector and local tools. Preserve the same artifacts and validation steps; do not skip the workflow merely because code mode cannot be used.",
+      "Edit existing presentations in place.",
+      "Match exemplars by narrative role, content density, evidence type, orientation, hierarchy, and meaning-bearing slots—not merely by object count or visual similarity. If the user links a particular template slide, inspect it explicitly and use it when it fits the requested role.",
+      "Do not use an exemplar containing device mockups, photography, screenshots, charts, or other meaning-bearing slide-local media unless every such element is explicitly mapped to destination content as keep, replace, or delete. If every element cannot be mapped, choose another exemplar.",
+      "1. Duplicate a rendered template exemplar when its design depends on slide-local shapes, image or chart frames, tables, groups, video, custom text styles, footer treatment, or other native objects.",
+      "3. Populate, replace, or remove existing exemplar objects and inherited placeholders before creating new primary text, image, table, chart, or shape objects.",
+      "Treat slide-local structure as part of the template. When a duplicated exemplar already contains a table, title frame, card structure, divider, footer, image frame, or other reusable structural object, edit it in place. Do not delete and recreate it merely to simplify implementation. Remove an object only after explicitly mapping it to `delete` because the destination slide does not need it.",
+      "Preserve the intrinsic aspect ratio of every image and video. Never stretch media by independently setting its width and height or by applying unequal horizontal and vertical scaling without deriving both from its intrinsic dimensions. Do not blindly reuse an exemplar media transform when the replacement has a different aspect ratio.",
+      "Use crop-to-fill only for decorative photography or full-bleed imagery where edge cropping is safe. Fit screenshots, charts, diagrams, UI, and videos fully within the intended frame so all meaning-bearing content remains visible; center the result, and prefer empty margins to distortion or loss of important content. Treat stretched media or improperly cropped meaning-bearing content as a concrete visual defect.",
+      "Preserve the template's font sizes whenever possible. If text overflows, first consider a small, local font-size reduction; do not shrink an entire mixed-style text box to solve one overflowing passage. Never reduce narrative body or list text below 12 pt. If the template already defines smaller narrative text for the same role, preserve that template size but do not reduce it further. Template-native captions, footers, source notes, and micro-labels may remain smaller, but do not reuse those smaller styles for narrative content.",
+      "If content still does not fit readably, choose a denser suitable exemplar or shorten flexible wording while preserving the original meaning, tone, facts, and required details. Treat reaching the 12 pt narrative floor, visible overcrowding, conspicuously undersized text, or leaving a major intended region unused as evidence that the archetype is wrong—not as a cue for further local typography repairs. Restore the template size and switch to a more appropriate exemplar or shorten the copy; do not apply a uniform minimum-size style to an entire text box or keep adjusting paragraphs to force an unsuitable exemplar. If adapting an image-led exemplar requires deleting its principal media slot and leaving that region empty, choose a text-first exemplar instead.",
+      "Treat multiple text and paragraph styles within one text box as structural. If a text box combines a title, kicker, label, body, or other differently styled runs, replace the corresponding text while preserving the existing run and paragraph styles. Do not apply one uniform style to the entire text box.",
+      "Before replacing text in a mixed-style text box, record its existing text and paragraph runs and update the corresponding ranges. Do not use `deleteText` over `ALL` followed by `insertText` and `updateTextStyle` over `ALL`; if replacement changes run lengths, reconstruct the original styled ranges explicitly.",
+      "Use native paragraph bullets for lists. Never type leading hyphens or visible bullet glyphs such as `•`, `◦`, `▪`, or `‣` into inserted text to imitate a bulleted list. When an exemplar uses a custom bullet character or style, preserve its existing list formatting and edit the paragraph text without replacing or normalizing the marker.",
+      "Preserve native links, notes, tables, charts, and media types when supported, and remove stale exemplar content. Keep unused template-library slides until the delivered slides and final order are verified, then delete them last.",
+      "The checker makes no API or render calls. It reports only compact, object-level findings for empty native bullet paragraphs, duplicate or typed bullet markers, explicitly undersized narrative text, unresolved generic placeholder text, empty text placeholders, and structurally blank slides. Repair every `error` before rendering. Treat `warning` findings as review prompts and preserve intentional template-native exceptions. Combine applicable repairs with the existing consolidated repair pass; do not add a read, parse, render, or diagnostic-rerun cycle solely to clear warnings.",
+      "Inspect every delivered slide from one output render and collect all concrete defects before repairing. Prefer one consolidated repair pass, but perform a second consolidated pass when defects remain. A structural rebuild invalidates prior visual QA: render the complete delivered deck again and use the second repair pass if needed. Do not perform more than two repair passes. Do not create additional read, parse, or render cycles without a concrete defect or structural change that invalidates an existing artifact.",
+      "- **Q&A and summaries:** Every file whose contents you summarize or use to support an answer MUST receive a `:codex-file-citation{...}` with `purpose=\"source\"` in the final response. Use the source citation in place of the filename, wherever the filename would appear. Do not write the filename separately and append its citation at the end. Files merely inspected but not used in the answer need no citation. Do not emit output citations for unchanged files or read-only answers.",
+      "Deliver a native Google Slides file even when another authoring workflow was used to build it, unless the user explicitly requests preservation of the source file type or no conversion. Set `path` to its verified native URL returned by the connector and omit `mode`. Citation directives are exempt from “Return web URLs as Markdown links.”"
+    ]
+  },
+  {
+    "name": "google-slides",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-curated\\google-drive\\0722921d\\skills\\google-slides\\SKILL.md",
+    "sha256": "fd14974d7c4ea9ff134bcc21cd32b2b1d61eeaa77c6dc757075b07eef6bedbdb",
+    "characters": 15348,
+    "applicable_excerpts": [
+      "description: Route Google Slides authoring requests and derive a design system from a native template or reference deck. Use this skill when the user provides an existing native Google Slides deck as a template, reference, or prior-period source, or asks to edit, update, repair, restyle, or clean up an existing native Google Slides deck. Use the Presentations skill instead for net-new presentation creation when no existing native Google Slides deck must be followed.",
+      "- Inspect prompt, conversation history, existing file and relevant references to figure out what questions to ask.",
+      "Use `request_user_input` once if available, else ask via a message. Have the best suggestion first. Append `(Recommended)` to its label. Have another good alternative second. Have `Use your judgment` as the third and final option. If the request times out or returns no answer, proceed using your best judgment; do not ask again.",
+      "- Use `[@presentations](plugin://presentations@openai-primary-runtime)` to create a net-new presentation when no existing native Google Slides deck is the template or reference.",
+      "- Use this skill to create a presentation by following an existing native Google Slides template, reference deck, or prior-period deck.",
+      "- Use this skill to edit, update, repair, restyle, or clean up an existing native Google Slides deck.",
+      "- If a request combines new content with an existing native Google Slides deck that must be followed, use this skill.",
+      "- Do not use this skill to author a blank or from-scratch presentation.",
+      "If code mode is unavailable in the current Codex environment, reproduce the same read-to-file, parse, and render workflow with the available connector and local tools. Preserve the same artifacts and validation steps; do not skip the workflow merely because code mode cannot be used.",
+      "Edit existing presentations in place.",
+      "Match exemplars by narrative role, content density, evidence type, orientation, hierarchy, and meaning-bearing slots—not merely by object count or visual similarity. If the user links a particular template slide, inspect it explicitly and use it when it fits the requested role.",
+      "Do not use an exemplar containing device mockups, photography, screenshots, charts, or other meaning-bearing slide-local media unless every such element is explicitly mapped to destination content as keep, replace, or delete. If every element cannot be mapped, choose another exemplar.",
+      "1. Duplicate a rendered template exemplar when its design depends on slide-local shapes, image or chart frames, tables, groups, video, custom text styles, footer treatment, or other native objects.",
+      "3. Populate, replace, or remove existing exemplar objects and inherited placeholders before creating new primary text, image, table, chart, or shape objects.",
+      "Treat slide-local structure as part of the template. When a duplicated exemplar already contains a table, title frame, card structure, divider, footer, image frame, or other reusable structural object, edit it in place. Do not delete and recreate it merely to simplify implementation. Remove an object only after explicitly mapping it to `delete` because the destination slide does not need it.",
+      "Preserve the intrinsic aspect ratio of every image and video. Never stretch media by independently setting its width and height or by applying unequal horizontal and vertical scaling without deriving both from its intrinsic dimensions. Do not blindly reuse an exemplar media transform when the replacement has a different aspect ratio.",
+      "Use crop-to-fill only for decorative photography or full-bleed imagery where edge cropping is safe. Fit screenshots, charts, diagrams, UI, and videos fully within the intended frame so all meaning-bearing content remains visible; center the result, and prefer empty margins to distortion or loss of important content. Treat stretched media or improperly cropped meaning-bearing content as a concrete visual defect.",
+      "Preserve the template's font sizes whenever possible. If text overflows, first consider a small, local font-size reduction; do not shrink an entire mixed-style text box to solve one overflowing passage. Never reduce narrative body or list text below 12 pt. If the template already defines smaller narrative text for the same role, preserve that template size but do not reduce it further. Template-native captions, footers, source notes, and micro-labels may remain smaller, but do not reuse those smaller styles for narrative content.",
+      "If content still does not fit readably, choose a denser suitable exemplar or shorten flexible wording while preserving the original meaning, tone, facts, and required details. Treat reaching the 12 pt narrative floor, visible overcrowding, conspicuously undersized text, or leaving a major intended region unused as evidence that the archetype is wrong—not as a cue for further local typography repairs. Restore the template size and switch to a more appropriate exemplar or shorten the copy; do not apply a uniform minimum-size style to an entire text box or keep adjusting paragraphs to force an unsuitable exemplar. If adapting an image-led exemplar requires deleting its principal media slot and leaving that region empty, choose a text-first exemplar instead.",
+      "Treat multiple text and paragraph styles within one text box as structural. If a text box combines a title, kicker, label, body, or other differently styled runs, replace the corresponding text while preserving the existing run and paragraph styles. Do not apply one uniform style to the entire text box.",
+      "Before replacing text in a mixed-style text box, record its existing text and paragraph runs and update the corresponding ranges. Do not use `deleteText` over `ALL` followed by `insertText` and `updateTextStyle` over `ALL`; if replacement changes run lengths, reconstruct the original styled ranges explicitly.",
+      "Use native paragraph bullets for lists. Never type leading hyphens or visible bullet glyphs such as `•`, `◦`, `▪`, or `‣` into inserted text to imitate a bulleted list. When an exemplar uses a custom bullet character or style, preserve its existing list formatting and edit the paragraph text without replacing or normalizing the marker.",
+      "Preserve native links, notes, tables, charts, and media types when supported, and remove stale exemplar content. Keep unused template-library slides until the delivered slides and final order are verified, then delete them last.",
+      "The checker makes no API or render calls. It reports only compact, object-level findings for empty native bullet paragraphs, duplicate or typed bullet markers, explicitly undersized narrative text, unresolved generic placeholder text, empty text placeholders, and structurally blank slides. Repair every `error` before rendering. Treat `warning` findings as review prompts and preserve intentional template-native exceptions. Combine applicable repairs with the existing consolidated repair pass; do not add a read, parse, render, or diagnostic-rerun cycle solely to clear warnings.",
+      "Inspect every delivered slide from one output render and collect all concrete defects before repairing. Prefer one consolidated repair pass, but perform a second consolidated pass when defects remain. A structural rebuild invalidates prior visual QA: render the complete delivered deck again and use the second repair pass if needed. Do not perform more than two repair passes. Do not create additional read, parse, or render cycles without a concrete defect or structural change that invalidates an existing artifact."
+    ]
+  },
+  {
+    "name": "visualize",
+    "path": "C:\\Users\\19927\\.codex\\plugins\\cache\\openai-bundled\\visualize\\1.0.50\\skills\\visualize\\SKILL.md",
+    "sha256": "766f4e5ee250af9d3c68353d0b8609e40e0ce5926a625d7ca88e073525360d25",
+    "characters": 33337,
+    "applicable_excerpts": [
+      "description: \"Create visualizations and interactive tools directly in conversation. Proactively use to show how something works; explore 'what happens when', 'what changes', or 'help me understand'; compare or inspect; create simulations, maps, charts, graphs, and mockups. Use standard tools for static scientific figures.\"",
+      "- A request for a new standalone file, website, app page, component, or other project change is not an in-conversation visualization request, even when the deliverable contains charts or interactive content.",
+      "- Create a visual only when the user needs to see or explore it in the conversation and it materially improves the explanation. Do not create an inline visual merely because the request involves data, charts, or an interactive page.",
+      "- In user-facing prose, describe only what the visual helps the user see or decide. Keep it concise and do not repeat information already clear from the visual. Never announce this skill, a visualization surface, widgets, HTML, SVG, scripts, local files, inline data, or implementation details.",
+      "- For each new or updated visualization, choose a concise ASCII lowercase-hyphenated title and write `<title>.html` in an explicitly writable, durable, task-owned location. Prefer the thread-scoped visualization directory when it appears in the writable roots. Otherwise, use the task's supplied `work/` directory or create an output directory under its authorized working directory.",
+      "- Never save inline visualization fragments to Library; they are response content, not user-facing file deliverables.",
+      "- Build the visual in the conversation. Use the open project when the user asks for a site, app page, component, or change to existing project files.",
+      "- Keep visualizations under 1 MB. Aggregate, bin, downsample, reduce precision, or drop unused fields from large inline datasets.",
+      "- Check that JavaScript has no undefined identifiers, every queried element exists, and the primary interaction updates the visual. The bundled `python3 scripts/render.py <absolute-fragment-path> [<destination>.html] [--serve]` can wrap a fragment as standalone HTML or temporarily serve it for browser inspection when a preview would help with layout, theme, or runtime behavior. The rendered preview places the fragment inside a sandboxed iframe: scope Playwright locators to `page.frameLocator(\"iframe\")` and evaluation to that frame.",
+      "- Keep the fragment focused on the visualization. Do not include explanatory paragraphs, formulas, instructions, or narrative callouts. Include only necessary labels, legends, values, and accessible text alternatives.",
+      "- Add `\"mode\":\"wide\"` for a full-screen desktop app mockup, including its application shell. For other visuals, add it only when several compact chart panels must remain side by side for direct comparison and would be unreadable at the normal width. Never widen a single plot, map, grid, diagram, or timeline merely because it is dense. Keep contained mockups, dialogs, and mobile screens at normal width; stack separate self-contained views vertically. Wide visualizations render in an expandable inline surface up to 1,024px:",
+      "- Whenever you create or update an inline visualization, include its content reference only in that same turn's final response (never in commentary or progress updates), even when editing an existing file or reusing a path shown in an earlier turn.",
+      "- Emit only the content reference for the fragment. Never announce it as an artifact, website, output, attachment, link, or download, and never add a Markdown link to it. Do not append a Markdown table or repeat the visual's data; add at most one short conclusion when the user needs an explanation.",
+      "## Exporting an existing visualization",
+      "- Apply this export flow only when the user explicitly asks to turn the existing inline source or visualization into a website. For a general website request, build a new responsive site in the output directory or open project, using Sites when appropriate, without applying this skill's guidance.",
+      "- When the user asks to publish or host an existing visualization and the `sites` skill is available, use it to choose the project, write the rendered standalone document as `index.html`, and publish it.",
+      "- Make every fill, stroke, text, border, shadow, chart, and canvas color theme-aware. Never hardcode light or dark palettes such as white panels, off-white backgrounds, black text, slate strokes, or Tailwind color literals.",
+      "- Use series colors only for chart lines, marks, and legend swatches. Keep values, axis text, and direct labels in `--foreground` or `--muted-foreground`.",
+      "- Keep chart grids and inactive structure thin and neutral. Use 1-2px neutral structural paths; never thicken, dash, or double-stroke the whole structure.",
+      "- `h1`, `h2`, and `h3` are available; use one concise visible heading for a self-contained chart or graph, with short panel headings only when needed. Do not restate the prompt or add a redundant title to other visualizations.",
+      "- Keep filters, selections, and other presentation-only interactions local. For drill-down actions that ask Codex to investigate or explain selected data, call `await window.openai.sendFollowUpMessage({ prompt, title })`, where the optional `title` is a concise confirmation-dialog heading of up to 250 characters. Include the selected values and requested investigation in the prompt, and label the action clearly.",
+      "- For alternative designs of the same component or screen, read [Variant carousel](tweak.md#variant-carousel), even when design controls are not requested. Use descriptive variant names without numeric or ordinal prefixes (for example, `Compact`, never `01 · Compact`); the carousel already displays the count.",
+      "- Include a few thoughtfully chosen design alternatives whenever they would help the user explore a mockup, without waiting for the user to ask. Read [tweak.md](tweak.md) and bind useful options with the host-provided `Tweak` helper. Keep ordinary mockup interactions local; do not add design controls to charts, explainers, or simulations unless requested. Do not render a second controls panel or open annotation mode automatically.",
+      "- NEVER use visualization CSS variables or utility classes inside a mockup (for example, `--card`, `--font-size-base`, `.card`, or `.btn`). Define root-scoped, product-specific colors, typography, surfaces, and controls instead. This rule overrides all general visualization guidance.",
+      "- **Contained mockup:** Frame a component, dialog, small feature, or mobile screen as a compact product surface. Add `.viz-dotted-background` to the surrounding preview area or carousel root for a quiet, theme-aware dot grid. This preview-only class is an exception to the mockup utility rule; keep it outside the product UI and leave full-page mockups, charts, and explainers plain.",
+      "- Use D3 for data-rich Cartesian or statistical plots and handwritten SVG for simple, directly labeled values. Keep diagrams, simulations, and maps under their existing guidance. Load the version-pinned approved-CDN script `https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js`.",
+      "- Render the figure, legend, and subplots directly on the transparent host surface. Frame only the SVG plot area; never wrap charts in `.card`, rounded panels, filled backgrounds, or shadowed containers.",
+      "- Give the figure a concise visible title. Render each Cartesian subplot in its own responsive SVG with a matching `viewBox`, a thin frame, and visible `text.axis-title[data-axis=\"x\"]` and `text.axis-title[data-axis=\"y\"]` showing quantities and units.",
+      "- Derive padded domains with `d3.extent(...)` over all observations, uncertainty, and references. Inset scale ranges for marker radii and keep every path inside `rect[data-chart-frame]`; never draw endpoint connectors outside the frame or guess or hard-code the domain.",
+      "- Prefer `--viz-series-1` through `--viz-series-6` for chart series; use `--foreground` and `--border` for neutrals, cycle the six series tokens when more are needed, and never use literal or fallback colors. Give every SVG label `fill: var(--foreground)` and `font-size: 12px`; never shrink labels below 11 screen pixels. Stack subplots when their labels no longer fit.",
+      "- Share one root-relative, pointer-transparent `<div class=\"tooltip\" role=\"tooltip\">` using `--popover` and `--popover-foreground`. In each multi-series SVG, give the full-plot overlay both `data-chart-hit` and `data-chart-hover-overlay=\"cross-series\"`. Keep the `data-chart-hover-guide` at the exact cursor x, interpolate every visible series there, and show one aligned `data-chart-hover-marker` and tooltip row per visible series; never snap the guide to a nearby sample. Let touch users pin the same cross-series details without requiring hover.",
+      "- Give isolated marks transparent `data-chart-hit` targets at least 32 screen pixels across on fine pointers and about 44px on coarse pointers; use one nearest-point overlay for dense scatter.",
+      "- For named numeric data and one-off analyses, start with the plot. Put values and takeaways on its marks, axes, or annotations. Never add a KPI row, controls, cards, or panels unless those UI elements are explicitly requested.",
+      "- For US states or counties, use `https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json/+esm`. For ZIP/ZCTA or city boundaries, download official Census or local open-data GeoJSON; do not guess sibling atlas paths or import raw JSON as JavaScript.",
+      "- Use one compact horizontal selected-item summary, then a grid with exactly one readable identifier per cell, then one small legend. Render only that identifier as visible cell text; put all other metadata in an accessible label or one summary line, not badges or fact grids. Allow only selection unless asked.",
+      "- Use compact metrics and one stacked chart of category allocation per period. Never substitute totals-only bars or duplicate it as a heatmap and totals chart.",
+      "## Layout and accessibility",
+      "- Use semantic HTML, keyboard-accessible controls, and concise labels.",
+      "- `.card`: The only card-like HTML surface. Use its base class unchanged for a necessary numeric summary, selected-item summary, or bounded interactive field. Before adding a fill, border, radius, or shadow to any layout container, either use `.card` or leave it transparent and unframed; never recreate card chrome on rows, panels, tiles, sections, or wrappers. Keep charts, maps, diagrams, tables, controls, and the whole visualization unframed. Never nest cards; show 2-4 summaries near the top only when useful. Structural groupings and repeated content are not bounded interactive fields. Organize them with layout or visual marks, not container chrome.",
+      "- `.nav.nav-pills` + `.nav-link`: Use the accessible, interactive [Tabs](#tabs) API below.",
+      "- `[data-tooltip]`: Use for concise supplementary plain text on static or dynamic triggers; the sandbox handles hover, focus, and touch and creates `.tooltip` elements. Keep essential content visible and triggers labeled. Never use `title`, custom markup, or initialization. Example: `<button type=\"button\" data-tooltip=\"Reset view\">Reset</button>`.",
+      "- When a visible label is truncated, put its full text in `data-tooltip` on the existing accessible trigger so hover, focus, and tap reveal it. The bundled calendar does this automatically.",
+      "- `[data-tooltip-placement]`: Optionally prefer `top` (default), `right`, `bottom`, or `left`; collision handling may flip it.",
+      "- `.table`: Use on a semantic table for a quiet, unframed data view. It provides wrapping cells and subtle horizontal dividers without vertical gridlines. Use sentence case for headers.",
+      "- `.text-small`: Use for the smallest host-scaled secondary chart labels and annotations, never below 11px or for essential content.",
+      "- `.sr-only`: Use for visually hidden accessible text.",
+      "## Charts",
+      "- Prefer inline SVG for simple charts and version-pinned approved-CDN libraries when native interaction, scales, legends, or layout materially improve the result.",
+      "- Resolve theme colors before passing them to canvas or chart APIs that cannot parse CSS variables or `light-dark(...)`; redraw when the theme changes.",
+      "- Use a tooltip unless it would distract from a simple, directly labeled chart. Keep chart-library tooltips and grouped legend interactions native; never replace them with a custom one-point tooltip. For SVG, attach `data-tooltip` directly to the real pointer-accessible mark and include its label, value, and units; the sandbox handles themed positioning, keyboard focus, and touch.",
+      "- Animate transitions between chart states so lines and marks move to their new values, resampling paths when point counts differ. Do not animate initial appearance or use fade-only effects; never loop motion, and honor `prefers-reduced-motion`.",
+      "- Scope SVG styles to the chart class. Never target every `svg` in a container that also contains Lucide icons.",
+      "- Include labeled axes, units, and directly labeled important values. Give every chart, SVG, canvas, and widget a concise screen-reader summary using a role and accessible name or description, SVG `<title>`/`<desc>`, fallback text, or an `.sr-only` heading or description.",
+      "- Use the sandbox-provided global `lucide`. Add an icon name with `data-lucide`:",
+      "  <i data-lucide=\"search\" aria-hidden=\"true\"></i>",
+      "- Never author inline icon SVG or icon paths. Use only supplied Lucide names; the sandbox replaces each placeholder with a host-sized `currentColor` SVG. Reserve authored inline SVG for charts and data marks."
+    ]
+  }
+]

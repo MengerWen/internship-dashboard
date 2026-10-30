@@ -1,0 +1,217 @@
+日遥测按内容身份复用科学结构头与冻结清单
+
+
+diff --git a/因子/algobench/src/algobench/formal_day_manifest_codec.py b/因子/algobench/src/algobench/formal_day_manifest_codec.py
+new file mode 100644
+index 00000000..2c54817c
+--- /dev/null
++++ b/因子/algobench/src/algobench/formal_day_manifest_codec.py
+@@ -0,0 +1,102 @@
++"""日清单的内容寻址结构池；公开读取恢复完整科学内容。"""
++from __future__ import annotations
++
++import json
++
++from .formal_exactness import EXACTNESS_IDENTITY_SCHEMA_VERSION, identities_sha256
++
++POOL_KEY = "day_manifest_content_pool"
++POOL_SCHEMA = "formal-day-manifest-content-pool-v1"
++HEADER_REF = "exactness_schema_ref"
++SCOPE_REF = "feature_scope_ref"
++HEADER_KEYS = ("schema_version", "columns", "dtypes")
++
++
++def pack_day_manifest(value):
++    if "stock_day_exactness_evidence" not in value and "stock_proxy_bank_telemetry" not in value:
++        return value
++    if POOL_KEY in value:
++        raise ValueError("day manifest already contains an encoded content pool")
++    headers, scopes, header_cache, scope_cache = {}, {}, {}, {}
++
++    def pack(node):
++        if isinstance(node, dict):
++            if HEADER_REF in node or SCOPE_REF in node:
++                raise ValueError("day manifest contains a reserved content reference")
++            if node.get("schema_version") == EXACTNESS_IDENTITY_SCHEMA_VERSION:
++                key = (tuple(node["columns"]), tuple(node["dtypes"].items()))
++                digest = header_cache.get(key)
++                if digest is None:
++                    header = {name: node[name] for name in HEADER_KEYS}
++                    digest = identities_sha256(header)
++                    headers[digest] = header
++                    header_cache[key] = digest
++                return {**{name: item for name, item in node.items() if name not in HEADER_KEYS}, HEADER_REF: digest}
++            result = {}
++            for name, item in node.items():
++                if name == "feature_scope" and isinstance(item, dict):
++                    key = item.get("feature_manifest_sha256")
++                    cached = scope_cache.get(key)
++                    if cached is not None and cached[0] == item:
++                        digest = cached[1]
++                    else:
++                        digest = identities_sha256(item)
++                        scopes.setdefault(digest, item)
++                        scope_cache[key] = (item, digest)
++                    result[name] = {SCOPE_REF: digest}
++                else:
++                    result[name] = pack(item)
++            return result
++        if isinstance(node, list) and node and isinstance(node[0], (dict, list)):
++            return [pack(item) for item in node]
++        return node
++
++    packed = pack(value)
++    if headers or scopes:
++        packed[POOL_KEY] = dict(schema_version=POOL_SCHEMA, exactness_headers=headers, feature_scopes=scopes)
++    return packed
++
++
++def restore_day_manifest(value):
++    if not isinstance(value, dict):
++        return value
++    pool = value.get(POOL_KEY)
++    if pool is None:
++        return value
++    if not isinstance(pool, dict) or pool.get("schema_version") != POOL_SCHEMA:
++        raise ValueError("unsupported day manifest content pool")
++    headers, scopes = pool.get("exactness_headers"), pool.get("feature_scopes")
++    if not isinstance(headers, dict) or not isinstance(scopes, dict):
++        raise ValueError("day manifest content pools are missing")
++    for digest, header in headers.items():
++        if (not isinstance(header, dict) or set(header) != set(HEADER_KEYS)
++                or header.get("schema_version") != EXACTNESS_IDENTITY_SCHEMA_VERSION
++                or identities_sha256(header) != digest):
++            raise ValueError("day manifest exactness schema hash differs")
++    scope_bytes = {}
++    for digest, scope in scopes.items():
++        if not isinstance(scope, dict) or identities_sha256(scope) != digest:
++            raise ValueError("day manifest feature scope hash differs")
++        scope_bytes[digest] = json.dumps(scope, ensure_ascii=False, separators=(",", ":"))
++
++    def restore(node):
++        if isinstance(node, dict):
++            if HEADER_REF in node:
++                digest = node[HEADER_REF]
++                if digest not in headers or any(name in node for name in HEADER_KEYS):
++                    raise ValueError("day manifest exactness schema reference differs")
++                header = headers[digest]
++                return {**{name: item for name, item in node.items() if name != HEADER_REF},
++                    "schema_version": header["schema_version"], "columns": list(header["columns"]),
++                    "dtypes": dict(header["dtypes"])}
++            if SCOPE_REF in node:
++                digest = node[SCOPE_REF]
++                if set(node) != {SCOPE_REF} or digest not in scope_bytes:
++                    raise ValueError("day manifest feature scope reference differs")
++                return json.loads(scope_bytes[digest])
++            return {name: restore(item) for name, item in node.items()}
++        if isinstance(node, list) and node and isinstance(node[0], (dict, list)):
++            return [restore(item) for item in node]
++        return node
++
++    return restore({name: item for name, item in value.items() if name != POOL_KEY})
+diff --git a/因子/algobench/src/algobench/formal_panel.py b/因子/algobench/src/algobench/formal_panel.py
+index e5047268..e01cc571 100644
+--- a/因子/algobench/src/algobench/formal_panel.py
++++ b/因子/algobench/src/algobench/formal_panel.py
+@@ -3441,3 +3441,4 @@ def resolve_day_manifest(record: Mapping[str, object], *, object_publication=Non
+         raise ValueError("unsupported day manifest compression")
+-    manifest = json.loads(payload)
++    from .formal_day_manifest_codec import restore_day_manifest
++    manifest = restore_day_manifest(json.loads(payload))
+     if manifest["date"] != record["date"]:
+@@ -6309,2 +6310,4 @@ def _atomic_write_json(payload: Mapping[str, object], path: Path, *, object_publ
+     from .prescreen_runtime import publication_staging
++    from .formal_day_manifest_codec import pack_day_manifest
++    payload = pack_day_manifest(payload)
+     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True).encode("utf-8")
+@@ -6323,3 +6326,4 @@ def _read_json(path: Path) -> dict[str, object]:
+     payload = path.read_bytes()
+-    value = json.loads(gzip.decompress(payload) if path.suffix == ".gz" else payload)
++    from .formal_day_manifest_codec import restore_day_manifest
++    value = restore_day_manifest(json.loads(gzip.decompress(payload) if path.suffix == ".gz" else payload))
+     if not isinstance(value, dict):
+diff --git a/因子/algobench/tests/test_formal_day_manifest_codec.py b/因子/algobench/tests/test_formal_day_manifest_codec.py
+new file mode 100644
+index 00000000..b220d211
+--- /dev/null
++++ b/因子/algobench/tests/test_formal_day_manifest_codec.py
+@@ -0,0 +1,79 @@
++from copy import deepcopy
++import hashlib
++import json
++from pathlib import Path
++
++import pytest
++
++from algobench.formal_day_manifest_codec import pack_day_manifest, restore_day_manifest, POOL_KEY, HEADER_REF, SCOPE_REF
++from algobench.formal_exactness import EXACTNESS_IDENTITY_SCHEMA_VERSION, identities_sha256
++from algobench.formal_panel import _atomic_write_json, _read_json, resolve_day_manifest
++
++
++def example():
++    identity = dict(schema_version=EXACTNESS_IDENTITY_SCHEMA_VERSION, rows=2,
++        columns=["order_id", "score", "来源"], dtypes={"order_id": "int64", "score": "float64", "来源": "object"},
++        values_sha256="a"*64, null_mask_sha256="b"*64)
++    scope = dict(feature_manifest_sha256="f"*64, output_dependencies=[dict(factor_id="买方", values=[2**63+1, None])])
++    return dict(date="2025-11-18", status="success", stock_day_exactness_evidence=[
++        dict(code="000001", input_tables={"order": deepcopy(identity)}),
++        dict(code="000002", response_winners={"winner": deepcopy(identity)})],
++        stock_proxy_bank_telemetry=[dict(code=code, feature_scope=deepcopy(scope)) for code in ("000001", "000002")],
++        floats=[-0., 1e-300, float("nan")])
++
++
++def test_pooled_manifest_preserves_all_scientific_content_and_independent_public_dicts():
++    value = example()
++    before = identities_sha256(value)
++    packed = pack_day_manifest(value)
++    assert identities_sha256(value) == before
++    assert len(packed[POOL_KEY]["exactness_headers"]) == 1
++    assert len(packed[POOL_KEY]["feature_scopes"]) == 1
++    restored = restore_day_manifest(json.loads(json.dumps(packed)))
++    assert identities_sha256(restored) == before
++    first = restored["stock_day_exactness_evidence"][0]["input_tables"]["order"]
++    second = restored["stock_day_exactness_evidence"][1]["response_winners"]["winner"]
++    first["columns"].clear()
++    first["dtypes"].clear()
++    assert second["columns"] and second["dtypes"]
++    restored["stock_proxy_bank_telemetry"][0]["feature_scope"]["output_dependencies"].clear()
++    assert restored["stock_proxy_bank_telemetry"][1]["feature_scope"]["output_dependencies"]
++    assert identities_sha256(value) == before
++
++
++@pytest.mark.parametrize("compressed", [False, True])
++def test_committed_public_readers_restore_pooled_and_legacy_content(tmp_path, compressed):
++    value = example()
++    path = tmp_path / ("day.json.gz" if compressed else "day.json")
++    digest = _atomic_write_json(value, path)
++    assert digest == hashlib.sha256(path.read_bytes()).hexdigest()
++    record = dict(date=value["date"], manifest_reference=dict(path=str(path), sha256=digest,
++        **({"compression": "gzip"} if compressed else {})))
++    assert identities_sha256(resolve_day_manifest(record)) == identities_sha256(value)
++    assert identities_sha256(_read_json(path)) == identities_sha256(value)
++    assert restore_day_manifest(value) is value
++    assert pack_day_manifest({"status": "success"}) == {"status": "success"}
++
++
++@pytest.mark.parametrize("fault", ["version", "header_hash", "scope_hash", "header_ref", "scope_ref", "missing_pool"])
++def test_pooled_manifest_rejects_changed_or_missing_content_references(fault):
++    packed = json.loads(json.dumps(pack_day_manifest(example())))
++    pool = packed[POOL_KEY]
++    if fault == "version": pool["schema_version"] = "unknown"
++    elif fault == "header_hash": next(iter(pool["exactness_headers"].values()))["columns"].reverse()
++    elif fault == "scope_hash": next(iter(pool["feature_scopes"].values()))["output_dependencies"].clear()
++    elif fault == "header_ref": packed["stock_day_exactness_evidence"][0]["input_tables"]["order"][HEADER_REF] = "0"*64
++    elif fault == "scope_ref": packed["stock_proxy_bank_telemetry"][0]["feature_scope"][SCOPE_REF] = "0"*64
++    else: del pool["exactness_headers"]
++    with pytest.raises(ValueError, match="day manifest"):
++        restore_day_manifest(packed)
++
++
++def test_changed_feature_scope_is_bound_separately_to_its_full_content():
++    value = example()
++    value["stock_proxy_bank_telemetry"][1]["feature_scope"]["output_dependencies"].append(dict(factor_id="sell"))
++    packed = pack_day_manifest(value)
++    assert len(packed[POOL_KEY]["feature_scopes"]) == 2
++    assert identities_sha256(restore_day_manifest(packed)) == identities_sha256(value)
++    with pytest.raises(ValueError, match="already contains"):
++        pack_day_manifest(packed)

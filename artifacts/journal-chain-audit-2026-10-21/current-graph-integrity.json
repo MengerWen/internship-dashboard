@@ -1,0 +1,1007 @@
+{
+  "chains": [
+    {
+      "id": "onboarding",
+      "track": "infra",
+      "label": "上手：米筐环境与交易规则",
+      "short": "上手",
+      "purpose": "配置米筐行情和回测环境，运行示例策略，整理沪深交易及异常交易监控规则，作为后续研究的基础。",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-06-23",
+          "2026-06-24"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "米筐示例已运行，交易规则资料已入库。"
+    },
+    {
+      "id": "doris-migration",
+      "track": "infra",
+      "label": "Doris 取数与服务器迁移",
+      "short": "Doris 迁移",
+      "purpose": "把研究取数接到服务器上的 Doris 数据库，处理批量读取、内存限制和故障后的断点续算。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-01"
+        ]
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-07-15",
+          "2026-07-30"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "7 月 15 日的固定分批方案后来被替换；7 月 30 日继续处理数据库恢复后的续算。两者不能都称为最终采用方案。"
+    },
+    {
+      "id": "wangly-env",
+      "track": "infra",
+      "label": "wangly 计算环境与结果同步方案",
+      "short": "wangly 环境",
+      "purpose": "配置 wangly 的研究依赖和数据访问检查，编写向 wenjie 同步结果的方案。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-04"
+        ]
+      },
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-09-04",
+          "2026-09-04"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "有环境配置代码和结果同步计划；不能据此认定每份结果都已传回 wenjie。"
+    },
+    {
+      "id": "doris-efficiency",
+      "track": "infra",
+      "label": "Doris 取数效率方案",
+      "short": "Doris 效率",
+      "purpose": "整理数据库取数中可减少重复查询、传输和解析开销的做法，供后续任务使用。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-10-09"
+        ]
+      },
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-10-09",
+          "2026-10-09"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "这段记录主要是一份通用效率计划，不代表所有查询都已改完或获得同一提速幅度。"
+    },
+    {
+      "id": "storage-cleanup",
+      "track": "infra",
+      "label": "存储盘点、归档与重复文件清理",
+      "short": "存储清理",
+      "purpose": "区分正式结果、可恢复副本、运行暂存和到期材料，核对归档与恢复证据后清理重复文件，并保留实际回收量。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-10-14",
+          "2026-10-16"
+        ]
+      },
+      "review": {
+        "days": 3,
+        "span": [
+          "2026-10-14",
+          "2026-10-16"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "已记录多次指定范围内的清理及回读核验，并保留实际回收量和恢复记录。"
+    },
+    {
+      "id": "lv2-snapshot",
+      "track": "snapshot",
+      "label": "逐笔数据重建 100ms 盘口快照",
+      "short": "LV2 快照",
+      "purpose": "按委托、成交和撤单的事件顺序重建订单簿，生成 100ms 与 3 秒快照，用米筐 3 秒行情核对样本，并为后续因子研究整理数据说明。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-06-25",
+          "2026-06-26",
+          "2026-07-08"
+        ]
+      },
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-06-25",
+          "2026-07-08"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "早期样本对照与图示已完成。后续回放审计另列一条链，早期样本一致不等于全部历史都已验证。"
+    },
+    {
+      "id": "replay",
+      "track": "snapshot",
+      "label": "深市订单簿回放与正确性检查",
+      "short": "回放核验",
+      "purpose": "重新检查深市撮合规则、成交价格、事件前后盘口和快照时间，核对它们如何影响正式因子，并整理可复用的生产入口。",
+      "status": "active",
+      "closes_into": {
+        "daily": [
+          "2026-10-18"
+        ]
+      },
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-10-17",
+          "2026-10-20"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "截至记录版本，已有单日、三日和真实因子小样本核验；全量重算的前置条件仍单独检查，不能据此称全历史修正已经完成。"
+    },
+    {
+      "id": "literature",
+      "track": "footprint",
+      "label": "论文复现与首个因子评价框架",
+      "short": "论文复现",
+      "purpose": "整理订单流失衡、低延迟交易和订单簿聚类等论文，复现其中的方法，并搭建可以计算、评价因子的 factor_lab。",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-06-29",
+          "2026-07-03"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "其中的实现和评价方法继续用于 algobench；不把论文方法直接当成已经识别真实算法账户的证据。"
+    },
+    {
+      "id": "algobench",
+      "track": "footprint",
+      "label": "论文指标与主动关注度面板",
+      "short": "论文指标",
+      "purpose": "把六篇论文的方法写成可计算的指标，检查指标相关性，再研究股票上主动交易痕迹的关注度，并生成按日面板。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-06",
+          "2026-07-07",
+          "2026-07-08",
+          "2026-07-09",
+          "2026-07-13"
+        ]
+      },
+      "review": {
+        "days": 9,
+        "span": [
+          "2026-07-06",
+          "2026-07-14"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "旧方向在 7 月 10 日调整；关注度面板和公共计算代码继续进入正式因子研究。"
+    },
+    {
+      "id": "formal-engine",
+      "track": "footprint",
+      "label": "正式因子计算：订单配对与行为评分",
+      "short": "因子计算",
+      "purpose": "把逐笔数据整理成订单生命周期，寻找相关订单，对队列行为和价格冲击评分，再生成因子、收益标签和评价结果。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-22",
+          "2026-07-23"
+        ]
+      },
+      "review": {
+        "days": 11,
+        "span": [
+          "2026-07-15",
+          "2026-07-25"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "订单配对、评分和共享中间结果继续用于后续筛选定标及历史评价；具体版本是否通过验收仍看当天记录。"
+    },
+    {
+      "id": "gates",
+      "track": "footprint",
+      "label": "数量和价格筛选规则、历史区间扩展",
+      "short": "筛选规则",
+      "purpose": "研究哪些订单关系需要保留、怎样按价格和数量连续评分，并把正式因子评价扩展到更长日期范围。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-29",
+          "2026-07-31",
+          "2026-08-01",
+          "2026-08-02"
+        ]
+      },
+      "review": {
+        "days": 6,
+        "span": [
+          "2026-07-27",
+          "2026-08-02"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "7 月 29 日取消价格硬筛选，保留 10% 数量门和连续价格评分；这套规则随后用于固定参数历史评价。"
+    },
+    {
+      "id": "fixed-history",
+      "track": "factor",
+      "label": "固定参数的历史补算与结果解释",
+      "short": "历史补算",
+      "purpose": "保留一套已固定参数，复用已完成日期，补算更早的历史区间，核对恢复来源，并解释报告中的因子公式。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-04",
+          "2026-08-05"
+        ]
+      },
+      "review": {
+        "days": 3,
+        "span": [
+          "2026-08-03",
+          "2026-08-05"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "后续开盘五分钟研究复用这批历史输入。定标日前的回溯结果属于固定参数历史评价，不能自动算作样本外检验。"
+    },
+    {
+      "id": "open5m",
+      "track": "factor",
+      "label": "开盘五分钟：因子评价与参数定标",
+      "short": "开盘5分钟",
+      "purpose": "围绕开盘后五分钟的委托行为构建和评价因子，估计连续评分尺度与结构参数，并改进读取、回放和计算速度。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-06",
+          "2026-08-07",
+          "2026-08-24",
+          "2026-09-02",
+          "2026-09-03",
+          "2026-09-04"
+        ]
+      },
+      "review": {
+        "days": 13,
+        "span": [
+          "2026-08-06",
+          "2026-09-18"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "后续分出撤单相位、深度匹配和分组定标等研究；计算提速与预测表现分开评价，九参数定标曾未达到 60 秒目标。"
+    },
+    {
+      "id": "cancel-phase",
+      "track": "factor",
+      "label": "撤单等待时间、相位与机械撤单研究",
+      "short": "撤单研究",
+      "purpose": "先统计委托经过多久撤单，再把等待节奏、买卖方向及机械撤单行为写成因子，检查它们与同日日内收益的关系。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-16",
+          "2026-08-24",
+          "2026-09-04",
+          "2026-09-06"
+        ]
+      },
+      "review": {
+        "days": 10,
+        "span": [
+          "2026-08-19",
+          "2026-10-15"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "撤单分布和相位因子已有历史报告；机械撤单逐股稳定性的后续生成于 10 月 15 日停止。局部停止不撤销已有相位结果。"
+    },
+    {
+      "id": "depth-match",
+      "track": "factor",
+      "label": "盘口深度匹配与跨股票同步预查",
+      "short": "深度匹配",
+      "purpose": "检查委托股数是否贴近可见盘口深度，并完成买卖侧因子评价；另曾预查不同股票是否出现同步委托。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-07"
+        ]
+      },
+      "review": {
+        "days": 5,
+        "span": [
+          "2026-09-05",
+          "2026-09-18"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "深度匹配有 601 日、24 列评价。跨股票同步 C3.3 于 9 月 11 日放弃，9 月 18 日补记并清理；两项工作的去向不同。"
+    },
+    {
+      "id": "old-factor-bank",
+      "track": "factor",
+      "label": "老因子重算与单日性能检查",
+      "short": "老因子库",
+      "purpose": "核对老因子的定义和输入，减少配对与评分的重复计算，以单日 300 秒为性能目标，随后启动 601 日历史计算。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-07",
+          "2026-09-16"
+        ]
+      },
+      "review": {
+        "days": 4,
+        "span": [
+          "2026-09-07",
+          "2026-09-12"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "历史结果用于后续模型输入和深市 328 列计算；300 秒是验收目标，不是所有交易日都能达到的统一耗时。"
+    },
+    {
+      "id": "grouped-calibration",
+      "track": "factor",
+      "label": "按股票和市场状态分组定标",
+      "short": "分组定标",
+      "purpose": "比较不同股票、市场状态下的行为尺度，确定分组方式，生成六类连续评分尺度和所需结构参数，供正式因子计算使用。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-10-07",
+          "2026-10-09"
+        ]
+      },
+      "review": {
+        "days": 5,
+        "span": [
+          "2026-10-07",
+          "2026-10-11"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "参数包与结构参数接入后续深市 328 列计算。601 日内估计和评价这些参数，仍属于历史样本内研究。"
+    },
+    {
+      "id": "szse-model328",
+      "track": "factor",
+      "label": "深市 328 列因子的计算、验收与评价",
+      "short": "深市328",
+      "purpose": "用固定的模型输入列和新参数计算深市历史因子，逐日核验四类来源及合并结果，最后封存并评价与日内收益的关系。",
+      "status": "done",
+      "closes_into": {
+        "showcase": "factor",
+        "daily": [
+          "2026-10-14",
+          "2026-10-16",
+          "2026-10-18"
+        ]
+      },
+      "review": {
+        "days": 6,
+        "span": [
+          "2026-10-10",
+          "2026-10-18"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "10 月 18 日记录 601 日、328 列全期验收与单因子评价；这是当时参数与回放版本的结果，后续正确性修正另有记录。"
+    },
+    {
+      "id": "sse-v2",
+      "track": "factor",
+      "label": "沪市委托还原与公开可见因子口径",
+      "short": "沪市委托",
+      "purpose": "根据沪市逐笔数据还原可观测委托，核对订单号、序列和成交价格，并逐项判断公开信息能支持哪些因子定义。",
+      "status": "active",
+      "closes_into": {
+        "daily": [
+          "2026-10-14",
+          "2026-10-16"
+        ]
+      },
+      "review": {
+        "days": 10,
+        "span": [
+          "2026-09-23",
+          "2026-10-17"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "仍有版本迭代、缺失与定义差检查。G0/G1、270/350/356 等数目属于不同版本和范围，不汇总成一套已全部完成的因子。"
+    },
+    {
+      "id": "ml-count",
+      "track": "model",
+      "label": "总量因子的模型研究计划与结构诊断",
+      "short": "总量模型",
+      "purpose": "早期从 count 因子出发规划机器学习和结构诊断；原计划文件名写 51 个，正文后来改为 127 个 total-only 因子。",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-08-04",
+          "2026-08-06"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "这里主要记录模型研究的起步计划；实际执行和多模型结果在后续“模型执行”链中。"
+    },
+    {
+      "id": "ml-exec",
+      "track": "model",
+      "label": "模型执行、任务调度与资源限制",
+      "short": "模型执行",
+      "purpose": "让不同模型共用固定的数据与研究规则，按 CPU、GPU、内存和时间限制分配任务，支持失败恢复，并减少重复拟合与归因计算。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-08-19"
+        ]
+      },
+      "review": {
+        "days": 10,
+        "span": [
+          "2026-08-11",
+          "2026-08-20"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "folded",
+      "fate_note": "后续 330 候选研究沿用部分输入和执行基础。无随机森林的阶段报告是 8 月 19 日归档的模型报告，不是撤单延迟报告。"
+    },
+    {
+      "id": "ml-330",
+      "track": "model",
+      "label": "330 候选到 328 列模型的选择与重算",
+      "short": "模型重算",
+      "purpose": "从 330 个因子候选建立 LightGBM 和排序研究，修正选股、成交与估值的先后顺序；排除 f97 买卖两列后，发布 328 列输入的重算结果。",
+      "status": "done",
+      "closes_into": {
+        "showcase": "model"
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-09-20",
+          "2026-09-21"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "9 月 21 日发布修正模型结果。自动选择、已使用历史样本和毛收益各有边界，不能直接认定已得到可实盘交易的策略。"
+    },
+    {
+      "id": "dashboard-build",
+      "track": "delivery",
+      "label": "研究成果看板建站",
+      "short": "看板建站",
+      "purpose": "建立研究成果、每日汇报和展示页，加入公式、图示、离线阅读及部署配置，让研究材料可以集中浏览。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-07-07",
+          "2026-07-08",
+          "2026-07-09",
+          "2026-07-13"
+        ]
+      },
+      "review": {
+        "days": 5,
+        "span": [
+          "2026-07-07",
+          "2026-07-13"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "看板随后继续发布报告和增加功能；这里的记录段结束不表示网站不再维护。"
+    },
+    {
+      "id": "report-publish",
+      "track": "delivery",
+      "label": "汇报发布与看板日常维护",
+      "short": "发布维护",
+      "purpose": "把研究结果、解释和图表发布到看板，修正文案和浏览功能，并维护构建及项目规则。",
+      "status": "active",
+      "closes_into": {
+        "daily": [
+          "2026-07-23",
+          "2026-07-31",
+          "2026-08-01",
+          "2026-08-24",
+          "2026-09-16",
+          "2026-09-17",
+          "2026-09-18",
+          "2026-10-07"
+        ]
+      },
+      "review": {
+        "days": 22,
+        "span": [
+          "2026-07-23",
+          "2026-10-20"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "持续维护中。这里的提交可能只是报告或规则修改，不据此认定研究计算在同一天重跑。"
+    },
+    {
+      "id": "visual-b",
+      "track": "delivery",
+      "label": "研究编辑台版式改造",
+      "short": "版式调整",
+      "purpose": "按已选定的研究编辑台方向调整字体、纸墨配色、页面结构和窄屏显示。",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-08-11",
+          "2026-08-11"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "版式改造已提交，后续报告继续使用这套阅读与展示方式。"
+    },
+    {
+      "id": "report-tags",
+      "track": "delivery",
+      "label": "汇报标签与结果页浏览功能",
+      "short": "标签与浏览",
+      "purpose": "为汇报加入可保存的主题标签和筛选，并改进撤单、深度匹配报告中的方向对照、排序、公式和导航。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-09-07"
+        ]
+      },
+      "review": {
+        "days": 2,
+        "span": [
+          "2026-09-07",
+          "2026-09-09"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "标签功能与报告浏览改造分别记录；不能把报告中的买卖方向功能都称为标签算法。"
+    },
+    {
+      "id": "model-report",
+      "track": "delivery",
+      "label": "LightGBM 模型报告及结果修订",
+      "short": "模型报告",
+      "purpose": "发布模型设置、测试结果和诊断图，进一步解释 RankIC、组间排序及多空收益，并替换为因果时序修正后的结果。",
+      "status": "done",
+      "closes_into": null,
+      "review": {
+        "days": 3,
+        "span": [
+          "2026-09-19",
+          "2026-09-21"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "9 月 19 日的初版报告早于 330 候选研究；只有 9 月 21 日的修订接入相应重算结果。"
+    },
+    {
+      "id": "report328",
+      "track": "delivery",
+      "label": "328 列因子的 601 日结果报告",
+      "short": "328报告",
+      "purpose": "把深市新参数 328 列因子的 601 日评价发布为可筛选、比较和下载的报告，包含逐日相关性、分组收益与逐列诊断。",
+      "status": "done",
+      "closes_into": {
+        "daily": [
+          "2026-10-18"
+        ]
+      },
+      "review": {
+        "days": 1,
+        "span": [
+          "2026-10-18",
+          "2026-10-18"
+        ],
+        "unreviewed_days": [],
+        "by": "Codex",
+        "on": "2026-10-20"
+      },
+      "fate": "landed",
+      "fate_note": "报告已发布。它是单因子历史评价，分组毛收益未扣成本，也不等于模型或策略已在新的样本外期间通过检验。"
+    }
+  ],
+  "edges": [
+    {
+      "index": 1,
+      "from": "onboarding",
+      "to": "lv2-snapshot",
+      "type": "延续",
+      "confidence": "inferred",
+      "registered_date": null,
+      "rendered_source": "2026-06-24",
+      "rendered_target": "2026-06-25",
+      "basis": "6月23—24日环境和交易规则提交后，6月25日进入 lv2_snapshot_workspace 的快照实现。"
+    },
+    {
+      "index": 2,
+      "from": "lv2-snapshot",
+      "to": "literature",
+      "type": "依赖解除",
+      "confidence": "confirmed",
+      "registered_date": "2026-06-30",
+      "rendered_source": "2026-06-30",
+      "rendered_target": "2026-06-30",
+      "basis": "6月30日新增快照数据摘要并由 factor_lab 使用快照输入；不把6月29日纯文献收集算作快照开发。"
+    },
+    {
+      "index": 3,
+      "from": "literature",
+      "to": "algobench",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-07-03",
+      "rendered_target": "2026-07-06",
+      "basis": "7月1—3日复现 lowlat/ClusterLOB，7月6日将六篇论文方法落入 algobench。"
+    },
+    {
+      "index": 4,
+      "from": "algobench",
+      "to": "formal-engine",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-07-14",
+      "rendered_target": "2026-07-15",
+      "basis": "7月14日研究工作区入独立仓，7月15—16日同一 algobench 实施正式因子引擎。"
+    },
+    {
+      "index": 5,
+      "from": "doris-migration",
+      "to": "formal-engine",
+      "type": "依赖解除",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-07-15",
+      "rendered_target": "2026-07-15",
+      "basis": "7月15日服务器/Doris 总计划为7月16日正式引擎提供数据访问；后续7月30日恢复不作为首次交接。"
+    },
+    {
+      "index": 6,
+      "from": "formal-engine",
+      "to": "gates",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-07-25",
+      "rendered_target": "2026-07-27",
+      "basis": "7月27—29日计划在正式 Scorer/Response 上调整数量门、Tick 与价格门。"
+    },
+    {
+      "index": 7,
+      "from": "gates",
+      "to": "fixed-history",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-08-02",
+      "rendered_target": "2026-08-03",
+      "basis": "8月2日固定参数全区间计划后，8月3日以不可变种子补齐历史前缀。"
+    },
+    {
+      "index": 8,
+      "from": "fixed-history",
+      "to": "open5m",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-08-05",
+      "rendered_target": "2026-08-06",
+      "basis": "8月6日 Open5m 正式评价计划复用已有历史区间、registry 和输出。"
+    },
+    {
+      "index": 9,
+      "from": "ml-count",
+      "to": "ml-exec",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-08-06",
+      "rendered_target": "2026-08-11",
+      "basis": "8月4日 ML 计划与8月6日全量原始因子计划，延续为8月11日 algobench.ml 冻结研究和家族适配。"
+    },
+    {
+      "index": 10,
+      "from": "open5m",
+      "to": "ml-exec",
+      "type": "依赖解除",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-08-10",
+      "rendered_target": "2026-08-11",
+      "basis": "ML 规范计划明确只读取冻结的 Open5m 因子历史输出，数据验收是执行前置。"
+    },
+    {
+      "index": 11,
+      "from": "open5m",
+      "to": "cancel-phase",
+      "type": "派生",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-08-10",
+      "rendered_target": "2026-08-19",
+      "basis": "8月19日撤单延迟计划明确复用 Open5m 日期契约、生命周期与事件标准化。"
+    },
+    {
+      "index": 12,
+      "from": "open5m",
+      "to": "depth-match",
+      "type": "派生",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-09-04",
+      "rendered_target": "2026-09-05",
+      "basis": "9月5日 C7.1 计划直接复用 L2、提交前盘口和订单量分布旁证，未声称由撤单相位结果派生；来源改为 open5m。"
+    },
+    {
+      "index": 13,
+      "from": "wangly-env",
+      "to": "old-factor-bank",
+      "type": "依赖解除",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-09-04",
+      "rendered_target": "2026-09-07",
+      "basis": "9月4日环境引导与结果转移在先，9月7日旧因子300秒计划使用已核验服务器环境。"
+    },
+    {
+      "index": 14,
+      "from": "old-factor-bank",
+      "to": "sse-v2",
+      "type": "派生",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-09-12",
+      "rendered_target": "2026-09-23",
+      "basis": "9月23日沪市委托输入审计与重建代码用于相同因子面板；老因子注册和可识别性约束仍在。"
+    },
+    {
+      "index": 15,
+      "from": "old-factor-bank",
+      "to": "szse-model328",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-09-12",
+      "rendered_target": "2026-10-10",
+      "basis": "10月12日重算计划明确从冻结模型映射提取256个老因子与其余输入，沿用老因子合同。"
+    },
+    {
+      "index": 16,
+      "from": "open5m",
+      "to": "grouped-calibration",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-09-18",
+      "rendered_target": "2026-10-07",
+      "basis": "10月8日定档预检明确复用旧的连续核历史定标脚本和六核日级中心；来源由深度匹配改为 open5m。"
+    },
+    {
+      "index": 17,
+      "from": "grouped-calibration",
+      "to": "szse-model328",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-10-10",
+      "rendered_target": "2026-10-10",
+      "basis": "10月12日计划明确绑定已验收六核逐股票日参数表与正式结构参数 v2。"
+    },
+    {
+      "index": 18,
+      "from": "szse-model328",
+      "to": "storage-cleanup",
+      "type": "派生",
+      "confidence": "confirmed",
+      "registered_date": "2026-10-16",
+      "rendered_source": "2026-10-16",
+      "rendered_target": "2026-10-16",
+      "basis": "10月16日深市328列存储收尾计划对应深市生产与性能试验，不将10月14日沪市热清理作为此边交接点。"
+    },
+    {
+      "index": 19,
+      "from": "szse-model328",
+      "to": "report328",
+      "type": "收口",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-10-18",
+      "rendered_target": "2026-10-18",
+      "basis": "10月18日研究提交10bca944与看板提交1a0fefd8，分别完成收益评价记录与相同328列报告发布。"
+    },
+    {
+      "index": 20,
+      "from": "ml-exec",
+      "to": "ml-330",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-08-20",
+      "rendered_target": "2026-09-20",
+      "basis": "9月20—21日 LightGBM/因果单次拟合沿用 ML 研究执行与模型输入规范。"
+    },
+    {
+      "index": 21,
+      "from": "lv2-snapshot",
+      "to": "replay",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": "2026-10-17",
+      "rendered_source": "2026-07-08",
+      "rendered_target": "2026-10-17",
+      "basis": "10月17日逐笔回放及快照对齐检查，承接的是订单簿回放；沪市G1是并行工作，未据此认定因果承接。"
+    },
+    {
+      "index": 22,
+      "from": "dashboard-build",
+      "to": "report-publish",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-07-13",
+      "rendered_target": "2026-07-23",
+      "basis": "7月7—13日建站后，7月23日以后继续在同一看板仓发布和维护报告。"
+    },
+    {
+      "index": 23,
+      "from": "dashboard-build",
+      "to": "visual-b",
+      "type": "延续",
+      "confidence": "confirmed",
+      "registered_date": null,
+      "rendered_source": "2026-07-13",
+      "rendered_target": "2026-08-11",
+      "basis": "8月11日 c9ecdcf2 直接修改已有看板视觉与壳层。"
+    },
+    {
+      "index": 24,
+      "from": "visual-b",
+      "to": "report-tags",
+      "type": "延续",
+      "confidence": "inferred",
+      "registered_date": null,
+      "rendered_source": "2026-08-11",
+      "rendered_target": "2026-09-07",
+      "basis": "9月7日7896f7d9在已有研究编辑台上新增标签与归类。"
+    },
+    {
+      "index": 25,
+      "from": "report-tags",
+      "to": "model-report",
+      "type": "延续",
+      "confidence": "inferred",
+      "registered_date": null,
+      "rendered_source": "2026-09-09",
+      "rendered_target": "2026-09-19",
+      "basis": "9月19日模型报告使用已有看板阅读/展示与导航；本边记录交付演进，不表示标签算法是模型研究前提。"
+    },
+    {
+      "index": 26,
+      "from": "ml-330",
+      "to": "model-report",
+      "type": "收口",
+      "confidence": "confirmed",
+      "registered_date": "2026-09-21",
+      "rendered_source": "2026-09-21",
+      "rendered_target": "2026-09-21",
+      "basis": "模型报告9月19日初版早于330研究；9月21日bc1098eb发布因果重算，83498922恢复展示，交接明确定位9月21日。"
+    }
+  ],
+  "snapshot": "0910a201154aa02b6889ad77899943a2eb656d1c"
+}

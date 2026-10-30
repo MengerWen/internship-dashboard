@@ -1,0 +1,155 @@
+结构采集进程初始化时绑定配置与全日元数据
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index e16e8f6b..a099893e 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -765,3 +765,7 @@ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: fl
+     from algobench.formal_panel import FORMAL_L2_COLUMNS_BY_TABLE
+-    from algobench.formal_real_data_calibration import StructuralCalibrationConsumer
++    from algobench.formal_real_data_calibration import (
++        StructuralCalibrationConsumer,
++        StructuralCalibrationWorker,
++        initialize_structural_calibration_worker,
++    )
+     from algobench.formal_reference import load_formal_dates, load_formal_universe
+@@ -816,8 +820,4 @@ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: fl
+         prepare_event_prestate_kernel()
+-        kwargs["compute_executor_factory"] = partial(
+-            ProcessPoolExecutor, mp_context=multiprocessing.get_context("fork")
+-        )
+     replay_kernel_compile_seconds = time.perf_counter() - compile_started
+     query_telemetry = []
+-    scheduler = DailyScheduler(settings, telemetry_sink=lambda row: query_telemetry.append(asdict(row)), **kwargs)
+     spec_path = REPO_ROOT / "因子/algobench/configs/formal_evaluation_intraday_open5m_2025_2026h1_v1.yaml"
+@@ -833,20 +833,29 @@ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: fl
+         raise ValueError("parallel structural pairs require one shared CPU slot root across date runners")
+-    scheduler.register(
+-        "open5m_structural_calibration_v2",
+-        StructuralCalibrationConsumer(
+-            cfg=cfg,
+-            window_spec=window_spec,
+-            metadata_by_code=metadata_by_code,
+-            parameters=parameters,
+-            kernel_parameter_table=kernel_identity.get("parameter_table") if kernel_identity else None,
+-            reuse_depth_supports=reuse_root is not None,
+-            skip_r19_only_supports=bool(section.get("skip_r19_only_supports", False)),
+-            bbo_whole_day_actions=bool(section.get("bbo_whole_day_actions", False)),
+-            bbo_record_action_diagnostics=bool(section.get("bbo_record_action_diagnostics", False)),
+-            pair_cancel_workers=int(section.get("pair_cancel_workers", 1)),
+-            pair_parallel_min_rows=int(section.get("pair_parallel_min_rows", 1_000_000)),
+-            pair_cpu_slot_root=(Path(os.environ["SIRUI_STRUCTURAL_CPU_SLOT_ROOT"]) if os.environ.get("SIRUI_STRUCTURAL_CPU_SLOT_ROOT") else None),
+-            f40_source_root=(hot_progress_root(args.output_root, args.scratch_root) / "f40_sources") if section.get("f40_staged_calibration") else None,
+-        ),
++    consumer = StructuralCalibrationConsumer(
++        cfg=cfg,
++        window_spec=window_spec,
++        metadata_by_code=metadata_by_code,
++        parameters=parameters,
++        kernel_parameter_table=kernel_identity.get("parameter_table") if kernel_identity else None,
++        reuse_depth_supports=reuse_root is not None,
++        skip_r19_only_supports=bool(section.get("skip_r19_only_supports", False)),
++        bbo_whole_day_actions=bool(section.get("bbo_whole_day_actions", False)),
++        bbo_record_action_diagnostics=bool(section.get("bbo_record_action_diagnostics", False)),
++        pair_cancel_workers=int(section.get("pair_cancel_workers", 1)),
++        pair_parallel_min_rows=int(section.get("pair_parallel_min_rows", 1_000_000)),
++        pair_cpu_slot_root=(Path(os.environ["SIRUI_STRUCTURAL_CPU_SLOT_ROOT"]) if os.environ.get("SIRUI_STRUCTURAL_CPU_SLOT_ROOT") else None),
++        f40_source_root=(hot_progress_root(args.output_root, args.scratch_root) / "f40_sources") if section.get("f40_staged_calibration") else None,
+     )
++    if os.name == "posix":
++        kwargs["compute_executor_factory"] = partial(
++            ProcessPoolExecutor,
++            mp_context=multiprocessing.get_context("fork"),
++            initializer=initialize_structural_calibration_worker,
++            initargs=(consumer,),
++        )
++        handler = StructuralCalibrationWorker()
++    else:
++        handler = consumer
++    scheduler = DailyScheduler(settings, telemetry_sink=lambda row: query_telemetry.append(asdict(row)), **kwargs)
++    scheduler.register("open5m_structural_calibration_v2", handler)
+     plan = structural_query_plan(args.date, codes, FORMAL_L2_COLUMNS_BY_TABLE)
+diff --git a/因子/algobench/src/algobench/formal_real_data_calibration.py b/因子/algobench/src/algobench/formal_real_data_calibration.py
+index 55f9f18d..a563747a 100644
+--- a/因子/algobench/src/algobench/formal_real_data_calibration.py
++++ b/因子/algobench/src/algobench/formal_real_data_calibration.py
+@@ -58,2 +58,20 @@ STRUCTURAL_EVENT_PRESTATE_LEGS = ("order", "trade_bid", "cancel")
+ 
++_STRUCTURAL_WORKER_CONSUMER = None
++
++
++def initialize_structural_calibration_worker(consumer):
++    """每个计算进程只接收一次冻结配置和股票元数据。"""
++    global _STRUCTURAL_WORKER_CONSUMER
++    _STRUCTURAL_WORKER_CONSUMER = consumer
++
++
++@dataclass(frozen=True)
++class StructuralCalibrationWorker:
++    """逐股任务只传输输入，完整消费者由进程初始化器持有。"""
++
++    def __call__(self, item):
++        if _STRUCTURAL_WORKER_CONSUMER is None:
++            raise RuntimeError("structural calibration worker is not initialized")
++        return _STRUCTURAL_WORKER_CONSUMER(item)
++
+ 
+diff --git a/因子/algobench/tests/test_structural_calibration_worker.py b/因子/algobench/tests/test_structural_calibration_worker.py
+new file mode 100644
+index 00000000..7cc9ff19
+--- /dev/null
++++ b/因子/algobench/tests/test_structural_calibration_worker.py
+@@ -0,0 +1,52 @@
++from concurrent.futures import ProcessPoolExecutor
++from dataclasses import dataclass, field
++import multiprocessing
++import pickle
++
++import pytest
++
++from algobench.formal_real_data_calibration import (
++    StructuralCalibrationWorker,
++    initialize_structural_calibration_worker,
++)
++
++
++@dataclass
++class CountingConsumer:
++    metadata: dict = field(default_factory=lambda: {str(i): i for i in range(2863)})
++    calls: int = 0
++
++    def __call__(self, item):
++        self.calls += 1
++        return item, self.metadata[str(item)], self.calls
++
++
++def test_worker_requires_initialized_consumer(monkeypatch):
++    import algobench.formal_real_data_calibration as module
++    monkeypatch.setattr(module, "_STRUCTURAL_WORKER_CONSUMER", None)
++    with pytest.raises(RuntimeError, match="not initialized"):
++        StructuralCalibrationWorker()(0)
++
++
++@pytest.mark.parametrize("method", ["spawn", "fork"])
++def test_worker_reuses_initialized_state_for_multiple_stock_tasks(method):
++    if method not in multiprocessing.get_all_start_methods():
++        pytest.skip("process start method is unavailable")
++    consumer = CountingConsumer()
++    with ProcessPoolExecutor(
++        max_workers=1,
++        mp_context=multiprocessing.get_context(method),
++        initializer=initialize_structural_calibration_worker,
++        initargs=(consumer,),
++    ) as pool:
++        results = list(pool.map(StructuralCalibrationWorker(), [0, 1, 2]))
++    assert results == [(0, 0, 1), (1, 1, 2), (2, 2, 3)]
++    assert consumer.calls == 0
++
++
++def test_each_task_transfers_compact_worker_descriptor():
++    consumer = CountingConsumer()
++    worker = StructuralCalibrationWorker()
++    assert len(pickle.dumps(worker)) < 256
++    assert len(pickle.dumps(consumer)) > 20_000
++    assert isinstance(pickle.loads(pickle.dumps(worker)), StructuralCalibrationWorker)

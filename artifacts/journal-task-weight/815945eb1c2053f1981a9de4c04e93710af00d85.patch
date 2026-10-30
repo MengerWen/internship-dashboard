@@ -1,0 +1,26 @@
+Verify each exactness column is hashed once across shared projections
+
+
+diff --git a/因子/algobench/tests/test_formal_exactness.py b/因子/algobench/tests/test_formal_exactness.py
+index c094fbad..79c4d296 100644
+--- a/因子/algobench/tests/test_formal_exactness.py
++++ b/因子/algobench/tests/test_formal_exactness.py
+@@ -257,3 +257,5 @@ def test_shared_projection_hashes_match_independent_v1_frames(size, monkeypatch)
+     normalized = []
++    native = []
+     original = exactness._hashable_series
++    original_arrays = exactness._int64_array_column_hashes
+     def observe(series):
+@@ -262,4 +264,11 @@ def test_shared_projection_hashes_match_independent_v1_frames(size, monkeypatch)
+     monkeypatch.setattr(exactness, "_hashable_series", observe)
++    def observe_arrays(series):
++        result = original_arrays(series)
++        if result is not None:
++            native.append((series.name, len(series)))
++        return result
++    monkeypatch.setattr(exactness, "_int64_array_column_hashes", observe_arrays)
+     assert exactness.frame_exactness_identities(frame, projections) == expected
+-    assert sum(length for _, length in normalized) == size*len(frame.columns)
++    assert sum(length for _, length in normalized + native) == size*len(frame.columns)
++    assert all(length <= exactness._OBJECT_HASH_BLOCK_ROWS for _, length in native)
+     for invalid in [("value", "date"), ("missing",), ("date", "date")]:

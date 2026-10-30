@@ -1,0 +1,113 @@
+强制公共页预算并记录单查询返回峰值
+
+
+diff --git a/lv2_snapshot_workspace/src/snapshot/bounded_page_io.py b/lv2_snapshot_workspace/src/snapshot/bounded_page_io.py
+index 78b2e7bb..9e232229 100644
+--- a/lv2_snapshot_workspace/src/snapshot/bounded_page_io.py
++++ b/lv2_snapshot_workspace/src/snapshot/bounded_page_io.py
+@@ -6,2 +6,3 @@ from dataclasses import replace
+ import io
++import math
+ import os
+@@ -133,2 +134,8 @@ def _read_one(
+             metrics.read_rows += raw.lines + int(bool(raw.bytes_read) and raw.last_byte != b"\n")
++            if completed and returncode == 0:
++                metrics.max_completed_query_rows = max(
++                    metrics.max_completed_query_rows,
++                    raw.lines + int(bool(raw.bytes_read) and raw.last_byte != b"\n"),
++                )
++                metrics.max_completed_query_bytes = max(metrics.max_completed_query_bytes, raw.bytes_read)
+             if metrics.query_count == 1:
+@@ -179,2 +186,6 @@ def load_bounded_code_range(
+         raise ValueError("page budgets must be positive")
++    if (not isinstance(max_bytes, int) or not isinstance(max_rows, int)
++            or not math.isfinite(query_timeout_seconds) or max_bytes > MAX_PAGE_BYTES
++            or max_rows > MAX_PAGE_ROWS or query_timeout_seconds > QUERY_TIMEOUT_SECONDS):
++        raise ValueError("budgets cannot exceed shared page policy")
+     arrow_threads = 4 if arrow_threads is None else arrow_threads
+diff --git a/lv2_snapshot_workspace/src/snapshot/io.py b/lv2_snapshot_workspace/src/snapshot/io.py
+index 26dcdd3f..d4c761f0 100644
+--- a/lv2_snapshot_workspace/src/snapshot/io.py
++++ b/lv2_snapshot_workspace/src/snapshot/io.py
+@@ -150,2 +150,4 @@ class StreamMetrics:
+     grouping_seconds: float = 0.0
++    max_completed_query_rows: int = 0
++    max_completed_query_bytes: int = 0
+ 
+diff --git a/lv2_snapshot_workspace/src/snapshot/query_plan.py b/lv2_snapshot_workspace/src/snapshot/query_plan.py
+index 36117ae5..a6504978 100644
+--- a/lv2_snapshot_workspace/src/snapshot/query_plan.py
++++ b/lv2_snapshot_workspace/src/snapshot/query_plan.py
+@@ -285,3 +285,3 @@ class QueryPlan:
+     def code_range_pages(self) -> tuple[tuple[str, ...], ...]:
+-        """Split the sorted universe into contiguous, non-overlapping pages."""
++        """Return the fixed-width starting layout; research reads adapt at runtime."""
+ 
+@@ -407,2 +407,4 @@ class QueryTelemetry:
+     grouping_seconds: float = 0.0
++    max_completed_query_rows: int = 0
++    max_completed_query_bytes: int = 0
+ 
+@@ -1085,2 +1087,4 @@ def _iter_code_range_pages(
+                         grouping_seconds=sum(item.grouping_seconds for item in metrics_list),
++                        max_completed_query_rows=max(item.max_completed_query_rows for item in metrics_list),
++                        max_completed_query_bytes=max(item.max_completed_query_bytes for item in metrics_list),
+                     )
+diff --git a/lv2_snapshot_workspace/tests/test_bounded_page_io.py b/lv2_snapshot_workspace/tests/test_bounded_page_io.py
+index be775c3d..a784bed7 100644
+--- a/lv2_snapshot_workspace/tests/test_bounded_page_io.py
++++ b/lv2_snapshot_workspace/tests/test_bounded_page_io.py
+@@ -59,20 +59,26 @@ def test_page_budget_splits_disjoint_codes_and_never_returns_partial_data(parser
+     class Input(io.BytesIO):
++        def __init__(self, process):
++            super().__init__()
++            self.output = process.stdout
++
+         def close(self):
++            if self.closed:
++                return
+             sql = self.getvalue().decode()
+             lo, hi = re.findall(r"code (?:>=|<=) '([0-9]{6})'", sql)
+-            owner.stdout = io.BytesIO(b"".join(
++            data = b"".join(
+                 line + b"\n" for line in DATA.splitlines() if lo <= line.split(b"\t")[2].decode() <= hi
+-            ))
++            )
+             # The reader already holds the pipe; replace its contents in place.
+-            output.seek(0); output.truncate(); output.write(owner.stdout.getvalue()); output.seek(0)
+-            owner.stdout = output
++            self.output.seek(0)
++            self.output.truncate()
++            self.output.write(data)
++            self.output.seek(0)
++            super().close()
+ 
+     def factory(*args, **kwargs):
+-        nonlocal owner, output
+         owner = Process(b"")
+-        output = owner.stdout
+-        owner.stdin = Input()
++        owner.stdin = Input(owner)
+         return owner
+ 
+-    owner, output = None, None
+     metrics = gateway.StreamMetrics()
+@@ -146,2 +152,9 @@ def test_query_budget_cannot_overlap_the_quiet_window():
+ 
++@pytest.mark.parametrize("kwargs", [{"max_rows": 1_000_001}, {"max_bytes": (64 << 20) + 1},
++                                   {"query_timeout_seconds": 121}])
++def test_query_budget_cannot_exceed_shared_policy(kwargs):
++    with pytest.raises(ValueError, match="shared page"):
++        load_bounded_code_range(spec(), **kwargs)
++
++
+ @pytest.mark.skipif(os.name != "posix", reason="company server uses Linux account locks")
+diff --git a/lv2_snapshot_workspace/tests/test_query_plan.py b/lv2_snapshot_workspace/tests/test_query_plan.py
+index c9d29edd..7ffa2860 100644
+--- a/lv2_snapshot_workspace/tests/test_query_plan.py
++++ b/lv2_snapshot_workspace/tests/test_query_plan.py
+@@ -623,2 +623,4 @@ def test_telemetry_append_contains_only_performance_metadata(tmp_path) -> None:
+         "grouping_seconds": 0.0,
++        "max_completed_query_rows": 0,
++        "max_completed_query_bytes": 0,
+     }

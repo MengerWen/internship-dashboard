@@ -1,0 +1,16 @@
+让真实分片回归使用唯一注册的采集模块
+
+
+diff --git a/scripts/tests/test_kernel_shard_benchmark.py b/scripts/tests/test_kernel_shard_benchmark.py
+index 99050873..af992bb2 100644
+--- a/scripts/tests/test_kernel_shard_benchmark.py
++++ b/scripts/tests/test_kernel_shard_benchmark.py
+@@ -16,2 +16,8 @@ import benchmark_open5m_kernel_shards as benchmark
+ 
++@pytest.fixture(autouse=True)
++def canonical_kernel_module(monkeypatch):
++    # 跨进程函数和归约类型须来自模块注册表中的同一个实例。
++    monkeypatch.setattr(benchmark, 'kernel', sys.modules['run_open5m_kernel_calibration_szse_history'])
++
++
+ @pytest.mark.parametrize('consumer_shards', (1, 4))

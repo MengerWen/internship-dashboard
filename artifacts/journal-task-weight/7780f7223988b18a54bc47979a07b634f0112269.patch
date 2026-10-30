@@ -1,0 +1,82 @@
+记录受限业务命令从进程创建到退出的完整墙钟
+
+
+diff --git a/scripts/_guard_sentinel.py b/scripts/_guard_sentinel.py
+index cb9fdd7a..c4bf92d4 100644
+--- a/scripts/_guard_sentinel.py
++++ b/scripts/_guard_sentinel.py
+@@ -6,2 +6,3 @@ from __future__ import annotations
+ import argparse
++import json
+ import os
+@@ -46,2 +47,3 @@ def main(argv: Sequence[str] | None = None) -> int:
+     parser.add_argument("--release-file", type=Path, required=True)
++    parser.add_argument("--command-timing-file", type=Path)
+     parser.add_argument("--start-timeout", type=float, default=30.0)
+@@ -66,4 +68,14 @@ def main(argv: Sequence[str] | None = None) -> int:
+         return 125
++    command_start = active_monotonic()
++    raw_start, start_epoch = time.monotonic(), time.time()
+     completed = subprocess.run(_oom_preferred_command(command), check=False)
++    raw_end, end_epoch = time.monotonic(), time.time()
++    command_end = active_monotonic()
+     returncode = _normalise_returncode(completed.returncode)
++    if args.command_timing_file:
++        _atomic_write(args.command_timing_file, json.dumps(dict(
++            schema_version="guard-business-command-timing-v1", command=command, exit_code=returncode,
++            start_epoch=start_epoch, end_epoch=end_epoch, raw_wall_seconds=raw_end-raw_start,
++            active_wall_seconds=command_end-command_start,
++            boundary="before child process creation through command exit; active clock excludes confirmed trading freezes")) + "\n")
+     _atomic_write(args.exit_code_file, f"{returncode}\n")
+diff --git a/scripts/run_guarded.py b/scripts/run_guarded.py
+index 7a4cbb1c..616799c4 100644
+--- a/scripts/run_guarded.py
++++ b/scripts/run_guarded.py
+@@ -1512,2 +1512,3 @@ def _run_systemd(
+         release_file = temporary / "release"
++        command_timing_file = temporary / "command-timing.json"
+         sentinel_argv = [
+@@ -1523,2 +1524,4 @@ def _run_systemd(
+             str(release_file),
++            "--command-timing-file",
++            str(command_timing_file),
+             "--timeout",
+@@ -1764,2 +1767,4 @@ def _run_systemd(
+                 "killed_by_guard": False,
++                "business_command_timing": (json.loads(command_timing_file.read_text())
++                                            if command_timing_file.is_file() else None),
+                 "scope_memory_peak_bytes": snapshot[
+@@ -2072,2 +2077,3 @@ def _merge_outcome(manifest: dict[str, Any], outcome: dict[str, Any]) -> None:
+             "sentinel_exit_code": outcome["sentinel_exit_code"],
++            "business_command_timing": outcome.get("business_command_timing"),
+             "killed_by_guard": outcome["killed_by_guard"],
+diff --git a/因子/algobench/tests/test_run_guarded.py b/因子/algobench/tests/test_run_guarded.py
+index df0249ea..47682d3d 100644
+--- a/因子/algobench/tests/test_run_guarded.py
++++ b/因子/algobench/tests/test_run_guarded.py
+@@ -13,2 +13,3 @@ import threading
+ import time
++from types import SimpleNamespace
+ 
+@@ -1052,2 +1053,21 @@ def test_sentinel_records_exit_code_and_times_out(tmp_path):
+ 
++def test_sentinel_clock_includes_child_exit_and_preserves_raw_freeze_time(tmp_path, monkeypatch):
++    start, ready, release, exit_file, timing = [tmp_path / name for name in ("start", "ready", "release", "exit", "timing")]
++    start.touch()
++    release.touch()
++    active = iter([1., 2., 302., 302.])
++    raw = iter([10., 610.])
++    epochs = iter([1000., 1600.])
++    monkeypatch.setattr(sentinel, "active_monotonic", lambda: next(active))
++    monkeypatch.setattr(sentinel.time, "monotonic", lambda: next(raw))
++    monkeypatch.setattr(sentinel.time, "time", lambda: next(epochs))
++    monkeypatch.setattr(sentinel.subprocess, "run", lambda *a, **kw: SimpleNamespace(returncode=0))
++    assert sentinel.main(["--start-file", str(start), "--ready-file", str(ready), "--release-file", str(release),
++        "--exit-code-file", str(exit_file), "--command-timing-file", str(timing), "--", "business"]) == 0
++    record = json.loads(timing.read_text())
++    assert record["active_wall_seconds"] == 300.
++    assert record["raw_wall_seconds"] == 600.
++    assert record["exit_code"] == 0 and record["command"] == ["business"]
++
++
+ def test_sentinel_waits_for_release_file(tmp_path):

@@ -1,0 +1,189 @@
+并行重建发布诊断并核对NaN及空值的完整身份
+
+按独立已验收组件使用16个进程，复用完整GET、来源SHA和8GiB热暂存监测。无损核对保留NaN位置、Arrow有效位图、浮点符号零和精确整数，6项回归通过。
+
+
+diff --git a/scripts/benchmark_formal_day_bucket_publication.py b/scripts/benchmark_formal_day_bucket_publication.py
+index be4a8534..9c2787b0 100644
+--- a/scripts/benchmark_formal_day_bucket_publication.py
++++ b/scripts/benchmark_formal_day_bucket_publication.py
+@@ -5,2 +5,4 @@ import argparse
+ from dataclasses import replace
++from concurrent.futures import ProcessPoolExecutor
++from multiprocessing import get_context
+ import json
+@@ -8,3 +10,2 @@ import os
+ from pathlib import Path
+-import resource
+ import shutil
+@@ -21,3 +22,3 @@ from algobench.formal_derived_fragments import (
+     DerivedFragment, RAW_BANK_AUDIT_SCHEMAS, read_derived_fragment, write_derived_fragment)
+-from algobench.formal_exactness import identities_sha256
++from algobench.formal_exactness import identities_sha256, table_exactness_identities
+ from algobench.ml.artifacts import atomic_write_json
+@@ -36,2 +37,50 @@ def fresh_root(path):
+ 
++def same_values(left, right):
++    import pyarrow as pa
++    if not left.schema.equals(right.schema, check_metadata=False) or len(left) != len(right):
++        return False
++    changed = [field.name for field in left.schema if pa.types.is_floating(field.type)
++        or not left[field.name].equals(right[field.name])]
++    if not changed:
++        return True
++    if any(not left[name].is_null().equals(right[name].is_null()) for name in changed):
++        return False
++    # Arrow equals 将同位置 NaN 判为不同；沿用科学合同的完整数值与空值身份。
++    def identity(table):
++        return table_exactness_identities(table.select(changed), {"all": tuple(changed)},
++            arrow_int64_lists=True, arrow_strings=True)[1]
++    return identity(left) == identity(right)
++
++
++def prepare_component(job):
++    root, publisher, kind, name, target, expected, expected_rows, entries, day = job
++    local = root / (name + ".parquet")
++    publisher.stage_verified(target, local, expected_sha256=expected, maximum_bytes=512*1024**2)
++    table = pq.ParquetFile(local).read(use_threads=False)
++    if len(table) != expected_rows:
++        raise ValueError("来源组件行数不符")
++    fragments, seen = [], set()
++    def write(code, stock):
++        if code in seen or code not in entries or len(stock) != entries[code]["row_count"]:
++            raise ValueError("来源股票覆盖或行数不符")
++        seen.add(code)
++        entry = entries[code]
++        fragment = write_derived_fragment(root / "fragments", run_id="fixture", kind=kind,
++            date=day, code=code, table=stock, schema_version=entry["schema_version"],
++            logical_fingerprint=entry["logical_fingerprint"], metadata=entry["metadata"])
++        if not same_values(read_derived_fragment(fragment.path), stock):
++            raise ValueError("重建片段未保留来源完整值")
++        fragments.append(fragment.as_payload())
++    for code, stock in stock_tables(table):
++        write(code, stock.cast(RAW_BANK_AUDIT_SCHEMAS[kind]))
++    import pyarrow as pa
++    for code, entry in entries.items():
++        if code not in seen:
++            if entry["row_count"]:
++                raise ValueError("来源清单存在未交付的非空股票")
++            write(code, pa.Table.from_pylist([], schema=RAW_BANK_AUDIT_SCHEMAS[kind]))
++    local.unlink()
++    return name, fragments, sum(Path(row["path"]).stat().st_size for row in fragments)
++
++
+ def prepare(args):
+@@ -47,3 +96,3 @@ def prepare(args):
+         expected_artifact_schema=DAY_BUCKET_SCHEMA_VERSION, object_publication=publisher, manifest_snapshot=manifest)
+-    fragments, identities, total, seen = [], {}, 0, set()
++    fragments, identities, total, jobs = [], {}, 0, []
+     source_rows = {row["name"]: row for row in manifest["components"]}
+@@ -53,44 +102,20 @@ def prepare(args):
+             raise ValueError("来源包含非订单组件")
+-        local = root / "source.parquet"
+         expected = metadata["component_file_sha256"][name]
+-        publisher.stage_verified(target, local, expected_sha256=expected, maximum_bytes=512*1024**2)
+-        table = pq.ParquetFile(local).read(use_threads=False)
+-        if len(table) != source_rows[name]["row_count"]:
+-            raise ValueError("来源组件行数不符")
+-        for code, stock in stock_tables(table):
+-            if (kind, code) in seen:
+-                raise ValueError("来源股票重复出现在组件中")
+-            seen.add((kind, code))
+-            entry = restore_day_bucket_entry(metadata, metadata["entries"][kind][code])
+-            stock = stock.cast(RAW_BANK_AUDIT_SCHEMAS[kind])
+-            if len(stock) != entry["row_count"]:
+-                raise ValueError("来源股票行数不符")
+-            fragment = write_derived_fragment(root / "fragments", run_id="fixture", kind=kind,
+-                date=metadata["date"], code=code, table=stock, schema_version=entry["schema_version"],
+-                logical_fingerprint=entry["logical_fingerprint"], metadata=entry["metadata"])
+-            if not read_derived_fragment(fragment.path).equals(stock, check_metadata=False):
+-                raise ValueError("重建片段未保留来源完整值")
+-            size = Path(fragment.path).stat().st_size
+-            total += size
+-            if total + local.stat().st_size > LIMIT:
+-                raise ValueError("重建派生片段超过 8 GiB 诊断预算")
+-            fragments.append(fragment.as_payload())
++        bucket = int(name.split("__", 1)[1])
++        entries = {code: restore_day_bucket_entry(metadata, row)
++            for code, row in metadata["entries"][kind].items() if row["bucket"] == bucket}
++        jobs.append((root, publisher, kind, name, target, expected, source_rows[name]["row_count"],
++            entries, metadata["date"]))
+         identities[name] = expected
+-        local.unlink()
+-        print(json.dumps(dict(component=name, fragments=len(fragments), fragment_bytes=total)), flush=True)
+-    import pyarrow as pa
+-    for kind, entries in metadata["entries"].items():
+-        for code, encoded in entries.items():
+-            if (kind, code) in seen:
+-                continue
+-            entry = restore_day_bucket_entry(metadata, encoded)
+-            if entry["row_count"]:
+-                raise ValueError("来源清单存在未交付的非空股票")
+-            fragment = write_derived_fragment(root / "fragments", run_id="fixture", kind=kind,
+-                date=metadata["date"], code=code, table=pa.Table.from_pylist([], schema=RAW_BANK_AUDIT_SCHEMAS[kind]),
+-                schema_version=entry["schema_version"], logical_fingerprint=entry["logical_fingerprint"], metadata=entry["metadata"])
+-            total += Path(fragment.path).stat().st_size
+-            fragments.append(fragment.as_payload())
+-    if total > LIMIT:
+-        raise ValueError("派生诊断片段超过 8 GiB")
++    from algobench.formal_factor_resources import HotStagingMonitor
++    monitor = HotStagingMonitor(root, LIMIT).start()
++    try:
++        with ProcessPoolExecutor(max_workers=16,
++                mp_context=get_context("forkserver" if sys.platform == "linux" else "spawn")) as pool:
++            for name, rows, size in pool.map(prepare_component, jobs):
++                fragments.extend(rows)
++                total += size
++                print(json.dumps(dict(component=name, fragments=len(fragments), fragment_bytes=total)), flush=True)
++    finally:
++        history = monitor.close()
+     if publisher.readback_sha256(args.source_manifest) != digest:
+@@ -100,3 +125,4 @@ def prepare(args):
+         source_component_sha256=identities, source_component_identities_sha256=identities_sha256(identities),
+-        date=metadata["date"], window_token=metadata["factor_window_token"], fragments=fragments, bytes=total))
++        date=metadata["date"], window_token=metadata["factor_window_token"], fragments=fragments, bytes=total,
++        resource_history=history))
+ 
+@@ -104,2 +130,3 @@ def prepare(args):
+ def run(args):
++    import resource
+     source_root, target_root = args.fixture.resolve(), args.output_root.resolve()
+diff --git a/scripts/tests/test_benchmark_formal_day_bucket_publication.py b/scripts/tests/test_benchmark_formal_day_bucket_publication.py
+new file mode 100644
+index 00000000..f82bf064
+--- /dev/null
++++ b/scripts/tests/test_benchmark_formal_day_bucket_publication.py
+@@ -0,0 +1,33 @@
++import importlib.util
++from pathlib import Path
++
++import numpy as np
++import pyarrow as pa
++import pytest
++
++
++def load_module():
++    path = Path(__file__).resolve().parents[1] / "benchmark_formal_day_bucket_publication.py"
++    spec = importlib.util.spec_from_file_location("publication_probe", path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++@pytest.mark.parametrize("change", [None, "value", "null", "nan_position", "integer", "zero_sign"])
++def test_fixture_comparison_preserves_nan_null_and_exact_integer_identity(change):
++    module = load_module()
++    left = pa.table(dict(value=pa.array([np.nan, None, 0., -0., .5]),
++        integer=pa.array([2**62+1] * 5, type=pa.int64()), text=["甲", None, "x", "x", "y"],
++        finite=[0., .1, .2, .3, .4]))
++    values = [np.nan, None, 0., -0., .5]
++    integers = [2**62+1] * 5
++    finite = [0., .1, .2, .3, .4]
++    if change == "value": values[-1] = np.nextafter(.5, 1.)
++    if change == "null": values[1] = np.nan
++    if change == "nan_position": values[0], values[2] = values[2], values[0]
++    if change == "integer": integers[-1] += 1
++    if change == "zero_sign": finite[0] = -0.
++    right = pa.table(dict(value=pa.array(values), integer=pa.array(integers, type=pa.int64()),
++        text=["甲", None, "x", "x", "y"], finite=finite))
++    assert module.same_values(left, right) is (change is None)

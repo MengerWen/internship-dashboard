@@ -1,0 +1,62 @@
+允许常数核绑定回归使用独立单日范围并核对完整交易日历
+
+
+diff --git a/因子/algobench/src/algobench/formal_raw_bank_startup.py b/因子/algobench/src/algobench/formal_raw_bank_startup.py
+index 84d6e206..039a9798 100644
+--- a/因子/algobench/src/algobench/formal_raw_bank_startup.py
++++ b/因子/algobench/src/algobench/formal_raw_bank_startup.py
+@@ -113,5 +113,14 @@ def raw_bank_scheduler_factory():
+ 
+-def startup_record(cfg, args, runtime, registry, registry_path, specs, specs_path):
+-    """Validate the complete calendar and separate file and loader identities."""
++def frozen_formal_calendar(runtime, selected_date):
++    """Keep the accepted full calendar while restricting a binding regression."""
+     dates = list(runtime["kernel_calibration"]["dates"])
++    if runtime.get("binding_regression_only") is True:
++        if not selected_date or dates != [selected_date]:
++            raise ValueError("binding regression requires its single explicit date")
++        from .formal_calibration_scope import FULL_DATES_SHA256
++        from .paths import ALGOBENCH_ROOT
++        inventory = ALGOBENCH_ROOT / "configs/open5m_calibration_dates_full_2024_2026q2_v1.txt"
++        if sha256_file(inventory) != FULL_DATES_SHA256:
++            raise ValueError("binding regression full calendar SHA-256 mismatch")
++        dates = inventory.read_text(encoding="utf-8").splitlines()
+     if len(dates) != 601 or dates != sorted(set(dates)) or (
+@@ -119,2 +128,10 @@ def startup_record(cfg, args, runtime, registry, registry_path, specs, specs_pat
+         raise ValueError("frozen formal calendar must contain the contracted 601 dates")
++    if selected_date and selected_date not in dates:
++        raise ValueError("single-day selection is outside the frozen formal calendar")
++    return dates
++
++
++def startup_record(cfg, args, runtime, registry, registry_path, specs, specs_path):
++    """Validate the complete calendar and separate file and loader identities."""
++    dates = frozen_formal_calendar(runtime, args.date)
+     accepted = load_formal_dates(cfg, start_date=dates[0], end_date=dates[-1])
+@@ -123,4 +140,2 @@ def startup_record(cfg, args, runtime, registry, registry_path, specs, specs_pat
+             f"missing={sorted(set(dates)-set(accepted))}; extra={sorted(set(accepted)-set(dates))}")
+-    if args.date and args.date not in dates:
+-        raise ValueError("single-day selection is outside the frozen formal calendar")
+     if cfg.output_root.resolve() == args.output_root.resolve():
+diff --git a/因子/algobench/tests/test_formal_raw_bank_startup.py b/因子/algobench/tests/test_formal_raw_bank_startup.py
+index 10212f7e..b8a95e2f 100644
+--- a/因子/algobench/tests/test_formal_raw_bank_startup.py
++++ b/因子/algobench/tests/test_formal_raw_bank_startup.py
+@@ -16,2 +16,17 @@ WINDOWS = ROOT / "因子/algobench/configs/formal_evaluation_intraday_open5m_202
+ 
++def test_binding_regression_keeps_full_calendar_and_requires_its_explicit_day():
++    from algobench.formal_raw_bank_startup import frozen_formal_calendar
++    day = "2026-04-22"
++    runtime = dict(binding_regression_only=True, kernel_calibration=dict(dates=[day]))
++    calendar = frozen_formal_calendar(runtime, day)
++    assert len(calendar) == 601 and day in calendar
++    assert (calendar[0], calendar[-1]) == ("2024-01-02", "2026-06-30")
++    for selected in (None, "2026-01-13"):
++        with pytest.raises(ValueError, match="single explicit date"):
++            frozen_formal_calendar(runtime, selected)
++    with pytest.raises(ValueError, match="601 dates"):
++        frozen_formal_calendar(dict(kernel_calibration=dict(dates=[day])), day)
++    assert frozen_formal_calendar(dict(kernel_calibration=dict(dates=calendar)), None) == calendar
++
++
+ @pytest.mark.skipif(importlib.util.find_spec('numba') is None, reason='preloaded full bank requires numba')

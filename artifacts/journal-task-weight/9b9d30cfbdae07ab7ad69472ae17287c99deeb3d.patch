@@ -1,0 +1,79 @@
+按实际生产者区分历史定义与可执行评分清单
+
+
+diff --git a/scripts/validate_preregister.py b/scripts/validate_preregister.py
+index e7bc581b..709d6bb8 100644
+--- a/scripts/validate_preregister.py
++++ b/scripts/validate_preregister.py
+@@ -164,2 +164,3 @@ UNSUPPORTED_BASE_FACTOR_IDS = {
+ }
++RETIRED_CONTROL_BASE_FACTOR_IDS = frozenset({"ctrl01", "ctrl02", "ctrl03", "ctrl04"})
+ 
+@@ -560,6 +561,8 @@ def _execution_inventory(
+         base_factor_id = str(members[0].get("base_factor_id", "")) if members else ""
+-        if base_factor_id in UNSUPPORTED_BASE_FACTOR_IDS:
++        if base_factor_id in UNSUPPORTED_BASE_FACTOR_IDS | RETIRED_CONTROL_BASE_FACTOR_IDS:
+             execution_class = "unsupported"
+-            unsupported_mapping[specification.specification_id] = str(
+-                document["unsupported_reason"]
++            unsupported_mapping[specification.specification_id] = (
++                "historical control definition has no active scorer"
++                if base_factor_id in RETIRED_CONTROL_BASE_FACTOR_IDS
++                else str(document["unsupported_reason"])
+             )
+diff --git a/因子/algobench/tests/test_intraday_continuation_contract.py b/因子/algobench/tests/test_intraday_continuation_contract.py
+index 301da8cc..88d26024 100644
+--- a/因子/algobench/tests/test_intraday_continuation_contract.py
++++ b/因子/algobench/tests/test_intraday_continuation_contract.py
+@@ -170,4 +170,4 @@ def test_intraday_active_response_inventory_is_dynamic_and_baseline_free():
+ 
+-    assert len(specifications) == 55
+-    assert sum(len(item.record_ids) for item in specifications) == 165
++    assert len(specifications) == 51
++    assert sum(len(item.record_ids) for item in specifications) == 153
+     assert len(pair_transforms) == 15
+@@ -178,5 +178,3 @@ def test_intraday_active_response_inventory_is_dynamic_and_baseline_free():
+     )
+-    assert required_historical_baseline_kinds(catalog, registry) == (
+-        "activity",
+-    )
++    assert required_historical_baseline_kinds(catalog, registry) == ()
+ 
+diff --git a/因子/algobench/tests/test_run_2026q2_logic_study.py b/因子/algobench/tests/test_run_2026q2_logic_study.py
+index 08881eb7..9e8cff1f 100644
+--- a/因子/algobench/tests/test_run_2026q2_logic_study.py
++++ b/因子/algobench/tests/test_run_2026q2_logic_study.py
+@@ -199,4 +199,4 @@ def test_q2_evaluation_streams_pairs_and_applies_current_record_inventory():
+     )
+-    assert len(engine.formal_columns) == 165
+-    assert engine.historical_baseline_kinds == ("activity",)
++    assert len(engine.formal_columns) == 153
++    assert engine.historical_baseline_kinds == ()
+     retained = {item.base_logic for item in engine.specifications}
+diff --git a/因子/algobench/tests/test_validate_preregister.py b/因子/algobench/tests/test_validate_preregister.py
+index 1c1af520..3d1058ef 100644
+--- a/因子/algobench/tests/test_validate_preregister.py
++++ b/因子/algobench/tests/test_validate_preregister.py
+@@ -48,6 +48,6 @@ def test_frozen_registry_has_expected_factor_and_column_inventory():
+     assert stats["execution_classes"] == {
+-        "stock_day_scorer": {"specifications": 59, "columns": 177},
++        "stock_day_scorer": {"specifications": 55, "columns": 165},
+         "blocked": {"specifications": 2, "columns": 6},
+         "rejected": {"specifications": 1, "columns": 3},
+-        "unsupported": {"specifications": 9, "columns": 27},
++        "unsupported": {"specifications": 13, "columns": 39},
+     }
+@@ -121,4 +121,4 @@ def test_validator_classifies_retired_producers_as_unsupported() -> None:
+     assert stats["execution_classes"]["unsupported"] == {
+-        "specifications": 9,
+-        "columns": 27,
++        "specifications": 13,
++        "columns": 39,
+     }
+@@ -257,2 +257,6 @@ def test_validator_closes_execution_mappings_and_reference_provenance() -> None:
+     assert set(mappings["unsupported"]) == {
++        "ctrl01_default_v1",
++        "ctrl02_default_v1",
++        "ctrl03_default_v1",
++        "ctrl04_default_v1",
+         "ctrl05_default_v1",

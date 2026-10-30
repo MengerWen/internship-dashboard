@@ -1,0 +1,1424 @@
+Document factor engine reuse and verified single-day performance repair
+
+
+diff --git a/reports/2026-10/2026-10-12-szse-factor-engineering-reuse-audit.md b/reports/2026-10/2026-10-12-szse-factor-engineering-reuse-audit.md
+new file mode 100644
+index 00000000..639b1a32
+--- /dev/null
++++ b/reports/2026-10/2026-10-12-szse-factor-engineering-reuse-audit.md
+@@ -0,0 +1,214 @@
++# 2026-10-12 深市因子计算性能与旧代码复用审计
++
++旧版普通日的 `daily_compute` 确实为 **249.90 秒**，修复前完整基线中对应指标为 **472.46 秒**，增加 **222.56 秒，约 89.1%**。旧工程已经取得的计算性能有真实收据支持。
++
++当前入口继续调用原来的因子运行器，核心算法大部分仍在复用。修复前的退化集中在 F40 匹配环节、执行配置与重股票调度，并伴随提取、提交和验收成本增加。修复以原运行器及其优化为基础补齐适配，保留固定科学合同。
++
++本报告对照旧版本与修复前的 328 列基线，核对既有代码、Git 文件对象、历史报告和原始遥测元数据。修复采用原运行器、调度器和已有算法接口；实施内容与实测验收另见[深市因子性能修复](2026-10-12-szse-factor-performance-repair.md)。以下“当前基线”均指 `1cca10f9` 的修复前测量，不代表修复后的代码性能。
++
++## 1. 对照对象与计时边界
++
++对照日均为 **2026-04-22**。
++
++| 项目 | 旧基线 | 当前已测基线 |
++| --- | --- | --- |
++| 代码版本 | `c67c5524523d54b89fb6fadfca1af92a786d4013` | `1cca10f9176d3cfbb065ddee9ec1940bee3bb727` |
++| 运行账户 | wenjie | wangly |
++| 因子范围 | 284 正式列、4 诊断列 | 旧来源投影 256 列，完整结果另含 72 个新因子 |
++| 参数内容身份 | R19：`40513893…826f27` | v2：`aad67bc3…db29` |
++| 预期股票 / 有 L2 / 无证据 | 2889 / 2883 / 6 | 2889 / 2883 / 6 |
++| order / trade / cancel 行数 | 15,211,764 / 8,008,649 / 2,631,192 | 完全相同 |
++| 普通配对原始 / 合格候选数 | 960,938,998 / 68,706,893 | 完全相同 |
++
++三个需要分开的计时口径：
++
++1. **计算调度窗口 `daily_compute`**：249.90 → 472.46 秒。从第一只股票提交计算到全部股票完成，包含排队、锁等待及任务收尾；不是纯 CPU 时间。旧版在提取完成后提交，当前版边提取边提交，因此当前窗口还与提取重叠。
++2. **旧来源运行器正文**：353.64 → 730.02 秒，包含启动验证、计算面板、内部输出与运行器收尾。
++3. **完整业务流程**：旧业务 guard 为 356.78 秒，另有独立精确验收 guard 229.07 秒；当前完整 328 列业务为 1258.56 秒，含四来源、验收、发布和合并。不能把 356.78 与 1258.56 当成相同范围的计算耗时。
++
++即使保守地从当前 `daily_compute` 扣掉全部 66.20 秒提取窗口，剩余窗口仍为 **406.25 秒**。这不是独立测得的纯计算用时，但足以说明：提取阶段的计时重叠解释不了全部退化。
++
++历史 [2026-10-10 股票日参数绑定回归](2026-10-10-old-factor-stock-day-binding.md)中，使用 R19 常数表保持原评分参数时，已经记录到日计算 **319.93 秒**、日提交 **180.54 秒**。执行路径的性能变化在正式 v2 参数计算之前就已出现。账户、配置等条件也变了，这条记录不能单独证明参数绑定导致退化。
++
++## 2. 计算阶段主要慢在哪里
++
++以下“累计秒数”是各股票进程的墙钟之和，包含等待，可能相互重叠。它们用于定位热点，不能相加得到整日耗时。
++
++| 指标 | 旧基线 | 当前基线 | 含义 |
++| --- | ---: | ---: | --- |
++| 全部股票任务累计墙钟 | 3788.78 | 5504.91 | 增加 1716.13 秒 |
++| 全部 scorer 累计墙钟 | 1279.48 | 2551.42 | 增加 1271.94 秒 |
++| F40 scorer 累计墙钟 | 297.89 | 1629.41 | 约 5.47 倍，增加 1331.52 秒 |
++| F40 matching/cache 累计墙钟 | 215.13 | 1551.98 | F40 的主要增量 |
++| 聚合累计墙钟 | 619.22 | 583.00 | 下降 |
++| 生命周期构建累计墙钟 | 165.26 | 168.39 | 接近 |
++| 共享工件身份累计墙钟 | 210.50 | 189.03 | 下降 |
++| 股票任务中位数 | 0.689 | 0.648 | 下降 |
++| 股票任务 P95 | 3.590 | 3.592 | 接近 |
++| 最慢股票任务 | 83.60 | 209.37 | 长尾明显变重 |
++
++**F40 的增量已经超过全部 scorer 的净增量**，因为其他 scorer 合计略有下降。大部分普通股票没有普遍变慢，最重股票及其匹配等待是首要排查对象。
++
++共享配对路径也有增量：`pair_score_derive` 为 186.06 → 538.77 秒，`pair_dispatch_total` 为 260.04 → 625.08 秒。原始候选数相同不代表新核参数下的全部权重、正权重图与响应处理成本相同。这一块需要保留在后续剖析中，但现有证据不支持重写整套配对器。
++
++### 2.1 F40 的实际有效图更大
++
++| F40 指标 | 旧基线 | 当前基线 |
++| --- | ---: | ---: |
++| 原始候选 | 2,150,500,811 | 2,141,700,018 |
++| episode 数 | 4,289,468 | 4,289,385 |
++| 筛选后保留的候选边 | 479,191,246 | 669,278,421 |
++| 最终匹配边 | 3,906,357 | 3,969,259 |
++| 至少 500 万边的买/卖单侧图 | 13 | 21 |
++| 至少 500 万保留边的股票 | 13 | 22 |
++
++原始输入和候选枚举规模接近，**有效候选边增加约 39.7%**。新参数下进入求解的图确实有变化，不能仅由“日期和原始行数一样”推断匹配工作量应当一样。
++
++现有 `formal_f40_streaming._memory_slot` 对至少 500 万边的单侧图使用共享匹配锁。旧版已经有这个机制；当前大图更多，更容易出现跨股票等待。大型结果缓存的股票数量也增加了。
++
++这是目前最有证据支持的原因候选，但仍需区分：
++
++- 候选回放和 CSR 构造；
++- 共享锁等待；
++- 精确求解；
++- 缓存写入与读回。
++
++当前基线没有启用该模块的 `SIRUI_F40_TELEMETRY_DIR` 详细观测，已有聚合收据不能把上述成本拆开。因此不能把 1551.98 秒全部称为求解 CPU，也不能断言某个新参数独自造成全部退化。
++
++**复用实现**：保留原候选流、紧凑临时记录、CSR、精确稀疏求解、固定同分规则、缓存身份和内存保护。修复后的现有详细观测与完整日结果见修复报告；聚合 matching/cache 时间不能直接当作精确求解 CPU，也不足以支持更换求解器。
++
++### 2.2 旧性能配置没有完整传入新适配层
++
++| 设置 | 旧基线 | 当前基线 |
++| --- | ---: | ---: |
++| 提取 / 解析线程 | 8 / 1 | 1 / 4 |
++| 计算进程 | 16 | 12 |
++| 在途任务上限 | 24 | 24 |
++| 发布线程 | 16 | 4 |
++| 提取结束后按全日输入量优先提交 | 开启 | 关闭 |
++| worker 内存回收最低 RSS | 1536 MiB | 0 MiB |
++| 计算准入预算 / 每行估计 | 80 GiB / 20,000 字节 | 相同 |
++
++原调度器仍有重股票优先堆和内存 backfill。问题在于当前逐步返回按代码范围读取的数据，只能优先处理“已经到达”的股票，无法获得旧基线全日提取后统一排序的效果。
++
++`formal_model328_sources.ModelSources.old` 继续调用旧运行器，却没有传入已有的 `streaming_dispatch_after_extraction` 与 `worker_reclaim_threshold_mib` 设置。后者默认 0，使每只股票收尾都执行完整 GC、Arrow 空闲内存回收和 allocator trim；原版仅在 RSS 达到 1.5 GiB 后执行。现有回收函数完全未变。
++
++调度队列等待累计为 1927.71 → 5578.51 秒，最大等待 24.82 → 151.61 秒。它同时受长任务、锁与任务到达顺序影响，不能单独归因于计算进程数。
++
++**可以复用的内容**：原内存阈值回收、重任务优先、lookahead、内存准入与队列上限。需要补齐适配层对这些设置的显式传递及身份记录。
++
++**必须遵守的边界**：
++
++- 当前单 SQL、解析 4 加计算至多 12，是混合阶段的账户预算要求；不能恢复历史 8 路 SQL 并发。
++- 全部提取结束后的纯计算阶段，可按现有账户 16 核规则评估使用 16 个计算进程；当前适配层把 12 固定为全程上限，没有区分阶段。是否值得切换要实测，也可能受 F40 锁限制。
++- 不能直接打开旧的全日缓冲开关：它会在父进程累积全天原始输入，必须与现行分页、字节上限和预取约束一起设计。优先复用有界 lookahead、重任务排序及已有内存准入。
++
++当前峰值内存约 35.1 GiB、交换峰值为 0，CPU 配额节流只有 0.004687 秒，资源验收通过。现有收据没有显示 OOM、交换或配额节流能解释这次大幅变慢。不同账户、Python 环境和缓存条件也影响对照，尚无逐项配对测试证明新默认配置更优。
++
++## 3. 分页、提交与验收的额外成本
++
++### 3.1 分页要保留，但要正确比较
++
++旧基线遥测只有 **3 次 SQL**，三张表各一次；当前旧来源为 **73 次 SQL**：order 27、trade 23、cancel 23。提取调度窗口为 **12.00 → 66.20 秒**。
++
++这说明本次选定的旧基线使用了流式解析，但并未执行当前要求的有界 SQL 分页。socket/Arrow 分块与 SQL 分页是两件事；这也不否定其他历史版本曾修改分页。
++
++当前单日、实际代码范围、有界页、共享账户 SQL 串行及字节上限必须保留。应复用现有 `snapshot` 查询规划、分页和流式加载代码，按真实页行数/字节核对范围宽度与页面大小，不再建立第二套拉取器。不能为了恢复 12 秒而退回三条全天大查询、OFFSET、长 IN 或服务器排序。
++
++当前 66.20 秒还包含父进程处理，并非 Doris 服务端执行时间。没有本轮 Profile/扫描与裁剪证据，无法判断 73 次查询各自的扫描成本，也不能宣称分页本身必然慢 5.5 倍。
++
++### 3.2 提交变慢有独立证据
++
++- 桶合并与提交：**40.27 → 120.99 秒**。
++- 完整日提交：**49.11 → 131.16 秒**。
++- 日结果验证：**42.86 → 123.18 秒**，嵌套在日提交中，不能重复相加。
++- 运行器启动验证：**2.30 → 38.43 秒**，还没有细分文件读取、哈希与参数验证的各自成本。
++
++发布线程 16 → 4、存储账户和对象读回路径均有变化，不能仅凭这些数字确定每项贡献。应继续复用原桶提交、对象校验与 manifest 协议，减少经身份验证后仍重复进行的读取/哈希，保持同一科学验收覆盖。
++
++当前完整流程的旧来源约 **1102.22 秒**，其中旧运行器正文为 **730.02 秒**；约 **372.20 秒**在外层科学验收、投影和再次发布等工作中。新增来源约为撤单买 57.24 秒、撤单卖 5.54 秒、深度 48.06 秒。完整 1258.56 秒不能主要归因于多算了 72 列。
++
++审计基线中的撤单买卖共用一次计算和提取，通过 `pending_cancel` 传递两侧结果；旧来源、撤单双侧、深度合计三轮 L2 获取。修复使用原 consumer 注册机制共用一次分页读取，保留各来源的严格整数、事件排序、窗口、收据及独立补算路径，完整日等价性见修复报告。
++
++### 3.3 审计基线的版本边界
++
++审计起点的代码为 `477d4469c52e82c7c6d00078407e3661af7d620d`，与测量基线 `1cca10f9` 不同。
++
++关联任务后续加入：
++
++- `05f866a8`：有界并行对象读回与原审计核对；
++- `477d4469`：有限发布队列内释放已验证的临时 Parquet 副本，原始片段保留至 manifest 完成。
++
++该版本已记录 Linux 相关测试 122 项通过，尚未提供对应完整日测量。因此，472.46/1258.56 秒只能描述 `1cca10f9` 的基线表现；后续修复的性能必须由其独立运行收据确认。
++
++压力基线的失败属于 8 GiB 派生暂存超限：原始片段约 6.25 GB，加验证副本约 2.51 GB，采样达到约 8.76 GB。它与普通日计算慢是不同问题；上述副本释放修复有必要保留，其性能效果仍待测。
++
++## 4. 旧代码复用清单
++
++入口调用关系仍是：
++
++`ModelSources.old → run_open5m_raw_bank → run_formal_windows → FormalFactorEngine.run_stock_day`。
++
++下面的复用以现有接口为中心，无需重建因子引擎。
++
++| 能力 | 保留的实现 | 当前所需适配 / 验证 |
++| --- | --- | --- |
++| 事件规范化与回放 | `formal_event_replay`、原生事件和提交前状态路径 | 保持原字段类型、同序号顺序、报价单位；传入当前股票日参数 |
++| 生命周期账本 | `formal_lifecycle_accel` 与原完整账本校验 | 保留 SZSE 原生快速路径及异常输入回退 |
++| 配对、响应与 BBO | 原流式归约、直接寻址图、有界索引、响应模板、只读数组与 Arrow 审计 | 按新核权重核对实际热点；不得削减候选覆盖或改变同分规则 |
++| F40 候选与精确匹配 | 原生 p=1 候选、紧凑临时记录、CSR、`formal_sparse_assignment` | 使用已有分项观测，保留精确匹配、同分规则和内存保护 |
++| 评分与聚合 | `formal_scorers`、原评分依赖与聚合器 | 保留必要上游依赖，按 manifest 投影模型需要的输出 |
++| 身份与精确核验 | `formal_exactness`、`formal_numeric_cell_hash`、源工件与订单审计 | 复用已验证内容，保留全部校验要求 |
++| 调度与资源回收 | `DailyScheduler`、内存准入、重任务堆、lookahead、`formal_worker_memory` | 补传已有阈值；区分混合阶段与纯计算阶段预算 |
++| SQL 分页与加载 | 现有 `snapshot` 查询规划、代码范围页、流式解析 | 保留现行有界与串行要求，实测页大小 |
++| 发布与断点 | 原日桶、有限发布队列、对象读回和 manifest | 保留最新副本释放修复，验证并发与重复读回成本 |
++| 参数解析与缓存 | 原 base engine 缓存、`StockDayKernelTable` 的日期分片缓存 | 继续按股票日绑定六通用核，不引入每股重建全套运行器 |
++
++Git 对照确认，旧基线到审计起点 `477d4469`，以下 **11 个模块的文件内容完全相同**：
++
++`formal_event_replay.py`、`formal_exactness.py`、`formal_f40_cache.py`、`formal_lifecycle_accel.py`、`formal_numeric_cell_hash.py`、`formal_response_actions.py`、`formal_response_batch_arrays.py`、`formal_response_templates.py`、`formal_scorers.py`、`formal_sparse_assignment.py`、`formal_worker_memory.py`。
++
++两版 Git blob 身份逐一相同，完整对象哈希保存在配套 JSON。该证据说明此前的回放、账本、响应、身份、求解与回收优化已保留至审计起点。修复随后在 `formal_exactness` 中接入已有的有界原生整数数组哈希；最终修改范围与精确性证据见修复报告。
++
++其他模块也以扩展既有实现为主：BBO 新增精确支持度/定标工具；F40 增加观测和组件并行；生命周期增加 SSE 适配；pair reducers 增加只读归约复用。它们不构成另建一套数学计算流程的理由。
++
++## 5. 当前需求中确实必要的变化
++
++1. **股票日参数绑定**：新需求使用六通用核的股票日参数，以及完整冻结结构参数。应复用已有 engine 构造和参数表缓存，在原 engine 上绑定参数。现有代码每个 worker 按日期读取单日分片并缓存，不是每只股票读取完整约 170 万股票日表；绑定使用浅复制和规格替换。
++2. **256 旧因子投影与 328 列合并**：按当前 manifest 选择模型列，合并撤单买 24、撤单卖 24、深度 24，保留股票日覆盖及来源身份。
++3. **上游依赖裁剪**：输出减少 32 列，不等于对应共享计算都能删。F40、F42/BBO、f12 共识等仍被保留特征依赖；必须沿现有依赖清单裁剪。
++4. **当前分页与资源约束**：保留单日有界获取、账户预算、内存和派生暂存上限。
++5. **来源验收与恢复**：四来源收据及最终合并保证部分失败后可恢复。应将它们接在原计算结果之后，避免重复拉取、重复验收相同内容。
++
++旧 F40 缓存实现可以复用，旧匹配结果不能无条件复用。缓存身份包含参数、价格单位、episode/订单内容和股票键。新参数改变有效图时，R19 数值结果只有通过完整身份兼容性检查才能复用。结构定标的 `ValidatedF40SourceCache` 等工具也不能直接宣称会加速正式评分；应先核对该路径是否真正消费它。
++
++## 6. 修复范围与验证合同
++
++修复以正式 v2 参数下的有效完整日结果为正确性参照，以旧性能实现为工程参照。保留全部候选、精确匹配、同分规则和科学审计，不以参数变更换取速度。
++
++| 已实施的适配 | 复用的工程基础 | 验证要求 |
++| --- | --- | --- |
++| 显式传递 1536 MiB 回收阈值 | 原 worker 回收函数与运行器参数 | 配置、参数消费和运行身份一致 |
++| 提取结束后启用 16 个计算进程 | 原有界调度器、重任务堆、内存准入 | 混合阶段解析 4、计算最多 12；纯计算阶段最多 16；在途上限不变 |
++| 发布使用 16 个线程，独立订单审计使用 12 个线程 | 原桶提交、对象读回与科学验收 | 全部校验仍执行，有界暂存与持久提交不变 |
++| 在原 scheduler 注册撤单双侧与深度 consumer | 原来源 consumer、单日查询规划和原日回调 | 一次原始读取，保持独立来源收据、缺失语义与恢复路径 |
++| 整数数组身份复用有界原生哈希 | 已验证的 `int64_ragged_array_hashes` | 与原规范化身份逐位一致；不支持的类型保留原处理路径 |
++| 压缩 manifest 与持久对象采用既有强读回接口 | 原 manifest 解析、SHA 验证与对象发布工具 | 验证内容与持久路径一致，不依赖挂载缓存可见性 |
++
++完整日验证固定输入、正式参数、报价单位、列清单和资源配置，核对全部 328 列的值与 NaN 位置、股票覆盖、订单审计、状态/上下文身份、对象读回和资源证据。分阶段墙钟用于定位成本，不能将嵌套或重叠阶段相加。小样本与单元测试不能代替完整日精确对照。
++
++现行计划的最终性能关卡要求 **3 个普通日，每日至少 3 次同一最终版本的独立完整运行，每次全部 328 列不超过 300 秒**；固定的 **5 个压力日各保留至少一次优化前后完整对照**，压力日按正确性和资源合同接受、尽力提速。普通日超时或任何未解决的正确性/资源失败都禁止启动 601 日生产。旧版 249.90 秒属于计算调度窗口，不能单独证明完整业务通过 300 秒。
++
++## 7. 证据与核对方式
++
++- [对照元数据、完整版本与 Git blob 清单](2026-10-12-szse-factor-engineering-reuse-evidence/baseline-comparison.json)：原 gzip 文件 SHA、输入计数、分阶段统计、配置、参数身份和最新版本测量空缺。
++- [旧普通日完整业务报告](../2026-09/2026-09-12-old-factor-ordinary-day-speed.md)。
++- [旧性能实现与等价性证据](../2026-09/2026-09-12-old-factor-performance-implementation.md)。
++- [股票日参数绑定回归](2026-10-10-old-factor-stock-day-binding.md)。
++- [正式执行合同](../../decisions/2026-09-08-old-factor-bank-execution-contract.md)。
++
++旧遥测：`quota/wenjie/outputs/sirui/old-factor-bank/full-c67c5524-20260422-e8c16q24p1-m80k20-pub16-direct-gzip-r01/panel_win0930_0935/shards/date=2026-04-22.telemetry.json.gz`，SHA256 `75c15a9791c69ce464325069c94184b5c792d60ee21bbeff2231832b770daca8`。
++
++当前已测遥测：`sirui-wangly/wangly/outputs/sirui/published/szse-model328-factor-bank/baseline-20260422-1cca10f9-r01/factor-bank/old256/runs/2026-04-22/baseline-20260422-1cca10f9-r01/panel_win0930_0935/shards/date=2026-04-22.telemetry.json.gz`，SHA256 `1b0eb2b9bdb786e4114dd310b764bbd2022c4a5f5b96fdafa6aab9ff13ff2222`。
++
++基线核对直接读取两份原始遥测元数据并验证引用 SHA，复核同日输入、候选数、阶段统计、图规模及历史运行器配置和收据，逐一核对 11 个模块的 Git blob。完整日修复测量、精确比较和交付边界见修复报告；逐笔业务数据留在公司存储。
+diff --git a/reports/2026-10/2026-10-12-szse-factor-engineering-reuse-evidence/baseline-comparison.json b/reports/2026-10/2026-10-12-szse-factor-engineering-reuse-evidence/baseline-comparison.json
+new file mode 100644
+index 00000000..bd4478e7
+--- /dev/null
++++ b/reports/2026-10/2026-10-12-szse-factor-engineering-reuse-evidence/baseline-comparison.json
+@@ -0,0 +1,515 @@
++{
++  "schema_version": "szse-factor-engineering-reuse-audit-v1",
++  "audit_date": "2026-10-12",
++  "date": "2026-04-22",
++  "scope": "Read-only audit of existing execution receipts and Git objects. No SQL, business recomputation, deployment or optimization performed.",
++  "referenced_thread": {
++    "hostId": "local",
++    "threadId": "01a12ded-28a2-79b1-8ef4-d5e5118728ab",
++    "title": "26.10.12 深市新因子计算",
++    "pause_preserved": true
++  },
++  "old": {
++    "revision": "c67c5524523d54b89fb6fadfca1af92a786d4013",
++    "root": "/home/wenjie/hdd-store/outputs/sirui/old-factor-bank/full-c67c5524-20260422-e8c16q24p1-m80k20-pub16-direct-gzip-r01",
++    "object_telemetry": "quota/wenjie/outputs/sirui/old-factor-bank/full-c67c5524-20260422-e8c16q24p1-m80k20-pub16-direct-gzip-r01/panel_win0930_0935/shards/date=2026-04-22.telemetry.json.gz",
++    "runner": {
++      "revision": "c67c5524523d54b89fb6fadfca1af92a786d4013",
++      "runtime_content_sha256": "40513893b34f31abf82ea5c7e54aa5d3be15456169e05ef0a52cd84f68826f27",
++      "runner_wall_seconds": 353.6423759525642,
++      "runner_phase_seconds": {
++        "compute_panel": 342.0195645382628,
++        "post_compute_validation": 9.318894822150469,
++        "startup_validation": 2.3038882203400135
++      },
++      "resources": {
++        "compute_memory_budget_gib": 80,
++        "compute_memory_bytes_per_input_row": 20000,
++        "compute_queue_depth": 24,
++        "compute_workers": 16,
++        "extract_workers": 8,
++        "materialized_day_limit": 1,
++        "parser_threads": 1,
++        "publication_workers": 16,
++        "release_worker_memory": true,
++        "streaming_dispatch_after_extraction": true,
++        "worker_reclaim_threshold_mib": 1536
++      },
++      "output_sha256": "0ebebc3c40cc32fc0ba1ff16858436eb7ff40ac3ec522f35f107f20ca6584883"
++    },
++    "business_guard_wall_seconds": 356.77526722475886,
++    "independent_acceptance_guard_wall_seconds": 229.06911979056895,
++    "telemetry_sha256": "75c15a9791c69ce464325069c94184b5c792d60ee21bbeff2231832b770daca8",
++    "timing_seconds": {
++      "daily_compute": 249.89991851057857,
++      "daily_extraction": 12.00006518047303,
++      "day_bucket_merge_commit": 40.27166404668242,
++      "day_callback": 49.11003854032606,
++      "day_cleanup": 0.02070023864507675,
++      "day_commit": 49.11003854032606,
++      "day_manifest_finalize": 6.232289952225983,
++      "day_preflight": 1.2251698654145002,
++      "day_result_validation": 42.861784145236015,
++      "day_universe_prepare": 4.266282372176647,
++      "factor_sum": 3788.7836557421833,
++      "shard_write": 6.038971986621618
++    },
++    "table_rows": {
++      "cancel": 2631192,
++      "order": 15211764,
++      "trade": 8008649
++    },
++    "stock_universe": {
++      "expected": 2889,
++      "available": 2883,
++      "no_evidence": 6
++    },
++    "l2_query_count": 3,
++    "l2_queries_per_table": {
++      "cancel": 1,
++      "order": 1,
++      "trade": 1
++    },
++    "ordinary_pairs": {
++      "raw": 960938998,
++      "accepted": 68706893
++    },
++    "worker_total": {
++      "count": 2889,
++      "sum": 3788.7836557421833,
++      "p50": 0.689451178535819,
++      "p95": 3.58975628390908,
++      "max": 83.6022774791345
++    },
++    "stock_phases": {
++      "aggregation_total": {
++        "count": 2889,
++        "sum": 619.2227224512026,
++        "p50": 0.14051882550120354,
++        "p95": 0.5528113882988691,
++        "max": 4.9780192309990525
++      },
++      "event_conversion": {
++        "count": 2889,
++        "sum": 97.3389518018812,
++        "p50": 0.021457436494529247,
++        "p95": 0.08653813730925318,
++        "max": 0.7203834932297468
++      },
++      "event_replay_total": {
++        "count": 2889,
++        "sum": 342.91288074757904,
++        "p50": 0.05840296484529972,
++        "p95": 0.38333946708589706,
++        "max": 5.900340094231069
++      },
++      "lifecycle_build": {
++        "count": 2889,
++        "sum": 165.26029853709042,
++        "p50": 0.028613598085939884,
++        "p95": 0.1911351911723613,
++        "max": 1.6973296022042632
++      },
++      "shared_exactness_identity": {
++        "count": 2889,
++        "sum": 210.50170585978776,
++        "p50": 0.040248037315905094,
++        "p95": 0.22536032982170562,
++        "max": 2.0134447095915675
++      },
++      "pair_dispatch_total": {
++        "count": 2889,
++        "sum": 260.0392911937088,
++        "p50": 0.014178739860653877,
++        "p95": 0.2611055418848991,
++        "max": 30.760483972728252
++      },
++      "pair_score_derive": {
++        "count": 2889,
++        "sum": 186.05693528614938,
++        "p50": 0.0075785918161273,
++        "p95": 0.17799221891909833,
++        "max": 26.32650945801288
++      },
++      "scorer_total": {
++        "count": 2889,
++        "sum": 1279.4784788750112,
++        "p50": 0.20192121714353561,
++        "p95": 1.2557636480778447,
++        "max": 29.190078925341368
++      },
++      "shared_artifact_build_total": {
++        "count": 2889,
++        "sum": 1510.1715930476785,
++        "p50": 0.2623933460563421,
++        "p95": 1.5638830156996837,
++        "max": 48.915052304044366
++      }
++    },
++    "scheduler_phases": {
++      "parent_prepare_and_submit": {
++        "count": 2883,
++        "sum": 9.760401255451143,
++        "p50": 0.000033600255846977234,
++        "p95": 0.00008199838921427729,
++        "max": 9.30333860963583
++      },
++      "parent_receive": {
++        "count": 2883,
++        "sum": 39.11117196083069,
++        "p50": 0.004754781723022461,
++        "p95": 0.007753372192382814,
++        "max": 0.8510477542877197
++      },
++      "queue_wait": {
++        "count": 2883,
++        "sum": 1927.7116565704346,
++        "p50": 0.36690330505371094,
++        "p95": 1.9055645942687989,
++        "max": 24.819677352905273
++      },
++      "worker_execution": {
++        "count": 2883,
++        "sum": 3808.399965286255,
++        "p50": 0.6928901672363281,
++        "p95": 3.654365134239204,
++        "max": 83.85803723335266
++      }
++    },
++    "f40": {
++      "scorer_wall_seconds_sum": 297.8893986232579,
++      "phase_seconds_sum": {
++        "episodes": 34.43038265965879,
++        "horizon_anchors": 11.209110870026052,
++        "matching_and_cache": 215.13424546271563,
++        "paths_and_edge_audit": 35.163071401417255
++      },
++      "raw_candidates": 2150500811,
++      "episodes": 4289468,
++      "matched_edges": 3906357,
++      "retained_candidates": 479191246,
++      "side_edges_total": 479191246,
++      "large_sides_ge5m": 13,
++      "large_stocks_ge5m": 13
++    },
++    "pair_materialization": {
++      "pair_batch_write_seconds_sum": 0,
++      "pair_parquet_write_seconds_sum": 0
++    },
++    "max_busy_workers_observed": 16,
++    "max_compute_tasks_in_flight_observed": 24
++  },
++  "current_measured": {
++    "revision": "1cca10f9176d3cfbb065ddee9ec1940bee3bb727",
++    "root": "/home/wangly/hdd-store/outputs/sirui/published/szse-model328-factor-bank/baseline-20260422-1cca10f9-r01",
++    "object_telemetry": "sirui-wangly/wangly/outputs/sirui/published/szse-model328-factor-bank/baseline-20260422-1cca10f9-r01/factor-bank/old256/runs/2026-04-22/baseline-20260422-1cca10f9-r01/panel_win0930_0935/shards/date=2026-04-22.telemetry.json.gz",
++    "runner": {
++      "wall_seconds": 730.0220820652321,
++      "runner_phase_seconds": {
++        "compute_panel": 679.0037015723065,
++        "post_compute_validation": 12.591971633955836,
++        "startup_validation": 38.42637402750552
++      },
++      "resources": {
++        "compute_memory_budget_gib": 80,
++        "compute_memory_bytes_per_input_row": 20000,
++        "compute_queue_depth": 24,
++        "compute_workers": 12,
++        "extract_workers": 1,
++        "materialized_day_limit": 1,
++        "parser_threads": 4,
++        "publication_workers": 4,
++        "release_worker_memory": true,
++        "streaming_dispatch_after_extraction": false,
++        "worker_reclaim_threshold_mib": 0
++      },
++      "runtime_content_sha256": "aad67bc31b68cc580408913526bbdb9209bc08138263c0b372b9e29bcd11db29",
++      "preload": null
++    },
++    "old_result_sha256": "0db67440eb5a38c5afe873bf15e9fbcfe7e286761a53fe7eda631a414eabe736",
++    "complete_process_sample": {
++      "date": "2026-04-22",
++      "business_wall_seconds": 1258.5585376191884,
++      "resources": {
++        "average_effective_cores": 4.193321092759558,
++        "cpu_system_seconds": 1085.815694,
++        "cpu_throttled_seconds": 0.004687,
++        "cpu_usage_seconds": 5290.705845,
++        "cpu_user_seconds": 4204.890152,
++        "io_read_bytes": 41377792,
++        "io_read_operations": 4224264,
++        "io_write_bytes": 619465572,
++        "io_write_operations": 5341983,
++        "memory_current_end_bytes": 2100473856,
++        "memory_peak_bytes": 37687590912,
++        "swap_peak_bytes": 0,
++        "wall_seconds": 1261.6982405986637
++      },
++      "performance_passed": false,
++      "resource_passed": true,
++      "business_correctness_passed": true
++    },
++    "complete_process_sample_sha256": "556fe1ae10decedb4130b429089b8479bdfaabeac76fdcb366c9de3df4bc0430",
++    "source_wall_seconds_rounded_from_thread": {
++      "old": 1102.22,
++      "cancel_buy": 57.24,
++      "cancel_sell": 5.54,
++      "depth": 48.06
++    },
++    "telemetry_sha256": "1b0eb2b9bdb786e4114dd310b764bbd2022c4a5f5b96fdafa6aab9ff13ff2222",
++    "timing_seconds": {
++      "daily_compute": 472.45554518606514,
++      "daily_extraction": 66.20113726332784,
++      "day_bucket_merge_commit": 120.99122364167124,
++      "day_callback": 131.15875597018749,
++      "day_cleanup": 0.019439568743109703,
++      "day_commit": 131.15875597018749,
++      "day_manifest_finalize": 7.952181119471788,
++      "day_preflight": 1.493911886587739,
++      "day_result_validation": 123.18431527167559,
++      "day_universe_prepare": 1.3269021268934011,
++      "factor_sum": 5504.91195775196,
++      "shard_write": 7.736486374400556
++    },
++    "table_rows": {
++      "cancel": 2631192,
++      "order": 15211764,
++      "trade": 8008649
++    },
++    "stock_universe": {
++      "expected": 2889,
++      "available": 2883,
++      "no_evidence": 6
++    },
++    "l2_query_count": 73,
++    "l2_queries_per_table": {
++      "cancel": 23,
++      "order": 27,
++      "trade": 23
++    },
++    "ordinary_pairs": {
++      "raw": 960938998,
++      "accepted": 68706893
++    },
++    "worker_total": {
++      "count": 2889,
++      "sum": 5504.91195775196,
++      "p50": 0.6476605255156755,
++      "p95": 3.592272806912659,
++      "max": 209.36765641532838
++    },
++    "stock_phases": {
++      "aggregation_total": {
++        "count": 2889,
++        "sum": 582.9982921853662,
++        "p50": 0.12749079894274473,
++        "p95": 0.5187835047021504,
++        "max": 6.949820599518716
++      },
++      "event_conversion": {
++        "count": 2889,
++        "sum": 108.32790413871408,
++        "p50": 0.02362793404608965,
++        "p95": 0.08624811079353094,
++        "max": 2.051966819912195
++      },
++      "event_replay_total": {
++        "count": 2889,
++        "sum": 412.0895101809874,
++        "p50": 0.0648137191310525,
++        "p95": 0.423993743956089,
++        "max": 8.967565141618252
++      },
++      "lifecycle_build": {
++        "count": 2889,
++        "sum": 168.39212035015225,
++        "p50": 0.03339762985706329,
++        "p95": 0.18415898587554685,
++        "max": 1.966237754561007
++      },
++      "shared_exactness_identity": {
++        "count": 2889,
++        "sum": 189.0341779179871,
++        "p50": 0.03623390104621649,
++        "p95": 0.20002355799078908,
++        "max": 1.7945724464952946
++      },
++      "pair_dispatch_total": {
++        "count": 2889,
++        "sum": 625.0840034801513,
++        "p50": 0.013887148350477219,
++        "p95": 0.3215226735919713,
++        "max": 61.97969902027398
++      },
++      "pair_score_derive": {
++        "count": 2889,
++        "sum": 538.7686694012955,
++        "p50": 0.007313814014196396,
++        "p95": 0.23271612785756546,
++        "max": 56.84420436434448
++      },
++      "scorer_total": {
++        "count": 2889,
++        "sum": 2551.4214783841744,
++        "p50": 0.18798384256660938,
++        "p95": 1.147577626444399,
++        "max": 141.95619945786893
++      },
++      "shared_artifact_build_total": {
++        "count": 2889,
++        "sum": 1919.7003213707358,
++        "p50": 0.23986586090177298,
++        "p95": 1.5420436028391111,
++        "max": 96.75634159892797
++      }
++    },
++    "scheduler_phases": {
++      "parent_prepare_and_submit": {
++        "count": 2883,
++        "sum": 0.20908266585320234,
++        "p50": 0.00003063119947910309,
++        "p95": 0.00006411029025912292,
++        "max": 0.005054527893662453
++      },
++      "parent_receive": {
++        "count": 2883,
++        "sum": 88.50302743911743,
++        "p50": 0.0038924217224121094,
++        "p95": 0.006874084472656259,
++        "max": 4.95098614692688
++      },
++      "queue_wait": {
++        "count": 2883,
++        "sum": 5578.508264064789,
++        "p50": 0.6841349601745605,
++        "p95": 3.5877263784408613,
++        "max": 151.61047196388245
++      },
++      "worker_execution": {
++        "count": 2883,
++        "sum": 5594.930833101273,
++        "p50": 0.6755599975585938,
++        "p95": 3.6292296171188365,
++        "max": 209.60867047309875
++      }
++    },
++    "f40": {
++      "scorer_wall_seconds_sum": 1629.4052011761814,
++      "phase_seconds_sum": {
++        "episodes": 33.322751806117594,
++        "horizon_anchors": 9.995847422629595,
++        "matching_and_cache": 1551.9838796304539,
++        "paths_and_edge_audit": 32.396223980002105
++      },
++      "raw_candidates": 2141700018,
++      "episodes": 4289385,
++      "matched_edges": 3969259,
++      "retained_candidates": 669278421,
++      "side_edges_total": 669278421,
++      "large_sides_ge5m": 21,
++      "large_stocks_ge5m": 22
++    },
++    "pair_materialization": {
++      "pair_batch_write_seconds_sum": 0,
++      "pair_parquet_write_seconds_sum": 0
++    },
++    "max_busy_workers_observed": 12,
++    "max_compute_tasks_in_flight_observed": 24
++  },
++  "current_inspected": {
++    "revision": "477d4469c52e82c7c6d00078407e3661af7d620d",
++    "complete_day_performance_after_latest_fixes": null,
++    "identical_core_files": [
++      {
++        "file": "因子/algobench/src/algobench/formal_event_replay.py",
++        "old_blob": "f247ca791880d49f2d40205eed498a51645ae4ca",
++        "current_blob": "f247ca791880d49f2d40205eed498a51645ae4ca",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_exactness.py",
++        "old_blob": "8a7b9084f7c06878621adf104b4b03841e882b86",
++        "current_blob": "8a7b9084f7c06878621adf104b4b03841e882b86",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_f40_cache.py",
++        "old_blob": "b105e8191ac638e7760d717b1822dac241127d55",
++        "current_blob": "b105e8191ac638e7760d717b1822dac241127d55",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_lifecycle_accel.py",
++        "old_blob": "166d3ef72c3e0a467e362f591ccf9d14a87f038c",
++        "current_blob": "166d3ef72c3e0a467e362f591ccf9d14a87f038c",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_numeric_cell_hash.py",
++        "old_blob": "7ff373f31fbf4cb618ae98e84ed67bcdf8dcd89e",
++        "current_blob": "7ff373f31fbf4cb618ae98e84ed67bcdf8dcd89e",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_response_actions.py",
++        "old_blob": "69c7224d8a7ca097972748ca06e00c0b394e236d",
++        "current_blob": "69c7224d8a7ca097972748ca06e00c0b394e236d",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_response_batch_arrays.py",
++        "old_blob": "584e3d55ad7c389f31a5d69acae5bc99da2879c4",
++        "current_blob": "584e3d55ad7c389f31a5d69acae5bc99da2879c4",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_response_templates.py",
++        "old_blob": "1f80bab2c18313a9fb1a34c69da6e80514e01e6c",
++        "current_blob": "1f80bab2c18313a9fb1a34c69da6e80514e01e6c",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_scorers.py",
++        "old_blob": "365b3b95d8011cae29ccf6fcef535f08e7599d14",
++        "current_blob": "365b3b95d8011cae29ccf6fcef535f08e7599d14",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_sparse_assignment.py",
++        "old_blob": "05ea451d5bc8897f10d148a05195cc4c8f065601",
++        "current_blob": "05ea451d5bc8897f10d148a05195cc4c8f065601",
++        "identical": true
++      },
++      {
++        "file": "因子/algobench/src/algobench/formal_worker_memory.py",
++        "old_blob": "f1b1cc8601ebef6739d3b677a90ddde92e16e48f",
++        "current_blob": "f1b1cc8601ebef6739d3b677a90ddde92e16e48f",
++        "identical": true
++      }
++    ]
++  },
++  "comparisons": {
++    "compute_ratio": 1.8905790286044672,
++    "retained_growth": 0.396683321297568,
++    "f40_raw_growth": -0.004092438819359279,
++    "f40_scorer_ratio": 5.469832792663085,
++    "f40_delta": 1331.5158025529236,
++    "scorer_delta": 1271.9429995091632,
++    "stock_wall_delta": 1716.1283020097762,
++    "daily_compute_delta_seconds": 222.55562667548656,
++    "compute_window_after_conservatively_subtracting_full_extraction_seconds": 406.2544079227373
++  },
++  "timing_contract": {
++    "daily_compute": "Wall interval from first stock submission through all stock completion; includes queue/lock/wait. New streaming dispatch overlaps extraction; old dispatch starts after extraction.",
++    "daily_extraction": "Wall interval consumed by loader and parent stream handling; is not a server-only SQL execution time.",
++    "aggregate_process_times": "Per-stock elapsed wall intervals summed across workers; may overlap and include waits; do not sum them into day wall time.",
++    "day_commit": "Includes nested validation and manifest operations.",
++    "old_business_vs_new_complete": "Old business guard excludes separately recorded reference acceptance; new complete process includes four sources, scientific acceptance, publication and merge. These are not equal scope."
++  },
++  "unresolved": [
++    "F40 lock wait versus graph construction/solve/cache IO timing is not available in the inspected baseline aggregates.",
++    "Resource settings, host/runtime, parameter identity, feature scope and cold-cache policy differ; there is no paired causal isolation.",
++    "Worker memory reclaim is emitted as progress records; no complete reclaim timing aggregation was inspected.",
++    "No measured complete-day performance at the latest inspected revision."
++  ]
++}
+diff --git a/reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/diagnostics.json b/reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/diagnostics.json
+new file mode 100644
+index 00000000..52cd8d40
+--- /dev/null
++++ b/reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/diagnostics.json
+@@ -0,0 +1,57 @@
++{
++  "schema_version": "szse-factor-repair-diagnostics-v1",
++  "business_revision": "6266e27060830665afa1e753b1e5cc9632be0e0a",
++  "analysis_revision": "472c50e48b6cd9ae7e7185288b99286db2fb0c70",
++  "date": "2026-04-22",
++  "input_attempt": "optimized-20260422-6266e270-r01",
++  "old_acceptance_profile": {
++    "guard_path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/model328-repair-remaining-profile_20261012T110639Z_1180f28c2d484a449143cebf2558f9cd.json",
++    "passed": true,
++    "formal_acceptance_writers_disabled": true,
++    "source_acceptance_sha256_before_after_equal": true,
++    "build_cumulative_seconds": 34.376215196000004,
++    "order_audit_wall_seconds": 20.638553532771766,
++    "day_manifest_resolve_cumulative_seconds": 9.207703987,
++    "performance_gate_sample": false,
++    "timing_limit": "Instrumented read-only analysis; overlapping thread timings cannot be added."
++  },
++  "publication": {
++    "components": 256,
++    "actual_merge_commit_wall_seconds": 58.45187459420413,
++    "cumulative_component_seconds": {
++      "copy_seconds": 577.9757469631732,
++      "encode_seconds": 76.46881391387433,
++      "fragment_read_concat_seconds": 84.22977490909398,
++      "readback_hash_seconds": 43.11578918155283,
++      "source_hash_seconds": 1.1674557952210307,
++      "total_seconds": 783.1132579585537
++    },
++    "source": "Committed day-bucket manifest metadata.publication_component_timings",
++    "timing_limit": "Component timings overlap across sixteen publication workers."
++  },
++  "f40": {
++    "minimum_observed_edges": 1000000,
++    "observed_graphs": 116,
++    "source_directory": "/tmp/wangly-szse-model328-optimized-20260422-6266e270-r01/control/f40",
++    "phase_counts": {
++      "counted": 116,
++      "lock_acquired": 116,
++      "csr_ready": 116,
++      "components_ready": 116,
++      "component_solver": 116,
++      "component_complete": 327,
++      "solved": 116
++    },
++    "cumulative_seconds": {
++      "count": 37.28640647791326,
++      "lock_wait": 1.7405113819986582,
++      "graph_build": 12.6542080771178,
++      "objective_build": 1.735073996707797,
++      "solver": 34.56864569988102,
++      "component_build": 0.0251441802829504,
++      "objective_and_solve": 36.60963607765734,
++      "component_setup_and_solve_wall": 37.0875232713297
++    },
++    "timing_limit": "Multi-stock cumulative wall time; phases are nested, and graphs below the observation threshold are excluded."
++  }
++}
+diff --git a/reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/measurements.json b/reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/measurements.json
+new file mode 100644
+index 00000000..77e7d6a8
+--- /dev/null
++++ b/reports/2026-10/2026-10-12-szse-factor-performance-repair-evidence/measurements.json
+@@ -0,0 +1,523 @@
++{
++  "schema_version": "szse-factor-repair-measurements-v1",
++  "date": "2026-04-22",
++  "measurements": [
++    {
++      "attempt": "baseline-20260422-1cca10f9-r01",
++      "revision": "1cca10f9176d3cfbb065ddee9ec1940bee3bb727",
++      "complete_business_seconds": 1258.5585376191884,
++      "guard": {
++        "path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/model328-baseline-20260422_20261012T050639Z_2c382d88f8f74f6887744507186aebfe.json",
++        "sha256": "df4d45f70c599085ad1695f0c1deb74d1a54cfde87c90574ee283c245bed7054"
++      },
++      "guard_exit": 0,
++      "resources": {
++        "average_effective_cores": 4.193321092759558,
++        "cpu_system_seconds": 1085.815694,
++        "cpu_throttled_seconds": 0.004687,
++        "cpu_usage_seconds": 5290.705845,
++        "cpu_user_seconds": 4204.890152,
++        "io_read_bytes": 41377792,
++        "io_read_operations": 4224264,
++        "io_write_bytes": 619465572,
++        "io_write_operations": 5341983,
++        "memory_current_end_bytes": 2100473856,
++        "memory_peak_bytes": 37687590912,
++        "swap_peak_bytes": 0,
++        "wall_seconds": 1261.6982405986637
++      },
++      "runner_seconds": 730.0220820652321,
++      "runner_phases": {
++        "compute_panel": 679.0037015723065,
++        "post_compute_validation": 12.591971633955836,
++        "startup_validation": 38.42637402750552
++      },
++      "stages": [
++        {
++          "date": "2026-04-22",
++          "stage": "daily_compute",
++          "seconds": 472.45554518606514
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "daily_extraction",
++          "seconds": 66.20113726332784
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_bucket_merge_commit",
++          "seconds": 120.99122364167124
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_callback",
++          "seconds": 131.15875597018749
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_cleanup",
++          "seconds": 0.019439568743109703
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_commit",
++          "seconds": 131.15875597018749
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_manifest_finalize",
++          "seconds": 7.952181119471788
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_preflight",
++          "seconds": 1.493911886587739
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_result_validation",
++          "seconds": 123.18431527167559
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_universe_prepare",
++          "seconds": 1.3269021268934011
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "factor_sum",
++          "seconds": 5504.91195775196
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "shard_write",
++          "seconds": 7.736486374400556
++        }
++      ],
++      "old_audit_seconds": null,
++      "old_audit_workers": null,
++      "hot_staging_peak_bytes": 5486477765,
++      "equivalence": null
++    },
++    {
++      "attempt": "optimized-20260422-bb09717e-r01",
++      "revision": "bb09717e1abc1eef31833cec2e618731a4af1caa",
++      "complete_business_seconds": 652.8216329375282,
++      "guard": {
++        "path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/model328-baseline-20260422_20261012T083740Z_717117c9835f40048149e9882c7c7472.json",
++        "sha256": "ad77141ed36492aab43d79f371a1099ff6b278334ee841de27e75678d98c2f7b"
++      },
++      "guard_exit": 0,
++      "resources": {
++        "average_effective_cores": 7.0264025368401235,
++        "cpu_system_seconds": 569.839837,
++        "cpu_throttled_seconds": 0,
++        "cpu_usage_seconds": 4592.087579,
++        "cpu_user_seconds": 4022.247742,
++        "io_read_bytes": 43577344,
++        "io_read_operations": 4853949,
++        "io_write_bytes": 619554646,
++        "io_write_operations": 5561579,
++        "memory_current_end_bytes": 433758208,
++        "memory_peak_bytes": 35286093824,
++        "swap_peak_bytes": 0,
++        "wall_seconds": 653.5474668471143
++      },
++      "runner_seconds": 472.94434721954167,
++      "runner_phases": {
++        "compute_panel": 458.5116078387946,
++        "post_compute_validation": 11.014187145978212,
++        "startup_validation": 3.418535904958844
++      },
++      "stages": [
++        {
++          "date": "2026-04-22",
++          "stage": "daily_compute",
++          "seconds": 320.36330862529576
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "daily_extraction",
++          "seconds": 39.998002781532705
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_bucket_merge_commit",
++          "seconds": 92.40064708516002
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_callback",
++          "seconds": 101.4559229593724
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_cleanup",
++          "seconds": 0.014346993528306484
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_commit",
++          "seconds": 101.4559229593724
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_manifest_finalize",
++          "seconds": 6.967803026549518
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_preflight",
++          "seconds": 1.499167368747294
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_result_validation",
++          "seconds": 94.47271563299
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_universe_prepare",
++          "seconds": 0.4221754167228937
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "factor_sum",
++          "seconds": 3793.0019132290035
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "shard_write",
++          "seconds": 6.788697904907167
++        }
++      ],
++      "old_audit_seconds": 57.84834056440741,
++      "old_audit_workers": 4,
++      "hot_staging_peak_bytes": 3676425808,
++      "equivalence": {
++        "compared_columns": 328,
++        "date": "2026-04-22",
++        "nan_positions_exact": true,
++        "old_scientific_evidence_sha256": "3a87c1fe746071030d45eb0e4d1ffe2026bf341e1c9254f0cd2201eaa9025284",
++        "rows": 2889,
++        "status": "accepted",
++        "values_exact": true
++      }
++    },
++    {
++      "attempt": "optimized-20260422-0da3fc24-r01",
++      "revision": "0da3fc24ae62301c12eb45b3a7dd8b3917ea0eeb",
++      "complete_business_seconds": 557.0969021683559,
++      "guard": {
++        "path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/model328-baseline-20260422_20261012T085954Z_5f9f3ba0ce05433f9bb22ff6d91b9b77.json",
++        "sha256": "bc9ec50259aea2ce80b0c0131df40590dc5a545c14a2576353ee27210736619e"
++      },
++      "guard_exit": 0,
++      "resources": {
++        "average_effective_cores": 7.974592093162433,
++        "cpu_system_seconds": 334.617177,
++        "cpu_throttled_seconds": 1.582078,
++        "cpu_usage_seconds": 4447.277652,
++        "cpu_user_seconds": 4112.660476,
++        "io_read_bytes": 35139584,
++        "io_read_operations": 4877481,
++        "io_write_bytes": 619549790,
++        "io_write_operations": 5575141,
++        "memory_current_end_bytes": 394907648,
++        "memory_peak_bytes": 40938422272,
++        "swap_peak_bytes": 0,
++        "wall_seconds": 557.680894526653
++      },
++      "runner_seconds": 381.99459725711495,
++      "runner_phases": {
++        "compute_panel": 368.0321203507483,
++        "post_compute_validation": 10.909734370186925,
++        "startup_validation": 3.0527254650369287
++      },
++      "stages": [
++        {
++          "date": "2026-04-22",
++          "stage": "daily_compute",
++          "seconds": 241.4532914366573
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "daily_extraction",
++          "seconds": 25.68839539028704
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_bucket_merge_commit",
++          "seconds": 91.40472273249179
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_callback",
++          "seconds": 101.32808413822204
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_cleanup",
++          "seconds": 0.014608192257583141
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_commit",
++          "seconds": 101.32808413822204
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_manifest_finalize",
++          "seconds": 7.686806910671294
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_preflight",
++          "seconds": 1.5266006030142307
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_result_validation",
++          "seconds": 93.62385926395655
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_universe_prepare",
++          "seconds": 0.4284314941614866
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "factor_sum",
++          "seconds": 3695.998482786119
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "shard_write",
++          "seconds": 7.4826995227485895
++        }
++      ],
++      "old_audit_seconds": 62.85251536499709,
++      "old_audit_workers": 4,
++      "hot_staging_peak_bytes": 3666559296,
++      "equivalence": {
++        "compared_columns": 328,
++        "date": "2026-04-22",
++        "nan_positions_exact": true,
++        "old_scientific_evidence_sha256": "3a87c1fe746071030d45eb0e4d1ffe2026bf341e1c9254f0cd2201eaa9025284",
++        "rows": 2889,
++        "status": "accepted",
++        "values_exact": true
++      }
++    },
++    {
++      "attempt": "optimized-20260422-8a188a19-r01",
++      "revision": "8a188a19ba961334f581779770d765f10829adea",
++      "complete_business_seconds": 566.1944644497707,
++      "guard": {
++        "path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/model328-baseline-20260422_20261012T094000Z_e2d887d403f544bfa09a3e0319f5b431.json",
++        "sha256": "2dc78f6c24e70f25bedb103af66b3298eee2c0740f1f6eb59d5ec5192f026949"
++      },
++      "guard_exit": 0,
++      "resources": {
++        "average_effective_cores": 9.056130402052428,
++        "cpu_system_seconds": 1007.684696,
++        "cpu_throttled_seconds": 2.843107,
++        "cpu_usage_seconds": 5135.490473,
++        "cpu_user_seconds": 4127.805776,
++        "io_read_bytes": 37871616,
++        "io_read_operations": 4943654,
++        "io_write_bytes": 619611406,
++        "io_write_operations": 5558040,
++        "memory_current_end_bytes": 425902080,
++        "memory_peak_bytes": 40164515840,
++        "swap_peak_bytes": 0,
++        "wall_seconds": 567.0733795790002
++      },
++      "runner_seconds": 385.44554074201733,
++      "runner_phases": {
++        "compute_panel": 365.79783654399216,
++        "post_compute_validation": 15.84985255356878,
++        "startup_validation": 3.797823362983763
++      },
++      "stages": [
++        {
++          "date": "2026-04-22",
++          "stage": "daily_compute",
++          "seconds": 279.34662168938667
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "daily_extraction",
++          "seconds": 45.04182305559516
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_bucket_merge_commit",
++          "seconds": 49.450019287876785
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_callback",
++          "seconds": 58.03811484016478
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_cleanup",
++          "seconds": 0.013643546961247921
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_commit",
++          "seconds": 58.03811484016478
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_manifest_finalize",
++          "seconds": 6.360093149356544
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_preflight",
++          "seconds": 1.554690768942237
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_result_validation",
++          "seconds": 51.66210440546274
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_universe_prepare",
++          "seconds": 0.4720825906842947
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "factor_sum",
++          "seconds": 4213.75824531354
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "shard_write",
++          "seconds": 6.171578768640757
++        }
++      ],
++      "old_audit_seconds": 33.78226245753467,
++      "old_audit_workers": 12,
++      "hot_staging_peak_bytes": 3867248683,
++      "equivalence": {
++        "compared_columns": 328,
++        "date": "2026-04-22",
++        "nan_positions_exact": true,
++        "old_scientific_evidence_sha256": "3a87c1fe746071030d45eb0e4d1ffe2026bf341e1c9254f0cd2201eaa9025284",
++        "rows": 2889,
++        "status": "accepted",
++        "values_exact": true
++      }
++    },
++    {
++      "attempt": "optimized-20260422-6266e270-r01",
++      "revision": "6266e27060830665afa1e753b1e5cc9632be0e0a",
++      "complete_business_seconds": 471.17232174705714,
++      "guard": {
++        "path": "/home/wangly/hdd-store/outputs/sirui/algobench/reports/guard/model328-optimized-20260422_20261012T104404Z_80d04562e15f45babcb1d8b19ca3fcae.json",
++        "sha256": "5f4bdb682e87280898cd63723c4ec9abfcffbc4e3bf3f1bca3ba5a7508e24ec9"
++      },
++      "guard_exit": 0,
++      "resources": {
++        "average_effective_cores": 9.547604455899608,
++        "cpu_system_seconds": 509.420459,
++        "cpu_throttled_seconds": 5.527708,
++        "cpu_usage_seconds": 4506.310702,
++        "cpu_user_seconds": 3996.890243,
++        "io_read_bytes": 37806080,
++        "io_read_operations": 2977419,
++        "io_write_bytes": 633347570,
++        "io_write_operations": 3506295,
++        "memory_current_end_bytes": 388898816,
++        "memory_peak_bytes": 40184025088,
++        "swap_peak_bytes": 0,
++        "wall_seconds": 471.9833883792162
++      },
++      "runner_seconds": 383.8380819661543,
++      "runner_phases": {
++        "compute_panel": 366.56965060997754,
++        "post_compute_validation": 13.827012901194394,
++        "startup_validation": 3.441383914090693
++      },
++      "stages": [
++        {
++          "date": "2026-04-22",
++          "stage": "daily_compute",
++          "seconds": 268.7286807950586
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "daily_extraction",
++          "seconds": 31.830977856181562
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_bucket_merge_commit",
++          "seconds": 58.45187459420413
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_callback",
++          "seconds": 66.73875558655709
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_cleanup",
++          "seconds": 0.018153948709368706
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_commit",
++          "seconds": 66.73875558655709
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_manifest_finalize",
++          "seconds": 6.2950743129476905
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_preflight",
++          "seconds": 1.4900371432304382
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_result_validation",
++          "seconds": 60.41837943624705
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "day_universe_prepare",
++          "seconds": 0.42157398629933596
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "factor_sum",
++          "seconds": 3773.5460945926607
++        },
++        {
++          "date": "2026-04-22",
++          "stage": "shard_write",
++          "seconds": 6.090369598940015
++        }
++      ],
++      "old_audit_seconds": 18.106120963580906,
++      "old_audit_workers": 12,
++      "hot_staging_peak_bytes": 3879963056,
++      "equivalence": {
++        "compared_columns": 328,
++        "date": "2026-04-22",
++        "nan_positions_exact": true,
++        "old_scientific_evidence_sha256": "3a87c1fe746071030d45eb0e4d1ffe2026bf341e1c9254f0cd2201eaa9025284",
++        "rows": 2889,
++        "status": "accepted",
++        "values_exact": true
++      }
++    }
++  ]
++}
+diff --git a/reports/2026-10/2026-10-12-szse-factor-performance-repair.md b/reports/2026-10/2026-10-12-szse-factor-performance-repair.md
+new file mode 100644
+index 00000000..bfa1a7bd
+--- /dev/null
++++ b/reports/2026-10/2026-10-12-szse-factor-performance-repair.md
+@@ -0,0 +1,82 @@
++# 2026-10-12 深市因子计算性能修复
++
++正式 v2 参数下，2026-04-22 的计算调度窗口从 **472.46 秒降至 268.73 秒**；完整 328 列流程从 **1258.56 秒降至 471.17 秒**，缩短约 **62.6%**。完整结果的 2889 行、328 列数值及 NaN 位置与修复前完全一致，原科学审计身份也一致。
++
++性能修复按这组完整实测和精确对照交付。计算阶段已恢复到 300 秒以内；完整流程仍超出原计划的 300 秒门槛。最终普通日重复验收、压力日验收及 601 日生产尚未完成。该完整日结果保存为正确性已接受、原性能关卡未通过，不能据此宣称 601 日生产完成。
++
++## 1. 修改范围
++
++继续使用原调用链：
++
++`ModelSources.old → run_open5m_raw_bank → run_formal_windows → DailyScheduler → FormalFactorEngine.run_stock_day`。
++
++| 适配 | 原工程基础 | 最终行为 |
++| --- | --- | --- |
++| worker 内存回收 | `formal_worker_memory` 和原运行器参数 | 显式传入原有 1536 MiB 阈值，配置校验及运行身份同时记录 |
++| 计算阶段配额 | 原流式调度、重任务堆、lookahead 和字节准入 | 提取期间解析 4、计算最多 12；提取结束后计算最多 16；保留在途任务和内存上限 |
++| 有界发布与验收 | 原日桶提交、对象读回、独立订单审计 | 发布 16 路，订单审计 12 个单线程进程；保持全部校验和临时副本释放 |
++| 三来源共用读取 | 原撤单双侧与深度 consumer、原 scheduler 注册接口 | 原股票任务内依次消费同一份 L2 输入，一次分页读取；原日回调在载荷清理前汇总来源结果 |
++| 独立来源恢复 | 原来源计算函数及四来源收据 | 已接受来源保持复用；仅缺失的来源进入独立补算；全部来源接受后合并 |
++| 持久身份哈希 | 原 `int64_ragged_array_hashes` 数值哈希内核 | 对符合类型和大小限制的整数数组单元格直接计算原 v1 身份；其他类型沿用原规范化路径 |
++| manifest 与验收元数据 | 原压缩 manifest 解析、SHA 校验、对象发布接口 | 读取经 SHA 绑定的压缩日清单；性能采样和科学比较通过对象接口读取控制记录，保留持久路径 |
++| 冻结输入预检 | 原股票日参数及报价校验 | 股票集合按日期一次分组；4 路有界文件验证继续覆盖全部约 170 万股票日参数记录和 601 日报价来源 |
++
++新增整数数组哈希路径按最多 32768 行分块，单块平坦数值缓冲不超过 64 MiB，单元格数组最多 262144 个元素。只接收一维原生 `int64` 数组；混合类型、缺失值、不支持的形状或后端不可用时保留原处理。列类型、列顺序、数值身份和 null mask 合同不变。
++
++旧事件回放、生命周期账本、配对、响应/BBO、F40 候选及精确稀疏匹配、评分和聚合继续沿用。六通用核、九组冻结结构参数、候选覆盖、同分规则、报价单位和缺失证据语义保持不变。本次未引入另一套因子引擎或拉取器。
++
++## 2. 完整日实测
++
++全部试算使用正式 v2 参数、同一完整股票集合、同一 328 列清单和公司持久存储。每次使用新进程、新输出目录及新 attempt，不复用已有计算结果。允许复用的依赖与编译缓存由运行身份绑定；新进程不表示操作系统缓存为空。
++
++| 已接受正确性的测量版本 | 计算调度窗口 / 秒 | 旧运行器正文 / 秒 | 桶合并与提交 / 秒 | 独立订单审计 / 秒 | 完整 328 列 / 秒 |
++| --- | ---: | ---: | ---: | ---: | ---: |
++| 修复前 `1cca10f9` | 472.46 | 730.02 | 120.99 | 旧收据未记录该分项 | 1258.56 |
++| 阈值回收与输入验证 `bb09717e` | 320.36 | 472.94 | 92.40 | 57.85 | 652.82 |
++| 按阶段使用计算配额 `0da3fc24` | 241.45 | 381.99 | 91.40 | 62.85 | 557.10 |
++| 发布与审计配额 `8a188a19` | 279.35 | 385.45 | 49.45 | 33.78 | 566.19 |
++| 共享读取与原生身份哈希 `6266e270` | **268.73** | **383.84** | **58.45** | **18.11** | **471.17** |
++
++这些测量用于核对改动效果和波动，版本不同，不能冒充同一最终版本的三次稳定性验收。发布和审计分项改善也不保证每次完整墙钟单调下降。
++
++计算调度窗口从第一只股票提交至全部股票任务完成，包括排队、执行和收尾；共享版本包含旧因子、撤单双侧和深度 consumer。提取与计算可以重叠。桶合并、日回调和日验证存在嵌套，不能相加。完整业务墙钟由 guard 的实际业务命令计时，覆盖进程启动、来源计算、必要验收、持久提交、合并及退出。
++
++冻结输入全期预检独立记录，最新计算版本预检用时 **161.34 秒**；它检查已有参数和来源，没有预先计算因子。完整日业务仍执行自身启动与输入身份核验。预检时间不混入单日计时，也不作为单日提速成绩。
++
++## 3. 正确性和资源证据
++
++四个优化完整日均与 `1cca10f9` 完整基线做精确对照，结果如下：
++
++- 全部 **2889 行、328 列**一致，数值按精确相等检查，NaN 位置一致。
++- 原候选、订单归因、共享工件、状态/用途/上下文投影及撤单、深度审计身份一致。
++- 科学证据内容 SHA-256 为 `3a87c1fe746071030d45eb0e4d1ffe2026bf341e1c9254f0cd2201eaa9025284`。
++- 全部股票覆盖包括 2883 只有 L2 证据股票和 6 只无 L2 证据股票；后者保留原缺失语义。
++
++`6266e270` 最新完整日的 guard 正常退出，内存峰值 **40,184,025,088 字节，约 37.4 GiB**，交换峰值为零，无 OOM、guard 强杀或 watchdog 触发。派生暂存峰值 **3,879,963,056 字节**，低于 8 GiB 上限。保留单 SQL、实际代码范围页、有界行数/字节、账户互斥、内部单线程以及 100G / 1600% guard。
++
++Linux 计算、调度、发布、来源、原生哈希和面板相关 **320 项测试通过**。持久对象采样入口的相关 **22 项测试在 Windows 和 Linux 均通过**，包含挂载文件不可见时从对象读取已提交身份、guard 和资源历史的实际入口验证。
++
++## 4. 剩余成本
++
++最新完整日中，旧来源含其验收和收据提交为 **425.67 秒**；共用读取后，撤单买、撤单卖、深度来源调用分别为 **9.36、10.08、7.51 秒**，主要完成各自发布和收据。
++
++持久桶发布共有 **256 个对象**。分项累计值为读取/拼接 **84.23 秒**、编码 **76.47 秒**、上传 **577.98 秒**、读回哈希 **43.12 秒**。并发下这些值相互重叠，只用于定位；实际桶合并提交为 **58.45 秒**。持久上传是明确的剩余成本，不能通过延后上传或取消读回把时间移出完整业务边界。
++
++对已接受结果执行的只读剖析中，完整独立验收约 **34.38 秒**，其中订单审计约 **20.64 秒**、压缩日清单解析约 **9.21 秒**。剖析保留原校验，禁止写回原验收文件，并核对原文件身份；它不属于正式速度样本。
++
++F40 现有详细观测覆盖 **116 个至少 100 万边的图**：累计候选计数约 **37.29 秒**、锁等待约 **1.74 秒**、CSR 构建约 **12.65 秒**、精确求解约 **34.57 秒**。这些是多股票累计墙钟且仅覆盖观测阈值以上的图；不能代表整日纯 CPU，也不能相加解释完整 471 秒。现有证据支持保留既有精确匹配路径。
++
++计算阶段恢复后，完整 300 秒门槛仍相差 **171.17 秒**。该差距作为实测限制保留，不削减科学范围、少保存证据或改变日期分类以取得通过。当前性能修复以完整结果的正确性和上述实测成绩交付。
++
++## 5. 版本与交付边界
++
++- 计算和完整精确对照对应 `6266e27060830665afa1e753b1e5cc9632be0e0a`。
++- 持久对象采样入口对应 `472c50e48b6cd9ae7e7185288b99286db2fb0c70`。本地提交、GitHub `main`、wangly 与 wenjie 的 `main` 源码同步分别核验完成；完整业务实测仍按上一条记录其实际版本。
++- 最终性能关卡仍按原计划执行：3 个普通样本日每日至少 3 次同一最终版本完整独立运行，每次 328 列不超过 300 秒；固定的 5 个压力日各保留至少一次优化前后完整正确性和资源对照。
++- 当前仅完成一个普通日期的修复测量，性能关卡未通过，601 日生产尚未启动。
++
++[实测元数据、guard 与精确对照身份](2026-10-12-szse-factor-performance-repair-evidence/measurements.json)保留全部已接受测量；[分项剖析元数据](2026-10-12-szse-factor-performance-repair-evidence/diagnostics.json)保存只读验收剖析及桶发布、F40 观测的来源和计时限制。逐笔数据、完整日面板和审计工件均留在公司存储：
++
++`/home/wangly/hdd-store/outputs/sirui/published/szse-model328-factor-bank/`。
++
++最新完整日目录为 `optimized-20260422-6266e270-r01`，其中 `complete_process_sample.json` 绑定业务 guard、来源收据、合并收据和资源历史，`exact-equivalence-baseline.json` 保存完整精确比较。复用清单及修复前工程对照另见[性能与旧代码复用审计](2026-10-12-szse-factor-engineering-reuse-audit.md)。

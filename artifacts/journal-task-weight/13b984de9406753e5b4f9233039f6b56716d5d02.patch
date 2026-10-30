@@ -1,0 +1,21 @@
+验证对象审计按可选释放记录和清单读取完整接口
+
+
+diff --git a/因子/algobench/tests/test_formal_raw_bank_diagnostics.py b/因子/algobench/tests/test_formal_raw_bank_diagnostics.py
+index 5c871f23..94826d3b 100644
+--- a/因子/algobench/tests/test_formal_raw_bank_diagnostics.py
++++ b/因子/algobench/tests/test_formal_raw_bank_diagnostics.py
+@@ -42,3 +42,7 @@ def test_completed_order_audit_uses_authoritative_object_binding(tmp_path):
+     class Publisher:
+-        def read_json(self, target, *, with_sha256):
++        def read_json(self, target, *, with_sha256=False, optional=False):
++            if target.name == "ORDER_AUDIT_RELEASE.json":
++                assert optional and not with_sha256
++                calls.append("release_record")
++                return None
+             assert target == path
+@@ -48,3 +52,3 @@ def test_completed_order_audit_uses_authoritative_object_binding(tmp_path):
+     assert validate_order_audit_verification(root, manifest, verification, object_publication=Publisher()) is verification
+-    assert calls == ["read_json"] and not root.exists()
++    assert calls == ["release_record", "read_json"] and not root.exists()
+     with pytest.raises(ValueError, match="completed order audit verification differs"):

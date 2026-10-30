@@ -1,0 +1,461 @@
+增加单查询有界页读取和完整调用性能验收
+
+
+diff --git a/lv2_snapshot_workspace/src/snapshot/bounded_page_io.py b/lv2_snapshot_workspace/src/snapshot/bounded_page_io.py
+new file mode 100644
+index 00000000..4b3643e4
+--- /dev/null
++++ b/lv2_snapshot_workspace/src/snapshot/bounded_page_io.py
+@@ -0,0 +1,199 @@
++"""单查询、有界页读取；原始行只在公司服务器内存中处理。"""
++from __future__ import annotations
++
++from contextlib import contextmanager
++from dataclasses import replace
++import io
++import os
++from pathlib import Path
++import subprocess
++import threading
++import time
++
++import pandas as pd
++
++from . import io as gateway
++from .page_processing import group_code_page, process_code_range_payload
++
++_SQL_LOCK = threading.Lock()
++MAX_PAGE_BYTES = 64 << 20
++MAX_PAGE_ROWS = 1_000_000
++QUERY_TIMEOUT_SECONDS = 120.0
++
++
++class PageBudgetExceeded(gateway.DorisQueryError):
++    """当前 SQL 页需拆成互不重叠的更小股票范围。"""
++
++
++@contextmanager
++def query_slot():
++    """Linux 同账户进程共享 SQL 锁；本地测试只需线程锁。"""
++    with _SQL_LOCK:
++        if os.name != "posix":
++            yield
++            return
++        import fcntl
++
++        path = Path("/tmp") / f"sirui-doris-sql-{os.getuid()}.lock"
++        with path.open("a+b") as stream:
++            fcntl.flock(stream, fcntl.LOCK_EX)
++            try:
++                yield
++            finally:
++                fcntl.flock(stream, fcntl.LOCK_UN)
++
++
++class _BudgetRaw(gateway._CountingRaw):
++    def __init__(self, raw, *, started, max_bytes, max_rows):
++        super().__init__(raw, started=started)
++        self.max_bytes, self.max_rows = max_bytes, max_rows
++        self.lines = 0
++        self.last_byte = b""
++
++    def readinto(self, buffer):
++        # Limit over-read when the Arrow reader requests an entire parser block.
++        view = memoryview(buffer)[:min(len(buffer), 1 << 20, self.max_bytes - self.bytes_read + 1)]
++        count = super().readinto(view)
++        if count:
++            data = bytes(view[:count])
++            self.lines += data.count(b"\n")
++            self.last_byte = data[-1:]
++        rows = self.lines + int(bool(self.bytes_read) and self.last_byte != b"\n")
++        if self.bytes_read > self.max_bytes or rows > self.max_rows:
++            raise PageBudgetExceeded("Doris page exceeded row or byte budget")
++        return count
++
++
++def _read_one(
++    spec, *, backend, login_path, database, popen_factory, arrow_threads,
++    parser_block_size, metrics, peak_rss_reader, page_parser, max_bytes, max_rows,
++    query_timeout_seconds,
++):
++    query_started = time.perf_counter()
++    parts, data = [], b""
++    with query_slot():
++        gateway.wait_for_doris_window()
++        started = time.perf_counter()
++        process = popen_factory(
++            gateway._mysql_command(login_path=login_path, database=database),
++            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=0,
++        )
++        if any(pipe is None for pipe in (process.stdin, process.stdout, process.stderr)):
++            gateway._terminate_process(process)
++            raise gateway.DorisQueryError("mysql subprocess did not expose all required pipes")
++        stderr = gateway._StderrDrain(process.stderr)
++        stderr.start()
++        raw = _BudgetRaw(process.stdout, started=started, max_bytes=max_bytes, max_rows=max_rows)
++        expired = threading.Event()
++
++        def abort():
++            expired.set()
++            if gateway._process_running(process):
++                process.kill()
++
++        timer = threading.Timer(query_timeout_seconds, abort)
++        timer.daemon = True
++        timer.start()
++        completed = False
++        try:
++            process.stdin.write((gateway.build_select_sql(spec) + "\n").encode("utf-8"))
++            process.stdin.close()
++            if page_parser == "buffered" and backend == "pyarrow":
++                data = io.BufferedReader(raw, buffer_size=1 << 20).read()
++            else:
++                frames = (
++                    gateway._iter_pyarrow_frames(raw, spec.columns, arrow_threads=arrow_threads,
++                                                block_size=parser_block_size)
++                    if backend == "pyarrow" else gateway._iter_pandas_frames(raw, spec.columns)
++                )
++                parts = [frame for frame in frames if not frame.empty]
++            completed = True
++        finally:
++            timer.cancel()
++            if not completed and gateway._process_running(process):
++                gateway._terminate_process(process)
++            process.stdout.close()
++            returncode = gateway._wait_process(process)
++            stderr.join()
++            metrics.query_count += 1
++            metrics.bytes_read += raw.bytes_read
++            metrics.read_rows += raw.lines + int(bool(raw.bytes_read) and raw.last_byte != b"\n")
++            if metrics.query_count == 1:
++                metrics.first_row_seconds = raw.first_byte_seconds
++            metrics.drain_seconds += time.perf_counter() - started
++            if expired.is_set():
++                raise gateway.DorisQueryError("Doris page exceeded query time budget")
++            if completed and returncode:
++                raise gateway.DorisQueryError(gateway._safe_diagnostic(stderr.text()))
++    if page_parser == "buffered" and backend == "pyarrow":
++        result = process_code_range_payload(
++            data, spec, parser="buffered", threads=int(arrow_threads or 1),
++            max_bytes=max_bytes, max_rows=max_rows, block_size=parser_block_size,
++        )
++        metrics.parse_seconds += result.parse_seconds
++        metrics.grouping_seconds += result.grouping_seconds
++        frames, retained = result.frames, result.retained_rows
++    elif parts:
++        page = parts[0] if len(parts) == 1 else pd.concat(parts, ignore_index=True)
++        grouping_started = time.perf_counter()
++        frames, retained = group_code_page(page, spec.codes)
++        metrics.grouping_seconds += time.perf_counter() - grouping_started
++    else:
++        frames, retained = {}, 0
++    metrics.retained_rows += retained
++    metrics.rows = metrics.retained_rows
++    metrics.discarded_rows = metrics.read_rows - metrics.retained_rows
++    metrics.elapsed_seconds += time.perf_counter() - query_started
++    metrics.peak_rss_bytes = max(metrics.peak_rss_bytes, int(peak_rss_reader()))
++    return frames
++
++
++def load_bounded_code_range(
++    spec, *, backend="pyarrow", login_path=gateway.DB_LOGIN_PATH, database=gateway.DB_NAME,
++    popen_factory=subprocess.Popen, arrow_threads=None, parser_block_size=4 << 20,
++    metrics=None, peak_rss_reader=None, page_parser="incremental",
++    max_bytes=MAX_PAGE_BYTES, max_rows=MAX_PAGE_ROWS, query_timeout_seconds=QUERY_TIMEOUT_SECONDS,
++):
++    """超预算时丢弃该次页，按股票池二分；单股超预算需配置更短时间窗。"""
++    if spec.code_range is None or spec.codes is None or "code" not in spec.columns:
++        raise ValueError("bounded reader requires a code-range spec with explicit codes")
++    if backend not in {"pyarrow", "pandas"} or page_parser not in {"incremental", "buffered"}:
++        raise ValueError("unsupported parser backend or page parser")
++    if arrow_threads is not None and (isinstance(arrow_threads, bool) or not isinstance(arrow_threads, int)
++                                     or not 1 <= arrow_threads <= 16):
++        raise ValueError("arrow_threads must be an integer within 1..16")
++    if min(max_bytes, max_rows, parser_block_size, query_timeout_seconds) <= 0:
++        raise ValueError("page budgets must be positive")
++    current = metrics if metrics is not None else gateway.StreamMetrics()
++    for name in vars(gateway.StreamMetrics()):
++        setattr(current, name, 0)
++    kwargs = dict(backend=backend, login_path=login_path, database=database,
++                  popen_factory=popen_factory, arrow_threads=arrow_threads,
++                  parser_block_size=parser_block_size, metrics=current,
++                  peak_rss_reader=peak_rss_reader or gateway.process_peak_rss_bytes,
++                  page_parser=page_parser, max_bytes=max_bytes, max_rows=max_rows,
++                  query_timeout_seconds=query_timeout_seconds)
++    started = time.perf_counter()
++
++    def load(page):
++        try:
++            return _read_one(page, **kwargs)
++        except PageBudgetExceeded:
++            if len(page.codes) == 1:
++                raise PageBudgetExceeded(
++                    f"single-stock page {page.codes[0]} exceeds budget; use shorter explicit data_time intervals"
++                ) from None
++            codes = tuple(sorted(page.codes))
++            midpoint = len(codes) // 2
++            frames = {}
++            for subset in (codes[:midpoint], codes[midpoint:]):
++                child = replace(page, codes=subset, code_range=(subset[0], subset[-1]))
++                frames.update(load(child))
++            return frames
++
++    try:
++        return load(spec)
++    finally:
++        current.elapsed_seconds = time.perf_counter() - started
++        current.discarded_rows = current.read_rows - current.retained_rows
++        current.peak_rss_bytes = max(current.peak_rss_bytes, int(kwargs["peak_rss_reader"]()))
+diff --git a/lv2_snapshot_workspace/src/snapshot/io.py b/lv2_snapshot_workspace/src/snapshot/io.py
+index 501e37f0..663fb5ed 100644
+--- a/lv2_snapshot_workspace/src/snapshot/io.py
++++ b/lv2_snapshot_workspace/src/snapshot/io.py
+@@ -146,2 +146,6 @@ class StreamMetrics:
+     peak_rss_bytes: int = 0
++    query_count: int = 0
++    drain_seconds: float = 0.0
++    parse_seconds: float = 0.0
++    grouping_seconds: float = 0.0
+ 
+diff --git a/lv2_snapshot_workspace/tests/test_bounded_page_io.py b/lv2_snapshot_workspace/tests/test_bounded_page_io.py
+new file mode 100644
+index 00000000..aed1ae4a
+--- /dev/null
++++ b/lv2_snapshot_workspace/tests/test_bounded_page_io.py
+@@ -0,0 +1,133 @@
++from __future__ import annotations
++
++from dataclasses import replace
++import io
++import re
++import threading
++import time
++
++import pandas as pd
++import pytest
++
++from snapshot import io as gateway
++from snapshot.bounded_page_io import PageBudgetExceeded, load_bounded_code_range, query_slot
++
++
++DATA = b"2\t1\t000002\t20\n1\t1\t000001\t10\n3\t1\t000002\t30\n4\t1\t000001\t40\n"
++
++
++def spec():
++    return gateway.make_query_spec(
++        "2026-06-30", "order", ("000001", "000002"),
++        columns=("seq", "channel_no", "code", "qty"), code_range=("000001", "000002"),
++    )
++
++
++class Process:
++    def __init__(self, data=DATA):
++        self.stdin, self.stdout, self.stderr = io.BytesIO(), io.BytesIO(data), io.BytesIO()
++
++    def poll(self):
++        return 0
++
++    def wait(self):
++        return 0
++
++
++@pytest.mark.parametrize("parser", ["incremental", "buffered"])
++def test_bounded_reader_preserves_values_types_and_stock_row_order(parser):
++    expected = gateway.load_table_code_range(spec(), popen_factory=lambda *a, **k: Process())
++    metrics = gateway.StreamMetrics()
++    actual = load_bounded_code_range(
++        spec(), popen_factory=lambda *a, **k: Process(), page_parser=parser,
++        metrics=metrics, peak_rss_reader=lambda: 100,
++    )
++    for code in expected:
++        pd.testing.assert_frame_equal(actual[code], expected[code], check_exact=True)
++    assert metrics.query_count == 1 and metrics.retained_rows == metrics.read_rows == 4
++    assert metrics.bytes_read == len(DATA) and metrics.peak_rss_bytes == 100
++    assert metrics.elapsed_seconds >= metrics.drain_seconds + metrics.grouping_seconds
++
++
++@pytest.mark.parametrize("parser", ["incremental", "buffered"])
++def test_page_budget_splits_disjoint_codes_and_never_returns_partial_data(parser):
++    class Input(io.BytesIO):
++        def close(self):
++            sql = self.getvalue().decode()
++            lo, hi = re.findall(r"code (?:>=|<=) '([0-9]{6})'", sql)
++            owner.stdout = io.BytesIO(b"".join(
++                line + b"\n" for line in DATA.splitlines() if lo <= line.split(b"\t")[2].decode() <= hi
++            ))
++            # The reader already holds the pipe; replace its contents in place.
++            output.seek(0); output.truncate(); output.write(owner.stdout.getvalue()); output.seek(0)
++            owner.stdout = output
++
++    def factory(*args, **kwargs):
++        nonlocal owner, output
++        owner = Process(b"")
++        output = owner.stdout
++        owner.stdin = Input()
++        return owner
++
++    owner, output = None, None
++    metrics = gateway.StreamMetrics()
++    actual = load_bounded_code_range(spec(), popen_factory=factory, max_rows=3,
++                                     page_parser=parser, metrics=metrics)
++    assert list(actual) == ["000001", "000002"]
++    assert list(actual["000001"].seq) == [1, 4]
++    assert list(actual["000002"].seq) == [2, 3]
++    assert metrics.query_count == 3 and metrics.retained_rows == 4
++    assert metrics.read_rows == 8 and metrics.discarded_rows == 4
++
++
++def test_single_stock_budget_requires_an_explicit_shorter_window():
++    one = replace(spec(), codes=("000001",), code_range=("000001", "000001"))
++    with pytest.raises(PageBudgetExceeded, match="shorter explicit data_time"):
++        load_bounded_code_range(one, popen_factory=lambda *a, **k: Process(), max_bytes=10)
++
++
++def test_sql_slot_serializes_query_threads():
++    active = maximum = 0
++
++    def task():
++        nonlocal active, maximum
++        with query_slot():
++            active += 1
++            maximum = max(maximum, active)
++            time.sleep(0.01)
++            active -= 1
++
++    threads = [threading.Thread(target=task) for _ in range(3)]
++    for thread in threads:
++        thread.start()
++    for thread in threads:
++        thread.join()
++    assert maximum == 1
++
++
++def test_query_timeout_reaps_mysql_and_reports_time_budget():
++    released = threading.Event()
++
++    class Slow(io.BytesIO):
++        def readinto(self, buffer):
++            released.wait(timeout=1)
++            return 0
++
++    class Blocked(Process):
++        def __init__(self):
++            super().__init__(b"")
++            self.stdout = Slow()
++            self.killed = False
++
++        def poll(self):
++            return 0 if self.killed else None
++
++        def kill(self):
++            self.killed = True
++            released.set()
++
++    process = Blocked()
++    with pytest.raises(gateway.DorisQueryError, match="time budget"):
++        load_bounded_code_range(spec(), popen_factory=lambda *a, **k: process,
++                                 query_timeout_seconds=0.02, page_parser="buffered")
++    assert process.killed
+diff --git a/scripts/benchmark_doris_page_end_to_end.py b/scripts/benchmark_doris_page_end_to_end.py
+new file mode 100644
+index 00000000..ff22fcbc
+--- /dev/null
++++ b/scripts/benchmark_doris_page_end_to_end.py
+@@ -0,0 +1,97 @@
++#!/usr/bin/env python3
++"""比较有界真实 order 页的完整读取调用；保留逐查询证据与重复行。"""
++from __future__ import annotations
++
++import argparse
++from dataclasses import asdict
++from datetime import datetime, timezone
++import gc
++import hashlib
++import json
++from pathlib import Path
++import subprocess
++import sys
++import time
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / "lv2_snapshot_workspace/src"))
++import numpy as np
++import pandas as pd
++from snapshot import io as gateway
++from snapshot.bounded_page_io import load_bounded_code_range
++from benchmark_doris_page_processing import CLUSTERS, require_compute_window
++
++VARIANTS = (("stable_incremental", 1), ("hash_incremental", 1), ("hash_buffered", 4))
++
++
++def digest_frames(frames):
++    digest = hashlib.sha256()
++    for code, frame in sorted(frames.items()):
++        digest.update(code.encode())
++        digest.update(repr([(c, str(t)) for c, t in frame.dtypes.items()]).encode())
++        hashes = pd.util.hash_pandas_object(frame, index=False).to_numpy()
++        digest.update(np.sort(hashes).tobytes())
++    return digest.hexdigest()
++
++
++def save(path, report):
++    path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--output", type=Path, required=True)
++    args = parser.parse_args()
++    report = {"code_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
++              "started_utc": datetime.now(timezone.utc).isoformat(), "status": "running", "samples": [],
++              "comparison": "outer call wall; independent serial SQL, cache not cleared; raw multiset and dtypes",
++              "date": "2026-06-30", "sql_count_limit": 27}
++    deadline = time.monotonic() + 600
++    args.output.parent.mkdir(parents=True, exist_ok=True)
++    try:
++        for cluster, start in CLUSTERS:
++            codes = tuple(f"{c:06d}" for c in range(start, start + 80))
++            spec = gateway.make_query_spec(
++                "2026-06-30", "order", codes, code_range=(codes[0], codes[-1]),
++                data_time_intervals=(gateway.DataTimeInterval("2026-06-30 09:30:00", "2026-06-30 09:35:00"),),
++            )
++            expected = None
++            for repeat in range(3):
++                for variant, threads in VARIANTS[repeat:] + VARIANTS[:repeat]:
++                    require_compute_window(deadline)
++                    gc.collect()
++                    metrics = gateway.StreamMetrics()
++                    tick, cpu = time.perf_counter(), time.process_time()
++                    if variant == "stable_incremental":
++                        frames = gateway.load_table_code_range(spec, metrics=metrics, arrow_threads=1)
++                    else:
++                        frames = load_bounded_code_range(
++                            spec, metrics=metrics, arrow_threads=threads,
++                            page_parser="buffered" if variant == "hash_buffered" else "incremental",
++                        )
++                    wall, cpu_seconds = time.perf_counter() - tick, time.process_time() - cpu
++                    digest = digest_frames(frames)
++                    if expected is None:
++                        expected = digest
++                    if digest != expected:
++                        raise RuntimeError("SQL replay changed raw rows or column dtypes")
++                    sample = {"cluster": cluster, "repeat": repeat, "variant": variant, "threads": threads,
++                              "wall_seconds": wall, "cpu_seconds": cpu_seconds, "metrics": asdict(metrics),
++                              "raw_multiset_sha256": digest, "code_count": len(frames),
++                              "sql": gateway.build_select_sql(spec)}
++                    report["samples"].append(sample)
++                    save(args.output, report)
++                    print(json.dumps({k: sample[k] for k in ("cluster", "repeat", "variant", "wall_seconds")}), flush=True)
++                    del frames
++        report["status"] = "passed"
++    except BaseException as error:
++        report["status"] = "failed"
++        report["error"] = repr(error)
++        raise
++    finally:
++        report["finished_utc"] = datetime.now(timezone.utc).isoformat()
++        save(args.output, report)
++
++
++if __name__ == "__main__":
++    main()

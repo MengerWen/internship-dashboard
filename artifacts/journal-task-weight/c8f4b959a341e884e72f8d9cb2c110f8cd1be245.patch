@@ -1,0 +1,101 @@
+Reuse bounded native integer-array hashing for persisted exactness audits
+
+Keep v1 values, dtype and null identities; fall back for mixed, unsupported or oversized cells. Portable exactness checks pass on Windows; compiled numeric-kernel cases are verified on the company Linux runtime.
+
+
+diff --git a/因子/algobench/src/algobench/formal_exactness.py b/因子/algobench/src/algobench/formal_exactness.py
+index 8a7b9084..3fc303ec 100644
+--- a/因子/algobench/src/algobench/formal_exactness.py
++++ b/因子/algobench/src/algobench/formal_exactness.py
+@@ -19,2 +19,3 @@ EXACTNESS_IDENTITY_SCHEMA_VERSION = "formal-exactness-identity-v1"
+ _OBJECT_HASH_BLOCK_ROWS = 32768
++_OBJECT_ARRAY_HASH_BYTES = 64 * 1024 * 1024
+ 
+@@ -71,5 +72,8 @@ def frame_exactness_identities(frame: pd.DataFrame, projections: Mapping, *, row
+             if hashes is None:
+-                normalized = _hashable_series(series.iloc[start:start+block_rows])
+-                hashes = hash_array(normalized._values)
+-                del normalized
++                block = series.iloc[start:start+block_rows]
++                hashes = _int64_array_column_hashes(block) if object_values else None
++                if hashes is None:
++                    normalized = _hashable_series(block)
++                    hashes = hash_array(normalized._values)
++                    del normalized
+             hashes = hashes.astype("<u8", copy=False)
+@@ -216,2 +220,24 @@ def _hashable_series(series: pd.Series) -> pd.Series:
+ 
++def _int64_array_column_hashes(series):
++    if not len(series) or not isinstance(series.iloc[0], np.ndarray):
++        return None
++    from .formal_numeric_cell_hash import int64_ragged_array_hashes, prepare_numeric_cell_hash_kernel
++    if not prepare_numeric_cell_hash_kernel():
++        return None
++    arrays = series.to_numpy(dtype=object, copy=False)
++    lengths = np.empty(len(arrays), dtype=np.int64)
++    total = 0
++    for position, value in enumerate(arrays):
++        if (not isinstance(value, np.ndarray) or value.ndim != 1 or value.dtype != np.dtype("int64")
++                or value.size > 262144):
++            return None
++        total += value.nbytes
++        if total > _OBJECT_ARRAY_HASH_BYTES:
++            return None
++        lengths[position] = value.size
++    offsets = np.r_[np.int64(0), np.cumsum(lengths)]
++    values = np.concatenate(arrays)
++    return int64_ragged_array_hashes(values, offsets, np.arange(len(arrays), dtype=np.int64))
++
++
+ def _hashable_numeric_sequences(raw, series):
+diff --git a/因子/algobench/tests/test_formal_numeric_cell_hash.py b/因子/algobench/tests/test_formal_numeric_cell_hash.py
+index 5dd3b7eb..8ca274fb 100644
+--- a/因子/algobench/tests/test_formal_numeric_cell_hash.py
++++ b/因子/algobench/tests/test_formal_numeric_cell_hash.py
+@@ -124 +124,46 @@ def test_zero_width_depth_and_invalid_prefix_lengths():
+         numeric_sequence_hashes(values, np.ones(7, dtype=np.int64))
++
++
++def test_persisted_integer_array_columns_keep_v1_identity_across_blocks(monkeypatch):
++    import algobench.formal_exactness as exact
++    rng = np.random.default_rng(92781)
++    values = [np.empty(0, dtype=np.int64), np.array([-(2**63), 2**63-1, 2**53+1], dtype=np.int64),
++              rng.integers(-(2**63), 2**63-1, 10000, dtype=np.int64),
++              np.arange(34, dtype=np.int64)[::2]]
++    frame = pd.DataFrame({"triggers": pd.Series(values + [values[i % 2] for i in range(32795)], dtype=object),
++                          "score": np.linspace(0., 1., 32799)})
++    before = [value.copy() for value in values]
++    projections = {"all": tuple(frame.columns), "array": ("triggers",)}
++    positions = {"array": np.arange(0, len(frame), 3)}
++    observed = exact.frame_exactness_identities(frame, projections, row_positions=positions)
++    with monkeypatch.context() as patch:
++        patch.setattr(exact, "_int64_array_column_hashes", lambda series: None)
++        expected = exact.frame_exactness_identities(frame, projections, row_positions=positions)
++    assert observed == expected
++    for value, original in zip(values, before):
++        np.testing.assert_array_equal(value, original)
++
++
++@pytest.mark.parametrize("other", [None, [1, 2], np.array([1, 2], dtype=np.int32),
++                                  np.array([1, 2], dtype=">i8"), np.array([[1, 2]], dtype=np.int64)])
++def test_integer_array_hashes_preserve_mixed_type_fallback(monkeypatch, other):
++    import algobench.formal_exactness as exact
++    frame = pd.DataFrame({"triggers": pd.Series([np.array([1, 2], dtype=np.int64), other], dtype=object)})
++    observed = exact.frame_exactness_identity(frame)
++    with monkeypatch.context() as patch:
++        patch.setattr(exact, "_int64_array_column_hashes", lambda series: None)
++        expected = exact.frame_exactness_identity(frame)
++    assert observed == expected
++
++
++def test_integer_array_hashes_keep_bounded_staging_and_portable_fallback(monkeypatch):
++    import algobench.formal_exactness as exact
++    import algobench.formal_numeric_cell_hash as native
++    frame = pd.DataFrame({"triggers": pd.Series([np.arange(32, dtype=np.int64)] * 3, dtype=object)})
++    with monkeypatch.context() as patch:
++        patch.setattr(exact, "_int64_array_column_hashes", lambda series: None)
++        expected = exact.frame_exactness_identity(frame)
++    monkeypatch.setattr(exact, "_OBJECT_ARRAY_HASH_BYTES", 32)
++    assert exact.frame_exactness_identity(frame) == expected
++    monkeypatch.setattr(native, "prepare_numeric_cell_hash_kernel", lambda: False)
++    assert exact.frame_exactness_identity(frame) == expected

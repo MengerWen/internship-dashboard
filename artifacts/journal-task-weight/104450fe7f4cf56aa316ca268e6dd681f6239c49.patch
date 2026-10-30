@@ -1,0 +1,27 @@
+feat: parameterize full-history label output root
+
+
+diff --git a/scripts/audit_rqdata_vwap_units.py b/scripts/audit_rqdata_vwap_units.py
+index d916ffbb..44ce34ae 100644
+--- a/scripts/audit_rqdata_vwap_units.py
++++ b/scripts/audit_rqdata_vwap_units.py
+@@ -31,4 +31,5 @@ def main(argv: list[str] | None = None) -> int:
+     )
++    parser.add_argument("--output-root")
+     args = parser.parse_args(argv)
+-    cfg = load_formal_label_config(args.config)
++    cfg = load_formal_label_config(args.config, output_root=args.output_root)
+     batch = load_rqdata_price_batch(cfg)
+diff --git a/scripts/build_labels_d1_1030.py b/scripts/build_labels_d1_1030.py
+index 72f37692..a01d2bd6 100644
+--- a/scripts/build_labels_d1_1030.py
++++ b/scripts/build_labels_d1_1030.py
+@@ -34,2 +34,3 @@ def main(argv: list[str] | None = None) -> int:
+     )
++    parser.add_argument("--output-root")
+     parser.add_argument("--force", action="store_true")
+@@ -45,3 +46,3 @@ def main(argv: list[str] | None = None) -> int:
+ 
+-    cfg = load_formal_label_config(args.config)
++    cfg = load_formal_label_config(args.config, output_root=args.output_root)
+     batch = load_rqdata_price_batch(cfg)

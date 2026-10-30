@@ -1,0 +1,22 @@
+分片归约保留完整事件轴计数并累计互斥候选计数
+
+
+diff --git a/因子/algobench/src/algobench/formal_parallel_structural_pairs.py b/因子/algobench/src/algobench/formal_parallel_structural_pairs.py
+index 91128295..8e63bab9 100644
+--- a/因子/algobench/src/algobench/formal_parallel_structural_pairs.py
++++ b/因子/algobench/src/algobench/formal_parallel_structural_pairs.py
+@@ -160,3 +160,5 @@ def merge_shards(shards):
+         telemetry = dict(first.telemetry)
+-        for name in ("observable_transition_candidates", "positive_response_candidates", "penalty_rejected_candidates", "matching_graph_edges", "matched_edges", "response_seconds", "matching_seconds"):
++        if any(part.telemetry["observable_transition_candidates"] != first.telemetry["observable_transition_candidates"] for part in parts):
++            raise ValueError("structural pair shard observable event axes differ")
++        for name in ("positive_response_candidates", "penalty_rejected_candidates", "matching_graph_edges", "matched_edges", "response_seconds", "matching_seconds"):
+             telemetry[name] = sum(part.telemetry[name] for part in parts)
+diff --git a/因子/algobench/tests/test_parallel_structural_pairs.py b/因子/algobench/tests/test_parallel_structural_pairs.py
+index ff87eb63..80e3fd21 100644
+--- a/因子/algobench/tests/test_parallel_structural_pairs.py
++++ b/因子/algobench/tests/test_parallel_structural_pairs.py
+@@ -62,2 +62,3 @@ def test_shards_merge_event_maxima_and_exact_candidate_counts_before_weighting()
+     assert result.bbo_results["own"].telemetry["positive_response_candidates"] == 14
++    assert result.bbo_results["own"].telemetry["observable_transition_candidates"] == 11
+     assert result.local_best["signature"].cancel_order_id.tolist() == [1, 2]

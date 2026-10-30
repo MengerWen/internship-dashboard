@@ -1,0 +1,255 @@
+feat: classify C7 quantity and price reach geometry
+
+
+diff --git a/因子/algobench/src/algobench/execution_geometry_prescreen.py b/因子/algobench/src/algobench/execution_geometry_prescreen.py
+index b247bfcd..f62d604b 100644
+--- a/因子/algobench/src/algobench/execution_geometry_prescreen.py
++++ b/因子/algobench/src/algobench/execution_geometry_prescreen.py
+@@ -190,2 +190,7 @@ def classify_execution_geometry(
+     )
++    result = _attach_c7_geometry_fields(
++        result,
++        lifecycle=merged,
++        event_prestate=prestate,
++    )
+     if result.duplicated(["date", "code", "channel_no", "order_id"]).any():
+@@ -211,3 +216,7 @@ def classify_execution_geometry_events(
+     if accelerated is not None:
+-        return accelerated
++        return _attach_c7_geometry_fields(
++            accelerated,
++            lifecycle=None,
++            event_prestate=event_prestate,
++        )
+     lifecycle = build_formal_lifecycle(windows, event_prestate=event_prestate)
+@@ -217,2 +226,152 @@ def classify_execution_geometry_events(
+ 
++def classify_price_reach(
++    *,
++    side: object,
++    ord_type: object,
++    submit_price_tick: object,
++    opponent_best_price_tick: object,
++    opponent_second_price_tick: object,
++) -> str:
++    """Classify how far one SZSE order could reach at submission."""
++
++    normalized_side = str(side).strip().upper()
++    normalized_type = str(ord_type).strip().upper()[:1]
++    best = _positive_int(opponent_best_price_tick)
++    second = _positive_int(opponent_second_price_tick)
++    price = _positive_int(submit_price_tick)
++    if normalized_side not in {"B", "S"} or best is None:
++        return "unknown"
++    if second is None:
++        return "second_level_absent"
++    if normalized_type == "M":
++        return "second_or_deeper"
++    if normalized_type != "L" or price is None:
++        return "unknown"
++    reaches_best = price >= best if normalized_side == "B" else price <= best
++    if not reaches_best:
++        return "unknown"
++    reaches_second = price >= second if normalized_side == "B" else price <= second
++    return "second_or_deeper" if reaches_second else "best_only"
++
++
++def _positive_int(value: object) -> int | None:
++    if value is None or pd.isna(value):
++        return None
++    try:
++        result = int(value)
++    except (TypeError, ValueError):
++        return None
++    return result if result > 0 else None
++
++
++def _second_price(row: pd.Series) -> object:
++    explicit = row.get("opponent_second_price_tick_pre", pd.NA)
++    if not pd.isna(explicit):
++        return explicit
++    side = str(row.get("action_side", row.get("side", ""))).upper()
++    source = "ask_prices_topn_pre" if side == "B" else "bid_prices_topn_pre"
++    values = row.get(source)
++    if isinstance(values, np.ndarray):
++        return int(values[1]) if len(values) > 1 else pd.NA
++    if isinstance(values, (list, tuple)):
++        return int(values[1]) if len(values) > 1 else pd.NA
++    return pd.NA
++
++
++def _attach_c7_geometry_fields(
++    geometry: pd.DataFrame,
++    *,
++    lifecycle: pd.DataFrame | None,
++    event_prestate: pd.DataFrame,
++) -> pd.DataFrame:
++    result = geometry.copy()
++    key_columns = ["date", "code", "channel_no", "order_id"]
++    metadata = pd.DataFrame(index=result.index)
++    if lifecycle is not None:
++        available = [
++            column
++            for column in (*key_columns, "ord_type", "submit_price_tick")
++            if column in lifecycle
++        ]
++        if "order_id" in available:
++            source = lifecycle.loc[:, available].drop_duplicates(key_columns)
++            metadata = result.loc[:, key_columns].merge(
++                source, on=key_columns, how="left", validate="one_to_one"
++            )
++    prestate = event_prestate.loc[
++        event_prestate["event_leg"].astype(str).eq("order")
++    ].copy()
++    prestate["order_id"] = pd.to_numeric(prestate["action_order_id"]).astype("int64")
++    prestate["opponent_second_price_tick_pre"] = prestate.apply(
++        _second_price, axis=1
++    )
++    prestate_join_keys = (
++        key_columns
++        if {"date", "code", "channel_no"}.issubset(prestate.columns)
++        else ["order_id"]
++    )
++    prestate_columns = [
++        *prestate_join_keys,
++        "ord_type",
++        "price_tick",
++        "opponent_second_price_tick_pre",
++    ]
++    available = [column for column in prestate_columns if column in prestate]
++    prestate_source = prestate.loc[:, available].drop_duplicates(prestate_join_keys)
++    state_metadata = result.loc[:, prestate_join_keys].merge(
++        prestate_source, on=prestate_join_keys, how="left", validate="one_to_one"
++    )
++    if metadata.empty:
++        metadata = result.loc[:, key_columns].copy()
++    lifecycle_type = metadata.get("ord_type", pd.Series(pd.NA, index=result.index))
++    lifecycle_price = metadata.get(
++        "submit_price_tick", pd.Series(pd.NA, index=result.index)
++    )
++    state_type = state_metadata.get(
++        "ord_type", pd.Series(pd.NA, index=result.index, dtype="object")
++    )
++    state_price = state_metadata.get(
++        "price_tick", pd.Series(pd.NA, index=result.index, dtype="object")
++    )
++    result["ord_type"] = lifecycle_type.fillna(state_type).astype(str)
++    result["submit_price_tick"] = pd.array(
++        pd.to_numeric(lifecycle_price, errors="coerce").fillna(
++            pd.to_numeric(state_price, errors="coerce")
++        ),
++        dtype="Int64",
++    )
++    result["opponent_second_price_tick_pre"] = pd.array(
++        state_metadata["opponent_second_price_tick_pre"], dtype="Int64"
++    )
++    q = pd.to_numeric(result["submit_qty"], errors="coerce").fillna(0).to_numpy(
++        dtype=np.int64
++    )
++    d_numeric = pd.to_numeric(result["opponent_best_qty_pre"], errors="coerce")
++    d = d_numeric.fillna(0).to_numpy(dtype=np.int64)
++    valid = d_numeric.notna().to_numpy() & (q > 0) & (d > 0)
++    relation = np.full(len(result), "indeterminate", dtype=object)
++    relation[valid & (q < d)] = "Q<D"
++    relation[valid & (q == d)] = "Q=D"
++    relation[valid & (q > d)] = "Q>D"
++    result["q_relation"] = relation
++    result["price_reach"] = [
++        classify_price_reach(
++            side=side,
++            ord_type=order_type,
++            submit_price_tick=submit_price,
++            opponent_best_price_tick=best,
++            opponent_second_price_tick=second,
++        )
++        for side, order_type, submit_price, best, second in zip(
++            result["side"],
++            result["ord_type"],
++            result["submit_price_tick"],
++            result["best_price_tick_pre"],
++            result["opponent_second_price_tick_pre"],
++            strict=True,
++        )
++    ]
++    return result
++
++
+ def ratio_native_bins(values: Sequence[object]) -> np.ndarray:
+@@ -491,2 +650,3 @@ def execution_geometry_coverage(geometry: pd.DataFrame) -> dict[str, int | float
+ __all__ = [
++    "classify_price_reach",
+     "classify_execution_geometry",
+diff --git a/因子/algobench/tests/test_execution_geometry_prescreen.py b/因子/algobench/tests/test_execution_geometry_prescreen.py
+index a203bfa0..21362187 100644
+--- a/因子/algobench/tests/test_execution_geometry_prescreen.py
++++ b/因子/algobench/tests/test_execution_geometry_prescreen.py
+@@ -8,2 +8,3 @@ from algobench.execution_geometry_prescreen import (
+     classify_execution_geometry_events,
++    classify_price_reach,
+     execution_geometry_coverage,
+@@ -98,2 +99,4 @@ def _fixtures() -> tuple[pd.DataFrame, pd.DataFrame]:
+             "side": ["B", "B", "B", "S"],
++            "ord_type": ["L", "L", "L", "L"],
++            "submit_price_tick": [101, 101, 102, 99],
+             "submit_qty": [100, 80, 150, 100],
+@@ -117,2 +120,3 @@ def _fixtures() -> tuple[pd.DataFrame, pd.DataFrame]:
+             "pre_state_complete_pre": [True, True, True, False],
++            "opponent_second_price_tick_pre": [102, 102, 102, 98],
+         }
+@@ -245 +249,56 @@ def test_execution_geometry_reports_depletion_penetration_and_direction_coverage
+     }
++
++
++def test_geometry_emits_ord_type_submit_price_and_int_quantity_relation() -> None:
++    lifecycle, prestate = _fixtures()
++    result = classify_execution_geometry(lifecycle, prestate)
++    assert result["ord_type"].tolist() == ["L", "L", "L", "L"]
++    assert result["submit_price_tick"].tolist() == [101, 101, 102, 99]
++    assert result["q_relation"].tolist() == ["Q=D", "Q<D", "Q>D", "indeterminate"]
++
++
++def test_limit_order_reaching_only_best_is_best_only() -> None:
++    assert classify_price_reach(
++        side="B", ord_type="L", submit_price_tick=101,
++        opponent_best_price_tick=101, opponent_second_price_tick=102,
++    ) == "best_only"
++
++
++def test_limit_order_reaching_second_level_is_second_or_deeper() -> None:
++    assert classify_price_reach(
++        side="S", ord_type="L", submit_price_tick=98,
++        opponent_best_price_tick=99, opponent_second_price_tick=98,
++    ) == "second_or_deeper"
++
++
++def test_market_order_type_reach_uses_szse_semantics() -> None:
++    assert classify_price_reach(
++        side="B", ord_type="M", submit_price_tick=0,
++        opponent_best_price_tick=101, opponent_second_price_tick=102,
++    ) == "second_or_deeper"
++    assert classify_price_reach(
++        side="B", ord_type="U", submit_price_tick=0,
++        opponent_best_price_tick=101, opponent_second_price_tick=102,
++    ) == "unknown"
++
++
++def test_absent_second_level_is_not_classified_as_best_only() -> None:
++    assert classify_price_reach(
++        side="B", ord_type="L", submit_price_tick=101,
++        opponent_best_price_tick=101, opponent_second_price_tick=pd.NA,
++    ) == "second_level_absent"
++
++
++def test_q_equals_d_full_fill_is_exact_depletion() -> None:
++    lifecycle, prestate = _fixtures()
++    result = classify_execution_geometry(lifecycle.iloc[[0]], prestate.iloc[[0]])
++    assert result.loc[0, "geometry_status"] == "exact_best_depletion"
++
++
++def test_q_greater_d_can_be_exact_depletion_without_penetration() -> None:
++    lifecycle, prestate = _fixtures()
++    lifecycle = lifecycle.iloc[[0]].copy()
++    lifecycle["submit_qty"] = 150
++    result = classify_execution_geometry(lifecycle, prestate.iloc[[0]])
++    assert result.loc[0, "q_relation"] == "Q>D"
++    assert result.loc[0, "geometry_status"] == "exact_best_depletion"

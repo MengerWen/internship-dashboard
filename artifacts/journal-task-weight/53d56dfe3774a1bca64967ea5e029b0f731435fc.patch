@@ -1,0 +1,251 @@
+Publish F40 archives in verified parallel storage parts
+
+Transfer at most four 16 MiB parts concurrently while retaining per-part and complete-archive byte verification. Read both segmented and existing single-file archives without changing fact bytes. Reject missing, reordered, escaped, or corrupted parts before completion. Validation: 83 targeted tests passed.
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index 2f285f38..4dedc613 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -67,2 +67,3 @@ DAY_PACK_FILE_SCHEMA_VERSION = "open5m-structural-calibration-arrow-pack-v2"
+ RECEIPT_SCHEMA_VERSION = "open5m-structural-calibration-day-receipt-v3"
++F40_PUBLICATION_PART_BYTES = 16 * 1024**2
+ SINGLE_DAY_WALL_LIMIT_SECONDS = 60.0
+@@ -492,3 +493,3 @@ def _prepare_f40_day_sources(source_root: Path, manifest_path: Path, manifest: M
+ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path, telemetry=None) -> str:
+-    from algobench.formal_f40_stages import SOURCE_SCHEMA, validate_f40_sources
++    from algobench.formal_f40_stages import SOURCE_SCHEMA, validate_f40_sources, verify_f40_archive
+     manifest = json.loads(local_manifest.read_text(encoding="utf-8"))
+@@ -502,3 +503,22 @@ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path, telemetr
+     started = time.perf_counter()
+-    shutil.copyfile(source, archive)
++    part_bytes = F40_PUBLICATION_PART_BYTES
++    if source.stat().st_size > part_bytes:
++        def copy_part(index):
++            offset = index * part_bytes
++            with source.open("rb") as handle:
++                handle.seek(offset)
++                data = handle.read(part_bytes)
++            target = archive.with_name(f"{archive.name}.part-{index:06d}")
++            digest = hashlib.sha256(data).hexdigest()
++            with target.open("xb") as handle:
++                handle.write(data)
++            if target.stat().st_size != len(data) or _sha256_file(target) != digest:
++                raise ValueError("persisted F40 archive hash mismatch")
++            return {"file": target.name, "bytes": len(data), "sha256": digest}
++        count = (source.stat().st_size + part_bytes - 1) // part_bytes
++        with ThreadPoolExecutor(max_workers=4) as copies:
++            parts = list(copies.map(copy_part, range(count)))
++        manifest = {**manifest, "archive": {**manifest["archive"], "parts": parts}}
++    else:
++        shutil.copyfile(source, archive)
+     if telemetry is not None:
+@@ -506,4 +526,6 @@ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path, telemetr
+     started = time.perf_counter()
+-    if archive.stat().st_size != manifest["archive"]["bytes"] or _sha256_file(archive) != manifest["archive"]["sha256"]:
+-        raise ValueError("persisted F40 archive hash mismatch")
++    try:
++        verify_f40_archive(manifest_path, manifest["archive"], release_cache=False)
++    except ValueError as exc:
++        raise ValueError("persisted F40 archive hash mismatch") from exc
+     if telemetry is not None:
+@@ -511,5 +533,4 @@ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path, telemetr
+     started = time.perf_counter()
+-    write_immutable_day_json(manifest_path, manifest)
+-    if _sha256_file(manifest_path) != source_hash:
+-        raise ValueError("persisted F40 manifest hash mismatch")
++    source_hash = write_immutable_day_json(manifest_path, manifest)
++    validation = {"schema_version": SOURCE_SCHEMA, "manifest_sha256": source_hash, "content_validated": True}
+     write_immutable_day_json(manifest_path.with_name("f40_source_validation.json"), validation)
+diff --git a/scripts/run_open5m_selected_date_calibration.py b/scripts/run_open5m_selected_date_calibration.py
+index 92f38d38..e411d5fe 100644
+--- a/scripts/run_open5m_selected_date_calibration.py
++++ b/scripts/run_open5m_selected_date_calibration.py
+@@ -859,4 +859,6 @@ def run(args: argparse.Namespace) -> int:
+                 facts = _load_mapping(facts_path, "F40 source manifest")
+-                with _archive_reader(facts_path.with_name(facts["archive"]["file"])):
+-                    pass
++                from algobench.formal_f40_stages import f40_archive_paths
++                for archive_path, _ in f40_archive_paths(facts_path, facts["archive"]):
++                    with _archive_reader(archive_path):
++                        pass
+         print(json.dumps({"date": day, "completed": len(rows_by_date), "selected": len(dates),
+diff --git a/因子/algobench/src/algobench/formal_f40_stages.py b/因子/algobench/src/algobench/formal_f40_stages.py
+index e0e25978..eda7c274 100644
+--- a/因子/algobench/src/algobench/formal_f40_stages.py
++++ b/因子/algobench/src/algobench/formal_f40_stages.py
+@@ -7,2 +7,3 @@ from contextlib import contextmanager
+ import hashlib
++import io
+ import json
+@@ -139,2 +140,69 @@ def file_sha256(path: Path, *, release_cache: bool = False) -> str:
+ 
++def f40_archive_paths(manifest_path: Path, archive):
++    parts = archive.get("parts")
++    rows = parts if parts is not None else [archive]
++    if not rows or sum(row["bytes"] for row in rows) != archive["bytes"]:
++        raise ValueError("F40 archive part size inventory mismatch")
++    names = [row["file"] for row in rows]
++    if len(names) != len(set(names)) or any(Path(name).name != name for name in names):
++        raise ValueError("F40 archive parts must have unique basenames")
++    return [(manifest_path.parent / row["file"], row) for row in rows]
++
++
++class _ArchivePartsReader(io.RawIOBase):
++    def __init__(self, paths, *, release_cache):
++        super().__init__()
++        self.paths = iter(paths)
++        self.release_cache = release_cache
++        self.current = self.context = None
++
++    def readable(self):
++        return True
++
++    def readinto(self, target):
++        while True:
++            if self.current is None:
++                path = next(self.paths, None)
++                if path is None:
++                    return 0
++                self.context = _archive_reader(path, release_cache=self.release_cache)
++                self.current = self.context.__enter__()
++            size = self.current.readinto(target)
++            if size:
++                return size
++            self.context.__exit__(None, None, None)
++            self.current = self.context = None
++
++    def close(self):
++        try:
++            if self.context is not None:
++                self.context.__exit__(None, None, None)
++                self.current = self.context = None
++        finally:
++            super().close()
++
++
++@contextmanager
++def f40_archive_reader(manifest_path: Path, archive, *, release_cache=True):
++    paths = [path for path, _ in f40_archive_paths(manifest_path, archive)]
++    with io.BufferedReader(_ArchivePartsReader(paths, release_cache=release_cache)) as handle:
++        yield handle
++
++
++def verify_f40_archive(manifest_path: Path, archive, *, release_cache=True):
++    complete = hashlib.sha256()
++    for path, row in f40_archive_paths(manifest_path, archive):
++        if path.stat().st_size != row["bytes"]:
++            raise ValueError("F40 source archive hash mismatch")
++        digest = hashlib.sha256()
++        with _archive_reader(path, release_cache=release_cache) as handle:
++            for block in iter(lambda: handle.read(1024**2), b""):
++                digest.update(block)
++                complete.update(block)
++        if digest.hexdigest() != row["sha256"]:
++            raise ValueError("F40 source archive hash mismatch")
++    if complete.hexdigest() != archive["sha256"]:
++        raise ValueError("F40 source archive hash mismatch")
++
++
+ def archive_f40_sources(source_root: Path, destination: Path, sources) -> dict[str, object]:
+@@ -188,8 +256,6 @@ def _extract_f40_archive(manifest_path, manifest, root):
+     archive = manifest["archive"]
+-    path = manifest_path.parent / archive["file"]
+-    if path.stat().st_size != archive["bytes"] or file_sha256(path, release_cache=True) != archive["sha256"]:
+-        raise ValueError("F40 source archive hash mismatch")
++    verify_f40_archive(manifest_path, archive)
+     expected = {row["file"] for row in manifest["sources"]}
+     found = set()
+-    with _archive_reader(path) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
++    with f40_archive_reader(manifest_path, archive) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
+         for entry in bundle:
+@@ -265,5 +331,3 @@ def validate_f40_sources(manifest_path, *, read_only=False, release_cache=True):
+     if archive:
+-        path = manifest_path.parent / archive["file"]
+-        if path.stat().st_size != archive["bytes"] or file_sha256(path, release_cache=release_cache) != archive["sha256"]:
+-            raise ValueError("F40 source archive hash mismatch")
++        verify_f40_archive(manifest_path, archive, release_cache=release_cache)
+     else:
+@@ -279,3 +343,3 @@ def validate_f40_sources(manifest_path, *, read_only=False, release_cache=True):
+         found = set()
+-        with _archive_reader(path, release_cache=release_cache) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
++        with f40_archive_reader(manifest_path, archive, release_cache=release_cache) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
+             for entry in bundle:
+diff --git a/因子/algobench/tests/test_formal_f40_stages.py b/因子/algobench/tests/test_formal_f40_stages.py
+index 89a4bde2..d589794f 100644
+--- a/因子/algobench/tests/test_formal_f40_stages.py
++++ b/因子/algobench/tests/test_formal_f40_stages.py
+@@ -260,2 +260,39 @@ def test_publication_cache_retains_bytes_without_accepting_changed_archive(tmp_p
+ 
++@pytest.mark.parametrize("damage", ["none", "part", "order", "missing", "path"])
++def test_segmented_archive_preserves_complete_facts_and_rejects_bad_parts(tmp_path, damage):
++    import algobench.formal_f40_stages as module
++    path, source = write_source(tmp_path / "sources")
++    expected = path.read_bytes()
++    archive = archive_f40_sources(path.parent, tmp_path / "facts.tar", [source])
++    original = (tmp_path / "facts.tar").read_bytes()
++    parts = []
++    for index, offset in enumerate(range(0, len(original), 4097)):
++        data = original[offset:offset+4097]
++        target = tmp_path / f"part-{index}"
++        target.write_bytes(data)
++        parts.append({"file": target.name, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
++    (tmp_path / "facts.tar").unlink()
++    if damage == "part":
++        with (tmp_path / parts[0]["file"]).open("r+b") as handle:
++            handle.write(b"broken")
++    elif damage == "order":
++        parts.reverse()
++    elif damage == "missing":
++        parts.pop()
++    elif damage == "path":
++        parts[0]["file"] = "../part-0"
++    manifest_path = tmp_path / "manifest.json"
++    manifest = {"sources": [source], "archive": {**archive, "parts": parts}}
++    manifest_path.write_text(json.dumps(manifest))
++    if damage != "none":
++        with pytest.raises(ValueError, match="archive"):
++            module.validate_f40_sources(manifest_path)
++        return
++    module.validate_f40_sources(manifest_path)
++    with module.f40_archive_reader(manifest_path, manifest["archive"]) as handle:
++        assert handle.read() == original
++    with local_f40_sources(manifest_path, manifest) as extracted:
++        assert (extracted / source["file"]).read_bytes() == expected
++
++
+ def test_reduced_cost_support_and_positive_matching_equal_complete_candidates():
+diff --git a/因子/algobench/tests/test_run_open5m_real_data_calibration.py b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+index 2851b315..60e806e7 100644
+--- a/因子/algobench/tests/test_run_open5m_real_data_calibration.py
++++ b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+@@ -272,3 +272,3 @@ def test_cross_device_publication_verifies_staged_bytes_before_replacing(tmp_pat
+ 
+-@pytest.mark.parametrize("corruption", ["none", "fact", "transport"])
++@pytest.mark.parametrize("corruption", ["none", "fact", "transport", "segments", "segment_transport"])
+ def test_concurrent_day_publication_binds_only_verified_f40_facts(tmp_path, monkeypatch, corruption):
+@@ -277,2 +277,8 @@ def test_concurrent_day_publication_binds_only_verified_f40_facts(tmp_path, monk
+     source_root = tmp_path / "hot" / "sources"
++    if corruption in ("segments", "segment_transport"):
++        monkeypatch.setattr(runner, "F40_PUBLICATION_PART_BYTES", 4097)
++    if corruption == "segment_transport":
++        digest = runner._sha256_file
++        monkeypatch.setattr(runner, "_sha256_file", lambda path: "0" * 64
++            if "out" in path.parts and ".part-" in path.name else digest(path))
+     _, source = write_source(source_root)
+@@ -305,3 +311,3 @@ def test_concurrent_day_publication_binds_only_verified_f40_facts(tmp_path, monk
+         f40_source_root=source_root, f40_manifest=manifest)
+-    if corruption == "none":
++    if corruption in ("none", "segments"):
+         published, paths = runner.commit_day_artifacts(build_pack, **kwargs)
+@@ -312,2 +318,10 @@ def test_concurrent_day_publication_binds_only_verified_f40_facts(tmp_path, monk
+             expected_identity={key: receipt[key] for key in runner.RESUME_IDENTITY_FIELDS}) is not None
++        if corruption == "segments":
++            from algobench.formal_f40_stages import local_f40_sources, validate_f40_sources
++            manifest_path = paths.pack_path.with_name("f40_sources.json")
++            validate_f40_sources(manifest_path, read_only=True)
++            stored = json.loads(manifest_path.read_text())
++            assert len(stored["archive"]["parts"]) > 1
++            with local_f40_sources(manifest_path, stored) as extracted:
++                assert runner._sha256_file(extracted / source["file"]) == source["sha256"]
+     else:

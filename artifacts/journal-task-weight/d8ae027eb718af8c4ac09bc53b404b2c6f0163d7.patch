@@ -1,0 +1,37 @@
+冻结清单结构池保留浮点符号身份
+
+
+diff --git a/因子/algobench/src/algobench/formal_day_manifest_codec.py b/因子/algobench/src/algobench/formal_day_manifest_codec.py
+index 2c54817c..78f32690 100644
+--- a/因子/algobench/src/algobench/formal_day_manifest_codec.py
++++ b/因子/algobench/src/algobench/formal_day_manifest_codec.py
+@@ -37,10 +37,8 @@ def pack_day_manifest(value):
+                 if name == "feature_scope" and isinstance(item, dict):
+-                    key = item.get("feature_manifest_sha256")
+-                    cached = scope_cache.get(key)
+-                    if cached is not None and cached[0] == item:
+-                        digest = cached[1]
+-                    else:
++                    key = id(item)
++                    digest = scope_cache.get(key)
++                    if digest is None:
+                         digest = identities_sha256(item)
+                         scopes.setdefault(digest, item)
+-                        scope_cache[key] = (item, digest)
++                        scope_cache[key] = digest
+                     result[name] = {SCOPE_REF: digest}
+diff --git a/因子/algobench/tests/test_formal_day_manifest_codec.py b/因子/algobench/tests/test_formal_day_manifest_codec.py
+index b220d211..91da27f7 100644
+--- a/因子/algobench/tests/test_formal_day_manifest_codec.py
++++ b/因子/algobench/tests/test_formal_day_manifest_codec.py
+@@ -79 +79,10 @@ def test_changed_feature_scope_is_bound_separately_to_its_full_content():
+         pack_day_manifest(packed)
++
++
++def test_feature_scope_pool_preserves_signed_zero_in_equal_python_dicts():
++    value = example()
++    value["stock_proxy_bank_telemetry"][0]["feature_scope"]["scale"] = 0.
++    value["stock_proxy_bank_telemetry"][1]["feature_scope"]["scale"] = -0.
++    packed = pack_day_manifest(value)
++    assert len(packed[POOL_KEY]["feature_scopes"]) == 2
++    assert identities_sha256(restore_day_manifest(packed)) == identities_sha256(value)

@@ -1,0 +1,118 @@
+Commit complete day artifacts with one verified receipt
+
+Overlap verified F40 publication with fresh day-pack publication. A fresh owned target becomes reusable only after both artifact hashes pass and one completion receipt is written. Preserve atomic replacement for an existing standalone pack; release both daily file caches in long runs. Validation: 30 related tests and the transport-failure regression passed.
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index d01c605a..1a5f2cae 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -391,3 +391,4 @@ def _read_day_pack_arrow(path: Path, *, materialize: bool) -> dict[str, object]:
+ def commit_day_pack(
+-    pack: Mapping[str, object], *, output_root: Path, scratch_root: Path
++    pack: Mapping[str, object], *, output_root: Path, scratch_root: Path,
++    publish_receipt: bool = True,
+ ) -> DailyArtifactPaths:
+@@ -396,2 +397,4 @@ def commit_day_pack(
+     paths.pack_path.parent.mkdir(parents=True, exist_ok=True)
++    if not publish_receipt and (paths.pack_path.exists() or paths.receipt_path.exists()):
++        raise FileExistsError("combined day publication requires a fresh artifact target")
+     pending_root = scratch_root / "pending"
+@@ -409,3 +412,4 @@ def commit_day_pack(
+                 raise
+-            with temporary.open("rb") as source, published_pending.open("xb") as target:
++            target_path = published_pending if publish_receipt else paths.pack_path
++            with temporary.open("rb") as source, target_path.open("xb") as target:
+                 shutil.copyfileobj(source, target, length=1024 * 1024)
+@@ -413,5 +417,6 @@ def commit_day_pack(
+                 os.fsync(target.fileno())
+-            if published_pending.stat().st_size != size or _sha256_file(published_pending) != digest:
++            if target_path.stat().st_size != size or _sha256_file(target_path) != digest:
+                 raise RuntimeError("staged day pack failed hash verification")
+-            os.replace(published_pending, paths.pack_path)
++            if publish_receipt:
++                os.replace(published_pending, paths.pack_path)
+     finally:
+@@ -427,3 +432,4 @@ def commit_day_pack(
+     }
+-    atomic_write_json(paths.receipt_path, receipt)
++    if publish_receipt:
++        atomic_write_json(paths.receipt_path, receipt)
+     return paths
+@@ -507,3 +513,3 @@ def commit_day_artifacts(pack_factory, *, output_root: Path, scratch_root: Path,
+                          f40_source_root: Path | None = None, f40_manifest=None, telemetry=None):
+-    """Prepare independent day artifacts concurrently and publish verified bytes."""
++    """Publish independent verified artifacts before committing one day receipt."""
+     with ThreadPoolExecutor(max_workers=1) as preparation:
+@@ -513,3 +519,6 @@ def commit_day_artifacts(pack_factory, *, output_root: Path, scratch_root: Path,
+             local_manifest = f40_source_root.parent / "f40_publication" / "f40_sources.json"
+-            future = preparation.submit(_prepare_f40_day_sources, f40_source_root, local_manifest, f40_manifest, telemetry)
++            def publish_facts():
++                prepared = _prepare_f40_day_sources(f40_source_root, local_manifest, f40_manifest, telemetry)
++                return _persist_f40_day_sources(prepared, manifest_path, telemetry)
++            future = preparation.submit(publish_facts)
+         started = time.perf_counter()
+@@ -519,3 +528,4 @@ def commit_day_artifacts(pack_factory, *, output_root: Path, scratch_root: Path,
+         started = time.perf_counter()
+-        paths = commit_day_pack(pack, output_root=output_root, scratch_root=scratch_root)
++        paths = commit_day_pack(pack, output_root=output_root, scratch_root=scratch_root,
++                                publish_receipt=future is None)
+         if telemetry is not None:
+@@ -524,8 +534,11 @@ def commit_day_artifacts(pack_factory, *, output_root: Path, scratch_root: Path,
+             started = time.perf_counter()
+-            prepared = future.result()
++            source_hash = future.result()
+             if telemetry is not None:
+                 telemetry["f40_prepare_wait_seconds"] = time.perf_counter() - started
+-            source_hash = _persist_f40_day_sources(prepared, manifest_path, telemetry)
+-            receipt = json.loads(paths.receipt_path.read_text(encoding="utf-8"))
+-            atomic_write_json(paths.receipt_path, {**receipt, "f40_sources_sha256": source_hash})
++            atomic_write_json(paths.receipt_path, {
++                "schema_version": RECEIPT_SCHEMA_VERSION, **_resume_identity(pack),
++                "pack_sha256": _sha256_file(paths.pack_path),
++                "pack_bytes": paths.pack_path.stat().st_size,
++                "f40_sources_sha256": source_hash,
++            })
+     return pack, paths
+diff --git a/scripts/run_open5m_selected_date_calibration.py b/scripts/run_open5m_selected_date_calibration.py
+index c0d6fbf3..1fdad20e 100644
+--- a/scripts/run_open5m_selected_date_calibration.py
++++ b/scripts/run_open5m_selected_date_calibration.py
+@@ -861,2 +861,7 @@ def run(args: argparse.Namespace) -> int:
+                 pass
++            facts_path = Path(row["path"]).with_name("f40_sources.json")
++            if facts_path.is_file():
++                facts = _load_mapping(facts_path, "F40 source manifest")
++                with _archive_reader(facts_path.with_name(facts["archive"]["file"])):
++                    pass
+         print(json.dumps({"date": day, "completed": len(rows_by_date), "selected": len(dates),
+diff --git a/因子/algobench/tests/test_run_open5m_real_data_calibration.py b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+index 56ab6af7..fd673ffc 100644
+--- a/因子/algobench/tests/test_run_open5m_real_data_calibration.py
++++ b/因子/algobench/tests/test_run_open5m_real_data_calibration.py
+@@ -289,2 +289,3 @@ def test_concurrent_day_publication_binds_only_verified_f40_facts(tmp_path, monk
+         assert pack_started.wait(3), "the independent day pack must start before F40 publication finishes"
++        assert not runner.daily_artifact_paths(tmp_path / "out", "2026-04-22").receipt_path.exists()
+         return original(*args)
+@@ -315,3 +316,20 @@ def test_concurrent_day_publication_binds_only_verified_f40_facts(tmp_path, monk
+         paths = runner.daily_artifact_paths(kwargs["output_root"], "2026-04-22")
+-        assert "f40_sources_sha256" not in json.loads(paths.receipt_path.read_text())
++        assert not paths.receipt_path.exists()
++
++
++def test_fresh_day_transport_failure_keeps_the_day_uncommitted(tmp_path, monkeypatch):
++    runner = _load()
++    monkeypatch.setattr(runner, "_write_day_pack_arrow", lambda pack, path: path.write_bytes(b"complete package"))
++    def cross_device(source, target):
++        raise OSError(errno.EXDEV, "cross device")
++    monkeypatch.setattr(runner.os, "replace", cross_device)
++    monkeypatch.setattr(runner.shutil, "copyfileobj", lambda source, target, length: target.write(b"damaged"))
++    kwargs = dict(output_root=tmp_path / "out", scratch_root=tmp_path / "scratch", publish_receipt=False)
++    with pytest.raises(RuntimeError, match="staged day pack"):
++        runner.commit_day_pack({"date": "2026-04-22"}, **kwargs)
++    paths = runner.daily_artifact_paths(kwargs["output_root"], "2026-04-22")
++    assert not paths.receipt_path.exists()
++    assert runner.load_reusable_day_pack(paths.pack_path, paths.receipt_path, expected_identity={}) is None
++    with pytest.raises(FileExistsError, match="fresh"):
++        runner.commit_day_pack({"date": "2026-04-22"}, **kwargs)
+ 

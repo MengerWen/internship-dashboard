@@ -1,0 +1,27 @@
+识别虚拟环境RECORD中的外部命令入口
+
+
+diff --git a/scripts/cache_structural_calibration_runtime.py b/scripts/cache_structural_calibration_runtime.py
+index 510a8d89..c073fd26 100644
+--- a/scripts/cache_structural_calibration_runtime.py
++++ b/scripts/cache_structural_calibration_runtime.py
+@@ -44,3 +44,6 @@ def cache_runtime(source: Path, destination: Path, lock: Path, *, budget_bytes=2
+             if ".." in relative.parts:
+-                if relative.parts[:2] != ("..", "..") or relative.parts[2:3] != ("bin",):
++                parents = 0
++                while parents < len(relative.parts) and relative.parts[parents] == "..":
++                    parents += 1
++                if parents not in (2, 3) or relative.parts[parents:parents + 1] != ("bin",):
+                     raise ValueError("installed package record escapes site-packages")
+diff --git a/因子/algobench/tests/test_structural_runtime_cache.py b/因子/algobench/tests/test_structural_runtime_cache.py
+index 9062552b..4ff38963 100644
+--- a/因子/algobench/tests/test_structural_runtime_cache.py
++++ b/因子/algobench/tests/test_structural_runtime_cache.py
+@@ -32,4 +32,5 @@ def fixture(tmp_path, *, corrupt=False, extra=""):
+ 
+-def test_cache_verifies_installed_and_cached_bytes(tmp_path):
+-    source, cache, lock = fixture(tmp_path, extra="../../bin/example,,\n")
++@pytest.mark.parametrize("console", ["../../bin/example", "../../../bin/example"])
++def test_cache_verifies_installed_and_cached_bytes(tmp_path, console):
++    source, cache, lock = fixture(tmp_path, extra=f"{console},,\n")
+     result = module().cache_runtime(source, cache, lock)

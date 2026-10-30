@@ -1,0 +1,43 @@
+{
+  "input_sha256": "067b8fd5cbf77fcd5aa56cfff6aa0ca351065abb50343e2cac6a331fa8755f7d",
+  "original_output_sha256": "7adcd8de8480029597c8fd778cf3e5dbd43a5774e28b5231a215cbb566f14b95",
+  "css_sha256": {
+    "report.css": "8568b34ce16671f75c59d7dfcbe5401563eae2380a628c193270e60b54e59254",
+    "reader.css": "b73097f6e9a4ab6048d6631822989bcf96f5ae50567cd9396d6f726f56405cfa"
+  },
+  "font_family": "ReportSerif / Noto Serif SC",
+  "font_weights": [
+    400,
+    700
+  ],
+  "reuse": {
+    "build": "scripts/build_sse_reconstruction_report_20261023.py:build",
+    "font": "font_face",
+    "contract": "scripts/verify_sse_reconstruction_report_20261023.py:check / preview",
+    "decision": "复用现有生成、字体子集与站点登记验收；仅同步文案与五处语义修正，无新增计算或交互实现。"
+  },
+  "corrections": [
+    {
+      "before": "开盘前 5 分钟窗口内只要快照出现",
+      "after": "开盘后 09:30–09:35 窗口内只要快照出现"
+    },
+    {
+      "before": "在比卖一还低的公开价格上，买方盘口不可能挂着同侧卖单量。",
+      "after": "在比卖一还低的公开价格上，卖方盘口不可能挂着同侧卖单量。"
+    },
+    {
+      "before": "θ 是核函数中的衰减尺度（决定相隔多远时权重衰减一半）",
+      "after": "θ 是核函数中的衰减尺度（按 exp(−d/θ)，距离为 θ 时权重降至 1/e；半衰距离为 θ ln(2)）"
+    },
+    {
+      "section": "clock",
+      "before": "当某只股票多空力量接近平衡、|S| 非常接近 0 时",
+      "after": "当某只股票 maker / taker 归一化差值 S 非常接近 0 时"
+    },
+    {
+      "section": "evidence",
+      "before": "静态代码扫描（共核对 368 处读取点）",
+      "after": "静态代码扫描（共核对 368 处命中位置，包含构建、诊断、历史及评分代码）"
+    }
+  ]
+}

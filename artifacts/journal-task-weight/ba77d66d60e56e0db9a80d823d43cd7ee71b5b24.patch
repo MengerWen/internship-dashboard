@@ -1,0 +1,81 @@
+记录日包归并及F40本地和持久发布的分段耗时
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index 61fdd963..e250a00a 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -456,7 +456,13 @@ def load_reusable_day_pack(
+ 
+-def _prepare_f40_day_sources(source_root: Path, manifest_path: Path, manifest: Mapping[str, object]) -> Path:
++def _prepare_f40_day_sources(source_root: Path, manifest_path: Path, manifest: Mapping[str, object], telemetry=None) -> Path:
+     from algobench.formal_f40_stages import archive_f40_sources, validate_f40_sources
++    started = time.perf_counter()
+     archive = archive_f40_sources(source_root, manifest_path.with_name("f40_sources.tar"), manifest["sources"])
++    if telemetry is not None:
++        telemetry["f40_local_archive_seconds"] = time.perf_counter() - started
++    started = time.perf_counter()
+     atomic_write_json(manifest_path, {**manifest, "archive": archive})
+     validate_f40_sources(manifest_path)
++    if telemetry is not None:
++        telemetry["f40_local_validation_seconds"] = time.perf_counter() - started
+     return manifest_path
+@@ -464,3 +470,3 @@ def _prepare_f40_day_sources(source_root: Path, manifest_path: Path, manifest: M
+ 
+-def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path) -> str:
++def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path, telemetry=None) -> str:
+     from algobench.formal_f40_stages import SOURCE_SCHEMA, validate_f40_sources
+@@ -475,5 +481,12 @@ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path) -> str:
+     try:
++        started = time.perf_counter()
+         shutil.copyfile(source, pending)
++        if telemetry is not None:
++            telemetry["f40_copy_to_persistent_seconds"] = time.perf_counter() - started
++        started = time.perf_counter()
+         if pending.stat().st_size != manifest["archive"]["bytes"] or _sha256_file(pending) != manifest["archive"]["sha256"]:
+             raise ValueError("persisted F40 archive hash mismatch")
++        if telemetry is not None:
++            telemetry["f40_persistent_staging_hash_seconds"] = time.perf_counter() - started
++        started = time.perf_counter()
+         os.replace(pending, archive)
+@@ -484,2 +497,4 @@ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path) -> str:
+         validate_f40_sources(manifest_path)
++        if telemetry is not None:
++            telemetry["f40_persistent_commit_and_validation_seconds"] = time.perf_counter() - started
+     finally:
+@@ -493,3 +508,3 @@ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path) -> str:
+ def commit_day_artifacts(pack_factory, *, output_root: Path, scratch_root: Path,
+-                         f40_source_root: Path | None = None, f40_manifest=None):
++                         f40_source_root: Path | None = None, f40_manifest=None, telemetry=None):
+     """Prepare independent day artifacts concurrently and publish verified bytes."""
+@@ -500,7 +515,17 @@ def commit_day_artifacts(pack_factory, *, output_root: Path, scratch_root: Path,
+             local_manifest = f40_source_root.parent / "f40_publication" / "f40_sources.json"
+-            future = preparation.submit(_prepare_f40_day_sources, f40_source_root, local_manifest, f40_manifest)
++            future = preparation.submit(_prepare_f40_day_sources, f40_source_root, local_manifest, f40_manifest, telemetry)
++        started = time.perf_counter()
+         pack = pack_factory()
++        if telemetry is not None:
++            telemetry["day_support_merge_seconds"] = time.perf_counter() - started
++        started = time.perf_counter()
+         paths = commit_day_pack(pack, output_root=output_root, scratch_root=scratch_root)
++        if telemetry is not None:
++            telemetry["day_pack_commit_seconds"] = time.perf_counter() - started
+         if future is not None:
+-            source_hash = _persist_f40_day_sources(future.result(), manifest_path)
++            started = time.perf_counter()
++            prepared = future.result()
++            if telemetry is not None:
++                telemetry["f40_prepare_wait_seconds"] = time.perf_counter() - started
++            source_hash = _persist_f40_day_sources(prepared, manifest_path, telemetry)
+             receipt = json.loads(paths.receipt_path.read_text(encoding="utf-8"))
+@@ -969,4 +994,5 @@ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: fl
+     merge_started = time.perf_counter()
++    publication_telemetry = {}
+     pack, paths = commit_day_artifacts(build_pack, output_root=daily_output_root, scratch_root=args.scratch_root,
+-        f40_source_root=(hot_root / "f40_sources") if f40_manifest is not None else None, f40_manifest=f40_manifest)
++        f40_source_root=(hot_root / "f40_sources") if f40_manifest is not None else None, f40_manifest=f40_manifest, telemetry=publication_telemetry)
+     if any(hot_root.iterdir()):
+@@ -1040,2 +1066,3 @@ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: fl
+         },
++        "publication_telemetry": publication_telemetry,
+         "query_telemetry": query_telemetry,

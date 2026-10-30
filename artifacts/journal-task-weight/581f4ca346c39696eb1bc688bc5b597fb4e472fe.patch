@@ -1,0 +1,11 @@
+验证对象上传显式禁用多段上传的参数合同
+
+
+diff --git a/因子/algobench/tests/test_formal_object_publication.py b/因子/algobench/tests/test_formal_object_publication.py
+index e4d0093f..bc13d746 100644
+--- a/因子/algobench/tests/test_formal_object_publication.py
++++ b/因子/algobench/tests/test_formal_object_publication.py
+@@ -39,2 +39,3 @@ def test_object_upload_passes_closed_file_and_account_attributes(tmp_path, monke
+                         f"uid=1007;gid=1007;mode={stat.S_IFREG | 0o600}",
++                        "--disable-multipart",
+                         str(source.absolute()), "company/bucket/outputs/object.parquet"]

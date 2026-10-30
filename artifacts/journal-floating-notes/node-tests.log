@@ -1,0 +1,194 @@
+
+> test
+> node --test tests/tag-model.test.cjs tests/tag-api.test.mjs tests/journal-calendar.test.cjs tests/journal-provenance.test.cjs tests/journal-notes.test.cjs
+
+TAP version 13
+# Subtest: 2026 年七个官方假期的首尾日期均属于休息日
+ok 1 - 2026 年七个官方假期的首尾日期均属于休息日
+  ---
+  duration_ms: 5.1315
+  type: 'test'
+  ...
+# Subtest: 六个调休补班周末不标底纹，普通周末仍标底纹
+ok 2 - 六个调休补班周末不标底纹，普通周末仍标底纹
+  ---
+  duration_ms: 0.1623
+  type: 'test'
+  ...
+# Subtest: 节前节后的普通工作日不标底纹，未收录年份不套用旧节日
+ok 3 - 节前节后的普通工作日不标底纹，未收录年份不套用旧节日
+  ---
+  duration_ms: 0.1345
+  type: 'test'
+  ...
+# Subtest: 九项工作与相邻点位的浮窗均避让，保留原锚点
+ok 4 - 九项工作与相邻点位的浮窗均避让，保留原锚点
+  ---
+  duration_ms: 4.7946
+  type: 'test'
+  ...
+# Subtest: 最早日期的说明放在下方，短图面通过留白容纳，不移动点位
+ok 5 - 最早日期的说明放在下方，短图面通过留白容纳，不移动点位
+  ---
+  duration_ms: 1.9394
+  type: 'test'
+  ...
+# Subtest: 拖动位置被限制在图面内
+ok 6 - 拖动位置被限制在图面内
+  ---
+  duration_ms: 0.1669
+  type: 'test'
+  ...
+# Subtest: 连接点位于浮窗边界并向内留出角距
+ok 7 - 连接点位于浮窗边界并向内留出角距
+  ---
+  duration_ms: 0.6293
+  type: 'test'
+  ...
+# Subtest: 引线绕开其他浮窗和相邻点位，不穿过矩形内部
+ok 8 - 引线绕开其他浮窗和相邻点位，不穿过矩形内部
+  ---
+  duration_ms: 1.2811
+  type: 'test'
+  ...
+# Subtest: 无可用通路时明确返回 null，不伪造穿窗连线
+ok 9 - 无可用通路时明确返回 null，不伪造穿窗连线
+  ---
+  duration_ms: 0.1892
+  type: 'test'
+  ...
+# Subtest: 浮窗间距仅15px时，连接端口仍有可用通路
+ok 10 - 浮窗间距仅15px时，连接端口仍有可用通路
+  ---
+  duration_ms: 0.3837
+  type: 'test'
+  ...
+# Subtest: 圆角路径保留起终点，重复点不产生无效数值
+ok 11 - 圆角路径保留起终点，重复点不产生无效数值
+  ---
+  duration_ms: 0.1862
+  type: 'test'
+  ...
+# Subtest: 点大小只读取对应任务的归属量，同日总量及其他任务不影响它
+ok 12 - 点大小只读取对应任务的归属量，同日总量及其他任务不影响它
+  ---
+  duration_ms: 1.9395
+  type: 'test'
+  ...
+# Subtest: 跨链份额显示精确计量，缺少提交证据不冒充当天总量
+ok 13 - 跨链份额显示精确计量，缺少提交证据不冒充当天总量
+  ---
+  duration_ms: 0.4727
+  type: 'test'
+  ...
+# Subtest: 旧密度按比例迁移，保存后再次打开不重复放大
+ok 14 - 旧密度按比例迁移，保存后再次打开不重复放大
+  ---
+  duration_ms: 1.4905
+  type: 'test'
+  ...
+# Subtest: 缺少或无效的密度偏好回到新标准间距
+ok 15 - 缺少或无效的密度偏好回到新标准间距
+  ---
+  duration_ms: 0.1328
+  type: 'test'
+  ...
+# Subtest: 完整归属明细将提交标题、理由、路径和依据层级作为文本显示
+ok 16 - 完整归属明细将提交标题、理由、路径和依据层级作为文本显示
+  ---
+  duration_ms: 0.6254
+  type: 'test'
+  ...
+# Subtest: 人工核实的链成果不会混入同日其他链的报告
+ok 17 - 人工核实的链成果不会混入同日其他链的报告
+  ---
+  duration_ms: 0.649
+  type: 'test'
+  ...
+# Subtest: 交接曲线采用已登记来源阶段，缺失日期不悄悄换成相邻日
+ok 18 - 交接曲线采用已登记来源阶段，缺失日期不悄悄换成相邻日
+  ---
+  duration_ms: 0.2344
+  type: 'test'
+  ...
+# Subtest: 原始依据只接受 GitHub HTTPS 链接并转义标题和属性
+ok 19 - 原始依据只接受 GitHub HTTPS 链接并转义标题和属性
+  ---
+  duration_ms: 0.2085
+  type: 'test'
+  ...
+# Subtest: atomic updates, stale revisions and retry after lost response
+ok 20 - atomic updates, stale revisions and retry after lost response
+  ---
+  duration_ms: 18.0719
+  type: 'test'
+  ...
+# Subtest: reject malformed data before storage write
+ok 21 - reject malformed data before storage write
+  ---
+  duration_ms: 0.3541
+  type: 'test'
+  ...
+# Subtest: all authenticated emails can edit; anonymous and forged email headers cannot
+ok 22 - all authenticated emails can edit; anonymous and forged email headers cannot
+  ---
+  duration_ms: 3.388
+  type: 'test'
+  ...
+# Subtest: CSRF, methods, unknown endpoints and oversized bodies are rejected
+ok 23 - CSRF, methods, unknown endpoints and oversized bodies are rejected
+  ---
+  duration_ms: 1.1276
+  type: 'test'
+  ...
+# Subtest: JWT verification requires pinned issuer, audience, expiration and signed email
+ok 24 - JWT verification requires pinned issuer, audience, expiration and signed email
+  ---
+  duration_ms: 24.9635
+  type: 'test'
+  ...
+# Subtest: multi-tag OR/AND, untagged, search and empty filters retain original order
+ok 25 - multi-tag OR/AND, untagged, search and empty filters retain original order
+  ---
+  duration_ms: 1.8245
+  type: 'test'
+  ...
+# Subtest: bulk add is non-destructive and removing the last tag makes a report untagged
+ok 26 - bulk add is non-destructive and removing the last tag makes a report untagged
+  ---
+  duration_ms: 0.3523
+  type: 'test'
+  ...
+# Subtest: rename keeps identity, merge deduplicates assignments and delete only removes its tag
+ok 27 - rename keeps identity, merge deduplicates assignments and delete only removes its tag
+  ---
+  duration_ms: 1.27
+  type: 'test'
+  ...
+# Subtest: input rejects duplicate names, malicious IDs, invalid colors and dangling relations
+ok 28 - input rejects duplicate names, malicious IDs, invalid colors and dangling relations
+  ---
+  duration_ms: 0.4237
+  type: 'test'
+  ...
+# Subtest: suggestions explain literal keyword matches and never auto-assign
+ok 29 - suggestions explain literal keyword matches and never auto-assign
+  ---
+  duration_ms: 0.3274
+  type: 'test'
+  ...
+# Subtest: import unifies equal names without losing existing assignments or duplicating tags
+ok 30 - import unifies equal names without losing existing assignments or duplicating tags
+  ---
+  duration_ms: 0.2879
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 990.9576

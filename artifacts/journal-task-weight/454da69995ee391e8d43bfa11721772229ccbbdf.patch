@@ -1,0 +1,46 @@
+以完整guard进程树记录发布阶段CPU和分配器配置
+
+
+diff --git a/scripts/benchmark_formal_day_bucket_publication.py b/scripts/benchmark_formal_day_bucket_publication.py
+index 9c2787b0..6bbcd962 100644
+--- a/scripts/benchmark_formal_day_bucket_publication.py
++++ b/scripts/benchmark_formal_day_bucket_publication.py
+@@ -11,2 +11,3 @@ from pathlib import Path
+ import shutil
++import subprocess
+ import sys
+@@ -130,3 +131,2 @@ def prepare(args):
+ def run(args):
+-    import resource
+     source_root, target_root = args.fixture.resolve(), args.output_root.resolve()
+@@ -149,3 +149,9 @@ def run(args):
+         fragments.append(replace(original, path=str(target)))
+-    before = resource.getrusage(resource.RUSAGE_SELF), resource.getrusage(resource.RUSAGE_CHILDREN)
++    from algobench.formal_factor_resources import observe_scope_resources
++    scope = Path(observe_scope_resources()["scope"])
++    # forkserver 工作进程是孙进程，资源必须取整个 guard scope。
++    def cpu_stat():
++        return {k: int(v)/1e6 for k,v in (row.split() for row in (scope / "cpu.stat").read_text().splitlines())
++            if k in ("usage_usec", "user_usec", "system_usec")}
++    before = cpu_stat()
+     started = perf_counter()
+@@ -155,4 +161,4 @@ def run(args):
+     seconds = perf_counter()-started
+-    after = resource.getrusage(resource.RUSAGE_SELF), resource.getrusage(resource.RUSAGE_CHILDREN)
+-    cpu = sum((b.ru_utime+b.ru_stime)-(a.ru_utime+a.ru_stime) for a,b in zip(before,after))
++    after = cpu_stat()
++    cpu = after["usage_usec"] - before["usage_usec"]
+     manifest = json.loads(committed.manifest_path.read_bytes())
+@@ -164,5 +170,12 @@ def run(args):
+     shutil.rmtree(published)
++    import pyarrow as pa
+     result = dict(schema_version="formal-publication-diagnostic-v1", diagnostic_only=True,
++        business_revision=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
++        allocation_environment={name: os.environ.get(name) for name in
++            ("NUMPY_MADVISE_HUGEPAGE", "MIMALLOC_ALLOW_THP", "ARROW_DEFAULT_MEMORY_POOL")},
++        arrow_memory_pool=pa.default_memory_pool().backend_name,
+         source_sha256=fixture["source_sha256"], executor=args.executor, workers=args.workers,
+         bucket_count=args.bucket_count, wall_seconds=seconds, cpu_seconds=cpu, average_effective_cores=cpu/seconds,
++        cpu_user_seconds=after["user_usec"]-before["user_usec"],
++        cpu_system_seconds=after["system_usec"]-before["system_usec"],
+         rows=committed.row_count, rows_per_second=committed.row_count/seconds,

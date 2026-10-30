@@ -1,0 +1,90 @@
+使对象发布按命名空间定位并免除挂载目录查询
+
+对象上传保留完整SHA回读及源文件释放约束；本地文件发布仍按文件系统路径验收。相关检查：12项对象发布测试、31项启动及完整日性能合同测试通过，1项跳过。
+
+
+diff --git a/decisions/2026-10-14-object-publication-namespace.md b/decisions/2026-10-14-object-publication-namespace.md
+new file mode 100644
+index 00000000..22ee4f97
+--- /dev/null
++++ b/decisions/2026-10-14-object-publication-namespace.md
+@@ -0,0 +1,10 @@
++# 对象发布路径按对象命名空间校验
++
++日期：2026-10-14
++状态：已接受
++
++`ObjectPublication` 的 mount 路径是对象键的定位符。对象操作按绝对路径的词法规范化结果核对 mount 范围，再使用已验证的 alias/bucket 调用对象接口；不沿 S3FS 目录或符号链接解析对象键，也不为对象上传创建挂载目录。
++
++映射预检继续核对既有文件与对象回读的 SHA-256。上传后仍须完整回读并核对内容哈希，成功后才释放本地源文件。词法规范化后的越界路径和 mount 根本身均拒绝。实际本地文件发布继续解析文件系统路径、建立目录并核对目标文件。
++
++这一界面让对象发布免于反复等待挂载元数据，也避免挂载缓存的目录可见性改变对象定位。需要沿文件系统符号链接访问文件的调用者，应使用本地文件发布入口。
+diff --git a/因子/algobench/src/algobench/prescreen_runtime.py b/因子/algobench/src/algobench/prescreen_runtime.py
+index b01ac0fd..bb63190a 100644
+--- a/因子/algobench/src/algobench/prescreen_runtime.py
++++ b/因子/algobench/src/algobench/prescreen_runtime.py
+@@ -48,4 +48,5 @@ class ObjectPublication:
+     def target(self, path):
+-        path = Path(path)
+-        relative = (path.parent.resolve() / path.name).relative_to(Path(self.mount_root).resolve())
++        # 这里的路径标识对象键；命名空间校验不读取挂载缓存中的目录或符号链接。
++        path = Path(os.path.abspath(path))
++        relative = path.relative_to(Path(os.path.abspath(self.mount_root)))
+         if not relative.parts:
+@@ -134,3 +135,3 @@ def publish_file(source: Path, target: Path, *, expected_sha256=None, remove_sou
+     source, target = Path(source), Path(target)
+-    resolved_target = target.resolve() if object_publication is None else target.parent.resolve() / target.name
++    resolved_target = target.resolve() if object_publication is None else Path(os.path.abspath(target))
+     if source.resolve() == resolved_target:
+@@ -140,3 +141,3 @@ def publish_file(source: Path, target: Path, *, expected_sha256=None, remove_sou
+     hashed = perf_counter()
+-    if prepare_parent:
++    if prepare_parent and object_publication is None:
+         target.parent.mkdir(parents=True, exist_ok=True)
+diff --git a/因子/algobench/tests/test_formal_object_publication.py b/因子/algobench/tests/test_formal_object_publication.py
+index da3f5608..4679e7d9 100644
+--- a/因子/algobench/tests/test_formal_object_publication.py
++++ b/因子/algobench/tests/test_formal_object_publication.py
+@@ -84,2 +84,3 @@ def test_object_publication_requires_complete_remote_readback_before_release(tmp
+             calls.append("upload")
++            target.parent.mkdir(parents=True, exist_ok=True)
+             shutil.copyfile(source, target)
+@@ -102,2 +103,38 @@ def test_object_publication_requires_complete_remote_readback_before_release(tmp
+ 
++def test_direct_object_publication_uses_namespace_without_mount_metadata(tmp_path, monkeypatch):
++    mount = tmp_path / "mount"
++    source = tmp_path / "local.parquet"
++    source.write_bytes(b"complete immutable object")
++    target = mount / "outputs/new/day.parquet"
++    publisher = ObjectPublication(str(mount), "company/bucket")
++    objects = {}
++    resolve, mkdir = Path.resolve, Path.mkdir
++
++    def owned_namespace(path):
++        return path == mount or mount in path.parents
++
++    def resolve_local(path, *args, **kwargs):
++        if owned_namespace(path):
++            raise AssertionError("object locator must not resolve through the mount")
++        return resolve(path, *args, **kwargs)
++
++    def mkdir_local(path, *args, **kwargs):
++        if owned_namespace(path):
++            raise AssertionError("object upload must not create mount directories")
++        return mkdir(path, *args, **kwargs)
++
++    monkeypatch.setattr(Path, "resolve", resolve_local)
++    monkeypatch.setattr(Path, "mkdir", mkdir_local)
++    monkeypatch.setattr(ObjectPublication, "upload", lambda self, src, dst:
++        objects.__setitem__(self.target(dst), src.read_bytes()))
++    monkeypatch.setattr(ObjectPublication, "readback_sha256", lambda self, dst:
++        hashlib.sha256(objects[self.target(dst)]).hexdigest())
++    digest = publish_file(source, target, object_publication=publisher, remove_source=True)
++    assert digest == hashlib.sha256(b"complete immutable object").hexdigest()
++    assert objects == {"company/bucket/outputs/new/day.parquet": b"complete immutable object"}
++    assert not source.exists()
++    with pytest.raises(ValueError):
++        publisher.target(mount / ".." / "outside")
++
++
+ def test_mapping_preflight_binds_client_and_existing_reference(tmp_path, monkeypatch):

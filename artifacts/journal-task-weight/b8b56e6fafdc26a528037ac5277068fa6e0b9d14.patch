@@ -1,0 +1,137 @@
+Reuse verified artifact file caches during daily publication
+
+Keep complete archive and support-array verification while deferring file-cache release to the date boundary. Preserve cache release for cross-date reads. Validation: 59 targeted tests passed.
+
+
+diff --git a/scripts/run_open5m_real_data_calibration.py b/scripts/run_open5m_real_data_calibration.py
+index 27f62cd8..d01c605a 100644
+--- a/scripts/run_open5m_real_data_calibration.py
++++ b/scripts/run_open5m_real_data_calibration.py
+@@ -305,3 +305,3 @@ def _sha256_file(path: Path) -> str:
+     from algobench.formal_f40_stages import file_sha256
+-    return file_sha256(path, release_cache=path.stat().st_size >= 8 * 1024**2)
++    return file_sha256(path)
+ 
+@@ -437,2 +437,3 @@ def load_reusable_day_pack(
+     materialize: bool = True,
++    release_cache: bool = True,
+ ) -> dict[str, object] | None:
+@@ -442,6 +443,7 @@ def load_reusable_day_pack(
+             return None
+-        if _sha256_file(pack_path) != receipt.get("pack_sha256"):
++        from algobench.formal_f40_stages import file_sha256
++        if file_sha256(pack_path, release_cache=release_cache) != receipt.get("pack_sha256"):
+             return None
+         from algobench.formal_f40_stages import _archive_reader
+-        with _archive_reader(pack_path):
++        with _archive_reader(pack_path, release_cache=release_cache):
+             pack = _read_day_pack_arrow(pack_path, materialize=materialize)
+@@ -464,3 +466,3 @@ def _prepare_f40_day_sources(source_root: Path, manifest_path: Path, manifest: M
+     atomic_write_json(manifest_path, {**manifest, "archive": archive})
+-    validate_f40_sources(manifest_path)
++    validate_f40_sources(manifest_path, release_cache=False)
+     if telemetry is not None:
+@@ -494,3 +496,3 @@ def _persist_f40_day_sources(local_manifest: Path, manifest_path: Path, telemetr
+     atomic_write_json(manifest_path.with_name("f40_source_validation.json"), validation)
+-    validate_f40_sources(manifest_path)
++    validate_f40_sources(manifest_path, release_cache=False)
+     if telemetry is not None:
+@@ -1003,2 +1005,3 @@ def _run(args: argparse.Namespace, raw_config: Mapping[str, object], started: fl
+         materialize=False,
++        release_cache=False,
+     ) is None:
+diff --git a/scripts/run_open5m_selected_date_calibration.py b/scripts/run_open5m_selected_date_calibration.py
+index 5f83e0ec..c0d6fbf3 100644
+--- a/scripts/run_open5m_selected_date_calibration.py
++++ b/scripts/run_open5m_selected_date_calibration.py
+@@ -64,3 +64,3 @@ def _sha256_file(path: Path) -> str:
+     from algobench.formal_f40_stages import file_sha256
+-    return file_sha256(path, release_cache=path.stat().st_size >= 8 * 1024**2)
++    return file_sha256(path)
+ 
+@@ -246,2 +246,3 @@ def _validate_completed_day(
+     read_only: bool = False,
++    release_cache: bool = True,
+ ) -> dict[str, object] | None:
+@@ -273,5 +274,5 @@ def _validate_completed_day(
+             if read_only:
+-                validate_f40_sources(date_root / "f40_sources.json", read_only=True)
++                validate_f40_sources(date_root / "f40_sources.json", read_only=True, release_cache=release_cache)
+             else:
+-                validate_f40_sources(date_root / "f40_sources.json")
++                validate_f40_sources(date_root / "f40_sources.json", release_cache=release_cache)
+         if day_runner.load_reusable_day_pack(
+@@ -281,2 +282,3 @@ def _validate_completed_day(
+             materialize=False,
++            release_cache=release_cache,
+         ) is None:
+@@ -372,2 +374,3 @@ def _publish_child_day(
+         materialize=False,
++        release_cache=False,
+     ) is None:
+@@ -417,2 +420,3 @@ def _publish_child_day(
+         materialize=False,
++        release_cache=False,
+     ) is None:
+@@ -853,2 +857,6 @@ def run(args: argparse.Namespace) -> int:
+             rows_by_date=rows_by_date, phase="date_published", active_date=day, reused_dates=reused_dates)
++        if collection_date is None:
++            from algobench.formal_f40_stages import _archive_reader
++            with _archive_reader(Path(row["path"])):
++                pass
+         print(json.dumps({"date": day, "completed": len(rows_by_date), "selected": len(dates),
+diff --git a/因子/algobench/src/algobench/formal_f40_stages.py b/因子/algobench/src/algobench/formal_f40_stages.py
+index 26b89ab9..e0e25978 100644
+--- a/因子/algobench/src/algobench/formal_f40_stages.py
++++ b/因子/algobench/src/algobench/formal_f40_stages.py
+@@ -119,3 +119,3 @@ class ValidatedF40SourceCache:
+ @contextmanager
+-def _archive_reader(path: Path):
++def _archive_reader(path: Path, *, release_cache: bool = True):
+     """归档读完即释放页缓存，避免多日文件驻留累计触及任务内存上限。"""
+@@ -125,3 +125,3 @@ def _archive_reader(path: Path):
+         finally:
+-            if hasattr(os, "posix_fadvise"):
++            if release_cache and hasattr(os, "posix_fadvise"):
+                 # 刚写入的归档先同步，否则DONTNEED可能保留脏页。
+@@ -258,3 +258,3 @@ def _validate_f40_table(table, expected):
+ 
+-def validate_f40_sources(manifest_path, *, read_only=False):
++def validate_f40_sources(manifest_path, *, read_only=False, release_cache=True):
+     """Decode once at publication; later checks bind the verified file bytes."""
+@@ -266,3 +266,3 @@ def validate_f40_sources(manifest_path, *, read_only=False):
+         path = manifest_path.parent / archive["file"]
+-        if path.stat().st_size != archive["bytes"] or file_sha256(path, release_cache=True) != archive["sha256"]:
++        if path.stat().st_size != archive["bytes"] or file_sha256(path, release_cache=release_cache) != archive["sha256"]:
+             raise ValueError("F40 source archive hash mismatch")
+@@ -279,3 +279,3 @@ def validate_f40_sources(manifest_path, *, read_only=False):
+         found = set()
+-        with _archive_reader(path) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
++        with _archive_reader(path, release_cache=release_cache) as handle, tarfile.open(fileobj=handle, mode="r|") as bundle:
+             for entry in bundle:
+diff --git a/因子/algobench/tests/test_formal_f40_stages.py b/因子/algobench/tests/test_formal_f40_stages.py
+index eb3ba217..89a4bde2 100644
+--- a/因子/algobench/tests/test_formal_f40_stages.py
++++ b/因子/algobench/tests/test_formal_f40_stages.py
+@@ -241,2 +241,21 @@ def test_archive_reads_release_completed_file_cache_and_preserve_facts(tmp_path,
+ 
++def test_publication_cache_retains_bytes_without_accepting_changed_archive(tmp_path, monkeypatch):
++    import algobench.formal_f40_stages as module
++    from algobench.ml.artifacts import atomic_write_json
++    path, source = write_source(tmp_path / "sources")
++    archive = archive_f40_sources(path.parent, tmp_path / "facts.tar", [source])
++    manifest = tmp_path / "manifest.json"
++    atomic_write_json(manifest, {"sources": [source], "archive": archive})
++    def unexpected_sync(fd):
++        raise AssertionError("publication validation must retain its file cache")
++    monkeypatch.setattr(module.os, "fsync", unexpected_sync)
++    # Read-only validation decodes every member without creating a new receipt.
++    module.validate_f40_sources(manifest, read_only=True, release_cache=False)
++    target = tmp_path / "facts.tar"
++    with target.open("r+b") as handle:
++        handle.write(b"changed")
++    with pytest.raises(ValueError, match="archive hash"):
++        module.validate_f40_sources(manifest, read_only=True, release_cache=False)
++
++
+ def test_reduced_cost_support_and_positive_matching_equal_complete_candidates():

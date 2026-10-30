@@ -1,0 +1,51 @@
+以精确对象列举核实缺失回执并保留存储失败
+
+
+diff --git a/因子/algobench/src/algobench/prescreen_runtime.py b/因子/algobench/src/algobench/prescreen_runtime.py
+index 2a148890..9f7a9b61 100644
+--- a/因子/algobench/src/algobench/prescreen_runtime.py
++++ b/因子/algobench/src/algobench/prescreen_runtime.py
+@@ -81,2 +81,9 @@ class ObjectPublication:
+                     return None
++                # Some mc releases omit the S3 error code. A successful,
++                # empty exact-key listing proves absence without interpreting
++                # human-readable errors or swallowing connection failures.
++                listing = subprocess.run([self.executable, "ls", "--json", self.target(path)],
++                                         stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
++                if listing.returncode == 0 and not listing.stdout.strip():
++                    return None
+             raise RuntimeError(f"object control-record readback failed: {path}")
+diff --git a/因子/algobench/tests/test_formal_object_publication.py b/因子/algobench/tests/test_formal_object_publication.py
+index 31ad2951..af9c913c 100644
+--- a/因子/algobench/tests/test_formal_object_publication.py
++++ b/因子/algobench/tests/test_formal_object_publication.py
+@@ -3,2 +3,3 @@ from pathlib import Path
+ import shutil
++import subprocess
+ 
+@@ -9,2 +10,25 @@ from algobench.prescreen_runtime import ObjectPublication, publish_file
+ 
++@pytest.mark.parametrize("listing_code,listing_output,missing", [
++    (0, b"", True), (1, b"", False), (0, b'{"status":"success"}', False),
++])
++def test_optional_object_read_uses_exact_key_absence_evidence(tmp_path, monkeypatch,
++                                                            listing_code, listing_output, missing):
++    calls = []
++    def run(argv, **kwargs):
++        calls.append(argv[1])
++        if argv[1] == "cat": return subprocess.CompletedProcess(argv, 1, b"")
++        if argv[1] == "stat":
++            return subprocess.CompletedProcess(argv, 1, b'{"status":"error","error":{"cause":{"error":{}}}}')
++        assert argv == ["mc", "ls", "--json", "company/bucket/missing.json"]
++        return subprocess.CompletedProcess(argv, listing_code, listing_output)
++    monkeypatch.setattr(subprocess, "run", run)
++    publisher = ObjectPublication(str(tmp_path), "company/bucket")
++    if missing:
++        assert publisher.read_json(tmp_path / "missing.json", optional=True) is None
++    else:
++        with pytest.raises(RuntimeError, match="readback failed"):
++            publisher.read_json(tmp_path / "missing.json", optional=True)
++    assert calls == ["cat", "stat", "ls"]
++
++
+ def test_object_publication_maps_only_owned_mount_descendants(tmp_path):

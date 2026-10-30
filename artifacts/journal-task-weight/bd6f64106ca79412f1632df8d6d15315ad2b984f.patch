@@ -1,0 +1,40 @@
+为撤单分片隔离父进程后台进度报告的线程状态
+
+
+diff --git a/因子/algobench/src/algobench/formal_parallel_structural_pairs.py b/因子/algobench/src/algobench/formal_parallel_structural_pairs.py
+index 8e63bab9..94a89bd3 100644
+--- a/因子/algobench/src/algobench/formal_parallel_structural_pairs.py
++++ b/因子/algobench/src/algobench/formal_parallel_structural_pairs.py
+@@ -126,2 +126,8 @@ def _run_shard(index):
+ 
++def _initialize_structural_shard():
++    # 子进程使用父 scope 的 CPU 进度；不继承父进程后台报告线程的锁。
++    from snapshot.scheduler import _ACTIVE_WORKER_PROGRESS
++    _ACTIVE_WORKER_PROGRESS.set(None)
++
++
+ def merge_shards(shards):
+@@ -192,3 +198,4 @@ def produce_parallel_structural_pairs(*, lifecycle, prestate, context, plan, wor
+         with suspended_structural_cpu_slot():
+-            with ProcessPoolExecutor(max_workers=workers, mp_context=mp.get_context("fork")) as pool:
++            with ProcessPoolExecutor(max_workers=workers, mp_context=mp.get_context("fork"),
++                    initializer=_initialize_structural_shard) as pool:
+                 shards = list(pool.map(_run_shard, range(workers)))
+diff --git a/因子/algobench/tests/test_parallel_structural_pairs.py b/因子/algobench/tests/test_parallel_structural_pairs.py
+index 80e3fd21..31c438d5 100644
+--- a/因子/algobench/tests/test_parallel_structural_pairs.py
++++ b/因子/algobench/tests/test_parallel_structural_pairs.py
+@@ -77 +77,13 @@ def test_fork_inputs_are_read_only_and_private_response_state_stays_writable():
+     assert private.flags.writeable
++
++
++def test_structural_shard_has_private_progress_context():
++    from snapshot.scheduler import _ACTIVE_WORKER_PROGRESS
++    from algobench.formal_parallel_structural_pairs import _initialize_structural_shard
++    parent = object()
++    token = _ACTIVE_WORKER_PROGRESS.set(parent)
++    try:
++        _initialize_structural_shard()
++        assert _ACTIVE_WORKER_PROGRESS.get() is None
++    finally:
++        _ACTIVE_WORKER_PROGRESS.reset(token)

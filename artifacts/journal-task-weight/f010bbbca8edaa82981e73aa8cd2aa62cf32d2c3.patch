@@ -1,0 +1,176 @@
+按安装文件哈希缓存结构定标所需运行依赖
+
+
+diff --git a/scripts/cache_structural_calibration_runtime.py b/scripts/cache_structural_calibration_runtime.py
+new file mode 100644
+index 00000000..510a8d89
+--- /dev/null
++++ b/scripts/cache_structural_calibration_runtime.py
+@@ -0,0 +1,101 @@
++"""按已安装包的 RECORD 校验结构定标依赖，缓存到本地任务目录。"""
++from __future__ import annotations
++
++import argparse
++import base64
++from concurrent.futures import ThreadPoolExecutor
++import csv
++import hashlib
++import io
++import json
++from pathlib import Path, PurePosixPath
++
++
++PACKAGES = (
++    "numpy", "pandas", "pyarrow", "numba", "llvmlite", "scipy", "psutil",
++    "PyYAML", "python-dateutil", "pytz", "tzdata", "six", "packaging",
++    "pytest", "iniconfig", "pluggy", "Pygments", "threadpoolctl", "joblib",
++    "setuptools",
++)
++
++
++def cache_runtime(source: Path, destination: Path, lock: Path, *, budget_bytes=2 * 1024**3):
++    source, destination = source.resolve(), destination.resolve()
++    if destination == source or source in destination.parents or "hdd-store" in destination.parts:
++        raise ValueError("runtime cache requires a separate local task directory")
++    if destination.exists():
++        raise FileExistsError("runtime cache destination already exists")
++    versions = {}
++    for line in lock.read_text(encoding="utf-8").splitlines():
++        if line and not line.startswith("#"):
++            name, version = line.split("==")
++            versions[name.lower()] = version
++    files = {}
++    records = {}
++    for package in PACKAGES:
++        version = versions[package.lower()]
++        record = f"{package.lower().replace('-', '_')}-{version}.dist-info/RECORD"
++        data = (source / record).read_bytes()
++        records[package] = {"version": version, "record_sha256": hashlib.sha256(data).hexdigest()}
++        for name, digest, size in csv.reader(io.StringIO(data.decode("utf-8"))):
++            relative = PurePosixPath(name)
++            if relative.is_absolute():
++                raise ValueError("installed package record contains an absolute path")
++            if ".." in relative.parts:
++                if relative.parts[:2] != ("..", "..") or relative.parts[2:3] != ("bin",):
++                    raise ValueError("installed package record escapes site-packages")
++                continue
++            if "__pycache__" in relative.parts:
++                continue
++            if not digest:
++                if name != record:
++                    raise ValueError("installed package file has no content hash")
++                digest = "sha256=" + base64.urlsafe_b64encode(hashlib.sha256(data).digest()).decode().rstrip("=")
++                size = len(data)
++            if not digest.startswith("sha256="):
++                raise ValueError("runtime cache requires SHA-256 package records")
++            row = (digest.removeprefix("sha256="), int(size))
++            if name in files and files[name] != row:
++                raise ValueError("installed package file identities conflict")
++            files[name] = row
++    total = sum(size for _, size in files.values())
++    if total > budget_bytes:
++        raise ValueError("runtime cache exceeds its byte budget")
++    destination.mkdir(parents=True, exist_ok=False)
++
++    def copy_file(row):
++        name, (expected, size) = row
++        src = source / name
++        if src.is_symlink():
++            raise ValueError("runtime cache does not follow installed file symlinks")
++        content = src.read_bytes()
++        digest = hashlib.sha256(content).digest()
++        if len(content) != size or base64.urlsafe_b64encode(digest).decode().rstrip("=") != expected:
++            raise ValueError(f"installed package file hash differs: {name}")
++        target = destination / name
++        target.parent.mkdir(parents=True, exist_ok=True)
++        target.write_bytes(content)
++        if hashlib.sha256(target.read_bytes()).digest() != digest:
++            raise ValueError(f"cached package file hash differs: {name}")
++
++    with ThreadPoolExecutor(max_workers=4) as executor:
++        for _ in executor.map(copy_file, files.items()):
++            pass
++    result = {"source": str(source), "destination": str(destination), "packages": records,
++              "files": len(files), "bytes": total, "budget_bytes": budget_bytes,
++              "lock_sha256": hashlib.sha256(lock.read_bytes()).hexdigest(), "content_verified": True}
++    (destination.parent / "runtime_cache.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
++    return result
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--source", type=Path, required=True)
++    parser.add_argument("--destination", type=Path, required=True)
++    parser.add_argument("--lock", type=Path, default=Path(__file__).resolve().parents[1] / "requirements/server-py314.lock")
++    args = parser.parse_args()
++    print(json.dumps(cache_runtime(args.source, args.destination, args.lock)))
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/因子/algobench/tests/test_structural_runtime_cache.py b/因子/algobench/tests/test_structural_runtime_cache.py
+new file mode 100644
+index 00000000..9062552b
+--- /dev/null
++++ b/因子/algobench/tests/test_structural_runtime_cache.py
+@@ -0,0 +1,60 @@
++import base64
++import hashlib
++import importlib.util
++from pathlib import Path
++
++import pytest
++
++
++def module():
++    path = Path(__file__).resolve().parents[3] / "scripts/cache_structural_calibration_runtime.py"
++    spec = importlib.util.spec_from_file_location("structural_runtime_cache", path)
++    result = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(result)
++    result.PACKAGES = ("example",)
++    return result
++
++
++def fixture(tmp_path, *, corrupt=False, extra=""):
++    source = tmp_path / "installed"
++    (source / "example-1.0.dist-info").mkdir(parents=True)
++    content = b"frozen package content"
++    digest = base64.urlsafe_b64encode(hashlib.sha256(content).digest()).decode().rstrip("=")
++    (source / "example.py").write_bytes(b"changed" if corrupt else content)
++    (source / "example-1.0.dist-info/RECORD").write_text(
++        f"example.py,sha256={digest},{len(content)}\nexample-1.0.dist-info/RECORD,,\n" + extra,
++        encoding="utf-8",
++    )
++    lock = tmp_path / "lock.txt"
++    lock.write_text("example==1.0\n")
++    return source, tmp_path / "cache", lock
++
++
++def test_cache_verifies_installed_and_cached_bytes(tmp_path):
++    source, cache, lock = fixture(tmp_path, extra="../../bin/example,,\n")
++    result = module().cache_runtime(source, cache, lock)
++    assert result["content_verified"] is True and result["files"] == 2
++    assert (cache / "example.py").read_bytes() == (source / "example.py").read_bytes()
++    assert not (tmp_path / "bin").exists()
++    with pytest.raises(FileExistsError):
++        module().cache_runtime(source, cache, lock)
++
++
++def test_cache_rejects_corrupt_source(tmp_path):
++    with pytest.raises(ValueError, match="hash differs"):
++        module().cache_runtime(*fixture(tmp_path, corrupt=True))
++
++
++@pytest.mark.parametrize("extra", ["../escape,sha256=x,1\n", "/absolute,sha256=x,1\n"])
++def test_cache_rejects_escaping_record_paths(tmp_path, extra):
++    source, cache, lock = fixture(tmp_path, extra=extra)
++    with pytest.raises(ValueError, match="absolute path|escapes"):
++        module().cache_runtime(source, cache, lock)
++    assert not cache.exists()
++
++
++def test_cache_admits_bytes_before_creating_destination(tmp_path):
++    source, cache, lock = fixture(tmp_path)
++    with pytest.raises(ValueError, match="byte budget"):
++        module().cache_runtime(source, cache, lock, budget_bytes=1)
++    assert not cache.exists()

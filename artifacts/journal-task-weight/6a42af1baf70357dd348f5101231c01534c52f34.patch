@@ -1,0 +1,12 @@
+补全F40运行资源回归测试的窗口标识
+
+
+diff --git a/因子/algobench/tests/test_f40_scoring_continuity.py b/因子/algobench/tests/test_f40_scoring_continuity.py
+index a7599d81..05203f3a 100644
+--- a/因子/algobench/tests/test_f40_scoring_continuity.py
++++ b/因子/algobench/tests/test_f40_scoring_continuity.py
+@@ -215,3 +215,3 @@ def test_runner_carries_resources_without_serializing_cache_inventory(tmp_path,
+     monkeypatch.setattr(runner, 'run_formal_windows', panel)
+-    assert runner.compute_panel(args, None, SimpleNamespace(window_id='open5m'), ['2024-01-02'],
++    assert runner.compute_panel(args, None, SimpleNamespace(window_id='open5m', output_token='open5m'), ['2024-01-02'],
+         Path('registry.yaml'), SimpleNamespace(gate=None, bundle_sha256='hash'), effective_config={}) == 'complete'

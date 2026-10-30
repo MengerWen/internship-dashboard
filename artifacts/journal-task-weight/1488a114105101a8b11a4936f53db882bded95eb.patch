@@ -1,0 +1,54 @@
+fix: keep fused geometry inside the evidence window
+
+
+diff --git a/因子/algobench/src/algobench/event_prestate_accel.py b/因子/algobench/src/algobench/event_prestate_accel.py
+index f86a24b7..972ac231 100644
+--- a/因子/algobench/src/algobench/event_prestate_accel.py
++++ b/因子/algobench/src/algobench/event_prestate_accel.py
+@@ -180,2 +180,3 @@ def build_event_prestate_accelerated(
+         evidence,
++        np.ones(len(kind), dtype=np.bool_),
+         seq,
+@@ -255,2 +256,4 @@ def build_event_prestate_with_depth_accelerated(
+     )
++    geometry_replay = np.zeros(len(kind), dtype=np.bool_)
++    geometry_replay[block.replay_positions] = True
+     output = _compiled_replay(
+@@ -258,2 +261,3 @@ def build_event_prestate_with_depth_accelerated(
+         evidence,
++        geometry_replay,
+         seq,
+@@ -678,2 +682,3 @@ def _compiled_replay_impl(
+     evidence,
++    geometry_replay,
+     seq,
+@@ -1007,3 +1012,3 @@ def _compiled_replay_impl(
+         geometry_opponent_best = -1
+-        if emit_geometry and kind[index] == 1:
++        if emit_geometry and geometry_replay[index] and kind[index] == 1:
+             bslot = bid_slot[index]
+@@ -1074,3 +1079,3 @@ def _compiled_replay_impl(
+             submit_best_ask[slot] = prices[best_ask_pos] if best_ask_pos >= 0 else -1
+-            if emit_geometry:
++            if emit_geometry and geometry_replay[index]:
+                 best_bid_qty = bid_depth[best_bid_pos] if best_bid_pos >= 0 else 0
+@@ -1167,3 +1172,3 @@ def _compiled_replay_impl(
+                 recent_total += qty[index]
+-            if emit_geometry:
++            if emit_geometry and geometry_replay[index]:
+                 bslot = bid_slot[index]
+@@ -1206,3 +1211,3 @@ def _compiled_replay_impl(
+             if slot >= 0 and exists[slot]:
+-                if emit_geometry:
++                if emit_geometry and geometry_replay[index]:
+                     before = lifecycle_remaining[slot]
+diff --git a/因子/algobench/tests/test_execution_geometry_prescreen.py b/因子/algobench/tests/test_execution_geometry_prescreen.py
+index d49f4207..cafeb870 100644
+--- a/因子/algobench/tests/test_execution_geometry_prescreen.py
++++ b/因子/algobench/tests/test_execution_geometry_prescreen.py
+@@ -71,2 +71,5 @@ def _event_geometry_fixture():
+             _event(42, "09:33:00.020", "trade", bid_id=4, ask_id=900, qty=1, price_tick=101),
++            _event(50, "10:28:00.000", "order", order_id=950, qty=100, price_tick=101, side="S", ord_type="L"),
++            _event(51, "10:29:00.000", "order", order_id=5, qty=100, price_tick=101, side="B", ord_type="L"),
++            _event(52, "10:31:00.000", "trade", bid_id=5, ask_id=950, qty=100, price_tick=101),
+         ]

@@ -1,0 +1,62 @@
+覆盖单股执行完成和提前返回的状态释放
+
+
+diff --git a/scripts/tests/test_formal_execution_stages.py b/scripts/tests/test_formal_execution_stages.py
+index ac1cf309..01c165cb 100644
+--- a/scripts/tests/test_formal_execution_stages.py
++++ b/scripts/tests/test_formal_execution_stages.py
+@@ -4,2 +4,3 @@ import weakref
+ 
++import pandas as pd
+ import pytest
+@@ -19,2 +20,4 @@ def build(events, **kwargs):
+ def test_completed_build_releases_execution_state_without_waiting_for_gc(monkeypatch, exactness):
++    # 内核初始化与单次执行状态的释放分别检查。
++    build(normalized(sweeping_limit()), capture_exactness_evidence=exactness)
+     instances = []
+@@ -60 +63,45 @@ def test_sequential_builds_keep_source_identity_and_artifacts_separate():
+     assert first.exactness_evidence['artifacts_sha256'] != second.exactness_evidence['artifacts_sha256']
++
++
++@pytest.mark.parametrize('completion', ['scored', 'static_skip', 'no_evidence_orders'])
++def test_stock_day_releases_phase_state_and_preserves_results_without_cyclic_gc(monkeypatch, completion):
++    from test_formal_engine import _single_logic_engine, _load_document
++    from algobench.formal_scorers import build_formal_scorer_registry
++
++    instances = []
++    original = module._StockDayExecution.run
++    def observe(execution):
++        instances.append(weakref.ref(execution))
++        return original(execution)
++    monkeypatch.setattr(module._StockDayExecution, 'run', observe)
++    if completion == 'static_skip':
++        engine = module.FormalFactorEngine(
++            catalog=module.PreregisterCatalog.from_document(_load_document()),
++            scorer_registry=build_formal_scorer_registry(), config=module.EngineConfig(phase='score'))
++    else:
++        engine = _single_logic_engine(artifacts=frozenset({Artifact.LIFECYCLE, Artifact.PRESTATE}))
++    enabled = gc.isenabled()
++    gc.disable()
++    try:
++        results = []
++        for code in ['000001', '000002']:
++            events = normalized(sweeping_limit())
++            events['code'] = code
++            if completion == 'no_evidence_orders':
++                events = events.iloc[:1].copy()
++                events['ts'] = pd.Timestamp('2026-06-30 10:30:00')
++            result = engine.run_stock_day(events)
++            results.append(result)
++            assert len(instances) == len(results)
++            assert all(reference() is None for reference in instances)
++            assert result.row.code.tolist() == [code]
++            if completion == 'no_evidence_orders':
++                assert {item.reason for item in result.telemetry} == {'no_evidence_orders'}
++            elif completion == 'static_skip':
++                assert {item.status for item in result.telemetry} == {'skipped'}
++            else:
++                assert result.row[list(result.formal_columns)].notna().any(axis=None)
++        assert results[0].row.code.tolist() == ['000001']
++    finally:
++        if enabled:
++            gc.enable()

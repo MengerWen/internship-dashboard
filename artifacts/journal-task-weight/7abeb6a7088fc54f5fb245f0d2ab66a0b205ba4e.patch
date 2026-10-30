@@ -1,0 +1,35 @@
+允许研究任务按代表样本选择固定或自适应页宽
+
+
+diff --git a/lv2_snapshot_workspace/src/snapshot/query_plan.py b/lv2_snapshot_workspace/src/snapshot/query_plan.py
+index a6504978..429bc269 100644
+--- a/lv2_snapshot_workspace/src/snapshot/query_plan.py
++++ b/lv2_snapshot_workspace/src/snapshot/query_plan.py
+@@ -274,2 +274,3 @@ class QueryPlan:
+         code_range_page_size: int = 80,
++        adaptive_page_size: bool = True,
+     ) -> "QueryPlan":
+@@ -281,3 +282,3 @@ class QueryPlan:
+             code_range_page_size=code_range_page_size, table_parallelism=1,
+-            prestart_compute_pool=True, adaptive_page_size=True,
++            prestart_compute_pool=True, adaptive_page_size=adaptive_page_size,
+         )
+diff --git a/lv2_snapshot_workspace/tests/test_query_plan.py b/lv2_snapshot_workspace/tests/test_query_plan.py
+index 7ffa2860..384dd955 100644
+--- a/lv2_snapshot_workspace/tests/test_query_plan.py
++++ b/lv2_snapshot_workspace/tests/test_query_plan.py
+@@ -796,12 +796,4 @@ def test_slow_consumer_keeps_at_most_two_parent_pages(monkeypatch) -> None:
+     plan = QueryPlan.for_research("2024-01-02", ["000001", "000002", "000003"],
+-                                  tables=("trade",), code_range_page_size=1)
+-    # Fix the density estimate to one code per subsequent page.
+-    original_load = load
+-
+-    def dense_load(spec, **kwargs):
+-        frames = original_load(spec, **kwargs)
+-        kwargs["metrics"].bytes_read = 48 << 20
+-        return frames
+-
+-    monkeypatch.setattr(query_plan_module, "load_table_code_range", dense_load)
++                                  tables=("trade",), code_range_page_size=1,
++                                  adaptive_page_size=False)
+     stream = iter_raw_day_by_code(plan)

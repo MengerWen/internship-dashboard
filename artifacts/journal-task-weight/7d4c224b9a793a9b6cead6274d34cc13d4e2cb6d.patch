@@ -1,0 +1,34 @@
+通过公共入口还原分布统计的日桶元数据
+
+
+diff --git a/因子/algobench/src/algobench/formal_day_buckets.py b/因子/algobench/src/algobench/formal_day_buckets.py
+index 4e623fc5..611683bc 100644
+--- a/因子/algobench/src/algobench/formal_day_buckets.py
++++ b/因子/algobench/src/algobench/formal_day_buckets.py
+@@ -61,3 +61,3 @@ def _pack_entry_metadata(entries):
+ 
+-def _restore_entry_metadata(metadata, entry):
++def restore_day_bucket_entry(metadata, entry):
+     encoding = metadata.get("entry_metadata_encoding")
+@@ -428,3 +428,3 @@ def read_day_bucket_table(
+         raise ValueError("formal day bucket entry is invalid")
+-    entry = _restore_entry_metadata(metadata, entry)
++    entry = restore_day_bucket_entry(metadata, entry)
+     bucket = int(entry["bucket"])
+diff --git a/因子/algobench/src/algobench/formal_mechanism_distributions.py b/因子/algobench/src/algobench/formal_mechanism_distributions.py
+index 5c76d024..da4155d9 100644
+--- a/因子/algobench/src/algobench/formal_mechanism_distributions.py
++++ b/因子/algobench/src/algobench/formal_mechanism_distributions.py
+@@ -12,3 +12,3 @@ import pyarrow.parquet as pq
+ from .formal_artifact_commit import resolve_artifact_components
+-from .formal_day_buckets import DAY_BUCKET_SCHEMA_VERSION
++from .formal_day_buckets import DAY_BUCKET_SCHEMA_VERSION, restore_day_bucket_entry
+ from .formal_raw_bank_evaluation import shape_bins
+@@ -199,4 +199,6 @@ def evaluate_order_distributions(accepted, root, local_temp_root, *, publish_out
+             entries = manifest["metadata"]["entries"]
++            restored = [restore_day_bucket_entry(manifest["metadata"], entry)
++                for entry in entries["raw_consensus_orders"].values()]
+             group_orders = {tuple(entry["metadata"]["consensus_groups"])
+-                for entry in entries["raw_consensus_orders"].values() if entry["metadata"].get("consensus_groups")}
++                for entry in restored if entry["metadata"].get("consensus_groups")}
+             if len(group_orders) > 1 or (not group_orders and source["row_counts"]["raw_consensus_orders"]):

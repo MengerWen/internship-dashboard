@@ -1,0 +1,15 @@
+docs: require wangly data access preflight
+
+
+diff --git a/docs/prompts/wangly-compute-task.md b/docs/prompts/wangly-compute-task.md
+index 6b1b25f8..047a53db 100644
+--- a/docs/prompts/wangly-compute-task.md
++++ b/docs/prompts/wangly-compute-task.md
+@@ -51,4 +51,6 @@
+    python -m pip check
++   timeout 15s mysql --login-path="$SIRUI_DB_LOGIN_PATH" \
++     --batch --skip-column-names -e 'SELECT 1'
+    ```
+-   如果环境审计或依赖缺失，先在 clean、exact-revision checkout 上运行 `bash scripts/install-server-environment.sh`；该脚本必须只使用清华镜像 `https://pypi.tuna.tsinghua.edu.cn/simple`。安装后重新核对，不允许任务脚本临时 `pip install`。
++   如果 Python 环境审计或依赖缺失，先在 clean、exact-revision checkout 上运行 `bash scripts/install-server-environment.sh`；该脚本必须只使用清华镜像 `https://pypi.tuna.tsinghua.edu.cn/simple`。安装后重新核对，不允许任务脚本临时 `pip install`。如果只读数据库探针失败，停止真实数据任务并报告 login-path 错误；不得复制其他服务器的 `.mylogin.cnf` 或猜测密码。
+ 7. 检查是否已有重任务：

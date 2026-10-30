@@ -1,0 +1,407 @@
+让正式评价与 pilot 入口使用分组运行配置
+
+主要 CLI 构造 FormalPanelSpec / FormalRunSpec，按资源、研究范围、执行选项和注入依赖组装配置。历史区间分段使用新的 scope 值，保留参数、冻结门控、输出位置和旧库函数入口。
+
+验证：53 通过，5 个历史研究配置失败与 2fc4f1e7 基线节点完全一致（基线 52 通过、5 失败）。28 个公共选项取值表达式 AST 一致；pilot 接线测试覆盖股票日期选择、资源、标签消费者和输出目录。
+
+
+diff --git a/scripts/run_formal_panel.py b/scripts/run_formal_panel.py
+index 6cbc49d0..e547c3c4 100644
+--- a/scripts/run_formal_panel.py
++++ b/scripts/run_formal_panel.py
+@@ -6,2 +6,3 @@ from __future__ import annotations
+ import argparse
++from dataclasses import replace
+ from datetime import date
+@@ -40,4 +41,6 @@ from algobench.formal_panel import (  # noqa: E402
+     assert_szse_codes,
+-    run_formal_panel,
+-    run_formal_windows,
++)
++from algobench.formal import (  # noqa: E402
++    FormalDependencies, FormalExecution, FormalPanelSpec, FormalResources,
++    FormalRunSpec, FormalScope, run_panel, run_windows,
+ )
+@@ -690,20 +693,46 @@ def main(argv: list[str] | None = None) -> int:
+     common = dict(
+-        start=args.start,
+-        end=args.end,
+-        workers=args.workers,
+-        compute_workers=args.compute_workers,
+-        compute_queue_depth=args.compute_queue_depth,
+-        parser_threads_per_stream=args.parser_threads,
+-        materialized_day_limit=args.materialized_day_limit,
+-        worker_internal_threads=args.worker_internal_threads,
+-        emit_stock_day_progress=args.stock_day_progress,
++        resources=FormalResources(
++            workers=args.workers,
++            compute_workers=args.compute_workers,
++            compute_queue_depth=args.compute_queue_depth,
++            parser_threads_per_stream=args.parser_threads,
++            materialized_day_limit=args.materialized_day_limit,
++            worker_internal_threads=args.worker_internal_threads,
++        ),
++        scope=FormalScope(
++            start=args.start,
++            end=args.end,
++            phase=args.phase,
++            codes=args.codes,
++            dates=(
++                tuple(str(value) for value in interval["trading_dates"])
++                if interval is not None
++                else None
++            ),
++            excluded_dates=tuple(args.exclude_dates),
++        ),
++        execution=FormalExecution(
++            emit_stock_day_progress=args.stock_day_progress,
++            train_artifact_mode=args.train_artifact_mode,
++            pair_scoring_mode=args.pair_scoring_mode,
++            event_replay_mode=args.event_replay_mode,
++            response_execution_mode=args.response_execution_mode,
++            capture_exactness_evidence=args.capture_exactness_evidence,
++            derived_scratch_root=args.derived_scratch_root,
++            derived_bucket_count=args.derived_bucket_count,
++            profile_code=args.profile_code or "",
++            profile_date=args.profile_date or "",
++            profile_output=args.profile_output,
++            require_quote_tick_daily_validation=bool(
++                study is not None
++                and study.frozen_parameter_schema
++                in {
++                    "formal_kernel_params_intraday_gate_v3",
++                    "formal_kernel_params_intraday_fixed_policy_v1",
++                }
++            ),
++        ),
++        dependencies=FormalDependencies(universe_loader=interval_universe_loader),
+         resume=args.resume,
+-        phase=args.phase,
+-        codes=args.codes,
+         output_root=args.output_root,
+-        train_artifact_mode=args.train_artifact_mode,
+-        pair_scoring_mode=args.pair_scoring_mode,
+-        event_replay_mode=args.event_replay_mode,
+-        response_execution_mode=args.response_execution_mode,
+-        capture_exactness_evidence=args.capture_exactness_evidence,
+         frozen_calibration_replay_through_date=(
+@@ -713,22 +742,2 @@ def main(argv: list[str] | None = None) -> int:
+         ),
+-        derived_scratch_root=args.derived_scratch_root,
+-        derived_bucket_count=args.derived_bucket_count,
+-        profile_code=args.profile_code or "",
+-        profile_date=args.profile_date or "",
+-        profile_output=args.profile_output,
+-        require_quote_tick_daily_validation=bool(
+-            study is not None
+-            and study.frozen_parameter_schema
+-            in {
+-                "formal_kernel_params_intraday_gate_v3",
+-                "formal_kernel_params_intraday_fixed_policy_v1",
+-            }
+-        ),
+-        dates=(
+-            tuple(str(value) for value in interval["trading_dates"])
+-            if interval is not None
+-            else None
+-        ),
+-        excluded_dates=tuple(args.exclude_dates),
+-        universe_loader=interval_universe_loader,
+     )
+@@ -903,12 +912,13 @@ def main(argv: list[str] | None = None) -> int:
+                     **common,
+-                    "start": segment_dates[0],
+-                    "end": segment_dates[-1],
+-                    "dates": segment_dates,
++                    "scope": replace(
++                        common["scope"], start=segment_dates[0],
++                        end=segment_dates[-1], dates=segment_dates,
++                    ),
+                     "frozen_calibration_replay_through_date": replay_through,
+                 }
+-                segment_result = run_formal_windows(
+-                    cfg,
++                segment_result = run_windows(FormalRunSpec(
++                    cfg=cfg,
+                     **multiwindow_common,
+                     **segment_common,
+-                )
++                ))
+                 segment_results.append(segment_result)
+@@ -933,10 +943,10 @@ def main(argv: list[str] | None = None) -> int:
+         else:
+-            result = run_formal_windows(
+-                cfg,
++            result = run_windows(FormalRunSpec(
++                cfg=cfg,
+                 **multiwindow_common,
+                 **common,
+-            )
++            ))
+             _, _, failed_dates = _print_multiwindow_summary(result)
+     else:
+-        result = run_formal_panel(cfg, **common)
++        result = run_panel(FormalPanelSpec(cfg=cfg, **common))
+         failed_dates = result.failed_dates
+diff --git a/scripts/run_pilot.py b/scripts/run_pilot.py
+index 9669d8d6..4390c858 100644
+--- a/scripts/run_pilot.py
++++ b/scripts/run_pilot.py
+@@ -82,3 +82,5 @@ from algobench.formal_labels import (  # noqa: E402
+ )
+-from algobench.formal_panel import run_formal_panel  # noqa: E402
++from algobench.formal import (  # noqa: E402
++    FormalExecution, FormalPanelSpec, FormalResources, FormalScope, run_panel,
++)
+ from algobench.paths import (  # noqa: E402
+@@ -229,18 +231,18 @@ def run_pilot(
+     progress_event("stock-day-factor", "starting formal stock-day factor consumers")
+-    result = run_formal_panel(
+-        cfg,
+-        start=min(pilot_dates),
+-        end=max(pilot_dates),
+-        phase="all",
+-        workers=workers,
+-        compute_workers=compute_workers,
+-        parser_threads_per_stream=parser_threads_per_stream,
++    result = run_panel(FormalPanelSpec(
++        cfg=cfg,
++        scope=FormalScope(
++            start=min(pilot_dates), end=max(pilot_dates),
++            phase="all", dates=pilot_dates, codes=pilot_codes,
++        ),
++        resources=FormalResources(
++            workers=workers, compute_workers=compute_workers,
++            parser_threads_per_stream=parser_threads_per_stream,
++        ),
++        execution=FormalExecution(emit_stock_day_progress=True),
+         resume=False,
+         output_root=output_root,
+-        dates=pilot_dates,
+-        codes=pilot_codes,
+         engine=engine,
+         extra_consumers=((LABEL_CONSUMER_NAME, FormalLabelPriceConsumer()),),
+-        emit_stock_day_progress=True,
+-    )
++    ))
+     if result.failed_dates:
+diff --git a/因子/algobench/tests/test_run_formal_panel.py b/因子/algobench/tests/test_run_formal_panel.py
+index 0393097f..2d4934e8 100644
+--- a/因子/algobench/tests/test_run_formal_panel.py
++++ b/因子/algobench/tests/test_run_formal_panel.py
+@@ -18,2 +18,10 @@ SCRIPT = REPO_ROOT / "scripts" / "run_formal_panel.py"
+ 
++def _configuration_values(spec):
++    groups = ("resources", "scope", "execution", "dependencies")
++    values = {name: value for name, value in vars(spec).items() if name not in groups}
++    for name in groups:
++        values.update(vars(getattr(spec, name)))
++    return values
++
++
+ def _load_module():
+@@ -133,4 +141,4 @@ def test_cli_forwards_fixed_scheduler_settings(monkeypatch, arguments, expected)
+ 
+-    def fake_run_formal_panel(cfg, **kwargs):
+-        captured.update(kwargs)
++    def fake_run_panel(spec):
++        captured.update(_configuration_values(spec))
+         return SimpleNamespace(
+@@ -142,3 +150,3 @@ def test_cli_forwards_fixed_scheduler_settings(monkeypatch, arguments, expected)
+ 
+-    monkeypatch.setattr(module, "run_formal_panel", fake_run_formal_panel)
++    monkeypatch.setattr(module, "run_panel", fake_run_panel)
+ 
+@@ -167,4 +175,4 @@ def test_cli_forwards_independent_output_root_without_resume(
+ 
+-    def fake_run_formal_panel(cfg, **kwargs):
+-        captured.update(kwargs)
++    def fake_run_panel(spec):
++        captured.update(_configuration_values(spec))
+         return SimpleNamespace(
+@@ -176,3 +184,3 @@ def test_cli_forwards_independent_output_root_without_resume(
+ 
+-    monkeypatch.setattr(module, "run_formal_panel", fake_run_formal_panel)
++    monkeypatch.setattr(module, "run_panel", fake_run_panel)
+     canary_root = tmp_path / "independent-canary"
+@@ -189,4 +197,4 @@ def test_cli_normalises_deduplicates_and_forwards_szse_canary_codes(monkeypatch)
+ 
+-    def fake_run_formal_panel(cfg, **kwargs):
+-        captured.update(kwargs)
++    def fake_run_panel(spec):
++        captured.update(_configuration_values(spec))
+         return SimpleNamespace(
+@@ -198,3 +206,3 @@ def test_cli_normalises_deduplicates_and_forwards_szse_canary_codes(monkeypatch)
+ 
+-    monkeypatch.setattr(module, "run_formal_panel", fake_run_formal_panel)
++    monkeypatch.setattr(module, "run_panel", fake_run_panel)
+ 
+@@ -217,5 +225,5 @@ def test_cli_forwards_complete_worker_profile_target(tmp_path, monkeypatch):
+         module,
+-        "run_formal_panel",
+-        lambda cfg, **kwargs: (
+-            captured.update(kwargs)
++        "run_panel",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+@@ -272,4 +280,4 @@ def test_cli_train_artifact_mode_defaults_full_and_forwards_explicit_shadow(monk
+ 
+-    def fake_run_formal_panel(cfg, **kwargs):
+-        captured.update(kwargs)
++    def fake_run_panel(spec):
++        captured.update(_configuration_values(spec))
+         return SimpleNamespace(
+@@ -278,3 +286,3 @@ def test_cli_train_artifact_mode_defaults_full_and_forwards_explicit_shadow(monk
+ 
+-    monkeypatch.setattr(module, "run_formal_panel", fake_run_formal_panel)
++    monkeypatch.setattr(module, "run_panel", fake_run_panel)
+     assert module.main(
+@@ -315,5 +323,5 @@ def test_cli_forwards_required_derived_scratch_and_bucket_count(
+         module,
+-        "run_formal_panel",
+-        lambda cfg, **kwargs: (
+-            captured.update(kwargs)
++        "run_panel",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+@@ -345,4 +353,4 @@ def test_cli_repeated_evaluation_ids_select_multiwindow_runner(monkeypatch) -> N
+ 
+-    def fake_run_formal_windows(cfg, **kwargs):
+-        captured.update(kwargs)
++    def fake_run_windows(spec):
++        captured.update(_configuration_values(spec))
+         return SimpleNamespace(
+@@ -364,6 +372,6 @@ def test_cli_repeated_evaluation_ids_select_multiwindow_runner(monkeypatch) -> N
+ 
+-    monkeypatch.setattr(module, "run_formal_windows", fake_run_formal_windows)
++    monkeypatch.setattr(module, "run_windows", fake_run_windows)
+     monkeypatch.setattr(
+         module,
+-        "run_formal_panel",
++        "run_panel",
+         lambda *_args, **_kwargs: pytest.fail("single-window runner was called"),
+@@ -427,5 +435,5 @@ def test_cli_bounds_explicit_frozen_calibration_replay(
+         module,
+-        "run_formal_windows",
+-        lambda _cfg, **kwargs: (
+-            captured.update(kwargs)
++        "run_windows",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+@@ -529,3 +537,4 @@ def _run_fixed_history_panel(tmp_path, monkeypatch, capsys):
+ 
+-    def fake_run_formal_windows(_cfg, **kwargs):
++    def fake_run_windows(spec):
++        kwargs = _configuration_values(spec)
+         calls.append(kwargs)
+@@ -545,3 +554,3 @@ def _run_fixed_history_panel(tmp_path, monkeypatch, capsys):
+ 
+-    monkeypatch.setattr(module, "run_formal_windows", fake_run_formal_windows)
++    monkeypatch.setattr(module, "run_windows", fake_run_windows)
+     output_root = tmp_path / "output"
+@@ -688,3 +697,3 @@ def _stub_panel_execution(module, monkeypatch) -> None:
+         module,
+-        "run_formal_windows",
++        "run_windows",
+         lambda *_args, **_kwargs: SimpleNamespace(
+@@ -803,5 +812,5 @@ def test_v3_calibration_enables_fail_closed_daily_quote_validation(
+         module,
+-        "run_formal_windows",
+-        lambda *_args, **kwargs: (
+-            captured.update(kwargs)
++        "run_windows",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+@@ -905,5 +914,5 @@ def test_v2_calibration_uses_explicit_sweep_gate_and_never_builds_labels(
+         module,
+-        "run_formal_windows",
+-        lambda *_args, **kwargs: (
+-            captured.update(kwargs)
++        "run_windows",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+@@ -943,5 +952,5 @@ def test_v2_guarded_canary_allows_only_bounded_single_day_debug_override(
+         module,
+-        "run_formal_windows",
+-        lambda *_args, **kwargs: (
+-            captured.update(kwargs)
++        "run_windows",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+@@ -1008,5 +1017,5 @@ def test_v2_evaluation_loads_gate_and_hash_only_from_frozen_bundle(
+         module,
+-        "run_formal_windows",
+-        lambda *_args, **kwargs: (
+-            captured.update(kwargs)
++        "run_windows",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+@@ -1043,5 +1052,5 @@ def test_v2_frozen_calibration_replay_uses_evaluation_gate_without_labels(
+         module,
+-        "run_formal_windows",
+-        lambda *_args, **kwargs: (
+-            captured.update(kwargs)
++        "run_windows",
++        lambda spec: (
++            captured.update(_configuration_values(spec))
+             or SimpleNamespace(
+diff --git a/因子/algobench/tests/test_run_pilot.py b/因子/algobench/tests/test_run_pilot.py
+index 97e8a801..e5ffd526 100644
+--- a/因子/algobench/tests/test_run_pilot.py
++++ b/因子/algobench/tests/test_run_pilot.py
+@@ -5,4 +5,6 @@ from pathlib import Path
+ import sys
++from types import SimpleNamespace
+ 
+ import pandas as pd
++import pytest
+ 
+@@ -38,2 +40,41 @@ def _universe(dates: tuple[str, ...], count: int = 5) -> pd.DataFrame:
+ 
++def test_pilot_hands_audited_selection_and_resources_to_formal_runner(tmp_path, monkeypatch):
++    module = _load_module()
++    cfg = SimpleNamespace(output_root=tmp_path)
++    engine, label_consumer = object(), object()
++    captured = []
++    monkeypatch.setattr(module, "load_config", lambda _path: cfg)
++    monkeypatch.setattr(module, "expected_attention_dates", lambda *a, **k: ["2026-06-30"])
++    monkeypatch.setattr(module, "load_attention_universe", lambda _cfg, dates: _universe(dates))
++    monkeypatch.setattr(module.FormalFactorEngine, "from_defaults", lambda **k: engine)
++    monkeypatch.setattr(module, "load_formal_label_config", lambda **k: SimpleNamespace(
++        vwap_source="rqdata", audit_sample_size=10, audit_min_coverage=1.0))
++    monkeypatch.setattr(module, "load_rqdata_price_batch", lambda _cfg: SimpleNamespace(frame=pd.DataFrame()))
++    monkeypatch.setattr(module, "audit_rqdata_vwap_units", lambda *a, **k: {"passed": True})
++    monkeypatch.setattr(module, "FormalLabelPriceConsumer", lambda: label_consumer)
++
++    class RunnerReceived(RuntimeError):
++        pass
++
++    def run(spec):
++        captured.append(spec)
++        raise RunnerReceived()
++
++    monkeypatch.setattr(module, "run_panel", run)
++    with pytest.raises(RunnerReceived):
++        module.run_pilot(workers=3, compute_workers=5, parser_threads_per_stream=4,
++                         execute_notebook=False, kernel_name="python3", run_kind="smoke",
++                         years=(2026,), days_per_year=1, stocks=2)
++    spec, = captured
++    assert spec.cfg is cfg and spec.engine is engine
++    assert spec.scope.dates == ("2026-06-30",)
++    assert spec.scope.codes == ("000001", "000005")
++    assert (spec.resources.workers, spec.resources.compute_workers,
++            spec.resources.parser_threads_per_stream) == (3, 5, 4)
++    assert spec.execution.emit_stock_day_progress is True
++    assert spec.extra_consumers == ((module.LABEL_CONSUMER_NAME, label_consumer),)
++    assert spec.output_root == module.pilot_output_roots(tmp_path, "smoke")[1]
++    assert spec.resume is False
++
++
+ def test_default_full_pilot_contract_is_backward_compatible() -> None:

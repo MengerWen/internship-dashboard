@@ -1,0 +1,23 @@
+保留深市默认运行身份及缓存兼容性
+
+
+diff --git a/scripts/run_open5m_raw_bank.py b/scripts/run_open5m_raw_bank.py
+index c6b13a36..6555256f 100644
+--- a/scripts/run_open5m_raw_bank.py
++++ b/scripts/run_open5m_raw_bank.py
+@@ -231,3 +231,4 @@ def run(args):
+         "l1_manifest": effective["l1_manifest"],
+-        "sse_channel_indices": effective.get("sse_channel_indices"),
++        "sse_clock_profiles": effective.get("sse_clock_profiles"),
++        **({"sse_channel_indices": effective.get("sse_channel_indices")} if include_sse else {}),
+         "research_query_policy": "single-day-code-range-v1",
+diff --git a/因子/algobench/src/algobench/formal_raw_bank_startup.py b/因子/algobench/src/algobench/formal_raw_bank_startup.py
+index f4472c5f..85311d0e 100644
+--- a/因子/algobench/src/algobench/formal_raw_bank_startup.py
++++ b/因子/algobench/src/algobench/formal_raw_bank_startup.py
+@@ -168,3 +168,4 @@ def startup_record(cfg, args, runtime, registry, registry_path, specs, specs_pat
+         "sse_clock_profiles": file_identity(args.sse_clock_profiles) if getattr(args, "sse_clock_profiles", None) else None,
+-        "sse_channel_indices": {d:{str(ch):i.identity for ch,i in indices.items()} for d,indices in getattr(args,'sse_profiles',{}).items()},
++        **({"sse_channel_indices": {d:{str(ch):i.identity for ch,i in indices.items()} for d,indices in args.sse_profiles.items()}}
++           if getattr(args,'sse_profiles',{}) else {}),
+         "profiling": {"stock": args.diagnostic_stock or getattr(args, "profile_stock", None),

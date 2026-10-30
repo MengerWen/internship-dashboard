@@ -1,0 +1,31 @@
+按实际提取状态验证股票完成通知
+
+
+diff --git a/lv2_snapshot_workspace/tests/test_scheduler.py b/lv2_snapshot_workspace/tests/test_scheduler.py
+index 40b849e4..a3d6593e 100644
+--- a/lv2_snapshot_workspace/tests/test_scheduler.py
++++ b/lv2_snapshot_workspace/tests/test_scheduler.py
+@@ -429,2 +429,3 @@ def test_multi_day_stream_reuses_compute_pool_and_commits_each_day(observe) -> N
+     shared_executors = []
++    extracted, completion_phases = set(), []
+ 
+@@ -444,2 +445,3 @@ def test_multi_day_stream_reuses_compute_pool_and_commits_each_day(observe) -> N
+             )
++        extracted.add(plan.date)
+ 
+@@ -453,5 +455,7 @@ def test_multi_day_stream_reuses_compute_pool_and_commits_each_day(observe) -> N
+         assert executor is shared_executors[0]
+-        assert extraction_finished
++        assert extraction_finished == (records[0].date in extracted)
++        completion_phases.append(extraction_finished)
+         completed.extend((record.date, record.code, record.payload) for record in records)
+-        side_jobs.append(executor.submit(lambda: "published"))
++        if extraction_finished:
++            side_jobs.append(executor.submit(lambda: "published"))
+ 
+@@ -510,3 +514,4 @@ def test_multi_day_stream_reuses_compute_pool_and_commits_each_day(observe) -> N
+         assert all(payload["private_payload"] == code for _, code, payload in completed)
+-        assert [job.result() for job in side_jobs] == ["published"] * 4
++        assert any(completion_phases)
++        assert [job.result() for job in side_jobs] == ["published"] * sum(completion_phases)
+ 

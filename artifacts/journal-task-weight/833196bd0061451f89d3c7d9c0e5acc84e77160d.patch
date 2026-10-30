@@ -1,0 +1,43 @@
+用完整的双边引用验证注意力面板与可选响应计算
+
+
+diff --git a/因子/algobench/tests/test_attention_panel.py b/因子/algobench/tests/test_attention_panel.py
+index 43da44ba..8db37d00 100644
+--- a/因子/algobench/tests/test_attention_panel.py
++++ b/因子/algobench/tests/test_attention_panel.py
+@@ -268,2 +268,10 @@ def _synthetic_doris_table(day: str, table: str, code: str) -> pd.DataFrame:
+                 "seq": 1,
++                "qty": 1,
++                "price": 10.0 + index / 100,
++                "side": "S" if index % 2 else "B",
++                "order_id": order_id + 10000,
++                "ord_type": "L",
++            }, {
++                **common,
++                "seq": 2,
+                 "price": 10.0 + index / 100,
+@@ -278,3 +286,3 @@ def _synthetic_doris_table(day: str, table: str, code: str) -> pd.DataFrame:
+                 **common,
+-                "seq": 2,
++                "seq": 3,
+                 "qty": 1,
+@@ -284,4 +292,4 @@ def _synthetic_doris_table(day: str, table: str, code: str) -> pd.DataFrame:
+                 "side": "B" if index % 2 else "S",
+-                "bid_id": order_id if index % 2 else 0,
+-                "ask_id": 0 if index % 2 else order_id,
++                "bid_id": order_id if index % 2 else order_id + 10000,
++                "ask_id": order_id + 10000 if index % 2 else order_id,
+             }]
+@@ -292,3 +300,3 @@ def _synthetic_doris_table(day: str, table: str, code: str) -> pd.DataFrame:
+                 **common,
+-                "seq": 3,
++                "seq": 4,
+                 "qty": 99,
+@@ -400,4 +408,4 @@ def test_table_event_vendor_side_mapping_is_opt_in_and_keeps_order_side_semantic
+     }.intersection(legacy.columns)
+-    assert diagnostic["side"].tolist() == ["B", "", ""]
+-    assert diagnostic["vendor_aggressor_side_raw"].tolist() == [pd.NA, "B", pd.NA]
+-    assert diagnostic["vendor_cancel_side_raw"].tolist() == [pd.NA, pd.NA, "B"]
++    assert diagnostic["side"].tolist() == ["S", "B", "", ""]
++    assert diagnostic["vendor_aggressor_side_raw"].tolist() == [pd.NA, pd.NA, "B", pd.NA]
++    assert diagnostic["vendor_cancel_side_raw"].tolist() == [pd.NA, pd.NA, pd.NA, "B"]

@@ -1,0 +1,371 @@
+feat: expose lagged and second-level depth state
+
+
+diff --git a/因子/algobench/src/algobench/event_prestate.py b/因子/algobench/src/algobench/event_prestate.py
+index 7d713371..5e9f3d7a 100644
+--- a/因子/algobench/src/algobench/event_prestate.py
++++ b/因子/algobench/src/algobench/event_prestate.py
+@@ -4,3 +4,3 @@ from __future__ import annotations
+ 
+-from bisect import bisect_left, insort
++from bisect import bisect_left, bisect_right, insort
+ from collections import deque
+@@ -1076,2 +1076,244 @@ def _empty_event_prestate(
+ 
++DEPTH_CHECKPOINT_COLUMNS = (
++    "date",
++    "code",
++    "channel_no",
++    "seq",
++    "ts",
++    "event_pos",
++    "best_bid_tick",
++    "best_bid_qty",
++    "second_bid_tick",
++    "second_bid_qty",
++    "best_ask_tick",
++    "best_ask_qty",
++    "second_ask_tick",
++    "second_ask_qty",
++)
++
++
++def build_depth_checkpoints(
++    windows: EventWindows,
++    *,
++    top_n: int = 2,
++) -> pd.DataFrame:
++    """Replay one stock-day and capture depth after every causal event."""
++
++    if int(top_n) < 2:
++        raise ValueError("depth checkpoints require top_n >= 2")
++    if windows.canonical_block is not None:
++        events = windows.canonical_block.frame
++    else:
++        replay_input = pd.concat(
++            [
++                windows.context_events,
++                windows.evidence_events,
++                windows.future_forbidden,
++            ],
++            ignore_index=True,
++        )
++        if replay_input.empty:
++            return _empty_depth_checkpoints(top_n=top_n)
++        ensure_reuse_paths()
++        from lowlat.events import standardize_events
++
++        events = standardize_events(replay_input)
++    if events.empty:
++        return _empty_depth_checkpoints(top_n=top_n)
++    ensure_reuse_paths()
++    from snapshot.orderbook import BUY, SELL, OrderBook
++
++    day, code, channel_no = _validate_stock_day(events)
++    if events.duplicated(["channel_no", "seq"]).any():
++        raise ValueError("depth checkpoints require unique seq within channel")
++    order_prices = pd.to_numeric(
++        events.loc[events["etype"].astype(str).eq("order"), "price_tick"],
++        errors="coerce",
++    )
++    depth = _DepthIndex(
++        [int(value) for value in order_prices.dropna().tolist() if int(value) > 0]
++    )
++    book = OrderBook(strict=False)
++    rows: list[tuple[object, ...]] = []
++    for event in events.itertuples(index=False):
++        kind = str(event.etype)
++        if kind == "order":
++            order_id = int(event.order_id)
++            before = _resting_depth_state(book, order_id)
++            book.apply_order(
++                order_id,
++                str(event.side),
++                int(event.price_tick),
++                int(event.qty),
++                str(event.ord_type),
++            )
++            _sync_depth_order(
++                depth,
++                before=before,
++                after=_resting_depth_state(book, order_id),
++            )
++        elif kind == "trade":
++            ids = {int(event.bid_id), int(event.ask_id)}
++            before = {
++                order_id: _resting_depth_state(book, order_id)
++                for order_id in ids
++            }
++            book.apply_trade(int(event.bid_id), int(event.ask_id), int(event.qty))
++            for order_id, previous in before.items():
++                _sync_depth_order(
++                    depth,
++                    before=previous,
++                    after=_resting_depth_state(book, order_id),
++                )
++        elif kind == "cancel":
++            order_id = int(event.order_id)
++            before = _resting_depth_state(book, order_id)
++            book.apply_cancel(order_id, int(event.qty))
++            _sync_depth_order(
++                depth,
++                before=before,
++                after=_resting_depth_state(book, order_id),
++            )
++        else:
++            raise ValueError(f"unknown event type: {kind!r}")
++        bid_prices, bid_qty = depth.top_n(BUY, int(top_n))
++        ask_prices, ask_qty = depth.top_n(SELL, int(top_n))
++        rows.append(
++            (
++                day.date().isoformat(),
++                code,
++                channel_no,
++                int(event.seq),
++                pd.Timestamp(event.ts),
++                int(event.event_pos),
++                _array_value(bid_prices, 0),
++                _array_value(bid_qty, 0),
++                _array_value(bid_prices, 1),
++                _array_value(bid_qty, 1),
++                _array_value(ask_prices, 0),
++                _array_value(ask_qty, 0),
++                _array_value(ask_prices, 1),
++                _array_value(ask_qty, 1),
++            )
++        )
++    result = pd.DataFrame(rows, columns=DEPTH_CHECKPOINT_COLUMNS)
++    for column in DEPTH_CHECKPOINT_COLUMNS:
++        if column.endswith("_tick") or column.endswith("_qty"):
++            result[column] = pd.array(result[column], dtype="Int64")
++    result.attrs["depth_checkpoint_schema_version"] = "depth_checkpoint_v1"
++    result.attrs["top_n"] = int(top_n)
++    result.attrs["state_timing"] = "post_event"
++    return result
++
++
++def attach_lagged_opponent_depth(
++    orders: pd.DataFrame,
++    checkpoints: pd.DataFrame,
++    *,
++    offsets_ms: Sequence[int],
++) -> pd.DataFrame:
++    """Attach causal opponent depth at fixed lags around each submit event."""
++
++    _required = ("date", "code", "channel_no", "side", "submit_ts")
++    missing = sorted(set(_required).difference(orders.columns))
++    if missing:
++        raise ValueError(f"orders are missing required columns: {missing}")
++    seq_column = "submit_seq" if "submit_seq" in orders else "seq"
++    if seq_column not in orders:
++        raise ValueError("orders require submit_seq or seq")
++    missing = sorted(set(DEPTH_CHECKPOINT_COLUMNS).difference(checkpoints.columns))
++    if missing:
++        raise ValueError(f"checkpoints are missing required columns: {missing}")
++    offsets = tuple(dict.fromkeys(int(value) for value in offsets_ms))
++    if not offsets:
++        raise ValueError("offsets_ms cannot be empty")
++    result = orders.copy()
++    checkpoint_groups = {
++        tuple(key if isinstance(key, tuple) else (key,)): group.sort_values(
++            ["ts", "seq", "event_pos"], kind="mergesort"
++        ).reset_index(drop=True)
++        for key, group in checkpoints.groupby(
++            ["date", "code", "channel_no"], sort=False, dropna=False
++        )
++    }
++    for offset in offsets:
++        token = _lag_token(offset)
++        depths: list[object] = []
++        prices: list[object] = []
++        second_prices: list[object] = []
++        observable: list[bool] = []
++        for order in result.itertuples(index=False):
++            key = (str(order.date), str(order.code), int(order.channel_no))
++            group = checkpoint_groups.get(key)
++            if group is None or group.empty:
++                depths.append(pd.NA)
++                prices.append(pd.NA)
++                second_prices.append(pd.NA)
++                observable.append(False)
++                continue
++            target = pd.Timestamp(order.submit_ts) + pd.Timedelta(milliseconds=offset)
++            target_ns = int(target.value)
++            timestamps = (
++                pd.to_datetime(group["ts"])
++                .to_numpy(dtype="datetime64[ns]")
++                .astype("int64")
++                .tolist()
++            )
++            if offset == 0:
++                seq = int(getattr(order, seq_column))
++                keys = list(zip(timestamps, group["seq"].astype("int64"), strict=True))
++                position = bisect_left(keys, (target_ns, seq)) - 1
++            else:
++                position = bisect_right(timestamps, target_ns) - 1
++            if position < 0:
++                depths.append(pd.NA)
++                prices.append(pd.NA)
++                second_prices.append(pd.NA)
++                observable.append(False)
++                continue
++            checkpoint = group.iloc[position]
++            side = str(order.side).upper()
++            prefix = "ask" if side == "B" else "bid" if side == "S" else ""
++            if not prefix:
++                depths.append(pd.NA)
++                prices.append(pd.NA)
++                second_prices.append(pd.NA)
++                observable.append(False)
++                continue
++            depth_value = checkpoint[f"best_{prefix}_qty"]
++            price_value = checkpoint[f"best_{prefix}_tick"]
++            depths.append(depth_value)
++            prices.append(price_value)
++            second_prices.append(checkpoint[f"second_{prefix}_tick"])
++            observable.append(pd.notna(depth_value) and int(depth_value) > 0)
++        result[f"opponent_best_qty_{token}"] = pd.array(depths, dtype="Int64")
++        result[f"opponent_best_price_tick_{token}"] = pd.array(prices, dtype="Int64")
++        result[f"opponent_second_price_tick_{token}"] = pd.array(
++            second_prices, dtype="Int64"
++        )
++        result[f"lag_observable_{token}"] = observable
++        result[f"lag_descriptive_only_{token}"] = offset > 0
++    result.attrs["lagged_depth_schema_version"] = "lagged_opponent_depth_v1"
++    result.attrs["positive_offsets_descriptive_only"] = True
++    result.attrs["offsets_ms"] = offsets
++    return result
++
++
++def _empty_depth_checkpoints(*, top_n: int) -> pd.DataFrame:
++    result = pd.DataFrame(columns=DEPTH_CHECKPOINT_COLUMNS)
++    result.attrs["depth_checkpoint_schema_version"] = "depth_checkpoint_v1"
++    result.attrs["top_n"] = int(top_n)
++    result.attrs["state_timing"] = "post_event"
++    return result
++
++
++def _array_value(values: np.ndarray, position: int) -> int | None:
++    return int(values[position]) if position < len(values) else None
++
++
++def _lag_token(offset_ms: int) -> str:
++    value = int(offset_ms)
++    return f"lag_{'m' if value < 0 else 'p' if value > 0 else 'z'}{abs(value)}ms"
++
++
+ def _project_event_prestate(
+diff --git a/因子/algobench/tests/test_event_prestate_lagged_depth.py b/因子/algobench/tests/test_event_prestate_lagged_depth.py
+new file mode 100644
+index 00000000..2d3c4380
+--- /dev/null
++++ b/因子/algobench/tests/test_event_prestate_lagged_depth.py
+@@ -0,0 +1,108 @@
++from __future__ import annotations
++
++import pandas as pd
++
++from algobench.event_prestate import (
++    attach_lagged_opponent_depth,
++    build_depth_checkpoints,
++)
++from algobench.event_windows import canonicalize_event_block, split_event_windows
++
++
++DAY = "2026-04-01"
++
++
++def _event(seq: int, time: str, etype: str, **values) -> dict[str, object]:
++    row = {
++        "channel_no": 1,
++        "seq": seq,
++        "ts": pd.Timestamp(f"{DAY} {time}"),
++        "etype": etype,
++        "code": "000001",
++        "side": "",
++        "price_tick": 0,
++        "qty": 0,
++        "order_id": 0,
++        "bid_id": 0,
++        "ask_id": 0,
++        "ord_type": "",
++    }
++    row.update(values)
++    return row
++
++
++def _windows():
++    events = pd.DataFrame(
++        [
++            _event(1, "09:29:59.000", "order", order_id=1, side="B", price_tick=99, qty=100, ord_type="L"),
++            _event(2, "09:29:59.100", "order", order_id=2, side="S", price_tick=101, qty=200, ord_type="L"),
++            _event(3, "09:29:59.200", "order", order_id=3, side="S", price_tick=102, qty=300, ord_type="L"),
++            _event(4, "09:30:00.000", "order", order_id=4, side="B", price_tick=101, qty=200, ord_type="L"),
++            _event(5, "09:30:00.000", "trade", bid_id=4, ask_id=2, price_tick=101, qty=50),
++            _event(6, "09:30:00.100", "cancel", order_id=2, qty=50),
++            _event(7, "09:30:00.200", "order", order_id=7, side="S", price_tick=100, qty=75, ord_type="L"),
++        ]
++    )
++    return split_event_windows(canonicalize_event_block(events))
++
++
++def _order(seq: int = 4, ts: str = "09:30:00.000") -> pd.DataFrame:
++    return pd.DataFrame(
++        {
++            "date": [DAY],
++            "code": ["000001"],
++            "channel_no": [1],
++            "side": ["B"],
++            "submit_seq": [seq],
++            "submit_ts": [pd.Timestamp(f"{DAY} {ts}")],
++            "submit_qty": [200],
++        }
++    )
++
++
++def test_second_level_prices_follow_channel_sequence() -> None:
++    checkpoints = build_depth_checkpoints(_windows())
++    before = checkpoints.loc[checkpoints["seq"].eq(3)].iloc[0]
++    after = checkpoints.loc[checkpoints["seq"].eq(7)].iloc[0]
++    assert (before["best_ask_tick"], before["second_ask_tick"]) == (101, 102)
++    assert (after["best_ask_tick"], after["second_ask_tick"]) == (100, 101)
++
++
++def test_lagged_depth_uses_state_effective_at_target_time() -> None:
++    result = attach_lagged_opponent_depth(
++        _order(ts="09:30:00.200"), build_depth_checkpoints(_windows()), offsets_ms=[-100, 0]
++    )
++    assert result.loc[0, "opponent_best_qty_lag_m100ms"] == 100
++    assert result.loc[0, "opponent_best_qty_lag_z0ms"] == 100
++
++
++def test_lagged_depth_does_not_use_nearest_order_snapshot() -> None:
++    result = attach_lagged_opponent_depth(
++        _order(ts="09:30:00.150"), build_depth_checkpoints(_windows()), offsets_ms=[0]
++    )
++    assert result.loc[0, "opponent_best_qty_lag_z0ms"] == 100
++
++
++def test_same_timestamp_is_resolved_by_event_sequence() -> None:
++    result = attach_lagged_opponent_depth(
++        _order(seq=5), build_depth_checkpoints(_windows()), offsets_ms=[0]
++    )
++    assert result.loc[0, "opponent_best_qty_lag_z0ms"] == 200
++
++
++def test_future_offsets_are_marked_descriptive_only() -> None:
++    result = attach_lagged_opponent_depth(
++        _order(), build_depth_checkpoints(_windows()), offsets_ms=[-100, 100]
++    )
++    assert not result.loc[0, "lag_descriptive_only_lag_m100ms"]
++    assert result.loc[0, "lag_descriptive_only_lag_p100ms"]
++    assert result.attrs["positive_offsets_descriptive_only"] is True
++
++
++def test_missing_history_and_missing_second_level_are_explicit() -> None:
++    checkpoints = build_depth_checkpoints(_windows())
++    result = attach_lagged_opponent_depth(_order(), checkpoints, offsets_ms=[-5000, 0])
++    assert not result.loc[0, "lag_observable_lag_m5000ms"]
++    assert pd.isna(result.loc[0, "opponent_best_qty_lag_m5000ms"])
++    one_level = checkpoints.loc[checkpoints["seq"].eq(2)].iloc[0]
++    assert pd.isna(one_level["second_ask_tick"])

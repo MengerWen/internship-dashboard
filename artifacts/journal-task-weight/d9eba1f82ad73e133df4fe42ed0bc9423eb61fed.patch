@@ -1,0 +1,52 @@
+通过对象接口写入并回读全部控制回执
+
+
+diff --git a/因子/algobench/src/algobench/formal_factor_run_schedule.py b/因子/algobench/src/algobench/formal_factor_run_schedule.py
+index 08155ee7..284970ff 100644
+--- a/因子/algobench/src/algobench/formal_factor_run_schedule.py
++++ b/因子/algobench/src/algobench/formal_factor_run_schedule.py
+@@ -84,3 +84,4 @@ class ReceiptStore:
+         relative = Path(relative)
+-        target = (self.root / relative).resolve()
++        target = (Path(os.path.abspath(self.root / relative)) if self.publisher else
++            (self.root / relative).resolve())
+         if self.root not in target.parents:
+@@ -89,3 +90,4 @@ class ReceiptStore:
+         atomic_write_json(local, document)
+-        return publish_file(local, target, object_publication=self.publisher)
++        return publish_file(local, target, object_publication=self.publisher,
++            prepare_parent=not bool(self.publisher))
+ 
+diff --git a/因子/algobench/tests/test_formal_model328_sources.py b/因子/algobench/tests/test_formal_model328_sources.py
+index 476d26d1..edd07e3b 100644
+--- a/因子/algobench/tests/test_formal_model328_sources.py
++++ b/因子/algobench/tests/test_formal_model328_sources.py
+@@ -234,2 +234,28 @@ def test_receipt_readback_uses_object_records_without_a_mount_cache(tmp_path, mo
+ 
++def test_object_control_publication_verifies_bytes_without_resolving_or_creating_mount_paths(tmp_path, monkeypatch):
++    import hashlib
++    _, store = fixture(tmp_path, monkeypatch)
++    objects = {}
++    class Publisher:
++        def upload(self, source, target): objects[Path(target)] = Path(source).read_bytes()
++        def readback_sha256(self, target): return hashlib.sha256(objects[Path(target)]).hexdigest()
++        def read_json(self, target, optional=False): return json.loads(objects[Path(target)])
++    store.publisher = Publisher()
++    original_resolve, original_mkdir = Path.resolve, Path.mkdir
++    def check(path):
++        if path == store.root or store.root in path.parents:
++            raise AssertionError("control publication accessed the mounted namespace")
++    def resolve(path, *args, **kwargs): check(path); return original_resolve(path, *args, **kwargs)
++    def mkdir(path, *args, **kwargs): check(path); return original_mkdir(path, *args, **kwargs)
++    monkeypatch.setattr(Path, "resolve", resolve)
++    monkeypatch.setattr(Path, "mkdir", mkdir)
++    document = dict(status="accepted", run_identity_sha256=store.identity_hash, rows=2875)
++    relative = Path("day_receipts") / DAY / "old" / "receipt.json"
++    digest = store.write_json(relative, document)
++    assert store.read_json(relative) == document
++    assert digest == store._hash(store.root / relative)
++    with pytest.raises(ValueError, match="escapes"):
++        store.write_json("../outside.json", document)
++
++
+ @pytest.mark.parametrize("accepted", [(), ("cancel_buy", "depth")])

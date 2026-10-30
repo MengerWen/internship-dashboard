@@ -1,0 +1,969 @@
+Doris 取数避开 08:50–09:35，并支持按 code 区间分页
+
+公司策略和实盘交易在北京时间 08:50–09:35 使用 Doris，网关在这段时间内
+不发新查询，等窗口结束再继续。
+
+查询计划新增 code_range_page_size：把股票池切成连续 code 区间，每页每表
+一条查询，只带单日 date、时间窗和 code 范围，不用 IN 列表，也不在库里
+ORDER BY。股票池过滤和按 code 分组在本地做，per-code 数据帧与原有有序
+流的构造方式相同。默认一页内各表串行查询，取下一页时调用方处理当前页。
+
+验证：lv2 网关、查询计划、调度器测试 121 项通过。
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+
+diff --git a/lv2_snapshot_workspace/src/snapshot/io.py b/lv2_snapshot_workspace/src/snapshot/io.py
+index 38208004..501e37f0 100644
+--- a/lv2_snapshot_workspace/src/snapshot/io.py
++++ b/lv2_snapshot_workspace/src/snapshot/io.py
+@@ -4,3 +4,9 @@ Callers provide a structured :class:`DorisQuerySpec`; arbitrary SQL text is
+ never accepted. The mysql subprocess is drained at full speed, rows are split
+-at ordered ``code`` boundaries, and this module exposes no disk writer.
++at ``code`` boundaries, and this module exposes no disk writer.
++
++Doris is shared with the company's live strategies, which use it between
++08:50 and 09:35 Beijing time; every query waits until that window has passed.
++Code-range specs page through one contiguous slice of the stock universe
++without IN lists or server-side sorting; stock filtering and grouping happen
++locally.
+ """
+@@ -10,3 +16,3 @@ from __future__ import annotations
+ from dataclasses import dataclass
+-from datetime import date as date_type, datetime
++from datetime import date as date_type, datetime, time as clock_time, timedelta, timezone
+ import hashlib
+@@ -78,2 +84,5 @@ _STDERR_LIMIT = 64 * 1024
+ 
++BEIJING = timezone(timedelta(hours=8))
++DORIS_QUIET_WINDOW = (clock_time(8, 50), clock_time(9, 35))
++
+ PopenFactory = Callable[..., Any]
+@@ -86,2 +95,43 @@ class DorisQueryError(RuntimeError):
+ 
++def _beijing_now() -> datetime:
++    return datetime.now(BEIJING)
++
++
++def seconds_until_doris_allowed(now: datetime | None = None) -> float:
++    """Return how long a new query must wait for the 08:50-09:35 window to end."""
++
++    moment = (now or _beijing_now()).astimezone(BEIJING)
++    start, end = DORIS_QUIET_WINDOW
++    if not start <= moment.time() < end:
++        return 0.0
++    resume = moment.replace(
++        hour=end.hour, minute=end.minute, second=0, microsecond=0
++    )
++    return (resume - moment).total_seconds()
++
++
++def wait_for_doris_window(
++    *,
++    sleep: Callable[[float], None] | None = None,
++) -> float:
++    """Block until queries are allowed; return the seconds spent waiting."""
++
++    sleep = sleep or time.sleep
++    waited = 0.0
++    announced = False
++    while (remaining := seconds_until_doris_allowed()) > 0:
++        if not announced:
++            print(
++                "Doris queries paused until 09:35 Beijing time "
++                f"({remaining:.0f}s)",
++                file=sys.stderr,
++                flush=True,
++            )
++            announced = True
++        step = min(remaining, 60.0)
++        sleep(step)
++        waited += step
++    return waited
++
++
+ @dataclass
+@@ -238,3 +288,7 @@ def validate_columns(table: TableName, values: Sequence[str]) -> tuple[str, ...]
+ class DorisQuerySpec:
+-    """One table and exactly one day; ``codes=None`` means the full market."""
++    """One table and exactly one day; ``codes=None`` means the full market.
++
++    With ``code_range=(first, last)`` the SQL selects that inclusive code range
++    without sorting, and ``codes`` lists the stocks kept locally.
++    """
+ 
+@@ -248,2 +302,3 @@ class DorisQuerySpec:
+     order_by_code_only: bool = False
++    code_range: tuple[str, str] | None = None
+ 
+@@ -286,2 +341,16 @@ class DorisQuerySpec:
+             raise TypeError("order_by_code_only must be a boolean")
++        if self.code_range is not None:
++            if isinstance(self.code_range, (str, bytes)) or len(self.code_range) != 2:
++                raise TypeError("code_range must be a (first, last) pair")
++            first, last = (validate_code(value) for value in self.code_range)
++            if first > last:
++                raise ValueError("code_range must be ascending")
++            if self.codes is None:
++                raise ValueError("code_range requires the explicit stocks kept locally")
++            if priority_codes:
++                raise ValueError("code_range queries do not support priority_codes")
++            outside = [code for code in self.codes if not first <= code <= last]
++            if outside:
++                raise ValueError(f"codes outside code_range: {outside[:5]}")
++            object.__setattr__(self, "code_range", (first, last))
+ 
+@@ -298,2 +367,3 @@ def make_query_spec(
+     order_by_code_only: bool = False,
++    code_range: tuple[str, str] | None = None,
+ ) -> DorisQuerySpec:
+@@ -309,2 +379,3 @@ def make_query_spec(
+         order_by_code_only=order_by_code_only,
++        code_range=None if code_range is None else tuple(code_range),
+     )
+@@ -321,2 +392,12 @@ def build_select_sql(spec: DorisQuerySpec) -> str:
+         clauses.append(_data_time_predicate(spec.data_time_intervals))
++    if spec.code_range is not None:
++        first, last = spec.code_range
++        clauses.append(f"code >= '{first}' AND code <= '{last}'")
++        sql = (
++            f"SELECT {', '.join(spec.columns)}\n"
++            f"FROM {table_sql}\n"
++            f"WHERE {' AND '.join(clauses)};"
++        )
++        _validate_generated_select(spec, sql)
++        return sql
+     if spec.codes is not None:
+@@ -373,2 +454,6 @@ def _validate_generated_select(spec: DorisQuerySpec, sql: str) -> None:
+         raise ValueError("full-market queries must not invent a code predicate")
++    if spec.code_range is not None and re.search(
++        r"\bIN\s*\(|\bORDER\s+BY\b", statement, re.IGNORECASE
++    ):
++        raise ValueError("code-range queries must not use IN lists or server-side sorting")
+ 
+@@ -494,2 +579,4 @@ def iter_table_by_code(
+         raise ValueError("iter_table_by_code requires the code column")
++    if spec.code_range is not None:
++        raise ValueError("code-range specs are unordered; use load_table_code_range")
+     if backend not in {"pyarrow", "pandas"}:
+@@ -501,2 +588,3 @@ def iter_table_by_code(
+ 
++    wait_for_doris_window()
+     current_metrics = metrics if metrics is not None else StreamMetrics()
+@@ -580,2 +668,115 @@ def iter_table_by_code(
+ 
++def load_table_code_range(
++    spec: DorisQuerySpec,
++    *,
++    backend: ParserBackend = "pyarrow",
++    login_path: str = DB_LOGIN_PATH,
++    database: str = DB_NAME,
++    popen_factory: PopenFactory = subprocess.Popen,
++    arrow_threads: int | None = None,
++    parser_block_size: int = 32 << 20,
++    metrics: StreamMetrics | None = None,
++    peak_rss_reader: PeakRssReader | None = None,
++) -> dict[str, pd.DataFrame]:
++    """Drain one code-range page and return its stocks' frames in code order.
++
++    A page is bounded by ``spec.codes``, so it is parsed whole, filtered to
++    those stocks and stably grouped by code here instead of in Doris.
++    """
++
++    if spec.code_range is None or spec.codes is None:
++        raise ValueError("load_table_code_range requires a code-range spec")
++    if "code" not in spec.columns:
++        raise ValueError("load_table_code_range requires the code column")
++    if backend not in {"pyarrow", "pandas"}:
++        raise ValueError("backend must be 'pyarrow' or 'pandas'")
++    if arrow_threads is not None and int(arrow_threads) <= 0:
++        raise ValueError("arrow_threads must be positive")
++    if int(parser_block_size) <= 0:
++        raise ValueError("parser_block_size must be positive")
++
++    wait_for_doris_window()
++    current_metrics = metrics if metrics is not None else StreamMetrics()
++    current_metrics.rows = 0
++    current_metrics.read_rows = 0
++    current_metrics.retained_rows = 0
++    current_metrics.discarded_rows = 0
++    current_metrics.bytes_read = 0
++    current_metrics.first_row_seconds = 0.0
++    current_metrics.elapsed_seconds = 0.0
++    started = time.perf_counter()
++    sql = build_select_sql(spec)
++    process = popen_factory(
++        _mysql_command(login_path=login_path, database=database),
++        stdin=subprocess.PIPE,
++        stdout=subprocess.PIPE,
++        stderr=subprocess.PIPE,
++        bufsize=0,
++    )
++    if process.stdin is None or process.stdout is None or process.stderr is None:
++        _terminate_process(process)
++        raise DorisQueryError("mysql subprocess did not expose all required pipes")
++
++    stderr_drain = _StderrDrain(process.stderr)
++    stderr_drain.start()
++    counting = _CountingRaw(io.BufferedReader(process.stdout, buffer_size=1 << 20), started=started)
++    completed = False
++    parts: list[pd.DataFrame] = []
++    try:
++        process.stdin.write((sql + "\n").encode("utf-8"))
++        process.stdin.close()
++        frames = (
++            _iter_pyarrow_frames(
++                counting,
++                spec.columns,
++                arrow_threads=arrow_threads,
++                block_size=int(parser_block_size),
++            )
++            if backend == "pyarrow"
++            else _iter_pandas_frames(counting, spec.columns)
++        )
++        parts = [frame for frame in frames if not frame.empty]
++        completed = True
++    finally:
++        if not completed and _process_running(process):
++            _terminate_process(process)
++        try:
++            process.stdout.close()
++        except Exception:  # noqa: BLE001 - cleanup must not mask the query result.
++            pass
++        returncode = _wait_process(process)
++        stderr_drain.join()
++        current_metrics.bytes_read = counting.bytes_read
++        current_metrics.first_row_seconds = counting.first_byte_seconds
++        current_metrics.elapsed_seconds = time.perf_counter() - started
++        current_metrics.peak_rss_bytes = int((peak_rss_reader or process_peak_rss_bytes)())
++        if completed and returncode != 0:
++            raise DorisQueryError(_safe_diagnostic(stderr_drain.text()))
++    if not parts:
++        return {}
++    # Bounded by the page's stock list, never by the whole day.
++    page = parts[0] if len(parts) == 1 else pd.concat(parts, ignore_index=True)
++    codes = page["code"].astype("string")
++    if codes.isna().any():
++        raise DorisQueryError("Doris returned NULL in the code column")
++    codes = codes.str.zfill(6)
++    keep = codes.isin(spec.codes).to_numpy(dtype=bool)
++    retained = int(keep.sum())
++    current_metrics.read_rows = len(page)
++    current_metrics.retained_rows = retained
++    current_metrics.discarded_rows = len(page) - retained
++    current_metrics.rows = retained
++    if not retained:
++        return {}
++    page = page.loc[keep].reset_index(drop=True)
++    order = np.argsort(codes[keep].to_numpy(dtype=object), kind="stable")
++    page = page.take(order)
++    return dict(
++        _split_frames_by_code(
++            iter((page,)),
++            expected_code_order=tuple(sorted(spec.codes)),
++        )
++    )
++
++
+ def _iter_pyarrow_frames(
+diff --git a/lv2_snapshot_workspace/src/snapshot/query_plan.py b/lv2_snapshot_workspace/src/snapshot/query_plan.py
+index 99810e8f..4dd1f8e8 100644
+--- a/lv2_snapshot_workspace/src/snapshot/query_plan.py
++++ b/lv2_snapshot_workspace/src/snapshot/query_plan.py
+@@ -26,2 +26,3 @@ from .io import (
+     iter_table_by_code,
++    load_table_code_range,
+     make_query_spec,
+@@ -37,2 +38,6 @@ from .storage_policy import assert_allowed_derived_artifact
+ 
++# A larger jump between consecutive universe codes starts a new page, so one
++# range never spans unrelated security blocks such as funds, bonds or B shares.
++CODE_RANGE_MAX_GAP = 1000
++
+ 
+@@ -58,2 +63,3 @@ class QueryPlan:
+     prestart_compute_pool: bool = False
++    code_range_page_size: int | None = None
+ 
+@@ -184,2 +190,15 @@ class QueryPlan:
+             raise TypeError("prestart_compute_pool must be a boolean")
++        if self.code_range_page_size is not None:
++            size = self.code_range_page_size
++            if isinstance(size, bool) or not isinstance(size, int):
++                raise TypeError("code_range_page_size must be an integer")
++            if size < 1:
++                raise ValueError("code_range_page_size must be positive")
++            if self.codes is None:
++                raise ValueError("code-range paging requires an explicit stock universe")
++            if stream_shards or self.priority_codes or self.order_by_code_only:
++                raise ValueError(
++                    "code-range paging replaces stream shards, priority codes "
++                    "and server-side ordering"
++                )
+ 
+@@ -205,2 +224,3 @@ class QueryPlan:
+         prestart_compute_pool: bool = False,
++        code_range_page_size: int | None = None,
+     ) -> "QueryPlan":
+@@ -237,2 +257,35 @@ class QueryPlan:
+             prestart_compute_pool=prestart_compute_pool,
++            code_range_page_size=code_range_page_size,
++        )
++
++    def code_range_pages(self) -> tuple[tuple[str, ...], ...]:
++        """Split the sorted universe into contiguous, non-overlapping pages."""
++
++        if self.code_range_page_size is None or self.codes is None:
++            raise ValueError("plan does not page by code range")
++        pages: list[tuple[str, ...]] = []
++        page: list[str] = []
++        for code in sorted(self.codes):
++            if page and (
++                len(page) >= self.code_range_page_size
++                or int(code) - int(page[-1]) > CODE_RANGE_MAX_GAP
++            ):
++                pages.append(tuple(page))
++                page = []
++            page.append(code)
++        pages.append(tuple(page))
++        return tuple(pages)
++
++    def code_range_spec(
++        self, table: TableName, page: Sequence[str]
++    ) -> DorisQuerySpec:
++        codes = tuple(page)
++        return make_query_spec(
++            self.date,
++            table,
++            codes,
++            columns=self.columns_by_table.get(table),
++            data_time_upper_bound=self.data_time_upper_bound,
++            data_time_intervals=self.data_time_intervals_by_table.get(table, ()),
++            code_range=(codes[0], codes[-1]),
+         )
+@@ -240,2 +293,4 @@ class QueryPlan:
+     def specs(self) -> tuple[DorisQuerySpec, ...]:
++        if self.code_range_page_size is not None:
++            raise ValueError("code-range plans issue one spec per page")
+         return tuple(
+@@ -263,2 +318,4 @@ class QueryPlan:
+             raise ValueError("stream query sharding requires explicit codes")
++        if self.code_range_page_size is not None:
++            raise ValueError("code-range plans issue one spec per page")
+         priority_set = set(self.priority_codes)
+@@ -486,2 +543,18 @@ def load_raw_day(
+     }
++    if plan.code_range_page_size is not None:
++        if retries:
++            raise ValueError("code-range plans do not retry partial days")
++        for raw in _iter_code_range_pages(
++            plan,
++            backend=backend,
++            popen_factory=popen_factory,
++            arrow_threads=arrow_threads,
++            telemetry_sink=telemetry_sink,
++            peak_rss_reader=peak_rss_reader,
++        ):
++            for table in TABLE_COLUMNS:
++                frame = getattr(raw, table)
++                if len(frame):
++                    tables[table][raw.code] = frame
++        return RawDaySlice(plan=plan, table_frames=tables)
+     specs = plan.specs()
+@@ -543,2 +616,12 @@ def iter_raw_day_by_code(
+         )
++    if plan.code_range_page_size is not None:
++        yield from _iter_code_range_pages(
++            plan,
++            backend=backend,
++            popen_factory=popen_factory,
++            arrow_threads=arrow_threads,
++            telemetry_sink=telemetry_sink,
++            peak_rss_reader=peak_rss_reader,
++        )
++        return
+     priority_set = set(plan.priority_codes)
+@@ -805,2 +888,161 @@ def iter_raw_day_by_code(
+ 
++def _iter_code_range_pages(
++    plan: QueryPlan,
++    *,
++    backend: ParserBackend,
++    popen_factory: PopenFactory | None,
++    arrow_threads: int | None,
++    telemetry_sink: TelemetrySink | None,
++    peak_rss_reader: Callable[[], int],
++) -> Iterator[RawCodeFrames]:
++    """Query one code-range page at a time and release its stocks in code order.
++
++    Within a page at most ``plan.table_parallelism`` tables are queried at
++    once. One loader thread fetches the next page while the caller consumes the
++    current one, so at most two pages of raw rows are resident.
++    """
++
++    pages = plan.code_range_pages()
++    tables = tuple(TABLE_COLUMNS)
++    loaded: Queue[tuple[str, object, object, object]] = Queue(maxsize=1)
++    stop = threading.Event()
++
++    def put(item: tuple[str, object, object, object]) -> None:
++        while not stop.is_set():
++            try:
++                loaded.put(item, timeout=0.1)
++                return
++            except Full:
++                continue
++
++    def load(spec: DorisQuerySpec) -> tuple[dict[str, pd.DataFrame], StreamMetrics]:
++        metrics = StreamMetrics()
++        kwargs: dict[str, object] = {
++            "backend": backend,
++            "arrow_threads": arrow_threads,
++            "metrics": metrics,
++            "peak_rss_reader": peak_rss_reader,
++        }
++        if popen_factory is not None:
++            kwargs["popen_factory"] = popen_factory
++        return load_table_code_range(spec, **kwargs), metrics
++
++    def produce() -> None:
++        executor = (
++            ThreadPoolExecutor(
++                max_workers=plan.table_parallelism,
++                thread_name_prefix="doris-code-range",
++            )
++            if plan.table_parallelism > 1
++            else None
++        )
++        try:
++            for page in pages:
++                specs = [plan.code_range_spec(table, page) for table in tables]
++                results = []
++                if executor is None:
++                    for spec in specs:
++                        if stop.is_set():
++                            return
++                        results.append(load(spec))
++                else:
++                    if stop.is_set():
++                        return
++                    futures = [executor.submit(load, spec) for spec in specs]
++                    results = [future.result() for future in futures]
++                put(("page", page, specs, results))
++            put(("done", None, None, None))
++        except BaseException as exc:  # noqa: BLE001 - relay exact query failure.
++            put(("error", exc, None, None))
++        finally:
++            if executor is not None:
++                executor.shutdown(wait=True, cancel_futures=True)
++
++    worker = threading.Thread(
++        target=produce, name="doris-code-range-pages", daemon=True
++    )
++    worker.start()
++    per_table: dict[TableName, list[tuple[DorisQuerySpec, int, StreamMetrics]]] = {
++        table: [] for table in tables
++    }
++    try:
++        while True:
++            try:
++                kind, first, second, third = loaded.get(timeout=0.2)
++            except Empty:
++                if not worker.is_alive() and loaded.empty():
++                    raise RuntimeError("code-range page loader stopped without a result")
++                continue
++            if kind == "error":
++                assert isinstance(first, BaseException)
++                raise first
++            if kind == "done":
++                break
++            page = first
++            frames_by_table: dict[TableName, tuple[DorisQuerySpec, dict[str, pd.DataFrame]]] = {}
++            for table, spec, (frames, metrics) in zip(tables, second, third, strict=True):
++                unexpected = sorted(set(frames).difference(page))
++                if unexpected:
++                    raise RuntimeError(
++                        f"code-range page returned codes outside the page: {unexpected[:5]}"
++                    )
++                frames_by_table[table] = (spec, frames)
++                per_table[table].append((spec, len(frames), metrics))
++            for code in page:
++                selected = {
++                    table: frames.pop(code, pd.DataFrame(columns=spec.columns))
++                    for table, (spec, frames) in frames_by_table.items()
++                }
++                yield RawCodeFrames(
++                    date=plan.date,
++                    code=code,
++                    order=selected["order"],
++                    trade=selected["trade"],
++                    cancel=selected["cancel"],
++                )
++        if telemetry_sink is not None:
++            for table in plan.tables:
++                records = per_table[table]
++                spec = records[0][0]
++                metrics_list = [metrics for _, _, metrics in records]
++                telemetry_sink(
++                    QueryTelemetry(
++                        date=plan.date,
++                        table=table,
++                        code_count=sum(count for _, count, _ in records),
++                        rows=sum(item.rows for item in metrics_list),
++                        bytes_read=sum(item.bytes_read for item in metrics_list),
++                        first_row_seconds=metrics_list[0].first_row_seconds,
++                        elapsed_seconds=sum(
++                            item.elapsed_seconds for item in metrics_list
++                        ),
++                        peak_rss_bytes=max(
++                            item.peak_rss_bytes for item in metrics_list
++                        ),
++                        planned_tables=plan.tables,
++                        data_time_upper_bound=spec.data_time_upper_bound,
++                        data_time_intervals=spec.data_time_intervals,
++                        data_time_intervals_fingerprint=(
++                            data_time_intervals_fingerprint(
++                                spec.data_time_intervals
++                            )
++                        ),
++                        query_pushdown_fallback=False,
++                        read_rows=sum(item.read_rows for item in metrics_list),
++                        retained_rows=sum(
++                            item.retained_rows for item in metrics_list
++                        ),
++                        discarded_rows=sum(
++                            item.discarded_rows for item in metrics_list
++                        ),
++                        table_parallelism=plan.table_parallelism,
++                        query_count=len(records),
++                        parser_threads_per_query=int(arrow_threads or 1),
++                    )
++                )
++    finally:
++        stop.set()
++        worker.join()
++
++
+ def _load_tables_parallel(
+diff --git a/lv2_snapshot_workspace/src/snapshot/scheduler.py b/lv2_snapshot_workspace/src/snapshot/scheduler.py
+index fdda2ac5..be464432 100644
+--- a/lv2_snapshot_workspace/src/snapshot/scheduler.py
++++ b/lv2_snapshot_workspace/src/snapshot/scheduler.py
+@@ -863,3 +863,7 @@ class DailyScheduler:
+             and all(len(plan.tables) == 3 for plan in plan_list)
+-            and all(plan.table_parallelism == 3 for plan in plan_list)
++            and all(
++                plan.table_parallelism == 3
++                or plan.code_range_page_size is not None
++                for plan in plan_list
++            )
+         ):
+diff --git a/lv2_snapshot_workspace/tests/conftest.py b/lv2_snapshot_workspace/tests/conftest.py
+new file mode 100644
+index 00000000..690053b4
+--- /dev/null
++++ b/lv2_snapshot_workspace/tests/conftest.py
+@@ -0,0 +1,18 @@
++from __future__ import annotations
++
++from datetime import datetime
++
++import pytest
++
++from snapshot import io as doris_io
++
++
++@pytest.fixture(autouse=True)
++def _outside_doris_quiet_window(monkeypatch):
++    """Fake Doris queries run at a fixed afternoon time unless a test sets its own."""
++
++    monkeypatch.setattr(
++        doris_io,
++        "_beijing_now",
++        lambda: datetime(2026, 10, 9, 14, 0, tzinfo=doris_io.BEIJING),
++    )
+diff --git a/lv2_snapshot_workspace/tests/test_doris_io.py b/lv2_snapshot_workspace/tests/test_doris_io.py
+index 375c8b36..c51dbcc6 100644
+--- a/lv2_snapshot_workspace/tests/test_doris_io.py
++++ b/lv2_snapshot_workspace/tests/test_doris_io.py
+@@ -457 +457,137 @@ def test_build_select_sql_can_group_codes_without_global_event_sort() -> None:
+     assert "ORDER BY code, channel_no, seq" not in sql
++
++
++def _code_range_spec(table: str, codes: list[str], **kwargs: object) -> DorisQuerySpec:
++    return make_query_spec(
++        "2024-01-02",
++        table,
++        codes,
++        code_range=(codes[0], codes[-1]),
++        data_time_intervals=(
++            DataTimeInterval("2024-01-02 09:30:00", "2024-01-02 09:35:00"),
++        ),
++        **kwargs,
++    )
++
++
++def test_code_range_sql_has_one_date_a_range_and_no_in_list_or_sort() -> None:
++    sql = build_select_sql(_code_range_spec("order", ["000001", "000002", "000005"]))
++
++    assert sql == (
++        "SELECT seq, channel_no, code, qty, price, data_time, received_time, side, order_id, ord_type\n"
++        "FROM `order`\n"
++        "WHERE date = '2024-01-02' AND "
++        "((data_time >= '2024-01-02 09:30:00' AND data_time < '2024-01-02 09:35:00')) AND "
++        "code >= '000001' AND code <= '000005';"
++    )
++
++
++@pytest.mark.parametrize(
++    "kwargs, error",
++    [
++        (dict(codes=None, code_range=("000001", "000002")), ValueError),
++        (dict(codes=["000001", "000009"], code_range=("000001", "000005")), ValueError),
++        (dict(codes=["000001"], code_range=("000005", "000001")), ValueError),
++        (dict(codes=["000001"], code_range=("1", "000001")), ValueError),
++        (dict(codes=["000001"], code_range="000001"), TypeError),
++        (dict(codes=["000001"], code_range=("000001", "000001"), priority_codes=["000001"]), ValueError),
++    ],
++)
++def test_code_range_spec_rejects_inconsistent_scope(kwargs, error) -> None:
++    with pytest.raises(error):
++        make_query_spec("2024-01-02", "trade", **kwargs)
++
++
++def test_ordered_stream_rejects_unordered_code_range_specs() -> None:
++    with pytest.raises(ValueError, match="load_table_code_range"):
++        list(iter_table_by_code(_code_range_spec("cancel", ["000001", "000002"]), popen_factory=_FakePopen()))
++
++
++def test_code_range_page_groups_unordered_rows_like_the_ordered_stream() -> None:
++    rows = {
++        "000001": [_tsv_row("order", "000001", seq=1), _tsv_row("order", "000001", seq=4, null_side=True)],
++        "000002": [_tsv_row("order", "000002", seq=2)],
++        "000005": [_tsv_row("order", "000005", seq=3), _tsv_row("order", "000005", seq=5)],
++    }
++    ordered = b"".join(rows["000001"] + rows["000002"] + rows["000005"])
++    expected = dict(
++        iter_table_by_code(
++            make_query_spec("2024-01-02", "order", ["000001", "000002", "000005"]),
++            popen_factory=_FakePopen(_FakeProcess(stdout=ordered)),
++            parser_block_size=180,
++        )
++    )
++    unordered = b"".join(
++        [
++            rows["000005"][0],
++            rows["000001"][0],
++            _tsv_row("order", "000003", seq=9),
++            rows["000002"][0],
++            rows["000005"][1],
++            rows["000001"][1],
++        ]
++    )
++    metrics = StreamMetrics()
++    factory = _FakePopen(_FakeProcess(stdout=unordered))
++
++    actual = doris_io.load_table_code_range(
++        _code_range_spec("order", ["000001", "000002", "000005"]),
++        popen_factory=factory,
++        parser_block_size=180,
++        metrics=metrics,
++        peak_rss_reader=lambda: 77,
++    )
++
++    assert list(actual) == ["000001", "000002", "000005"]
++    for code, frame in expected.items():
++        pd.testing.assert_frame_equal(actual[code], frame)
++    assert (metrics.read_rows, metrics.retained_rows, metrics.discarded_rows, metrics.rows) == (6, 5, 1, 5)
++    assert metrics.bytes_read == len(unordered)
++    assert metrics.peak_rss_bytes == 77
++    assert len(factory.calls) == 1
++
++
++def test_code_range_page_sends_range_sql_and_handles_empty_and_failed_queries() -> None:
++    empty = _FakeProcess()
++    factory = _FakePopen(empty)
++    assert doris_io.load_table_code_range(_code_range_spec("cancel", ["000001", "000002"]), popen_factory=factory) == {}
++    sent = bytes(empty.stdin.data).decode()
++    assert "code >= '000001' AND code <= '000002'" in sent and " IN (" not in sent and "ORDER BY" not in sent
++
++    failed = _FakeProcess(stderr=b"boom --login-path=private", returncode=1)
++    with pytest.raises(DorisQueryError) as exc_info:
++        doris_io.load_table_code_range(_code_range_spec("cancel", ["000001"]), popen_factory=_FakePopen(failed))
++    assert "private" not in str(exc_info.value)
++
++
++@pytest.mark.parametrize(
++    "clock, expected",
++    [((8, 49, 59), 0.0), ((8, 50, 0), 45 * 60.0), ((9, 0, 0), 35 * 60.0), ((9, 34, 30), 30.0), ((9, 35, 0), 0.0)],
++)
++def test_doris_quiet_window_covers_the_live_trading_start(clock, expected) -> None:
++    moment = doris_io.datetime(2026, 10, 9, *clock, tzinfo=doris_io.BEIJING)
++
++    assert doris_io.seconds_until_doris_allowed(moment) == expected
++
++
++def test_doris_quiet_window_uses_beijing_time_for_other_zones() -> None:
++    utc = doris_io.timezone.utc
++    assert doris_io.seconds_until_doris_allowed(doris_io.datetime(2026, 10, 9, 1, 0, tzinfo=utc)) == 35 * 60.0
++
++
++def test_queries_wait_for_the_quiet_window_before_starting_mysql(monkeypatch) -> None:
++    clock = [doris_io.datetime(2026, 10, 9, 9, 33, 30, tzinfo=doris_io.BEIJING)]
++    sleeps: list[float] = []
++
++    def sleep(seconds: float) -> None:
++        sleeps.append(seconds)
++        clock[0] += doris_io.timedelta(seconds=seconds)
++
++    monkeypatch.setattr(doris_io, "_beijing_now", lambda: clock[0])
++    monkeypatch.setattr(doris_io.time, "sleep", sleep)
++    factory = _FakePopen(_FakeProcess())
++
++    list(iter_table_by_code(make_query_spec("2024-01-02", "cancel", None), popen_factory=factory))
++
++    assert sleeps == [60.0, 30.0]
++    assert len(factory.calls) == 1
+diff --git a/lv2_snapshot_workspace/tests/test_query_plan.py b/lv2_snapshot_workspace/tests/test_query_plan.py
+index d09de975..d1df03f5 100644
+--- a/lv2_snapshot_workspace/tests/test_query_plan.py
++++ b/lv2_snapshot_workspace/tests/test_query_plan.py
+@@ -622 +622,203 @@ def test_telemetry_append_contains_only_performance_metadata(tmp_path) -> None:
+     assert "raw" not in payload
++
++
++def _paged_plan(codes, *, page_size=2, table_parallelism=1):
++    return QueryPlan.create(
++        "2024-01-02",
++        codes,
++        data_time_intervals_by_table={
++            table: (DataTimeInterval("2024-01-02 09:30:00", "2024-01-02 09:35:00"),)
++            for table in TABLE_COLUMNS
++        },
++        code_range_page_size=page_size,
++        table_parallelism=table_parallelism,
++    )
++
++
++def test_code_range_pages_are_contiguous_bounded_and_split_at_code_gaps() -> None:
++    plan = _paged_plan(
++        ["300002", "000001", "000002", "000004", "003816", "300001", "300003"],
++        page_size=2,
++    )
++
++    assert plan.code_range_pages() == (
++        ("000001", "000002"),
++        ("000004",),
++        ("003816",),
++        ("300001", "300002"),
++        ("300003",),
++    )
++    spec = plan.code_range_spec("trade", ("300001", "300002"))
++    assert spec.code_range == ("300001", "300002")
++    assert spec.codes == ("300001", "300002")
++    assert spec.data_time_intervals == plan.data_time_intervals_by_table["trade"]
++
++
++@pytest.mark.parametrize(
++    "kwargs",
++    [
++        dict(codes=None),
++        dict(stream_query_shards_by_table={"order": 2}),
++        dict(priority_codes=["000001"]),
++        dict(order_by_code_only=True),
++        dict(code_range_page_size=0),
++    ],
++)
++def test_code_range_paging_rejects_conflicting_options(kwargs) -> None:
++    values = dict(codes=["000001", "000002"], code_range_page_size=2)
++    values.update(kwargs)
++    codes = values.pop("codes")
++    with pytest.raises(ValueError):
++        QueryPlan.create("2024-01-02", codes, **values)
++
++
++def test_code_range_plan_has_no_whole_day_or_sharded_specs() -> None:
++    plan = _paged_plan(["000001", "000002"])
++    with pytest.raises(ValueError, match="one spec per page"):
++        plan.specs()
++    with pytest.raises(ValueError, match="one spec per page"):
++        plan.streaming_specs()
++
++
++def _fake_page_loader(table_codes, calls, *, active=None, delay=0.0):
++    def load(spec, **kwargs):
++        if active is not None:
++            with active["lock"]:
++                active["now"] += 1
++                active["max"] = max(active["max"], active["now"])
++        try:
++            if delay:
++                time.sleep(delay)
++            calls.append((spec.table, spec.code_range))
++            metrics = kwargs["metrics"]
++            frames = {}
++            for code in spec.codes:
++                if code in table_codes[spec.table]:
++                    frames[code] = pd.DataFrame(
++                        {column: [code if column == "code" else 1] for column in spec.columns}
++                    )
++            metrics.rows = metrics.retained_rows = len(frames)
++            metrics.read_rows = len(frames) + 1
++            metrics.discarded_rows = 1
++            metrics.bytes_read = 10 * len(frames)
++            metrics.first_row_seconds = 0.5
++            metrics.elapsed_seconds = 1.0
++            return frames
++        finally:
++            if active is not None:
++                with active["lock"]:
++                    active["now"] -= 1
++
++    return load
++
++
++def test_code_range_stream_queries_pages_serially_and_yields_every_code(monkeypatch) -> None:
++    table_codes = {
++        "order": {"000001", "000003"},
++        "trade": {"000002", "000003"},
++        "cancel": {"000001", "000002"},
++    }
++    calls: list[tuple[str, tuple[str, str]]] = []
++    active = {"lock": threading.Lock(), "now": 0, "max": 0}
++    monkeypatch.setattr(
++        query_plan_module,
++        "load_table_code_range",
++        _fake_page_loader(table_codes, calls, active=active, delay=0.01),
++    )
++    telemetry: list[QueryTelemetry] = []
++
++    rows = list(
++        iter_raw_day_by_code(
++            _paged_plan(["000003", "000001", "000002"], page_size=2),
++            arrow_threads=8,
++            telemetry_sink=telemetry.append,
++        )
++    )
++
++    assert [row.code for row in rows] == ["000001", "000002", "000003"]
++    assert [(len(row.order), len(row.trade), len(row.cancel)) for row in rows] == [
++        (1, 0, 1),
++        (0, 1, 1),
++        (1, 1, 0),
++    ]
++    assert list(rows[0].trade.columns) == list(TABLE_COLUMNS["trade"])
++    assert calls == [
++        ("order", ("000001", "000002")),
++        ("trade", ("000001", "000002")),
++        ("cancel", ("000001", "000002")),
++        ("order", ("000003", "000003")),
++        ("trade", ("000003", "000003")),
++        ("cancel", ("000003", "000003")),
++    ]
++    assert active["max"] == 1
++    assert [item.table for item in telemetry] == ["order", "trade", "cancel"]
++    assert [item.query_count for item in telemetry] == [2, 2, 2]
++    assert [item.rows for item in telemetry] == [2, 2, 2]
++    assert [item.discarded_rows for item in telemetry] == [2, 2, 2]
++    assert [item.elapsed_seconds for item in telemetry] == [2.0, 2.0, 2.0]
++    assert {item.parser_threads_per_query for item in telemetry} == {8}
++    assert {item.table_parallelism for item in telemetry} == {1}
++
++
++def test_code_range_stream_can_query_a_page_tables_together(monkeypatch) -> None:
++    calls: list[tuple[str, tuple[str, str]]] = []
++    active = {"lock": threading.Lock(), "now": 0, "max": 0}
++    codes = {"000001", "000002"}
++    monkeypatch.setattr(
++        query_plan_module,
++        "load_table_code_range",
++        _fake_page_loader({table: codes for table in TABLE_COLUMNS}, calls, active=active, delay=0.05),
++    )
++
++    rows = list(iter_raw_day_by_code(_paged_plan(sorted(codes), page_size=1, table_parallelism=3)))
++
++    assert [row.code for row in rows] == ["000001", "000002"]
++    assert 1 < active["max"] <= 3
++
++
++def test_code_range_stream_failure_emits_no_partial_telemetry(monkeypatch) -> None:
++    def failing(spec, **kwargs):
++        if spec.code_range == ("000003", "000003"):
++            raise RuntimeError("synthetic page failure")
++        return {}
++
++    monkeypatch.setattr(query_plan_module, "load_table_code_range", failing)
++    telemetry: list[QueryTelemetry] = []
++    stream = iter_raw_day_by_code(
++        _paged_plan(["000001", "000002", "000003"], page_size=2),
++        telemetry_sink=telemetry.append,
++    )
++
++    assert [next(stream).code, next(stream).code] == ["000001", "000002"]
++    with pytest.raises(RuntimeError, match="synthetic page failure"):
++        next(stream)
++    assert telemetry == []
++
++
++def test_code_range_stream_rejects_codes_outside_the_page(monkeypatch) -> None:
++    def leaking(spec, **kwargs):
++        return {"000009": pd.DataFrame({"code": ["000009"]})}
++
++    monkeypatch.setattr(query_plan_module, "load_table_code_range", leaking)
++    with pytest.raises(RuntimeError, match="outside the page"):
++        list(iter_raw_day_by_code(_paged_plan(["000001"], page_size=1)))
++
++
++def test_load_raw_day_pages_code_range_plans(monkeypatch) -> None:
++    calls: list[tuple[str, tuple[str, str]]] = []
++    table_codes = {"order": {"000001"}, "trade": {"000002"}, "cancel": set()}
++    monkeypatch.setattr(
++        query_plan_module,
++        "load_table_code_range",
++        _fake_page_loader(table_codes, calls),
++    )
++    telemetry: list[QueryTelemetry] = []
++
++    raw = load_raw_day(_paged_plan(["000001", "000002"], page_size=1), telemetry_sink=telemetry.append)
++
++    assert raw.codes == ("000001", "000002")
++    assert [len(frame) for frame in raw.for_code("000001")] == [1, 0, 0]
++    assert [len(frame) for frame in raw.for_code("000002")] == [0, 1, 0]
++    assert [item.query_count for item in telemetry] == [2, 2, 2]
++    with pytest.raises(ValueError, match="retry"):
++        load_raw_day(_paged_plan(["000001"], page_size=1), retries=1)
+diff --git a/lv2_snapshot_workspace/tests/test_scheduler.py b/lv2_snapshot_workspace/tests/test_scheduler.py
+index fc44d497..230de83c 100644
+--- a/lv2_snapshot_workspace/tests/test_scheduler.py
++++ b/lv2_snapshot_workspace/tests/test_scheduler.py
+@@ -1096 +1096,30 @@ def test_default_process_pool_executes_picklable_consumer(tmp_path) -> None:
+     assert profile_events[0]["details"]["profile_output"] == str(profile_path)
++
++
++def test_code_range_plans_stream_with_the_full_parser_budget() -> None:
++    seen: list[tuple[str, int, int]] = []
++
++    def frame(code: str) -> pd.DataFrame:
++        return pd.DataFrame({"code": [code], "seq": [1]})
++
++    def streaming_loader(plan, **kwargs):
++        seen.append((plan.date, plan.table_parallelism, kwargs["arrow_threads"]))
++        for code in plan.codes:
++            yield RawCodeFrames(date=plan.date, code=code, order=frame(code), trade=frame(code), cancel=frame(code))
++
++    scheduler = DailyScheduler(
++        _settings(compute_workers=2, compute_queue_depth=4, parser_threads_per_stream=4),
++        loader=query_plan_module.load_raw_day,
++        extraction_executor_factory=ThreadPoolExecutor,
++        compute_executor_factory=lambda *, max_workers: ThreadPoolExecutor(max_workers=max_workers),
++    )
++    scheduler.streaming_loader = streaming_loader
++    scheduler.register("streaming", _Consumer("streaming"))
++
++    result = scheduler.run(
++        [QueryPlan.create("2024-01-02", ["000001", "000002"], code_range_page_size=1, prestart_compute_pool=True)]
++    )
++
++    assert seen == [("2024-01-02", 1, 4)]
++    assert [record.status for record in result.dates] == ["done"]
++    assert sorted(record.code for record in result.tasks) == ["000001", "000002"]

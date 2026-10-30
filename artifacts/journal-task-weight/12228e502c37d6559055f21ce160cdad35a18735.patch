@@ -1,0 +1,12 @@
+使用完整成交的合法原生事件验证轻量面板
+
+
+diff --git a/因子/algobench/tests/test_litepanel.py b/因子/algobench/tests/test_litepanel.py
+index bb60cebd..27fd5e50 100644
+--- a/因子/algobench/tests/test_litepanel.py
++++ b/因子/algobench/tests/test_litepanel.py
+@@ -150,3 +150,3 @@ def _synthetic_events(code: str, date: str) -> pd.DataFrame:
+         _row(6, "09:30:01.000", "order", "B", 10010, 1000, 4, code),
+-        _trade(7, "09:30:01.020", 4, 2, 500, 10010, code),
++        _trade(7, "09:30:01.020", 4, 2, 1000, 10010, code),
+         _row(8, "09:30:02.000", "order", "S", 10020, 1000, 5, code),

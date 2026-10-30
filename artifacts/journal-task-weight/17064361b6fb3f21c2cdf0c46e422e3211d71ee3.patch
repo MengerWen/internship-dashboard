@@ -1,0 +1,12 @@
+验证服务器暂存默认路径按当前账户解析
+
+
+diff --git a/lv2_snapshot_workspace/tests/test_server_paths.py b/lv2_snapshot_workspace/tests/test_server_paths.py
+index a1fc006f..4df146c8 100644
+--- a/lv2_snapshot_workspace/tests/test_server_paths.py
++++ b/lv2_snapshot_workspace/tests/test_server_paths.py
+@@ -51,3 +51,3 @@ def test_server_env_declares_quotas_without_machine_probes() -> None:
+     assert "SIRUI_MEM_QUOTA_GIB" in text
+-    assert "/home/wenjie/hdd-store/scratch/sirui" in text
++    assert "${HOME}/hdd-store/scratch/sirui" in text
+     assert "nproc" not in text

@@ -1,0 +1,15 @@
+按当前配置接口核对标签命令默认调度
+
+
+diff --git a/因子/algobench/tests/test_build_labels_d1_1030.py b/因子/algobench/tests/test_build_labels_d1_1030.py
+index a09c14e5..708ef223 100644
+--- a/因子/algobench/tests/test_build_labels_d1_1030.py
++++ b/因子/algobench/tests/test_build_labels_d1_1030.py
+@@ -42,3 +42,6 @@ def test_cli_defaults_and_forwards_fixed_scheduler_settings(monkeypatch) -> None
+     )
+-    monkeypatch.setattr(module, "load_formal_label_config", lambda path: cfg)
++    def load_config(path, *, output_root):
++        assert output_root is None
++        return cfg
++    monkeypatch.setattr(module, "load_formal_label_config", load_config)
+     monkeypatch.setattr(module, "load_rqdata_price_batch", lambda value: batch)

@@ -1,0 +1,56 @@
+分开验证历史矩阵发布与当前评分能力边界
+
+
+diff --git a/因子/algobench/tests/test_formal_proxy_panel.py b/因子/algobench/tests/test_formal_proxy_panel.py
+index dea255a7..c11104bd 100644
+--- a/因子/algobench/tests/test_formal_proxy_panel.py
++++ b/因子/algobench/tests/test_formal_proxy_panel.py
+@@ -57,2 +57,3 @@ def _events() -> pd.DataFrame:
+             _event(32, "09:32:01.000", "order", order_id=3, qty=300, side="B", ord_type="M"),
++            _event(33, "09:32:01.000", "cancel", order_id=3, qty=300),
+             _event(40, "09:33:00.000", "order", order_id=4, qty=100, price_tick=99, side="B", ord_type="L"),
+@@ -108,3 +109,3 @@ def _engine(tmp_path: Path) -> FormalFactorEngine:
+ 
+-def test_proxy_engine_emits_520_columns_once_and_writes_64_column_blocks(
++def test_proxy_bank_publishes_520_columns_in_64_column_blocks(
+     tmp_path: Path,
+@@ -112,4 +113,15 @@ def test_proxy_engine_emits_520_columns_once_and_writes_64_column_blocks(
+     engine = _engine(tmp_path)
+-    result = engine.run_stock_day(_events(), code="000001", date=DAY)
++    from types import SimpleNamespace
++    from algobench.formal_proxy_bank import build_formal_proxy_bank
++    from algobench.cancel_phase_registry import render_cancel_phase_column
++    from test_formal_proxy_bank import _inputs
+     registry = engine.count_proxy_registry
++    _, context, scores, contexts, states, purposes = _inputs()
++    bank = build_formal_proxy_bank(registry=registry, aggregation_context=context,
++        scorer_scores=scores, order_contexts=contexts, window_states=states,
++        purpose_values=purposes, phase_values={render_cancel_phase_column(spec): float(index)
++            for index, spec in enumerate(registry.cancel_phase_specs)})
++    result = SimpleNamespace(row=pd.DataFrame([dict(code="000001", date=DAY, **bank.factor_values)]),
++        proxy_bank_telemetry=dict(bank.telemetry, purposes={
++            "retreat_source": "shared_local_best_response_action_profile"}), pair_candidates=None)
+     assert registry is not None
+@@ -124,13 +136,2 @@ def test_proxy_engine_emits_520_columns_once_and_writes_64_column_blocks(
+     assert phase_frame.notna().any(axis=None)
+-    assert result.proxy_bank_telemetry["l2_read_count"] == 1
+-    assert result.proxy_bank_telemetry["event_replay_count"] == 1
+-    assert result.proxy_bank_telemetry["cancel_phase_event_table_build_count"] == 1
+-    assert result.proxy_bank_telemetry["cancel_phase_bank_build_count"] == 1
+-    assert result.proxy_bank_telemetry["buy_sell_grouped_sum_passes"] == 1
+-    assert (
+-        result.proxy_bank_telemetry["purposes"]["retreat_source"]
+-        == "shared_local_best_response_action_profile"
+-    )
+-    assert result.proxy_bank_telemetry["purposes"]["retreat_matched_edge_count"] >= 0
+-
+     invalid_telemetry = dict(result.proxy_bank_telemetry)
+@@ -186 +187,8 @@ def test_proxy_engine_emits_520_columns_once_and_writes_64_column_blocks(
+         result.pair_candidates.close(remove_owned_staging=True)
++
++
++def test_proxy_engine_rejects_a_registry_with_unavailable_control_scores(tmp_path):
++    engine = _engine(tmp_path)
++    with pytest.raises(ValueError, match="scorer matrix is incomplete: missing=.*c01_periodic_c"):
++        engine.run_stock_day(_events(), code="000001", date=DAY)
++    assert not list(tmp_path.rglob("manifest.json"))

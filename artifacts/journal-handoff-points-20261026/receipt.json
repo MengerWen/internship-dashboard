@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-26",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "xhigh",
+  "runtime_evidence": "当前会话 turn_context 与 config.toml 已核对",
+  "base_commit": "b92fe53d4e4ad7ed99929e21d3c542ee0d73ab08",
+  "commit": "70636ceeb3d6cd90d43b7d2a907910d9d82cdd0b",
+  "branch": "main",
+  "remote_main_verified": "70636ceeb3d6cd90d43b7d2a907910d9d82cdd0b",
+  "behavior": "图例选中交接线时，按实际起止日期同步高亮连接点，保留圆点空实、叉号和方块；切换与取消时同步清除。",
+  "design": "沿用已批准的研究编辑台和推进图谱方向，复用 focus 令牌与原始点形，不增加设计方向选择。",
+  "npm_test": {"passed": 52, "failed": 0},
+  "browser": {
+    "local_verified": true,
+    "checks": "browser-checks.json",
+    "coverage": ["四种线型", "实际端点集合", "切换与重复点击", "Esc", "Enter与空格", "390px窄屏", "密度切换", "单点阅读与线型切换"],
+    "console_errors": [],
+    "screenshot": "desktop.png",
+    "production_interaction_verified": false,
+    "production_limitation": "Chrome 标签页检查连接超时，未完成线上交互复验。"
+  },
+  "build": {
+    "source": "从已推送提交导出的独立目录；Git 时间查询使用原仓库历史",
+    "daily_reports": 40,
+    "journal_days": 106,
+    "mtime_fallbacks": 0,
+    "warning": "因子轨道现有12条链，超过10条"
+  },
+  "deployment": {
+    "url": "https://internship-dashboard.mengerwenjie.workers.dev/",
+    "manual_version": "591a9295-f79c-46b5-af2b-d99851412614",
+    "manual_tag": "70636ce",
+    "active_version": "0c1dc923-4dda-46ff-bc93-3e33a477c9ef",
+    "active_percentage": 100,
+    "active_deployment": "a28c0257-1c7c-42f5-aac8-09720a3e2022",
+    "active_source": "GitHub 当前提交的 Workers Builds 自动发布",
+    "github_check_conclusion": "success",
+    "build_id": "90065d01-57c2-4187-8752-05f2b7a60f37",
+    "github_check_completed_at": "2026-10-26T03:28:17Z",
+    "note": "手动发布成功后，同一提交的自动构建完成，当前版本按GitHub检查输出和部署记录交叉核对。"
+  },
+  "cleanup": {
+    "temporary_source_archive_removed": true,
+    "temporary_release_directory_removed": true,
+    "release_links_before_removal": 0,
+    "release_process_references_before_removal": 0,
+    "preview_process_stopped": 67796,
+    "worktrees_created": 0
+  }
+}
