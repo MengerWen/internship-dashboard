@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const {execFileSync} = require('node:child_process');
 
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8030/';
-const output = path.resolve(process.env.JOURNAL_ARTIFACT_DIR || 'artifacts/journal-axis-order');
+const output = require('./artifact_paths.cjs').artifactDirectory('journal-axis-order');
 const baselineCommit = execFileSync('git', ['rev-parse', 'HEAD'], {encoding: 'utf8'}).trim();
 const before = {module: {exports: {}}};
 vm.runInNewContext(execFileSync('git', ['show', `${baselineCommit}:site/js/journal-notes.js`], {encoding: 'utf8'}), before);

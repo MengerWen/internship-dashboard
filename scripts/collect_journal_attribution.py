@@ -302,10 +302,12 @@ if __name__ == "__main__":
     sys.path.insert(0, str(ROOT))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--output-dir", type=Path, default=ROOT / ".local/runs/journal-task-weight",
+                        help="完整盘点与账本的临时输出目录")
     args = parser.parse_args()
     config = json.loads((ROOT / "scripts/journal_repos.json").read_text(encoding="utf-8"))
     commits = inventory(config)
-    target = ROOT / "artifacts/journal-task-weight"
+    target = args.output_dir
     target.mkdir(parents=True, exist_ok=True)
     (target / "commit-inventory.json").write_text(json.dumps(commits, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     rules = json.loads((ROOT / "scripts/journal_attribution_rules.json").read_text(encoding="utf-8"))

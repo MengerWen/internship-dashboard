@@ -5,7 +5,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8029/dist/';
-const output = path.resolve(process.env.JOURNAL_ARTIFACT_DIR || 'artifacts/journal-annotations');
+const output = require('./artifact_paths.cjs').artifactDirectory('journal-annotations');
 
 async function checkAnnotations(page, label) {
   const boxes = await page.locator('.journal-annotation').evaluateAll(nodes => nodes.map(node => {

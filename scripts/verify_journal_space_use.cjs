@@ -6,7 +6,7 @@ const path = require('node:path');
 const {execFileSync} = require('node:child_process');
 
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8030/';
-const output = path.resolve('artifacts/journal-space-use');
+const output = require('./artifact_paths.cjs').artifactDirectory('journal-space-use');
 const baseline = '35ea1ee8cdde19c89fdbddf7d597ff3dbcf708c4';
 
 function measure() {

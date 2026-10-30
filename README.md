@@ -135,6 +135,8 @@ python scripts/collect_journal_attribution.py --check
 
 ## 发布流程
 
+任务临时产物、未发表正文及收尾检查按[文件维护说明](docs/maintenance/artifacts.md)处理。研究日志验收输出默认位于 `.local/runs/`；任务结束运行 `npm run workspace:audit`，长期证据再选入 `artifacts/`。
+
 ```powershell
 D:\MG\anaconda3\python.exe build.py
 git add content config.json README.md DEPLOY.md DECISIONS.md build.py site requirements.txt .gitignore

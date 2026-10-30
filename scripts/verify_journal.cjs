@@ -5,7 +5,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8029/dist/';
-const output = path.resolve(process.env.JOURNAL_ARTIFACT_DIR || 'artifacts/journal-column-v2');
+const output = require('./artifact_paths.cjs').artifactDirectory('journal-column-v2');
 const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
 
 async function settled(page) {

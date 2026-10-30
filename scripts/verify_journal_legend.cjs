@@ -4,7 +4,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
 const base = process.env.JOURNAL_BASE_URL || 'http://127.0.0.1:8034/dist/';
-const output = path.resolve(process.env.JOURNAL_ARTIFACT_DIR || 'artifacts/journal-legend');
+const output = require('./artifact_paths.cjs').artifactDirectory('journal-legend');
 const offlineDir = process.env.JOURNAL_OFFLINE_DIR || 'dist-offline';
 const types = ['延续', '派生', '依赖解除', '收口'];
 
