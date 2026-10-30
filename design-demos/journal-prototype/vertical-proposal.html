@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>竖向推进流 · 提案效果图｜研究日志</title>
+<link rel="stylesheet" href="proto.css">
+<style>
+.wrap { max-width: 1400px; margin: 0 auto; padding: 0 24px 100px; }
+
+.controls {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 0 0 12px; border-bottom: 1px solid var(--line);
+}
+.seg { display: flex; border: 1px solid var(--line); }
+.seg button {
+  font: inherit; font-size: 12px; padding: 4px 13px; background: none; border: 0;
+  cursor: pointer; color: var(--muted); border-right: 1px solid var(--line-soft);
+}
+.seg button:last-child { border-right: 0; }
+.seg button.is-on { background: var(--line); color: var(--bg); }
+.note-right { margin-left: auto; font-size: 12px; color: var(--muted); }
+
+/* ── 全景条 ───────────────────────────────── */
+.panorama { padding: 14px 0 6px; border-bottom: 1px solid var(--line-soft); }
+.panorama svg { display: block; width: 100%; height: 150px; }
+.panorama .pt { fill: var(--bg); stroke: var(--text); stroke-width: 1.2; }
+.panorama .pt.rep { fill: var(--text); }
+.panorama .pl { stroke: var(--text); stroke-width: 1.2; fill: none; }
+.panorama .ph { stroke: var(--text); stroke-width: .8; fill: none; opacity: .3; }
+.panorama .prule { stroke: var(--line-soft); stroke-width: 1; }
+.panorama .plab { font-size: 9.5px; fill: var(--muted); font-family: var(--font-body); }
+.panorama .pwin { fill: var(--focus); opacity: .1; }
+.panorama .psel { stroke: var(--focus); stroke-width: 1.2; }
+.pcap { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); padding-top: 4px; }
+
+/* ── 吸顶表头 ─────────────────────────────── */
+.thead {
+  position: sticky; top: 0; z-index: 6; background: var(--bg);
+  display: grid; grid-template-columns: var(--railw) 1fr 168px;
+  border-bottom: 1px solid var(--line); padding: 8px 0 7px; font-size: 11px; color: var(--muted);
+}
+.thead .lanes { position: relative; height: 15px; }
+.thead .lanes span {
+  position: absolute; top: 0; font-size: 9.5px; color: var(--muted);
+  white-space: nowrap; transform: translateX(-50%);
+}
+.thead .tk { position: absolute; top: 0; border-left: 1px solid var(--line-soft); height: 15px; }
+
+/* ── 推进流 ───────────────────────────────── */
+.stream { position: relative; display: grid; grid-template-columns: var(--railw) 1fr 168px; }
+.railsvg { position: absolute; left: 0; top: 0; width: var(--railw); height: 100%; overflow: visible; z-index: 1; }
+.hits { position: absolute; left: 0; top: 0; width: var(--railw); height: 100%; z-index: 3; }
+.hits i { position: absolute; width: 18px; cursor: pointer; }
+.rbody { grid-column: 2; }
+.rtail { grid-column: 3; }
+
+.month {
+  grid-column: 1 / -1; font-family: var(--font-serif); font-size: 15px; font-weight: 700;
+  padding: 22px 0 6px; border-bottom: 1px solid var(--line); position: sticky; top: 31px;
+  background: var(--bg); z-index: 5;
+}
+.month span { font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 10px; font-family: var(--font-body); }
+
+.rbody { border-bottom: 1px solid var(--line-soft); padding: var(--rowpad) 0 var(--rowpad) 14px; }
+.rtail { border-bottom: 1px solid var(--line-soft); padding: var(--rowpad) 0 var(--rowpad) 10px; text-align: right; }
+.rbody.hot, .rtail.hot { background: var(--surface); }
+.rbody.rep { box-shadow: inset 3px 0 0 0 var(--line); }
+
+.dayhead { display: flex; align-items: baseline; gap: 10px; min-height: var(--lineh); }
+.dayhead .hl { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dayhead .dt, .dayhead .wd, .dayhead .cn { flex: 0 0 auto; }
+.dt { font-family: var(--font-serif); font-size: 15px; }
+.wd, .cn { font-size: 10.5px; color: var(--muted); }
+.hl { font-size: 13.5px; }
+.hl.draft { color: var(--muted); }
+.notes { list-style: none; margin: 0; padding: 0; }
+.notes li { display: flex; align-items: baseline; gap: 10px; height: var(--lineh); overflow: hidden; }
+.notes .note { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.notes .cname { flex: 0 0 auto; }
+.cname { font-size: 11px; color: var(--muted); width: 72px; }
+.note { font-size: 12.5px; }
+.chip { font-size: 9.5px; border: 1px solid var(--line-soft); padding: 0 4px; color: var(--muted); margin-left: 6px; }
+li.dropped .note, li.dropped .cname { color: var(--muted); }
+.tailchip { font-size: 10.5px; border: 1px solid var(--line-soft); padding: 0 5px; color: var(--muted); display: inline-block; margin: 0 0 3px 4px; }
+.tailchip.pub { border-color: var(--line); color: var(--text); }
+
+.gap { grid-column: 1 / -1; font-size: 11px; color: var(--muted); padding: 5px 0 5px 14px; border-bottom: 1px solid var(--line-soft); }
+
+/* 悬停一条链：不位移，用层级、线宽、纸色描边和对比 */
+.lit .cl { stroke: var(--focus) !important; stroke-width: 3 !important; }
+.lit .cd { stroke: var(--focus) !important; }
+.dim { opacity: .22; }
+.hotname { color: var(--focus) !important; }
+
+@media (max-width: 900px) {
+  .thead, .stream { grid-template-columns: 34px 1fr; }
+  .tails { display: none; }
+  .thead .lanes span { display: none; }
+  .cname { min-width: 56px; }
+}
+</style>
+</head>
+<body style="--railw:238px; --lineh:22px; --rowpad:7px">
+<div class="proto-note">提案效果图 · <b>竖向推进流</b>　时间向下，链条是泳道（28 条链按轨道打包成 <b>9 条泳道</b>），每天一行，<b>每个点右边有它自己的一句注解</b>。数据取自已实现的 <code>dist/manifest.json</code> 与证据 JSON；注解是脚本草稿（正式实现要人写），「未采用」标记是 5 处实测候选。</div>
+
+<header class="masthead">
+  <div class="masthead-row">
+    <div class="edition">Research edition no. 06<br>Shanghai · 2026</div>
+    <div class="brand">量化实习成果看板<small>QUANT RESEARCH ARCHIVE</small></div>
+    <div class="edition" style="text-align:right">提案 · 不是线上页面</div>
+  </div>
+  <nav class="tabs">
+    <a class="tab" href="#">正式成果</a><a class="tab" href="#">每日汇报</a>
+    <a class="tab is-active" href="#">研究日志</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="viewhead">
+    <div><h1>研究日志</h1><p>每天做了什么，接住了什么，交给了谁</p></div>
+    <div class="stat" id="stat"></div>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="密度">
+      <button data-den="24">紧凑</button>
+      <button data-den="22" class="is-on">标准</button>
+      <button data-den="26">宽松</button>
+    </div>
+    <div class="note-right" id="hint">鼠标移到左侧任一条泳道上，这条链会浮起来、它的名字高亮，其它变淡</div>
+  </div>
+
+  <section class="panorama">
+    <svg id="pano" aria-label="全景条：整段实习的形状，点一下跳到那天"></svg>
+    <div class="pcap"><span id="pfrom"></span><span>全景条 · 点一下跳到那天</span><span id="pto"></span></div>
+  </section>
+
+  <div class="thead">
+    <div class="lanes" id="thlanes"></div>
+    <div>日期 · 这天做了什么 · 每条链各自在做什么</div>
+    <div style="text-align:right">链条与汇报</div>
+  </div>
+
+  <div class="stream" id="stream">
+    <svg class="railsvg" id="rail" aria-hidden="true"></svg>
+    <div class="hits" id="hits"></div>
+  </div>
+</div>
+
+<script src="v2-data.js"></script>
+<script>
+(function () {
+  const V = window.V2;
+  const ch = new Map(V.chains.map(c => [c.id, c]));
+  const days = V.days;
+  const byDate = new Map(days.map(d => [d.date, d]));
+  const LANE_W = 20, TRACK_GAP = 7, PAD = 16;
+  const trackOfLane = l => V.tracks.findIndex(t => l >= t.from && l <= t.to);
+  const laneX = l => PAD + l * LANE_W + Math.max(0, trackOfLane(l)) * TRACK_GAP;
+  const railW = laneX(V.lanes - 1) + PAD + 24;
+  document.body.style.setProperty("--railw", railW + "px");
+
+  document.getElementById("stat").innerHTML =
+    "<b>" + days.length + "</b> 天有记录　<b>" + V.chains.length + "</b> 条链条<br>"
+    + V.lanes + " 条泳道（原来 28 条链各占一行）· " + days[0].date + " → " + days[days.length - 1].date;
+
+  // ── 吸顶表头：泳道名 ──
+  const th = document.getElementById("thlanes");
+  const TRACK_ABBR = {"数据与服务器": "数据", "快照与回放": "快照", "算法痕迹": "痕迹",
+                      "因子与定标": "因子", "模型": "模型", "看板与交付": "交付"};
+  th.innerHTML = V.tracks.map(t =>
+    `<span class="tk" style="left:${laneX(t.from) - 10}px"></span>`
+    + `<span style="left:${(laneX(t.from) + laneX(t.to)) / 2}px">${esc(TRACK_ABBR[t.label] || t.label)}</span>`).join("");
+
+  // ── 全景条 ──
+  const PW = 1200, PH = 150, PL = 96, PR = 16;
+  const t0 = Date.parse(days[0].date), t1 = Date.parse(days[days.length - 1].date);
+  const px = d => PL + (Date.parse(d) - t0) / (t1 - t0) * (PW - PL - PR);
+  const trackRow = {}; V.tracks.forEach((t, i) => trackRow[t.id] = 18 + i * 21);
+  const pp = [];
+  V.tracks.forEach(t => {
+    pp.push(`<line class="prule" x1="${PL}" y1="${trackRow[t.id] + 10}" x2="${PW - PR}" y2="${trackRow[t.id] + 10}"/>`);
+    pp.push(`<text class="plab" x="${PL - 8}" y="${trackRow[t.id] + 13}" text-anchor="end">${esc(t.label)}</text>`);
+  });
+  V.handoffs.forEach(h => {
+    const a = ch.get(h.from), b = ch.get(h.to);
+    if (!a || !b) return;
+    const x1 = px(a.span[1]), x2 = px(b.span[0]);
+    const y1 = trackRow[a.track] + 10, y2 = trackRow[b.track] + 10;
+    pp.push(`<path class="ph" d="M${x1},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}"/>`);
+  });
+  V.chains.forEach(c => {
+    const y = trackRow[c.track] + 10;
+    const dts = days.filter(d => d.notes.some(n => n.id === c.id)).map(d => d.date);
+    if (!dts.length) return;
+    pp.push(`<path class="pl" d="M${px(dts[0])},${y} H${px(dts[dts.length - 1])}"/>`);
+    dts.forEach(dt => {
+      const d = byDate.get(dt);
+      pp.push(`<circle class="pt${d.published.length ? " rep" : ""}" cx="${px(dt)}" cy="${y}" r="${Math.min(4.5, 1.6 + 0.3 * Math.sqrt(d.total_commits))}"/>`);
+    });
+  });
+  for (let m = 7; m <= 10; m++) {
+    const dt = `2026-${String(m).padStart(2, "0")}-01`;
+    pp.push(`<line class="prule" x1="${px(dt)}" y1="8" x2="${px(dt)}" y2="${PH - 24}"/>`);
+    pp.push(`<text class="plab" x="${px(dt) + 4}" y="${PH - 14}">${m}月</text>`);
+  }
+  pp.push(`<rect class="pwin" id="pwin" x="${PL}" y="10" width="0" height="${PH - 30}"/>`);
+  pp.push(`<line class="psel" id="psel" x1="0" y1="8" x2="0" y2="${PH - 18}" style="display:none"/>`);
+  days.forEach(d => pp.push(`<rect fill="transparent" data-jump="${d.date}" x="${px(d.date) - 4}" y="6" width="8" height="${PH - 20}" style="cursor:pointer"/>`));
+  const pano = document.getElementById("pano");
+  pano.setAttribute("viewBox", `0 0 ${PW} ${PH}`);
+  pano.innerHTML = pp.join("");
+  document.getElementById("pfrom").textContent = days[0].date;
+  document.getElementById("pto").textContent = days[days.length - 1].date;
+
+  // ── 推进流 ──
+  const stream = document.getElementById("stream");
+  let lastMonth = "", prev = null;
+  const frag = document.createDocumentFragment();
+  days.forEach(d => {
+    const m = d.date.slice(0, 7);
+    if (m !== lastMonth) {
+      lastMonth = m; prev = null;
+      const h = document.createElement("div");
+      h.className = "month";
+      h.innerHTML = m.replace("-", " 年 ") + " 月<span>"
+        + days.filter(x => x.date.slice(0, 7) === m).length + " 天有记录</span>";
+      frag.appendChild(h);
+    }
+    if (prev) {
+      const skip = (Date.parse(d.date) - Date.parse(prev)) / 864e5 - 1;
+      if (skip >= 1) {
+        const g = document.createElement("div");
+        g.className = "gap";
+        const a = new Date(Date.parse(prev) + 864e5).toISOString().slice(5, 10);
+        const b = new Date(Date.parse(d.date) - 864e5).toISOString().slice(5, 10);
+        g.textContent = (skip === 1 ? a : a + " — " + b) + "　无记录";
+        frag.appendChild(g);
+      }
+    }
+    prev = d.date;
+
+    const body = document.createElement("div");
+    body.className = "rbody" + (d.covering.length ? " rep" : "");
+    body.dataset.date = d.date;
+    const draft = d.headline_source === "commit";
+    body.innerHTML = `<div class="dayhead"><span class="dt">${d.date.slice(5)}</span>`
+      + `<span class="wd">${d.weekday}</span>`
+      + `<span class="hl${draft ? " draft" : ""}">${esc(d.headline)}</span>`
+      + `<span class="cn">${d.total_commits} 次提交</span></div>`
+      + `<ul class="notes">` + d.notes.slice().sort((a, b) => ch.get(a.id).lane - ch.get(b.id).lane)
+        .map(n => `<li data-chain="${n.id}"${n.outcome === "dropped" ? ' class="dropped"' : ""}>`
+          + `<span class="cname" data-name="${n.id}">${esc(ch.get(n.id).short)}</span>`
+          + `<span class="note">${esc(n.note)}`
+          + (n.outcome === "dropped" ? `<span class="chip" title="${esc(n.outcome_note || "")}">未采用</span>` : "")
+          + `</span></li>`).join("") + `</ul>`;
+
+    const tail = document.createElement("div");
+    tail.className = "rtail";
+    tail.dataset.date = d.date;
+    tail.innerHTML = d.notes.map(n => `<span class="tailchip" data-name="${n.id}">${esc(ch.get(n.id).short)}</span>`).join("")
+      + d.published.map(r => `<span class="tailchip pub">发布 ${r.slice(5)}</span>`).join("");
+
+    frag.appendChild(body); frag.appendChild(tail);
+  });
+  stream.appendChild(frag);
+
+  // ── 轨道线 ──
+  const rail = document.getElementById("rail"), hits = document.getElementById("hits");
+  function noteY(date, cid) {
+    const body = stream.querySelector(`.rbody[data-date="${date}"]`);
+    if (!body) return null;
+    const li = body.querySelector(`li[data-chain="${cid}"]`);
+    if (!li) return null;
+    const a = li.getBoundingClientRect(), s = stream.getBoundingClientRect();
+    return a.top - s.top + a.height / 2;
+  }
+  function draw() {
+    const P = [], H = [];
+    V.chains.forEach(c => {
+      const pts = days.filter(d => d.notes.some(n => n.id === c.id))
+        .map(d => ({ date: d.date, y: noteY(d.date, c.id), d }))
+        .filter(p => p.y !== null);
+      if (!pts.length) return;
+      const X = laneX(c.lane);
+      P.push(`<g data-chain="${c.id}">`);
+      // 泳道基线
+      P.push(`<line x1="${X}" y1="${pts[0].y}" x2="${X}" y2="${pts[pts.length - 1].y}" stroke="var(--line-soft)" stroke-width="1"/>`);
+      for (let i = 1; i < pts.length; i++) {
+        const gap = (Date.parse(pts[i].date) - Date.parse(pts[i - 1].date)) / 864e5 > 1;
+        const drop = pts[i].d.notes.find(n => n.id === c.id)?.outcome === "dropped";
+        // 纸色描边在下，墨线在上：交叉处有上下关系
+        P.push(`<path d="M${X},${pts[i - 1].y} L${X},${pts[i].y}" stroke="var(--bg)" stroke-width="5" fill="none"/>`);
+        P.push(`<path class="cl" d="M${X},${pts[i - 1].y} L${X},${pts[i].y}" stroke="${drop || gap ? "var(--muted)" : "var(--text)"}" stroke-width="${drop ? 1 : 1.7}" stroke-dasharray="${drop ? "1 3" : gap ? "3 4" : ""}" fill="none"/>`);
+      }
+      pts.forEach(p => {
+        const n = p.d.notes.find(x => x.id === c.id);
+        const drop = n && n.outcome === "dropped";
+        const r = Math.min(6, Math.max(2.2, 2.2 + .42 * Math.sqrt(p.d.total_commits)));
+        P.push(`<circle cx="${X}" cy="${p.y}" r="${r + 1.6}" fill="var(--bg)"/>`);
+        P.push(`<circle class="cd" cx="${X}" cy="${p.y}" r="${r}" fill="${p.d.covering.length && !drop ? "var(--text)" : "var(--bg)"}" stroke="${drop ? "var(--muted)" : "var(--text)"}" stroke-width="${drop ? 1 : 1.7}"/>`);
+        P.push(`<line x1="${X + r + 2}" y1="${p.y}" x2="${railW}" y2="${p.y}" stroke="var(--line-soft)" stroke-width="1"/>`);
+      });
+      P.push(`</g>`);
+      H.push(`<i data-chain-hit="${c.id}" style="left:${X - 9}px;top:${pts[0].y - 10}px;height:${pts[pts.length - 1].y - pts[0].y + 20}px"></i>`);
+    });
+    // 交接
+    V.handoffs.forEach(h => {
+      const a = ch.get(h.from), b = ch.get(h.to);
+      if (!a || !b) return;
+      const ya = noteY(a.span[1], h.from), yb = noteY(b.span[0], h.to);
+      if (ya === null || yb === null) return;
+      const xa = laneX(a.lane), xb = laneX(b.lane), my = (ya + yb) / 2;
+      const dash = h.type === "派生" ? "4 3" : h.type === "依赖解除" ? "1 3" : "";
+      P.push(`<path d="M${xa},${ya} L${xa},${my - 6} Q${xa},${my} ${xa + Math.sign(xb - xa) * 6},${my} L${xb - Math.sign(xb - xa) * 6},${my} Q${xb},${my} ${xb},${my + 6} L${xb},${yb}" fill="none" stroke="var(--text)" stroke-width="1" stroke-dasharray="${dash}" opacity=".45"><title>${h.type}</title></path>`);
+    });
+    rail.style.height = stream.scrollHeight + "px";
+    rail.innerHTML = P.join("");
+    hits.style.height = stream.scrollHeight + "px";
+    hits.innerHTML = H.join("");
+  }
+
+  // ── 悬停一条链 ──
+  let lit = null;
+  function light(cid) {
+    lit = cid;
+    rail.querySelectorAll("g[data-chain]").forEach(g => {
+      const on = !cid || g.dataset.chain === cid;
+      g.classList.toggle("lit", !!cid && on);
+      g.classList.toggle("dim", !!cid && !on);
+      if (cid && on) rail.appendChild(g);
+    });
+    document.querySelectorAll("[data-name]").forEach(n => {
+      n.classList.toggle("hotname", !!cid && n.dataset.name === cid);
+      n.style.opacity = cid && n.dataset.name !== cid ? .25 : 1;
+    });
+    document.querySelectorAll(".rbody, .rtail").forEach(r => {
+      const has = !!cid && byDate.get(r.dataset.date).notes.some(n => n.id === cid);
+      r.classList.toggle("hot", has);
+    });
+    document.getElementById("hint").textContent = cid
+      ? ch.get(cid).label + "　" + ch.get(cid).span[0] + " → " + ch.get(cid).span[1] + "　" + ch.get(cid).days + " 天"
+      : "鼠标移到左侧任一条泳道上，这条链会浮起来、它的名字高亮，其它变淡";
+  }
+  hits.addEventListener("mouseover", e => { const i = e.target.closest("[data-chain-hit]"); if (i) light(i.dataset.chainHit); });
+  hits.addEventListener("mouseleave", () => light(null));
+  stream.addEventListener("mouseover", e => {
+    const li = e.target.closest("li[data-chain]"); if (li) light(li.dataset.chain);
+  });
+
+  // 全景条跳转
+  pano.addEventListener("click", e => {
+    const t = e.target.closest("[data-jump]"); if (!t) return;
+    const row = stream.querySelector(`.rbody[data-date="${t.dataset.jump}"]`);
+    if (row) row.scrollIntoView({ block: "center" });
+    const l = document.getElementById("psel");
+    l.setAttribute("x1", px(t.dataset.jump)); l.setAttribute("x2", px(t.dataset.jump)); l.style.display = "";
+  });
+
+  // 密度
+  document.querySelectorAll("[data-den]").forEach(b => b.onclick = () => {
+    document.querySelectorAll("[data-den]").forEach(o => o.classList.toggle("is-on", o === b));
+    document.body.style.setProperty("--lineh", b.dataset.den + "px");
+    document.body.style.setProperty("--rowpad", b.dataset.den === "24" ? "5px" : b.dataset.den === "26" ? "10px" : "7px");
+    requestAnimationFrame(draw);
+  });
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+  draw();
+  document.fonts.ready.then(draw);
+  let tid; window.addEventListener("resize", () => { clearTimeout(tid); tid = setTimeout(draw, 120); });
+})();
+</script>
+</body>
+</html>

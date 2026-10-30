@@ -1,0 +1,76 @@
+<section data-variant="证据签条" id="proof-labels" aria-label="证据签条设计样稿">
+  <style>
+    #proof-labels{--pl-paper:#f2eee4;--pl-sheet:#f8f4eb;--pl-ink:#15212b;--pl-line:#c8c1b4;--pl-focus:#d9654f;--pl-muted:#5b625f;background:var(--pl-paper);color:var(--pl-ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",sans-serif;padding:28px;min-height:780px;box-sizing:border-box;color-scheme:light}
+    #proof-labels *{box-sizing:border-box}#proof-labels button,#proof-labels a{font:inherit;color:inherit}#proof-labels button{cursor:var(--cursor-interaction,pointer)}#proof-labels button:focus-visible,#proof-labels a:focus-visible{outline:3px solid var(--pl-focus);outline-offset:4px}#proof-labels .pl-mast{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--pl-ink)}#proof-labels .pl-brand{font-family:"Songti SC",SimSun,serif;font-size:20px;font-weight:500;letter-spacing:.06em}#proof-labels .pl-meta{font-size:12px;color:var(--pl-muted)}#proof-labels .pl-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:24px 0 22px}#proof-labels h2{font:500 30px/1.3 "Songti SC",SimSun,serif;margin:0 0 5px}#proof-labels p{margin:0}#proof-labels .pl-date{font:500 20px/1.3 Georgia,serif;white-space:nowrap}#proof-labels .pl-workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,1fr);gap:28px}#proof-labels .pl-graph{min-width:0}#proof-labels .pl-axis{height:40px;position:relative;margin-left:110px;font:12px/1.6 Georgia,serif;color:var(--pl-muted)}#proof-labels .pl-axis span{position:absolute;transform:translateX(-50%);top:6px}#proof-labels .pl-axis span:nth-child(1){left:14%}#proof-labels .pl-axis span:nth-child(2){left:44%;color:var(--pl-ink);border-bottom:2px solid var(--pl-focus);padding-bottom:4px}#proof-labels .pl-axis span:nth-child(3){left:85%}#proof-labels .pl-rows{position:relative}#proof-labels .pl-rows:before{content:"";position:absolute;left:calc(110px + (100% - 110px)*.44);top:0;bottom:0;background:#e7dfd0;width:1px}#proof-labels .pl-row{position:relative;width:100%;height:80px;display:block;border:0;border-bottom:1px solid var(--pl-line);background:transparent;text-align:left;padding:0}#proof-labels .pl-row:last-child{border-bottom:0}#proof-labels .pl-row[aria-pressed="true"]{background:var(--pl-sheet)}#proof-labels .pl-name{position:absolute;left:0;top:21px;width:106px;font-weight:500;padding-left:9px}#proof-labels .pl-row[aria-pressed="true"] .pl-name{border-left:3px solid var(--pl-focus);padding-left:6px}#proof-labels .pl-track{position:absolute;left:110px;right:0;top:35px;height:1px;background:var(--pl-line)}#proof-labels .pl-past{position:absolute;width:7px;height:7px;border:1px solid var(--pl-line);background:var(--pl-paper);border-radius:50%;top:-3px;left:14%;transform:translateX(-50%)}#proof-labels .pl-node{position:absolute;width:var(--pl-size);height:var(--pl-size);border:1.5px solid var(--pl-ink);background:var(--pl-sheet);border-radius:50%;top:0;left:44%;transform:translate(-50%,-50%);z-index:1}#proof-labels .pl-row[aria-pressed="true"] .pl-node{outline:3px solid var(--pl-focus);outline-offset:5px}#proof-labels .pl-sign{position:absolute;left:calc(44% + 25px);top:-17px;min-height:34px;max-width:calc(56% - 28px);display:flex;align-items:center;flex-wrap:wrap;gap:3px 7px;background:var(--pl-paper);padding:3px 7px;border-left:1px solid var(--pl-ink);font-size:12px;line-height:1.4}#proof-labels .pl-sign:before{content:"";position:absolute;right:100%;width:14px;height:1px;top:16px;background:var(--pl-ink)}#proof-labels .pl-row[aria-pressed="true"] .pl-sign{background:var(--pl-sheet)}#proof-labels .pl-sign span{white-space:nowrap}#proof-labels .pl-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:17px;font-size:12px;color:var(--pl-muted)}#proof-labels .pl-legend span{display:inline-flex;align-items:center;gap:5px}#proof-labels .pl-legend i{display:inline-block;width:9px;height:9px;border:1px solid var(--pl-ink);border-radius:50%;background:var(--pl-sheet)}#proof-labels .pl-legend i.pl-solid{background:var(--pl-ink)}#proof-labels .pl-detail{background:var(--pl-sheet);padding:20px 22px;min-width:0;min-height:480px;align-self:start;border-top:3px solid var(--pl-ink)}#proof-labels .pl-detail-top{font-size:12px;color:var(--pl-muted);display:flex;justify-content:space-between;gap:8px}#proof-labels h3{font:500 24px/1.4 "Songti SC",SimSun,serif;margin:14px 0 9px}#proof-labels .pl-detail-note{margin-bottom:15px}#proof-labels .pl-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}#proof-labels .pl-tag{border-bottom:1px solid var(--pl-line);font-size:12px;padding:1px 0}#proof-labels .pl-section-title{font-size:12px;letter-spacing:.06em;color:var(--pl-muted);margin:18px 0 8px}#proof-labels .pl-material{border-top:1px solid var(--pl-line);padding:12px 0}#proof-labels .pl-material-name{font-weight:500;margin-bottom:5px}#proof-labels .pl-file{font:12px/1.7 Consolas,monospace;overflow-wrap:anywhere;color:var(--pl-muted)}#proof-labels .pl-open{display:inline-flex;align-items:center;min-height:44px;margin-top:9px;text-decoration:underline;text-underline-offset:4px}#proof-labels .pl-evidence-meta{font-size:12px;color:var(--pl-muted);margin-top:5px}#proof-labels .pl-discussion{border-top:1px solid var(--pl-line);padding-top:12px}#proof-labels .pl-discussion dl{margin:0}#proof-labels .pl-discussion dt{font-size:12px;color:var(--pl-muted);margin:10px 0 3px}#proof-labels .pl-discussion dd{margin:0}#proof-labels .pl-footer{margin-top:24px;padding-top:14px;border-top:1px solid var(--pl-ink);display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--pl-muted)}
+    @media(max-width:760px){#proof-labels{padding:20px 16px;min-height:1040px}#proof-labels .pl-workspace{grid-template-columns:1fr;gap:25px}#proof-labels .pl-detail{min-height:360px}#proof-labels h2{font-size:26px}#proof-labels .pl-date{font-size:18px}#proof-labels .pl-meta{max-width:90px;text-align:right}#proof-labels .pl-heading{align-items:start}#proof-labels .pl-row{height:76px}#proof-labels .pl-brand{font-size:18px}#proof-labels .pl-footer{flex-wrap:wrap}#proof-labels .pl-track{left:100px}#proof-labels .pl-axis{margin-left:100px}#proof-labels .pl-name{width:97px;font-size:14px;padding-left:5px}#proof-labels .pl-row[aria-pressed="true"] .pl-name{padding-left:2px}#proof-labels .pl-rows:before{left:calc(100px + (100% - 100px)*.44)}#proof-labels .pl-sign{left:calc(44% + 19px);max-width:calc(56% - 19px);padding:3px 4px;gap:3px 5px}#proof-labels .pl-sign:before{width:10px}#proof-labels .pl-legend{gap:6px 12px}}
+    #proof-labels .pl-workspace{grid-template-columns:minmax(0,1fr) 280px;gap:20px;}
+    #proof-labels .pl-graph{display:grid;grid-template-columns:64px repeat(5,minmax(106px,1fr));overflow-x:auto;align-items:start;align-self:start;}
+    #proof-labels .pl-axis{grid-row:1;grid-column:1;position:relative;display:block;margin:0;width:64px;height:360px;}
+    #proof-labels .pl-axis span{left:0!important;top:98px;transform:none;}
+    #proof-labels .pl-axis span:nth-child(2){top:143px;border:0;padding:0;}
+    #proof-labels .pl-axis span:nth-child(3){top:187px;color:var(--pl-ink);border-bottom:2px solid var(--pl-focus);padding-bottom:4px;}
+    #proof-labels .pl-rows{display:contents;}
+    #proof-labels .pl-rows:before{display:none;}
+    #proof-labels .pl-row{grid-row:1;position:relative;height:360px;min-width:106px;border:0;border-left:1px solid var(--pl-line);}
+    #proof-labels .pl-name{top:10px;left:6px;right:6px;width:auto;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0!important;}
+    #proof-labels .pl-row[aria-pressed="true"] .pl-name{border-left:0;}
+    #proof-labels .pl-row[aria-pressed="true"]:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--pl-focus);}
+    #proof-labels .pl-track{top:67px;bottom:23px;left:50%;right:auto;width:1px;height:auto;}
+    #proof-labels .pl-past{left:0;top:36px;}
+    #proof-labels .pl-node{left:0;top:129px;}
+    #proof-labels .pl-sign{top:168px;left:0;right:auto;transform:translateX(-50%);width:94px;max-width:none;min-height:44px;border-left:0;border-top:1px solid var(--pl-ink);padding:7px 4px;gap:5px 9px;justify-content:center;}
+    #proof-labels .pl-sign:before{top:auto;bottom:100%;left:50%;right:auto;width:1px;height:23px;}
+    #proof-labels .pl-legend{grid-row:2;grid-column:1/-1;min-width:594px;}
+    @media(max-width:900px){#proof-labels .pl-workspace{grid-template-columns:1fr;}#proof-labels .pl-detail{margin-top:24px;}}
+  </style>
+  <header class="pl-mast"><span class="pl-brand">思瑞 · 研究日志</span><span class="pl-meta">工作图谱 / 局部样稿</span></header>
+  <div class="pl-heading"><div><h2>沿着工作，找到材料</h2><p class="pl-meta">38 条任务链中的当天 5 项</p></div><span class="pl-date">2026.10.21</span></div>
+  <div class="pl-workspace">
+    <div class="pl-graph" aria-label="10月21日五条任务链，签条标出证据类型">
+      <div class="pl-axis" aria-hidden="true"><span>10.19</span><span>10.20</span><span>10.21</span></div>
+      <div class="pl-rows">
+        <button class="pl-row" type="button" data-case="sse-v2" aria-pressed="true" aria-controls="pl-evidence-detail"><span class="pl-name">沪市委托还原</span><span class="pl-track" aria-hidden="true"><i class="pl-past"></i><i class="pl-node" style="--pl-size:28px"></i><span class="pl-sign"><span>代码</span><span>提交</span><span>验收记录</span><span>会话</span></span></span></button>
+        <button class="pl-row" type="button" data-case="replay" aria-pressed="false" aria-controls="pl-evidence-detail"><span class="pl-name">回放核验</span><span class="pl-track" aria-hidden="true"><i class="pl-past"></i><i class="pl-node" style="--pl-size:9px"></i><span class="pl-sign"><span>文档</span></span></span></button>
+        <button class="pl-row" type="button" data-case="research-journal" aria-pressed="false" aria-controls="pl-evidence-detail"><span class="pl-name">研究日志</span><span class="pl-track" aria-hidden="true"><i class="pl-past"></i><i class="pl-node" style="--pl-size:22px"></i><span class="pl-sign"><span>代码</span><span>提交</span></span></span></button>
+        <button class="pl-row" type="button" data-case="behavior-design" aria-pressed="false" aria-controls="pl-evidence-detail"><span class="pl-name">行为构思</span><span class="pl-track" aria-hidden="true"><i class="pl-node" style="--pl-size:9px"></i><span class="pl-sign"><span>会话</span></span></span></button>
+        <button class="pl-row" type="button" data-case="corrected-replay-344" aria-pressed="false" aria-controls="pl-evidence-detail"><span class="pl-name">344 列定参</span><span class="pl-track" aria-hidden="true"><i class="pl-past"></i><i class="pl-node" style="--pl-size:12px"></i><span class="pl-sign"><span>待核</span></span></span></button>
+      </div>
+      <div class="pl-legend"><span>圆径：提交量</span><span><i></i>无关联汇报</span><span><i class="pl-solid"></i>有关联汇报</span><span>■ 收口</span><span>× 未采用</span></div>
+    </div>
+    <aside class="pl-detail" id="pl-evidence-detail" aria-live="polite" aria-label="当前任务的证据材料"></aside>
+  </div>
+  <footer class="pl-footer"><span>10 月 21 日未发布汇报</span><span>签条只说明材料类别</span></footer>
+  <script>
+  (() => {
+    const root = document.getElementById('proof-labels');
+    if (!root) return;
+    const cases = [
+      {id:'sse-v2',label:'沪市委托还原',note:'沪深三项口径修正通过全市场对照',kind:'mixed',weight:74,tags:['代码','提交','验收记录','会话'],artifact:'三项口径修正与全市场对照',url:'https://github.com/MengerWen/sirui-quant-research/blob/fb52d08a98c5fdd4b576dae0489d951205a38dff/reports/2026-10/2026-10-21-open5m-queue-f16-dm-decisions-r2.md',discussion:'决定排队余量采用新口径，并用于后续耗尽尺度定参。'},
+      {id:'replay',label:'回放核验',note:'完整日验收并保留回放来源',kind:'artifact',weight:0,tags:['文档'],artifact:'正确盘口 344 列重新定参',url:'https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md',discussion:''},
+      {id:'research-journal',label:'研究日志',note:'修复采集并补核来源',kind:'artifact',weight:34,tags:['代码','提交'],artifact:'研究日志图谱与来源采集改动',url:'https://github.com/MengerWen/internship-dashboard/commit/902b03b440425600c64ac4ba0030eeab3a36d9e9',discussion:''},
+      {id:'behavior-design',label:'行为构思',note:'比较 V3 至 V9 的沪深适用性和顺序',kind:'discussion',weight:0,tags:['会话'],artifact:'',url:'',discussion:'比较不同方案在沪深市场的适用性；具体实现与验证仍需后续记录。'},
+      {id:'corrected-replay-344',label:'344 列定参',note:'六核采集推进，结构参数改用新口径',kind:'pending',weight:null,tags:['待核'],artifact:'',url:'',discussion:'需要补核文件、提交及运行回执之间的对应关系。'}
+    ];
+    const detail = root.querySelector('.pl-detail');
+    const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function render(id) {
+      const item = cases.find(c => c.id === id) || cases[0];
+      root.querySelectorAll('[data-case]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.case === item.id)));
+      const commit = item.url.includes('/commit/');
+      const location = item.url ? (commit ? item.url.split('/commit/')[1] : item.url.split('/reports/')[1]) : '';
+      let content = `<div class="pl-detail-top"><span>2026.10.21 · 材料索引</span><span>${item.weight === null ? '提交量待核' : item.weight + ' 提交权重'}</span></div><h3>${esc(item.label)}</h3><p class="pl-detail-note">${esc(item.note)}</p><div class="pl-tags">${item.tags.map(tag => `<span class="pl-tag">${esc(tag)}</span>`).join('')}</div>`;
+      if (item.url) content += `<div class="pl-section-title">${commit ? '提交记录' : '文件列表'}</div><div class="pl-material"><p class="pl-material-name">${esc(item.artifact)}</p><div class="pl-file">${esc(location)}</div><p class="pl-evidence-meta">${commit ? '仓库 · internship-dashboard' : '仓库 · sirui-quant-research'}</p><a class="pl-open" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${commit ? '查看这次提交 ↗' : '打开原文件 ↗'}</a></div>`;
+      if (item.id === 'replay') content += '<p class="pl-evidence-meta">有文件入口，演示提交量为 0。</p>';
+      if (item.discussion && item.kind !== 'pending') content += `<div class="pl-section-title">讨论摘录</div><div class="pl-discussion"><dl><dt>问题</dt><dd>${item.id === 'sse-v2' ? '排队余量后续采用哪套口径？' : 'V3 至 V9 在沪深市场如何安排？'}</dd><dt>${item.kind === 'discussion' ? '目前结论与待验证' : '决定'}</dt><dd>${esc(item.discussion)}</dd>${item.kind === 'mixed' ? '<dt>待验证</dt><dd>后续定参的运行与验收状态，需查看对应回执。</dd>' : ''}</dl></div>`;
+      if (item.kind === 'pending') content += `<div class="pl-section-title">待补证据</div><div class="pl-discussion"><p>${esc(item.discussion)}</p><dl><dt>需要对应</dt><dd>具体文件 → 提交版本 → 运行回执</dd><dt>当前可见</dt><dd>当天任务摘要，尚未确认材料入口。</dd></dl></div>`;
+      detail.innerHTML = content;
+    }
+    root.querySelectorAll('[data-case]').forEach(button => {
+      const item = cases.find(c => c.id === button.dataset.case);
+      button.setAttribute('aria-label', item.label + '，' + item.tags.join('、') + '，查看材料');
+      button.addEventListener('click', () => render(button.dataset.case));
+    });
+    render('sse-v2');
+  })();
+  </script>
+</section>

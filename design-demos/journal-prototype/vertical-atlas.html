@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>竖向链条图 · 提案效果图｜研究日志</title>
+<link rel="stylesheet" href="proto.css">
+<style>
+.wrap { max-width: 1400px; margin: 0 auto; padding: 0 24px 100px; }
+
+.controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 0 0 12px; border-bottom: 1px solid var(--line); }
+.seg { display: flex; border: 1px solid var(--line); }
+.seg button { font: inherit; font-size: 12px; padding: 4px 13px; background: none; border: 0; cursor: pointer; color: var(--muted); border-right: 1px solid var(--line-soft); }
+.seg button:last-child { border-right: 0; }
+.seg button.is-on { background: var(--line); color: var(--bg); }
+.hint { margin-left: auto; font-size: 12px; color: var(--muted); }
+.clearbtn { font: inherit; font-size: 12px; background: none; border: 1px solid var(--line-soft); padding: 3px 9px; cursor: pointer; color: var(--text); }
+
+.thead { position: sticky; top: 0; z-index: 8; background: var(--bg); border-bottom: 1px solid var(--line); }
+.thead .inner { position: relative; height: 110px; }
+.tname {
+  position: absolute; bottom: 4px; font-size: 11px; color: var(--muted);
+  writing-mode: vertical-rl; text-orientation: mixed; white-space: nowrap;
+  transform: translateX(-50%); cursor: pointer; padding: 2px 2px 0;
+  transition: color 120ms var(--ease), opacity 120ms var(--ease);
+}
+.tname:hover { color: var(--text); }
+.tname.is-dropped { text-decoration: line-through; text-decoration-thickness: 1px; }
+.tname.sel { color: var(--focus); font-weight: 700; }
+.tname.dim { opacity: .2; }
+.tgroup { position: absolute; top: 2px; font-size: 10.5px; color: var(--text); transform: translateX(-50%); white-space: nowrap; }
+.tbar { position: absolute; top: 18px; height: 1px; background: var(--line); }
+.tsep { position: absolute; top: 18px; bottom: 0; width: 1px; background: var(--line-soft); }
+
+.canvas { position: relative; }
+svg.atlas { display: block; width: 100%; }
+.atlas .weekend { fill: var(--bg-deep); opacity: .28; }
+.atlas .mrule { stroke: var(--line-soft); stroke-width: 1; }
+.atlas .mlab { font-size: 11px; fill: var(--muted); }
+.atlas .dlab { font-size: 9.5px; fill: var(--muted); cursor: pointer; }
+.atlas .dlab.sel { fill: var(--focus); font-weight: 700; }
+.atlas .gsep { stroke: var(--line-soft); stroke-width: 1; }
+.atlas .cline { stroke: var(--text); stroke-width: 1.7; fill: none; }
+.atlas .cpause { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; fill: none; }
+.atlas .cdrop { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 1 3; fill: none; }
+.atlas .halo { stroke: var(--bg); stroke-width: 5; fill: none; }
+.atlas .hand { stroke: var(--text); stroke-width: 1; fill: none; opacity: .3; }
+.atlas .dot { fill: var(--bg); stroke: var(--text); stroke-width: 1.7; }
+.atlas .dot.rep { fill: var(--text); }
+.atlas .cross { stroke: var(--text); stroke-width: 2; stroke-linecap: round; }
+.atlas .ring { fill: var(--bg); }
+.atlas .seal { fill: var(--text); }
+.atlas .tick { stroke: var(--text); stroke-width: 2; }
+.atlas g.unit { transition: opacity 120ms var(--ease); }
+.atlas g.unit.sel .cline { stroke: var(--focus); stroke-width: 3; }
+.atlas g.unit.sel .dot { stroke: var(--focus); }
+.atlas g.unit.sel .dot.rep { fill: var(--focus); }
+.atlas g.unit.sel .cross { stroke: var(--focus); }
+.atlas g.unit.dim { opacity: .13; }
+
+.atlas .rowhit, .atlas .hit { fill: transparent; cursor: pointer; }
+.atlas .dayline { stroke: var(--focus); stroke-width: 1.4; }
+.atlas .daymark { fill: none; stroke: var(--focus); stroke-width: 2; }
+.atlas .lead { stroke: var(--focus); stroke-width: 1; fill: none; opacity: .75; }
+.atlas .vlead { stroke: var(--line); stroke-width: 1; opacity: .45; }
+.atlas .vnote { font-size: 11px; fill: var(--text); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
+.atlas .vnote.drop { fill: var(--muted); }
+
+.cards { position: absolute; left: 0; top: 0; pointer-events: none; }
+.card {
+  position: absolute; width: 236px; background: var(--surface); border: 1px solid var(--line);
+  padding: 8px 11px 9px; font-size: 12px; box-shadow: 0 6px 18px rgb(21 33 43 / .12);
+}
+.card.one { width: 262px; }
+.card .cn { font-size: 11px; color: var(--muted); }
+.card .ct { margin-top: 3px; line-height: 1.5; }
+.card .cw { margin-top: 4px; font-size: 11px; color: var(--muted); }
+.card .chip { font-size: 9.5px; border: 1px solid var(--line-soft); padding: 0 4px; color: var(--muted); margin-left: 6px; }
+
+.detail { border: 1px solid var(--line); background: var(--surface); padding: 22px 26px 26px; margin-top: 26px; }
+.detail .top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.detail .pd { font-family: var(--font-serif); font-size: 26px; line-height: 1; }
+.detail .pw { font-size: 12px; color: var(--muted); }
+.detail h2 { font-family: var(--font-serif); font-size: 19px; margin: 10px 0 0; font-weight: 700; }
+.detail .chips { margin-top: 10px; }
+.detail .chip { font-size: 11px; border-bottom: 1px solid var(--line-soft); padding: 0 2px; margin-right: 10px; cursor: pointer; }
+.detail .chip:hover { border-color: var(--focus); }
+.detail .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; margin-top: 10px; }
+.detail h4 { font-size: 13px; font-weight: 700; margin: 20px 0 8px; }
+.detail ul { margin: 0; padding-left: 18px; font-size: 13px; }
+.detail li { margin-bottom: 5px; }
+.detail .flow { font-size: 13px; }
+.detail .flow .grp { color: var(--muted); font-size: 12px; margin: 12px 0 4px; }
+.detail .flow .arrow { font-family: var(--font-mono); color: var(--muted); margin-right: 6px; }
+.detail .nb { display: flex; gap: 10px; margin-top: 6px; }
+.detail .nb div { flex: 1; border: 1px solid var(--line-soft); padding: 8px 10px; font-size: 12px; color: var(--muted); min-height: 38px; }
+.detail details { margin-bottom: 6px; }
+.detail summary { cursor: pointer; font-size: 13px; }
+.detail .plan { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.detail .empty { color: var(--muted); font-size: 13px; }
+.detail .chaindays { columns: 2; column-gap: 32px; font-size: 13px; }
+.detail .chaindays button { font: inherit; background: none; border: 0; padding: 1px 0; cursor: pointer; text-align: left; display: block; width: 100%; color: inherit; }
+.detail .chaindays button:hover { color: var(--focus); }
+.detail .chaindays .dt { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin-right: 7px; }
+
+.foot { display: flex; gap: 18px; flex-wrap: wrap; font-size: 11px; color: var(--muted); padding: 10px 0 0; }
+.foot i { font-style: normal; display: inline-flex; align-items: center; gap: 6px; }
+
+@media (max-width: 900px) {
+  .wrap { padding: 0 12px 60px; }
+  .detail .cols { grid-template-columns: 1fr; }
+  .detail .chaindays { columns: 1; }
+}
+</style>
+</head>
+<body>
+<div class="proto-note">提案效果图 · <b>竖向链条图</b>　28 条链条一条不少，每条占自己一列。<b>全部靠点击，没有悬浮</b>：点日期出整条日期线和当天的横向卡片，点列头的链名出这条链的纵向注解，点单个点只出那一个点的说明。</div>
+
+<header class="masthead">
+  <div class="masthead-row">
+    <div class="edition">Research edition no. 06<br>Shanghai · 2026</div>
+    <div class="brand">量化实习成果看板<small>QUANT RESEARCH ARCHIVE</small></div>
+    <div class="edition" style="text-align:right">提案 · 不是线上页面</div>
+  </div>
+  <nav class="tabs">
+    <a class="tab" href="#">正式成果</a><a class="tab" href="#">每日汇报</a>
+    <a class="tab is-active" href="#">研究日志</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="viewhead">
+    <div><h1>研究日志</h1><p>每天做了什么，接住了什么，交给了谁</p></div>
+    <div class="stat" id="stat"></div>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="密度">
+      <button data-ppd="7">紧凑 · 一屏看全</button>
+      <button data-ppd="11" class="is-on">标准</button>
+      <button data-ppd="17">宽松</button>
+    </div>
+    <button class="clearbtn" id="clear" hidden>取消选中（Esc）</button>
+    <div class="hint" id="hint">点左边的日期看这一天，点上面的链名看这条链，点某个点只看那一个点</div>
+  </div>
+
+  <div class="thead"><div class="inner" id="thead"></div></div>
+
+  <div class="canvas" id="canvas">
+    <svg class="atlas" id="atlas"></svg>
+    <div class="cards" id="cards"></div>
+  </div>
+
+  <div class="foot">
+    <i><svg width="30" height="12"><circle cx="7" cy="6" r="3" fill="#f2eee4" stroke="#1e2a31" stroke-width="1.7"/><circle cx="22" cy="6" r="5.5" fill="#f2eee4" stroke="#1e2a31" stroke-width="1.7"/></svg> 点的大小 = 当天提交数</i>
+    <i><svg width="18" height="12"><circle cx="9" cy="6" r="4.5" fill="#1e2a31"/></svg> 实心 = 这天的工作写进了汇报</i>
+    <i><svg width="30" height="12"><line x1="15" y1="0" x2="15" y2="12" stroke="#68716f" stroke-width="1" stroke-dasharray="3 4"/></svg> 虚线 = 这条链停着</i>
+    <i><svg width="18" height="14"><path d="M4 3 L12 11 M12 3 L4 11" stroke="#1e2a31" stroke-width="2" stroke-linecap="round"/></svg> × = 这天这条链的工作未被采用</i>
+    <i><svg width="14" height="12"><rect x="3" y="3" width="7" height="7" fill="#1e2a31"/></svg> 收口</i>
+    <i>左侧刻度 = 这天发布了汇报</i>
+  </div>
+
+  <div class="detail" id="detail"></div>
+</div>
+
+<script src="v2-data.js"></script>
+<script>
+(function () {
+  const V = window.V2;
+  const days = V.days, byDate = new Map(days.map(d => [d.date, d]));
+  const trackOrder = V.tracks.map(t => t.id);
+  const chains = V.chains.slice().sort((a, b) =>
+    trackOrder.indexOf(a.track) - trackOrder.indexOf(b.track) || a.span[0].localeCompare(b.span[0]));
+  chains.forEach((c, i) => c.col = i);
+  const ch = new Map(chains.map(c => [c.id, c]));
+  const noteOf = (date, cid) => (byDate.get(date)?.notes || []).find(n => n.id === cid);
+  const daysOf = cid => days.filter(d => noteOf(d.date, cid));
+  const REPO = { "sirui-quant-research": "研究主仓", "Quant_Research-Trading": "父仓", "internship-dashboard": "看板仓" };
+
+  const D0 = Date.parse(days[0].date), D1 = Date.parse(days[days.length - 1].date);
+  const SPAN = (D1 - D0) / 864e5;
+  const DATE_W = 86, PAD_R = 18, GROUP_GAP = 16, TOP = 14, BOT = 26;
+  let ppd = 11, W = 1200, colW = 40;
+  let sel = null;   // {kind:'day'|'chain'|'point', date, chain}
+
+  document.getElementById("stat").innerHTML =
+    "<b>" + days.length + "</b> 天有记录　<b>" + chains.length + "</b> 条链条<br>"
+    + "六个轨道 · " + days[0].date + " → " + days[days.length - 1].date + " 共 " + (SPAN + 1) + " 天";
+
+  const groupIndexOf = col => trackOrder.indexOf(chains[col].track);
+  const colX = col => DATE_W + 18 + col * colW + groupIndexOf(col) * GROUP_GAP + colW / 2;
+  const yOf = date => TOP + (Date.parse(date) - D0) / 864e5 * ppd;
+  const PLOT_R = () => W - PAD_R;
+  const radius = d => Math.min(7, Math.max(2.2, 2.2 + .46 * Math.sqrt(d.total_commits)));
+
+  function layout() {
+    W = document.getElementById("canvas").clientWidth || 1200;
+    const groups = new Set(chains.map(c => c.track)).size;
+    colW = Math.max(22, (W - DATE_W - 18 - PAD_R - (groups - 1) * GROUP_GAP) / chains.length);
+  }
+
+  function header() {
+    const th = document.getElementById("thead"), p = [];
+    V.tracks.forEach(t => {
+      const cols = chains.filter(c => c.track === t.id).map(c => c.col);
+      if (!cols.length) return;
+      const a = colX(Math.min(...cols)) - colW / 2, b = colX(Math.max(...cols)) + colW / 2;
+      p.push(`<span class="tgroup" style="left:${(a + b) / 2}px">${esc(t.label)}</span>`);
+      p.push(`<span class="tbar" style="left:${a}px;width:${b - a}px"></span>`);
+      if (b < W - PAD_R) p.push(`<span class="tsep" style="left:${b + GROUP_GAP / 2}px"></span>`);
+    });
+    chains.forEach(c => p.push(
+      `<span class="tname${c.fate === "dropped" ? " is-dropped" : ""}" data-chain="${c.id}" `
+      + `style="left:${colX(c.col)}px" title="${esc(c.label)}　${c.span[0]} → ${c.span[1]}　${c.days} 天">`
+      + esc(c.short) + `</span>`));
+    th.innerHTML = p.join("");
+    th.querySelectorAll(".tname").forEach(n =>
+      n.onclick = () => select({ kind: "chain", chain: n.dataset.chain }));
+  }
+
+  const svg = document.getElementById("atlas");
+  function draw() {
+    layout();
+    const H = TOP + SPAN * ppd + BOT;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.setAttribute("height", H);
+    const P = [];
+
+    for (let i = 0; i <= SPAN; i++) {
+      const dt = new Date(D0 + i * 864e5).toISOString().slice(0, 10);
+      const wd = new Date(dt + "T00:00:00Z").getUTCDay();
+      if (wd === 0 || wd === 6) P.push(`<rect class="weekend" x="${DATE_W}" y="${yOf(dt) - ppd / 2}" width="${PLOT_R() - DATE_W}" height="${ppd}"/>`);
+      if (dt.slice(8) === "01" || i === 0) {
+        P.push(`<line class="mrule" x1="${DATE_W - 8}" y1="${yOf(dt)}" x2="${PLOT_R()}" y2="${yOf(dt)}"/>`);
+        P.push(`<text class="mlab" x="0" y="${yOf(dt) - 4}">${Number(dt.slice(5, 7))} 月</text>`);
+      }
+    }
+    days.forEach(d => {
+      const mon = new Date(d.date + "T00:00:00Z").getUTCDay() === 1;
+      if (ppd >= 11 || mon) P.push(`<text class="dlab" data-day="${d.date}" x="${DATE_W - 12}" y="${yOf(d.date) + 3.5}" text-anchor="end">${d.date.slice(5)}</text>`);
+      if (d.published.length) P.push(`<line class="tick" x1="${DATE_W - 6}" y1="${yOf(d.date)}" x2="${DATE_W + 2}" y2="${yOf(d.date)}"/>`);
+    });
+
+    V.tracks.forEach(t => {
+      const cols = chains.filter(c => c.track === t.id).map(c => c.col);
+      if (!cols.length) return;
+      const b = colX(Math.max(...cols)) + colW / 2 + GROUP_GAP / 2;
+      if (b < PLOT_R()) P.push(`<line class="gsep" x1="${b}" y1="${TOP}" x2="${b}" y2="${TOP + SPAN * ppd}"/>`);
+    });
+
+    V.handoffs.forEach(h => {
+      const a = ch.get(h.from), b = ch.get(h.to);
+      if (!a || !b) return;
+      const x1 = colX(a.col), y1 = yOf(a.span[1]), x2 = colX(b.col), y2 = yOf(b.span[0]);
+      const dash = h.type === "派生" ? "4 3" : h.type === "依赖解除" ? "1 3" : "";
+      P.push(`<g class="unit" data-chains="${h.from} ${h.to}"><path class="hand" stroke-dasharray="${dash}" d="M${x1},${y1} C${x1},${(y1 + y2) / 2} ${x2},${(y1 + y2) / 2} ${x2},${y2}"><title>${h.type}：${esc(a.short)} → ${esc(b.short)}</title></path></g>`);
+    });
+
+    chains.forEach(c => {
+      const dts = daysOf(c.id).map(d => d.date);
+      if (!dts.length) return;
+      const X = colX(c.col);
+      P.push(`<g class="unit" data-chain="${c.id}" data-chains="${c.id}">`);
+      for (let i = 1; i < dts.length; i++) {
+        const gap = (Date.parse(dts[i]) - Date.parse(dts[i - 1])) / 864e5 > 3;
+        const drop = noteOf(dts[i], c.id).outcome === "dropped";
+        P.push(`<path class="halo" d="M${X},${yOf(dts[i - 1])} L${X},${yOf(dts[i])}"/>`);
+        P.push(`<path class="${drop ? "cdrop" : gap ? "cpause" : "cline"}" d="M${X},${yOf(dts[i - 1])} L${X},${yOf(dts[i])}"/>`);
+      }
+      dts.forEach(dt => {
+        const d = byDate.get(dt), n = noteOf(dt, c.id), r = radius(d);
+        P.push(`<circle class="ring" cx="${X}" cy="${yOf(dt)}" r="${r + 2.2}"/>`);
+        if (n.outcome === "dropped") {
+          const a = Math.max(3.4, r);
+          P.push(`<path class="cross" d="M${X - a},${yOf(dt) - a} L${X + a},${yOf(dt) + a} M${X + a},${yOf(dt) - a} L${X - a},${yOf(dt) + a}"/>`);
+        } else {
+          P.push(`<circle class="dot${d.covering.length ? " rep" : ""}" cx="${X}" cy="${yOf(dt)}" r="${r}"/>`);
+        }
+      });
+      if (c.fate !== "dropped") P.push(`<rect class="seal" x="${X - 3.5}" y="${yOf(dts[dts.length - 1]) - 3.5}" width="7" height="7"/>`);
+      P.push(`</g>`);
+    });
+
+    days.forEach(d => P.push(`<rect class="rowhit" data-day="${d.date}" x="${DATE_W}" y="${yOf(d.date) - ppd / 2}" width="${PLOT_R() - DATE_W}" height="${ppd}"/>`));
+    chains.forEach(c => daysOf(c.id).forEach(d =>
+      P.push(`<rect class="hit" data-day="${d.date}" data-chain="${c.id}" x="${colX(c.col) - 9}" y="${yOf(d.date) - (ppd + 6) / 2}" width="18" height="${ppd + 6}"/>`)));
+    P.push(`<g id="overlay"></g>`);
+    svg.innerHTML = P.join("");
+    header();
+    paint();
+  }
+
+  // ── 选中后的绘制 ────────────────────────────────────
+  function paint() {
+    const ov = svg.querySelector("#overlay"), cards = document.getElementById("cards");
+    ov.innerHTML = ""; cards.innerHTML = "";
+    document.querySelectorAll(".tname").forEach(n => n.classList.remove("sel", "dim"));
+    svg.querySelectorAll(".dlab").forEach(n => n.classList.remove("sel"));
+    svg.querySelectorAll("g.unit").forEach(g => g.classList.remove("sel", "dim"));
+    document.getElementById("clear").hidden = !sel;
+    if (!sel) {
+      document.getElementById("hint").textContent = "点左边的日期看这一天，点上面的链名看这条链，点某个点只看那一个点";
+      renderDetail(null); return;
+    }
+    if (sel.kind === "chain") paintChain(ov); else paintDay(ov, cards);
+    renderDetail(sel);
+  }
+
+  // 选中一天：横线穿过当天的点 + 横向排开的卡片（和当天的点一样横着）
+  function paintDay(ov, cards) {
+    const d = byDate.get(sel.date), y = yOf(sel.date);
+    const items = sel.kind === "point"
+      ? d.notes.filter(n => n.id === sel.chain)
+      : d.notes.slice().sort((a, b) => ch.get(a.id).col - ch.get(b.id).col);
+    const live = new Set(items.map(n => n.id));
+    svg.querySelectorAll("g.unit").forEach(g => {
+      const own = (g.dataset.chains || "").split(" ");
+      if (!own.some(o => live.has(o))) g.classList.add("dim");
+    });
+    document.querySelectorAll(".tname").forEach(n =>
+      n.classList.add(live.has(n.dataset.chain) ? "sel" : "dim"));
+    const lab = svg.querySelector(`.dlab[data-day="${CSS.escape(sel.date)}"]`);
+    if (lab) lab.classList.add("sel");
+
+    const parts = [`<line class="dayline" x1="${DATE_W}" y1="${y}" x2="${PLOT_R()}" y2="${y}"/>`];
+    items.forEach(n => parts.push(
+      `<circle class="daymark" cx="${colX(ch.get(n.id).col)}" cy="${y}" r="${radius(d) + 4.5}"/>`));
+
+    const CW = sel.kind === "point" ? 262 : 236, GAP = 10, bandY = y + 20;
+    const xs = [];
+    items.forEach((n, i) => {
+      const want = colX(ch.get(n.id).col) - CW / 2;
+      xs.push(i ? Math.max(want, xs[i - 1] + CW + GAP) : Math.max(DATE_W, want));
+    });
+    const over = xs.length ? xs[xs.length - 1] + CW - PLOT_R() : 0;
+    if (over > 0) for (let i = 0; i < xs.length; i++) xs[i] = Math.max(DATE_W, xs[i] - over);
+
+    const html = [];
+    items.forEach((n, i) => {
+      const c = ch.get(n.id), X = colX(c.col), cx = xs[i] + CW / 2, dir = cx > X ? 1 : -1;
+      parts.push(`<path class="lead" d="M${X},${y + radius(d) + 6} L${X},${bandY - 10} Q${X},${bandY - 4} ${X + dir * 6},${bandY - 4} L${cx - dir * 6},${bandY - 4} Q${cx},${bandY - 4} ${cx},${bandY}"/>`);
+      html.push(`<div class="card${sel.kind === "point" ? " one" : ""}" style="left:${xs[i]}px;top:${bandY}px">`
+        + `<div class="cn">${esc(c.label)}${n.outcome === "dropped" ? '<span class="chip">未采用</span>' : ""}</div>`
+        + `<div class="ct">${esc(n.note)}</div>`
+        + (n.outcome_note ? `<div class="cw">${esc(n.outcome_note)}</div>` : "")
+        + `</div>`);
+    });
+    ov.innerHTML = parts.join("");
+    cards.innerHTML = html.join("");
+    document.getElementById("hint").textContent = sel.kind === "point"
+      ? sel.date + "　" + ch.get(sel.chain).label + "　只看这一个点"
+      : sel.date + "　" + d.weekday + "　这天在 " + d.notes.length + " 条链上有工作";
+  }
+
+  // 选中一条链：整列点亮 + 纵向排开的注解（和这条链的点一样竖着）
+  function paintChain(ov) {
+    const c = ch.get(sel.chain), X = colX(c.col), list = daysOf(c.id);
+    const ovNode = svg.querySelector("#overlay");
+    svg.querySelectorAll("g.unit").forEach(g => {
+      const own = (g.dataset.chains || "").split(" ");
+      if (g.dataset.chain === c.id) { g.classList.add("sel"); ovNode.before(g); }
+      else if (!own.includes(c.id)) g.classList.add("dim");
+    });
+    document.querySelectorAll(".tname").forEach(n =>
+      n.classList.add(n.dataset.chain === c.id ? "sel" : "dim"));
+
+    const MIN = 15, parts = [], toRight = X < W * 0.62;
+    let last = -Infinity;
+    list.forEach(d => {
+      const y = yOf(d.date), ty = Math.max(y, last + MIN); last = ty;
+      const n = noteOf(d.date, c.id), tx = toRight ? X + 13 : X - 13;
+      parts.push(`<path class="vlead" d="M${X + (toRight ? 1 : -1) * (radius(d) + 3)},${y} L${tx + (toRight ? -4 : 4)},${ty - 3.5}"/>`);
+      parts.push(`<text class="vnote${n.outcome === "dropped" ? " drop" : ""}" x="${tx}" y="${ty}" `
+        + `text-anchor="${toRight ? "start" : "end"}">${d.date.slice(5)}　${esc(cut(n.note, 18))}`
+        + (n.outcome === "dropped" ? "（未采用）" : "") + `</text>`);
+    });
+    ov.innerHTML = parts.join("");
+    document.getElementById("hint").textContent =
+      c.label + "　" + c.span[0] + " → " + c.span[1] + "　" + c.days + " 天";
+  }
+
+  // ── 图下方的完整说明 ───────────────────────────────
+  function renderDetail(s) {
+    const el = document.getElementById("detail");
+    if (!s) { el.innerHTML = '<div class="empty">点图上的日期、链名或某个点，这里显示对应的完整说明。</div>'; return; }
+    el.innerHTML = s.kind === "chain" ? chainCard(ch.get(s.chain))
+      : dayCard(byDate.get(s.date), s.kind === "point" ? s.chain : null);
+    el.querySelectorAll(".chip[data-chain]").forEach(b =>
+      b.onclick = () => select({ kind: "chain", chain: b.dataset.chain }));
+    el.querySelectorAll("button[data-day]").forEach(b =>
+      b.onclick = () => select({ kind: "point", date: b.dataset.day, chain: b.dataset.chain }));
+  }
+
+  function dayCard(d, only) {
+    const notes = only ? d.notes.filter(n => n.id === only) : d.notes;
+    const o = [];
+    o.push(`<div class="top"><span class="pd">${d.date}</span><span class="pw">${d.weekday}　${d.total_commits} 次提交`
+      + (only ? `　· 只看 ${esc(ch.get(only).short)} 这一个点` : "") + `</span></div>`);
+    o.push(`<h2>${esc(d.headline)}</h2>`);
+    o.push(`<div class="chips">` + d.notes.map(n =>
+      `<span class="chip" data-chain="${n.id}">${esc(ch.get(n.id).short)}</span>`).join("") + `</div>`);
+    o.push(`<div class="cols"><div>`);
+    o.push(`<h4>做了什么</h4><ul>` + notes.map(n =>
+      `<li>${esc(ch.get(n.id).short)}　${esc(n.note)}${n.outcome === "dropped" ? "（未采用）" : ""}</li>`).join("") + `</ul>`);
+    o.push(`<h4>脉络</h4><div class="flow">`);
+    notes.forEach(n => {
+      const c = ch.get(n.id), list = daysOf(c.id).map(x => x.date), i = list.indexOf(d.date);
+      o.push(`<div class="grp">${esc(c.label)}</div>`);
+      V.handoffs.filter(h => h.to === c.id && ch.get(h.from)).forEach(h =>
+        o.push(`<div><span class="arrow">←</span>承接 <span class="chip" data-chain="${h.from}">${esc(ch.get(h.from).short)}</span>${h.type}</div>`));
+      V.handoffs.filter(h => h.from === c.id && ch.get(h.to)).forEach(h =>
+        o.push(`<div><span class="arrow">→</span>交给 <span class="chip" data-chain="${h.to}">${esc(ch.get(h.to).short)}</span>${h.type}</div>`));
+      o.push(`<div class="nb"><div>${i > 0 ? "上一天 " + list[i - 1] + "　" + esc(cut(byDate.get(list[i - 1]).headline, 20)) : "上一天 无"}</div>`
+        + `<div>${i >= 0 && i < list.length - 1 ? "下一天 " + list[i + 1] + "　" + esc(cut(byDate.get(list[i + 1]).headline, 20)) : "下一天 无"}</div></div>`);
+    });
+    o.push(`</div></div><div>`);
+    o.push(`<h4>根据</h4>`);
+    o.push(`<details open><summary>提交　${d.total_commits} 次</summary>`
+      + d.repos.map(r => `<details><summary>${esc(REPO[r.repo] || r.repo)}　${r.commits} 次`
+        + (r.commits > r.items.length ? `（列出前 ${r.items.length} 条）` : "") + `</summary><ul>`
+        + r.items.map(s => `<li>${esc(s)}</li>`).join("") + `</ul></details>`).join("") + `</details>`);
+    o.push(`<h4>计划</h4>` + (d.plans.length
+      ? `<ul>` + d.plans.map(p => `<li>${esc(p.title)}<br><span class="plan">${esc(p.file)}</span></li>`).join("") + `</ul>`
+      : `<div class="empty">无</div>`));
+    o.push(`<h4>覆盖这天工作的汇报</h4>` + (d.covering.length
+      ? `<ul>` + d.covering.map(r => `<li>${r}</li>`).join("") + `</ul>` : `<div class="empty">无</div>`));
+    o.push(`<h4>这天发布的汇报</h4>` + (d.published.length
+      ? `<ul>` + d.published.map(r => `<li>${r}</li>`).join("") + `</ul>` : `<div class="empty">无</div>`));
+    o.push(`</div></div>`);
+    return o.join("");
+  }
+
+  function chainCard(c) {
+    const list = daysOf(c.id), tr = V.tracks.find(t => t.id === c.track), o = [];
+    o.push(`<div class="top"><span class="pd">${esc(c.short)}</span><span class="pw">${esc(tr ? tr.label : "")}　`
+      + `${c.span[0]} → ${c.span[1]}　${c.days} 天${c.fate === "dropped" ? "　· 这条链后来没有被采用" : ""}</span></div>`);
+    o.push(`<h2>${esc(c.label)}</h2>`);
+    o.push(`<div class="cols"><div>`);
+    const inb = V.handoffs.filter(h => h.to === c.id && ch.get(h.from));
+    const out = V.handoffs.filter(h => h.from === c.id && ch.get(h.to));
+    o.push(`<h4>上下游</h4><div class="flow">`);
+    if (!inb.length && !out.length) o.push(`<div class="empty">还没有确认的上下游。</div>`);
+    inb.forEach(h => o.push(`<div><span class="arrow">←</span>承接 <span class="chip" data-chain="${h.from}">${esc(ch.get(h.from).label)}</span>${h.type}</div>`));
+    out.forEach(h => o.push(`<div><span class="arrow">→</span>交给 <span class="chip" data-chain="${h.to}">${esc(ch.get(h.to).label)}</span>${h.type}</div>`));
+    o.push(`</div>`);
+    const reps = list.filter(d => d.covering.length);
+    o.push(`<h4>落成了什么</h4>` + (reps.length
+      ? `<ul>` + reps.map(d => `<li>${d.date}　写进汇报 ${d.covering.join("、")}</li>`).join("") + `</ul>`
+      : `<div class="empty">这条链还没有落成每日汇报。</div>`));
+    o.push(`</div><div>`);
+    o.push(`<h4>这条链上的 ${list.length} 天</h4><div class="chaindays">` + list.map(d => {
+      const n = noteOf(d.date, c.id);
+      return `<button data-day="${d.date}" data-chain="${c.id}"><span class="dt">${d.date.slice(5)}</span>`
+        + esc(cut(n.note, 24)) + (n.outcome === "dropped" ? "（未采用）" : "") + `</button>`;
+    }).join("") + `</div>`);
+    o.push(`</div></div>`);
+    return o.join("");
+  }
+
+  // ── 点击 ───────────────────────────────────────────
+  function select(next) { sel = next; paint(); }
+  svg.addEventListener("click", e => {
+    const point = e.target.closest(".hit");
+    if (point) return select({ kind: "point", date: point.dataset.day, chain: point.dataset.chain });
+    const lab = e.target.closest(".dlab");
+    if (lab) return select({ kind: "day", date: lab.dataset.day });
+    const row = e.target.closest(".rowhit");
+    if (row) return select({ kind: "day", date: row.dataset.day });
+    select(null);
+  });
+  document.getElementById("clear").onclick = () => select(null);
+  document.addEventListener("keydown", e => { if (e.key === "Escape") select(null); });
+
+  document.querySelectorAll("[data-ppd]").forEach(b => b.onclick = () => {
+    document.querySelectorAll("[data-ppd]").forEach(o => o.classList.toggle("is-on", o === b));
+    ppd = Number(b.dataset.ppd); draw();
+  });
+
+  function cut(s, n) { return String(s).length > n ? String(s).slice(0, n) + "…" : s; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+  draw();
+  document.fonts.ready.then(draw);
+  let tid; window.addEventListener("resize", () => { clearTimeout(tid); tid = setTimeout(draw, 120); });
+})();
+</script>
+</body>
+</html>

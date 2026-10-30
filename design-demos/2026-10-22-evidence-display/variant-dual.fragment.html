@@ -1,0 +1,111 @@
+<section data-variant="产物与讨论双轨" id="proof-dual" aria-label="每日工作点 · 产物与讨论双轨">
+  <style>
+    #proof-dual{--paper:#f2eee4;--surface:#f8f4eb;--ink:#15212b;--line:#c8c1b4;--focus:#d9654f;--quiet:#59616a;--row-height:76px;background:var(--paper);color:var(--ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",sans-serif;width:100%;min-width:0;box-sizing:border-box;padding:26px 28px 30px;overflow-wrap:anywhere}
+    #proof-dual *{box-sizing:border-box}#proof-dual [hidden]{display:none!important}#proof-dual h2,#proof-dual h3,#proof-dual p{margin:0}#proof-dual button,#proof-dual select{font:inherit;color:inherit}#proof-dual button,#proof-dual a,#proof-dual select{touch-action:manipulation}#proof-dual button{cursor:var(--cursor-interaction,pointer)}
+    #proof-dual .pd-kicker{font-size:12px;letter-spacing:.14em;color:var(--quiet)}#proof-dual .pd-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding-bottom:18px;border-bottom:1px solid var(--ink)}#proof-dual h2{font:400 28px/1.3 "Songti SC","SimSun",serif;margin-top:5px}#proof-dual .pd-topmeta{text-align:right;color:var(--quiet);font-size:12px;padding-top:4px}#proof-dual .pd-topmeta strong{display:block;font-weight:500;color:var(--ink);font-size:14px}#proof-dual .pd-toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin:18px 0 12px;flex-wrap:wrap}#proof-dual .pd-context{font-size:14px}#proof-dual .pd-context span{color:var(--quiet);font-size:12px;margin-left:10px}#proof-dual .pd-picker{display:flex;align-items:center;gap:8px;font-size:12px}#proof-dual select{background:var(--surface);border:1px solid var(--line);border-radius:0;min-height:44px;max-width:220px;padding:8px 28px 8px 10px;font-size:14px}
+    #proof-dual .pd-map-scroll{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}#proof-dual .pd-map{width:100%;min-width:900px}#proof-dual .pd-grid{display:grid;grid-template-columns:80px repeat(5,minmax(164px,1fr))}#proof-dual .pd-axis-head{font-size:12px;color:var(--quiet);padding:18px 8px}#proof-dual .pd-column{min-width:0;text-align:center;border-left:1px solid var(--line);padding:10px 8px 12px}#proof-dual .pd-task{display:block;width:100%;min-height:44px;border:0;background:transparent;font-size:14px;font-weight:500;padding:8px 0}#proof-dual .pd-task[aria-pressed="true"]{color:var(--focus)}#proof-dual .pd-rail-labels{display:grid;grid-template-columns:1fr 1fr;font-size:12px;color:var(--quiet)}#proof-dual .pd-day{align-items:stretch;border-top:1px solid var(--line);min-height:var(--row-height)}#proof-dual .pd-date{font-size:14px;padding:18px 10px;font-variant-numeric:tabular-nums}#proof-dual .pd-date small{display:block;color:var(--quiet);font-size:12px}#proof-dual .pd-slot{position:relative;display:grid;grid-template-columns:1fr 1fr;border-left:1px solid var(--line);min-height:var(--row-height);background-image:linear-gradient(to right,transparent calc(25% - .5px),var(--line) calc(25% - .5px),var(--line) calc(25% + .5px),transparent calc(25% + .5px),transparent calc(75% - .5px),var(--line) calc(75% - .5px),var(--line) calc(75% + .5px),transparent calc(75% + .5px))}#proof-dual .pd-history{align-self:center;justify-self:center;position:relative;background:var(--surface);color:var(--quiet);font-size:22px;line-height:26px;min-width:26px;text-align:center}#proof-dual .pd-history.dot{width:8px;height:8px;min-width:8px;border-radius:50%;background:var(--quiet)}#proof-dual .pd-current{background:var(--paper)}#proof-dual .pd-current .pd-date{border-left:3px solid var(--focus);padding-left:7px}#proof-dual .pd-point{position:relative;width:100%;min-height:var(--row-height);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:10px 0;border:0;background:transparent;text-align:center;grid-column:1/-1}#proof-dual .pd-point[aria-pressed="true"]{background:color-mix(in srgb,var(--focus) 9%,var(--surface));box-shadow:inset 0 -3px var(--focus)}#proof-dual .pd-mark{justify-self:center;display:flex;align-items:center;justify-content:center;background:var(--surface);color:var(--ink);font-size:12px;line-height:1;min-width:28px;min-height:28px}#proof-dual .pd-solid{width:22px;height:22px;min-width:22px;min-height:22px;border:4px solid var(--surface);outline:1px solid var(--ink);border-radius:50%;background:var(--ink)}#proof-dual .pd-solid.large{width:30px;height:30px}#proof-dual .pd-quote{font-family:Georgia,serif;font-size:38px;line-height:28px;padding-top:9px}#proof-dual .pd-empty{color:var(--quiet);font-size:14px}#proof-dual .pd-unknown{border:1px dashed var(--ink);border-radius:50%;width:28px;height:28px}#proof-dual .pd-point[aria-pressed="true"] .pd-solid{background:var(--focus);outline-color:var(--focus)}#proof-dual .pd-point[aria-pressed="true"] .pd-quote{color:var(--focus)}#proof-dual .pd-states{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding:10px 14px 10px 90px;font-size:12px;color:var(--quiet)}#proof-dual .pd-states span{display:inline-block}#proof-dual .pd-states b{color:var(--ink);font-weight:500}#proof-dual .pd-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;margin:12px 0 22px;color:var(--quiet);font-size:12px}#proof-dual .pd-legend span{display:inline-flex;align-items:center;gap:7px}#proof-dual .pd-dotkey{width:10px;height:10px;background:var(--ink);border-radius:50%;display:inline-block}#proof-dual .pd-quotekey{font:24px/16px Georgia,serif;color:var(--ink)}#proof-dual .pd-legend .pd-task-count{margin-left:auto;color:var(--ink)}
+    #proof-dual .pd-detail{border-top:1px solid var(--ink);padding-top:18px}#proof-dual .pd-detail-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:16px}#proof-dual .pd-detail-head h3{font:400 23px/1.4 "Songti SC","SimSun",serif;margin:3px 0 5px}#proof-dual .pd-category{color:var(--focus);font-size:12px;white-space:nowrap;border-bottom:1px solid var(--focus);padding:5px 0}#proof-dual .pd-note{font-size:14px}#proof-dual .pd-evidence{display:grid;grid-template-columns:1fr 1fr;gap:0}#proof-dual .pd-half{min-width:0;padding:0 24px 0 0}#proof-dual .pd-half+.pd-half{border-left:1px solid var(--line);padding:0 0 0 24px}#proof-dual .pd-half h4{font-size:14px;font-weight:500;letter-spacing:.08em;margin:0 0 12px;display:flex;align-items:center;gap:8px}#proof-dual .pd-half h4 small{font-size:12px;color:var(--quiet);font-weight:400;letter-spacing:0}#proof-dual .pd-file{list-style:none;margin:0;padding:0}#proof-dual .pd-file li{border-top:1px solid var(--line);padding:12px 0}#proof-dual .pd-file a{color:var(--ink);text-decoration:underline;text-underline-offset:4px;display:block;min-height:44px;font-size:14px;line-height:1.6;overflow-wrap:anywhere}#proof-dual .pd-filemeta{font-size:12px;color:var(--quiet);display:block;margin-top:6px}#proof-dual .pd-empty-text{font-size:14px;color:var(--quiet);border-top:1px solid var(--line);padding-top:12px}#proof-dual .pd-count{font-size:12px;color:var(--quiet);margin-top:10px}#proof-dual details{border-top:1px solid var(--line)}#proof-dual summary{padding:10px 0;min-height:44px;font-size:14px;cursor:var(--cursor-interaction,pointer)}#proof-dual .pd-discussion{font-size:14px;padding:0 0 12px}#proof-dual .pd-discussion p+p{margin-top:10px}#proof-dual .pd-discussion b{font-weight:500}#proof-dual .pd-footer{font-size:12px;color:var(--quiet);margin-top:20px;padding-top:12px;border-top:1px solid var(--line)}#proof-dual .pd-report{background:transparent;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;color:var(--ink);min-height:44px;font-size:12px}#proof-dual .pd-reportbox{border-top:1px solid var(--line);padding:10px 0;color:var(--quiet);font-size:14px}
+    @media(max-width:600px){#proof-dual{padding:20px 16px 24px}#proof-dual h2{font-size:26px}#proof-dual .pd-top{gap:10px}#proof-dual .pd-topmeta{max-width:108px}#proof-dual .pd-toolbar{align-items:flex-start;gap:10px}#proof-dual .pd-context span{display:block;margin:0}#proof-dual .pd-picker{width:100%;justify-content:space-between}#proof-dual select{max-width:240px;flex:1;min-width:0}#proof-dual .pd-legend{margin-bottom:18px;gap:7px 15px}#proof-dual .pd-legend .pd-task-count{width:100%;margin-left:0}#proof-dual .pd-evidence{grid-template-columns:1fr;gap:20px}#proof-dual .pd-half,#proof-dual .pd-half+.pd-half{border:0;padding:0}#proof-dual .pd-detail-head h3{font-size:22px}#proof-dual .pd-category{white-space:normal;max-width:95px;text-align:right}#proof-dual .pd-footer{margin-top:16px}}
+    #proof-dual .pd-task[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--focus);text-underline-offset:5px;}
+    #proof-dual .pd-category{color:var(--ink);}
+  </style>
+  <header class="pd-top">
+    <div><p class="pd-kicker">研究日志 / DAILY WORK</p><h2>每日工作点</h2></div>
+    <p class="pd-topmeta"><strong>2026.10.21</strong>任务图谱 · 局部样稿</p>
+  </header>
+  <div class="pd-toolbar">
+    <p class="pd-context">10 月 19 日—21 日 <span>38 条任务链中，展开当日 5 项</span></p>
+    <label class="pd-picker">查看任务 <select id="pd-task-select" aria-label="查看任务"><option value="sse-v2">沪市委托还原</option><option value="replay">回放核验</option><option value="research-journal">研究日志</option><option value="behavior-design">行为构思</option><option value="corrected-replay-344">344 列定参</option></select></label>
+  </div>
+  <div class="pd-map-scroll" role="region" aria-label="日期纵向排列，每条任务分为产物和讨论两轨；可横向滚动">
+    <div class="pd-map">
+      <div class="pd-grid">
+        <div class="pd-axis-head">日期 ↓<br>任务 →</div>
+        <div class="pd-column"><button type="button" class="pd-task" data-case="sse-v2" aria-pressed="true">沪市委托还原</button><div class="pd-rail-labels"><span>产物</span><span>讨论</span></div></div>
+        <div class="pd-column"><button type="button" class="pd-task" data-case="replay" aria-pressed="false">回放核验</button><div class="pd-rail-labels"><span>产物</span><span>讨论</span></div></div>
+        <div class="pd-column"><button type="button" class="pd-task" data-case="research-journal" aria-pressed="false">研究日志</button><div class="pd-rail-labels"><span>产物</span><span>讨论</span></div></div>
+        <div class="pd-column"><button type="button" class="pd-task" data-case="behavior-design" aria-pressed="false">行为构思</button><div class="pd-rail-labels"><span>产物</span><span>讨论</span></div></div>
+        <div class="pd-column"><button type="button" class="pd-task" data-case="corrected-replay-344" aria-pressed="false">344 列定参</button><div class="pd-rail-labels"><span>产物</span><span>讨论</span></div></div>
+      </div>
+      <div class="pd-grid pd-day" aria-label="10 月 19 日，历史任务背景">
+        <div class="pd-date">10.19<small>周一</small></div>
+        <div class="pd-slot"><span class="pd-history dot"></span></div><div class="pd-slot"><span class="pd-history dot"></span></div><div class="pd-slot"></div><div class="pd-slot"></div><div class="pd-slot"></div>
+      </div>
+      <div class="pd-grid pd-day" aria-label="10 月 20 日，历史任务背景">
+        <div class="pd-date">10.20<small>周二</small></div>
+        <div class="pd-slot"><span class="pd-history dot"></span></div><div class="pd-slot"><span class="pd-history dot"></span></div><div class="pd-slot"><span class="pd-history dot"></span></div><div class="pd-slot"></div><div class="pd-slot"><span class="pd-history dot"></span></div>
+      </div>
+      <div class="pd-grid pd-day pd-current" aria-label="10 月 21 日，五项任务，点击查看材料">
+        <div class="pd-date">10.21<small>周三</small></div>
+        <div class="pd-slot"><button class="pd-point" data-case="sse-v2" type="button" aria-label="沪市委托还原：产物与讨论并存，查看详情" aria-pressed="true"><span class="pd-mark pd-solid large" aria-hidden="true"></span><span class="pd-mark pd-quote" aria-hidden="true">“</span></button></div>
+        <div class="pd-slot"><button class="pd-point" data-case="replay" type="button" aria-label="回放核验：已落盘文档，零提交，查看详情" aria-pressed="false"><span class="pd-mark pd-solid" aria-hidden="true"></span><span class="pd-mark pd-empty" aria-hidden="true">—</span></button></div>
+        <div class="pd-slot"><button class="pd-point" data-case="research-journal" type="button" aria-label="研究日志：代码与提交，查看详情" aria-pressed="false"><span class="pd-mark pd-solid large" aria-hidden="true"></span><span class="pd-mark pd-empty" aria-hidden="true">—</span></button></div>
+        <div class="pd-slot"><button class="pd-point" data-case="behavior-design" type="button" aria-label="行为构思：目前仅见会话，查看详情" aria-pressed="false"><span class="pd-mark pd-empty" aria-hidden="true">—</span><span class="pd-mark pd-quote" aria-hidden="true">“</span></button></div>
+        <div class="pd-slot"><button class="pd-point" data-case="corrected-replay-344" type="button" aria-label="344 列定参：证据待核，查看详情" aria-pressed="false"><span class="pd-mark pd-unknown" aria-hidden="true">?</span><span class="pd-mark pd-unknown" aria-hidden="true">?</span></button></div>
+      </div>
+      <div class="pd-states"><span><b>产物＋讨论</b></span><span>文档 · 零提交</span><span>代码与提交</span><span>目前仅见会话</span><span>证据待核</span></div>
+    </div>
+  </div>
+  <div class="pd-legend" aria-label="图谱图例"><span><i class="pd-dotkey" aria-hidden="true"></i>可查产物</span><span><i class="pd-quotekey" aria-hidden="true">“</i>讨论依据</span><span>— 当前未列材料</span><span>? 待核</span><span class="pd-task-count">5 项任务 · 每项各有两轨</span></div>
+  <div class="pd-detail" aria-live="polite" aria-atomic="false">
+    <div class="pd-detail-head"><div><p class="pd-kicker">10.21 / 当前任务</p><h3 id="pd-detail-title">沪市委托还原</h3><p class="pd-note" id="pd-detail-note">沪深三项口径修正通过全市场对照</p></div><span class="pd-category" id="pd-detail-category">产物与讨论并存</span></div>
+    <div class="pd-evidence">
+      <div class="pd-half"><h4><i class="pd-dotkey" aria-hidden="true"></i>产物 <small id="pd-artifact-kind">代码 · 提交 · 验收记录</small></h4><div id="pd-artifact-content"><ul class="pd-file"><li><a href="https://github.com/MengerWen/sirui-quant-research/blob/fb52d08a98c5fdd4b576dae0489d951205a38dff/reports/2026-10/2026-10-21-open5m-queue-f16-dm-decisions-r2.md" target="_blank" rel="noopener noreferrer">三项口径修正与全市场对照 ↗</a><span class="pd-filemeta">决策与对照文档 · 2026-10-21</span></li></ul><p class="pd-count">提交量 74 · 运行和验收以材料记录为准</p></div></div>
+      <div class="pd-half"><h4><i class="pd-quotekey" aria-hidden="true">“</i>讨论 <small id="pd-discussion-kind">会话</small></h4><div id="pd-discussion-content"><details open><summary>会话摘录</summary><div class="pd-discussion"><p><b>问题</b> · 沪深三项口径修正。</p><p><b>决定</b> · 决定排队余量采用新口径，并用于后续耗尽尺度定参。</p><p><b>待验证</b> · 具体范围与执行结果见产物材料。</p></div></details></div></div>
+    </div>
+    <div class="pd-footer">既有标记独立保留：■ 收口 · × 未采用。汇报关联另行查看。<button type="button" class="pd-report" id="pd-report-toggle" aria-expanded="false" aria-controls="pd-report-info">查看当日汇报</button><p class="pd-reportbox" id="pd-report-info" hidden>10 月 21 日未发布当日汇报；这五项仍保留在研究日志。产物与讨论的分类不改变汇报发布状态。</p></div>
+  </div>
+  <script>
+    (() => {
+      const root = document.getElementById('proof-dual');
+      if (!root) return;
+      const cases = [
+        {id:'sse-v2',label:'沪市委托还原',note:'沪深三项口径修正通过全市场对照',kind:'mixed',weight:74,tags:['代码','提交','验收记录','会话'],artifact:'三项口径修正与全市场对照',url:'https://github.com/MengerWen/sirui-quant-research/blob/fb52d08a98c5fdd4b576dae0489d951205a38dff/reports/2026-10/2026-10-21-open5m-queue-f16-dm-decisions-r2.md',discussion:'决定排队余量采用新口径，并用于后续耗尽尺度定参。'},
+        {id:'replay',label:'回放核验',note:'完整日验收并保留回放来源',kind:'artifact',weight:0,tags:['文档'],artifact:'正确盘口 344 列重新定参',url:'https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md',discussion:''},
+        {id:'research-journal',label:'研究日志',note:'修复采集并补核来源',kind:'artifact',weight:34,tags:['代码','提交'],artifact:'研究日志图谱与来源采集改动',url:'https://github.com/MengerWen/internship-dashboard/commit/902b03b440425600c64ac4ba0030eeab3a36d9e9',discussion:''},
+        {id:'behavior-design',label:'行为构思',note:'比较 V3 至 V9 的沪深适用性和顺序',kind:'discussion',weight:0,tags:['会话'],artifact:'',url:'',discussion:'比较不同方案在沪深市场的适用性；具体实现与验证仍需后续记录。'},
+        {id:'corrected-replay-344',label:'344 列定参',note:'六核采集推进，结构参数改用新口径',kind:'pending',weight:null,tags:['待核'],artifact:'',url:'',discussion:'需要补核文件、提交及运行回执之间的对应关系。'}
+      ];
+      const picker = root.querySelector('#pd-task-select');
+      const artifactContent = root.querySelector('#pd-artifact-content');
+      const discussionContent = root.querySelector('#pd-discussion-content');
+      let selected = 'sse-v2';
+      const add = (tag, className, text) => { const el = document.createElement(tag); if(className) el.className=className; if(text !== undefined) el.textContent=text; return el; };
+      function select(id, save) {
+        const item = cases.find(c => c.id === id) || cases[0]; selected=item.id;
+        root.querySelectorAll('[data-case]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.case === item.id)));
+        picker.value = item.id;
+        root.querySelector('#pd-detail-title').textContent = item.label;
+        root.querySelector('#pd-detail-note').textContent = item.note;
+        const category = item.kind === 'mixed' ? '产物与讨论并存' : item.kind === 'discussion' ? '目前仅见会话' : item.kind === 'pending' ? '证据待核' : item.weight === 0 ? '已落盘文档 · 零提交' : '代码与提交';
+        root.querySelector('#pd-detail-category').textContent = category;
+        root.querySelector('#pd-artifact-kind').textContent = item.tags.filter(t=>t!=='会话').join(' · ') || '当前未列';
+        artifactContent.replaceChildren(); discussionContent.replaceChildren();
+        if (item.artifact) {
+          const list=add('ul','pd-file'); const li=add('li'); const a=add('a','',item.artifact+' ↗'); a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a);
+          const meta = item.id==='replay' ? '已落盘文档 · 2026-10-20 材料' : item.id==='research-journal' ? 'GitHub 提交 · 902b03b' : '决策与对照文档 · 2026-10-21';
+          li.append(add('span','pd-filemeta',meta));list.append(li);artifactContent.append(list);
+          artifactContent.append(add('p','pd-count',item.weight===0 ? '提交量 0 · 文档仍计入产物轨' : '提交量 '+item.weight+' · 运行和验收以材料记录为准'));
+        } else artifactContent.append(add('p','pd-empty-text',item.kind==='pending' ? '产物尚待核对。补齐文件、提交与运行回执后，再确定落位。' : '当前仅列出会话依据，尚未列入可查文件或代码产物。'));
+        root.querySelector('#pd-discussion-kind').textContent = item.kind==='pending' ? '对应关系待核' : item.discussion ? '会话' : '当前未列';
+        if(item.discussion) {
+          const details=add('details');details.open=true;details.append(add('summary','',item.kind==='pending'?'核对清单':'会话摘录'));
+          const body=add('div','pd-discussion');
+          if(item.kind==='mixed') { body.append(add('p','','问题 · 沪深三项口径修正。'),add('p','','决定 · '+item.discussion),add('p','','待验证 · 具体范围与执行结果见产物材料。')); }
+          else if(item.kind==='discussion') {body.append(add('p','','问题 · V3 至 V9 在沪深市场的适用性和推进顺序。'),add('p','','讨论 · '+item.discussion),add('p','','待验证 · 具体实现与验证仍需后续记录。'));}
+          else {body.append(add('p','',item.discussion),add('p','','待核 · 文件内容、提交版本和运行回执是否对应同一次任务。'));}
+          details.append(body);discussionContent.append(details);
+        } else discussionContent.append(add('p','pd-empty-text','当前未单列会话材料。可从产物入口核对已保留的记录。'));
+        if(save && window.openai && typeof window.openai.setWidgetState==='function') window.openai.setWidgetState({modelContent:{variant:'产物与讨论双轨',selectedTask:item.label,evidenceType:category},privateContent:{dualTask:selected}}).catch(()=>{});
+      }
+      root.querySelectorAll('[data-case]').forEach(button => button.addEventListener('click',()=>select(button.dataset.case,true)));
+      picker.addEventListener('change',()=>select(picker.value,true));
+      const reportButton=root.querySelector('#pd-report-toggle'); const reportInfo=root.querySelector('#pd-report-info');
+      reportButton.addEventListener('click',()=>{const open=reportButton.getAttribute('aria-expanded')!=='true';reportButton.setAttribute('aria-expanded',String(open));reportInfo.hidden=!open;});
+      const saved = window.openai && window.openai.widgetState;
+      select(saved && saved.privateContent && saved.privateContent.dualTask || selected,false);
+      window.addEventListener('openai:set_globals',event=>{const savedState=event.detail && event.detail.globals && event.detail.globals.widgetState;if(savedState && savedState.privateContent && savedState.privateContent.dualTask)select(savedState.privateContent.dualTask,false);});
+      if(globalThis.Tweak){const state={rowHeight:76};const tweak=new Tweak({container:root,onChange:()=>root.style.setProperty('--row-height',state.rowHeight+'px')});tweak.addSlider(state,'rowHeight',{label:'日期行距',min:64,max:96,step:4,unit:'px',reference:'dual.rowHeight'});}
+    })();
+  </script>
+</section>

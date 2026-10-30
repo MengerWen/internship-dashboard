@@ -1,0 +1,225 @@
+<div id="jpd-bplus">
+  <style>
+    #jpd-bplus{--bp-paper:#f2eee4;--bp-surface:#f8f4eb;--bp-tint:#e9e2d5;--bp-ink:#15212b;--bp-rule:#c8c1b4;--bp-focus:#d9654f;--bp-past:#7c8581;color:var(--bp-ink);font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;font-size:14px;line-height:1.6;width:100%}
+    #jpd-bplus *{box-sizing:border-box}
+    #jpd-bplus [hidden]{display:none!important}
+    #jpd-bplus button{font:inherit;color:inherit;cursor:pointer;background:transparent}
+    #jpd-bplus button:focus-visible{outline:2px solid var(--bp-focus);outline-offset:3px}
+    #jpd-bplus .bp-stage{min-height:980px;background:var(--bp-paper);padding:0 24px 24px;border:1px solid var(--bp-rule)}
+    #jpd-bplus .bp-masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:19px 0 15px;border-bottom:2px solid var(--bp-ink)}
+    #jpd-bplus .bp-masthead h1{font-family:"Noto Serif SC","Songti SC",SimSun,serif;font-size:23px;line-height:1.4;font-weight:700;margin:0}
+    #jpd-bplus .bp-masthead span{font-size:12px;white-space:nowrap}
+    #jpd-bplus .bp-nav{display:flex;border-bottom:1px solid var(--bp-rule);font-size:13px}
+    #jpd-bplus .bp-nav span{padding:9px 20px}
+    #jpd-bplus .bp-nav [aria-current]{background:var(--bp-ink);color:var(--bp-paper)}
+    #jpd-bplus .bp-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 0 15px}
+    #jpd-bplus .bp-heading h2{font-size:21px;font-weight:700;margin:0}
+    #jpd-bplus .bp-heading p{margin:4px 0 0;font-size:13px}
+    #jpd-bplus .bp-date-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    #jpd-bplus .bp-date-actions button{border:1px solid var(--bp-rule);padding:8px 12px;min-height:44px;font-size:13px}
+    #jpd-bplus .bp-date-actions button:disabled{opacity:.45;cursor:default}
+    #jpd-bplus .bp-scope{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 0 14px;font-size:13px}
+    #jpd-bplus .bp-scope b{font-weight:700}
+    #jpd-bplus .bp-scope button{border:0;padding:4px 0;text-decoration:underline;text-underline-offset:4px;min-height:36px;font-size:13px}
+    #jpd-bplus .bp-board{border-top:2px solid var(--bp-ink);border-bottom:1px solid var(--bp-rule)}
+    #jpd-bplus .bp-grid{display:grid;grid-template-columns:84px repeat(var(--bp-columns),minmax(0,1fr))}
+    #jpd-bplus .bp-header{border-bottom:1px solid var(--bp-rule)}
+    #jpd-bplus .bp-date-head{padding:16px 8px 13px;font-size:12px;align-self:center}
+    #jpd-bplus .bp-column-name{min-height:72px;border:0;border-left:1px solid var(--bp-rule);padding:9px 9px 12px;text-align:center;min-width:0}
+    #jpd-bplus .bp-column-name small{display:block;font-size:12px;line-height:1.5;font-weight:400}
+    #jpd-bplus .bp-column-name strong{display:block;font-size:14px;font-weight:700;margin-top:4px}
+    #jpd-bplus .bp-history-row{min-height:44px}
+    #jpd-bplus .bp-day-button{border:0;min-height:44px;min-width:0;text-align:left;padding:10px 8px;font-size:13px;font-variant-numeric:tabular-nums}
+    #jpd-bplus .bp-history-cell{display:flex;justify-content:center;align-items:center;border-left:1px solid var(--bp-rule);min-height:44px;min-width:0;position:relative}
+    #jpd-bplus .bp-dot{display:block;width:var(--bp-diameter);height:var(--bp-diameter);color:var(--bp-ink);border:1.2px solid currentColor;border-radius:50%;background:var(--bp-paper);box-sizing:border-box;flex:none}
+    #jpd-bplus .bp-dot.is-filled{background:currentColor}
+    #jpd-bplus .bp-history-cell .bp-dot{color:var(--bp-past)}
+    #jpd-bplus .bp-rest{background:color-mix(in srgb,var(--bp-tint) 55%,var(--bp-paper))}
+    #jpd-bplus .bp-current-row{border-top:1.5px solid var(--bp-focus);border-bottom:1px solid var(--bp-rule);align-items:stretch}
+    #jpd-bplus .bp-current-date{align-self:stretch;padding-top:8px}
+    #jpd-bplus .bp-current-date button{font-size:14px;font-weight:700;display:block;width:100%}
+    #jpd-bplus .bp-current-date small{display:block;font-size:12px;font-weight:400;padding:0 8px 12px}
+    #jpd-bplus .bp-work-cell{border-left:1px solid var(--bp-rule);padding:0 12px 17px;display:flex;flex-direction:column;min-width:0;min-height:224px;background:var(--bp-surface)}
+    #jpd-bplus .bp-work-cell .bp-marker-button{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;border:0;padding:0}
+    #jpd-bplus .bp-work-cell.is-focused .bp-dot{outline:2px solid var(--bp-focus);outline-offset:3px}
+    #jpd-bplus .bp-short-stem{display:block;width:1px;height:16px;background:var(--bp-ink);margin:-5px auto 0}
+    #jpd-bplus .bp-note{font-size:15px;line-height:1.75;text-align:left;margin:14px 0 16px;overflow-wrap:anywhere;text-wrap:pretty}
+    #jpd-bplus .bp-weight{font-size:12px;line-height:1.6;margin:auto 0 0;padding-top:10px;border-top:1px solid var(--bp-rule);font-variant-numeric:tabular-nums;min-height:82px}
+    #jpd-bplus .bp-nowrap{white-space:nowrap}
+    #jpd-bplus .bp-overview svg{display:block;max-width:100%}
+    #jpd-bplus .bp-overview text{font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;font-size:12px;fill:var(--bp-ink)}
+    #jpd-bplus .bp-weight b{font-size:16px;font-weight:700}
+    #jpd-bplus .bp-weight small{display:block;font-size:12px}
+    #jpd-bplus .is-focused{background:var(--bp-tint)}
+    #jpd-bplus .bp-work-cell.is-focused{background:var(--bp-tint)}
+    #jpd-bplus .bp-current-row.is-collapsed .bp-work-cell{min-height:44px;padding-bottom:0}
+    #jpd-bplus .bp-current-row.is-collapsed .bp-current-date{padding-top:0}
+    #jpd-bplus .bp-current-row.is-collapsed .bp-current-date small{display:none}
+    #jpd-bplus .bp-current-row.is-collapsed .bp-note,#jpd-bplus .bp-current-row.is-collapsed .bp-weight,#jpd-bplus .bp-current-row.is-collapsed .bp-short-stem{display:none}
+    #jpd-bplus .bp-legend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 22px;font-size:12px;padding-top:19px}
+    #jpd-bplus .bp-legend span{display:inline-flex;align-items:center;gap:7px}
+    #jpd-bplus .bp-legend i{--bp-diameter:9px}
+    #jpd-bplus .bp-size-key{--bp-diameter:14px!important}
+    #jpd-bplus .bp-mobile-days,#jpd-bplus .bp-mobile-records{display:none}
+    #jpd-bplus .bp-legacy-chart{position:relative;min-width:0}
+    #jpd-bplus .bp-legacy-chart svg{display:block}
+    #jpd-bplus .bp-legacy-chart text{font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;font-size:12px;fill:var(--bp-ink)}
+    #jpd-bplus .bp-legacy-zoom{border-top:2px solid var(--bp-ink);margin-top:16px}
+    #jpd-bplus .bp-legacy-zoom-title{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:15px 0}
+    #jpd-bplus .bp-legacy-zoom-title h3{font-size:16px;font-weight:700;margin:0}
+    #jpd-bplus .bp-legacy-zoom-title span{font-size:12px}
+    #jpd-bplus .bp-legacy-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+    #jpd-bplus .bp-legacy-lane{border:0;border-left:1px solid var(--bp-rule);padding:0 12px 16px;display:flex;flex-direction:column;align-items:stretch;min-width:0;text-align:left}
+    #jpd-bplus .bp-legacy-lane:last-child{border-right:1px solid var(--bp-rule)}
+    #jpd-bplus .bp-legacy-marker{min-height:50px;display:flex;justify-content:center;align-items:center;position:relative}
+    #jpd-bplus .bp-legacy-marker::after{content:"";width:1px;height:19px;background:var(--bp-ink);position:absolute;top:32px;left:50%}
+    #jpd-bplus .bp-code{display:inline-flex;justify-content:center;align-items:center;width:20px;height:20px;border:1px solid currentColor;font-weight:700;font-size:12px;line-height:1;flex:none}
+    #jpd-bplus .bp-legacy-name{display:flex;justify-content:center;align-items:center;gap:7px;flex-wrap:wrap;min-height:48px;font-size:14px;font-weight:700}
+    #jpd-bplus .bp-legacy-note{display:block;min-height:100px;padding-top:12px;font-size:14px;line-height:1.7}
+    #jpd-bplus .bp-legacy-lane.is-focused .bp-dot{outline:2px solid var(--bp-focus);outline-offset:3px}
+    #jpd-bplus .bp-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+    @media(max-width:760px){
+      #jpd-bplus .bp-stage{padding:0 16px 24px;min-height:1540px}
+      #jpd-bplus .bp-edition{display:none}
+      #jpd-bplus .bp-masthead h1{font-size:21px}
+      #jpd-bplus .bp-nav span{padding:9px 14px}
+      #jpd-bplus .bp-heading{align-items:flex-start;flex-direction:column;gap:12px;padding:20px 0 12px}
+      #jpd-bplus .bp-heading h2{font-size:20px}
+      #jpd-bplus .bp-heading p{font-size:13px}
+      #jpd-bplus .bp-date-actions{width:100%;justify-content:space-between}
+      #jpd-bplus .bp-scope{padding-top:4px;align-items:baseline}
+      #jpd-bplus .bp-scope button{font-size:13px}
+      #jpd-bplus .bp-board{display:none}
+      #jpd-bplus .bp-mobile-days{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:18px}
+      #jpd-bplus .bp-mobile-days button{border:1px solid var(--bp-rule);min-height:44px;font-size:14px;font-variant-numeric:tabular-nums}
+      #jpd-bplus .bp-mobile-days [aria-pressed="true"]{background:var(--bp-ink);color:var(--bp-paper);border-color:var(--bp-ink)}
+      #jpd-bplus .bp-mobile-records{display:block;border-top:2px solid var(--bp-ink)}
+      #jpd-bplus .bp-mobile-task{padding:17px 12px 18px;border-bottom:1px solid var(--bp-rule);background:var(--bp-surface)}
+      #jpd-bplus .bp-mobile-task.is-focused{background:var(--bp-tint)}
+      #jpd-bplus .bp-mobile-title{display:flex;align-items:center;gap:14px;border:0;padding:0;min-height:44px;text-align:left;font-size:16px;font-weight:700;width:100%}
+      #jpd-bplus .bp-mobile-title .bp-dot{margin:0 5px;color:var(--bp-ink)}
+      #jpd-bplus .bp-mobile-task.is-focused .bp-dot{outline:2px solid var(--bp-focus);outline-offset:3px}
+      #jpd-bplus .bp-mobile-task .bp-note{font-size:16px;margin:7px 0 12px}
+      #jpd-bplus .bp-mobile-task .bp-weight{font-size:13px;padding-top:8px}
+      #jpd-bplus .bp-mobile-task .bp-weight{min-height:0}
+      #jpd-bplus .bp-absent{display:block;width:14px;height:14px;flex:none;margin:0 5px}
+      #jpd-bplus .bp-mobile-records.is-collapsed .bp-note,#jpd-bplus .bp-mobile-records.is-collapsed .bp-weight{display:none}
+      #jpd-bplus .bp-legacy-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 0}
+      #jpd-bplus .bp-legacy-lane{border:1px solid var(--bp-rule)}
+      #jpd-bplus .bp-legacy-note{font-size:16px;min-height:105px}
+    }
+    @media(max-width:360px){#jpd-bplus .bp-masthead h1{font-size:19px}#jpd-bplus .bp-nav span{padding:9px 11px}}
+    @media(prefers-reduced-motion:reduce){#jpd-bplus *{animation:none!important;transition:none!important}}
+  </style>
+  <p class="bp-sr" data-live aria-live="polite"></p>
+  <div class="viz-carousel" aria-label="B方向的改进对比" data-previous-label="上一方案" data-next-label="下一方案">
+    <section data-variant="原位展开" aria-label="推荐方案，原位展开">
+      <div class="bp-stage">
+        <header class="bp-masthead"><span class="bp-edition">研究档案 / 2026</span><h1>量化实习成果看板</h1><span>设计草稿</span></header>
+        <div class="bp-nav" aria-label="看板栏目"><span>正式成果</span><span>每日汇报</span><span aria-current="page">研究日志</span></div>
+        <div class="bp-heading"><div><h2 data-day-heading>2026-10-20 的工作</h2><p data-day-meta>周二　6 项工作　未关联汇报</p></div><div class="bp-date-actions"><button type="button" data-day-step="-1">前一天</button><button type="button" data-day-step="1">后一天</button></div></div>
+        <div class="bp-scope"><span data-scope>当日相关任务（6 条）</span><button type="button" data-collapse aria-expanded="true">收起当天说明</button></div>
+        <div class="bp-mobile-days" data-mobile-days aria-label="选择工作日期"></div>
+        <div class="bp-board" data-board aria-label="按日期与任务列排列的工作记录"></div>
+        <div class="bp-mobile-records" data-mobile-records aria-label="当天的工作说明"></div>
+        <div class="bp-legend"><span><i class="bp-dot"></i>未关联汇报</span><span><i class="bp-dot is-filled"></i>有关联汇报</span><span><i class="bp-dot bp-size-key"></i>点径表示归属提交量</span></div>
+      </div>
+    </section>
+    <section data-variant="原B：当日放大" aria-label="上一轮B方案，独立当日放大区域" hidden>
+      <div class="bp-stage">
+        <header class="bp-masthead"><span class="bp-edition">研究档案 / 2026</span><h1>量化实习成果看板</h1><span>设计草稿</span></header>
+        <div class="bp-nav" aria-label="看板栏目"><span>正式成果</span><span>每日汇报</span><span aria-current="page">研究日志</span></div>
+        <div class="bp-heading"><h2>当日展开</h2><p>2026-10-20　周二　6 项工作　未关联汇报</p></div>
+        <div class="bp-legacy-chart" data-legacy-chart role="group" aria-label="原B方案的历史图与编号"></div>
+        <div class="bp-legacy-zoom"><div class="bp-legacy-zoom-title"><h3>10 月 20 日，当日放大</h3><span>按原图从左到右展开</span></div><div class="bp-legacy-grid" data-legacy-grid></div></div>
+        <div class="bp-legend"><span><i class="bp-dot"></i>未关联汇报</span><span><i class="bp-dot is-filled"></i>有关联汇报</span><span><i class="bp-dot bp-size-key"></i>点径表示归属提交量</span></div>
+      </div>
+    </section>
+  </div>
+  <script type="application/json" id="jpd-bplus-data">{"tracks":[{"id":"infra","label":"数据与服务器"},{"id":"snapshot","label":"快照与回放"},{"id":"footprint","label":"算法痕迹"},{"id":"factor","label":"因子与定标"},{"id":"model","label":"模型"},{"id":"delivery","label":"看板与交付"},{"id":"special","label":"专题研究"}],"chains":[{"id":"onboarding","short":"上手","track":"infra"},{"id":"doris-migration","short":"服务器迁移","track":"infra"},{"id":"wangly-env","short":"环境与传输","track":"infra"},{"id":"doris-efficiency","short":"Doris 取数","track":"infra"},{"id":"storage-cleanup","short":"存储清理","track":"infra"},{"id":"trading-window-freeze","short":"早盘冻结","track":"infra"},{"id":"research-code","short":"代码结构","track":"infra"},{"id":"lv2-snapshot","short":"LV2 快照","track":"snapshot"},{"id":"replay","short":"回放核验","track":"snapshot"},{"id":"literature","short":"论文复现","track":"footprint"},{"id":"algobench","short":"论文指标","track":"footprint"},{"id":"formal-engine","short":"因子计算","track":"footprint"},{"id":"gates","short":"筛选规则","track":"footprint"},{"id":"cross-stock-sync","short":"跨股同步","track":"footprint"},{"id":"behavior-design","short":"行为构思","track":"footprint"},{"id":"mechanism-precheck","short":"机制预查","track":"footprint"},{"id":"fixed-history","short":"历史补算","track":"factor"},{"id":"open5m","short":"开盘5分钟","track":"factor"},{"id":"old-factor-calibration","short":"旧因子定标","track":"factor"},{"id":"cancel-phase","short":"撤单研究","track":"factor"},{"id":"depth-match","short":"深度匹配","track":"factor"},{"id":"old-factor-bank","short":"老因子库","track":"factor"},{"id":"grouped-calibration","short":"分组定标","track":"factor"},{"id":"szse-model328","short":"深市328","track":"factor"},{"id":"sse-v2","short":"沪市委托","track":"factor"},{"id":"corrected-replay-344","short":"344重定参","track":"factor"},{"id":"ml-exec","short":"多模型族","track":"model"},{"id":"ml-330","short":"LightGBM","track":"model"},{"id":"model-methods","short":"模型方法","track":"model"},{"id":"strategy-research","short":"策略假设","track":"model"},{"id":"dashboard-build","short":"看板建站","track":"delivery"},{"id":"report-publish","short":"发布维护","track":"delivery"},{"id":"visual-b","short":"版式调整","track":"delivery"},{"id":"report-tags","short":"标签与浏览","track":"delivery"},{"id":"model-report","short":"模型报告","track":"delivery"},{"id":"report328","short":"328报告","track":"delivery"},{"id":"research-journal","short":"研究日志","track":"delivery"},{"id":"fund-research","short":"产品研究","track":"special"}],"days":[{"date":"2026-10-14","chains":["storage-cleanup","szse-model328","sse-v2","report-publish","behavior-design"],"notes":{"storage-cleanup":{"note":"核验归档后清理重复缓存","outcome":"landed","outcome_note":""},"szse-model328":{"note":"暂停并准备单日四分钟优化","outcome":"landed","outcome_note":""},"sse-v2":{"note":"实现委托还原 v2 并提速","outcome":"landed","outcome_note":""},"report-publish":{"note":"发布沪市委托 v2 提速报告","outcome":"landed","outcome_note":""},"behavior-design":{"note":"逐项研究 V3 至 V9 的可行性","outcome":"landed","outcome_note":""}},"weights":{"report-publish":{"value":6.0,"direct":6,"shared":0,"numerator":6,"denominator":1},"sse-v2":{"value":91.0,"direct":91,"shared":0,"numerator":91,"denominator":1},"storage-cleanup":{"value":14.5,"direct":14,"shared":1,"numerator":29,"denominator":2},"szse-model328":{"value":51.5,"direct":51,"shared":1,"numerator":103,"denominator":2},"trading-window-freeze":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"behavior-design":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":true},{"date":"2026-10-15","chains":["storage-cleanup","sse-v2","cancel-phase","behavior-design","szse-model328","model-methods"],"notes":{"storage-cleanup":{"note":"盘点副本并按保留期限清理","outcome":"landed","outcome_note":""},"sse-v2":{"note":"逐列检查沪市因子的计算条件","outcome":"landed","outcome_note":""},"cancel-phase":{"note":"停止机械撤单稳定性分析的后续生成","outcome":"landed","outcome_note":"只停止逐股稳定性分析这一项后续工作；已有的相位因子和机械撤单结果照常保留。"},"behavior-design":{"note":"细化 V3 比例上限的预查方向","outcome":"landed","outcome_note":""},"szse-model328":{"note":"写单日四分钟优化计划","outcome":"landed","outcome_note":""},"model-methods":{"note":"解读机器学习组合归因论文","outcome":"landed","outcome_note":""}},"weights":{"cancel-phase":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"sse-v2":{"value":12.0,"direct":12,"shared":0,"numerator":12,"denominator":1},"storage-cleanup":{"value":46.0,"direct":42,"shared":8,"numerator":46,"denominator":1},"szse-model328":{"value":6.0,"direct":2,"shared":8,"numerator":6,"denominator":1},"behavior-design":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1},"model-methods":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false},{"date":"2026-10-16","chains":["storage-cleanup","szse-model328","sse-v2","report-publish","behavior-design"],"notes":{"storage-cleanup":{"note":"清理失败暂存并补齐清理记录","outcome":"landed","outcome_note":""},"szse-model328":{"note":"按验收配置继续剩余日期","outcome":"landed","outcome_note":""},"sse-v2":{"note":"登记可见口径并建三值判定","outcome":"landed","outcome_note":""},"report-publish":{"note":"发布深市 328 列提速与存储复盘","outcome":"landed","outcome_note":""},"behavior-design":{"note":"V3 比例尺寸线写了又撤销","outcome":"dropped","outcome_note":"只撤销了比例尺寸线这一次尝试，没有跑真实数据；V 系列研究继续。"}},"weights":{"behavior-design":{"value":2.0,"direct":2,"shared":0,"numerator":2,"denominator":1},"report-publish":{"value":4.0,"direct":4,"shared":0,"numerator":4,"denominator":1},"sse-v2":{"value":36.0,"direct":36,"shared":0,"numerator":36,"denominator":1},"storage-cleanup":{"value":6.5,"direct":5,"shared":3,"numerator":13,"denominator":2},"szse-model328":{"value":21.5,"direct":20,"shared":3,"numerator":43,"denominator":2}},"report":true},{"date":"2026-10-17","chains":["replay","sse-v2","szse-model328"],"notes":{"replay":{"note":"诊断快照偏移和回放对因子的影响","outcome":"landed","outcome_note":""},"sse-v2":{"note":"核对 G1 缺失、定义差与恢复比例","outcome":"landed","outcome_note":""},"szse-model328":{"note":"继续剩余日期计算","outcome":"landed","outcome_note":""}},"weights":{"replay":{"value":35.0,"direct":35,"shared":0,"numerator":35,"denominator":1},"sse-v2":{"value":72.0,"direct":71,"shared":2,"numerator":72,"denominator":1},"storage-cleanup":{"value":2.0,"direct":1,"shared":2,"numerator":2,"denominator":1},"szse-model328":{"value":4.0,"direct":4,"shared":0,"numerator":4,"denominator":1}},"report":false},{"date":"2026-10-18","chains":["replay","szse-model328","report328","storage-cleanup"],"notes":{"replay":{"note":"复核三日生产回放","outcome":"landed","outcome_note":""},"szse-model328":{"note":"存档 601 日结果并完成单因子评价","outcome":"landed","outcome_note":""},"report328":{"note":"发布 328 列因子的 601 日评价报告","outcome":"landed","outcome_note":""},"storage-cleanup":{"note":"报告存档后清理暂存","outcome":"landed","outcome_note":""}},"weights":{"replay":{"value":19.0,"direct":19,"shared":0,"numerator":19,"denominator":1},"report328":{"value":5.0,"direct":5,"shared":0,"numerator":5,"denominator":1},"storage-cleanup":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"szse-model328":{"value":10.0,"direct":10,"shared":0,"numerator":10,"denominator":1}},"report":true},{"date":"2026-10-19","chains":["replay","research-code","storage-cleanup","szse-model328"],"notes":{"replay":{"note":"审计成交价格并设正确回放为默认","outcome":"landed","outcome_note":""},"research-code":{"note":"整理公共 IO、入口和执行阶段","outcome":"landed","outcome_note":""},"storage-cleanup":{"note":"扫描 wenjie 和 wangly 的存储","outcome":"landed","outcome_note":""},"szse-model328":{"note":"比较老因子新旧参数表现","outcome":"landed","outcome_note":""}},"weights":{"replay":{"value":37.0,"direct":37,"shared":0,"numerator":37,"denominator":1},"sse-v2":{"value":2.0,"direct":2,"shared":0,"numerator":2,"denominator":1},"szse-model328":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"research-code":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1},"storage-cleanup":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false},{"date":"2026-10-20","chains":["replay","wangly-env","sse-v2","corrected-replay-344","research-journal","research-code"],"notes":{"replay":{"note":"交付回放整改并拒收旧参数来源","outcome":"landed","outcome_note":""},"wangly-env":{"note":"核验并重建两个账户的默认环境","outcome":"landed","outcome_note":""},"sse-v2":{"note":"按逻辑分类并实现公开可见 v3 候选","outcome":"landed","outcome_note":""},"corrected-replay-344":{"note":"定下 344 列范围和八组定参来源","outcome":"landed","outcome_note":""},"research-journal":{"note":"建设研究日志并审阅历史记录","outcome":"landed","outcome_note":""},"research-code":{"note":"拆分回放依赖并修复回归","outcome":"landed","outcome_note":""}},"weights":{"corrected-replay-344":{"value":10.0,"direct":10,"shared":0,"numerator":10,"denominator":1},"replay":{"value":64.5,"direct":64,"shared":1,"numerator":129,"denominator":2},"report-publish":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"research-journal":{"value":32.0,"direct":32,"shared":0,"numerator":32,"denominator":1},"sse-v2":{"value":12.0,"direct":12,"shared":0,"numerator":12,"denominator":1},"wangly-env":{"value":16.5,"direct":16,"shared":1,"numerator":33,"denominator":2},"research-code":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false},{"date":"2026-10-21","chains":["replay","corrected-replay-344","sse-v2","research-journal","behavior-design"],"notes":{"replay":{"note":"完整日验收并保留回放来源","outcome":"landed","outcome_note":""},"corrected-replay-344":{"note":"六核采集推进，结构参数改用新口径","outcome":"landed","outcome_note":""},"sse-v2":{"note":"沪深三项口径修正通过全市场对照","outcome":"landed","outcome_note":""},"research-journal":{"note":"修复采集并补核来源","outcome":"landed","outcome_note":""},"behavior-design":{"note":"比较 V3 至 V9 的沪深适用性和顺序","outcome":"landed","outcome_note":""}},"weights":{"corrected-replay-344":{"value":54.5,"direct":54,"shared":1,"numerator":109,"denominator":2},"replay":{"value":7.5,"direct":7,"shared":1,"numerator":15,"denominator":2},"research-journal":{"value":34.0,"direct":34,"shared":0,"numerator":34,"denominator":1},"sse-v2":{"value":74.0,"direct":74,"shared":0,"numerator":74,"denominator":1},"behavior-design":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false}]}</script>
+  <script>
+  (()=>{
+    const root=document.getElementById('jpd-bplus');
+    const data=JSON.parse(root.querySelector('#jpd-bplus-data').textContent);
+    const state={date:'2026-10-20',focused:'replay',expanded:true,legacyFocus:'replay'};
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const diameter=v=>3+2.25*Math.log2(1+Math.max(0,v));
+    const getDay=date=>data.days.find(d=>d.date===date);
+    const dayTasks=day=>data.chains.filter(c=>day.chains.includes(c.id)).map(c=>({...c,note:day.notes[c.id]?.note||'注解待补',weight:day.weights[c.id]?.value??0,shared:day.weights[c.id]?.shared??0}));
+    const dot=(day,id)=>`<i class="bp-dot${day.report?' is-filled':''}" style="--bp-diameter:${diameter(day.weights[id]?.value??0)}px" aria-hidden="true"></i>`;
+    const weight=t=>t.weight===0?'当天无已归属提交':`归属提交量 <b>${t.weight}</b> 份${t.shared?'<small>含 1 条跨链提交<span class="bp-nowrap">的份额</span></small>':''}`;
+    const note=s=>esc(s).replace('v3 候选','<span class="bp-nowrap">v3 候选</span>');
+    const trackName=id=>data.tracks.find(t=>t.id===id)?.label||'';
+    const announce=s=>{root.querySelector('[data-live]').textContent=s;};
+    function board(){
+      const day=getDay(state.date),tasks=dayTasks(day),index=data.days.indexOf(day);
+      if(!tasks.some(t=>t.id===state.focused))state.focused=tasks[0]?.id;
+      const weekday=['周日','周一','周二','周三','周四','周五','周六'][new Date(state.date+'T00:00:00Z').getUTCDay()];
+      root.querySelector('[data-day-heading]').textContent=state.date+' 的工作';
+      root.querySelector('[data-day-meta]').textContent=`${weekday}　${tasks.length} 项工作　${day.report?'有关联汇报':'未关联汇报'}`;
+      root.querySelector('[data-scope]').textContent=state.expanded?`当日相关任务（${tasks.length} 条）`:`全部任务（${data.chains.length} 条）`;
+      root.querySelector('[data-day-step="-1"]').disabled=index===0;
+      root.querySelector('[data-day-step="1"]').disabled=index===data.days.length-1;
+      const toggle=root.querySelector('[data-collapse]');toggle.textContent=state.expanded?'收起并查看全图':'展开当天说明';toggle.setAttribute('aria-expanded',String(state.expanded));
+      const focusClass=id=>state.focused===id?' is-focused':'';
+      const header=`<div class="bp-grid bp-header"><div class="bp-date-head">工作日期</div>${tasks.map(t=>`<button type="button" class="bp-column-name${focusClass(t.id)}" data-task="${t.id}" aria-pressed="${state.focused===t.id}" aria-label="聚焦${esc(t.short)}"><small>${esc(trackName(t.track))}</small><strong>${esc(t.short)}</strong></button>`).join('')}</div>`;
+      const rows=data.days.map(d=>{
+        if(d.date===state.date)return `<div class="bp-grid bp-current-row"><div class="bp-current-date"><button type="button" class="bp-day-button" data-date="${d.date}" aria-current="date" aria-label="查看${d.date}的工作">${d.date.slice(5)}</button><small>已展开</small></div>${tasks.map(t=>`<article class="bp-work-cell${focusClass(t.id)}" data-column="${t.id}" aria-label="${esc(t.short)}的当天说明"><button type="button" class="bp-marker-button" data-task="${t.id}" aria-pressed="${state.focused===t.id}" aria-label="聚焦${esc(t.short)}，${esc(t.note)}">${dot(d,t.id)}</button><span class="bp-short-stem" aria-hidden="true"></span><p class="bp-note">${note(t.note)}</p><p class="bp-weight">${weight(t)}</p></article>`).join('')}</div>`;
+        const rest=['2026-10-17','2026-10-18'].includes(d.date)?' bp-rest':'';
+        return `<div class="bp-grid bp-history-row${rest}"><button type="button" class="bp-day-button" data-date="${d.date}" aria-label="查看${d.date}的工作">${d.date.slice(5)}</button>${tasks.map(t=>`<div class="bp-history-cell${focusClass(t.id)}" data-column="${t.id}" aria-label="${d.date}，${esc(t.short)}，${d.chains.includes(t.id)?'有工作记录':'没有登记这项工作'}">${d.chains.includes(t.id)?dot(d,t.id):''}</div>`).join('')}</div>`;
+      }).join('');
+      const container=root.querySelector('[data-board]');container.style.setProperty('--bp-columns',tasks.length);container.innerHTML=state.expanded?header+rows:'<div class="bp-overview" data-overview></div>';
+      if(!state.expanded)overview();
+      root.querySelector('[data-mobile-days]').innerHTML=data.days.map(d=>`<button type="button" data-date="${d.date}" aria-pressed="${d.date===state.date}" aria-label="查看${d.date}的工作">${d.date.slice(5)}</button>`).join('');
+      const mobile=root.querySelector('[data-mobile-records]');mobile.classList.toggle('is-collapsed',!state.expanded);
+      const mobileTasks=state.expanded?tasks:data.chains.map(c=>tasks.find(t=>t.id===c.id)||{...c,note:'当天没有登记这项工作',weight:0});
+      mobile.innerHTML=mobileTasks.map(t=>`<article class="bp-mobile-task${focusClass(t.id)}" data-column="${t.id}" aria-label="${esc(t.short)}的当天说明"><button type="button" class="bp-mobile-title" data-task="${t.id}" ${day.chains.includes(t.id)?'':'disabled'} aria-pressed="${state.focused===t.id}">${day.chains.includes(t.id)?dot(day,t.id):'<span class="bp-absent" aria-hidden="true"></span>'}<span>${esc(t.short)}</span></button><p class="bp-note">${note(t.note)}</p><p class="bp-weight">${weight(t)}</p></article>`).join('');
+    }
+    function overview(){
+      const el=root.querySelector('[data-overview]');if(!el)return;
+      const w=el.getBoundingClientRect().width;if(w<40)return;
+      const day=getDay(state.date),head=122,pitch=28,left=68,right=14,cw=(w-left-right)/data.chains.length,h=head+data.days.length*pitch+20;
+      const x=id=>left+(data.chains.findIndex(c=>c.id===id)+.5)*cw;
+      const y=date=>head+data.days.findIndex(d=>d.date===date)*pitch;
+      let html=`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="全部38条任务的日期概览"><title>全部任务概览</title><text x="8" y="24">工作日期</text>`;
+      data.chains.forEach(c=>{html+=`<text x="${x(c.id)}" y="20" style="writing-mode:vertical-rl" font-weight="${day.chains.includes(c.id)?700:400}">${esc(c.short)}</text>`;});
+      html+=`<path d="M${left},${y(day.date)}H${w-right}" stroke="var(--bp-focus)" stroke-width="1.2"/>`;
+      data.days.forEach(d=>{html+=`<text x="${left-12}" y="${y(d.date)+4}" text-anchor="end" font-weight="${d.date===day.date?700:400}">${d.date.slice(5)}</text>`;d.chains.forEach(id=>{html+=`<circle cx="${x(id)}" cy="${y(d.date)}" r="${diameter(d.weights[id]?.value??0)/2}" fill="${d.report?'var(--bp-past)':'var(--bp-paper)'}" stroke="${d.date===day.date?'var(--bp-ink)':'var(--bp-past)'}" stroke-width="1.2"/>`;});});
+      el.innerHTML=html+'</svg>';
+    }
+    function focusTask(id){
+      state.focused=id;
+      root.querySelectorAll('[data-board] [data-task],[data-mobile-records] [data-task]').forEach(e=>{e.classList.toggle('is-focused',e.dataset.task===id);e.setAttribute('aria-pressed',String(e.dataset.task===id));});
+      root.querySelectorAll('[data-board] [data-column],[data-mobile-records] [data-column]').forEach(e=>e.classList.toggle('is-focused',e.dataset.column===id));
+      const task=dayTasks(getDay(state.date)).find(t=>t.id===id);announce(`已聚焦${task.short}。${task.note}`);
+    }
+    const legacyDay=getDay('2026-10-20');
+    const legacyTasks=dayTasks(legacyDay).map((t,i)=>({...t,code:String.fromCharCode(65+i)}));
+    root.querySelector('[data-legacy-grid]').innerHTML=legacyTasks.map(t=>`<button type="button" class="bp-legacy-lane${t.id===state.legacyFocus?' is-focused':''}" data-legacy-task="${t.id}" aria-pressed="${t.id===state.legacyFocus}" aria-label="原B，${esc(t.short)}，${esc(t.note)}"><span class="bp-legacy-marker">${dot(legacyDay,t.id)}</span><span class="bp-legacy-name"><span class="bp-code">${t.code}</span>${esc(t.short)}</span><span class="bp-legacy-note">${esc(t.note)}</span><span class="bp-weight">${weight(t)}</span></button>`).join('');
+    function legacyChart(){
+      const el=root.querySelector('[data-legacy-chart]'),w=el.getBoundingClientRect().width;if(w<40)return;
+      const visible=w<720?legacyTasks:data.chains,left=w<720?52:68,right=14,head=w<720?92:111,pitch=19,extra=30,h=head+data.days.length*pitch+39+extra,cw=(w-left-right)/visible.length;
+      const x=id=>left+(visible.findIndex(c=>c.id===id)+.5)*cw;
+      const y=date=>{const i=data.days.findIndex(d=>d.date===date);return head+i*pitch+(i>6?extra:0);};
+      let svg=`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="原B的历史图，十月二十日的六项工作用A至F标记"><title>原B的历史图</title><rect x="${x(state.legacyFocus)-cw/2}" y="25" width="${cw}" height="${h-36}" fill="var(--bp-tint)"/><text x="0" y="18">工作日期</text>`;
+      if(w>=720)data.tracks.forEach(tr=>{const group=visible.filter(c=>c.track===tr.id);if(group.length)svg+=`<text x="${(x(group[0].id)+x(group.at(-1).id))/2}" y="18" text-anchor="middle">${esc(tr.label)}</text>`;});
+      visible.forEach(c=>{svg+=`<text x="${x(c.id)}" y="${w<720?13:37}" style="writing-mode:vertical-rl" font-weight="${legacyTasks.some(t=>t.id===c.id)?700:400}">${esc(c.short)}</text><path d="M${x(c.id)},${head-8}V${h-12}" stroke="var(--bp-rule)" stroke-width=".6"/>`;});
+      data.days.forEach(d=>{svg+=`<text x="${left-12}" y="${y(d.date)+4}" text-anchor="end" font-weight="${d.date===legacyDay.date?700:400}">${d.date.slice(5)}</text>`;d.chains.forEach(id=>{if(visible.some(c=>c.id===id))svg+=`<circle cx="${x(id)}" cy="${y(d.date)}" r="${diameter(d.weights[id]?.value??0)/2}" fill="${d.report?'var(--bp-past)':'var(--bp-paper)'}" stroke="${d.date===legacyDay.date?'var(--bp-ink)':'var(--bp-past)'}" stroke-width="1.2"/>`;});});
+      svg+=`<path d="M${left},${y(legacyDay.date)}H${w-right}" stroke="var(--bp-focus)" stroke-width="1.2"/>`;
+      legacyTasks.forEach(t=>{const cy=y(legacyDay.date),focused=t.id===state.legacyFocus;svg+=`<circle cx="${x(t.id)}" cy="${cy}" r="${diameter(t.weight)/2}" fill="var(--bp-paper)" stroke="var(--bp-ink)" stroke-width="1.5"/>${focused?`<circle cx="${x(t.id)}" cy="${cy}" r="${diameter(t.weight)/2+3.5}" fill="none" stroke="var(--bp-focus)" stroke-width="2"/>`:''}<rect x="${x(t.id)-10}" y="${cy+17}" width="20" height="20" fill="${focused?'var(--bp-ink)':'var(--bp-surface)'}" stroke="var(--bp-ink)"/><text x="${x(t.id)}" y="${cy+31}" text-anchor="middle" style="fill:${focused?'var(--bp-paper)':'var(--bp-ink)'}">${t.code}</text>`;});
+      el.innerHTML=svg+'</svg>';
+    }
+    root.addEventListener('click',e=>{
+      const date=e.target.closest('[data-date]');if(date){state.date=date.dataset.date;state.expanded=true;board();announce(`已展开${state.date}的${dayTasks(getDay(state.date)).length}项工作`);return;}
+      const step=e.target.closest('[data-day-step]');if(step){const i=data.days.findIndex(d=>d.date===state.date),next=data.days[i+Number(step.dataset.dayStep)];if(next){state.date=next.date;state.expanded=true;board();announce(`已展开${state.date}的工作`);}return;}
+      const collapse=e.target.closest('[data-collapse]');if(collapse){state.expanded=!state.expanded;board();announce(state.expanded?'已展开当天说明':'已收起当天说明');return;}
+      const task=e.target.closest('[data-task]');if(task){focusTask(task.dataset.task);return;}
+      const old=e.target.closest('[data-legacy-task]');if(old){state.legacyFocus=old.dataset.legacyTask;root.querySelectorAll('[data-legacy-task]').forEach(b=>{b.classList.toggle('is-focused',b===old);b.setAttribute('aria-pressed',String(b===old));});legacyChart();}
+    });
+    root.addEventListener('keydown',e=>{const b=e.target.closest('[data-task]');if(!b||!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();const tasks=dayTasks(getDay(state.date)),i=tasks.findIndex(t=>t.id===state.focused),next=tasks[(i+(e.key==='ArrowRight'?1:-1)+tasks.length)%tasks.length];focusTask(next.id);const target=root.querySelector(`[data-board] .bp-column-name[data-task="${next.id}"]`);if(target&&target.getBoundingClientRect().width>0)target.focus();});
+    board();
+    new ResizeObserver(legacyChart).observe(root.querySelector('[data-legacy-chart]'));
+    new ResizeObserver(overview).observe(root.querySelector('[data-board]'));
+  })();
+  </script>
+</div>

@@ -1,0 +1,256 @@
+<div id="jpd-root">
+  <style>
+    #jpd-root{--jp-paper:#f2eee4;--jp-surface:#f8f4eb;--jp-surface-2:#e9e2d5;--jp-ink:#15212b;--jp-rule:#c8c1b4;--jp-focus:#d9654f;--jp-soft:#a6aaa4;color:var(--jp-ink);font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;font-size:14px;line-height:1.6;width:100%}
+    #jpd-root *{box-sizing:border-box}
+    #jpd-root button{font:inherit;color:inherit;cursor:pointer}
+    #jpd-root button:focus-visible{outline:2px solid var(--jp-focus);outline-offset:3px}
+    #jpd-root button:active{transform:translateY(1px)}
+    #jpd-root [hidden]{display:none!important}
+    #jpd-root .jp-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+    #jpd-root .jp-product{background:var(--jp-paper);min-height:856px;padding:0 24px 24px;border:1px solid var(--jp-rule)}
+    #jpd-root .jp-masthead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 0 15px;border-bottom:2px solid var(--jp-ink)}
+    #jpd-root .jp-masthead h1{font-family:"Noto Serif SC","Songti SC",SimSun,serif;font-size:23px;line-height:1.4;font-weight:700;letter-spacing:0;margin:0}
+    #jpd-root .jp-edition,#jpd-root .jp-draft{font-size:12px;white-space:nowrap}
+    #jpd-root .jp-nav{display:flex;border-bottom:1px solid var(--jp-rule);gap:0;font-size:13px}
+    #jpd-root .jp-nav span{padding:9px 20px}
+    #jpd-root .jp-nav [aria-current]{background:var(--jp-ink);color:var(--jp-paper)}
+    #jpd-root .jp-titlebar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:22px 0 14px}
+    #jpd-root .jp-titlebar h2{font-size:20px;font-weight:700;margin:0}
+    #jpd-root .jp-date{font-size:13px;display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;font-variant-numeric:tabular-nums}
+    #jpd-root .jp-date b{font-size:15px}
+    #jpd-root .jp-chart{position:relative;min-width:0;overflow:visible}
+    #jpd-root .jp-chart svg{display:block;overflow:visible}
+    #jpd-root .jp-chart text{font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;font-size:12px;fill:var(--jp-ink)}
+    #jpd-root .jp-chart .jp-axis{font-variant-numeric:tabular-nums}
+    #jpd-root .jp-chart .jp-past{stroke:var(--jp-soft);stroke-width:1.1}
+    #jpd-root .jp-chart .jp-past-line{stroke:var(--jp-soft);stroke-width:1;fill:none;opacity:.5}
+    #jpd-root .jp-chart .jp-grid{stroke:var(--jp-rule);stroke-width:.65;opacity:.6}
+    #jpd-root .jp-chart .jp-selected-line{stroke:var(--jp-focus);stroke-width:1.2}
+    #jpd-root .jp-chart .jp-current-dot{fill:var(--jp-paper);stroke:var(--jp-ink);stroke-width:1.5}
+    #jpd-root .jp-chart .jp-ring{fill:none;stroke:var(--jp-focus);stroke-width:2}
+    #jpd-root .jp-head-title{font-weight:700}
+    #jpd-root .jp-code{display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;background:var(--jp-surface);border:1px solid var(--jp-ink);font-size:13px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
+    #jpd-root .jp-point-hit{position:absolute;top:0;border:0;padding:0;background:transparent;height:44px;transform:translate(-50%,-50%)}
+    #jpd-root .jp-point-hit:active{transform:translate(-50%,-50%)}
+    #jpd-root .jp-point-hit .jp-code{position:absolute;left:50%;top:38px;transform:translateX(-50%);width:20px;height:20px;font-size:12px}
+    #jpd-root .jp-point-hit[aria-pressed="true"] .jp-code{background:var(--jp-ink);color:var(--jp-paper)}
+    #jpd-root .jp-reading{margin-top:13px;border-top:2px solid var(--jp-ink)}
+    #jpd-root .jp-reading-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:14px 0 9px}
+    #jpd-root h3{font-size:16px;font-weight:700;margin:0}
+    #jpd-root .jp-reading-top span{font-size:12px}
+    #jpd-root .jp-table-head,#jpd-root .jp-note-row{display:grid;grid-template-columns:38px 128px minmax(0,1fr) 118px;gap:12px;align-items:center;text-align:left}
+    #jpd-root .jp-table-head{font-size:12px;padding:7px 12px 9px;border-bottom:1px solid var(--jp-rule)}
+    #jpd-root .jp-table-head span:last-child{text-align:right}
+    #jpd-root .jp-note-row{width:100%;min-height:57px;background:transparent;border:0;border-bottom:1px solid var(--jp-rule);padding:10px 12px}
+    #jpd-root .jp-note-row[aria-pressed="true"]{background:var(--jp-surface-2);box-shadow:inset 0 0 0 1px var(--jp-ink)}
+    #jpd-root .jp-note-row[aria-pressed="true"] .jp-code{background:var(--jp-ink);color:var(--jp-paper)}
+    #jpd-root .jp-task-name{font-weight:700}
+    #jpd-root .jp-note-row .jp-number{text-align:right;font-variant-numeric:tabular-nums}
+    #jpd-root .jp-number small{display:block;font-size:12px;line-height:1.4}
+    #jpd-root .jp-legend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 22px;padding-top:16px;font-size:12px}
+    #jpd-root .jp-legend span{display:inline-flex;align-items:center;gap:6px}
+    #jpd-root .jp-dot-key{width:9px;height:9px;border:1.3px solid var(--jp-ink);border-radius:50%;display:inline-block}
+    #jpd-root .jp-dot-key.filled{background:var(--jp-ink)}
+    #jpd-root .jp-size-key{width:14px;height:14px;border:1.3px solid var(--jp-ink);border-radius:50%;display:inline-block}
+    #jpd-root .jp-day-zoom{border-top:2px solid var(--jp-ink);margin-top:13px}
+    #jpd-root .jp-zoom-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0}
+    #jpd-root .jp-lane{display:flex;flex-direction:column;align-items:stretch;min-width:0;text-align:left;padding:0 12px 16px;border:0;border-right:1px solid var(--jp-rule);background:transparent}
+    #jpd-root .jp-lane:first-child{border-left:1px solid var(--jp-rule)}
+    #jpd-root .jp-lane[aria-pressed="true"]{background:var(--jp-surface-2)}
+    #jpd-root .jp-lane-dot{display:flex;align-items:center;justify-content:center;height:50px;position:relative}
+    #jpd-root .jp-lane-dot::after{content:"";height:20px;width:1px;background:var(--jp-ink);position:absolute;top:32px;left:50%}
+    #jpd-root .jp-lane-dot i{display:block;border:1.5px solid var(--jp-ink);background:var(--jp-paper);border-radius:50%}
+    #jpd-root .jp-lane[aria-pressed="true"] .jp-lane-dot i{outline:2px solid var(--jp-focus);outline-offset:3px}
+    #jpd-root .jp-lane-name{display:flex;gap:8px;align-items:center;font-weight:700;justify-content:center;min-height:48px;flex-wrap:wrap}
+    #jpd-root .jp-lane-name .jp-code{width:20px;height:20px;font-size:12px}
+    #jpd-root .jp-lane-note{display:block;min-height:94px;padding-top:10px}
+    #jpd-root .jp-lane-weight{display:block;font-size:12px;margin-top:15px;border-top:1px solid var(--jp-rule);padding-top:9px;font-variant-numeric:tabular-nums}
+    #jpd-root .jp-lane-weight strong{font-size:16px}
+    #jpd-root .jp-focus-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start;margin-top:18px}
+    #jpd-root .jp-inspector{border-top:2px solid var(--jp-ink);background:var(--jp-surface);padding:16px;min-width:0}
+    #jpd-root .jp-inspector-title{display:flex;align-items:center;gap:10px}
+    #jpd-root .jp-inspector-title h3{font-size:18px}
+    #jpd-root .jp-inspector-note{font-size:16px;line-height:1.8;margin:18px 0}
+    #jpd-root .jp-inspector-weight{font-size:13px;margin:0 0 16px}
+    #jpd-root .jp-stepper{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--jp-rule);padding-top:10px;font-size:12px;gap:6px}
+    #jpd-root .jp-stepper button{border:1px solid var(--jp-rule);padding:8px 10px;min-height:44px;background:transparent;white-space:nowrap}
+    #jpd-root .jp-task-directory{padding-top:18px}
+    #jpd-root .jp-task-directory h3{margin:0 0 8px;font-size:14px}
+    #jpd-root .jp-directory-item{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;text-align:left;padding:8px 10px;border:0;border-bottom:1px solid var(--jp-rule);background:transparent}
+    #jpd-root .jp-directory-item .jp-code{width:20px;height:20px;font-size:12px}
+    #jpd-root .jp-directory-item[aria-pressed="true"]{background:var(--jp-ink);color:var(--jp-paper)}
+    #jpd-root .jp-directory-item[aria-pressed="true"] .jp-code{border-color:var(--jp-paper);background:transparent;color:var(--jp-paper)}
+    #jpd-root .jp-focus-summary{border-top:1px solid var(--jp-rule);margin-top:18px;padding-top:16px;font-size:14px}
+    #jpd-root .jp-chart-caption{font-size:12px;margin:8px 0 0}
+    @media(max-width:760px){
+      #jpd-root .jp-product{padding:0 16px 22px;min-height:1120px}
+      #jpd-root .jp-edition{display:none}
+      #jpd-root .jp-masthead h1{font-size:21px}
+      #jpd-root .jp-titlebar{display:block;margin-top:18px}
+      #jpd-root .jp-titlebar h2{font-size:18px;margin-bottom:8px}
+      #jpd-root .jp-table-head{display:none}
+      #jpd-root .jp-note-row{grid-template-columns:30px minmax(0,1fr) 72px;gap:7px 10px;min-height:96px;padding:12px 8px;font-size:16px}
+      #jpd-root .jp-note-row .jp-note-text{grid-column:2/4;grid-row:2;font-size:16px}
+      #jpd-root .jp-note-row .jp-number{grid-column:3;grid-row:1;font-size:14px}
+      #jpd-root .jp-number small{font-size:12px}
+      #jpd-root .jp-zoom-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 0}
+      #jpd-root .jp-lane{border:1px solid var(--jp-rule);padding:0 12px 12px;font-size:16px}
+      #jpd-root .jp-lane-note{min-height:96px}
+      #jpd-root .jp-focus-layout{grid-template-columns:1fr;gap:16px}
+      #jpd-root .jp-inspector{padding:16px;display:grid;grid-template-columns:1fr;gap:0}
+      #jpd-root .jp-task-directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px}
+      #jpd-root .jp-task-directory h3{grid-column:1/-1}
+      #jpd-root .jp-reading-top{align-items:flex-start}
+      #jpd-root .jp-reading-top span{max-width:140px;text-align:right}
+    }
+    @media(max-width:390px){#jpd-root .jp-nav span{padding:9px 13px}#jpd-root .jp-task-directory{grid-template-columns:1fr}#jpd-root .jp-note-row{grid-template-columns:25px minmax(0,1fr) 67px;gap:6px}#jpd-root .jp-masthead h1{font-size:19px}}
+    @media(prefers-reduced-motion:reduce){#jpd-root *{animation:none!important;transition:none!important}}
+  </style>
+  <p class="jp-sr-only" data-selection-status aria-live="polite"></p>
+  <div class="viz-carousel" aria-label="点位说明的三种草稿" data-previous-label="上一方案" data-next-label="下一方案">
+    <section data-variant="编号对照" aria-label="编号对照草稿">
+      <div class="jp-product" data-design="index">
+        <header class="jp-masthead"><span class="jp-edition">研究档案 / 2026</span><h1>量化实习成果看板</h1><span class="jp-draft">草拟方案</span></header>
+        <div class="jp-nav" aria-label="看板栏目"><span>正式成果</span><span>每日汇报</span><span aria-current="page">研究日志</span></div>
+        <div class="jp-titlebar"><h2>编号对照</h2><div class="jp-date"><b>2026-10-20</b><span>周二</span><span>6 项工作</span><span>未关联汇报</span></div></div>
+        <div class="jp-chart" data-chart="index" role="group" aria-label="近八天研究日志，选中十月二十日"></div>
+        <section class="jp-reading" aria-label="十月二十日的全部工作说明">
+          <div class="jp-reading-top"><h3>10 月 20 日的工作说明</h3><span>A–F 为当天对照标记</span></div>
+          <div class="jp-table-head" aria-hidden="true"><span>对照</span><span>工作</span><span>当天说明</span><span>归属提交量（份）</span></div>
+          <div data-note-list="index"></div>
+        </section>
+        <div class="jp-legend"><span><i class="jp-dot-key"></i>未关联汇报</span><span><i class="jp-dot-key filled"></i>有关联汇报</span><span><i class="jp-size-key"></i>点径表示归属提交量</span></div>
+      </div>
+    </section>
+    <section data-variant="当日展开" aria-label="当日展开草稿" hidden>
+      <div class="jp-product" data-design="lanes">
+        <header class="jp-masthead"><span class="jp-edition">研究档案 / 2026</span><h1>量化实习成果看板</h1><span class="jp-draft">草拟方案</span></header>
+        <div class="jp-nav" aria-label="看板栏目"><span>正式成果</span><span>每日汇报</span><span aria-current="page">研究日志</span></div>
+        <div class="jp-titlebar"><h2>当日展开</h2><div class="jp-date"><b>2026-10-20</b><span>周二</span><span>6 项工作</span><span>未关联汇报</span></div></div>
+        <div class="jp-chart" data-chart="lanes" role="group" aria-label="近八天研究日志，选中十月二十日"></div>
+        <section class="jp-day-zoom" aria-label="十月二十日的任务列放大">
+          <div class="jp-reading-top"><h3>10 月 20 日，当日放大</h3><span>按原图从左到右展开</span></div>
+          <div class="jp-zoom-grid" data-lane-list></div>
+        </section>
+        <div class="jp-legend"><span><i class="jp-dot-key"></i>未关联汇报</span><span><i class="jp-dot-key filled"></i>有关联汇报</span><span><i class="jp-size-key"></i>点径表示归属提交量</span></div>
+      </div>
+    </section>
+    <section data-variant="单点聚焦" aria-label="单点聚焦草稿" hidden>
+      <div class="jp-product" data-design="focus">
+        <header class="jp-masthead"><span class="jp-edition">研究档案 / 2026</span><h1>量化实习成果看板</h1><span class="jp-draft">草拟方案</span></header>
+        <div class="jp-nav" aria-label="看板栏目"><span>正式成果</span><span>每日汇报</span><span aria-current="page">研究日志</span></div>
+        <div class="jp-titlebar"><h2>单点聚焦</h2><div class="jp-date"><b>2026-10-20</b><span>周二</span><span>6 项工作</span><span>未关联汇报</span></div></div>
+        <div class="jp-focus-layout">
+          <div><div class="jp-chart" data-chart="focus" role="group" aria-label="近八天研究日志，选中十月二十日"></div><div class="jp-focus-summary" data-focus-summary></div></div>
+          <aside aria-label="当前点位的工作说明">
+            <div class="jp-inspector" data-inspector></div>
+            <div class="jp-task-directory" data-directory></div>
+          </aside>
+        </div>
+        <div class="jp-legend"><span><i class="jp-dot-key"></i>未关联汇报</span><span><i class="jp-dot-key filled"></i>有关联汇报</span><span><i class="jp-size-key"></i>点径表示归属提交量</span></div>
+      </div>
+    </section>
+  </div>
+  <script type="application/json" id="jpd-source">{"tracks":[{"id":"infra","label":"数据与服务器"},{"id":"snapshot","label":"快照与回放"},{"id":"footprint","label":"算法痕迹"},{"id":"factor","label":"因子与定标"},{"id":"model","label":"模型"},{"id":"delivery","label":"看板与交付"},{"id":"special","label":"专题研究"}],"chains":[{"id":"onboarding","short":"上手","track":"infra"},{"id":"doris-migration","short":"服务器迁移","track":"infra"},{"id":"wangly-env","short":"环境与传输","track":"infra"},{"id":"doris-efficiency","short":"Doris 取数","track":"infra"},{"id":"storage-cleanup","short":"存储清理","track":"infra"},{"id":"trading-window-freeze","short":"早盘冻结","track":"infra"},{"id":"research-code","short":"代码结构","track":"infra"},{"id":"lv2-snapshot","short":"LV2 快照","track":"snapshot"},{"id":"replay","short":"回放核验","track":"snapshot"},{"id":"literature","short":"论文复现","track":"footprint"},{"id":"algobench","short":"论文指标","track":"footprint"},{"id":"formal-engine","short":"因子计算","track":"footprint"},{"id":"gates","short":"筛选规则","track":"footprint"},{"id":"cross-stock-sync","short":"跨股同步","track":"footprint"},{"id":"behavior-design","short":"行为构思","track":"footprint"},{"id":"mechanism-precheck","short":"机制预查","track":"footprint"},{"id":"fixed-history","short":"历史补算","track":"factor"},{"id":"open5m","short":"开盘5分钟","track":"factor"},{"id":"old-factor-calibration","short":"旧因子定标","track":"factor"},{"id":"cancel-phase","short":"撤单研究","track":"factor"},{"id":"depth-match","short":"深度匹配","track":"factor"},{"id":"old-factor-bank","short":"老因子库","track":"factor"},{"id":"grouped-calibration","short":"分组定标","track":"factor"},{"id":"szse-model328","short":"深市328","track":"factor"},{"id":"sse-v2","short":"沪市委托","track":"factor"},{"id":"corrected-replay-344","short":"344重定参","track":"factor"},{"id":"ml-exec","short":"多模型族","track":"model"},{"id":"ml-330","short":"LightGBM","track":"model"},{"id":"model-methods","short":"模型方法","track":"model"},{"id":"strategy-research","short":"策略假设","track":"model"},{"id":"dashboard-build","short":"看板建站","track":"delivery"},{"id":"report-publish","short":"发布维护","track":"delivery"},{"id":"visual-b","short":"版式调整","track":"delivery"},{"id":"report-tags","short":"标签与浏览","track":"delivery"},{"id":"model-report","short":"模型报告","track":"delivery"},{"id":"report328","short":"328报告","track":"delivery"},{"id":"research-journal","short":"研究日志","track":"delivery"},{"id":"fund-research","short":"产品研究","track":"special"}],"days":[{"date":"2026-10-14","chains":["storage-cleanup","szse-model328","sse-v2","report-publish","behavior-design"],"notes":{"storage-cleanup":{"note":"核验归档后清理重复缓存","outcome":"landed","outcome_note":""},"szse-model328":{"note":"暂停并准备单日四分钟优化","outcome":"landed","outcome_note":""},"sse-v2":{"note":"实现委托还原 v2 并提速","outcome":"landed","outcome_note":""},"report-publish":{"note":"发布沪市委托 v2 提速报告","outcome":"landed","outcome_note":""},"behavior-design":{"note":"逐项研究 V3 至 V9 的可行性","outcome":"landed","outcome_note":""}},"weights":{"report-publish":{"value":6.0,"direct":6,"shared":0,"numerator":6,"denominator":1},"sse-v2":{"value":91.0,"direct":91,"shared":0,"numerator":91,"denominator":1},"storage-cleanup":{"value":14.5,"direct":14,"shared":1,"numerator":29,"denominator":2},"szse-model328":{"value":51.5,"direct":51,"shared":1,"numerator":103,"denominator":2},"trading-window-freeze":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"behavior-design":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":true},{"date":"2026-10-15","chains":["storage-cleanup","sse-v2","cancel-phase","behavior-design","szse-model328","model-methods"],"notes":{"storage-cleanup":{"note":"盘点副本并按保留期限清理","outcome":"landed","outcome_note":""},"sse-v2":{"note":"逐列检查沪市因子的计算条件","outcome":"landed","outcome_note":""},"cancel-phase":{"note":"停止机械撤单稳定性分析的后续生成","outcome":"landed","outcome_note":"只停止逐股稳定性分析这一项后续工作；已有的相位因子和机械撤单结果照常保留。"},"behavior-design":{"note":"细化 V3 比例上限的预查方向","outcome":"landed","outcome_note":""},"szse-model328":{"note":"写单日四分钟优化计划","outcome":"landed","outcome_note":""},"model-methods":{"note":"解读机器学习组合归因论文","outcome":"landed","outcome_note":""}},"weights":{"cancel-phase":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"sse-v2":{"value":12.0,"direct":12,"shared":0,"numerator":12,"denominator":1},"storage-cleanup":{"value":46.0,"direct":42,"shared":8,"numerator":46,"denominator":1},"szse-model328":{"value":6.0,"direct":2,"shared":8,"numerator":6,"denominator":1},"behavior-design":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1},"model-methods":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false},{"date":"2026-10-16","chains":["storage-cleanup","szse-model328","sse-v2","report-publish","behavior-design"],"notes":{"storage-cleanup":{"note":"清理失败暂存并补齐清理记录","outcome":"landed","outcome_note":""},"szse-model328":{"note":"按验收配置继续剩余日期","outcome":"landed","outcome_note":""},"sse-v2":{"note":"登记可见口径并建三值判定","outcome":"landed","outcome_note":""},"report-publish":{"note":"发布深市 328 列提速与存储复盘","outcome":"landed","outcome_note":""},"behavior-design":{"note":"V3 比例尺寸线写了又撤销","outcome":"dropped","outcome_note":"只撤销了比例尺寸线这一次尝试，没有跑真实数据；V 系列研究继续。"}},"weights":{"behavior-design":{"value":2.0,"direct":2,"shared":0,"numerator":2,"denominator":1},"report-publish":{"value":4.0,"direct":4,"shared":0,"numerator":4,"denominator":1},"sse-v2":{"value":36.0,"direct":36,"shared":0,"numerator":36,"denominator":1},"storage-cleanup":{"value":6.5,"direct":5,"shared":3,"numerator":13,"denominator":2},"szse-model328":{"value":21.5,"direct":20,"shared":3,"numerator":43,"denominator":2}},"report":true},{"date":"2026-10-17","chains":["replay","sse-v2","szse-model328"],"notes":{"replay":{"note":"诊断快照偏移和回放对因子的影响","outcome":"landed","outcome_note":""},"sse-v2":{"note":"核对 G1 缺失、定义差与恢复比例","outcome":"landed","outcome_note":""},"szse-model328":{"note":"继续剩余日期计算","outcome":"landed","outcome_note":""}},"weights":{"replay":{"value":35.0,"direct":35,"shared":0,"numerator":35,"denominator":1},"sse-v2":{"value":72.0,"direct":71,"shared":2,"numerator":72,"denominator":1},"storage-cleanup":{"value":2.0,"direct":1,"shared":2,"numerator":2,"denominator":1},"szse-model328":{"value":4.0,"direct":4,"shared":0,"numerator":4,"denominator":1}},"report":false},{"date":"2026-10-18","chains":["replay","szse-model328","report328","storage-cleanup"],"notes":{"replay":{"note":"复核三日生产回放","outcome":"landed","outcome_note":""},"szse-model328":{"note":"存档 601 日结果并完成单因子评价","outcome":"landed","outcome_note":""},"report328":{"note":"发布 328 列因子的 601 日评价报告","outcome":"landed","outcome_note":""},"storage-cleanup":{"note":"报告存档后清理暂存","outcome":"landed","outcome_note":""}},"weights":{"replay":{"value":19.0,"direct":19,"shared":0,"numerator":19,"denominator":1},"report328":{"value":5.0,"direct":5,"shared":0,"numerator":5,"denominator":1},"storage-cleanup":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"szse-model328":{"value":10.0,"direct":10,"shared":0,"numerator":10,"denominator":1}},"report":true},{"date":"2026-10-19","chains":["replay","research-code","storage-cleanup","szse-model328"],"notes":{"replay":{"note":"审计成交价格并设正确回放为默认","outcome":"landed","outcome_note":""},"research-code":{"note":"整理公共 IO、入口和执行阶段","outcome":"landed","outcome_note":""},"storage-cleanup":{"note":"扫描 wenjie 和 wangly 的存储","outcome":"landed","outcome_note":""},"szse-model328":{"note":"比较老因子新旧参数表现","outcome":"landed","outcome_note":""}},"weights":{"replay":{"value":37.0,"direct":37,"shared":0,"numerator":37,"denominator":1},"sse-v2":{"value":2.0,"direct":2,"shared":0,"numerator":2,"denominator":1},"szse-model328":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"research-code":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1},"storage-cleanup":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false},{"date":"2026-10-20","chains":["replay","wangly-env","sse-v2","corrected-replay-344","research-journal","research-code"],"notes":{"replay":{"note":"交付回放整改并拒收旧参数来源","outcome":"landed","outcome_note":""},"wangly-env":{"note":"核验并重建两个账户的默认环境","outcome":"landed","outcome_note":""},"sse-v2":{"note":"按逻辑分类并实现公开可见 v3 候选","outcome":"landed","outcome_note":""},"corrected-replay-344":{"note":"定下 344 列范围和八组定参来源","outcome":"landed","outcome_note":""},"research-journal":{"note":"建设研究日志并审阅历史记录","outcome":"landed","outcome_note":""},"research-code":{"note":"拆分回放依赖并修复回归","outcome":"landed","outcome_note":""}},"weights":{"corrected-replay-344":{"value":10.0,"direct":10,"shared":0,"numerator":10,"denominator":1},"replay":{"value":64.5,"direct":64,"shared":1,"numerator":129,"denominator":2},"report-publish":{"value":1.0,"direct":1,"shared":0,"numerator":1,"denominator":1},"research-journal":{"value":32.0,"direct":32,"shared":0,"numerator":32,"denominator":1},"sse-v2":{"value":12.0,"direct":12,"shared":0,"numerator":12,"denominator":1},"wangly-env":{"value":16.5,"direct":16,"shared":1,"numerator":33,"denominator":2},"research-code":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false},{"date":"2026-10-21","chains":["replay","corrected-replay-344","sse-v2","research-journal","behavior-design"],"notes":{"replay":{"note":"完整日验收并保留回放来源","outcome":"landed","outcome_note":""},"corrected-replay-344":{"note":"六核采集推进，结构参数改用新口径","outcome":"landed","outcome_note":""},"sse-v2":{"note":"沪深三项口径修正通过全市场对照","outcome":"landed","outcome_note":""},"research-journal":{"note":"修复采集并补核来源","outcome":"landed","outcome_note":""},"behavior-design":{"note":"比较 V3 至 V9 的沪深适用性和顺序","outcome":"landed","outcome_note":""}},"weights":{"corrected-replay-344":{"value":54.5,"direct":54,"shared":1,"numerator":109,"denominator":2},"replay":{"value":7.5,"direct":7,"shared":1,"numerator":15,"denominator":2},"research-journal":{"value":34.0,"direct":34,"shared":0,"numerator":34,"denominator":1},"sse-v2":{"value":74.0,"direct":74,"shared":0,"numerator":74,"denominator":1},"behavior-design":{"value":0,"direct":0,"shared":0,"numerator":0,"denominator":1}},"report":false}]}</script>
+  <script>
+  (()=>{
+    const root=document.getElementById('jpd-root');
+    const data=JSON.parse(root.querySelector('#jpd-source').textContent);
+    const selectedDay=data.days.find(d=>d.date==='2026-10-20');
+    const chains=data.chains;
+    const tasks=chains.filter(c=>selectedDay.chains.includes(c.id)).map((c,i)=>({...c,code:String.fromCharCode(65+i),note:selectedDay.notes[c.id].note,weight:selectedDay.weights[c.id]?.value??0,shared:selectedDay.weights[c.id]?.shared??0}));
+    const state={index:'replay',lanes:'replay',focus:'replay'};
+    const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const radius=v=>(3+2.25*Math.log2(1+Math.max(0,v)))/2;
+    const code=t=>`<span class="jp-code" aria-hidden="true">${t.code}</span>`;
+    const weight=t=>t.weight===0?'当天无已归属提交':`${t.weight} 份${t.shared?'，含 1 条跨链提交的份额':''}`;
+    const labels=t=>`${t.code}，${t.short}，${t.note}，${weight(t)}`;
+    const noteList=root.querySelector('[data-note-list]');
+    noteList.innerHTML=tasks.map(t=>`<button type="button" class="jp-note-row" data-task="${t.id}" data-kind="index" aria-label="${escape(labels(t))}" aria-pressed="${state.index===t.id}">${code(t)}<span class="jp-task-name">${escape(t.short)}</span><span class="jp-note-text">${escape(t.note)}</span><span class="jp-number">${t.weight===0?'无已归属提交':t.weight}${t.shared?'<small>含跨链份额</small>':''}</span></button>`).join('');
+    root.querySelector('[data-lane-list]').innerHTML=tasks.map(t=>`<button type="button" class="jp-lane" data-task="${t.id}" data-kind="lanes" aria-label="${escape(labels(t))}" aria-pressed="${state.lanes===t.id}"><span class="jp-lane-dot" aria-hidden="true"><i style="width:${radius(t.weight)*2}px;height:${radius(t.weight)*2}px"></i></span><span class="jp-lane-name">${code(t)}${escape(t.short)}</span><span class="jp-lane-note">${escape(t.note)}</span><span class="jp-lane-weight">${t.weight===0?'当天无已归属提交':`归属提交量 <strong>${t.weight}</strong> 份`}${t.shared?'<br>含 1 条跨链提交的份额':''}</span></button>`).join('');
+    root.querySelector('[data-directory]').innerHTML='<h3>当天工作</h3>'+tasks.map(t=>`<button type="button" class="jp-directory-item" data-task="${t.id}" data-kind="focus" aria-pressed="${state.focus===t.id}" aria-label="查看${escape(t.short)}的说明">${code(t)}${escape(t.short)}</button>`).join('');
+    function inspector(){
+      const t=tasks.find(t=>t.id===state.focus),i=tasks.indexOf(t);
+      root.querySelector('[data-inspector]').innerHTML=`<div class="jp-inspector-title">${code(t)}<h3>${escape(t.short)}</h3></div><p class="jp-inspector-note">${escape(t.note)}</p><p class="jp-inspector-weight">${escape(weight(t))}</p><div class="jp-stepper"><button type="button" data-step="-1" aria-label="查看上一项工作">上一项</button><span>${i+1} / ${tasks.length}</span><button type="button" data-step="1" aria-label="查看下一项工作">下一项</button></div>`;
+      root.querySelector('[data-focus-summary]').innerHTML=`<span class="jp-code" aria-hidden="true">${t.code}</span> <strong>${escape(t.short)}</strong>　2026-10-20`;
+    }
+    function renderChart(el){
+      const kind=el.dataset.chart,w=el.getBoundingClientRect().width;
+      if(w<40)return;
+      const narrow=w<720,visible=narrow?tasks:chains;
+      const left=narrow?52:68,right=14,head=narrow?92:111;
+      const pitch=kind==='focus'?32:19;
+      const selectedIndex=data.days.findIndex(d=>d.date===selectedDay.date);
+      const labelBand=30;
+      const h=head+data.days.length*pitch+39+labelBand;
+      const cw=(w-left-right)/visible.length;
+      const x=id=>left+(visible.findIndex(c=>c.id===id)+.5)*cw;
+      const y=d=>{const i=data.days.findIndex(v=>v.date===d);return head+i*pitch+(i>selectedIndex?labelBand:0);};
+      const cy=y(selectedDay.date);
+      const chosen=state[kind];
+      const svg=[];
+      svg.push(`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="工作日期从上到下，任务从左到右，十月二十日有六项工作"><title>研究日志点位与说明对应草稿</title>`);
+      svg.push(`<rect x="${x(chosen)-cw/2}" y="26" width="${cw}" height="${h-38}" fill="var(--jp-surface-2)"/>`);
+      svg.push(`<text x="0" y="18">工作日期</text>`);
+      if(!narrow){
+        data.tracks.forEach(tr=>{
+          const group=visible.filter(c=>c.track===tr.id);if(!group.length)return;
+          const a=x(group[0].id)-cw/2,b=x(group.at(-1).id)+cw/2;
+          svg.push(`<text x="${(a+b)/2}" y="18" text-anchor="middle">${escape(tr.label)}</text><path class="jp-grid" d="M${a},25H${b} M${b},25V${h-12}"/>`);
+        });
+      }
+      visible.forEach(c=>{
+        const active=tasks.some(t=>t.id===c.id);
+        svg.push(`<text x="${x(c.id)}" y="${narrow?13:37}" style="writing-mode:vertical-rl" text-anchor="start" class="${active?'jp-head-title':''}">${escape(c.short)}</text>`);
+        if(active)svg.push(`<path class="jp-grid" d="M${x(c.id)},${head-9}V${h-12}"/>`);
+        const history=data.days.filter(d=>d.chains.includes(c.id));
+        if(history.length>1)svg.push(`<path class="jp-past-line" d="${history.map((d,i)=>`${i?'L':'M'}${x(c.id)},${y(d.date)}`).join(' ')}"/>`);
+      });
+      data.days.forEach(d=>{
+        if(d.date===selectedDay.date)return;
+        if(d.date==='2026-10-17'||d.date==='2026-10-18')svg.push(`<rect x="${left}" y="${y(d.date)-pitch/2}" width="${w-left-right}" height="${pitch}" fill="var(--jp-surface-2)" opacity=".6"/>`);
+        svg.push(`<text class="jp-axis" x="${left-12}" y="${y(d.date)+4}" text-anchor="end">${d.date.slice(5)}</text>`);
+        d.chains.forEach(id=>{
+          if(!visible.some(c=>c.id===id))return;
+          svg.push(`<circle class="jp-past" cx="${x(id)}" cy="${y(d.date)}" r="${radius(d.weights[id]?.value??0)}" fill="${d.report?'var(--jp-soft)':'var(--jp-paper)'}"/>`);
+        });
+      });
+      svg.push(`<path class="jp-selected-line" d="M${left},${cy}H${w-right}"/><text class="jp-axis" x="${left-12}" y="${cy+4}" text-anchor="end" font-weight="700">10-20</text>`);
+      tasks.forEach(t=>{
+        const r=radius(t.weight);
+        svg.push(`<circle class="jp-current-dot" cx="${x(t.id)}" cy="${cy}" r="${r}"/>`);
+        if(t.id===chosen)svg.push(`<circle class="jp-ring" cx="${x(t.id)}" cy="${cy}" r="${r+3.5}"/>`);
+      });
+      svg.push('</svg>');
+      svg.push(tasks.map(t=>`<button type="button" class="jp-point-hit" style="left:${x(t.id)}px;top:${cy}px;width:${Math.max(18,Math.min(narrow?44:25,cw-1))}px" data-task="${t.id}" data-kind="${kind}" aria-pressed="${chosen===t.id}" aria-label="${escape(labels(t))}">${code(t)}</button>`).join(''));
+      el.innerHTML=svg.join('');
+      el.style.height=h+'px';
+    }
+    function select(kind,id){
+      state[kind]=id;
+      const current=tasks.find(t=>t.id===id);
+      root.querySelector('[data-selection-status]').textContent=`已选中 ${current.code}，${current.short}。${current.note}`;
+      root.querySelectorAll(`[data-kind="${kind}"][data-task]`).forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.task===id)));
+      root.querySelectorAll(`[data-chart="${kind}"]`).forEach(renderChart);
+      if(kind==='focus')inspector();
+    }
+    root.addEventListener('click',e=>{
+      const b=e.target.closest('[data-task][data-kind]');
+      if(b){select(b.dataset.kind,b.dataset.task);return;}
+      const step=e.target.closest('[data-step]');
+      if(step){const i=tasks.findIndex(t=>t.id===state.focus);select('focus',tasks[(i+Number(step.dataset.step)+tasks.length)%tasks.length].id);}
+    });
+    root.addEventListener('keydown',e=>{
+      const b=e.target.closest('[data-task][data-kind]');if(!b)return;
+      if(!['ArrowLeft','ArrowRight'].includes(e.key))return;
+      e.preventDefault();
+      const i=tasks.findIndex(t=>t.id===b.dataset.task),next=tasks[(i+(e.key==='ArrowRight'?1:-1)+tasks.length)%tasks.length];
+      select(b.dataset.kind,next.id);
+      const target=root.querySelector(`[data-chart="${b.dataset.kind}"] [data-task="${next.id}"]`);if(target)target.focus();
+    });
+    inspector();
+    const observer=new ResizeObserver(entries=>entries.forEach(entry=>{if(entry.contentRect.width>0)renderChart(entry.target);}));
+    root.querySelectorAll('[data-chart]').forEach(el=>observer.observe(el));
+  })();
+  </script>
+</div>

@@ -1,0 +1,153 @@
+<section data-variant="空实分层" id="proof-solid" aria-label="每日工作图谱：空实分层样稿">
+  <style>
+    #proof-solid{--ps-paper:#f2eee4;--ps-sheet:#f8f4eb;--ps-ink:#15212b;--ps-line:#c8c1b4;--ps-focus:#d9654f;--ps-muted:#58626a;box-sizing:border-box;background:var(--ps-paper);color:var(--ps-ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",sans-serif;padding:24px;min-width:0;}
+    #proof-solid *,#proof-solid *:before,#proof-solid *:after{box-sizing:border-box;}
+    #proof-solid button,#proof-solid a{font:inherit;color:inherit;}
+    #proof-solid button{min-height:44px;background:none;border:0;cursor:pointer;}
+    #proof-solid a{text-underline-offset:4px;overflow-wrap:anywhere;}
+    #proof-solid .ps-top{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--ps-ink);padding-bottom:16px;}
+    #proof-solid .ps-brand{font:22px/1.3 Georgia,"SimSun",serif;letter-spacing:2px;}
+    #proof-solid .ps-crumb{font-size:12px;color:var(--ps-muted);margin-left:16px;letter-spacing:0;}
+    #proof-solid .ps-sample{font-size:12px;border:1px solid var(--ps-line);padding:3px 8px;white-space:nowrap;}
+    #proof-solid .ps-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:22px 0 18px;}
+    #proof-solid h2,#proof-solid h3,#proof-solid p{margin:0;}
+    #proof-solid h2{font:30px/1.3 Georgia,"SimSun",serif;letter-spacing:1px;}
+    #proof-solid .ps-subtitle{font-size:12px;color:var(--ps-muted);margin-top:6px;}
+    #proof-solid .ps-date{font-size:14px;white-space:nowrap;text-align:right;}
+    #proof-solid .ps-date small{display:block;color:var(--ps-muted);font-size:12px;}
+    #proof-solid .ps-legend{display:flex;gap:10px 20px;flex-wrap:wrap;align-items:center;padding:12px 0 16px;border-top:1px solid var(--ps-line);font-size:12px;}
+    #proof-solid .ps-key{display:inline-flex;gap:7px;align-items:center;}
+    #proof-solid .ps-key-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--ps-ink);flex:none;}
+    #proof-solid .ps-key-dot.ps-hollow{background:var(--ps-sheet);border:1.5px solid var(--ps-ink);}
+    #proof-solid .ps-key-dot.ps-pending{background:var(--ps-sheet);border:1.5px dashed var(--ps-ink);}
+    #proof-solid .ps-size-note{margin-left:auto;color:var(--ps-muted);}
+    #proof-solid .ps-workspace{display:grid;grid-template-columns:minmax(0,1fr) 290px;border-top:1px solid var(--ps-ink);border-bottom:1px solid var(--ps-ink);background:var(--ps-sheet);}
+    #proof-solid .ps-map{min-width:0;border-right:1px solid var(--ps-line);}
+    #proof-solid .ps-map-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--ps-line);font-size:12px;}
+    #proof-solid .ps-map-head strong{font-size:14px;font-weight:500;}
+    #proof-solid .ps-map-head span{color:var(--ps-muted);}
+    #proof-solid .ps-scroll{overflow-x:auto;overscroll-behavior-x:contain;}
+    #proof-solid .ps-chart{min-width:610px;padding:0 14px 12px;}
+    #proof-solid .ps-chart-head{display:grid;grid-template-columns:114px 56px minmax(0,1fr) 54px;align-items:center;height:48px;color:var(--ps-muted);font-size:12px;}
+    #proof-solid .ps-chart-head .ps-day-current{color:var(--ps-ink);font-weight:500;}
+    #proof-solid .ps-chart-head span:nth-child(n+2){text-align:center;}
+    #proof-solid .ps-chart-head .ps-day-current{text-align:left;padding-left:10px;}
+    #proof-solid .ps-task{display:grid;width:100%;grid-template-columns:114px 56px minmax(0,1fr) 54px;align-items:center;min-height:76px;text-align:left;padding:0;border-top:1px solid color-mix(in srgb,var(--ps-line) 65%,transparent);position:relative;}
+    #proof-solid .ps-task:hover{background:color-mix(in srgb,var(--ps-ink) 4%,transparent);}
+    #proof-solid .ps-task[aria-pressed="true"]{background:color-mix(in srgb,var(--ps-focus) 8%,var(--ps-sheet));}
+    #proof-solid .ps-task[aria-pressed="true"]:before{content:"";position:absolute;left:-14px;top:0;bottom:0;width:3px;background:var(--ps-focus);}
+    #proof-solid .ps-task-name{font-size:14px;font-weight:500;padding-right:12px;}
+    #proof-solid .ps-before,#proof-solid .ps-after{height:1px;background:var(--ps-line);position:relative;}
+    #proof-solid .ps-before:before{content:"";position:absolute;width:5px;height:5px;left:10px;top:-2px;border-radius:50%;background:var(--ps-line);}
+    #proof-solid .ps-current{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;align-items:center;min-height:76px;}
+    #proof-solid .ps-dot-cell{display:flex;justify-content:center;align-items:center;position:relative;min-height:76px;}
+    #proof-solid .ps-dot-cell:before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--ps-line);}
+    #proof-solid .ps-dot{width:var(--ps-diameter);height:var(--ps-diameter);position:relative;border-radius:50%;background:var(--ps-ink);flex:none;}
+    #proof-solid .ps-task[aria-pressed="true"] .ps-dot:after{content:"";position:absolute;inset:-5px;border:1.5px solid var(--ps-focus);border-radius:50%;}
+    #proof-solid .ps-task.ps-discussion .ps-dot{background:var(--ps-sheet);border:1.5px solid var(--ps-ink);}
+    #proof-solid .ps-task.ps-pending .ps-dot{background:var(--ps-sheet);border:1.5px dashed var(--ps-ink);}
+    #proof-solid .ps-task-note{font-size:14px;line-height:1.5;}
+    #proof-solid .ps-task-meta{display:block;color:var(--ps-muted);font-size:12px;margin-top:3px;}
+    #proof-solid .ps-after{background:repeating-linear-gradient(to right,var(--ps-line) 0 3px,transparent 3px 7px);}
+    #proof-solid .ps-map-foot{padding:12px 16px;border-top:1px solid var(--ps-line);display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--ps-muted);}
+    #proof-solid .ps-detail{min-width:0;padding:16px 18px 20px;}
+    #proof-solid .ps-detail-eyebrow{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ps-muted);margin-bottom:12px;}
+    #proof-solid .ps-detail h3{font:23px/1.4 Georgia,"SimSun",serif;margin-bottom:8px;}
+    #proof-solid .ps-evidence-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ps-muted);margin-bottom:16px;}
+    #proof-solid .ps-evidence-status:before{content:"";width:7px;height:7px;background:var(--ps-focus);border-radius:50%;}
+    #proof-solid .ps-detail-note{font-size:14px;margin-bottom:18px;}
+    #proof-solid .ps-material-group{padding:14px 0;border-top:1px solid var(--ps-line);}
+    #proof-solid .ps-group-title{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:500;margin-bottom:9px;}
+    #proof-solid .ps-group-title span{font-size:12px;font-weight:400;color:var(--ps-muted);}
+    #proof-solid .ps-material-link{display:block;min-height:44px;padding:8px 0;font-size:14px;text-decoration:none;}
+    #proof-solid .ps-material-link:hover{text-decoration:underline;}
+    #proof-solid .ps-link-title{display:block;}
+    #proof-solid .ps-link-type{font-size:12px;color:var(--ps-muted);display:block;margin-top:4px;}
+    #proof-solid .ps-conversation{margin:0;}
+    #proof-solid .ps-conversation dt{font-size:12px;color:var(--ps-muted);margin:10px 0 3px;}
+    #proof-solid .ps-conversation dd{font-size:14px;margin:0;}
+    #proof-solid .ps-empty{font-size:14px;color:var(--ps-muted);}
+    #proof-solid .ps-report{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:16px 0 0;}
+    #proof-solid .ps-report-label{font-size:14px;}
+    #proof-solid .ps-report-label span{font-size:12px;color:var(--ps-muted);margin-left:12px;}
+    #proof-solid .ps-report-toggle{font-size:12px;border-bottom:1px solid var(--ps-ink);padding:0 4px;white-space:nowrap;}
+    #proof-solid .ps-report-panel{padding-top:12px;}
+    #proof-solid .ps-report-panel a{display:block;min-height:44px;padding:10px 0;border-top:1px solid var(--ps-line);font-size:14px;}
+    #proof-solid [hidden]{display:none!important;}
+    @media(min-width:950px){#proof-solid .ps-chart{min-width:0;}#proof-solid .ps-workspace{grid-template-columns:minmax(0,1fr) 300px;}#proof-solid .ps-chart-head,#proof-solid .ps-task{grid-template-columns:112px 40px minmax(0,1fr) 24px;}}
+    @media(max-width:760px){#proof-solid{padding:18px 16px;}#proof-solid .ps-workspace{grid-template-columns:minmax(0,1fr);}#proof-solid .ps-map{border-right:0;}#proof-solid .ps-detail{border-top:1px solid var(--ps-ink);padding:20px 18px;}#proof-solid .ps-detail-note{max-width:54ch;}#proof-solid .ps-size-note{margin-left:0;flex-basis:100%;}#proof-solid .ps-crumb{margin-left:8px;}#proof-solid .ps-heading{align-items:flex-start;}#proof-solid h2{font-size:27px;}#proof-solid .ps-brand{font-size:20px;}#proof-solid .ps-report{align-items:flex-start;}#proof-solid .ps-report-label span{display:block;margin-left:0;}}
+    @media(prefers-reduced-motion:no-preference){#proof-solid .ps-task{transition:background-color 150ms ease;}}
+    #proof-solid .ps-chart{display:grid;grid-template-columns:64px repeat(5,minmax(102px,1fr));min-width:610px;padding:0 10px;min-height:384px;}
+    #proof-solid .ps-chart-head{display:block;position:relative;grid-row:1;height:384px;}
+    #proof-solid .ps-chart-head span{position:absolute;left:0;right:0;top:12px;text-align:left!important;padding:0!important;}
+    #proof-solid .ps-chart-head span:nth-child(2){top:99px;}
+    #proof-solid .ps-chart-head span:nth-child(3){top:143px;}
+    #proof-solid .ps-chart-head span:nth-child(4){top:187px;}
+    #proof-solid .ps-task{display:block;position:relative;grid-row:1;height:384px;min-height:384px;border-top:0;border-left:1px solid var(--ps-line);padding:0;text-align:center;}
+    #proof-solid .ps-task:after{content:"";position:absolute;top:67px;bottom:24px;left:50%;width:1px;background:var(--ps-line);z-index:0;}
+    #proof-solid .ps-task-name{position:absolute;top:10px;left:6px;right:6px;padding:0;min-height:44px;display:flex;align-items:center;justify-content:center;}
+    #proof-solid .ps-before,#proof-solid .ps-after{display:none;}
+    #proof-solid .ps-current{position:absolute;display:block;top:173px;left:0;right:0;min-height:0;z-index:1;}
+    #proof-solid .ps-dot-cell{height:44px;min-height:44px;}
+    #proof-solid .ps-dot-cell:before{display:none;}
+    #proof-solid .ps-task-note{position:relative;display:block;margin:16px 8px 0;padding:6px 2px;background:var(--ps-sheet);font-size:14px;line-height:1.6;text-align:left;}
+    #proof-solid .ps-task-meta{margin-top:8px;}
+    #proof-solid .ps-task[aria-pressed="true"]:before{left:0;top:0;bottom:auto;width:100%;height:3px;}
+    #proof-solid .ps-task[aria-pressed="true"] .ps-task-note{background:var(--ps-sheet);}
+    #proof-solid .ps-workspace{grid-template-columns:minmax(0,1fr) 280px;}
+    @media(max-width:900px){#proof-solid .ps-workspace{grid-template-columns:minmax(0,1fr);}#proof-solid .ps-map{border-right:0;}#proof-solid .ps-detail{border-top:1px solid var(--ps-ink);}}
+  </style>
+  <div class="ps-top"><div class="ps-brand">研究日志<span class="ps-crumb">／ 工作图谱</span></div><span class="ps-sample">样稿</span></div>
+  <div class="ps-heading"><div><h2>每日工作点</h2><p class="ps-subtitle">图谱局部 · 38 条任务线中显示 5 条</p></div><div class="ps-date">2026.10.21<small>当天 5 项工作</small></div></div>
+  <div class="ps-legend" aria-label="工作点图例"><span class="ps-key"><i class="ps-key-dot" aria-hidden="true"></i>有可查产物</span><span class="ps-key"><i class="ps-key-dot ps-hollow" aria-hidden="true"></i>仅见交流</span><span class="ps-key"><i class="ps-key-dot ps-pending" aria-hidden="true"></i>证据待核</span><span class="ps-size-note">圆点大小＝提交量 · 文档零提交仍为实心</span></div>
+  <div class="ps-workspace">
+    <div class="ps-map">
+      <div class="ps-map-head"><strong>任务线</strong><span>点选一项查看依据</span></div>
+      <div class="ps-scroll" aria-label="可横向滚动的工作图谱">
+        <div class="ps-chart">
+          <div class="ps-chart-head"><span>日期</span><span>10.19</span><span>10.20</span><span class="ps-day-current">10.21</span></div>
+          <button class="ps-task" type="button" data-case="sse-v2" aria-pressed="true" aria-controls="proof-solid-detail"><span class="ps-task-name">沪市委托还原</span><span class="ps-before" aria-hidden="true"></span><span class="ps-current"><span class="ps-dot-cell"><i class="ps-dot" style="--ps-diameter:30px" aria-hidden="true"></i></span><span class="ps-task-note">沪深三项口径修正通过全市场对照<span class="ps-task-meta">产物与讨论并存 · 74 提交</span></span></span><span class="ps-after" aria-hidden="true"></span></button>
+          <button class="ps-task" type="button" data-case="replay" aria-pressed="false" aria-controls="proof-solid-detail"><span class="ps-task-name">回放核验</span><span class="ps-before" aria-hidden="true"></span><span class="ps-current"><span class="ps-dot-cell"><i class="ps-dot" style="--ps-diameter:12px" aria-hidden="true"></i></span><span class="ps-task-note">完整日验收并保留回放来源<span class="ps-task-meta">文档已落盘 · 0 提交</span></span></span><span class="ps-after" aria-hidden="true"></span></button>
+          <button class="ps-task" type="button" data-case="research-journal" aria-pressed="false" aria-controls="proof-solid-detail"><span class="ps-task-name">研究日志</span><span class="ps-before" aria-hidden="true"></span><span class="ps-current"><span class="ps-dot-cell"><i class="ps-dot" style="--ps-diameter:23px" aria-hidden="true"></i></span><span class="ps-task-note">修复采集并补核来源<span class="ps-task-meta">代码与提交 · 34 提交</span></span></span><span class="ps-after" aria-hidden="true"></span></button>
+          <button class="ps-task ps-discussion" type="button" data-case="behavior-design" aria-pressed="false" aria-controls="proof-solid-detail"><span class="ps-task-name">行为构思</span><span class="ps-before" aria-hidden="true"></span><span class="ps-current"><span class="ps-dot-cell"><i class="ps-dot" style="--ps-diameter:12px" aria-hidden="true"></i></span><span class="ps-task-note">比较 V3 至 V9 的沪深适用性和顺序<span class="ps-task-meta">目前仅见会话 · 0 提交</span></span></span><span class="ps-after" aria-hidden="true"></span></button>
+          <button class="ps-task ps-pending" type="button" data-case="corrected-replay-344" aria-pressed="false" aria-controls="proof-solid-detail"><span class="ps-task-name">344 列定参</span><span class="ps-before" aria-hidden="true"></span><span class="ps-current"><span class="ps-dot-cell"><i class="ps-dot" style="--ps-diameter:16px" aria-hidden="true"></i></span><span class="ps-task-note">六核采集推进，结构参数改用新口径<span class="ps-task-meta">证据待核 · 提交量待确认</span></span></span><span class="ps-after" aria-hidden="true"></span></button>
+        </div>
+      </div>
+      <div class="ps-map-foot"><span>结局另记：■ 收口　× 未采用</span><span>点径为阅读态示意</span></div>
+    </div>
+    <aside class="ps-detail" id="proof-solid-detail" aria-live="polite" aria-label="选中任务的证据详情"></aside>
+  </div>
+  <div class="ps-report"><div class="ps-report-label">当天汇报<span>10 月 21 日未发布汇报</span></div><button type="button" class="ps-report-toggle" aria-expanded="false" aria-controls="proof-solid-reports">相关材料 3 ＋</button></div>
+  <div class="ps-report-panel" id="proof-solid-reports" hidden>
+    <a href="https://github.com/MengerWen/sirui-quant-research/blob/fb52d08a98c5fdd4b576dae0489d951205a38dff/reports/2026-10/2026-10-21-open5m-queue-f16-dm-decisions-r2.md" target="_blank" rel="noopener noreferrer">10.21 · 三项口径修正与全市场对照 ↗</a>
+    <a href="https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md" target="_blank" rel="noopener noreferrer">10.20 · 正确盘口 344 列重新定参 ↗</a>
+    <a href="https://github.com/MengerWen/internship-dashboard/commit/902b03b440425600c64ac4ba0030eeab3a36d9e9" target="_blank" rel="noopener noreferrer">研究日志图谱与来源采集改动 ↗</a>
+  </div>
+  <script>
+    (()=>{
+      const root=document.getElementById('proof-solid');
+      if(!root)return;
+      const cases=[{"id":"sse-v2","label":"沪市委托还原","note":"沪深三项口径修正通过全市场对照","kind":"mixed","weight":74,"tags":["代码","提交","验收记录","会话"],"artifact":"三项口径修正与全市场对照","url":"https://github.com/MengerWen/sirui-quant-research/blob/fb52d08a98c5fdd4b576dae0489d951205a38dff/reports/2026-10/2026-10-21-open5m-queue-f16-dm-decisions-r2.md","discussion":"决定排队余量采用新口径，并用于后续耗尽尺度定参。"},{"id":"replay","label":"回放核验","note":"完整日验收并保留回放来源","kind":"artifact","weight":0,"tags":["文档"],"artifact":"正确盘口 344 列重新定参","url":"https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md","discussion":""},{"id":"research-journal","label":"研究日志","note":"修复采集并补核来源","kind":"artifact","weight":34,"tags":["代码","提交"],"artifact":"研究日志图谱与来源采集改动","url":"https://github.com/MengerWen/internship-dashboard/commit/902b03b440425600c64ac4ba0030eeab3a36d9e9","discussion":""},{"id":"behavior-design","label":"行为构思","note":"比较 V3 至 V9 的沪深适用性和顺序","kind":"discussion","weight":0,"tags":["会话"],"artifact":"","url":"","discussion":"比较不同方案在沪深市场的适用性；具体实现与验证仍需后续记录。"},{"id":"corrected-replay-344","label":"344 列定参","note":"六核采集推进，结构参数改用新口径","kind":"pending","weight":null,"tags":["待核"],"artifact":"","url":"","discussion":"需要补核文件、提交及运行回执之间的对应关系。"}];
+      const detail=root.querySelector('.ps-detail');
+      const buttons=Array.from(root.querySelectorAll('[data-case]'));
+      const state={selected:'sse-v2'};
+      const escape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+      function render(){
+        const item=cases.find(entry=>entry.id===state.selected)||cases[0];
+        buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.case===item.id)));
+        const status=item.kind==='mixed'?'有产物 · 同时保留讨论':item.kind==='discussion'?'仅见交流':item.kind==='pending'?'证据待核':item.weight===0?'文档已落盘 · 0 提交':'代码与提交';
+        let content=`<div class="ps-detail-eyebrow"><span>10.21 · 证据详情</span><span>${cases.indexOf(item)+1} / 5</span></div><h3>${escape(item.label)}</h3><div class="ps-evidence-status">${status}</div><p class="ps-detail-note">${escape(item.note)}</p>`;
+        if(item.artifact){content+=`<div class="ps-material-group"><div class="ps-group-title">产物<span>1 项材料</span></div><a class="ps-material-link" href="${escape(item.url)}" target="_blank" rel="noopener noreferrer"><span class="ps-link-title">${escape(item.artifact)} ↗</span><span class="ps-link-type">${escape(item.tags.filter(tag=>tag!=='会话').join(' · '))} · GitHub</span></a></div>`;}
+        if(item.kind==='mixed'){content+=`<div class="ps-material-group"><div class="ps-group-title">讨论<span>会话摘录</span></div><dl class="ps-conversation"><dt>决定</dt><dd>${escape(item.discussion)}</dd><dt>待验证</dt><dd>后续耗尽尺度的定参结果。</dd></dl></div>`;}
+        if(item.kind==='discussion'){content+=`<div class="ps-material-group"><div class="ps-group-title">产物<span>当前未见</span></div><p class="ps-empty">尚无对应文件或提交。</p></div><div class="ps-material-group"><div class="ps-group-title">讨论<span>会话摘录</span></div><dl class="ps-conversation"><dt>问题</dt><dd>V3 至 V9 在沪深市场的适用性和实现顺序。</dd><dt>讨论记录</dt><dd>${escape(item.discussion)}</dd><dt>待验证</dt><dd>具体实现及验证记录。</dd></dl></div>`;}
+        if(item.kind==='pending'){content+=`<div class="ps-material-group"><div class="ps-group-title">待核材料</div><p>${escape(item.discussion)}</p><dl class="ps-conversation"><dt>当前缺口</dt><dd>文件、提交及运行回执的对应依据。</dd></dl></div>`;}
+        detail.innerHTML=content;
+      }
+      buttons.forEach(button=>button.addEventListener('click',()=>{state.selected=button.dataset.case;render();}));
+      const reportButton=root.querySelector('.ps-report-toggle');
+      const reportPanel=root.querySelector('.ps-report-panel');
+      reportButton.addEventListener('click',()=>{const open=reportButton.getAttribute('aria-expanded')==='true';reportButton.setAttribute('aria-expanded',String(!open));reportPanel.hidden=open;reportButton.textContent=open?'相关材料 3 ＋':'收起相关材料 −';});
+      render();
+    })();
+  </script>
+</section>

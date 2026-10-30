@@ -1,0 +1,901 @@
+{
+  "date": "2026-10-21",
+  "notice": "任务文字取自 10 月 21 日日志；证据类别为设计演示，尚未据此重分历史记录。",
+  "cases": [
+    {
+      "id": "sse-v2",
+      "label": "沪市委托还原",
+      "note": "沪深三项口径修正通过全市场对照",
+      "kind": "mixed",
+      "weight": 74,
+      "tags": [
+        "代码",
+        "提交",
+        "验收记录",
+        "会话"
+      ],
+      "artifact": "三项口径修正与全市场对照",
+      "url": "https://github.com/MengerWen/sirui-quant-research/blob/fb52d08a98c5fdd4b576dae0489d951205a38dff/reports/2026-10/2026-10-21-open5m-queue-f16-dm-decisions-r2.md",
+      "discussion": "决定排队余量采用新口径，并用于后续耗尽尺度定参。"
+    },
+    {
+      "id": "replay",
+      "label": "回放核验",
+      "note": "完整日验收并保留回放来源",
+      "kind": "artifact",
+      "weight": 0,
+      "tags": [
+        "文档"
+      ],
+      "artifact": "正确盘口 344 列重新定参",
+      "url": "https://github.com/MengerWen/sirui-quant-research/blob/9d3e0a37ca0ecff805a0707b14d2b70f7cc18be6/reports/2026-10/2026-10-20-corrected-replay-344-recalibration.md",
+      "discussion": ""
+    },
+    {
+      "id": "research-journal",
+      "label": "研究日志",
+      "note": "修复采集并补核来源",
+      "kind": "artifact",
+      "weight": 34,
+      "tags": [
+        "代码",
+        "提交"
+      ],
+      "artifact": "研究日志图谱与来源采集改动",
+      "url": "https://github.com/MengerWen/internship-dashboard/commit/902b03b440425600c64ac4ba0030eeab3a36d9e9",
+      "discussion": ""
+    },
+    {
+      "id": "behavior-design",
+      "label": "行为构思",
+      "note": "比较 V3 至 V9 的沪深适用性和顺序",
+      "kind": "discussion",
+      "weight": 0,
+      "tags": [
+        "会话"
+      ],
+      "artifact": "",
+      "url": "",
+      "discussion": "比较不同方案在沪深市场的适用性；具体实现与验证仍需后续记录。"
+    },
+    {
+      "id": "corrected-replay-344",
+      "label": "344 列定参",
+      "note": "六核采集推进，结构参数改用新口径",
+      "kind": "pending",
+      "weight": null,
+      "tags": [
+        "待核"
+      ],
+      "artifact": "",
+      "url": "",
+      "discussion": "需要补核文件、提交及运行回执之间的对应关系。"
+    }
+  ],
+  "chains": [
+    {
+      "id": "onboarding",
+      "short": "上手",
+      "track": "infra"
+    },
+    {
+      "id": "doris-migration",
+      "short": "服务器迁移",
+      "track": "infra"
+    },
+    {
+      "id": "wangly-env",
+      "short": "环境与传输",
+      "track": "infra"
+    },
+    {
+      "id": "doris-efficiency",
+      "short": "Doris 取数",
+      "track": "infra"
+    },
+    {
+      "id": "storage-cleanup",
+      "short": "存储清理",
+      "track": "infra"
+    },
+    {
+      "id": "trading-window-freeze",
+      "short": "早盘冻结",
+      "track": "infra"
+    },
+    {
+      "id": "research-code",
+      "short": "代码结构",
+      "track": "infra"
+    },
+    {
+      "id": "lv2-snapshot",
+      "short": "LV2 快照",
+      "track": "snapshot"
+    },
+    {
+      "id": "replay",
+      "short": "回放核验",
+      "track": "snapshot"
+    },
+    {
+      "id": "literature",
+      "short": "论文复现",
+      "track": "footprint"
+    },
+    {
+      "id": "algobench",
+      "short": "论文指标",
+      "track": "footprint"
+    },
+    {
+      "id": "formal-engine",
+      "short": "因子计算",
+      "track": "footprint"
+    },
+    {
+      "id": "gates",
+      "short": "筛选规则",
+      "track": "footprint"
+    },
+    {
+      "id": "cross-stock-sync",
+      "short": "跨股同步",
+      "track": "footprint"
+    },
+    {
+      "id": "behavior-design",
+      "short": "行为构思",
+      "track": "footprint"
+    },
+    {
+      "id": "mechanism-precheck",
+      "short": "机制预查",
+      "track": "footprint"
+    },
+    {
+      "id": "fixed-history",
+      "short": "历史补算",
+      "track": "factor"
+    },
+    {
+      "id": "open5m",
+      "short": "开盘5分钟",
+      "track": "factor"
+    },
+    {
+      "id": "old-factor-calibration",
+      "short": "旧因子定标",
+      "track": "factor"
+    },
+    {
+      "id": "cancel-phase",
+      "short": "撤单研究",
+      "track": "factor"
+    },
+    {
+      "id": "depth-match",
+      "short": "深度匹配",
+      "track": "factor"
+    },
+    {
+      "id": "old-factor-bank",
+      "short": "老因子库",
+      "track": "factor"
+    },
+    {
+      "id": "grouped-calibration",
+      "short": "分组定标",
+      "track": "factor"
+    },
+    {
+      "id": "szse-model328",
+      "short": "深市328",
+      "track": "factor"
+    },
+    {
+      "id": "sse-v2",
+      "short": "沪市委托",
+      "track": "factor"
+    },
+    {
+      "id": "corrected-replay-344",
+      "short": "344重定参",
+      "track": "factor"
+    },
+    {
+      "id": "ml-exec",
+      "short": "多模型族",
+      "track": "model"
+    },
+    {
+      "id": "ml-330",
+      "short": "LightGBM",
+      "track": "model"
+    },
+    {
+      "id": "model-methods",
+      "short": "模型方法",
+      "track": "model"
+    },
+    {
+      "id": "strategy-research",
+      "short": "策略假设",
+      "track": "model"
+    },
+    {
+      "id": "dashboard-build",
+      "short": "看板建站",
+      "track": "delivery"
+    },
+    {
+      "id": "report-publish",
+      "short": "发布维护",
+      "track": "delivery"
+    },
+    {
+      "id": "visual-b",
+      "short": "版式调整",
+      "track": "delivery"
+    },
+    {
+      "id": "report-tags",
+      "short": "标签与浏览",
+      "track": "delivery"
+    },
+    {
+      "id": "model-report",
+      "short": "模型报告",
+      "track": "delivery"
+    },
+    {
+      "id": "report328",
+      "short": "328报告",
+      "track": "delivery"
+    },
+    {
+      "id": "research-journal",
+      "short": "研究日志",
+      "track": "delivery"
+    },
+    {
+      "id": "fund-research",
+      "short": "产品研究",
+      "track": "special"
+    }
+  ],
+  "tracks": [
+    {
+      "id": "infra",
+      "label": "数据与服务器"
+    },
+    {
+      "id": "snapshot",
+      "label": "快照与回放"
+    },
+    {
+      "id": "footprint",
+      "label": "算法痕迹"
+    },
+    {
+      "id": "factor",
+      "label": "因子与定标"
+    },
+    {
+      "id": "model",
+      "label": "模型"
+    },
+    {
+      "id": "delivery",
+      "label": "看板与交付"
+    },
+    {
+      "id": "special",
+      "label": "专题研究"
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-10-14",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328",
+        "sse-v2",
+        "report-publish",
+        "behavior-design"
+      ],
+      "notes": {
+        "storage-cleanup": {
+          "note": "核验归档后清理重复缓存",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "szse-model328": {
+          "note": "暂停并准备单日四分钟优化",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "sse-v2": {
+          "note": "实现委托还原 v2 并提速",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "report-publish": {
+          "note": "发布沪市委托 v2 提速报告",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "behavior-design": {
+          "note": "逐项研究 V3 至 V9 的可行性",
+          "outcome": "landed",
+          "outcome_note": ""
+        }
+      },
+      "weights": {
+        "report-publish": {
+          "value": 6.0,
+          "direct": 6,
+          "shared": 0,
+          "numerator": 6,
+          "denominator": 1
+        },
+        "sse-v2": {
+          "value": 91.0,
+          "direct": 91,
+          "shared": 0,
+          "numerator": 91,
+          "denominator": 1
+        },
+        "storage-cleanup": {
+          "value": 14.5,
+          "direct": 14,
+          "shared": 1,
+          "numerator": 29,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "value": 51.5,
+          "direct": 51,
+          "shared": 1,
+          "numerator": 103,
+          "denominator": 2
+        },
+        "trading-window-freeze": {
+          "value": 1.0,
+          "direct": 1,
+          "shared": 0,
+          "numerator": 1,
+          "denominator": 1
+        },
+        "behavior-design": {
+          "value": 0,
+          "direct": 0,
+          "shared": 0,
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "report": true
+    },
+    {
+      "date": "2026-10-15",
+      "chains": [
+        "storage-cleanup",
+        "sse-v2",
+        "cancel-phase",
+        "behavior-design",
+        "szse-model328",
+        "model-methods"
+      ],
+      "notes": {
+        "storage-cleanup": {
+          "note": "盘点副本并按保留期限清理",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "sse-v2": {
+          "note": "逐列检查沪市因子的计算条件",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "cancel-phase": {
+          "note": "停止机械撤单稳定性分析的后续生成",
+          "outcome": "landed",
+          "outcome_note": "只停止逐股稳定性分析这一项后续工作；已有的相位因子和机械撤单结果照常保留。"
+        },
+        "behavior-design": {
+          "note": "细化 V3 比例上限的预查方向",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "szse-model328": {
+          "note": "写单日四分钟优化计划",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "model-methods": {
+          "note": "解读机器学习组合归因论文",
+          "outcome": "landed",
+          "outcome_note": ""
+        }
+      },
+      "weights": {
+        "cancel-phase": {
+          "value": 1.0,
+          "direct": 1,
+          "shared": 0,
+          "numerator": 1,
+          "denominator": 1
+        },
+        "sse-v2": {
+          "value": 12.0,
+          "direct": 12,
+          "shared": 0,
+          "numerator": 12,
+          "denominator": 1
+        },
+        "storage-cleanup": {
+          "value": 46.0,
+          "direct": 42,
+          "shared": 8,
+          "numerator": 46,
+          "denominator": 1
+        },
+        "szse-model328": {
+          "value": 6.0,
+          "direct": 2,
+          "shared": 8,
+          "numerator": 6,
+          "denominator": 1
+        },
+        "behavior-design": {
+          "value": 0,
+          "direct": 0,
+          "shared": 0,
+          "numerator": 0,
+          "denominator": 1
+        },
+        "model-methods": {
+          "value": 0,
+          "direct": 0,
+          "shared": 0,
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "report": false
+    },
+    {
+      "date": "2026-10-16",
+      "chains": [
+        "storage-cleanup",
+        "szse-model328",
+        "sse-v2",
+        "report-publish",
+        "behavior-design"
+      ],
+      "notes": {
+        "storage-cleanup": {
+          "note": "清理失败暂存并补齐清理记录",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "szse-model328": {
+          "note": "按验收配置继续剩余日期",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "sse-v2": {
+          "note": "登记可见口径并建三值判定",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "report-publish": {
+          "note": "发布深市 328 列提速与存储复盘",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "behavior-design": {
+          "note": "V3 比例尺寸线写了又撤销",
+          "outcome": "dropped",
+          "outcome_note": "只撤销了比例尺寸线这一次尝试，没有跑真实数据；V 系列研究继续。"
+        }
+      },
+      "weights": {
+        "behavior-design": {
+          "value": 2.0,
+          "direct": 2,
+          "shared": 0,
+          "numerator": 2,
+          "denominator": 1
+        },
+        "report-publish": {
+          "value": 4.0,
+          "direct": 4,
+          "shared": 0,
+          "numerator": 4,
+          "denominator": 1
+        },
+        "sse-v2": {
+          "value": 36.0,
+          "direct": 36,
+          "shared": 0,
+          "numerator": 36,
+          "denominator": 1
+        },
+        "storage-cleanup": {
+          "value": 6.5,
+          "direct": 5,
+          "shared": 3,
+          "numerator": 13,
+          "denominator": 2
+        },
+        "szse-model328": {
+          "value": 21.5,
+          "direct": 20,
+          "shared": 3,
+          "numerator": 43,
+          "denominator": 2
+        }
+      },
+      "report": true
+    },
+    {
+      "date": "2026-10-17",
+      "chains": [
+        "replay",
+        "sse-v2",
+        "szse-model328"
+      ],
+      "notes": {
+        "replay": {
+          "note": "诊断快照偏移和回放对因子的影响",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "sse-v2": {
+          "note": "核对 G1 缺失、定义差与恢复比例",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "szse-model328": {
+          "note": "继续剩余日期计算",
+          "outcome": "landed",
+          "outcome_note": ""
+        }
+      },
+      "weights": {
+        "replay": {
+          "value": 35.0,
+          "direct": 35,
+          "shared": 0,
+          "numerator": 35,
+          "denominator": 1
+        },
+        "sse-v2": {
+          "value": 72.0,
+          "direct": 71,
+          "shared": 2,
+          "numerator": 72,
+          "denominator": 1
+        },
+        "storage-cleanup": {
+          "value": 2.0,
+          "direct": 1,
+          "shared": 2,
+          "numerator": 2,
+          "denominator": 1
+        },
+        "szse-model328": {
+          "value": 4.0,
+          "direct": 4,
+          "shared": 0,
+          "numerator": 4,
+          "denominator": 1
+        }
+      },
+      "report": false
+    },
+    {
+      "date": "2026-10-18",
+      "chains": [
+        "replay",
+        "szse-model328",
+        "report328",
+        "storage-cleanup"
+      ],
+      "notes": {
+        "replay": {
+          "note": "复核三日生产回放",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "szse-model328": {
+          "note": "存档 601 日结果并完成单因子评价",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "report328": {
+          "note": "发布 328 列因子的 601 日评价报告",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "storage-cleanup": {
+          "note": "报告存档后清理暂存",
+          "outcome": "landed",
+          "outcome_note": ""
+        }
+      },
+      "weights": {
+        "replay": {
+          "value": 19.0,
+          "direct": 19,
+          "shared": 0,
+          "numerator": 19,
+          "denominator": 1
+        },
+        "report328": {
+          "value": 5.0,
+          "direct": 5,
+          "shared": 0,
+          "numerator": 5,
+          "denominator": 1
+        },
+        "storage-cleanup": {
+          "value": 1.0,
+          "direct": 1,
+          "shared": 0,
+          "numerator": 1,
+          "denominator": 1
+        },
+        "szse-model328": {
+          "value": 10.0,
+          "direct": 10,
+          "shared": 0,
+          "numerator": 10,
+          "denominator": 1
+        }
+      },
+      "report": true
+    },
+    {
+      "date": "2026-10-19",
+      "chains": [
+        "replay",
+        "research-code",
+        "storage-cleanup",
+        "szse-model328"
+      ],
+      "notes": {
+        "replay": {
+          "note": "审计成交价格并设正确回放为默认",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "research-code": {
+          "note": "整理公共 IO、入口和执行阶段",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "storage-cleanup": {
+          "note": "扫描 wenjie 和 wangly 的存储",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "szse-model328": {
+          "note": "比较老因子新旧参数表现",
+          "outcome": "landed",
+          "outcome_note": ""
+        }
+      },
+      "weights": {
+        "replay": {
+          "value": 37.0,
+          "direct": 37,
+          "shared": 0,
+          "numerator": 37,
+          "denominator": 1
+        },
+        "sse-v2": {
+          "value": 2.0,
+          "direct": 2,
+          "shared": 0,
+          "numerator": 2,
+          "denominator": 1
+        },
+        "szse-model328": {
+          "value": 1.0,
+          "direct": 1,
+          "shared": 0,
+          "numerator": 1,
+          "denominator": 1
+        },
+        "research-code": {
+          "value": 0,
+          "direct": 0,
+          "shared": 0,
+          "numerator": 0,
+          "denominator": 1
+        },
+        "storage-cleanup": {
+          "value": 0,
+          "direct": 0,
+          "shared": 0,
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "report": false
+    },
+    {
+      "date": "2026-10-20",
+      "chains": [
+        "replay",
+        "wangly-env",
+        "sse-v2",
+        "corrected-replay-344",
+        "research-journal",
+        "research-code"
+      ],
+      "notes": {
+        "replay": {
+          "note": "交付回放整改并拒收旧参数来源",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "wangly-env": {
+          "note": "核验并重建两个账户的默认环境",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "sse-v2": {
+          "note": "按逻辑分类并实现公开可见 v3 候选",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "corrected-replay-344": {
+          "note": "定下 344 列范围和八组定参来源",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "research-journal": {
+          "note": "建设研究日志并审阅历史记录",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "research-code": {
+          "note": "拆分回放依赖并修复回归",
+          "outcome": "landed",
+          "outcome_note": ""
+        }
+      },
+      "weights": {
+        "corrected-replay-344": {
+          "value": 10.0,
+          "direct": 10,
+          "shared": 0,
+          "numerator": 10,
+          "denominator": 1
+        },
+        "replay": {
+          "value": 64.5,
+          "direct": 64,
+          "shared": 1,
+          "numerator": 129,
+          "denominator": 2
+        },
+        "report-publish": {
+          "value": 1.0,
+          "direct": 1,
+          "shared": 0,
+          "numerator": 1,
+          "denominator": 1
+        },
+        "research-journal": {
+          "value": 32.0,
+          "direct": 32,
+          "shared": 0,
+          "numerator": 32,
+          "denominator": 1
+        },
+        "sse-v2": {
+          "value": 12.0,
+          "direct": 12,
+          "shared": 0,
+          "numerator": 12,
+          "denominator": 1
+        },
+        "wangly-env": {
+          "value": 16.5,
+          "direct": 16,
+          "shared": 1,
+          "numerator": 33,
+          "denominator": 2
+        },
+        "research-code": {
+          "value": 0,
+          "direct": 0,
+          "shared": 0,
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "report": false
+    },
+    {
+      "date": "2026-10-21",
+      "chains": [
+        "replay",
+        "corrected-replay-344",
+        "sse-v2",
+        "research-journal",
+        "behavior-design"
+      ],
+      "notes": {
+        "replay": {
+          "note": "完整日验收并保留回放来源",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "corrected-replay-344": {
+          "note": "六核采集推进，结构参数改用新口径",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "sse-v2": {
+          "note": "沪深三项口径修正通过全市场对照",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "research-journal": {
+          "note": "修复采集并补核来源",
+          "outcome": "landed",
+          "outcome_note": ""
+        },
+        "behavior-design": {
+          "note": "比较 V3 至 V9 的沪深适用性和顺序",
+          "outcome": "landed",
+          "outcome_note": ""
+        }
+      },
+      "weights": {
+        "corrected-replay-344": {
+          "value": 54.5,
+          "direct": 54,
+          "shared": 1,
+          "numerator": 109,
+          "denominator": 2
+        },
+        "replay": {
+          "value": 7.5,
+          "direct": 7,
+          "shared": 1,
+          "numerator": 15,
+          "denominator": 2
+        },
+        "research-journal": {
+          "value": 34.0,
+          "direct": 34,
+          "shared": 0,
+          "numerator": 34,
+          "denominator": 1
+        },
+        "sse-v2": {
+          "value": 74.0,
+          "direct": 74,
+          "shared": 0,
+          "numerator": 74,
+          "denominator": 1
+        },
+        "behavior-design": {
+          "value": 0,
+          "direct": 0,
+          "shared": 0,
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "report": false
+    }
+  ]
+}
