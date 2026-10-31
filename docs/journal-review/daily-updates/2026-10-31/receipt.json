@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "run_date": "2026-10-31",
+  "target_date": "2026-10-30",
+  "review_dates": [
+    "2026-10-24",
+    "2026-10-30"
+  ],
+  "coverage_status": "partial",
+  "source_versions": [
+    {
+      "repo": "sirui-quant-research",
+      "head": "65085dfb9f2a0b6f6a514bf49bfa3067e43c321d",
+      "cutoff": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f"
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "head": "b727fb8587fb691fb846878c2dcb7fb1ac3e2b70",
+      "cutoff": "b727fb8587fb691fb846878c2dcb7fb1ac3e2b70"
+    },
+    {
+      "repo": "internship-dashboard",
+      "head": "0572ce487462ed1b934d34490cd6eafc666882ec",
+      "cutoff": "0572ce487462ed1b934d34490cd6eafc666882ec"
+    }
+  ],
+  "source_post_heads": [
+    {
+      "repo": "sirui-quant-research",
+      "initial_head": "65085dfb9f2a0b6f6a514bf49bfa3067e43c321d",
+      "post_head": "65085dfb9f2a0b6f6a514bf49bfa3067e43c321d",
+      "changed": false
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "initial_head": "b727fb8587fb691fb846878c2dcb7fb1ac3e2b70",
+      "post_head": "b727fb8587fb691fb846878c2dcb7fb1ac3e2b70",
+      "changed": false
+    },
+    {
+      "repo": "internship-dashboard",
+      "initial_head": "0572ce487462ed1b934d34490cd6eafc666882ec",
+      "post_head": "0572ce487462ed1b934d34490cd6eafc666882ec",
+      "changed": false
+    }
+  ],
+  "source_review": "source-review.json",
+  "reconciliation": {
+    "exit_code": 1,
+    "inventory": "本轮inventory-full/inventory.json",
+    "reason": "独立会话清单仍有缺口，不能签收全部来源"
+  },
+  "model_start": {
+    "captured_at": "2026-10-31T00:57:48.213277+00:00",
+    "config": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "automation": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "turn_contexts": [
+      {
+        "timestamp": "2026-10-31T00:56:11.745Z",
+        "model": "gpt-6.1-sol",
+        "effort": "xhigh",
+        "line_sha256": "4d9b98dbbe8f3a9973af17b22a3d4c12908cb3ac415322d05b999c7656050d39"
+      }
+    ]
+  },
+  "model_precommit": {
+    "checked_at": "2026-10-31T01:18:05.644415+00:00",
+    "config": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "automation": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh",
+      "status": "ACTIVE",
+      "kind": "cron"
+    },
+    "turn_contexts": [
+      {
+        "line": 11,
+        "line_sha256": "4d9b98dbbe8f3a9973af17b22a3d4c12908cb3ac415322d05b999c7656050d39",
+        "timestamp": "2026-10-31T00:56:11.745Z",
+        "model": "gpt-6.1-sol",
+        "effort": "xhigh"
+      }
+    ],
+    "subagents": false,
+    "passed": true
+  },
+  "verification": {
+    "pytest": {
+      "exit_code": 0,
+      "passed": 22,
+      "files": [
+        "test_journal_build.py",
+        "test_journal_evidence.py",
+        "test_journal_provenance.py",
+        "test_journal_attribution.py",
+        "test_journal_point_evidence.py"
+      ]
+    },
+    "document_binding_followup": {
+      "exit_code": 0,
+      "passed": 5,
+      "reason": "按现行格式补齐文档写入依据字段"
+    },
+    "build": {
+      "status": "passed",
+      "journal_days": 111,
+      "output": "本轮.local/runs中隔离构建",
+      "warning": "既有factor轨道13条链超过提示值10"
+    },
+    "fixed_evidence_difference": 0,
+    "attribution_difference": 0,
+    "historical_fixed_refs": 104,
+    "content_checks": {
+      "links_checked": 12,
+      "refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-30-signal-overnight-hold.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-30-signal-overnight-hold-evidence/d12-summary.csv"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "research/factor-candidates/reviews/2026-10-30-round1-integration.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "research/factor-candidates/reviews/2026-10-30-round2-A-closeout.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "research/factor-candidates/reviews/2026-10-30-round2-data-checks.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-29-szse-v6-production.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/production-249-status.json"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-29-sse-17e9a303-formal-calibration.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-30-sse-formal-memory-admission.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-30-wangly-storage-cleanup.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "blob",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "reports/2026-10/2026-10-30-local-artifact-closeout.md"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "fee520cbdcfc9f4f43f8077c67a26878215a7280",
+          "path": ""
+        }
+      ],
+      "old_source_days_unchanged": 109,
+      "old_documents_unchanged": 758,
+      "old_attribution_items_unchanged": 97,
+      "new_chains": 0,
+      "new_handoffs": 0,
+      "sensitive_public_patterns": []
+    },
+    "local_browser": {
+      "checkedAt": "2026-10-31T01:17:24.633Z",
+      "url": "http://127.0.0.1:8076/#/journal/2026-10-30",
+      "title": "隔日持有出现回吐，候选表定下15个优先维度",
+      "excerpts": 7,
+      "groups": [
+        {
+          "commits": 15,
+          "open": true,
+          "summary": "深市344计算：归属提交量 15"
+        },
+        {
+          "commits": 3,
+          "open": true,
+          "summary": "发布维护：归属提交量 3"
+        },
+        {
+          "commits": 20,
+          "open": true,
+          "summary": "信号扩展：归属提交量 20"
+        },
+        {
+          "commits": 98,
+          "open": true,
+          "summary": "沪市340定参：归属提交量 98"
+        },
+        {
+          "commits": 15,
+          "open": true,
+          "summary": "存储清理：归属提交量 15"
+        },
+        {
+          "commits": 5,
+          "open": true,
+          "summary": "维护 5 条（未计入点大小）"
+        }
+      ],
+      "uniqueCommits": 156,
+      "coverageIncomplete": true,
+      "siteConsoleErrors": 0
+    },
+    "browser_extension_console_errors": 2,
+    "native_tool_receipts": [
+      {
+        "line": 272,
+        "line_sha256": "ddf7de3242ebbabdf6f94b3a24676b25a67a053a6840aaf9d313bc04b938083a",
+        "timestamp": "2026-10-31T01:02:12.866Z",
+        "matches": [
+          "固定原始引用"
+        ]
+      },
+      {
+        "line": 424,
+        "line_sha256": "5ecc4d0b656bda957e81fcf3ac612f26455db35a415196b57fff9955f88bbe5b",
+        "timestamp": "2026-10-31T01:11:02.870Z",
+        "matches": [
+          "22 passed in 8.15s"
+        ]
+      },
+      {
+        "line": 509,
+        "line_sha256": "e96e563e56c9b66780446e7c4a9f8ca8013407815735b2f18828cbcbb0add031",
+        "timestamp": "2026-10-31T01:14:45.377Z",
+        "matches": [
+          "5 passed in 0.02s"
+        ]
+      },
+      {
+        "line": 531,
+        "line_sha256": "79d45b267b11bab20a599727a8119c7f47656a212ec71f2aa16cdaa7b7a63024",
+        "timestamp": "2026-10-31T01:16:18.375Z",
+        "matches": [
+          "site-final"
+        ]
+      },
+      {
+        "line": 562,
+        "line_sha256": "9e1daf97bbf83a1bdd7763ca349a28f47f6dfdb25849aaffcf65c67e5edf2ed8",
+        "timestamp": "2026-10-31T01:16:58.273Z",
+        "matches": [
+          "156 条提交"
+        ]
+      }
+    ],
+    "workspace_initial": {
+      "exit_code": 1,
+      "untracked": 0,
+      "local_runs_mib": 1622.81,
+      "reason": "本轮两份生成构建超过1GiB，随后比对并普通删除初轮可重建副本。"
+    },
+    "generated_build_cleanup": "generated-build-cleanup.json"
+  },
+  "commit": {
+    "status": "pending"
+  },
+  "push": {
+    "status": "pending"
+  },
+  "publication": {
+    "status": "pending-existing-automatic-build"
+  },
+  "online_browser": {
+    "status": "pending"
+  },
+  "scope": {
+    "research_repositories_modified": false,
+    "server_sync": false,
+    "research_computation": false,
+    "manual_deploy": false,
+    "subagents": false
+  }
+}
