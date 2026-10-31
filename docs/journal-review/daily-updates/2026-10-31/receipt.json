@@ -292,19 +292,64 @@
       "local_runs_mib": 1622.81,
       "reason": "本轮两份生成构建超过1GiB，随后比对并普通删除初轮可重建副本。"
     },
-    "generated_build_cleanup": "generated-build-cleanup.json"
+    "generated_build_cleanup": "generated-build-cleanup.json",
+    "workspace_after_cleanup": {
+      "exit_code": 0,
+      "untracked": 0,
+      "local_runs_mib": 831.53
+    }
   },
   "commit": {
-    "status": "pending"
+    "status": "committed",
+    "sha": "617f5c2ed6a25958223ea4b8aed552592743e8a5"
   },
   "push": {
-    "status": "pending"
+    "status": "verified",
+    "remote_main": "617f5c2ed6a25958223ea4b8aed552592743e8a5",
+    "receipt": "原始push及ls-remote完整返回仅存本机"
   },
   "publication": {
-    "status": "pending-existing-automatic-build"
+    "status": "in_progress",
+    "conclusion": null,
+    "content_commit": "617f5c2ed6a25958223ea4b8aed552592743e8a5",
+    "check_id": 124400153098,
+    "build_id": "42128d3d-0e99-4bbb-baa8-41f1c2e40193",
+    "check_url": "https://github.com/MengerWen/internship-dashboard/runs/124400153098",
+    "started_at": "2026-10-31T01:23:40Z",
+    "completed_at": null,
+    "deployments_since_baseline": 0,
+    "manual_deploy": false,
+    "production_content_verified": false
   },
   "online_browser": {
-    "status": "pending"
+    "status": "blocked-computer-use-safety-check",
+    "reason": "浏览器工具无法足够可靠地确认Windows当前网址，已停止本轮电脑操作。",
+    "local_browser_passed": true,
+    "production_content_verified": false,
+    "native_stop": {
+      "thread_id": "01a18f74-f2d7-72e1-baaf-10baeead32c3",
+      "line": 669,
+      "line_sha256": "e906f3180d767778c448db687d2b470483fea0489d5371cecadf34462980a902",
+      "timestamp": "2026-10-31T01:22:53.340Z",
+      "role": "tool"
+    },
+    "preceding_timeouts": [
+      {
+        "thread_id": "01a18f74-f2d7-72e1-baaf-10baeead32c3",
+        "line": 608,
+        "line_sha256": "46511f994ab83471c4bc73f07e56eb6882dfcc3fdaf60aa4f533b05917267ce7",
+        "timestamp": "2026-10-31T01:20:14.637Z",
+        "role": "tool"
+      },
+      {
+        "thread_id": "01a18f74-f2d7-72e1-baaf-10baeead32c3",
+        "line": 623,
+        "line_sha256": "700e87cc20356d98a8145943cbb7d10b783a1446077a888b0be25a22f2de7389",
+        "timestamp": "2026-10-31T01:20:52.347Z",
+        "role": "tool"
+      }
+    ],
+    "workaround_attempted_after_stop": false
   },
   "scope": {
     "research_repositories_modified": false,
@@ -312,5 +357,37 @@
     "research_computation": false,
     "manual_deploy": false,
     "subagents": false
-  }
+  },
+  "model_end": {
+    "checked_at": "2026-10-31T09:24:09.417558+08:00",
+    "config": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "automation": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh",
+      "status": "ACTIVE",
+      "kind": "cron"
+    },
+    "turn_contexts": [
+      {
+        "line": 11,
+        "line_sha256": "4d9b98dbbe8f3a9973af17b22a3d4c12908cb3ac415322d05b999c7656050d39",
+        "timestamp": "2026-10-31T00:56:11.745Z",
+        "model": "gpt-6.1-sol",
+        "effort": "xhigh"
+      }
+    ],
+    "subagents": false,
+    "passed": true
+  },
+  "preview_cleanup": {
+    "first_pid": 70436,
+    "final_pid": 7532,
+    "stopped": true,
+    "port": 8076,
+    "listener_absent": true
+  },
+  "closed_at": "2026-10-31T09:24:09.417558+08:00"
 }
