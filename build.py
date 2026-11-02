@@ -383,9 +383,15 @@ class Builder:
             date_key = orphan.name.removesuffix(".show.md")
             if date_key not in primary_dates:
                 self.warnings.append(f"{orphan.relative_to(ROOT)} 缺少对应主日报,已跳过")
+        named_sources = set()
+        for primary in primary_paths:
+            try:
+                named_sources.add(str(frontmatter.loads(primary.read_text(encoding="utf-8")).metadata.get("show_source", "")))
+            except Exception:  # Main parsing below reports malformed documents.
+                pass
         for orphan in sorted(daily_dir.glob("*.show.html")):
             date_key = orphan.name.removesuffix(".show.html")
-            if date_key not in primary_dates:
+            if date_key not in primary_dates and orphan.name not in named_sources:
                 self.warnings.append(f"{orphan.relative_to(ROOT)} 缺少对应主日报,已跳过")
 
         seen_dates: set[str] = set()
@@ -454,6 +460,11 @@ class Builder:
             published_at, updated_at, time_source = self.daily_times(path, meta)
             show_md = daily_dir / f"{date_key}.show.md"
             show_html = daily_dir / f"{date_key}.show.html"
+            if meta.get("show_source"):
+                source_name = str(meta["show_source"])
+                if Path(source_name).name != source_name or "/" in source_name or "\\" in source_name or not source_name.endswith(".show.html"):
+                    raise ValueError(f"{path.name}: show_source 必须是当前目录中的 .show.html 文件名")
+                show_html = daily_dir / source_name
             has_show = False
             show_type: str | None = None
             show_path: str | None = None
@@ -468,7 +479,7 @@ class Builder:
                 show_type = "html"
                 show_title = date_key
                 show_content = show_html.read_text(encoding="utf-8")
-                show_rel = Path("daily") / f"{date_key}.show.html"
+                show_rel = Path("daily") / show_html.name
                 self.write_text(
                     self.out_dir / show_rel,
                     self.html_with_runtime_assets(show_content, prefix="../"),
