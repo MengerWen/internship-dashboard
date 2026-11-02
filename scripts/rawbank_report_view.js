@@ -1,5 +1,5 @@
 'use strict';
-async function initializeRawbankReport(dataOverride){
+async function initializeRawbankReport(dataOverride,restore){
 const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function unpack(encoded){return JSON.parse(await new Response(new Blob([Uint8Array.from(atob(encoded),c=>c.charCodeAt(0))]).stream().pipeThrough(new DecompressionStream('gzip'))).text())}
 const D=dataOverride||await unpack($('report-gzip').textContent.trim()),P=JSON.parse($('proof-data').textContent),F=D.factors,defs=D.definitions;
@@ -7,8 +7,8 @@ const assetDirectory=D.asset_directory||'raw-bank-2026-09-16';
 const waiting=new Map(),loaded=new Map(),assetBase=new URL((location.protocol==='about:'?'assets/':'../assets/')+assetDirectory+'/factors/',document.baseURI);
 window.rawbankFactorLoaded=async(key,encoded,context)=>{if(context&&context!==(D.asset_context||D.dataset_context))return;try{let result=await unpack(encoded);if(result.schema==='rawbank-segmented-factor-v1'){const part=result.segments[D.segment],a=part.slice[0],b=part.slice[1];result={metadata:result.metadata,diagnostic:false,distribution:part.distribution,daily_ic:result.daily_ic.slice(a,b),daily_health:result.daily_health.slice(a,b),daily_spread:result.daily_spread.slice(a,b),periods:part.period_indexes.map(i=>result.periods[i]),shape:part.shape,details:{...part.details,group_diagnostics:part.period_indexes.map(i=>result.group_diagnostics[i])}}}loaded.set(key,result);waiting.get(key)?.resolve(result)}catch(error){waiting.get(key)?.reject(error)}};
 const alias=f=>f.metadata.definition_key||f.metadata.factor_id.split('__')[0],definition=f=>defs[alias(f)]||{},name=f=>definition(f).name||alias(f);
-async function loadFactor(i){const f=F[i],key=alias(f)+'__'+f.metadata.projection;if(loaded.has(key))return loaded.get(key);if(!waiting.has(key)){let resolve,reject;const promise=new Promise((ok,fail)=>{resolve=ok;reject=fail});waiting.set(key,{promise,resolve,reject});const script=document.createElement('script');script.src=new URL(key+'.js',assetBase);script.onerror=()=>reject(new Error('因子数据无法加载：'+key));document.head.append(script)}return waiting.get(key).promise}
-window.rawbankReport={data:D,proof:P};
+async function loadFactor(i){const f=F[i],key=alias(f)+'__'+f.metadata.projection;if(loaded.has(key))return loaded.get(key);if(!waiting.has(key)){let resolve,reject;const promise=new Promise((ok,fail)=>{resolve=ok;reject=fail});waiting.set(key,{promise,resolve,reject});const script=document.createElement('script');script.src=new URL(key+'.js',assetBase);script.onload=()=>script.remove();script.onerror=()=>{script.remove();waiting.delete(key);reject(new Error('因子数据无法加载：'+key))};document.head.append(script)}return waiting.get(key).promise}
+window.rawbankReport={data:D,proof:P,save};
 const contextSuffix=D.dataset_context?'-'+D.dataset_context:'';
 const fmt=(v,n=5)=>v===null||v===undefined||!Number.isFinite(v)?'—':Number(v).toFixed(n),comma=v=>Number(v).toLocaleString('en-US'),bp=v=>Number.isFinite(v)?v*1e4:null;
 const layers=D.layers||{L1:'基础评分投影',L2:'多证据共识',L3:'微观结构情境',L4:'窗口状态',L5:'用途与流动性机制',L1_diagnostic:'市场行为诊断'},sides={buy:'Buy · 买侧',sell:'Sell · 卖侧',total:'总量诊断'};
@@ -24,6 +24,8 @@ function options(el,values){el.innerHTML=values.map(([v,t])=>'<option value="'+e
 for(const id of ['global-period','detail-period'])options($(id),D.periods.map((p,i)=>[i,periodName(p)]));
 for(const [key,label] of Object.entries(layers))$('layer-filter').insertAdjacentHTML('beforeend','<option value="'+key+'">'+key+' · '+label+'</option>');
 for(const id of [...new Set(F.map(alias))])$('family-filter').insertAdjacentHTML('beforeend','<option value="'+esc(id)+'">'+esc(id.split('_')[0]+' · '+name(F.find(f=>alias(f)===id)))+'</option>');
+const stateControls=['result-scope','result-sort','result-search','layer-filter','family-filter','side-filter','view-mode','factor-scope','factor-search','factor-arrangement','factor-sort'];
+if(restore){for(const id of stateControls)if(restore.controls?.[id]!==undefined)$(id).value=restore.controls[id];detailPeriod=Math.max(0,D.periods.findIndex(p=>p.id===restore.detailPeriod));$('detail-period').value=detailPeriod;$('global-period').value=Math.max(0,D.periods.findIndex(p=>p.id===restore.globalPeriod));selection=restore.selection||selection;tab=restore.tab||tab;dateRange={start:D.periods[detailPeriod].start,end:D.periods[detailPeriod].end};$('side-control').hidden=$('view-mode').value==='all'}
 function sortIndexes(indexes,key,p){const val=i=>{const s=F[i].periods[p];let v=key.startsWith('ic')?s.ic[0][0]:key==='t'?s.ic[1][3]:key.startsWith('spread')?s.spread[0][0]:s.ic[1][0];return Number.isFinite(v)?(['rank','ic_abs','t','spread'].includes(key)?Math.abs(v):v):-Infinity};return [...indexes].sort((a,b)=>(key==='id'?0:val(b)-val(a))||a-b)}
 function scopeMatches(f,scope){return scope==='all'||(scope==='phase'?f.metadata.source?.startsWith('cancel_'):['old','depth'].includes(scope)?f.metadata.source===scope:(scope==='diagnostic')===f.diagnostic)}
 function rowsForResults(){const p=+$('global-period').value,q=$('result-search').value.trim().toLowerCase(),scope=$('result-scope').value;return sortIndexes(F.map((_,i)=>i).filter(i=>scopeMatches(F[i],scope)&&searchText(F[i]).includes(q)),$('result-sort').value,p)}
@@ -104,6 +106,7 @@ $('download-summary').onclick=()=>{const p=+$('global-period').value;save(summar
 $('download-proof').onclick=()=>save(JSON.stringify(P,null,2),'rawbank-evaluation-result.json');$('download-alignment').onclick=()=>save(csv([['date','stock_days','valid_label_stock_days'],...D.label_alignment.map(r=>[r.date,r.rows,r.valid_labels])]),'rawbank-label-alignment.csv','text/csv;charset=utf-8');
 $('figure-close').onclick=()=>$('figure-dialog').close();$('figure-dialog').addEventListener('click',e=>{if(e.target===$('figure-dialog'))$('figure-dialog').close()});
 window.rawbankReport.dispose=()=>{observer?.disconnect();dailyRefresh.clear();if(zoomURL)URL.revokeObjectURL(zoomURL)};
+window.rawbankReport.snapshot=()=>({controls:Object.fromEntries(stateControls.map(id=>[id,$(id).value])),selection:{...selection},tab,detailPeriod:D.periods[detailPeriod].id,globalPeriod:D.periods[+$('global-period').value].id});
 renderResults();refresh();document.body.dataset.ready='true';
 }
 window.initializeRawbankReport=initializeRawbankReport;

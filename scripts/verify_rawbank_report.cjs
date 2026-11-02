@@ -50,6 +50,18 @@ let browser;
  await frame.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';document.querySelector('#factors').scrollIntoView({behavior:'instant'})});
  const downloadEvent=page.waitForEvent('download');await cards().first().locator('[data-key="download-factor"]').click();const download=await downloadEvent;assert.match(download.suggestedFilename(),/evaluation\.json$/);const downloaded=JSON.parse(fs.readFileSync(await download.path(),'utf8'));assert.equal(downloaded.dates.length,601);assert.equal(downloaded.factor.periods.length,44);assert.equal(downloaded.factor.periods[0].groups.length,50);assert.equal(downloaded.factor.details.ols.n,downloaded.factor.distribution.pairs);assert.equal(downloaded.factor.details.scatter.full.included,downloaded.factor.distribution.pairs);
  assert.equal(await frame.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.length-new Set(ids).size}),0);
+ if(process.env.RAWBANK_VIEW_OVERRIDE==='1'){
+  const raw=fs.readFileSync(path.join(root,'dist/assets/raw-bank-2026-09-16/evidence/details-result.json'));
+  const encoded=require('node:zlib').gzipSync(raw).toString('base64');let failOnce=true;
+  await page.route('**/details-result.json.js',route=>{const payload=failOnce?'invalid-gzip':encoded;failOnce=false;return route.fulfill({contentType:'text/javascript',body:'window.rawbankFileLoaded("details-result.json",'+JSON.stringify(payload)+',"application/json");'})});
+  await frame.evaluate(fs.readFileSync(path.join(root,'scripts/rawbank_file_downloads.js'),'utf8'));
+  await frame.evaluate(()=>{document.querySelector('a[href$="details-result.json"]').dataset.fileDownload='details-result.json';window.bindRawbankDownloads(window.rawbankReport.save)});
+  const link=frame.locator('a[data-file-download="details-result.json"]'),frameURL=frame.url();
+  await link.click();await frame.waitForFunction(()=>document.querySelector('a[data-file-download="details-result.json"]').textContent==='下载失败，点击重试');
+  const fileEvent=page.waitForEvent('download');await link.click();const file=await fileEvent;
+  assert.equal(file.suggestedFilename(),'details-result.json');assert.deepEqual(fs.readFileSync(await file.path()),raw);assert.equal(frame.url(),frameURL);
+  await frame.evaluate(()=>document.querySelector('#factors').scrollIntoView({behavior:'instant'}));
+ }
  await page.screenshot({path:process.argv[2]||path.join(root,'rawbank-report-desktop.png'),fullPage:false});
  await page.setViewportSize({width:390,height:844});await frame.evaluate(()=>{document.querySelector('#factors').scrollIntoView()});
  const overflow=await frame.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);if(overflow)console.log(await frame.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,nodes:[...document.querySelectorAll('*')].filter(e=>e.scrollWidth>e.clientWidth+2&&getComputedStyle(e).overflowX==='visible').slice(0,20).map(e=>({tag:e.tagName,id:e.id,cls:e.className,width:e.clientWidth,scroll:e.scrollWidth}))})));assert.equal(overflow,false);
