@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-11-02",
+  "actual_work_day": "2026-11-01",
+  "fixed_research_revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+  "base601": {
+    "status": "accepted",
+    "dates": 601,
+    "stock_days": 1719612,
+    "columns": 344,
+    "monthly_audits": 30,
+    "retained_bytes": 39493160895,
+    "normal_exit": true
+  },
+  "incremental_inputs": {
+    "status": "accepted",
+    "dates": 82,
+    "stock_days": 237750,
+    "parameter_estimation_calls": 0
+  },
+  "incremental_first_two": [
+    {
+      "dates": [
+        "2026-07-01"
+      ],
+      "stock_days": 2894,
+      "columns": 344,
+      "status": "accepted"
+    },
+    {
+      "dates": [
+        "2026-07-02"
+      ],
+      "stock_days": 2895,
+      "columns": 344,
+      "status": "accepted"
+    }
+  ],
+  "incremental_day_end": {
+    "remaining80_formally_accepted": 51,
+    "additional_day_signed_pending_batch_acceptance": [
+      "2026-10-08",
+      "2026-10-09"
+    ],
+    "remaining80_pending_final_acceptance": 29,
+    "wrapper_time": "2026-11-01T23:56:39.311000+08:00",
+    "server_time": "2026-11-01T15:57:07.211276+00:00",
+    "stage": "A10-bulk-r01",
+    "running": true,
+    "scope": "原两日加51日=53/82通过分批终验；另两日生产签收，不混为完整批次终验。"
+  },
+  "sse_day_end": {
+    "accepted_days": 320,
+    "last_date": "2025-05-19",
+    "total_days": 601,
+    "attempt": "A-r06",
+    "active_state": "inactive",
+    "failure_stage": "capacity_inventory",
+    "failure_type": "StorageError",
+    "wrapper_time": "2026-11-01T23:55:40.401000+08:00",
+    "server_epoch": 1793548611.3404918,
+    "scope": "11月2日后续恢复和全期结果留后续核对；已签收320日保留。"
+  },
+  "sse_regular_and_tail": {
+    "first_day_stock_days": 2257,
+    "columns": 340,
+    "a_days": 564,
+    "b_days": 37,
+    "b_estimated_hours": 9.68201958472686,
+    "b_upper_scenario_hours": 22.48284701481545,
+    "event_partition_rewrite_adopted": false,
+    "scope": "9.68小时点估计未过12小时改造条件；上界22.48小时是情景，不是置信区间。"
+  },
+  "sse_extreme": {
+    "whole_stock_accepted": true,
+    "warm_scientific_fields_equal": true,
+    "warm_guard_wall_seconds": 496.74,
+    "component_cost_hours": 4.7,
+    "scope": "分阶段组件成本跨10月31日至11月1日；复验不代表冷启动吞吐。"
+  },
+  "workflow_development": {
+    "追加检查": 43,
+    "对象读取专项": 9,
+    "scope": "均为原始记录，不在本轮重跑科研测试；批次重叠不合计。"
+  },
+  "date_boundary": "消息的北京时间和原始结果时钟分别记录；23:59消息中已跨午夜的服务器字段不用于截止日新增结论。11月2日80日全期终验不提前入库。"
+}

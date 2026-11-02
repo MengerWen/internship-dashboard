@@ -2415,20 +2415,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-10-25",
-        "days": 8,
+        "days": 9,
         "span": [
           "2026-10-24",
-          "2026-10-31"
+          "2026-11-01"
         ],
         "unreviewed_days": [],
         "scope": "24日原始要求、固定材料、实现差异及原始回执；来源整体仍不完整。",
         "incremental_review": {
-          "on": "2026-11-01",
-          "scope": "31日原始结果、要求、写入与运行回执增补，历史来源缺口保留。"
+          "on": "2026-11-02",
+          "scope": "11月1日固定材料及午夜前原始回执增补；最后Git提交后的进度以逐行SHA定位，历史缺口保留。"
         }
       },
       "fate": "landed",
-      "fate_note": "31日内存硬限中断后逐日恢复，23:04验收501/601日；父进程引用释放仅通过本地检查，运行尚未启用。",
+      "fate_note": "原601日、1719612股票日完成；新增82日已有53日通过分批终验，另两日生产签收待该批终验；长尾分流后继续运行。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2538,6 +2538,30 @@
           ],
           "title": "31日进展、结果与限制",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/reports/2026-10/2026-10-29-szse-v6-production.md#L1-L120"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+          "path": "reports/2026-11/2026-11-01-szse-incremental-production.md",
+          "lines": [
+            1,
+            102
+          ],
+          "title": "11月1日实施、验收与恢复阶段记录",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/8359645cd2291c3f7289de1c8dcf62197f7419eb/reports/2026-11/2026-11-01-szse-incremental-production.md#L1-L102"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+          "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/base601-final-acceptance.json",
+          "lines": [
+            1,
+            2417
+          ],
+          "title": "原601日全量验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/8359645cd2291c3f7289de1c8dcf62197f7419eb/reports/2026-10/2026-10-29-szse-v6-production-evidence/base601-final-acceptance.json#L1-L2417"
         }
       ]
     },
@@ -2966,16 +2990,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-01",
-        "days": 1,
+        "days": 2,
         "span": [
           "2026-10-31",
-          "2026-10-31"
+          "2026-11-01"
         ],
         "unreviewed_days": [],
-        "scope": "31日独立目标、固定实现、原始结果及消息核对；整体来源仍不完整。"
+        "scope": "31日独立目标、固定实现、原始结果及消息核对；整体来源仍不完整。",
+        "incremental_review": {
+          "on": "2026-11-02",
+          "scope": "11月1日固定材料及午夜前原始回执增补；最后Git提交后的进度以逐行SHA定位，历史缺口保留。"
+        }
       },
       "fate": "landed",
-      "fate_note": "三日6843股票日验收通过，样本外推42.72小时；极端股F40组件已恢复，整股及601日生产尚待完成。",
+      "fate_note": "极端整股及断点复验通过；11月1日晚320/601日签收后容量盘点再次超时，已完成日保留，后续恢复待核。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2989,6 +3017,18 @@
           ],
           "title": "31日结果、范围与未完成项",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/reports/2026-10/2026-10-31-sse-factor-production.md#L1-L137"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+          "path": "reports/2026-11/2026-11-01-sse-factor-production.md",
+          "lines": [
+            1,
+            172
+          ],
+          "title": "11月1日实施、验收与恢复阶段记录",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/8359645cd2291c3f7289de1c8dcf62197f7419eb/reports/2026-11/2026-11-01-sse-factor-production.md#L1-L172"
         }
       ]
     },
@@ -3040,6 +3080,57 @@
           ],
           "title": "三周期模型的已定事项和分阶段实施",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/PLAN/2026-10-31-model-szse344-baseline.md#L1-L144"
+        }
+      ]
+    },
+    {
+      "id": "factor-incremental-workflow",
+      "track": "factor",
+      "label": "冻结因子的增量生产与多批次读取",
+      "short": "增量生产流程",
+      "purpose": "将生产日期与冻结定标日历分开，核对跨版本完整样本和实际业务环境，统一批次验收、累计容量及多批次结果读取，供两市场后续补算复用。",
+      "status": "done",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-02",
+        "days": 1,
+        "span": [
+          "2026-11-01",
+          "2026-11-01"
+        ],
+        "unreviewed_days": [],
+        "scope": "独立增量流程的本地交付及正式消费范围；实际补算进度另归计算链，整体来源仍不完整。"
+      },
+      "fate": "landed",
+      "fate_note": "日期解耦、执行兼容、环境核验、批次验收和集合读取已交付并用于深市新增日期；各次生产仍须单独验收。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+          "path": "PLAN/2026-11-01-factor-incremental-workflow.md",
+          "lines": [
+            1,
+            76
+          ],
+          "title": "独立增量流程范围与复用决定",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/8359645cd2291c3f7289de1c8dcf62197f7419eb/PLAN/2026-11-01-factor-incremental-workflow.md#L1-L76"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+          "path": "reports/2026-11/2026-11-01-factor-incremental-workflow.md",
+          "lines": [
+            1,
+            71
+          ],
+          "title": "增量流程开发验收及实际运行边界",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/8359645cd2291c3f7289de1c8dcf62197f7419eb/reports/2026-11/2026-11-01-factor-incremental-workflow.md#L1-L71"
         }
       ]
     }
@@ -4728,6 +4819,48 @@
         "on": "2026-11-01",
         "basis": "固定输入、实际实现和验收材料相互对应。",
         "scope": "仅确认本次实际承接，不提前认定全期计算或训练完成。"
+      }
+    },
+    {
+      "from": "factor-incremental-workflow",
+      "to": "corrected-factor-344",
+      "type": "派生",
+      "date": "2026-11-01",
+      "source_date": "2026-11-01",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "深市新增日期实际使用独立生产范围、执行兼容、正式验收与多批次集合入口，保留原601日结果和82日输入。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+          "path": "reports/2026-11/2026-11-01-factor-incremental-workflow.md",
+          "lines": [
+            1,
+            71
+          ],
+          "title": "增量流程交付输入",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/8359645cd2291c3f7289de1c8dcf62197f7419eb/reports/2026-11/2026-11-01-factor-incremental-workflow.md#L1-L71"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+          "path": "reports/2026-11/2026-11-01-szse-incremental-production.md",
+          "lines": [
+            1,
+            102
+          ],
+          "title": "新增首日及603日集合的实际使用",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/8359645cd2291c3f7289de1c8dcf62197f7419eb/reports/2026-11/2026-11-01-szse-incremental-production.md#L1-L102"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-02",
+        "basis": "开发报告、实际生产入口、首日验收和集合凭证相互对应。",
+        "scope": "只记已实际消费的流程，沪市活动生产未使用此增量入口，不预连线。"
       }
     }
   ],

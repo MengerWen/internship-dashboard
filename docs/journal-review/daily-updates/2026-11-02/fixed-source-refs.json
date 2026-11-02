@@ -1,0 +1,922 @@
+{
+  "schema_version": 1,
+  "refs": [
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": ".gitattributes",
+      "sha256": "0660dfa01517615d858dbd10e15424dc0f713beacfc72d519bbd541274868543",
+      "bytes": 3477
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "PLAN/2026-10-29-szse-v6-production.md",
+      "sha256": "a37f7c3b8342589ae955c62b633114bae463e3c3dd632a51d6d015d83b9a27ed",
+      "bytes": 32751
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "PLAN/2026-10-31-sse-factor-production-assessment-plan.md",
+      "sha256": "fb2dc5998b1970a7c2f98167faca457df9e644e45fcece790ac2c7a8a28a1fe0",
+      "bytes": 27280
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "PLAN/2026-11-01-factor-incremental-workflow.md",
+      "sha256": "5fa60a6f8aa377d77595c430a60ceeaeea8c726a7995285b7f2d5f13d3841e10",
+      "bytes": 7513
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "PLAN/2026-11-01-sse-factor-production-full-run.md",
+      "sha256": "a98c768fb06aacede3b82c7c4f527619535fe678d68e3d2bfa4cd980d3ab4574",
+      "bytes": 9769
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "PLAN/2026-11-01-szse-incremental-production.md",
+      "sha256": "da77fe0a999821ffa3314c55e0d3b76bdc1d980d719181adf47b9d299810a1c4",
+      "bytes": 18642
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "configs/szse_incremental_quote_exemptions_20261101.yaml",
+      "sha256": "5a7c9ef59ea178732c4ba12a389de029166f6d2a857bc3096b44a61ab9dd5210",
+      "bytes": 891
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "docs/factor-incremental-workflow.md",
+      "sha256": "287b9c2fcceda001c9f0c5ae7303ae629cb7b9003ab27e51e86773d1baac5e89",
+      "bytes": 8883
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "lv2_snapshot_workspace/src/snapshot/day_pipeline.py",
+      "sha256": "abec54cfbfd00d162a3a20f46d9432a56537874b276f33d47d84eab57579980c",
+      "bytes": 13836
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "lv2_snapshot_workspace/src/snapshot/scheduler.py",
+      "sha256": "d0dcf78e48bbd1a748ccca839a7d2df6a79df6fc59d7a7bd43d28db97612a07e",
+      "bytes": 108378
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "lv2_snapshot_workspace/tests/test_day_pipeline.py",
+      "sha256": "a91dd19958614044dd23eb222d8e2fee546c7c3a51716984439aaa10c090e044",
+      "bytes": 8812
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/base601-final-acceptance.json",
+      "sha256": "9ecf68a2210de4625ed1776dd4c17e10fc76d0c18c49bbdcbb4e6485ee7070e3",
+      "bytes": 67953
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-final-acceptance.json",
+      "sha256": "ee99f3231dd1f80e2074dfde51ad7a74ffe8ebaa4bf79f8e31a7cf976d0ba61b",
+      "bytes": 37002
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-lifecycle-unit.json",
+      "sha256": "5f3af0c53e64a4e6faed51c6a283d749539874ae9d956d724d0eb00d392a7272",
+      "bytes": 2580
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-stage-r01.json",
+      "sha256": "82ec0cfb5c4c1b8a740072d34f0248d8bc16afdc592bc4ad1db3fabd972a5389",
+      "bytes": 15941
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-stage-r02-r03.json",
+      "sha256": "df5ccbea2222aea91f5c3bd0e24962e9f10f1d9b0aff89c2b0833d9ed78ffdec",
+      "bytes": 34967
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-stage-r04.json",
+      "sha256": "15da28237b9fafbd6f6b88f7a73feb5ad5c414d65b1d7d9bbadc540413f41bc8",
+      "bytes": 14988
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-unit.json",
+      "sha256": "79cf13869165df7b3c69170ea528290c4f0dd505901aabc01348777a22c4be9c",
+      "bytes": 1457
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-l1-endpoints-r01.json",
+      "sha256": "f7dbce34bb38d16764edfc61a5590929348955af207af97348368a32be01b88b",
+      "bytes": 9230
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-l2-endpoints-r01.json",
+      "sha256": "d833cfabeab3adee08e0f6f5982179522aa8c4d227336381828afebe04d5af6f",
+      "bytes": 13930
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-production-unit.json",
+      "sha256": "a0d0e2f9439ff92a88d6389c8174bbfe4ec224c68f281d093e0763291902e540",
+      "bytes": 1298
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-quote-exemption-unit-r03.json",
+      "sha256": "3eef288acacaf42064dc1d1bb22cbd7246a2aa9e401d7d5a55be3205561c0d55",
+      "bytes": 1334
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-quote-exemption-unit.json",
+      "sha256": "08e725e154d3f807c6c3b6a3ee91466f3c9fbb7ba3b70a10cdd0621cb2631167",
+      "bytes": 1349
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/pause-local-artifacts-20261101.json",
+      "sha256": "88107ccd8b6b8f804501e4a9000562a06e965182b8d06c76f5c140502437965f",
+      "bytes": 296
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/paused-by-user-20261101.json",
+      "sha256": "4211121573227c4657b99c4597001f2a72e364f8182279e06ed1cf037ad047bc",
+      "bytes": 21879
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/production-551-status.json",
+      "sha256": "8805a09caeffc95a23fbbab3603573d3c988e3c091fccf44c1a4b0d52c42004a",
+      "bytes": 16243
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production-evidence/qualification-r01-runtime-pause-evidence.json",
+      "sha256": "01c6302ff5924f9a8bdda8ebb71e3ab450dbbf51427433f8b3e7204d3f72181f",
+      "bytes": 37113
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-29-szse-v6-production.md",
+      "sha256": "abd347d27c325c2f553c430610c8045b0a44ed97320b523f839e55085c0f01e2",
+      "bytes": 36406
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/clock-duplicate-cleanup.json",
+      "sha256": "9a6e623e5a38057c9528f468390394550aab818fcab362da0837686ce71f8fb2",
+      "bytes": 56629
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/closeout-state.json",
+      "sha256": "0246e3ecb3835d022349e9ff0ff742116af2937c05dcbca6e820744777943908",
+      "bytes": 5723
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/expired-metadata-cleanup.json",
+      "sha256": "a4e4ddb0d9c02634b8e60f5ddc52defa2e9a656dfabff3a5f5eb309380bd0c1a",
+      "bytes": 2995
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/final-acceptance.json",
+      "sha256": "19a0141d5d56c5443b2614b1c93572d536359411b2891a603e1023ff5851815e",
+      "bytes": 6326
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/guard-cost-final.json",
+      "sha256": "0bb60aa69f7270a729a7e84c89a2da11dfedea9ce4d4bfe18418e48bae2c7c05",
+      "bytes": 274535
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/native-extreme-r09-acceptance.json",
+      "sha256": "31441aa3a79d7c6ddb1e316a885862e7b13b197eba6663a9d4038484ef20de4a",
+      "bytes": 42856
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/native-extreme-warm-r10-acceptance.json",
+      "sha256": "054e1fb3990990c490609d9f6505010b903ad9bd3a49248d23091d39154721db",
+      "bytes": 44070
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/server-closeout-fixture-cleanup.json",
+      "sha256": "a902aa3c9a500053426292bb1e4b38f9be5a51c5ddbd07ef50d7445c4686abb6",
+      "bytes": 2653
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production-evidence/storage-final.json",
+      "sha256": "800a65eeee1f4fa0716e29ff4763a7b056ad05add961df6f158fde8e43713951",
+      "bytes": 186503
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-10/2026-10-31-sse-factor-production.md",
+      "sha256": "d409716a0fe0fbadcd30993418d4f7347438b27585880e0b847f48855ff23ca0",
+      "bytes": 32314
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-factor-incremental-workflow.md",
+      "sha256": "297e88943e5c9cded4e96a11ea2a75be4900d82f3d2f0077a18a10f6f416545e",
+      "bytes": 7050
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/campaign-capacity.json",
+      "sha256": "feeb233fd846c15d8ef8530a845f048d8e7b09dfb1b905594d0b3a759373df85",
+      "bytes": 1421
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/capacity-baseline.json",
+      "sha256": "808d95b03b4dae23bc4b8a1e2f7e1554bcaf2d08e5370f68491532b7658a0164",
+      "bytes": 770
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/first-day-acceptance.json",
+      "sha256": "b902f15c2480f4f74d7d4d512fd06cf25884407aac00714d8ee039a61b16d9be",
+      "bytes": 7360
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/incident-A-r01-summary.json",
+      "sha256": "8e07229afc8e5c044885354efe12cfd6408db09d60859b8a0e410fddd70ad826",
+      "bytes": 4346
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/initial-state.json",
+      "sha256": "4683c22474e2b97fee600f27acff332a98bd3de2fe5177d6b5e4d803e524776c",
+      "bytes": 5256
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/measure-600839-probe.json",
+      "sha256": "52b29b0567c18dae0776542cfdbff6b5452c385491c7ebbfde4f6cc04d0f3d6c",
+      "bytes": 24965
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/measure-601212-probe.json",
+      "sha256": "1dda10481e1a17352177acddcc9f1737915211a30f8f75406986687a496201f0",
+      "bytes": 19828
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/prelaunch-acceptance.json",
+      "sha256": "52f36c8c4078c122d27c1b019d301b7608a653530abde8121e5a131b72c602ce",
+      "bytes": 2149
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/recovery-through-A-r04.json",
+      "sha256": "cf8bee037ffe73945fc924ceda14237db7a71999d5c6224ce4363afc8d7f7001",
+      "bytes": 10279
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/recovery-through-A-r05.json",
+      "sha256": "0c4aa7038e740c261ebecc548dc88bd748078723e0d0a19a7d1ec0f4c63619e9",
+      "bytes": 13994
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/resume-A-r06-acceptance.json",
+      "sha256": "8ab9fee10ccd0f85d03e7d09f405f6a78f5975b2ad2272e16dad3ab7a5e594f3",
+      "bytes": 2833
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/reuse-600930-acceptance.json",
+      "sha256": "989b586a1d01050b3951034f1befc038ba30646007de7e8f1340233484a08d6f",
+      "bytes": 2391
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/runtime-and-schedule.json",
+      "sha256": "25b3352b55c8b6872cdf1a8e8cd25fa082bd3bc0701d4b5c046e70fff5bbb2a8",
+      "bytes": 1220
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/source-restoration.json",
+      "sha256": "9e8e2e574fcda46888d8840e521ab56fc3c8d658b3818c58ddc0e298f01d1342",
+      "bytes": 3729
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/tail-inventory.json",
+      "sha256": "a54fd385407e03a2fd5c09b0654f6479626855805eeadaf83fc6d7f1c5786359",
+      "bytes": 503293
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production-evidence/tail-schedule.json",
+      "sha256": "b2d270d906a06228b32b6b79f2713f1449a718c737cd6556402776d0a98f1a48",
+      "bytes": 132427
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-sse-factor-production.md",
+      "sha256": "738bce5df295f1a19c5b75bb50c22fc284a3612d37a47483724055bdef99c301",
+      "bytes": 20057
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/compare-launch-r02.json",
+      "sha256": "7c9fe906913cf2b2424e87069e1e7bc3067711e18246cf45cf11b30efecfbeed",
+      "bytes": 2530
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/compat-accept-compare-launch-r03.json",
+      "sha256": "42ba066dc4b4092fcc72b867311e9ede7632ee12536671c22256054954dc1fa0",
+      "bytes": 5408
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/compat-run-launch-r03.json",
+      "sha256": "d8f82968441904bc0c0205cf603d8b9f078bfb9e3dcb38affb5fb5ce5e7e0962",
+      "bytes": 4029
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/continuous-qualification-final-acceptance.json",
+      "sha256": "b6445bfd0d4f916257f3d38643f2c3c0fb52db3fe51ebf656f94c97a11b524a4",
+      "bytes": 39192
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/continuous-qualification-launch-r01.json",
+      "sha256": "4d6026cf2de631fb2b65b43911cc131b9f3e07a8d66f8fad969b5599a46b3655",
+      "bytes": 6225
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/execution-compatibility-r02.json",
+      "sha256": "58e5b319fc45ca574dd40784b34fc39032d6608561fe4fe96f31a9f0cf3d9123",
+      "bytes": 340544
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/execution-compatibility-r03.json",
+      "sha256": "43645bd2a58d52faa97500240da91d60696cbb503006b4c4781b5d2db8f583dc",
+      "bytes": 340544
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-checkpoint-control-manifest-r01.json",
+      "sha256": "d7faa351b5af9e8501939115d5b1456f99667a4136d8265f9c45d4dcadb92bf9",
+      "bytes": 55181
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-checkpoint-receipt-r01.json",
+      "sha256": "2fbb52d3234a8c8b25e931d6e483d7c39a72d7ad074cfdb2b8c679d21a9834d1",
+      "bytes": 4417
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-final-state-r01.json",
+      "sha256": "3864385f11ed944f5e0bd51f56f53be40a14e932932661ccbcdc53fd3dde9465",
+      "bytes": 1472
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-state-r01.json",
+      "sha256": "d05866074a2b14cf8dfcdac26bb9121bfde7937237c20afa4153341c46c22513",
+      "bytes": 4468
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-temporary-release-r01.json",
+      "sha256": "e8794d12009783e5de9da7f8c9eaf181e7fc723e23f7ed9c5dbe72d319a2981b",
+      "bytes": 296
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-final-acceptance.json",
+      "sha256": "93efe97beb2520e5291c1930e14aca31051b775084ec408fa238c7758b93391f",
+      "bytes": 39184
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-guard-copy.json",
+      "sha256": "14a65825ebc12c8b761159f45f79f884e019c92bf84eae61e512db35b9158de5",
+      "bytes": 477
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-launch-r01.json",
+      "sha256": "c9053fc96be6da36141f017db5309c093a182209e13ed86c4149752b946cfecf",
+      "bytes": 4932
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-verify-launch-r02.json",
+      "sha256": "4b27adbc4147d98d503ac66586fe2ef16b4ea3b4d19b4bc13de24ea2a0564d18",
+      "bytes": 2746
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/result-collection-r01.json",
+      "sha256": "8443cc22522d33f4ae1a5febe5007a9827ca5935ae47c310ae498cfd3d4682b8",
+      "bytes": 46281
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/result-collection-r02.json",
+      "sha256": "e1e9919948c988ab88148fcd4c22bb7b4fa891d0b2978cc0c9dc77f2aa651ff0",
+      "bytes": 46944
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/runtime-acceptance-r01.json",
+      "sha256": "244ded6813facd0471fdf16b90729da7fbf97cb45ba14900c0d8d21611601e69",
+      "bytes": 5128
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/server-sync-r02-acceptance.json",
+      "sha256": "5e9a3a63284eff154a229afe392d1b9917b898744b3e5876977dc0333134ee59",
+      "bytes": 616
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/target-reference-r03.json",
+      "sha256": "9e38d52f7ec7fbd23acd2f2d6f536a3b077f976bea0f54d8cba36c839d47b4ab",
+      "bytes": 430
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production-evidence/workload-capacity-r01.json",
+      "sha256": "3267be08e49250e52e3cc9cc89c1fb98a7a46c691e5fec38b1c20e68e0be166a",
+      "bytes": 10392
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "reports/2026-11/2026-11-01-szse-incremental-production.md",
+      "sha256": "c7c666a7f6f598199ada54fc28bd9fb5da3981ed1f39ae40bf69e2d869858b5b",
+      "bytes": 16080
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/assess_sse_factor_tail.py",
+      "sha256": "0b5d4b878480b5efec385aed7c2196203da89d06a4cceab796144da0bc3f958d",
+      "bytes": 9170
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/build_factor_result_collection.py",
+      "sha256": "b4100801ff113d31ac1e4fd1678e8af899004bf442c3ddfaac204cc6e360b229",
+      "bytes": 2731
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/build_szse_model328_performance_gate.py",
+      "sha256": "ac7cff7ec824602bb329c3fa794beeee4f14cac86bcf1e8574430e19d7907716",
+      "bytes": 12714
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/compare_factor_bank_days.py",
+      "sha256": "e7d275944286948abd932532cb5d70603f130a67736787fceed8444b079ade34",
+      "bytes": 2612
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/compare_formal_window_outputs.py",
+      "sha256": "34ce62fd8c80792a4f597ba9a32a46d9902f40926a3f0aa3db35944d71fada10",
+      "bytes": 22239
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/plan_sse_factor_batches.py",
+      "sha256": "bfc07f8f3cc0fed79cd43cda7be2a1248e402f852a252a6391c3f7ecc8983da6",
+      "bytes": 7911
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/prepare_corrected344_incremental_inputs.py",
+      "sha256": "064d59dbe2ddf5aecbf2df89f0be1103e80769a5945c6ccca968e5a8f5952c2d",
+      "bytes": 31634
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/recover_corrected344_source_day.py",
+      "sha256": "9dec3538bbf0e7774ee3b222f255527da6e36f556b2ee337c3ba6c67c99a916e",
+      "bytes": 35125
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/recover_sse_stock_f40.py",
+      "sha256": "271918a4da0c045a0318832e4edc251c96d9e229bd2105dd72a4fdd39d42b5bf",
+      "bytes": 4797
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/resume_corrected344_bounded.py",
+      "sha256": "5950601219ac7aaa2d118b5253e8d50bd21c6a96ae42b65a9fbeb85163ed2071",
+      "bytes": 12528
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/run_corrected344_factor_production.py",
+      "sha256": "c6e69565faf622e2d566bbc3dd7fa781bb1beaf378ddd304edd424a28b7c0464",
+      "bytes": 56101
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/run_corrected344_incremental.py",
+      "sha256": "46576d3aef1081b15c91eeda99fafe40ae8023aea0eef6123e47199cdbeeaee1",
+      "bytes": 26398
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/run_guarded_request.py",
+      "sha256": "e9de9c264b3100d50835afd3905cfb576e9973ae68006377f130558a51b8b607",
+      "bytes": 4229
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/run_open5m_raw_bank.py",
+      "sha256": "edfc996935c59992eee3ce57f1acfe52a81b58c5f1f72680e3a3c86223a6766d",
+      "bytes": 38442
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/run_sse_factor_batch.py",
+      "sha256": "6ad39e3fd567942816d5223b290533a7784886115080d35c2c65eaabaab53118",
+      "bytes": 9119
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/run_sse_public340_factor_production.py",
+      "sha256": "21c48042c9a7037727431eb4bc252c2e3e8b96ed7cd8b51fa29eeda568a64427",
+      "bytes": 50476
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/run_szse344_multih.py",
+      "sha256": "15fd968cbc1ded46ebad1277653c512bddc5a4961db46a5cd73c707ef0c43aa6",
+      "bytes": 8422
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_assess_sse_factor_tail.py",
+      "sha256": "09016eb658dedefcf50db07fcca4e2d60c85e5ecdf053565c8926f8fb3214fc2",
+      "bytes": 1726
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_plan_sse_factor_batches.py",
+      "sha256": "37bd4a00ee009d168ee5a79ad8695579e75a790fd6c9d84a4a6a8f7ec2116017",
+      "bytes": 1494
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_prepare_corrected344_incremental_inputs.py",
+      "sha256": "1de4414260a4e6ad0014f0d189cf87abc2500d666ffc6543a41454498c916af6",
+      "bytes": 16560
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_recover_corrected344_source_day.py",
+      "sha256": "8dbcb11a28b32b2b24a1ca4cebd7fb39b0162faba5208b90a4c0cdd3228ae566",
+      "bytes": 14696
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_resume_corrected344_bounded.py",
+      "sha256": "43df5c3ef064d931cefefe9ff42d0d82ac4720b557e3042e0abc0c10d98db909",
+      "bytes": 13174
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_retained_scientific_audits.py",
+      "sha256": "cfbaf93001bb036282f5ca83f0251e7ef973c646c7e170ec2d28e6bfe478fefc",
+      "bytes": 2996
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_run_corrected344_incremental.py",
+      "sha256": "5aebb950c20fa4e6aac8fd8275c6e76a727b32d5dacd0df51c1bbd58e3d878eb",
+      "bytes": 13999
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_run_guarded_request.py",
+      "sha256": "17c67107878e6300b861f39492325e30fddd7511a7f486bbd31f0d116499e61d",
+      "bytes": 2464
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_run_sse_factor_batch.py",
+      "sha256": "9d4b061714f50a86a95a45f782aa5e3ef298302a18df727629f14abba54d9cc4",
+      "bytes": 1741
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_sse_public340_factor_production.py",
+      "sha256": "bb9c6036e6ad929b5a6c9832949de46132650b4aaadd43d0e7b78e1fc1ac678f",
+      "bytes": 16432
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_verify_factor_execution_cli.py",
+      "sha256": "fa1909e02e3acc4dbb0a70e26fccca0af4fd02c4fd81349f12796549e514811d",
+      "bytes": 1326
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/tests/test_verify_sse_factor_campaign.py",
+      "sha256": "4b7cf2b49244e7c7c3281c946e1e7d53536e604efce4e89486754f7c153433e3",
+      "bytes": 1853
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/verify_factor_execution_compatibility.py",
+      "sha256": "d24d335b575cb9710a0b94918a998c3d087d15083d0c7d4b81d4b1dce27baa5f",
+      "bytes": 1675
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/verify_factor_incremental_bank.py",
+      "sha256": "98d7d29d3af4130c472a3f31a4d80a6f25d1a83bf9d243145f5e223592bcffcc",
+      "bytes": 7328
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/verify_factor_production_runtime.py",
+      "sha256": "d38649ab081c13e1742076ee9814500e02d0297b9e7b7ec61dbc4f5fcd1ac138",
+      "bytes": 1663
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "scripts/verify_sse_factor_campaign.py",
+      "sha256": "8a51823e99017a347f73ecea82f847fd2458ce55b49d40a7daffd3045e0d332c",
+      "bytes": 9209
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/configs/szse_model328_resources_incremental_v1.json",
+      "sha256": "37df332125f89beb8ab806e01eae596600cd9bc63b8af725b3136be236cefa60",
+      "bytes": 1928
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_factor_bank_acceptance.py",
+      "sha256": "af13f5717685c57723c29b5c0f88aec88cad5aa55fbf6ea906a9cd63f31d8ee5",
+      "bytes": 4880
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_factor_collection.py",
+      "sha256": "b017896bb9772864ec73d212e48f29d62b0297b1e28b68daf9c63f4186e0ecd7",
+      "bytes": 10305
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_factor_execution_compatibility.py",
+      "sha256": "908c21b2a705803e4435dfd15d4244619db2cf0ce93fb15a54b9b33f0daa3447",
+      "bytes": 5596
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_factor_performance_contract.py",
+      "sha256": "f04049aae590874149228345c30b5f57333150f00fad1f74f07e50c437c88238",
+      "bytes": 7601
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_factor_production_scope.py",
+      "sha256": "1af40f26c5eea974aed3dedee3ae12bc770c9baf1754f7e1fbdbbde6ada87e38",
+      "bytes": 3952
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_factor_runtime.py",
+      "sha256": "de417021467514bc064577a2d93d33f98feb2a635b2ca91690bd368a97d277b5",
+      "bytes": 2547
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_model328_runtime.py",
+      "sha256": "138c64e8fa5471ce311050bb0220394ae11551904ac72127f01ffe9e38c144b0",
+      "bytes": 3166
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_model328_sources.py",
+      "sha256": "5c4dccd2840028cd19a8672c4bf0cd40ca35a28ef412d3236689832316352682",
+      "bytes": 42301
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_pair_shard_execution.py",
+      "sha256": "027b875f4a77fb3d969409b981db1f11335afb2f0cb8fc01047598a1a32971f4",
+      "bytes": 4287
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_parallel_production_pairs.py",
+      "sha256": "8317d82011b6231cf2a46262bfa0fd1cfeca0ba6b31d7fdebf5653e68abd946e",
+      "bytes": 22775
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/formal_raw_bank_startup.py",
+      "sha256": "c8b50ff556812fd2d6d83ae7db10a3b9c72e8f4c5a99accc6693ad05af9040ff",
+      "bytes": 19030
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/ml/szse344_data.py",
+      "sha256": "e5643d26114933f52223680ed687563af1e0d6daec2d1ba759c6a51544ddde02",
+      "bytes": 10301
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/src/algobench/ml/szse344_inputs.py",
+      "sha256": "44d26a22fd486482e55e41d7c47a3f2399fa92abb9d87653a364fb514ddcb58c",
+      "bytes": 7505
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/tests/test_factor_bank_collection.py",
+      "sha256": "f327fdc7c73e740bcbf28d053a3eddac39d3a41cea219e5ec30584bfd53d9f65",
+      "bytes": 13225
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/tests/test_factor_execution_compatibility.py",
+      "sha256": "abd48b1a88197f655c4f03ca495a6ae3b2bb760f1871bd4054ab73a46bef39e8",
+      "bytes": 5246
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/tests/test_factor_production_scope.py",
+      "sha256": "80f4c0a9fe8517fa5d0b475d1ace6d6e9abdb607e37ba0217877cfc2a1be1359",
+      "bytes": 5757
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/tests/test_factor_runtime_acceptance.py",
+      "sha256": "a65a99c31d2c9d7286e4245a0123dcae9b67f414e2b198111a936df6b449851c",
+      "bytes": 3262
+    },
+    {
+      "repo": "sirui-quant-research",
+      "revision": "8359645cd2291c3f7289de1c8dcf62197f7419eb",
+      "path": "因子/algobench/tests/test_production_pair_shards.py",
+      "sha256": "6b2a902c7b532e06389192048cbfae0e3307eea1931411119b2bf00481794263",
+      "bytes": 41065
+    }
+  ]
+}
