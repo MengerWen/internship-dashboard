@@ -64,19 +64,112 @@
     "extension_console_errors": 2
   },
   "content_commit": {
-    "status": "pending"
+    "status": "committed",
+    "sha": "718684e6373f7b72878cc85decc8b8ba678e19fb"
   },
   "push": {
-    "status": "pending"
+    "commit": "718684e6373f7b72878cc85decc8b8ba678e19fb",
+    "remote_sha": "718684e6373f7b72878cc85decc8b8ba678e19fb",
+    "status": "verified",
+    "at": "2026-11-02T09:30:57.211525+08:00"
   },
   "publication": {
-    "status": "pending"
+    "status": "verified",
+    "github_check": {
+      "id": 125048974882,
+      "head_sha": "718684e6373f7b72878cc85decc8b8ba678e19fb",
+      "name": "Workers Builds: internship-dashboard",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-02T01:39:04Z",
+      "completed_at": "2026-11-02T01:39:04Z",
+      "details_url": "https://dash.cloudflare.com/c4da947796d8aa346cad9273e206c858/workers/services/view/internship-dashboard/production/builds/c3d5cd5f-76ba-4c67-9a39-50c635d8927c"
+    },
+    "first_in_progress_started_at": "2026-11-02T01:32:17Z",
+    "observed_check_ids": [
+      125047238024,
+      125048974882
+    ],
+    "deployment": {
+      "id": "fa999ddf-f1c9-4c86-ab59-69eb530d5a0c",
+      "created_on": "2026-11-02T01:38:57.147931Z",
+      "versions": [
+        {
+          "version_id": "2b41026a-6184-4ced-8abd-495b04e6ca3f",
+          "percentage": 100
+        }
+      ]
+    },
+    "binding": "成功构建明确绑定Git SHA；同一构建URL的进行中检查与完成检查ID不同，均保留。单一新增部署的时间、100%版本及线上内容联合核对，部署元数据未直接给出Git SHA。"
   },
   "online_browser": {
-    "status": "pending"
+    "status": "passed",
+    "browser": "Chrome",
+    "target_date": "2026-11-01",
+    "chains": 3,
+    "excerpts": 4,
+    "document_count": 11,
+    "unique_attribution_commits": 63,
+    "all_attribution_groups_expanded": true,
+    "new_chain_and_handoff_checked": 1,
+    "coverage_incomplete_visible": true,
+    "console_errors": 14,
+    "console_error_sources": [
+      "chrome-extension://lnaahdmijnjnmgaalacdgakieangpjgp/content_script.js",
+      "https://internship-dashboard.mengerwenjie.workers.dev/#/journal?chain=factor-incremental-workflow&view=atlas"
+    ],
+    "scope": "实际读取最终日卡、正文、摘录、全部唯一归属链接及新链；未启动科研计算或操作服务器。",
+    "connection_recovery": "旧连接及多步调用超时后，在同一Chrome创建本轮新标签，按单步调用恢复。另一会话拥有的标签保持不动，未修改安全设置。",
+    "console_notes": "14条错误：1条明确来自Chrome扩展，13条为无调用栈的异步消息通道关闭提示。后者记录的网站URL不能单独确定来源；本次日卡、全部归属链接及新链的实际读取通过，不宣称控制台零错误。"
   },
   "workspace": {
-    "status": "pending"
+    "status": "passed",
+    "exit_code": 0,
+    "untracked": 0,
+    "scope": "审计文件已定向暂存；不清理其他任务输出。"
   },
-  "updated_at": "2026-11-02T09:30:37.963841+08:00"
+  "updated_at": "2026-11-02T09:53:12.005364+08:00",
+  "cleanup": {
+    "task": "journal-daily-2026-11-02",
+    "target": "本轮.local/runs目录内site",
+    "boundary_verified": true,
+    "links": 0,
+    "files": 6881,
+    "logical_bytes_deleted": 830777115,
+    "target_absent": true,
+    "preview_server_pid": 2508,
+    "preview_server_stopped": true,
+    "port_8078_listeners": 0,
+    "saved_manifest": "artifacts/journal-daily-2026-11-02/manifest.json",
+    "method": "PowerShell Remove-Item -LiteralPath 指定完整目录 -Recurse，无Force",
+    "scope": "只删除本轮可重建副本，其他任务和原始data均保留；未测物理分配变化。",
+    "first_preflight_failure": "命中检查命令自身；当时未删除，限定实际Python服务并复查端口后才通过。"
+  },
+  "model_end": {
+    "captured_at": "2026-11-02T09:53:11.985004+08:00",
+    "config": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "automation": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "automation_status": "ACTIVE",
+    "thread_id": "01a199c8-a64d-7943-a5fa-d4b26e580ef0",
+    "turns": [
+      {
+        "line": 11,
+        "sha256": "ead36ae272989e9d3426e9ae6e4d8d81ca263a7cc236356421d148291ca41f13",
+        "model": "gpt-6.1-sol",
+        "effort": "xhigh"
+      },
+      {
+        "line": 1168,
+        "sha256": "d137d4765bd927681e7b1dd56d3556870260db7a8cff3e3d9775cf16d9e4a8c6",
+        "model": "gpt-6.1-sol",
+        "effort": "xhigh"
+      }
+    ]
+  }
 }

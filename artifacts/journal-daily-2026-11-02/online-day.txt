@@ -1,0 +1,562 @@
+前一天 2026-10-31 沪市601日定参完成，正式因子仍有极端长尾
+后一天
+2026-11-01
+周日
+未关联汇报
+当天发布 0 篇
+63 次提交
+深市原601日验收完成，新增日期分流续算
+当天工作
+深市原601日、1719612股票日、344列通过完整验收。新增82日输入就绪；两日先完成，暂停优化后继续推进，午夜前累计53日通过分批终验，另两日生产签收待该批终验。
+增量流程将生产日期与定标日历分开，补齐跨版本完整样本、真实环境和正式验收入口；多批次索引按日期引用原结果，保留原601日及82日输入。
+沪市极端股整股及断点复验通过，601日分成564个常规日和37个尾部日。晚间推进至320日后，容量盘点再次超时退出，已完成日保留。
+各项记录 3 条任务链
+任务链
+当天进展
+提交归属
+深市344计算
+原601日完成，新增82日已终验53日
+有可查产物
+代码 / 提交 / 文档 / 会话
+查看依据
+33 条提交，4 份文档，3 段交流
+归属提交量 33
+增量生产流程
+交付独立增量范围与多批次读取流程
+有可查产物
+代码 / 提交 / 文档 / 会话
+查看依据
+4 条提交，3 份文档，1 段交流
+归属提交量 4
+沪市340计算
+沪市签收320日，容量读取再次超时
+有可查产物
+代码 / 提交 / 文档 / 会话
+查看依据
+24 条提交，4 份文档，2 段交流
+归属提交量 24
+相关工作 整条任务线与相邻记录
+补充说明
+
+深市原批次与新增输入。 原601日覆盖2024-01-02至2026-06-30，共1,719,612股票日、344列，30个月度审计通过，正式留存约39.493GB。最后控制轮正常退出；来源、面板、科学审计及对象库存完成全量核对。此前长尾和中断的成本仍保留，单日300秒参考线并非全期均已达到。
+
+新增日期为2026-07-01至2026-10-30，共82日、237,750股票日，参考输入验收完成，沿用冻结参数。最初首日因热环境缺少pandas文件退出；恢复依赖后按用户要求暂停。之后完成真实环境、完整同日样本逐位对照，再正式验收7月1、2日，共5,789股票日，生成603日结果索引。两日活动墙钟分别约7.57分钟、84.11分钟；后一天的001248单股约83分钟，单股长尾仍很明显。
+
+15时再次按要求暂停，保全断点并实际恢复验证。获得新的续算授权后，重股在派发前限为一只在途，普通股票继续回填，最多两日在途，并用小批次结束业务进程以控制驻留。完整普通日和重股的344列、浮点位、NaN位置及科学审计对照通过；先行四日完整周期1,201.350秒，平均约11.69核。午夜前，余80日中已有51日通过分批终验，加上原两日，共53/82日；10月8、9日另已生产签收，所在小批仍在运行。其余日期及全期集合等待后续终验。
+
+增量生产流程。 生产范围单独绑定实际日期、股票集合、冻结参数和输入凭证，新增日期不再受原601日定标日历限制。执行版本须通过完整已验收同日样本对照；实际业务环境核对包字节、导入路径、参考Parquet及同环境子进程。正式批次检查四来源、面板覆盖、日月审计、库存、资源和正常退出。
+
+多批次结果索引要求同一市场、科学口径与列序，每个日期只有一个来源，面板保留在原处。读取时继续核验原生签收和载荷，后续批次可直接追加。追加范围与容量检查43项、对象读取专项9项通过，测试范围有重叠。这套流程当天已用于深市实际补算；沪市活动生产继续使用其冻结版本。
+
+沪市极端股与全期生产。 600930/2025-07-16完成整股续算及四类完整审计；全部BBO断点和F40匹配复用的复验为496.740秒，340列、20个NaN及科学字段一致。分阶段组件墙钟合计4.700小时，最大买卖侧仍约2.3小时，复验速度不能代表新股票的冷计算吞吐。
+
+全期筛查1,370,521股票日，找出70个尾部候选股票日，601日划为常规564日与尾部37日，上市首日保留。尾部点估计9.68小时、上界情景22.48小时；候选数不能独自解释耗时。按原定12小时点估计条件，本轮未采用事件分段构图改造。
+
+首轮在220日后出现进程池退出，同日新池复算通过，底层退出原因仍未确认。之后从310日、311日先后恢复；容量读取改成每页100对象并保留有限重试。23时55分原始记录显示已签收320/601日，至2025-05-19；这一轮又在只读容量盘点超时后退出。签收结果保留，全期验收及后续恢复仍待完成。
+
+原始依据
+文件深市原601日完整验收、文件82日输入验收。
+文件增量公共流程开发验收、文件新增日期运行、暂停与分流。
+文件沪市极端股及断点复验、文件全期分批与故障恢复。
+文件晚间320日及深市51日分批终验的原始回执定位、文件结果及日期边界核验。
+会话与材料登记
+
+文件当日来源登记；文件本轮核对记录。来源覆盖仍不完整，历史会话原件、部分推送时间及待审材料继续留账。
+
+会话摘录
+Codex · 用户要求
+（11:39:41，北京时间）：增量流程开发的授权边界，后续运行由另一条明确请求授权。
+
+
+先完成代码修改和必要验证，不要启动正式补算。
+
+会话 01a19506-b0f5-7271-aa15-09e83adedc1e，原始记录第 243 行
+
+Codex · 用户要求
+（15:03:40，北京时间）：两日完成后暂停并保存进度；随后15:31获得新的续算授权。
+
+
+在完成当前正在进行的计算任务后暂停，我需要进行一些更改、加一些优化。当然了还是希望能够保存进度
+
+会话 01a1955c-2e17-7093-b4ad-44495ce08a7f，原始记录第 2271 行
+
+Codex · 用户要求
+（15:31:39，北京时间）：优化分析之后恢复推进余80日；实际完成日另据运行与终验回执。
+
+
+合理的。现在请你完成所有任务，直到剩余80日的因子全部计算完成
+
+会话 01a195fc-aede-7c22-8a9c-0942e6a8052d，原始记录第 161 行
+
+Codex · 用户决定
+（00:58:23，北京时间）：沪市尾部排期保留上市首日，后续按完整覆盖验收。
+
+
+上市首日照常计算，不因耗时排除，也不另设口径。
+
+会话 01a192e5-d71c-7d80-bd81-7c7c99c5c1fb，原始记录第 15 行
+
+原始记录
+提交、计划与汇报 63 次提交
+任务归属明细
+
+完整清单共 63 条提交。单任务计 1 份；明确的跨链提交等分，合计仍为 1 份。待核 0 条，保留原始链接供回查。提交量包含实现、修复、尝试、验收和记录，不折算工时或成果价值。
+
+深市344计算：归属提交量 33
+提交ed5e11ff
+记录深市550日原生核验与连续运行状态
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：reports/2026-10/2026-10-29-szse-v6-production-evidence/production-551-status.json；reports/2026-10/2026-10-29-szse-v6-production.md
+提交6a9f9449
+验收深市344列因子原601日完整生产结果
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；reports/2026-10/2026-10-29-szse-v6-production-evidence/base601-final-acceptance.json；reports/2026-10/2026-10-29-szse-v6-production.md
+提交147b2285
+核对深市7月起增量端点并登记输入与运行复用计划
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-l1-endpoints-r01.json；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-l2-endpoints-r01.json；reports/2026-10/2026-10-29-szse-v6-production.md
+提交3be26af0
+构建冻结深市因子的独立增量参考输入与覆盖凭证
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-unit.json；scripts/prepare_corrected344_incremental_inputs.py；scripts/tests/test_prepare_corrected344_incremental_inputs.py
+提交5d4de442
+按正式生命周期保留增量股票池并核验无事件缺价
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-lifecycle-unit.json；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-stage-r01.json；reports/2026-10/2026-10-29-szse-v6-production.md；scripts/prepare_corrected344_incremental_inputs.py；scripts/tests/test_prepare_corrected344_incremental_inputs.py
+提交531960c7
+沿用冻结实现组织深市增量单日验收与批量生产
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-production-unit.json；scripts/run_corrected344_incremental.py；scripts/tests/test_run_corrected344_incremental.py
+提交945888a8
+以正式公告补齐深市增量报价免限价证据
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；configs/szse_incremental_quote_exemptions_20261101.yaml；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-stage-r02-r03.json；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-quote-exemption-unit.json；reports/2026-10/2026-10-29-szse-v6-production.md；scripts/prepare_corrected344_incremental_inputs.py；scripts/tests/test_prepare_corrected344_incremental_inputs.py
+提交1b518781
+登记萃华退市整理首日的增量报价公告证据
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；configs/szse_incremental_quote_exemptions_20261101.yaml；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-stage-r04.json；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-quote-exemption-unit-r03.json；reports/2026-10/2026-10-29-szse-v6-production.md；scripts/tests/test_prepare_corrected344_incremental_inputs.py
+提交f95a793f
+验收深市7月至10月冻结因子增量输入
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；reports/2026-10/2026-10-29-szse-v6-production-evidence/incremental-inputs-final-acceptance.json；reports/2026-10/2026-10-29-szse-v6-production.md
+提交0507c88d
+保存深市增量计算暂停检查点与依赖恢复证据
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-10-29-szse-v6-production.md；reports/2026-10/2026-10-29-szse-v6-production-evidence/pause-local-artifacts-20261101.json；reports/2026-10/2026-10-29-szse-v6-production-evidence/paused-by-user-20261101.json；reports/2026-10/2026-10-29-szse-v6-production-evidence/qualification-r01-runtime-pause-evidence.json；reports/2026-10/2026-10-29-szse-v6-production.md
+提交88a8fb2f
+绑定父批次选版样本与真实执行版本的兼容链
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；docs/factor-incremental-workflow.md；scripts/run_corrected344_factor_production.py；scripts/tests/test_run_corrected344_incremental.py
+提交d11aa614
+在增量预检与正式启动之间保留父批次选版凭证
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：scripts/run_corrected344_factor_production.py；scripts/run_corrected344_incremental.py；scripts/tests/test_run_corrected344_incremental.py
+提交85b1e087
+记录深市增量环境与完整样本兼容验收
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；reports/2026-11/2026-11-01-szse-incremental-production-evidence/compare-launch-r02.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/execution-compatibility-r02.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-launch-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/runtime-acceptance-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/workload-capacity-r01.json；reports/2026-11/2026-11-01-szse-incremental-production.md
+提交5ed2eb65
+按原字节保留深市增量验收凭证
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：.gitattributes
+提交890409d1
+恢复新增日期时沿用签收的独立生产范围
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；scripts/recover_corrected344_source_day.py；scripts/tests/test_recover_corrected344_source_day.py
+提交8dc463f4
+让股票回填使用实际共享准入字节上限
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；lv2_snapshot_workspace/src/snapshot/day_pipeline.py；lv2_snapshot_workspace/src/snapshot/scheduler.py；scripts/recover_corrected344_source_day.py；scripts/tests/test_recover_corrected344_source_day.py
+提交0b8372c0
+记录深市首日签收与密集响应长尾实测
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：reports/2026-11/2026-11-01-szse-incremental-production.md
+提交9edbb7db
+保存深市新增首日正式验收及602日集合凭证
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：reports/2026-11/2026-11-01-szse-incremental-production-evidence/continuous-qualification-launch-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-final-acceptance.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-guard-copy.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pilot-qualification-verify-launch-r02.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/result-collection-r01.json；reports/2026-11/2026-11-01-szse-incremental-production.md
+提交0000bdcf
+按实际生产范围安排深市分层连续验收样本
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；reports/2026-11/2026-11-01-szse-incremental-production.md
+提交bb5a3947
+保存深市补算暂停断点、603日索引及新版本完整对照
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；reports/2026-11/2026-11-01-szse-incremental-production-evidence/compat-accept-compare-launch-r03.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/compat-run-launch-r03.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/continuous-qualification-final-acceptance.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/execution-compatibility-r03.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-checkpoint-control-manifest-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-checkpoint-receipt-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-final-state-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-state-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/pause-temporary-release-r01.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/result-collection-r02.json；reports/2026-11/2026-11-01-szse-incremental-production-evidence/server-sync-r02-acceptance.json
+提交c3e6962e
+允许已签收生产范围按明确交易日子集执行
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：因子/algobench/src/algobench/formal_raw_bank_startup.py；因子/algobench/tests/test_factor_production_scope.py
+提交5c077023
+为深市增量生产接入有界跨日调度与重股共享准入
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；scripts/recover_corrected344_source_day.py；scripts/resume_corrected344_bounded.py；scripts/run_corrected344_incremental.py；scripts/tests/test_recover_corrected344_source_day.py；scripts/tests/test_resume_corrected344_bounded.py；scripts/tests/test_run_corrected344_incremental.py；因子/algobench/configs/szse_model328_resources_incremental_v1.json
+提交17a45a73
+让执行兼容验收CLI完整核对嵌套科学审计
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：scripts/tests/test_verify_factor_execution_cli.py；scripts/verify_factor_execution_compatibility.py
+提交67e4ff51
+为正式guard阶段保存独立请求身份与真实退出状态
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：scripts/run_guarded_request.py；scripts/tests/test_run_guarded_request.py
+提交796effbb
+让跨日重股依次借用分片资源并记录等候成本
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：因子/algobench/configs/szse_model328_resources_incremental_v1.json；因子/algobench/src/algobench/formal_pair_shard_execution.py；因子/algobench/src/algobench/formal_parallel_production_pairs.py；因子/algobench/tests/test_production_pair_shards.py
+提交7f6ce8b1
+复用完整日与科学审计对照验收已签收因子批次
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：scripts/compare_factor_bank_days.py
+提交a23898cc
+记录深市80日续算分层、Linux验收及当前执行身份
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：reports/2026-11/2026-11-01-szse-incremental-production.md
+提交e961b89b
+绑定完整逐位对照中的新旧执行资源配置
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：因子/algobench/src/algobench/formal_factor_execution_compatibility.py；因子/algobench/tests/test_factor_execution_compatibility.py
+提交2fbb0133
+记录深市续算当前版本完整逐位验收及资源证据
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：reports/2026-11/2026-11-01-szse-incremental-production.md
+提交9bad02dc
+在派发前限制重股在途数并允许普通股票回填
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；lv2_snapshot_workspace/src/snapshot/day_pipeline.py；lv2_snapshot_workspace/src/snapshot/scheduler.py；lv2_snapshot_workspace/tests/test_day_pipeline.py；scripts/recover_corrected344_source_day.py；scripts/resume_corrected344_bounded.py；scripts/tests/test_resume_corrected344_bounded.py
+提交08e9d370
+按已签收摘要迁移合同核对完整日科学身份
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；scripts/build_szse_model328_performance_gate.py；scripts/compare_factor_bank_days.py；scripts/compare_formal_window_outputs.py；scripts/tests/test_retained_scientific_audits.py
+提交ed253812
+记录深市重股完整科学对照和派发前分流验收
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：reports/2026-11/2026-11-01-szse-incremental-production.md
+提交2b01c128
+记录深市五日终验并按四日业务进程分组续算
+sirui-quant-research，计 1/1 份；专项复核
+
+深市冻结344列原批次收尾、82日输入、真实补算或本次续算调度；共享模块按实际交付目标计一次。
+
+依据文件：PLAN/2026-11-01-szse-incremental-production.md；reports/2026-11/2026-11-01-szse-incremental-production.md
+增量生产流程：归属提交量 4
+提交4b2349f6
+将因子生产日期与冻结定标日历分开绑定
+sirui-quant-research，计 1/1 份；专项复核
+
+独立增量流程交付：日期、执行兼容、业务环境、正式验收与多批次集合；后续实际生产另归深市链。
+
+依据文件：PLAN/2026-11-01-factor-incremental-workflow.md；scripts/run_open5m_raw_bank.py；因子/algobench/src/algobench/formal_factor_production_scope.py；因子/algobench/src/algobench/formal_model328_sources.py；因子/algobench/src/algobench/formal_raw_bank_startup.py；因子/algobench/tests/test_factor_production_scope.py
+提交edc07900
+绑定增量执行兼容证据与实际业务环境
+sirui-quant-research，计 1/1 份；专项复核
+
+独立增量流程交付：日期、执行兼容、业务环境、正式验收与多批次集合；后续实际生产另归深市链。
+
+依据文件：PLAN/2026-11-01-factor-incremental-workflow.md；docs/factor-incremental-workflow.md；scripts/prepare_corrected344_incremental_inputs.py；scripts/run_corrected344_factor_production.py；scripts/run_corrected344_incremental.py；scripts/tests/test_prepare_corrected344_incremental_inputs.py；scripts/tests/test_run_corrected344_incremental.py；scripts/verify_factor_execution_compatibility.py；scripts/verify_factor_production_runtime.py；因子/algobench/src/algobench/formal_factor_execution_compatibility.py；因子/algobench/src/algobench/formal_factor_runtime.py；因子/algobench/src/algobench/formal_model328_runtime.py
+提交54b68983
+统一因子批次正式验收与多批次结果读取
+sirui-quant-research，计 1/1 份；专项复核
+
+独立增量流程交付：日期、执行兼容、业务环境、正式验收与多批次集合；后续实际生产另归深市链。
+
+依据文件：PLAN/2026-11-01-factor-incremental-workflow.md；docs/factor-incremental-workflow.md；scripts/build_factor_result_collection.py；scripts/prepare_corrected344_incremental_inputs.py；scripts/run_corrected344_incremental.py；scripts/run_szse344_multih.py；scripts/tests/test_prepare_corrected344_incremental_inputs.py；scripts/tests/test_run_corrected344_incremental.py；scripts/verify_factor_incremental_bank.py；因子/algobench/src/algobench/formal_factor_bank_acceptance.py；因子/algobench/src/algobench/formal_factor_collection.py；因子/algobench/src/algobench/formal_factor_performance_contract.py
+提交9a9330c0
+记录增量流程开发验收与正式运行边界
+sirui-quant-research，计 1/1 份；专项复核
+
+独立增量流程交付：日期、执行兼容、业务环境、正式验收与多批次集合；后续实际生产另归深市链。
+
+依据文件：reports/2026-11/2026-11-01-factor-incremental-workflow.md
+沪市340计算：归属提交量 24
+提交3de1b328
+验收沪市三日生产与极端股精确断点恢复
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：PLAN/2026-10-31-sse-factor-production-assessment-plan.md；reports/2026-10/2026-10-31-sse-factor-production-evidence/clock-duplicate-cleanup.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/closeout-state.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/expired-metadata-cleanup.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/final-acceptance.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/guard-cost-final.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/native-extreme-r09-acceptance.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/native-extreme-warm-r10-acceptance.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/server-closeout-fixture-cleanup.json；reports/2026-10/2026-10-31-sse-factor-production-evidence/storage-final.json；reports/2026-10/2026-10-31-sse-factor-production.md
+提交aa5aefcb
+登记沪市601日正式生产与尾部分批验收计划
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：PLAN/2026-11-01-sse-factor-production-full-run.md
+提交2a93561f
+从签收收据和保留摘要筛查沪市全期长尾
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/assess_sse_factor_tail.py；scripts/tests/test_assess_sse_factor_tail.py
+提交16a5fa5c
+按单股图规模筛查尾部并区分worker累计内存峰值
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/assess_sse_factor_tail.py；scripts/tests/test_assess_sse_factor_tail.py
+提交fa927414
+开启沪市显式日期生产与单股签收复用及日热数据释放
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交04907308
+按数组值编码单股持久结果并覆盖真实评分输出
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交293e054f
+串行准入超大股票并接入F40独占与批次恢复台账
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/run_sse_factor_batch.py；scripts/run_sse_public340_factor_production.py；scripts/tests/test_run_sse_factor_batch.py
+提交755dae12
+将沪市日级D9与特殊通道证据绑定公共科学收据
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交e9641f98
+复用并重新核验已暂存的冻结参数以支持生产续跑
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交4e5bf2b0
+根据实测尾部成本和图内存生成601日分批清单
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/plan_sse_factor_batches.py；scripts/run_sse_factor_batch.py；scripts/run_sse_public340_factor_production.py；scripts/tests/test_plan_sse_factor_batches.py
+提交c679e298
+提供沪市601日面板与科学收据的全量持久回读验收
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/tests/test_verify_sse_factor_campaign.py；scripts/verify_sse_factor_campaign.py
+提交77781fb6
+保存沪市全期尾部原始证据与正式生产验收状态
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：reports/2026-11/2026-11-01-sse-factor-production-evidence/initial-state.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/tail-inventory.json；reports/2026-11/2026-11-01-sse-factor-production.md
+提交6899085d
+按整项任务及实际签收覆盖核对沪市续跑容量
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交bb264f39
+按测点覆盖范围分别报告尾部插值与外推误差
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/plan_sse_factor_batches.py
+提交e0202775
+复用已核验的独占F40准备成员以支持中断恢复
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/recover_sse_stock_f40.py
+提交293be7f8
+在指定恢复验收中强制实际命中全部BBO侧断点
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交a1a2c0e9
+docs: record SSE 601-day admission and tail schedule
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：PLAN/2026-11-01-sse-factor-production-full-run.md；reports/2026-11/2026-11-01-sse-factor-production-evidence/campaign-capacity.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/capacity-baseline.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/first-day-acceptance.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/measure-600839-probe.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/measure-601212-probe.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/prelaunch-acceptance.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/reuse-600930-acceptance.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/runtime-and-schedule.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/source-restoration.json；reports/2026-11/2026-11-01-sse-factor-production-evidence/tail-schedule.json；reports/2026-11/2026-11-01-sse-factor-production.md
+提交a0e9676f
+保留沪市 worker 崩溃信号与股票上下文
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：PLAN/2026-11-01-sse-factor-production-full-run.md；scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交bb41261d
+记录沪市首轮进程池退出与失败日恢复验收
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：reports/2026-11/2026-11-01-sse-factor-production-evidence/incident-A-r01-summary.json；reports/2026-11/2026-11-01-sse-factor-production.md
+提交1dce8908
+为沪市容量页增加有限只读重试并保留主循环首因
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：PLAN/2026-11-01-sse-factor-production-full-run.md；scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交e3dcca5f
+记录沪市310日签收与容量读取恢复证据
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：reports/2026-11/2026-11-01-sse-factor-production-evidence/recovery-through-A-r04.json；reports/2026-11/2026-11-01-sse-factor-production.md
+提交e1331c63
+按百对象分页完成沪市正式容量盘点
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：PLAN/2026-11-01-sse-factor-production-full-run.md；scripts/run_sse_public340_factor_production.py；scripts/tests/test_sse_public340_factor_production.py
+提交f13fc971
+记录沪市311日签收与小页容量恢复验收
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：reports/2026-11/2026-11-01-sse-factor-production-evidence/recovery-through-A-r05.json；reports/2026-11/2026-11-01-sse-factor-production.md
+提交8359645c
+登记沪市小页完整恢复准入与A批续跑
+sirui-quant-research，计 1/1 份；专项复核
+
+沪市340列极端股恢复、601日生产、长尾排期或运行故障恢复；数学范围和运行验收分开。
+
+依据文件：reports/2026-11/2026-11-01-sse-factor-production-evidence/resume-A-r06-acceptance.json；reports/2026-11/2026-11-01-sse-factor-production.md
+维护 2 条（未计入点大小）
+提交fff5c98d
+补入10月31日定参交付与正式因子进展
+internship-dashboard；专项复核
+
+前一轮研究日志及验收收据，不重复计研究成果。
+
+依据文件：content/chains.json；content/journal/2026-10-31.md；content/journal/_attribution/2026-06-23.json；content/journal/_attribution/2026-06-24.json；content/journal/_attribution/2026-06-25.json；content/journal/_attribution/2026-06-26.json；content/journal/_attribution/2026-06-29.json；content/journal/_attribution/2026-06-30.json；content/journal/_attribution/2026-07-01.json；content/journal/_attribution/2026-07-03.json；content/journal/_attribution/2026-07-06.json；content/journal/_attribution/2026-07-07.json
+提交1184f2b1
+保存11月1日日志发布与验收收据
+internship-dashboard；专项复核
+
+前一轮研究日志及验收收据，不重复计研究成果。
+
+依据文件：artifacts/journal-daily-2026-11-01/2026-10-31.html；artifacts/journal-daily-2026-11-01/README.md；artifacts/journal-daily-2026-11-01/local-chains.txt；artifacts/journal-daily-2026-11-01/local-console.json；artifacts/journal-daily-2026-11-01/local-expanded.txt；artifacts/journal-daily-2026-11-01/local-point-sources.txt；artifacts/journal-daily-2026-11-01/manifest.json；artifacts/journal-daily-2026-11-01/online-commit-links.json；artifacts/journal-daily-2026-11-01/online-console.json；artifacts/journal-daily-2026-11-01/online-day.txt；artifacts/journal-daily-2026-11-01/online-model-chain.txt；artifacts/journal-daily-2026-11-01/online-model.png
+sirui-quant-research 61 次（列出前 10 条）
+internship-dashboard 2 次
+计划
+沪深因子增量流程实施计划
+sirui-quant-research / PLAN/2026-11-01-factor-incremental-workflow.md
+沪市 340 列 601 日正式生产执行计划
+sirui-quant-research / PLAN/2026-11-01-sse-factor-production-full-run.md
+深市82日冻结因子正式补算
+sirui-quant-research / PLAN/2026-11-01-szse-incremental-production.md
+覆盖这天工作的汇报
+无
+这天发布的汇报
+无
