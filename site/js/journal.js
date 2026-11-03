@@ -602,6 +602,7 @@
       const scroller = document.querySelector(".journal-scroller");
       const head = document.querySelector(".journal-head-scroller");
       if (!days.length) { scroller.innerHTML = '<p class="journal-empty">暂无日志。</p>'; head.innerHTML = ""; return; }
+      if (!scroller.clientWidth) return;
       const previousScroll = scroller.scrollLeft;
       const num = d => Date.parse(d + "T00:00:00Z") / 86400000;
       const first = num(days[0].date), last = num(days.at(-1).date);
@@ -612,7 +613,9 @@
         return t.id === "factor" ? chains.sort((a, b) => (factorFlow.includes(a.id) ? factorFlow.indexOf(a.id) : factorFlow.length) - (factorFlow.includes(b.id) ? factorFlow.indexOf(b.id) : factorFlow.length)) : chains;
       });
       const groups = this.registry.tracks.filter(t => ordered.some(c => c.track === t.id));
-      const width = Math.max(scroller.clientWidth, dateWidth + 2 * padding + gap * Math.max(0, groups.length - 1) + ordered.length * 34);
+      // 桌面直接重算各列坐标，点径与字号保持原值；窄屏保留可横向查看的图谱。
+      const width = matchMedia("(min-width: 860px)").matches ? scroller.clientWidth :
+        Math.max(scroller.clientWidth, dateWidth + 2 * padding + gap * Math.max(0, groups.length - 1) + ordered.length * 34);
       const colWidth = (width - dateWidth - 2 * padding - gap * Math.max(0, groups.length - 1)) / Math.max(1, ordered.length);
       const positions = new Map();
       ordered.forEach((c, i) => positions.set(c.id, dateWidth + padding + (i + .5) * colWidth + groups.findIndex(t => t.id === c.track) * gap));

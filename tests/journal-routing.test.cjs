@@ -10,7 +10,7 @@ function render({density = 14, width = 1000, source = '2026-10-16', middle = '20
     if (!elements.has(name)) elements.set(name, element());
     return elements.get(name);
   };
-  const context = {window: {}, document: {activeElement: null, getElementById: get, querySelector: get}};
+  const context = {window: {}, document: {activeElement: null, getElementById: get, querySelector: get}, matchMedia: () => ({matches: width >= 860})};
   vm.runInNewContext(fs.readFileSync('site/js/journal.js', 'utf8'), context);
   records ||= {from: [source], middle: [middle], to: [target]};
   const days = [...new Set(Object.values(records).flat())].sort().map(date => ({date, weekday: '工作日', chains: order.filter(id => records[id].includes(date))}));
