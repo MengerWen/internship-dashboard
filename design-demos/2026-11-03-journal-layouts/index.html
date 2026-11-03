@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="data:,">
+  <title>研究日志 · 五版设计对照</title>
+  <link rel="stylesheet" href="../../site/css/tokens.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="gallery.css">
+</head>
+<body class="gallery-page">
+  <header class="gallery-heading"><a href="https://internship-dashboard.mengerwenjie.workers.dev/#/journal" target="_blank" rel="noreferrer">量化实习成果看板</a><h1>研究日志，换一种读法。</h1><p>五个完整 Demo，使用同一份真实记录。打开大图后可筛选、切换日期、展开链条；底部可以随时换版。</p><div class="gallery-meta"><span id="gallery-count"></span><span>纸墨、字体与现有站点保持一致</span></div></header>
+  <main class="gallery-grid">
+    <article class="direction-preview"><div class="preview-heading"><div><span class="direction-letter">A</span><h2>方向总览</h2></div><a class="button" href="demo.html?variant=A">打开 Demo</a></div><p>先看七个方向的全貌，再展开一组链。保留图谱，减少同时摊开的内容。</p><a class="preview-frame" href="demo.html?variant=A" aria-label="打开 A 方向总览"><iframe src="demo.html?variant=A&amp;embed=1" title="A 方向总览预览" tabindex="-1" loading="eager"></iframe></a><div class="preview-foot"><span>全局分布 / 方向展开 / 单点阅读</span><span class="preference-mark" data-choice="A"></span></div></article>
+    <article class="direction-preview"><div class="preview-heading"><div><span class="direction-letter">B</span><h2>按日日志</h2></div><a class="button" href="demo.html?variant=B">打开 Demo</a></div><p>直接阅读每一天的全部并行工作。具体进展常驻正文，减少点来点去。</p><a class="preview-frame" href="demo.html?variant=B" aria-label="打开 B 按日日志"><iframe src="demo.html?variant=B&amp;embed=1" title="B 按日日志预览" tabindex="-1" loading="eager"></iframe></a><div class="preview-foot"><span>日期顺序 / 全文可读 / 搜索与方向筛选</span><span class="preference-mark" data-choice="B"></span></div></article>
+    <article class="direction-preview"><div class="preview-heading"><div><span class="direction-letter">C</span><h2>链条工作台</h2></div><a class="button" href="demo.html?variant=C">打开 Demo</a></div><p>左侧找到研究链，右侧读它的完整过程。适合追踪一个问题如何形成结论。</p><a class="preview-frame" href="demo.html?variant=C" aria-label="打开 C 链条工作台"><iframe src="demo.html?variant=C&amp;embed=1" title="C 链条工作台预览" tabindex="-1" loading="eager"></iframe></a><div class="preview-foot"><span>链条目录 / 连续时间线 / 前后承接</span><span class="preference-mark" data-choice="C"></span></div></article>
+    <article class="direction-preview"><div class="preview-heading"><div><span class="direction-letter">D</span><h2>阶段章节</h2></div><a class="button" href="demo.html?variant=D">打开 Demo</a></div><p>按五个研究阶段组织材料。先读问题怎样演变，再进入阶段内的具体工作。</p><a class="preview-frame" href="demo.html?variant=D" aria-label="打开 D 阶段章节"><iframe src="demo.html?variant=D&amp;embed=1" title="D 阶段章节预览" tabindex="-1" loading="eager"></iframe></a><div class="preview-foot"><span>阶段叙事 / 阶段内工作 / 关键交接</span><span class="preference-mark" data-choice="D"></span></div></article>
+    <article class="direction-preview"><div class="preview-heading"><div><span class="direction-letter">E</span><h2>月历日程</h2></div><a class="button" href="demo.html?variant=E">打开 Demo</a></div><p>从月份和日期进入工作。日历负责定位，旁边直接呈现当天各项进展。</p><a class="preview-frame" href="demo.html?variant=E" aria-label="打开 E 月历日程"><iframe src="demo.html?variant=E&amp;embed=1" title="E 月历日程预览" tabindex="-1" loading="eager"></iframe></a><div class="preview-foot"><span>月历定位 / 当天日程 / 方向过滤</span><span class="preference-mark" data-choice="E"></span></div></article>
+  </main>
+  <footer class="gallery-footer">可以直接选一版，也可以组合不同方案的局部。标记偏好只保存在当前浏览器，正式页面在选定后实施。</footer>
+  <script src="data.js"></script>
+  <script>
+    const snapshot=window.JOURNAL_DATA;
+    document.getElementById('gallery-count').textContent=`${snapshot.counts.chains} 条链 / ${snapshot.counts.days} 个记录日 / ${snapshot.counts.points} 个工作点`;
+    function fitPreviews(){document.querySelectorAll('.preview-frame').forEach(frame=>{const scale=frame.clientWidth/1280;frame.style.height=`${820*scale}px`;frame.querySelector('iframe').style.transform=`scale(${scale})`;});}
+    new ResizeObserver(fitPreviews).observe(document.querySelector('.gallery-grid'));fitPreviews();
+    function showChoice(){let picked;try{picked=localStorage.getItem('journal-layout-preference');}catch{}document.querySelectorAll('[data-choice]').forEach(el=>el.textContent=el.dataset.choice===picked?'已标记为偏好':'');}
+    showChoice();addEventListener('pageshow',showChoice);addEventListener('focus',showChoice);
+  </script>
+</body>
+</html>

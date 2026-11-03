@@ -1,0 +1,33 @@
+<div id="journal-demo-choice">
+  <style>
+    /* DEMO_STYLES */
+  </style>
+  <div class="viz-carousel" aria-label="研究日志的五种展示方式" data-previous-label="上一版" data-next-label="下一版">
+    <!-- DEMO_STAGES -->
+  </div>
+  <div class="jd-product jd-reading-layer">
+    <dialog id="reading-dialog" class="reading-dialog" aria-labelledby="reading-title">
+      <div class="reading-top"><span>研究记录</span><button id="close-reading" type="button" class="subtle-button">关闭</button></div>
+      <div id="reading-content"></div>
+    </dialog>
+  </div>
+</div>
+<script>
+/* DEMO_SCRIPTS */
+(function () {
+  const chooser = document.getElementById('journal-demo-choice');
+  const api = window.JournalDemo.api;
+  for (const key of ['A','B','C','D','E']) {
+    window.JournalVariants[key](document.getElementById('jd-root-' + key), api);
+  }
+  document.getElementById('close-reading').onclick = function () { document.getElementById('reading-dialog').close(); };
+  chooser.addEventListener('click', function (event) {
+    const point = event.target.closest('[data-open-point]');
+    if (point) { api.openPoint(point.dataset.openDate, point.dataset.openPoint); return; }
+    const chain = event.target.closest('[data-open-chain]');
+    if (chain) { api.openChain(chain.dataset.openChain); return; }
+    const day = event.target.closest('[data-open-day]');
+    if (day) api.openDay(day.dataset.openDay);
+  });
+}());
+</script>

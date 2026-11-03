@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-03",
+  "action": "启动本机回环HTTP预览服务",
+  "result": "外层执行请求被拒绝，未启动服务",
+  "tool_reason": "exec_command failed: CreateProcess; rejected: blocked by policy",
+  "approval_classification": "工具未提供自动审批记录，不称为自动审批拒绝",
+  "attempted_command": "$demoRun = 'D:\\MG\\！Internship\\BUILD\\汇报\\.local\\runs\\journal-layout-five-demos'; New-Item -ItemType Directory -Path $demoRun -Force | Out-Null; $demoPort = 8765; $portOwner = Get-NetTCPConnection -LocalPort $demoPort -State Listen -ErrorAction SilentlyContinue; if ($portOwner) { throw '8765端口已占用，未启动预览服务。' }; $pythonExecutable = (Get-Command python).Source; $demoServer = Start-Process -FilePath $pythonExecutable -ArgumentList @('-m','http.server','8765','--bind','127.0.0.1') -WorkingDirectory 'D:\\MG\\！Internship\\BUILD\\汇报' -WindowStyle Hidden -RedirectStandardOutput (Join-Path $demoRun 'server.stdout.log') -RedirectStandardError (Join-Path $demoRun 'server.stderr.log') -PassThru; @{task='研究日志五版Demo';status='awaiting_user_choice';reason='供用户在Codex内打开五版初稿进行人工选择；不承担正式站点发布或验收';review_after='2026-11-10';pid=$demoServer.Id;port=8765;binding='127.0.0.1';stop_method=('Stop-Process -Id '+$demoServer.Id);url='http://127.0.0.1:8765/design-demos/2026-11-03-journal-layouts/'} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $demoRun 'run.json') -Encoding utf8; Write-Output ('DEMO_SERVER_PID='+$demoServer.Id)",
+  "fallback": "直接打开index.html，以及由相同五版生成的对话内预览；不启动进程或网络服务，不修改执行策略"
+}

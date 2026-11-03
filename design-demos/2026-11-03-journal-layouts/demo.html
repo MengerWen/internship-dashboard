@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="data:,">
+  <title>研究日志 · 五种展示方式</title>
+  <link rel="stylesheet" href="../../site/css/tokens.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="variants/a-atlas.css">
+  <link rel="stylesheet" href="variants/b-daybook.css">
+  <link rel="stylesheet" href="variants/c-workbench.css">
+  <link rel="stylesheet" href="variants/d-chapters.css">
+  <link rel="stylesheet" href="variants/e-calendar.css">
+</head>
+<body>
+  <div class="prototype-notice"><a href="index.html">返回五版总览</a><span id="prototype-description"></span><button class="subtle-button" id="mark-choice" type="button">标记为偏好</button></div>
+  <header class="site-header">
+    <div class="masthead"><span class="masthead-side">量化研究档案<br>2026 / 夏秋</span><a href="index.html" class="site-brand">量化实习成果看板<small>Quant Research Archive</small></a><span class="masthead-side masthead-right">每日工作<br>有据可查</span></div>
+    <nav class="site-nav" aria-label="主栏目"><a href="https://internship-dashboard.mengerwenjie.workers.dev/#/showcase" target="_blank" rel="noreferrer">正式成果</a><a href="https://internship-dashboard.mengerwenjie.workers.dev/#/daily" target="_blank" rel="noreferrer">每日汇报</a><span aria-current="page">研究日志</span><span class="nav-caption">从具体工作，读回研究的来路</span></nav>
+  </header>
+  <main id="demo-root" tabindex="-1"></main>
+  <footer class="demo-footer">设计初稿 · 内容截至 <span id="data-date"></span> · 五版使用同一份研究日志</footer>
+  <nav id="variant-switcher" class="variant-switcher" aria-label="切换设计方案"></nav>
+  <dialog id="reading-dialog" class="reading-dialog" aria-labelledby="reading-title"><div class="reading-top"><span>研究记录</span><button id="close-reading" type="button" class="subtle-button">关闭</button></div><div id="reading-content"></div></dialog>
+  <script src="data.js"></script>
+  <script src="shared.js"></script>
+  <script src="variants/a-atlas.js"></script>
+  <script src="variants/b-daybook.js"></script>
+  <script src="variants/c-workbench.js"></script>
+  <script src="variants/d-chapters.js"></script>
+  <script src="variants/e-calendar.js"></script>
+  <script>JournalDemo.start();</script>
+</body>
+</html>
