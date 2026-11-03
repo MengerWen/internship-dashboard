@@ -1,0 +1,106 @@
+{
+  "stage": "A_local_code_preparation",
+  "formal_assets_built": false,
+  "company_data_trial_run": false,
+  "tests": [
+    {
+      "started_at": "2026-11-03T16:31:26.322747+00:00",
+      "command": [
+        "C:\\Python313\\python.exe",
+        "D:\\MG\\_GitLinked\\Quant_Research-Trading\\26 Summer\\❗思瑞投资\\sirui-quant-research\\scripts\\run_windows_pytest.py",
+        "--worker",
+        "D:\\MG\\！Internship\\BUILD\\汇报\\tests\\test_sse683_report.py",
+        "D:\\MG\\！Internship\\BUILD\\汇报\\tests\\test_szse683_report.py",
+        "--basetemp",
+        "D:\\MG\\_TaskRuntime\\sirui\\sse683-atlas-20261104-01a1a07e\\dashboard-pytest",
+        "-q"
+      ],
+      "cwd": "D:\\MG\\_GitLinked\\Quant_Research-Trading\\26 Summer\\❗思瑞投资\\sirui-quant-research",
+      "timeout_seconds": 240.0,
+      "timed_out": false,
+      "creation_flags": [
+        "CREATE_NO_WINDOW",
+        "CREATE_NEW_PROCESS_GROUP"
+      ],
+      "pid": 30572,
+      "exit_code": 0,
+      "wall_seconds": 139.97055249998812,
+      "pytest_summary": "8 passed in 138.91s (0:02:18)"
+    },
+    {
+      "started_at": "2026-11-03T16:34:10.070265+00:00",
+      "command": [
+        "C:\\Python313\\python.exe",
+        "D:\\MG\\_GitLinked\\Quant_Research-Trading\\26 Summer\\❗思瑞投资\\sirui-quant-research\\scripts\\run_windows_pytest.py",
+        "--worker",
+        "D:\\MG\\！Internship\\BUILD\\汇报\\tests\\test_sse683_report.py",
+        "--basetemp",
+        "D:\\MG\\_TaskRuntime\\sirui\\sse683-atlas-20261104-01a1a07e\\dashboard-r02-pytest",
+        "-q"
+      ],
+      "cwd": "D:\\MG\\_GitLinked\\Quant_Research-Trading\\26 Summer\\❗思瑞投资\\sirui-quant-research",
+      "timeout_seconds": 120.0,
+      "timed_out": false,
+      "creation_flags": [
+        "CREATE_NO_WINDOW",
+        "CREATE_NEW_PROCESS_GROUP"
+      ],
+      "pid": 54768,
+      "exit_code": 0,
+      "wall_seconds": 10.713549100008095,
+      "pytest_summary": "5 passed in 9.84s"
+    }
+  ],
+  "sources": [
+    {
+      "path": "scripts/build_szse683_report.py",
+      "sha256": "8d0398adcb4ed8d554ae9e358b93c64c5fa005d2f9351a8f218102aabd2d64bd"
+    },
+    {
+      "path": "scripts/factor_atlas_comparison.py",
+      "sha256": "0642d921e4b1e750e7e3a9faa96a0da883c4c8a79be64cb3c23c54ae2b3fb089"
+    },
+    {
+      "path": "scripts/sse683_report.py",
+      "sha256": "0f3dcbc6cf31aff299af610d56eef1e8f34a71f91f25906e49a52572a4ed6538"
+    },
+    {
+      "path": "scripts/sse683_comparison.js",
+      "sha256": "e384cc68ccaff62453d856280bddd103e9d78187b02359252c7e51585db202cd"
+    },
+    {
+      "path": "tests/test_sse683_report.py",
+      "sha256": "9631219bb9d842fa665de9872f85f8aa88b9ef2bac3edf9ff8db42609b660001"
+    }
+  ],
+  "reuse": {
+    "builder": "build_szse683_report.main及现有还原断言、打包格式、表格与下载封装，按市场及试运行参数扩展",
+    "viewer": "rawbank_report_view、rawbank_file_downloads、szse683_context沿用，沪市在内存中替换资产根；原文件不改",
+    "comparison": "只读九份深市summary，精确列名优先及唯一定义方向补配；现有构建器没有跨市场一对一配对和并列秩相关入口，新增聚合比较函数"
+  },
+  "metadata_readiness": {
+    "sse_columns": 340,
+    "paired": 340,
+    "sse_only": [],
+    "szse_only": [
+      "depth__dm03_price_room_buy",
+      "depth__dm03_price_room_sell",
+      "depth__dm04_price_cap_buy",
+      "depth__dm04_price_cap_sell"
+    ],
+    "missing_definitions": [],
+    "meaning": "冻结元数据预配对，不代表正式683日统计通过"
+  },
+  "constraints": {
+    "existing_szse_page_and_assets": "untouched",
+    "browser_and_screenshot_checks": "omitted_by_user",
+    "published_date_files": "checked at each formal build before writes",
+    "comparison_budget_bytes": 1048576
+  },
+  "temporary_outputs": {
+    "path": "D:\\MG\\_TaskRuntime\\sirui\\sse683-atlas-20261104-01a1a07e",
+    "budget_bytes": 104857600,
+    "review_after": "2026-11-09",
+    "cleanup": "测试夹具待运行结束后核对删除，日志转存研究仓库证据"
+  }
+}
