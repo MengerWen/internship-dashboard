@@ -1,0 +1,49 @@
+{
+  "status": "passed-with-known-untracked-deliverables",
+  "model": {
+    "model": "gpt-6.1-sol",
+    "effort": "xhigh",
+    "source": "raw turn_context",
+    "session_id": "01a19f37-6d17-7d11-bc66-b39315cfe331",
+    "timestamp": "2026-11-03T02:22:54.505Z",
+    "checked_at_start_and_end": true
+  },
+  "pytest": {
+    "status": "passed",
+    "passed": 22,
+    "seconds": 7.26,
+    "files": [
+      "tests/test_journal_build.py",
+      "tests/test_journal_evidence.py",
+      "tests/test_journal_provenance.py",
+      "tests/test_journal_attribution.py",
+      "tests/test_journal_point_evidence.py"
+    ]
+  },
+  "attribution_check": {
+    "status": "passed",
+    "total": 4850,
+    "days": 101,
+    "different": 0,
+    "pending": 9
+  },
+  "fixed_source_checks": {
+    "status": "passed",
+    "count": 30
+  },
+  "diff_check": {
+    "status": "passed",
+    "returncode": 0
+  },
+  "workspace_audit": {
+    "returncode": 1,
+    "stdout": "> workspace:audit\n> python scripts/workspace_inventory.py --check\n\n未跟踪条目：29\n临时输出：6958 个文件，875.28 MiB\n  design-demos/2026-11-03-journal-layouts: 20 项，0.32 MiB\n  docs/journal-review: 9 项，0.12 MiB",
+    "reason": "29个未跟踪条目为本次9份正式复核文件与主助手负责的20份Demo文件，尚未暂存；临时容量875.28MiB低于1GiB。",
+    "temporary_task_directory": ".local/runs/journal-attribution-2026-11-03/",
+    "review_after": "2026-11-10"
+  },
+  "commit_status": "not-staged-or-committed-by-subagent",
+  "push_status": "not-pushed-by-subagent",
+  "server_status": "not-operated",
+  "browser_status": "not-used"
+}

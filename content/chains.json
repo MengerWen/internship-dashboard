@@ -665,6 +665,13 @@
           ],
           "title": "主动关注度与单月评价配置",
           "url": "https://github.com/MengerWen/Quant_Research-Trading/blob/b4f413755c07c9e482e24b96330197045f125567/26%20Summer/%E2%9D%97%E6%80%9D%E7%91%9E%E6%8A%95%E8%B5%84/%E5%9B%A0%E5%AD%90/algobench/configs/attention13_m202507.yaml#L23-L59"
+        },
+        {
+          "kind": "commit",
+          "repo": "Quant_Research-Trading",
+          "revision": "7ed013e965f9a65651615aeec149a4fd9b5e638d",
+          "title": "7月11日关注度面板提速与Task 6检查",
+          "url": "https://github.com/MengerWen/Quant_Research-Trading/commit/7ed013e965f9a65651615aeec149a4fd9b5e638d"
         }
       ]
     },
@@ -1121,6 +1128,13 @@
           ],
           "title": "开盘五分钟的订单行为",
           "url": "https://github.com/MengerWen/internship-dashboard/blob/0910a201154aa02b6889ad77899943a2eb656d1c/content/daily/2026-09-16.md#L15-L21"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "55fa32d38b0da2ee7b3af590e460ee1bc5ae20fd",
+          "title": "8月27日旧因子解释、源码审计与定义修订",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/55fa32d38b0da2ee7b3af590e460ee1bc5ae20fd"
         }
       ]
     },
@@ -1372,6 +1386,20 @@
           ],
           "title": "沪市13日输入交付与前置项目收尾",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/6542955236311393e5879959d90933bc1049c5f4/reports/2026-10/2026-10-24-sse-input-handoff.md#L1-L116"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "f222f2590788290ce3304787d6b65626df051cdb",
+          "title": "10月17日G1速度与本任务测试收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/f222f2590788290ce3304787d6b65626df051cdb"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "ec565dddb273fb4c4b97934be0d88f7e76d1d684",
+          "title": "10月17日G1秩相关、缺失归因与本轮收尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/ec565dddb273fb4c4b97934be0d88f7e76d1d684"
         }
       ]
     },
@@ -1537,30 +1565,30 @@
     {
       "id": "dashboard-build",
       "track": "delivery",
-      "label": "研究成果看板建站",
-      "short": "看板建站",
-      "purpose": "建立研究成果、每日汇报和展示页，加入公式、图示、离线阅读和部署配置。",
-      "status": "done",
+      "label": "看板公共功能、构建与部署",
+      "short": "看板功能",
+      "purpose": "维护看板公共阅读与交互组件、页面构建、离线阅读和部署配置。报告专属内容的编写、修订与发布另归报告链。",
+      "status": "active",
       "closes_into": {
         "daily": []
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 4,
+        "days": 5,
         "span": [
           "2026-07-07",
-          "2026-10-29"
+          "2026-11-02"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-30",
-          "scope": "29日固定结果和原始消息增补；整体来源覆盖仍不完整。"
+          "on": "2026-11-03",
+          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
         }
       },
       "fate": "landed",
-      "fate_note": "29日修复浅克隆补全历史超时导致的自动构建失败，并核验报告发布。",
+      "fate_note": "29日修复浅克隆补全历史超时导致的自动构建失败；11月2日复用因子浏览组件，支持分段样本加载。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1575,9 +1603,9 @@
     {
       "id": "report-publish",
       "track": "delivery",
-      "label": "汇报发布与看板日常维护",
-      "short": "发布维护",
-      "purpose": "发布研究报告、解释和图表，修正通用阅读功能，维护项目规则；研究日志另成一链。",
+      "label": "报告编写、修订与发布",
+      "short": "报告发布",
+      "purpose": "编写、修订和发布研究报告、解释、图表及报告附件，整理与报告交付直接相关的说明。公共阅读功能、构建与部署归看板功能链，研究日志另成一链。",
       "status": "active",
       "closes_into": {
         "daily": [
@@ -1600,20 +1628,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 40,
+        "days": 41,
         "span": [
           "2026-07-07",
-          "2026-10-30"
+          "2026-11-02"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-31",
-          "scope": "30日固定结果、原始消息和写入回执增补；整体来源仍不完整。"
+          "on": "2026-11-03",
+          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
         }
       },
       "fate": "landed",
-      "fate_note": "30日重写研究仓README，迁移运行说明并加入三张配图；历史研究内容未重复计为当天新结果。",
+      "fate_note": "11月2日提交683日完整评价展示与聚合附件，关联11月1日名义汇报；统计形成日与汇报名义日分别保留。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2130,9 +2158,9 @@
     {
       "id": "behavior-design",
       "track": "footprint",
-      "label": "算法行为构思：B/C/D/V 候选与可行性",
-      "short": "行为构思",
-      "purpose": "从公开的执行算法规则、订单响应和可观测信息出发构思候选因子，逐项研判定义、识别难点、和已有因子的重叠，以及先做哪些预查。",
+      "label": "因子候选构思、定义与筛选",
+      "short": "候选构思",
+      "purpose": "从算法行为与可观测信息出发构思候选因子，维护日线、高频、行业与跨资产候选的维度、族和变体，核对机制、定义、数据可行性及既有因子的重叠，记录筛选、预注册准备与未采用理由。实际计算另归候选因子计算链。",
       "status": "active",
       "closes_into": {
         "daily": []
@@ -2140,7 +2168,7 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 20,
+        "days": 25,
         "span": [
           "2026-08-19",
           "2026-11-02"
@@ -2149,7 +2177,7 @@
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
           "on": "2026-11-03",
-          "scope": "11月2日实际结果与阶段边界增补，原id和历史记录保留。"
+          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
         }
       },
       "fate": "landed",
@@ -2179,6 +2207,54 @@
           ],
           "title": "11月2日结果、限制与阶段记录",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/c718c9e516fce624faad50c702488c1cb3e813d5/research/factor-candidates/reviews/2026-11-02-round8-integration.md#L1-L57"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "research/factor-candidates/reviews/2026-10-30-round2-A-closeout.md",
+          "lines": [
+            1,
+            53
+          ],
+          "title": "候选表第二轮A部分交付与待核项",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9f42ff5f4806322d0b5fa3f2c9622e18698d637f/research/factor-candidates/reviews/2026-10-30-round2-A-closeout.md#L1-L53"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
+          "path": "research/factor-candidates/reviews/2026-10-30-round1-integration.md",
+          "lines": [
+            1,
+            332
+          ],
+          "title": "三报告维度整合与出处核查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9f42ff5f4806322d0b5fa3f2c9622e18698d637f/research/factor-candidates/reviews/2026-10-30-round1-integration.md#L1-L332"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
+          "path": "research/factor-candidates/reviews/2026-10-31-round5-integration.md",
+          "lines": [
+            1,
+            57
+          ],
+          "title": "31日进展、结果与限制",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/research/factor-candidates/reviews/2026-10-31-round5-integration.md#L1-L57"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
+          "path": "PLAN/2026-10-31-factor-candidates-p1a.md",
+          "lines": [
+            1,
+            82
+          ],
+          "title": "十二个P1维度的材料准备范围",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/PLAN/2026-10-31-factor-candidates-p1a.md#L1-L82"
         }
       ]
     },
@@ -2259,8 +2335,8 @@
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-01",
-          "scope": "31日原始结果、要求、写入与运行回执增补，历史来源缺口保留。"
+          "on": "2026-11-03",
+          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
         }
       },
       "fate": "landed",
@@ -2278,18 +2354,6 @@
           ],
           "title": "模型方法：时间协议、标签与损失函数",
           "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "35be7b4699e90d7e391efae0167d2e65052e1cbe",
-          "path": "reports/2026-10/2026-10-29-signal-horizon-followup.md",
-          "lines": [
-            1,
-            1190
-          ],
-          "title": "29日进展与完成范围",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/35be7b4699e90d7e391efae0167d2e65052e1cbe/reports/2026-10/2026-10-29-signal-horizon-followup.md#L1-L1190"
         },
         {
           "kind": "file",
@@ -2318,20 +2382,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 7,
+        "days": 6,
         "span": [
           "2026-09-17",
-          "2026-10-29"
+          "2026-10-28"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-30",
-          "scope": "29日固定结果和原始消息增补；整体来源覆盖仍不完整。"
+          "on": "2026-11-03",
+          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
         }
       },
       "fate": "landed",
-      "fate_note": "29日用户提出以算法单为底层思路，新因子以逻辑联系解释入库，交互由模型发掘；尚未形成新策略结果。",
+      "fate_note": "27至28日暂缓成交细化、费用和税的建模，讨论纯信号与最终净收益评价的区别。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2841,10 +2905,10 @@
     },
     {
       "id": "signal-expansion",
-      "track": "factor",
-      "label": "扩展因子来源与预测周期研究",
-      "short": "信号扩展",
-      "purpose": "围绕现有算法单信号之外的增量信息，研究日线、行业、高频与跨资产候选，核对数据可用性，测量预测周期、集中度及评价口径。",
+      "track": "model",
+      "label": "旧模型信号周期与稳定性诊断",
+      "short": "旧信号诊断",
+      "purpose": "使用旧模型已经形成的预测，测量持有周期、选股集中度、市场状态、分数中性化、分组分半及隔日持有结果，保留价格口径、已观察测试期与未扣成本的限制。通用方法决定另归模型方法，候选定义和公共数据分别归各自链条。",
       "source_refs": [
         {
           "kind": "file",
@@ -2885,74 +2949,14 @@
         {
           "kind": "file",
           "repo": "sirui-quant-research",
-          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
-          "path": "research/factor-candidates/reviews/2026-10-30-round2-A-closeout.md",
+          "revision": "35be7b4699e90d7e391efae0167d2e65052e1cbe",
+          "path": "reports/2026-10/2026-10-29-signal-horizon-followup.md",
           "lines": [
             1,
-            53
+            1190
           ],
-          "title": "候选表第二轮A部分交付与待核项",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9f42ff5f4806322d0b5fa3f2c9622e18698d637f/research/factor-candidates/reviews/2026-10-30-round2-A-closeout.md#L1-L53"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "9f42ff5f4806322d0b5fa3f2c9622e18698d637f",
-          "path": "research/factor-candidates/reviews/2026-10-30-round1-integration.md",
-          "lines": [
-            1,
-            332
-          ],
-          "title": "三报告维度整合与出处核查",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/9f42ff5f4806322d0b5fa3f2c9622e18698d637f/research/factor-candidates/reviews/2026-10-30-round1-integration.md#L1-L332"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
-          "path": "research/factor-candidates/reviews/2026-10-31-round5-integration.md",
-          "lines": [
-            1,
-            57
-          ],
-          "title": "31日进展、结果与限制",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/research/factor-candidates/reviews/2026-10-31-round5-integration.md#L1-L57"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
-          "path": "reports/2026-10/2026-10-30-rqdata-minute-full-history.md",
-          "lines": [
-            1,
-            118
-          ],
-          "title": "31日全期分钟取数与传输限制",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/reports/2026-10/2026-10-30-rqdata-minute-full-history.md#L1-L118"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
-          "path": "research/factor-candidates/reviews/2026-10-31-batch1a-rq-reference.md",
-          "lines": [
-            1,
-            45
-          ],
-          "title": "参考数据因现有连接停止",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/research/factor-candidates/reviews/2026-10-31-batch1a-rq-reference.md#L1-L45"
-        },
-        {
-          "kind": "file",
-          "repo": "sirui-quant-research",
-          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
-          "path": "PLAN/2026-10-31-factor-candidates-p1a.md",
-          "lines": [
-            1,
-            82
-          ],
-          "title": "十二个P1维度的材料准备范围",
-          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/PLAN/2026-10-31-factor-candidates-p1a.md#L1-L82"
+          "title": "29日进展与完成范围",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/35be7b4699e90d7e391efae0167d2e65052e1cbe/reports/2026-10/2026-10-29-signal-horizon-followup.md#L1-L1190"
         }
       ],
       "status": "active",
@@ -2962,28 +2966,28 @@
       "review": {
         "by": "Codex",
         "on": "2026-10-28",
-        "days": 5,
+        "days": 4,
         "span": [
           "2026-10-27",
-          "2026-10-31"
+          "2026-10-30"
         ],
         "unreviewed_days": [],
         "scope": "27日固定来源或原始会话定位；来源整体仍不完整，不将讨论当作研究验收。",
         "incremental_review": {
-          "on": "2026-11-01",
-          "scope": "31日原始结果、要求、写入与运行回执增补，历史来源缺口保留。"
+          "on": "2026-11-03",
+          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
         }
       },
       "fate": "landed",
       "report_coverage": "curated",
-      "fate_note": "31日定稿49个有效变体并预注册，1a的33列等待资源；米筐全期取数已启动，11个日期检查通过，跨账户传输受容量限制。"
+      "fate_note": "29日完成176日周期、状态、中性化和分半诊断；30日完成175日隔日持有预检，缩小选股比例未改善隔日结果。"
     },
     {
       "id": "rqdata-network",
       "track": "infra",
-      "label": "米筐下载窗口与网络限速",
-      "short": "下载控制",
-      "purpose": "按用户确定的下载窗口和两账户合计带宽约束，维护分钟线与行业下载入口、限速和网络回执；真实下载与跨进程分摊分别验证。 并维护可复用的股票、指数与期指分钟数据、成分和合同传输，按原始回执区分恢复、封存和目标验收。",
+      "label": "米筐公共数据获取、校验与分发",
+      "short": "公共数据",
+      "purpose": "维护可复用的米筐股票、指数与期指分钟线、行业和历史成分数据，覆盖权限探测、取数、额度与容量、交易保护窗口、限速、恢复、封存及跨账户分发；实际进度和目标端验收按各轮原始回执记录。",
       "status": "active",
       "closes_into": {
         "daily": []
@@ -2991,16 +2995,16 @@
       "review": {
         "by": "Codex",
         "on": "2026-10-30",
-        "days": 3,
+        "days": 6,
         "span": [
-          "2026-10-29",
+          "2026-10-27",
           "2026-11-02"
         ],
         "unreviewed_days": [],
         "scope": "用户原始决定、代码、相关测试回执；未实测真实网络及跨账户合计。",
         "incremental_review": {
           "on": "2026-11-03",
-          "scope": "11月1日00:48中断的迟到补记及11月2日恢复、封存和传输结果；保留原始复核范围与历史id。"
+          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
         }
       },
       "fate": "landed",
@@ -3030,6 +3034,42 @@
           ],
           "title": "11月2日结果、限制与阶段记录",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/c718c9e516fce624faad50c702488c1cb3e813d5/reports/2026-10/2026-10-30-rqdata-minute-full-history.md#L1-L458"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
+          "path": "reports/2026-10/2026-10-30-rqdata-minute-full-history.md",
+          "lines": [
+            1,
+            118
+          ],
+          "title": "31日全期分钟取数与传输限制",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/reports/2026-10/2026-10-30-rqdata-minute-full-history.md#L1-L118"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "abcc9f054dfbcc462e007fcef544aa1b404a4376",
+          "path": "research/factor-candidates/reviews/2026-10-31-batch1a-rq-reference.md",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "参考数据因现有连接停止",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/abcc9f054dfbcc462e007fcef544aa1b404a4376/research/factor-candidates/reviews/2026-10-31-batch1a-rq-reference.md#L1-L45"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "35be7b4699e90d7e391efae0167d2e65052e1cbe",
+          "path": "reports/2026-10/2026-10-29-signal-horizon-decay.md",
+          "lines": [
+            1,
+            514
+          ],
+          "title": "29日公共分钟数据的封存、两账户复用与质量限制",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/35be7b4699e90d7e391efae0167d2e65052e1cbe/reports/2026-10/2026-10-29-signal-horizon-decay.md#L1-L514"
         }
       ]
     },

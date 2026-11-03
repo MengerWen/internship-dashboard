@@ -3,7 +3,7 @@
   "date": "2026-07-11",
   "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
   "source_config_sha256": "b9f28b9d3ff3d4ae169427a00d550affc20ffb4397991d63bccb5c823e1fe8cb",
-  "rules_sha256": "0e09c16c23efbc96ed28a4ab3f90420117178bf8109347eeb40cc4b4b1c5d77b",
+  "rules_sha256": "d68472cef5a127e5a12099d15898557413d817e6e5c182d3f5d0d289d05325ed",
   "revisions": {
     "sirui-quant-research": "c718c9e516fce624faad50c702488c1cb3e813d5",
     "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
@@ -241,19 +241,20 @@
       "subject": "优化速度 26.7.11 21:43",
       "status": "assigned",
       "chains": [
-        "literature"
+        "algobench"
       ],
-      "reason": "专用文件路径及提交主题标识本次目标；公共代码计入本次目标",
-      "subject_chain": null,
-      "related_chains": [],
+      "reason": "同次RUN_NOTES记录PLAN 12 Task 6关注度面板提速与验收；lowlat生命周期和runs是本目标的共用实现支持。",
+      "review_basis": "2026-11-03逐SHA原始差异与固定正文复核",
       "shares": {
-        "literature": {
+        "algobench": {
           "numerator": 1,
           "denominator": 1
         }
       },
-      "basis": "主题与专用文件",
+      "basis": "专项复核",
       "paths": [
+        "因子/algobench/RUN_NOTES.md",
+        "因子/algobench/src/algobench/attention.py",
         "因子/lowlat/src/lowlat/lifecycle.py",
         "因子/lowlat/src/lowlat/runs.py"
       ]

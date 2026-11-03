@@ -3,7 +3,7 @@
   "date": "2026-10-17",
   "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
   "source_config_sha256": "b9f28b9d3ff3d4ae169427a00d550affc20ffb4397991d63bccb5c823e1fe8cb",
-  "rules_sha256": "0e09c16c23efbc96ed28a4ab3f90420117178bf8109347eeb40cc4b4b1c5d77b",
+  "rules_sha256": "d68472cef5a127e5a12099d15898557413d817e6e5c182d3f5d0d289d05325ed",
   "revisions": {
     "sirui-quant-research": "c718c9e516fce624faad50c702488c1cb3e813d5",
     "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
@@ -165,38 +165,22 @@
       "sha": "f222f2590788290ce3304787d6b65626df051cdb",
       "date": "2026-10-17",
       "subject": "记录G1真实速度门槛及v4未完成验收项",
-      "status": "shared",
+      "status": "assigned",
       "chains": [
-        "sse-v2",
-        "storage-cleanup"
+        "sse-v2"
       ],
-      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
-      "subject_chain": null,
-      "related_chains": [],
+      "reason": "正文交付沪市G1速度与未完成验收项；cleanup仅本任务两个约1.56MB的tmpfs合成测试目录收尾，随G1目标归属。",
+      "review_basis": "2026-11-03逐SHA原始差异与固定正文复核",
       "shares": {
         "sse-v2": {
           "numerator": 1,
-          "denominator": 2
-        },
-        "storage-cleanup": {
-          "numerator": 1,
-          "denominator": 2
+          "denominator": 1
         }
       },
-      "basis": "主题与专用文件",
+      "basis": "专项复核",
       "paths": [
-        "PLAN/2026-10-16-sse-visible-g1-three-valued.md",
-        "decisions/2026-10-16-sse-visible-order-factor-contract.md",
-        "decisions/2026-10-16-sse-visible-three-valued-g1.md",
-        "reports/2026-10/2026-10-16-sse-factor-decisions-v4.csv",
         "reports/2026-10/2026-10-16-sse-visible-g1-v2.md",
-        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/delivery-inventory.json",
-        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/depth-tests-20261017.guard.json",
-        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/depth-tests-20261017.xml.gz",
-        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/frozen-files.json",
-        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/pilot-20261017.guard.json",
-        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/pilot-20261017.log.gz",
-        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/scope-stop.json"
+        "reports/2026-10/2026-10-17-sse-g1-mode-fix-evidence/cleanup.json"
       ]
     },
     {
@@ -1958,38 +1942,23 @@
       "sha": "ec565dddb273fb4c4b97934be0d88f7e76d1d684",
       "date": "2026-10-17",
       "subject": "交付G1秩相关分级、缺失归因与v5决定表",
-      "status": "shared",
+      "status": "assigned",
       "chains": [
-        "sse-v2",
-        "storage-cleanup"
+        "sse-v2"
       ],
-      "reason": "同一提交有多个明确目标，按目标数等分一份提交量",
-      "subject_chain": null,
-      "related_chains": [],
+      "reason": "正文交付G1秩相关、缺失归因与v5决定；清理仅本轮11个合成文件和21个本机控制文件，无独立存储治理目标。",
+      "review_basis": "2026-11-03逐SHA原始差异与固定正文复核",
       "shares": {
         "sse-v2": {
           "numerator": 1,
-          "denominator": 2
-        },
-        "storage-cleanup": {
-          "numerator": 1,
-          "denominator": 2
+          "denominator": 1
         }
       },
-      "basis": "主题与专用文件",
+      "basis": "专项复核",
       "paths": [
-        "PLAN/2026-10-17-visible-g1-ranks-missingness.md",
-        "reports/2026-10/2026-10-17-sse-factor-decisions-v5.csv",
         "reports/2026-10/2026-10-17-visible-g1-ranks-and-missingness.md",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/delivery-closeout.guard.full.json",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/delivery-closeout.json.gz",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/f132-detail.guard.full.json",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/f132-detail.json.gz",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/faithful-union-candidate.csv",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/missingness-explanations.csv",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/model-execution-check.json",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/perturbation-final.guard.full.json",
-        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/perturbation-final/complete.json.gz"
+        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/synthetic-test-cleanup.json.gz",
+        "reports/2026-10/2026-10-17-visible-g1-ranks-evidence/local-controller-cleanup.json"
       ]
     },
     {
