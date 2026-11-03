@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="data:,">
+  <title>研究日志 · 全部链条的五种排法</title>
+  <link rel="stylesheet" href="../../site/css/tokens.css"><link rel="stylesheet" href="../2026-11-03-journal-layouts/shared.css"><link rel="stylesheet" href="../2026-11-03-journal-layouts/gallery.css">
+</head>
+<body class="gallery-page">
+  <header class="gallery-heading"><a href="../2026-11-03-journal-layouts/index.html">上一轮五版（已否决）</a><h1>全部链条，打开就看。</h1><p>五版都默认画出全部48条链。比较同列、横排、分区、研究墙和月份矩阵；无需先点方向或筛选。</p><div class="gallery-meta"><span>48条链 / 114个记录日 / 401个工作点</span><span>默认全历史，没有横向拖动步骤</span></div></header>
+  <main class="gallery-grid" id="all-chain-gallery"></main>
+  <footer class="gallery-footer">链条始终保留在页面。选择只用于读取详情或高亮，不会把其他链藏起来。</footer>
+  <script>
+    const options=[['A','全链竖轴图谱','保留原有日期纵轴，48条链同时并列。','a'],['B','全链横轴年表','一条链占一行，把完整历史压进页面宽度。','b'],['C','七区平铺图谱','七个方向在同一页全部展开，每区画出自己的所有链。','c'],['D','全链研究墙','优先同时辨认全部48条链，点击后读进展与承接。','d'],['E','链与月份矩阵','全部48条链与6—11月交叉排列，月份格可展开日期。','e']];
+    document.getElementById('all-chain-gallery').innerHTML=options.map(([key,name,description])=>`<article class="direction-preview"><div class="preview-heading"><div><span class="direction-letter">${key}</span><h2>${name}</h2></div><a class="button" href="demo.html?variant=${key}">打开 Demo</a></div><p>${description}</p><a class="preview-frame" href="demo.html?variant=${key}" aria-label="打开${name}"><iframe src="demo.html?variant=${key}&amp;embed=1" title="${name}" tabindex="-1"></iframe></a><div class="preview-foot"><span>48条链默认展示</span></div></article>`).join('');
+    function fit(){document.querySelectorAll('.preview-frame').forEach(frame=>{const scale=frame.clientWidth/1280;frame.style.height=`${900*scale}px`;frame.querySelector('iframe').style.height='900px';frame.querySelector('iframe').style.transform=`scale(${scale})`;});}
+    new ResizeObserver(fit).observe(document.getElementById('all-chain-gallery'));fit();
+  </script>
+</body>
+</html>

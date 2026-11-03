@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-03",
+  "scope": "代码及资源检查，不代表浏览器实测",
+  "data_snapshot": {"as_of":"2026-11-02","chains":48,"record_days":114,"points":401},
+  "javascript_syntax": "config与五个方向均通过node --check",
+  "html_local_resources": "demo.html与index.html的本地引用均存在",
+  "offline_initial_mount": {
+    "method": "在离线DOM占位环境调用五个初始渲染函数，提取data-all-chain并与正式链ID集合逐项比较",
+    "A": {"chain_id_count":48,"unique_chain_ids":48,"matches_snapshot":true},
+    "B": {"chain_id_count":48,"unique_chain_ids":48,"matches_snapshot":true},
+    "C": {"chain_id_count":48,"unique_chain_ids":48,"matches_snapshot":true},
+    "D": {"chain_id_count":48,"unique_chain_ids":48,"matches_snapshot":true},
+    "E": {"chain_id_count":48,"unique_chain_ids":48,"matches_snapshot":true}
+  },
+  "inline_preview": "五版宿主切换，脚本语法检查通过，小于1MB，不依赖本地HTTP服务",
+  "browser_acceptance": "按项目交付规则未运行",
+  "production_journal_layout": "未修改，等待用户选择",
+  "review_after": "2026-11-10"
+}

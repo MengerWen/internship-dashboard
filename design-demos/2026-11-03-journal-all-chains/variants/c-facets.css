@@ -1,0 +1,575 @@
+body[data-variant="C"] #demo-root {
+  max-width: 1520px;
+}
+
+body[data-variant="C"] .cf-page {
+  --cf-label-height: 148px;
+  --cf-plot-height: 452px;
+  --cf-axis-width: 42px;
+  min-width: 0;
+}
+
+body[data-variant="C"] .cf-page-heading {
+  align-items: start;
+  margin-bottom: 22px;
+}
+
+body[data-variant="C"] .cf-page-heading h1 {
+  font-size: clamp(27px, 2.8vw, 36px);
+}
+
+body[data-variant="C"] .cf-page-heading > div {
+  max-width: 730px;
+}
+
+body[data-variant="C"] .cf-page-heading p {
+  color: var(--text);
+  font-size: 14px;
+}
+
+body[data-variant="C"] .cf-page-heading .cf-period {
+  flex: 0 0 auto;
+  padding-top: 5px;
+  color: var(--text);
+  text-align: right;
+  font-size: 23px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+body[data-variant="C"] .cf-period > span {
+  margin: 0 9px;
+  font-size: 13px;
+}
+
+body[data-variant="C"] .cf-period small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+body[data-variant="C"] .cf-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+}
+
+body[data-variant="C"] .cf-search {
+  flex: 0 1 330px;
+}
+
+body[data-variant="C"] .cf-search input {
+  flex: 1;
+  min-width: 0;
+  width: 245px;
+  color: var(--text);
+}
+
+body[data-variant="C"] .cf-search input::placeholder {
+  color: var(--text);
+  opacity: 1;
+}
+
+body[data-variant="C"] .cf-tools > p {
+  flex: 1 1 260px;
+  margin: 0;
+  font-size: 13px;
+}
+
+body[data-variant="C"] .cf-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 22px;
+  padding: 0 0 18px;
+  font-size: 12px;
+}
+
+body[data-variant="C"] .cf-key > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+body[data-variant="C"] .cf-key-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text);
+}
+
+body[data-variant="C"] .cf-key-gap {
+  width: 18px;
+  border-top: 1px dashed var(--text);
+}
+
+body[data-variant="C"] .cf-key-weekend {
+  width: 18px;
+  height: 10px;
+  background: var(--bg-deep);
+}
+
+body[data-variant="C"] .cf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px 22px;
+  align-items: start;
+}
+
+body[data-variant="C"] .cf-facet {
+  min-width: 0;
+  border-top: 2px solid var(--line);
+  border-bottom: 1px solid var(--line-soft);
+  padding: 14px 14px 10px;
+  background: var(--surface);
+}
+
+body[data-variant="C"] .cf-facet--wide {
+  grid-column: span 2;
+}
+
+body[data-variant="C"] .cf-facet-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 66px;
+}
+
+body[data-variant="C"] .cf-facet-heading h2 {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.45;
+  text-align: left;
+}
+
+body[data-variant="C"] .cf-facet-heading > p {
+  flex: 0 0 auto;
+  margin: 1px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: right;
+  white-space: nowrap;
+}
+
+body[data-variant="C"] .cf-facet-heading > p b {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+body[data-variant="C"] .cf-facet-heading > p span {
+  display: block;
+}
+
+body[data-variant="C"] .cf-chart {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--cf-axis-width) minmax(0, 1fr);
+  grid-template-rows: var(--cf-label-height) var(--cf-plot-height);
+  min-width: 0;
+  padding-bottom: 0;
+}
+
+body[data-variant="C"] .cf-axis-heading {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  padding-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+body[data-variant="C"] .cf-calendar {
+  position: absolute;
+  top: var(--cf-label-height);
+  right: 0;
+  bottom: 0;
+  left: var(--cf-axis-width);
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  pointer-events: none;
+}
+
+body[data-variant="C"] .cf-weekend,
+body[data-variant="C"] .cf-calendar-rule {
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+body[data-variant="C"] .cf-weekend {
+  background: var(--bg-deep);
+  opacity: .58;
+}
+
+body[data-variant="C"] .cf-calendar-rule {
+  border-top: 1px solid var(--line-soft);
+  opacity: .48;
+}
+
+body[data-variant="C"] .cf-calendar-rule.is-month {
+  border-top-color: var(--line);
+  opacity: .65;
+}
+
+body[data-variant="C"] .cf-date-axis {
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
+  z-index: 1;
+}
+
+body[data-variant="C"] .cf-axis-date {
+  position: absolute;
+  right: 9px;
+  font-size: 12px;
+  line-height: 1;
+  transform: translateY(-50%);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+body[data-variant="C"] .cf-axis-date.is-start {
+  transform: translateY(-2px);
+}
+
+body[data-variant="C"] .cf-axis-date.is-end {
+  transform: translateY(calc(-100% + 2px));
+}
+
+body[data-variant="C"] .cf-chain-columns {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cf-columns), minmax(0, 1fr));
+  grid-column: 2;
+  grid-row: 1 / 3;
+  min-width: 0;
+  z-index: 2;
+}
+
+body[data-variant="C"] .cf-chain {
+  display: grid;
+  grid-template-rows: var(--cf-label-height) var(--cf-plot-height);
+  min-width: 0;
+  border-left: 1px solid var(--line-soft);
+}
+
+body[data-variant="C"] .cf-chain:last-child {
+  border-right: 1px solid var(--line-soft);
+}
+
+body[data-variant="C"] .cf-chain-name {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
+  border-radius: 0;
+  padding: 11px 0 7px;
+  background: transparent;
+  color: var(--text);
+}
+
+body[data-variant="C"] .cf-chain-name > span {
+  display: block;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 12px;
+  line-height: 1.1;
+  letter-spacing: .075em;
+  text-align: left;
+}
+
+body[data-variant="C"] .cf-chain-name:hover {
+  background: var(--surface-2);
+}
+
+body[data-variant="C"] .cf-chain-name:focus-visible {
+  z-index: 5;
+  outline-offset: -2px;
+}
+
+body[data-variant="C"] .cf-chain-lane {
+  position: relative;
+  min-width: 0;
+}
+
+body[data-variant="C"] .cf-chain-segment {
+  position: absolute;
+  left: 50%;
+  width: 0;
+  border-left: 1px solid var(--text);
+  transform: translateX(-.5px);
+  pointer-events: none;
+}
+
+body[data-variant="C"] .cf-chain-segment.is-gap {
+  border-left-style: dashed;
+}
+
+body[data-variant="C"] .cf-workpoint {
+  position: absolute;
+  left: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: max(3px, var(--cf-hit-height));
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  transform: translateY(-50%);
+}
+
+body[data-variant="C"] .cf-point-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--text);
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 0 0 1px var(--surface);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+body[data-variant="C"] .cf-workpoint:hover .cf-point-mark,
+body[data-variant="C"] .cf-workpoint:focus-visible .cf-point-mark {
+  width: 9px;
+  height: 9px;
+  border-color: var(--focus);
+  background: var(--focus);
+}
+
+body[data-variant="C"] .cf-workpoint:focus-visible {
+  z-index: 4;
+  outline-offset: 1px;
+}
+
+body[data-variant="C"] .cf-unrecorded {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  writing-mode: vertical-rl;
+  font-size: 12px;
+  line-height: 1.2;
+  transform: translateX(-50%);
+}
+
+body[data-variant="C"] .cf-chain.is-search-match .cf-chain-name {
+  background: var(--surface-2);
+  box-shadow: inset 0 -3px 0 var(--focus);
+}
+
+body[data-variant="C"] .cf-chain.is-selected .cf-chain-name {
+  color: var(--surface);
+  background: var(--text);
+  box-shadow: inset 0 -3px 0 var(--focus);
+}
+
+body[data-variant="C"] .cf-chain.is-selected .cf-chain-segment {
+  border-left: 2px solid var(--focus);
+  transform: translateX(-1px);
+}
+
+body[data-variant="C"] .cf-chain.is-selected .cf-chain-segment.is-gap {
+  border-left-style: dashed;
+}
+
+body[data-variant="C"] .cf-chain.is-selected .cf-point-mark,
+body[data-variant="C"] .cf-workpoint.is-search-match .cf-point-mark {
+  border-color: var(--focus);
+  background: var(--focus);
+  width: 7px;
+  height: 7px;
+}
+
+body[data-variant="C"] .cf-chain.is-related .cf-chain-name {
+  text-decoration: underline;
+  text-decoration-color: var(--focus);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+body[data-variant="C"] .cf-chain.is-related .cf-chain-segment {
+  border-left-color: var(--focus);
+}
+
+body[data-variant="C"] .cf-chain.is-related .cf-point-mark {
+  border-color: var(--focus);
+}
+
+body[data-variant="C"] .cf-facet-foot {
+  margin: 15px 0 0;
+  font-size: 12px;
+}
+
+body[data-variant="C"] .cf-relations {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 22px;
+  margin-top: 30px;
+  padding: 22px 0 0;
+  border-top: 2px solid var(--line);
+}
+
+body[data-variant="C"] .cf-relations h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+body[data-variant="C"] .cf-relations p {
+  margin: 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+body[data-variant="C"] .cf-relations-selected {
+  padding: 5px 0 14px;
+}
+
+body[data-variant="C"] .cf-relations ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body[data-variant="C"] .cf-relations li {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+body[data-variant="C"] .cf-relation-direction {
+  padding-top: 10px;
+  font-size: 12px;
+}
+
+body[data-variant="C"] .cf-relations .chain-link {
+  min-height: 44px;
+  font-size: 14px;
+}
+
+body[data-variant="C"] .cf-relation-track {
+  display: inline-block;
+  margin-left: 12px;
+  font-size: 12px;
+}
+
+@media (max-width: 1040px) {
+  body[data-variant="C"] .cf-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-variant="C"] .cf-page-heading {
+    display: block;
+  }
+
+  body[data-variant="C"] .cf-page-heading .cf-period {
+    margin-top: 14px;
+    text-align: left;
+    font-size: 20px;
+  }
+
+  body[data-variant="C"] .cf-period small {
+    display: inline;
+    margin-left: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  body[data-variant="C"] .cf-page {
+    --cf-label-height: 148px;
+    --cf-plot-height: 484px;
+    --cf-axis-width: 39px;
+  }
+
+  body[data-variant="C"] .cf-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  body[data-variant="C"] .cf-facet--wide {
+    grid-column: auto;
+  }
+
+  body[data-variant="C"] .cf-facet {
+    padding: 14px 10px 11px;
+  }
+
+  body[data-variant="C"] .cf-facet-heading {
+    min-height: 68px;
+  }
+
+  body[data-variant="C"] .cf-facet-heading h2 {
+    font-size: 23px;
+  }
+
+  body[data-variant="C"] .cf-page-heading p,
+  body[data-variant="C"] .cf-relations p,
+  body[data-variant="C"] .cf-relations .chain-link {
+    font-size: 16px;
+  }
+
+  body[data-variant="C"] .cf-page-heading .cf-period {
+    white-space: normal;
+  }
+
+  body[data-variant="C"] .cf-period small {
+    display: block;
+    margin: 6px 0 0;
+  }
+
+  body[data-variant="C"] .cf-tools {
+    gap: 10px;
+  }
+
+  body[data-variant="C"] .cf-search {
+    flex: 1 1 100%;
+  }
+
+  body[data-variant="C"] .cf-search input {
+    font-size: 16px;
+  }
+
+  body[data-variant="C"] .cf-tools > p {
+    flex-basis: 170px;
+    font-size: 12px;
+  }
+
+  body[data-variant="C"] .cf-key {
+    gap: 8px 15px;
+  }
+
+  body[data-variant="C"] .cf-key > span:last-child {
+    flex-basis: 100%;
+  }
+
+  body[data-variant="C"] .cf-chain-name > span {
+    letter-spacing: .045em;
+  }
+
+  body[data-variant="C"] .cf-relations {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  body[data-variant="C"] .cf-relation-track {
+    display: block;
+    margin: 0 0 7px;
+  }
+}
