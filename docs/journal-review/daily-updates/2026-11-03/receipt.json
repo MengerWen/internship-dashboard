@@ -76,19 +76,97 @@
     "scope": "DOM正文、证据和链条读取；不作全站性能或截图验收。"
   },
   "content_commit": {
-    "status": "pending"
+    "status": "committed",
+    "sha": "9c48f8cb093ab98c5d12e69432d4b7d4eec9d07b"
   },
   "push": {
-    "status": "pending"
+    "commit": "9c48f8cb093ab98c5d12e69432d4b7d4eec9d07b",
+    "remote_sha": "9c48f8cb093ab98c5d12e69432d4b7d4eec9d07b",
+    "status": "verified",
+    "at": "2026-11-03T09:31:39.191182+08:00"
   },
   "publication": {
-    "status": "pending"
+    "status": "build-and-deployment-verified-content-readback-unverified",
+    "target_sha": "9c48f8cb093ab98c5d12e69432d4b7d4eec9d07b",
+    "build_id": "1ece5f0a-f7e3-4958-ab02-bdb80ae7d604",
+    "initial_check_run_id": 125669786754,
+    "final_check_run_id": 125673341501,
+    "conclusion": "success",
+    "completed_at": "2026-11-03T01:43:52Z",
+    "deployment": {
+      "id": "e15ad65f-c5b7-4052-8b0f-ab5ea68699f4",
+      "created_on": "2026-11-03T01:43:46.23778Z",
+      "versions": [
+        {
+          "version_id": "46552d53-af77-46e6-85f3-2fc21a4158d2",
+          "percentage": 100
+        }
+      ]
+    },
+    "precision": "目标SHA成功构建，基线后只有一个新增100%部署；版本元数据未直接提供GitSHA，线上正文仍未读取。"
   },
   "online_browser": {
-    "status": "pending"
+    "status": "unverified",
+    "attempts": [
+      "原独立标签重载超时并重置连接",
+      "同一Chrome按已知URL重新绑定，调试器未连接",
+      "同一Chrome新建独立标签超时"
+    ],
+    "desktop_takeover": false,
+    "alternate_content_read": {
+      "direct_html": "HTTP 403 Forbidden",
+      "jina_reader": "两个目标均连接失败，HTTP 000",
+      "web_reader": "两个目标URL均不可访问"
+    },
+    "affected": [
+      "2026-11-02新日卡",
+      "2026-11-01迟到补记",
+      "线上新链与交接"
+    ],
+    "scope": "本地Chrome完整检查通过；部署成功和线上实际显示分别记录，未称已完成线上验收。"
   },
   "workspace": {
-    "status": "pending"
+    "cleanup": {
+      "files_removed": 7986,
+      "logical_bytes_removed": 1615770665,
+      "preview_server_stopped": true,
+      "port_listening": false,
+      "site_path_absent": true,
+      "force": false
+    },
+    "temporary_capacity_mib": 854.27,
+    "raw_source_retention_review": "2026-11-10",
+    "worktrees_created": 0,
+    "untracked_before_audit_commit": 6,
+    "status": "passed-after-staging",
+    "untracked_after_staging": 0,
+    "workspace_audit_exit_code": 0
   },
-  "updated_at": "2026-11-03T09:31:14.300282+08:00"
+  "updated_at": "2026-11-03T01:51:34.953346+00:00",
+  "model_end_before_audit": {
+    "captured_at": "2026-11-03T01:51:02.897372+00:00",
+    "config": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "automation": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "automation_status": "ACTIVE",
+    "thread_id": "01a19eee-ed1e-79a0-9b96-ae0b47d10b84",
+    "turn_contexts": [
+      {
+        "line": 11,
+        "line_sha256": "bfb8987f0da01a9f1c7f062f21716b47161a6177ad65194487256664a0127031",
+        "model": "gpt-6.1-sol",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "audit_script_recovery": {
+    "first_attempt": "helper import触发前置HEAD检查并退出，未暂存、提交或推送",
+    "correction": "只加载模型与Git检查函数，原模型记录从已提交receipt恢复，误触发记录另存本机",
+    "retry": "定向11份收据和代表证据，workspace:audit通过"
+  }
 }
