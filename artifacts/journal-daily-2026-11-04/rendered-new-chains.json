@@ -1,0 +1,152 @@
+{
+  "chains": [
+    {
+      "id": "candidate-factor-diagnostics",
+      "track": "factor",
+      "label": "新候选因子的分角色诊断",
+      "short": "候选单因子诊断",
+      "purpose": "在冻结样本上按预测、调节、控制和市场角色诊断已计算候选，保留逐日统计、缺失及原始结果；诊断不作入库或入模门槛，与候选数值计算和344列既有因子评价分开。",
+      "status": "active",
+      "closes_into": {
+        "daily": []
+      },
+      "fate": "landed",
+      "fate_note": "深市Development的425日、61列初版诊断已归档；午夜前要求按信号自身IC可靠性补正，后续改稿另日核实。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2639a3c2fb7a43bde0a8c3f114085815013db5a4",
+          "path": "reports/2026-11/2026-11-03-candidate-diagnostics-szse-dev.md",
+          "lines": [
+            1,
+            1777
+          ],
+          "title": "11月3日独立目标及阶段结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2639a3c2fb7a43bde0a8c3f114085815013db5a4/reports/2026-11/2026-11-03-candidate-diagnostics-szse-dev.md#L1-L1777"
+        }
+      ],
+      "start": "2026-11-03",
+      "end": "2026-11-03",
+      "lane": 34
+    },
+    {
+      "id": "sse340-evaluation",
+      "track": "factor",
+      "label": "沪市340列因子的三周期评价",
+      "short": "沪市340列评价",
+      "purpose": "对沪市原601日、增量82日和合并683日进行三周期评价，交付独立展示及两市同名列比较；与生产、深市评价分别保留版本。",
+      "status": "active",
+      "closes_into": {
+        "daily": []
+      },
+      "fate": "landed",
+      "fate_note": "计划及只读来源盘点完成；A部分因预算计量停止。午夜前用户明确把1.35GiB计入既有110GB其他任务预留，重新对账与业务执行待下一日。",
+      "report_coverage": "curated",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2639a3c2fb7a43bde0a8c3f114085815013db5a4",
+          "path": "reports/2026-11/2026-11-03-sse683-factor-atlas.md",
+          "lines": [
+            1,
+            79
+          ],
+          "title": "11月3日独立目标及阶段结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2639a3c2fb7a43bde0a8c3f114085815013db5a4/reports/2026-11/2026-11-03-sse683-factor-atlas.md#L1-L79"
+        }
+      ],
+      "start": "2026-11-03",
+      "end": "2026-11-03",
+      "lane": 35
+    }
+  ],
+  "handoffs": [
+    {
+      "from": "candidate-factor-compute",
+      "to": "candidate-factor-diagnostics",
+      "type": "派生",
+      "date": "2026-11-03",
+      "source_date": "2026-11-03",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "已验收1a、1c及1c-2的数值和来源实际进入61列Development诊断；第二批25列不在本次诊断范围。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2639a3c2fb7a43bde0a8c3f114085815013db5a4",
+          "path": "research/factor-candidates/reviews/2026-11-03-batch1c-2-acceptance.md",
+          "lines": [
+            1,
+            50
+          ],
+          "title": "实际输入",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2639a3c2fb7a43bde0a8c3f114085815013db5a4/research/factor-candidates/reviews/2026-11-03-batch1c-2-acceptance.md#L1-L50"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2639a3c2fb7a43bde0a8c3f114085815013db5a4",
+          "path": "reports/2026-11/2026-11-03-candidate-diagnostics-szse-dev.md",
+          "lines": [
+            1,
+            1777
+          ],
+          "title": "实际使用与版本范围",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2639a3c2fb7a43bde0a8c3f114085815013db5a4/reports/2026-11/2026-11-03-candidate-diagnostics-szse-dev.md#L1-L1777"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-04",
+        "basis": "固定输入清单与实际结果相互对应。",
+        "scope": "只连接已经实际消费的输入，尚未完成的683日沪市集合不提前连线。"
+      }
+    },
+    {
+      "from": "rqdata-network",
+      "to": "szse344-multih",
+      "type": "派生",
+      "date": "2026-11-03",
+      "source_date": "2026-11-02",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "11月2日已封存并传输的全期分钟线与月末成分实际用于B4的683日标签和正式输入；不将新对手价标签视为已生成。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2639a3c2fb7a43bde0a8c3f114085815013db5a4",
+          "path": "reports/2026-10/2026-10-30-rqdata-minute-full-history.md",
+          "lines": [
+            1,
+            479
+          ],
+          "title": "实际输入",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2639a3c2fb7a43bde0a8c3f114085815013db5a4/reports/2026-10/2026-10-30-rqdata-minute-full-history.md#L1-L479"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "2639a3c2fb7a43bde0a8c3f114085815013db5a4",
+          "path": "reports/2026-11/2026-11-03-model-szse344-b45-run.md",
+          "lines": [
+            1,
+            191
+          ],
+          "title": "实际使用与版本范围",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/2639a3c2fb7a43bde0a8c3f114085815013db5a4/reports/2026-11/2026-11-03-model-szse344-b45-run.md#L1-L191"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-04",
+        "basis": "固定输入清单与实际结果相互对应。",
+        "scope": "只连接已经实际消费的输入，尚未完成的683日沪市集合不提前连线。"
+      }
+    }
+  ]
+}
