@@ -253,7 +253,6 @@ def main():
     downloads={'column-mapping.csv':'text/csv;charset=utf-8','all-context-performance.csv.gz':'application/gzip',
         'factor-overlap.json':'application/json;charset=utf-8','definitions.json':'application/json;charset=utf-8',
         'evaluation-contract.json':'application/json;charset=utf-8','factor-assets.json':'application/json;charset=utf-8'}
-    if comparison:downloads['market-comparison.csv.gz']='application/gzip'
     for name,mime in downloads.items():
         raw=(assets/name).read_bytes()
         encoded=base64.b64encode(gzip.compress(raw,mtime=0)).decode()
@@ -304,7 +303,7 @@ def main():
     asset_prefix=Path(os.path.relpath(output_root/'content/assets',target.parent)).as_posix()+'/'
     template=template.replace('../assets/',asset_prefix)
     if comparison:
-        comparison_bytes=len(encode(comparison).encode())+(assets/'market-comparison.csv.gz').stat().st_size+(assets/'market-comparison.csv.gz.js').stat().st_size+(ROOT/'scripts/sse683_comparison.js').stat().st_size
+        comparison_bytes=len(encode(comparison).encode())+(assets/'market-comparison.csv.gz').stat().st_size+(ROOT/'scripts/sse683_comparison.js').stat().st_size
         assert comparison_bytes<=1024**2
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(template,encoding='utf-8')

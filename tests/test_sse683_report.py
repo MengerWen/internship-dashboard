@@ -1,11 +1,14 @@
 import base64
+import csv
 from copy import deepcopy
 from datetime import date
 import gzip
 import hashlib
 import json
+import io
 from pathlib import Path
 import sys
+import subprocess
 
 import numpy as np
 import pytest
@@ -46,6 +49,18 @@ def test_comparison_ties_signs_missing_and_date_binding():
     assert rank_correlation([(1,3),(1,4)]) is None
     right['full-10m']['dates']=['2024-01-03']
     with pytest.raises(ValueError,match='日期'):compare_contexts(left,right)
+
+
+def test_comparison_download_preserves_values_and_csv_cells():
+    data=dict(metrics=['rank_ic'],columns=[['沪,"市','深市','old','factor_id']],
+              contexts={'full-10m':dict(rows=[[1.2345678901234567, None, True]])})
+    script="const {comparisonCsv}=require('./scripts/sse683_comparison.js');let s='';process.stdin.setEncoding('utf8');process.stdin.on('data',x=>s+=x);process.stdin.on('end',async()=>{const csv=comparisonCsv(JSON.parse(s));const raw=await new Response(new Blob([csv]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer();process.stdout.write(Buffer.from(raw))});"
+    result=subprocess.run(['node','-e',script],input=json.dumps(data).encode(),capture_output=True,check=True,cwd=ROOT)
+    rows=list(csv.reader(io.StringIO(gzip.decompress(result.stdout).decode('utf-8-sig'))))
+    assert rows[0]==['context','sse_column','szse_column','source','match_method','sse_rank_ic','szse_rank_ic','rank_same_sign']
+    assert rows[1][:5]==['full-10m','沪,"市','深市','old','factor_id']
+    assert float(rows[1][5])==1.2345678901234567
+    assert rows[1][6:]==['','True']
 
 
 def test_sse_template_replaces_market_identity():
