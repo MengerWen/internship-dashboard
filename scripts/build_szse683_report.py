@@ -12,6 +12,8 @@ import json
 from pathlib import Path
 import re
 import zipfile
+import os
+from daily_show_source import resolve_daily_show_source
 
 import numpy as np
 
@@ -93,8 +95,10 @@ def main():
     p.add_argument('--date', type=date.fromisoformat)
     p.add_argument('--trial', action='store_true')
     p.add_argument('--output-root', type=Path)
+    p.add_argument('--html-relative-path', help='沪市展示文件相对于content/daily的路径')
     a = p.parse_args()
     sse=a.exchange=='XSHG'
+    if a.html_relative_path and not sse:p.error('自定义展示路径仅用于沪市')
     if a.trial and not sse:p.error('试运行入口仅用于沪市')
     if sse and (not a.date or not re.fullmatch('[0-9a-f]{64}',a.collection_sha256 or '')):
         p.error('沪市需要发布日期和明确的集合SHA256')
@@ -105,6 +109,7 @@ def main():
     slug=f'sse683-{a.date.isoformat()}' if sse else 'szse683-2026-11-01'
     assets=output_root/'content/assets'/slug
     target=output_root/'content/daily'/f'{a.date:%Y-%m.%d}.show.html' if sse else ROOT/'content/daily/2026-11.01.show.html'
+    if a.html_relative_path:target=resolve_daily_show_source(output_root/'content/daily',a.html_relative_path)
     markdown=output_root/'content/daily'/f'{a.date.isoformat()}.md' if sse else None
     if sse and (target.exists() or markdown.exists() or assets.exists()):
         raise FileExistsError('沪市发布日期的正文、展示文件或资产目录已存在，须由用户处理占用')
@@ -296,6 +301,8 @@ def main():
     assert not re.search(r'__[A-Z_]+__',template)
     from add_nav_scrollspy import render, PAPER
     template=render(template,PAPER,target.name)
+    asset_prefix=Path(os.path.relpath(output_root/'content/assets',target.parent)).as_posix()+'/'
+    template=template.replace('../assets/',asset_prefix)
     if comparison:
         comparison_bytes=len(encode(comparison).encode())+(assets/'market-comparison.csv.gz').stat().st_size+(assets/'market-comparison.csv.gz.js').stat().st_size+(ROOT/'scripts/sse683_comparison.js').stat().st_size
         assert comparison_bytes<=1024**2
@@ -303,7 +310,7 @@ def main():
     target.write_text(template,encoding='utf-8')
     if sse and not a.trial:
         from sse683_report import markdown as render_markdown
-        markdown.write_text(render_markdown(a.date,target,proof,len(comparison['columns'])),encoding='utf-8')
+        markdown.write_text(render_markdown(a.date,target.relative_to(output_root/'content/daily'),proof,len(comparison['columns'])),encoding='utf-8')
     assert target.stat().st_size<25*1024**2 and all(p.stat().st_size<25*1024**2 for p in assets.rglob('*') if p.is_file())
     print(json.dumps(dict(html_bytes=target.stat().st_size,assets=len(inventory),exact_old_matches=exact,changed=modified,omitted=missing)))
 

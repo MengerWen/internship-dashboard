@@ -115,11 +115,13 @@ def test_trial_build_isolated_and_restores_all_bundles(tmp_path,monkeypatch):
     write(source/'factor-overlap.json',dict(columns=[f['metadata']['factor_id'] for f in factors],segments={s:dict(mean=[[None]*340 for _ in factors]) for s in ('full','base')}))
     output=tmp_path/'.local/runs/test'
     monkeypatch.setattr(builder,'ROOT',tmp_path)
-    monkeypatch.setattr(sys,'argv',['build','--input',str(source),'--exchange','XSHG','--collection-sha256','a'*64,'--date','2026-11-04','--trial','--output-root',str(output)])
+    monkeypatch.setattr(sys,'argv',['build','--input',str(source),'--exchange','XSHG','--collection-sha256','a'*64,'--date','2026-11-04','--trial','--output-root',str(output),'--html-relative-path','2026-11.04.show/.html'])
     builder.main()
-    page=(output/'content/daily/2026-11.04.show.html').read_text(encoding='utf-8')
+    page=(output/'content/daily/2026-11.04.show/.html').read_text(encoding='utf-8')
     assert '10日试运行' in page and 'value="increment"' not in page
     assert '三个周期均覆盖10日' in page
+    assert '../../assets/sse683-2026-11-04/' in page
+    assert "'../../assets/'" in page
     assets=output/'content/assets/sse683-2026-11-04'
     assert len(list(assets.glob('*/factors/*.js')))==1020
     assert len(list(assets.glob('*/summary.js')))==6

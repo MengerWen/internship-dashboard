@@ -17,6 +17,7 @@ import frontmatter
 import markdown
 from pymdownx.slugs import uslugify
 from pymdownx.superfences import fence_div_format
+from scripts.daily_show_source import resolve_daily_show_source
 
 
 ROOT = Path(__file__).resolve().parent
@@ -461,10 +462,7 @@ class Builder:
             show_md = daily_dir / f"{date_key}.show.md"
             show_html = daily_dir / f"{date_key}.show.html"
             if meta.get("show_source"):
-                source_name = str(meta["show_source"])
-                if Path(source_name).name != source_name or "/" in source_name or "\\" in source_name or not source_name.endswith(".show.html"):
-                    raise ValueError(f"{path.name}: show_source 必须是当前目录中的 .show.html 文件名")
-                show_html = daily_dir / source_name
+                show_html = resolve_daily_show_source(daily_dir, meta["show_source"])
             has_show = False
             show_type: str | None = None
             show_path: str | None = None
@@ -479,10 +477,10 @@ class Builder:
                 show_type = "html"
                 show_title = date_key
                 show_content = show_html.read_text(encoding="utf-8")
-                show_rel = Path("daily") / show_html.name
+                show_rel = Path("daily") / show_html.relative_to(daily_dir)
                 self.write_text(
                     self.out_dir / show_rel,
-                    self.html_with_runtime_assets(show_content, prefix="../"),
+                    self.html_with_runtime_assets(show_content, prefix="../" * len(show_rel.parent.parts)),
                 )
                 show_path = show_rel.as_posix()
                 self.show_stats["html"] += 1

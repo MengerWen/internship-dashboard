@@ -72,7 +72,7 @@ def markdown(publication_date, target, proof, paired):
 title: "{title}"
 date: {publication_date.isoformat()}
 stage: factor
-show_source: {target.name}
+show_source: {target.as_posix()}
 show_allow_downloads: true
 summary: "沪市340列的683日观察评价，分别展示原601日、新增82日和三个收益周期，并附沪深同名列对照。"
 ---
