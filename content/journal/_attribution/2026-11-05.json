@@ -1,0 +1,3022 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "cfd055283abedb211b5282b62e0885c4f77b3a03231440c8ce783a9e9d591fcb",
+  "rules_sha256": "cdf1a136778818526acd8c47db3ae5aff75478a0e56f53db6ec15c635e7150d4",
+  "revisions": {
+    "sirui-quant-research": "7ad008c48a239bb30f5ed435fa4e9811a153bd99",
+    "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
+    "internship-dashboard": "afc795eb754b2117ea9afea91b9c4338d7a5e063"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "c16dc61fabbcdf6f986608ac18bcfa0adda1a4b1",
+      "date": "2026-11-05",
+      "subject": "复用内嵌对照数据生成完整精度下载",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "对照下载的公共实现及测试。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse683-formal-report.md",
+        "scripts/build_szse683_report.py",
+        "scripts/sse683_comparison.js",
+        "scripts/sse683_report.py",
+        "tests/test_sse683_report.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "4d78fa51dd014ea68a5b9612af42c5cf8737dc0b",
+      "date": "2026-11-05",
+      "subject": "发布沪市340因子683日三周期汇报与完整资产",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "沪市正式汇报正文、HTML和资产。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse683-formal-report.md",
+        "artifacts/sse683-20261104/build-r02.json",
+        "artifacts/sse683-20261104/build.json",
+        "artifacts/sse683-20261104/comparison-roundtrip.json",
+        "artifacts/sse683-20261104/publication.json",
+        "artifacts/sse683-20261104/report-comparison-tests-r03.log",
+        "artifacts/sse683-20261104/report-comparison-tests-r03.log.json",
+        "artifacts/sse683-20261104/transfer.json",
+        "content/assets/sse683-2026-11-04/10m/factors/cph01_cancel_phase_kernel_energy_T1000_heat_20ms__buy.js",
+        "content/assets/sse683-2026-11-04/10m/factors/cph01_cancel_phase_kernel_energy_T1000_heat_20ms__sell.js",
+        "content/assets/sse683-2026-11-04/10m/factors/cph01_cancel_phase_kernel_energy_T1000_heat_50ms__buy.js",
+        "content/assets/sse683-2026-11-04/10m/factors/cph01_cancel_phase_kernel_energy_T1000_heat_50ms__sell.js"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "281aba5415b161b335732964c31cc91480fc0ee1",
+      "date": "2026-11-05",
+      "subject": "补入11月4日新标签与候选验收进展",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "自动日志维护或无独立差异的合入。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/journal-daily-2026-11-05/2026-11-04.html",
+        "artifacts/journal-daily-2026-11-05/README.md",
+        "artifacts/journal-daily-2026-11-05/rendered-day.json",
+        "content/chains.json",
+        "content/journal/2026-11-04.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "afc795eb754b2117ea9afea91b9c4338d7a5e063",
+      "date": "2026-11-05",
+      "subject": "保存11月5日日志交付收据与线上读取缺口",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "自动日志维护或无独立差异的合入。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/journal-daily-2026-11-05/README.md",
+        "artifacts/journal-daily-2026-11-05/online-verification.json",
+        "artifacts/journal-daily-2026-11-05/publication-summary.json",
+        "docs/journal-review/daily-updates/2026-11-05.md",
+        "docs/journal-review/daily-updates/2026-11-05/browser-verification.json",
+        "docs/journal-review/daily-updates/2026-11-05/receipt.json",
+        "docs/journal-review/daily-updates/2026-11-05/source-review.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "adcf7fc9fd5e53a5b3954f0b2ba9263ef828138a",
+      "date": "2026-11-05",
+      "subject": "保存正式接续准备与临时材料处置证据",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-340"
+      ],
+      "reason": "沪市最后交易日生产、恢复与完整集合验收。",
+      "shares": {
+        "sse-factor-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse-extreme-stock-time-budget.md",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-readiness.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/best-final-r02-tests.stderr.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/best-final-r02-tests.stdout.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/best-final-tests.stderr.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/best-final-tests.stdout.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/collection-entry-preflight.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/collection1599-r02-distribution.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/collection1599-transfer-retirement.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/controls-archive-temp-release-ready.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/controls-archive-temp-release-result.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-authority-and-model.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ee89ad9914473629a67b8554a2fea3328d588ddc",
+      "date": "2026-11-05",
+      "subject": "记录V4资源释放通知及正式重跑准入",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/.gitattributes",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/environment-capacity-20261105-r01.txt",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/execution-state.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/f-release-notice-20261105.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/preflight-20261105-r01.txt",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "92f4e64c4af03fddc3934d2774cc80db5908b345",
+      "date": "2026-11-05",
+      "subject": "记录V4十六核正式启动与四单元断点复用",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/execution-state.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/launch-20261105-r01.txt",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/start-state-20261105-r01.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4eacdf4acb2784a76319744036662291a06d3399",
+      "date": "2026-11-05",
+      "subject": "签收第3b批五列并记录四列未签收结果",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "research/factor-candidates/OVERVIEW.md",
+        "research/factor-candidates/families/FAM-ETF-LEAD-001.yaml",
+        "research/factor-candidates/families/FAM-ETF-PRESSURE-001.yaml",
+        "research/factor-candidates/families/FAM-EVENT-AGE-001.yaml",
+        "research/factor-candidates/families/FAM-EVENT-CONGESTION-001.yaml",
+        "research/factor-candidates/reviews/2026-11-04-batch3b-acceptance.json",
+        "research/factor-candidates/reviews/2026-11-04-batch3b-acceptance.md",
+        "research/factor-candidates/reviews/2026-11-04-round14-batch3b-checks.json",
+        "research/factor-candidates/reviews/2026-11-04-round14-batch3b-checks.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dff340ee880083627a26cd36de2bd7e29b1f282b",
+      "date": "2026-11-05",
+      "subject": "docs: record round 15 plan and confirmed round 14 review",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-05-factor-candidates-round15.md",
+        "research/factor-candidates/reviews/2026-11-05-round14-claude-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fa2bf0ad80ed7f025014e77822f386fd7ef1613d",
+      "date": "2026-11-05",
+      "subject": "fix: scope factor candidate capacity listings to bounded pages",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/run_factor_candidates_batch2.py",
+        "scripts/tests/test_factor_candidates_batch2.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "233fc4b0b1f4b8fe4fa34cec4ff038f2f4be9677",
+      "date": "2026-11-05",
+      "subject": "登记第15轮公告标题分类规则及三列补充预注册",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "PLAN/factor_preregister_candidates_batch3b_round15_v1.yaml",
+        "research/factor-candidates/OVERVIEW.md",
+        "research/factor-candidates/families/FAM-EVENT-AGE-001.yaml",
+        "research/factor-candidates/families/FAM-EVENT-CONGESTION-001.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d18aeb5007c245929973c6267340221b7fc300c",
+      "date": "2026-11-05",
+      "subject": "feat: compute and verify the approved TPLUSONE price-scale forms",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/factor_candidates_tplusone_round15.py",
+        "scripts/run_factor_candidates_tplusone_round15.py",
+        "scripts/tests/test_factor_candidates_tplusone_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9acd8a541080b6c76987784e4731d73dbde0d54b",
+      "date": "2026-11-05",
+      "subject": "feat: give clock refreshes an explicit immutable output identity",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/check_factor_candidates_round14.py",
+        "scripts/tests/test_factor_candidates_round14_clocks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "38208c5805f2c92b6f26cef13b239bacc6862606",
+      "date": "2026-11-05",
+      "subject": "按补充注册表重算公告分类并保留旧版分布核验",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/factor_candidates_batch3b_events.py",
+        "scripts/run_factor_candidates_batch3b.py",
+        "scripts/run_factor_candidates_batch3b_compute.py",
+        "scripts/tests/test_factor_candidates_batch3b_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0fe3b5aafaa872fb32d3142d4b778ba7f6633178",
+      "date": "2026-11-05",
+      "subject": "补齐第15轮ETF诊断、空窗缺失及签收恢复入口",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/preflight_factor_candidates_batch3b.py",
+        "scripts/run_factor_candidates_batch3b.py",
+        "scripts/run_factor_candidates_batch3b_compute.py",
+        "scripts/run_factor_candidates_batch3b_pressure_round15.py",
+        "scripts/tests/test_factor_candidates_batch3b_checks.py",
+        "scripts/tests/test_factor_candidates_batch3b_pressure_round15.py",
+        "scripts/verify_factor_candidates_batch3b_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "003b722ed84ddbfa4a2a6488fb44a724b7b4af17",
+      "date": "2026-11-05",
+      "subject": "记录公告旧版替代关系并验算新旧相关系数",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_factor_candidates_batch3b_compute.py",
+        "scripts/tests/test_factor_candidates_batch3b_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8513d5d5ca667dee736a1d64bc950faff8dcc7a8",
+      "date": "2026-11-05",
+      "subject": "feat: reuse signed TPLUSONE checkpoints across execution attempts",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_factor_candidates_tplusone_round15.py",
+        "scripts/tests/test_factor_candidates_tplusone_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2ba9c85760b987182a4f6493fd9a48e8f326930a",
+      "date": "2026-11-05",
+      "subject": "feat: gate and verify the frozen batch 3a factor production",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/factor_candidates_batch3a_round15.py",
+        "scripts/run_factor_candidates_batch3a_round14.py",
+        "scripts/run_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_round15.py",
+        "scripts/verify_factor_candidates_batch3a_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b5af521a0550fd22cdf3160573fd713e8d30a88f",
+      "date": "2026-11-05",
+      "subject": "feat: retire round 15 primitives after complete native acceptance",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/retire_factor_candidates_round15.py",
+        "scripts/tests/test_retire_factor_candidates_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1c909fdbfad493fb683e1435a3c473c5b93765fe",
+      "date": "2026-11-05",
+      "subject": "fix: read local and object guard receipts in SSE continuation",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-340"
+      ],
+      "reason": "沪市最后交易日生产、恢复与完整集合验收。",
+      "shares": {
+        "sse-factor-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse-extreme-stock-time-budget.md",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/continuation-receipt-windows-tests.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/continuation-receipt-windows-tests.txt",
+        "scripts/continue_sse_factor_after_bbo.py",
+        "scripts/continue_sse_factor_task.py",
+        "scripts/tests/test_continue_sse_factor_after_bbo.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aaf9b50ad914ec44501090de30d7866c3e7d8f23",
+      "date": "2026-11-05",
+      "subject": "以Git字节身份绑定公告补充注册表的原始版本",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/factor_preregister_candidates_batch3b_round15_v1.yaml",
+        "scripts/run_factor_candidates_batch3b.py",
+        "scripts/tests/test_factor_candidates_batch3b_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ef886ace511c9b7fa1e089905b8331423894d018",
+      "date": "2026-11-05",
+      "subject": "docs: record signed SSE last side and four-side continuation evidence",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-340"
+      ],
+      "reason": "沪市最后交易日生产、恢复与完整集合验收。",
+      "shares": {
+        "sse-factor-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse-extreme-stock-time-budget.md",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/continuation-receipts-distribution.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/continuation-receipts-linux-r01.guard.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/continuation-receipts-linux-r01.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/continuation-receipts-linux-result.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/controller-milestone-model.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-clock-alignment.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-grid-handoff.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-last-side-complete.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-last-side-guard.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-r28-failure.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-r28-stderr.txt"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "04ce71736c13163a032d3aab9937898df426c3d8",
+      "date": "2026-11-05",
+      "subject": "fix: measure the five-day gate with the production date batch",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/run_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fc1119c8b556d510460a3f6bd3a2e30dd97f25fe",
+      "date": "2026-11-05",
+      "subject": "约束ETF诊断的逐笔成交范围与查询计数",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/run_factor_candidates_batch3b_pressure_round15.py",
+        "scripts/tests/test_factor_candidates_batch3b_pressure_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1dd37ba4ebcd9cfddb6797ee8149cbe10cfb925c",
+      "date": "2026-11-05",
+      "subject": "fix: recompute batch 3a causal prefixes with future inputs perturbed",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/tests/test_factor_candidates_batch3a_causality_round15.py",
+        "scripts/verify_factor_candidates_batch3a_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1a5a9ef072e395a1f1ebd84223e71347949ac472",
+      "date": "2026-11-05",
+      "subject": "feat: reuse exact regression primitives with verified active-set counts",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/run_factor_candidates_batch3a_round14.py",
+        "scripts/run_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_reuse_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_round14.py",
+        "scripts/tests/test_factor_candidates_batch3a_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4656aa657ec7a495a26311359a01b109ac2318c2",
+      "date": "2026-11-05",
+      "subject": "记录V4六个新增单元工期门及留一误差",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/execution-state.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/six-new-unit-speed-gate.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e08c840bc7a7b2b766ec47136375d34740390c92",
+      "date": "2026-11-05",
+      "subject": "Measure dense end-to-end costs before batch3a admission",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/measure_factor_candidates_batch3a_round15.py",
+        "scripts/run_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_cost_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_round15.py",
+        "scripts/verify_factor_candidates_batch3a_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "20e09202b7e3501edd2af533cdd6db9d1d393444",
+      "date": "2026-11-05",
+      "subject": "Count gate tail batches in full-period IO budget",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/measure_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_cost_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aa60b8888e47aacdf4bbbf72434a36945632ca6d",
+      "date": "2026-11-05",
+      "subject": "fix: resume SSE bank acceptance from signed production and audit stages",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-340"
+      ],
+      "reason": "沪市最后交易日生产、恢复与完整集合验收。",
+      "shares": {
+        "sse-factor-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse-extreme-stock-time-budget.md",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-windows-tests.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-windows-tests.txt",
+        "scripts/continue_sse_factor_task.py",
+        "scripts/resume_sse_factor_bank_acceptance.py",
+        "scripts/tests/test_continue_sse_factor_task.py",
+        "scripts/tests/test_resume_sse_factor_bank_acceptance.py",
+        "scripts/tests/test_verify_sse_factor_bank.py",
+        "scripts/verify_sse_factor_bank.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fa34790455c9e78acbea4d68eec5907e204790f5",
+      "date": "2026-11-05",
+      "subject": "fix: bind SSE acceptance resume to its published verifier",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-340"
+      ],
+      "reason": "沪市最后交易日生产、恢复与完整集合验收。",
+      "shares": {
+        "sse-factor-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse-extreme-stock-time-budget.md",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-r02-windows-tests.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-r02-windows-tests.txt",
+        "scripts/resume_sse_factor_bank_acceptance.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5aa03d302eb4afb82ab49e082e133a1e67a81b76",
+      "date": "2026-11-05",
+      "subject": "独立ETF取数与签收的依赖入口并复用公共交易读取器",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/factor_candidates_batch3b_trades.py",
+        "scripts/run_factor_candidates_batch3b.py",
+        "scripts/run_factor_candidates_batch3b_pressure_round15.py",
+        "scripts/tests/test_factor_candidates_batch3b_pressure_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf3d27bc310015958933fce164c6b06b81301f2e",
+      "date": "2026-11-05",
+      "subject": "docs: record complete SSE production acceptance and measured runtime",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-340"
+      ],
+      "reason": "沪市最后交易日生产、恢复与完整集合验收。",
+      "shares": {
+        "sse-factor-340": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse-extreme-stock-time-budget.md",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/acceptance-r30-controller.stderr.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-distribution.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-linux-r01.guard.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-linux-r01.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-linux-result.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-r02-distribution.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-r02-linux-r01.guard.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-r02-linux-r01.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/bank-acceptance-r02-linux-result.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/controller-production-complete-model.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/formal-acceptance-source-reuse.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "df96498d248626c9cea08024fc39c8cc560f700e",
+      "date": "2026-11-05",
+      "subject": "记录ETF诊断样本与PRESSURE停止条件",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "research/factor-candidates/families/FAM-ETF-PRESSURE-001.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "15dafa6887f33702f33a7526658d9e40052f7fe8",
+      "date": "2026-11-05",
+      "subject": "封存沪市683日三周期全量评价签收凭证",
+      "status": "assigned",
+      "chains": [
+        "sse340-evaluation"
+      ],
+      "reason": "沪市三周期评价实际运行、输入与固定结果。",
+      "shares": {
+        "sse340-evaluation": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-archive-receipt.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-checkout-lifecycle-inventory.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-consumer-acceptance.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-coverage-r01-guard.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-coverage-r01-request.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-coverage-r01-result.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-evaluate-r01-guard.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-evaluate-r01-request.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-evaluate-r01-result.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-evaluate-r01.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-evaluate-r02-guard.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-evaluate-r02-request.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ebc3162abf0ec3306e5557aa251939660894046e",
+      "date": "2026-11-05",
+      "subject": "完成沪市因子汇报发布与运行材料收尾",
+      "status": "assigned",
+      "chains": [
+        "sse340-evaluation"
+      ],
+      "reason": "沪市三周期评价实际运行、输入与固定结果。",
+      "shares": {
+        "sse340-evaluation": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-sse-extreme-stock-time-budget.md",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-report-build-r02.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-report-comparison-roundtrip.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-report-publication.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-report-push.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-report-push.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/atlas-report-transfer.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/closure-dashboard-workspace-audit.txt",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/closure-final-runtime-state.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/closure-server-release-ready.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/closure-server-release-result.json",
+        "reports/2026-11/2026-11-04-sse-extreme-optimization-evidence/closure-windows-restore-release-ready.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d791a21b35fee2cdbed27bd726c3a8a9fab6daa1",
+      "date": "2026-11-05",
+      "subject": "完成SZSE344 V4重跑签收与工期成本报告",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/execution-state.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/final-acceptance-and-unit-summary.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/final-results.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/final-storage-and-release.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/final-wangly-state.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/final-wenjie-state.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/guard-terminal-evidence-20261105-r01.txt",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/hot-release-preparation-rerun.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/local-bytecode-release-prepared.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/local-bytecode-release-result.json",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/readback-launch-20261105-r01.txt",
+        "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence/readback-verification-20261105-r01.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6eef84e29281072935e94f949bab8cd8da08d343",
+      "date": "2026-11-05",
+      "subject": "Accept all five TPLUSONE columns over 683 trading days",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/OVERVIEW.md",
+        "research/factor-candidates/families/FAM-TPLUSONE-GAINMASS-001.yaml",
+        "research/factor-candidates/reviews/2026-11-05-batch2-tplusone-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch2-tplusone-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc90b14509c858ed68e77e5c4dee12034f716b6c",
+      "date": "2026-11-05",
+      "subject": "按实测worker并发保留全期未来核验资源",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/run_factor_candidates_batch3b_compute.py",
+        "scripts/tests/test_factor_candidates_batch3b_compute.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "75b47e4f672c666251705e1bfdfe06c53a30ffe6",
+      "date": "2026-11-05",
+      "subject": "Record verified TPLUSONE primitive retirement",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch2-tplusone-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch2-tplusone-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5bb8566b41a1c56121ee66e665ac72351772eda1",
+      "date": "2026-11-05",
+      "subject": "Verify ten date-market event clock offsets for batch3a",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5cd015f22f389b95994ca5d4bbdf90f5d29d4553",
+      "date": "2026-11-05",
+      "subject": "记录D7学习率固定0.10及D8轮数上限不变、改善门槛先回放",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "decisions/2026-11-03-szse344-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e8120ec257b9e910593b03e9fd67d0d1e253049b",
+      "date": "2026-11-05",
+      "subject": "增加V5：用V4检查点曲线离线回放改善门槛",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-03-model-szse344-labels-v2-lr.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41dd73ee0552684607962df7927bad43ae3c22c0",
+      "date": "2026-11-05",
+      "subject": "签收第15轮EVENT三列并记录PRESSURE停止与资源收尾",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "research/factor-candidates/OVERVIEW.md",
+        "research/factor-candidates/families/FAM-ETF-PRESSURE-001.yaml",
+        "research/factor-candidates/families/FAM-EVENT-AGE-001.yaml",
+        "research/factor-candidates/families/FAM-EVENT-CONGESTION-001.yaml",
+        "research/factor-candidates/reviews/2026-11-05-batch3b-acceptance-r2.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3b-acceptance-r2.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5e70c71fac34070ba66c35965b4cc8382a32318c",
+      "date": "2026-11-05",
+      "subject": "实现V5已签收检查点的改善门槛离线回放",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-03-model-szse344-labels-v2-lr.md",
+        "scripts/replay_szse344_stopping.py",
+        "scripts/tests/test_replay_szse344_stopping.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "33086211aa0f40cef7cb4bfa64d033a1416f7ca3",
+      "date": "2026-11-05",
+      "subject": "Preserve native guard evidence for TPLUSONE acceptance",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch2-tplusone-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch2-tplusone-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5070c4c0a6d24a943f6a783cb907abeaef99b797",
+      "date": "2026-11-05",
+      "subject": "报告V5门槛回放的轮数节省、最好点损失和删失",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/.gitattributes",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/2026-11-05-unit-results.md",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/guard.json",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/preflight-wangly.json",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/release-receipt.json",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/replay.json",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/run.log",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/server-artifact-inventory.json",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/server-release-precheck.json",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/tests-r01.log",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/tests-r01.log.json",
+        "reports/2026-11/2026-11-05-model-szse344-stopping-v5.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ed90671c814535655571badb953849a0d3ce9937",
+      "date": "2026-11-05",
+      "subject": "Record exact batch3a regression and optimization measurements",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "26de6dcf58857a385558423fbaeadbe8bc2b9c71",
+      "date": "2026-11-05",
+      "subject": "Scope round15 opening-window authorization to its runtime",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.md",
+        "scripts/factor_candidates_round15_runtime.py",
+        "scripts/run_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_round15_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "301f1916a2baa5e5751758c2f51a3f2a843d5574",
+      "date": "2026-11-05",
+      "subject": "Record passed five-day batch3a gate and full-period admission",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5394c8b5b47fdcba957507a338937248c0fd00eb",
+      "date": "2026-11-05",
+      "subject": "登记第16轮PRESSURE与CONGESTION执行计划及审核决定",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-05-factor-candidates-round16.md",
+        "research/factor-candidates/reviews/2026-11-05-round15-claude-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6bb9763c40ff9a8ae84122714be1409f04e79d19",
+      "date": "2026-11-05",
+      "subject": "按零偏移执行最后一次ETF全天诊断并复用76日日原料入口",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "research/factor-candidates/families/FAM-ETF-PRESSURE-001.yaml",
+        "scripts/run_factor_candidates_batch3b_pressure_round15.py",
+        "scripts/run_factor_candidates_batch3b_pressure_round16.py",
+        "scripts/tests/test_factor_candidates_batch3b_pressure_round16.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "243763915405fca48e67960523d009f9326b80b4",
+      "date": "2026-11-05",
+      "subject": "登记CONGESTION公司数区间与1%门槛的两列补充预注册",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "PLAN/factor_preregister_candidates_batch3b_round16_v1.yaml",
+        "research/factor-candidates/families/FAM-EVENT-CONGESTION-001.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9504ea2f9894d4fe822ad9f95446c6b67332de5a",
+      "date": "2026-11-05",
+      "subject": "按公司数上下限重算并独立验核CONGESTION两列",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/factor_candidates_batch3b_events.py",
+        "scripts/factor_candidates_batch3b_round16.py",
+        "scripts/run_factor_candidates_batch3b.py",
+        "scripts/run_factor_candidates_batch3b_compute.py",
+        "scripts/tests/test_factor_candidates_batch3b_round16.py",
+        "scripts/verify_factor_candidates_batch3b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "de7cd8b4b97fc1be3ab8d415933f4ba4d3a8dc6e",
+      "date": "2026-11-05",
+      "subject": "按传输清单核验并复用跨账户ETF原料收据",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/factor_candidates_batch3b_round16.py",
+        "scripts/run_factor_candidates_batch3b_compute.py",
+        "scripts/tests/test_factor_candidates_batch3b_round16.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "44cbbca7eb45cd8acc9516d573b1dbd5b5225116",
+      "date": "2026-11-05",
+      "subject": "记录76日ETF取数签收并输出全期逐日覆盖统计",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/factor_candidates_batch3b_round16.py",
+        "scripts/run_factor_candidates_batch3b_compute.py",
+        "scripts/tests/test_factor_candidates_batch3b_round16.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7aae77609e1a7a8596500693715e147de045dda0",
+      "date": "2026-11-05",
+      "subject": "核对短任务准入的完整实耗与公告源身份",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/tests/test_factor_candidates_batch3b_round16.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ebe4a9533e6ad99edeedf6514650ac5cde9cbf68",
+      "date": "2026-11-05",
+      "subject": "D8定为0.5倍标准误改善门槛并加停时仍在爬的两道保护",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-03-model-szse344-labels-v2-lr.md",
+        "decisions/2026-11-03-szse344-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6314ab0156bc8a79ed6585d1b4516c05299b5011",
+      "date": "2026-11-05",
+      "subject": "登记B6规模八项决定D10–D17并把D9移回决定表",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "decisions/2026-11-03-szse344-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "819b57ee3e00f7b01ce3f68f454106dd0e59d104",
+      "date": "2026-11-05",
+      "subject": "新增B6 PLAN：D8停止器与D10–D17规模的代码、离线外推及运行门",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-05-model-szse344-b6.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6b86134a7f3ee90e90d12665d3e430b0434942ba",
+      "date": "2026-11-05",
+      "subject": "记录B6 W1–W3函数复用边界与有界验收预算",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-preparation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "32500bbd5ab6fdd0d9be11d3c28df8fe84174474",
+      "date": "2026-11-05",
+      "subject": "实现D8锚点停止与保护A并核对54个V4和V5曲线单元",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/d8-equivalence.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/d8-summary-r01.log.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/d8-tests-r01.log.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-preparation.md",
+        "scripts/replay_szse344_stopping.py",
+        "scripts/tests/test_szse344_d8.py",
+        "scripts/verify_szse344_d8.py",
+        "因子/algobench/src/algobench/ml/cohort_scheduler.py",
+        "因子/algobench/src/algobench/ml/szse344_runtime.py",
+        "因子/algobench/src/algobench/ml/szse344_search.py",
+        "因子/algobench/src/algobench/ml/szse344_stopping.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b3c171f64086eb9e8f74f9c51f4bcf5198c90914",
+      "date": "2026-11-05",
+      "subject": "准备B6固定学习率清单与预算名额及10分钟评价任务",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/b6-design-r01.log.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/contract-draft.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/stage1-close-draft.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/stage1-morning-draft.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-preparation.md",
+        "scripts/prepare_szse344_b6.py",
+        "scripts/tests/test_szse344_b6.py",
+        "因子/algobench/src/algobench/ml/szse344_b6.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a754f8194547783eb40488ced764196e7bbb5443",
+      "date": "2026-11-05",
+      "subject": "按B6方法树规模和D8轮次离线外推预算并记录名额缺口",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/.gitattributes",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/cost-projection.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/cost-tests-r01.log.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-preparation.md",
+        "scripts/project_szse344_b6.py",
+        "scripts/tests/test_project_szse344_b6.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c39f8252c0beae66694db28bdbafb25d872c27e7",
+      "date": "2026-11-05",
+      "subject": "增加原库模型预测与选股集合逐位核对入口并记录独占准入状态",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/native-collection-r01.log.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/wangly-readiness-snapshot.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/wenjie-head.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-preparation.md",
+        "scripts/tests/test_szse344_d8.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "411b666bb18d9e2820054dc7a3fa73035424d5a4",
+      "date": "2026-11-05",
+      "subject": "交付B6 W3草案运行前清单及预算和原库验收缺口",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/.gitattributes",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/2026-11-05-second-stage-trees.md",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/b6-design-r01.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/code-revisions.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/cost-tests-r01.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/d8-summary-r01.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/d8-tests-r01.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/execution-draft.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/local-acceptance.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/local-duplicate-release-plan.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/local-duplicate-release-receipt.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-evidence/local-release-plan.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b4a0a43236e0a18bbf6463f410720e5bb94c630c",
+      "date": "2026-11-05",
+      "subject": "归一化页超限时按整股二分并保留恢复来源",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/run_factor_candidates_batch3a.py",
+        "scripts/run_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_decoded_budget.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7fa655d7ed05bb870d7c9314fd88f93bfd7d0210",
+      "date": "2026-11-05",
+      "subject": "精确保留分位数相等边界并核对原生面板签收",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3a-compute.md",
+        "scripts/certify_factor_candidates_batch3a_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_certify_round15.py",
+        "scripts/tests/test_factor_candidates_batch3a_quantile_round15.py",
+        "scripts/verify_factor_candidates_batch3a_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bb35a64eb499616383f0ad2b8d2608e5c0a1900f",
+      "date": "2026-11-05",
+      "subject": "补齐CONGESTION族的审核记录与计算状态",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/families/FAM-EVENT-CONGESTION-001.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d1b537367f469fe82a6fb118ca706089db367ed",
+      "date": "2026-11-05",
+      "subject": "签收CONGESTION区间版并记录139日覆盖恢复",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "research/factor-candidates/families/FAM-EVENT-CONGESTION-001.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e9a0c658f0c592474b7f358a803868c0389e70ff",
+      "date": "2026-11-05",
+      "subject": "将日量删除与删除后收据核验拆为独立阶段",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/retire_factor_candidates_round15.py",
+        "scripts/tests/test_retire_factor_candidates_round15.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6354a06407fe03f10730be80afd5ce4e2d13fad0",
+      "date": "2026-11-05",
+      "subject": "Support accepted industry shards in batch3b correlations",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "scripts/tests/test_factor_candidates_batch3b_checks.py",
+        "scripts/verify_factor_candidates_batch3b_checks.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d09a9fc97adc9f462c95355e1d18036cb11c1310",
+      "date": "2026-11-05",
+      "subject": "签收PRESSURE全期三列并记录质量与高相关配对",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-04-factor-candidates-batch3b-compute.md",
+        "research/factor-candidates/families/FAM-ETF-PRESSURE-001.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e686dcc3e50d3df793531ef0ef5e6f4ca56f8953",
+      "date": "2026-11-05",
+      "subject": "交付第16轮PRESSURE与CONGESTION验收r3报告",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/families/FAM-EVENT-CONGESTION-001.yaml",
+        "research/factor-candidates/reviews/2026-11-05-batch3b-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3b-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "54f4a55a3dad92ece8ca6546200ba16cf6b2f11f",
+      "date": "2026-11-05",
+      "subject": "按已提交目录生成第16轮总览并绑定报告统计",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/OVERVIEW.md",
+        "research/factor-candidates/reviews/2026-11-05-batch3b-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3b-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0103fc256d6956b7b3345c22cd8aa510a11410ee",
+      "date": "2026-11-05",
+      "subject": "B6 第一段跑完先停下，第二段规模看实测再定",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-05-model-szse344-b6.md",
+        "decisions/2026-11-03-szse344-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cd4656068e45709dff0464d64f330b1a59f1c3c8",
+      "date": "2026-11-05",
+      "subject": "Accept all 39 batch3a candidates and record round15 retirement",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/OVERVIEW.md",
+        "research/factor-candidates/families/FAM-AUCTION-IMBALANCE-001.yaml",
+        "research/factor-candidates/families/FAM-AUCTION-INSTABILITY-001.yaml",
+        "research/factor-candidates/families/FAM-AUCTION-REVISION-001.yaml",
+        "research/factor-candidates/families/FAM-BREADTH-CONSTRAINT-001.yaml",
+        "research/factor-candidates/families/FAM-CLOSEAUC-RESID-002.yaml",
+        "research/factor-candidates/families/FAM-LIQCOMMON-INDUSTRY-002.yaml",
+        "research/factor-candidates/families/FAM-LIQUIDITY-COMMON-001.yaml",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-acceptance-r3.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2d864e5e6d17e41f360fbdb2ecef296b19baef44",
+      "date": "2026-11-05",
+      "subject": "登记B6仅第一段授权及原库补验与产物预算",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dfc623ba8b1bdcaf35070326db1d679a57ab2b4c",
+      "date": "2026-11-05",
+      "subject": "Summarize round15 A-E acceptance and artifact closeout",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-round15-integration.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf7568c2e52f20ba6ed0e132ff44e1c63b7e0bc4",
+      "date": "2026-11-05",
+      "subject": "Register round17 factor candidate plan and approved round16 review",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-05-factor-candidates-round17.md",
+        "research/factor-candidates/reviews/2026-11-05-round16-claude-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "54a98a52a5ab2cd33eb2c024b01e7f4670679c36",
+      "date": "2026-11-05",
+      "subject": "Exclude duplicate CLOSEAUC variants at approved correlation threshold",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/families/FAM-CLOSEAUC-RESID-002.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c485b41a7961d2fc8c6e28df61530b98179c7e4b",
+      "date": "2026-11-05",
+      "subject": "Diagnose batch3a snapshot gaps within a persistent twenty-query budget",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_factor_candidates_batch3a_round17.py",
+        "scripts/tests/test_factor_candidates_batch3a_round17.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dd88e5ba92a71e8e81a34bfdc54f2237e249ab80",
+      "date": "2026-11-05",
+      "subject": "Diagnose signed PRESSURE-03 missingness without recomputing factors",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_factor_candidates_batch3b_pressure03.py",
+        "scripts/tests/test_factor_candidates_batch3b_pressure03_missing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fe34d181d1a85fc4d439634e0c8df6f95e64caf9",
+      "date": "2026-11-05",
+      "subject": "Read the inclusive auction endpoint through the second-resolution gateway",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_factor_candidates_batch3a_round17.py",
+        "scripts/tests/test_factor_candidates_batch3a_round17.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fc1170344ca7802413812def8c09cd04cbfc37ea",
+      "date": "2026-11-05",
+      "subject": "Record batch1b 683-day inputs and transfer admission limit",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-10-31-factor-candidates-batch1-compute.md",
+        "research/factor-candidates/reviews/2026-11-05-batch1b-acceptance.json",
+        "research/factor-candidates/reviews/2026-11-05-batch1b-acceptance.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b3d7b10c718d07759c190df2e7fddd1c09db42cb",
+      "date": "2026-11-05",
+      "subject": "发布SZSE344 v2第一段合同与签收恢复和成本排名入口",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/.gitattributes",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/authorization.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/meter-test-r02.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/native-and-storage.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/native-environment.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/native-kernel-continuity.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/native-launch.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/native-ssh-exit.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-close-published.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-morning-published.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-tests-r01.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-tests-r01.txt"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "71288c67dc887effef2e1a6f4facc9ff8c2f5f13",
+      "date": "2026-11-05",
+      "subject": "Report twenty-sample INSTABILITY gap diagnosis by market and year",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch3a-instability-diagnosis.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-instability-diagnosis.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5b4bdd8f286860bf8c608dd498497dfdab5de200",
+      "date": "2026-11-05",
+      "subject": "Validate PRESSURE diagnostics against formal-period pool identities",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_factor_candidates_batch3b_pressure03.py",
+        "scripts/tests/test_factor_candidates_batch3b_pressure03_missing.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0916c125b513a0db6faa4d2cce0de21012c4bca6",
+      "date": "2026-11-05",
+      "subject": "Integrate round17 A-D diagnosis, transfer gate and artifact closeout",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-round17-integration.json",
+        "research/factor-candidates/reviews/2026-11-05-round17-integration.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4703f6cddbda92192b5bb30946c1a200aad60b3a",
+      "date": "2026-11-05",
+      "subject": "State the round17 session A-D handoff boundary precisely",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-round17-integration.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e1302068c7a29ee59d6374ef305a54481354e7cb",
+      "date": "2026-11-05",
+      "subject": "fix(model): bind exclusive checks to the active B6 task",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/authorization.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/exclusive-r03.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/exclusive-r03.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-close-published.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-morning-published.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md",
+        "scripts/measure_szse344_learning_rates.py",
+        "scripts/run_szse344_stage1.py",
+        "scripts/tests/test_run_szse344_stage1.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "528987071df6c5adbdf9d6ed4923d59634b725e8",
+      "date": "2026-11-05",
+      "subject": "Report inputs, evidence interfaces and batches for thirteen reviewed factor families",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-round17-remaining-families.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6e15e97b1e1b65466cc43b6d192ba942c02e6baf",
+      "date": "2026-11-05",
+      "subject": "fix(model): normalize B6 fold dates and preserve cumulative execution",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/authorization.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/entry-r04.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/entry-r04.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-accepted.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-exit-r01.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-exit-r02.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-exit-r03.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-launch-r01.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-launch-r02.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-launch-r03.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-close-published.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-exit-r01.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "345a733ea2833e8aa808a231ac9427233478989d",
+      "date": "2026-11-05",
+      "subject": "docs(model): record B6 first-stage publication and execution identity",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/execution-identity-r02.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-exit-r04.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-launch-r04.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-plan-r04.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/wangly-sync-run-r02.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/wenjie-version.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b78d06fb0c1ef4916c2448f92d2b1f3c4209645",
+      "date": "2026-11-05",
+      "subject": "Report PRESSURE-03 missingness attribution and verified round17 resource closeout",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch3b-pressure03-missing.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3b-pressure03-missing.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4454c1d731ba5399eab18311eb0590d039ffa431",
+      "date": "2026-11-05",
+      "subject": "Register round18 factor candidate plan and approved round17 review",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-05-factor-candidates-round18.md",
+        "research/factor-candidates/reviews/2026-11-05-round17-claude-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "45a16705f09832aac893bb18998a358436d67a03",
+      "date": "2026-11-05",
+      "subject": "Diagnose auction gaps inside and outside the grid with nonmissing controls",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/diagnose_factor_candidates_batch3a_round18.py",
+        "scripts/tests/test_factor_candidates_batch3a_round18.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7acf3453d51c868c5a4798c0c5a142ec37233f6c",
+      "date": "2026-11-05",
+      "subject": "Prepare resumable six-column projection for the approved wangly window",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/project_factor_candidates_batch1b.py",
+        "scripts/tests/test_project_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b7009ed7310e6878b2c57a726d24f3acdc43b8b3",
+      "date": "2026-11-05",
+      "subject": "docs(model): record the B6 first-stage speed gate",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/native-kernel-execution-r02.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/speed-gate-boundary.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/speed-gate-first-observed.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "fb4f0f04598cb59a8be59437dc90276b41bb6020",
+      "date": "2026-11-05",
+      "subject": "Gate projection release on coordination and active model scopes",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/project_factor_candidates_batch1b.py",
+        "scripts/tests/test_project_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "685ff218d749f2720106518ad01de486b6018d9a",
+      "date": "2026-11-05",
+      "subject": "Draft batch4a and batch4c factor preregistration contracts",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/factor_preregister_candidates_batch4a_draft.yaml",
+        "PLAN/factor_preregister_candidates_batch4c_draft.yaml",
+        "research/factor-candidates/reviews/2026-11-05-batch4ac-preregister-draft.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "59742d2ed0f1335b6fbcc8eb8e77bb98515d641d",
+      "date": "2026-11-05",
+      "subject": "Report thirty-sample auction gaps and frame intervals by grid segment",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch3a-instability-diagnosis-r2.json",
+        "research/factor-candidates/reviews/2026-11-05-batch3a-instability-diagnosis-r2.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ade101db62c81a546d590d53571ea7022a84a6da",
+      "date": "2026-11-05",
+      "subject": "Record round18 1b projection preparation and window stop",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch1b-acceptance-r2.json",
+        "research/factor-candidates/reviews/2026-11-05-batch1b-acceptance-r2.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6b73816fc9e66cb71b41ef0585caf5b14c35d23",
+      "date": "2026-11-05",
+      "subject": "Summarize round18 diagnosis and gated 1b handoff",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-round18-integration.json",
+        "research/factor-candidates/reviews/2026-11-05-round18-integration.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aea5a001c4b15e9ae3bd2e7a63571129b08f8987",
+      "date": "2026-11-05",
+      "subject": "修复B6驻留准入与签收恢复",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/authorization.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/native-kernel-recovery-r03.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/recovery-r05.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/recovery-r05.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/recovery-r06.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/recovery-r06.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-close-published.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-exit-r02.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-failure-r02.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-launch-r02.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-morning-published.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4b270ff638a2559c4a7baa46bc1cc4e3d16bc6ac",
+      "date": "2026-11-05",
+      "subject": "记录B6缺口恢复与分配器原库验收",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/arena-native-accepted-r03.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/arena-native-exit-r03.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/arena-native-launch-r03.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-exit-r05.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-launch-r05.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/publication-plan-r05.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/recovery-accepted-r03.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/wangly-sync-run-r03.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "788fae020a17a641a94258a28f0ca2e11530b47e",
+      "date": "2026-11-05",
+      "subject": "释放B6已结束的本机测试产物",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/local-release-inventory.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/local-release-receipt.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/meter-test-r02.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f344d95962c492da9097e50e39d7c470c70c1eee",
+      "date": "2026-11-05",
+      "subject": "Bind 1b projection to B6 r03 and verify inventory before projection",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/project_factor_candidates_batch1b.py",
+        "scripts/tests/test_project_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f699988352acec77c7d339092fa0cd435e396d2b",
+      "date": "2026-11-05",
+      "subject": "Register round19 input checks and approved round18 review",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-05-factor-candidates-round19.md",
+        "research/factor-candidates/reviews/2026-11-05-round18-claude-review.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9e07cd765c6bf3b428a708be47df9a0c88e1c3b9",
+      "date": "2026-11-05",
+      "subject": "Apply approved batch4 decisions and draft INSTABILITY replacement",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/factor_preregister_candidates_batch3a_round19_draft.yaml",
+        "PLAN/factor_preregister_candidates_batch4a_draft.yaml",
+        "PLAN/factor_preregister_candidates_batch4c_draft.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "735443e3547b77fb67130a2bc82035b198607f17",
+      "date": "2026-11-05",
+      "subject": "Preregister round18 ALGOFLOW interpretation and implement 1b calculations",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/factor_preregister_candidates_batch1b_round18_v1.yaml",
+        "scripts/factor_candidates_batch1b.py",
+        "scripts/tests/test_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "983e99c2da949fac5100dc863107c0d764630d74",
+      "date": "2026-11-05",
+      "subject": "Add bounded wenjie batch4 source and minute checks",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/check_factor_candidates_batch4.py",
+        "scripts/tests/test_factor_candidates_batch4.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cc0f5a4aa8c517dfba866bc49955090c71ed3ce4",
+      "date": "2026-11-05",
+      "subject": "Keep batch4 signed readers independent of model dependencies",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/check_factor_candidates_batch4.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6149dcdc78d45eb311e2654cc858fb1a221c796c",
+      "date": "2026-11-05",
+      "subject": "Verify identical signed copy sources without staging collisions",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/project_factor_candidates_batch1b.py",
+        "scripts/tests/test_project_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "42523e55b199db5c689951ffa54b37db9a7da505",
+      "date": "2026-11-05",
+      "subject": "Verify rule0 futures switches from prior close open interest",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/check_factor_candidates_batch4.py",
+        "scripts/tests/test_factor_candidates_batch4.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b37b48ac0e05b5be0134df6d9ab4912c8f5910f2",
+      "date": "2026-11-05",
+      "subject": "Preserve completed batch4 receipts and selection gap diagnostics",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/check_factor_candidates_batch4.py",
+        "scripts/tests/test_factor_candidates_batch4.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8b930744a0db8ed029707092b2e29b6e2cb2ab67",
+      "date": "2026-11-05",
+      "subject": "Coordinate the r03 projection window with local-only metadata polling",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/coordinate_factor_candidates_batch1b.py",
+        "scripts/project_factor_candidates_batch1b.py",
+        "scripts/tests/test_coordinate_factor_candidates_batch1b.py",
+        "scripts/tests/test_project_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b7651e97b218134cf694b5af5e5d01e3874fc71c",
+      "date": "2026-11-05",
+      "subject": "Retain INSTABILITY baseline of twenty valid observations",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/factor_preregister_candidates_batch3a_round19_draft.yaml"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ea0bcfa5c770e86e1391eb3a0f2a4cd30ff0ea61",
+      "date": "2026-11-05",
+      "subject": "Report round19 batch4 input checks and preregistration decisions",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "候选定义、草案、局部不采用与新批次输入预查。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-batch4ac-preregister-draft-r2.json",
+        "research/factor-candidates/reviews/2026-11-05-batch4ac-preregister-draft-r2.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e499c0dc027c5e8fbb29f4be3bac210e0eb37008",
+      "date": "2026-11-05",
+      "subject": "Prepare wenjie 1b execution and independent acceptance with complete signed comparisons",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-round18-integration.md",
+        "scripts/factor_candidates_batch1b.py",
+        "scripts/run_factor_candidates_batch1b.py",
+        "scripts/tests/test_factor_candidates_batch1b.py",
+        "scripts/verify_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "edaa6f73587e5ffcde4bc3afadf0390d3b721b10",
+      "date": "2026-11-05",
+      "subject": "Keep 1b offline calculation and acceptance independent of training imports",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/reviews/2026-11-05-round18-integration.md",
+        "scripts/run_factor_candidates_batch1b.py",
+        "scripts/tests/test_factor_candidates_batch1b.py",
+        "scripts/verify_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f9a615b7a8a4c2a6dc2ad62c141017b7e4c412f2",
+      "date": "2026-11-05",
+      "subject": "完成回调拒绝后取消共享队列派发",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市基准模型学习率、停止规则、第一段运行或恢复。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/callback-green.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/callback-green.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/callback-red.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/callback-red.txt",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/callback-release-inventory.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/callback-release-receipt.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/callback-success-path.json",
+        "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md",
+        "scripts/tests/test_measure_szse344_cohort_queue.py",
+        "因子/algobench/src/algobench/ml/cohort_scheduler.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "60e7037ec36731c6108ce255669e4cacc2ecb2d4",
+      "date": "2026-11-05",
+      "subject": "feat: relay batch1b inputs with bounded native checksum receipts",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/relay_factor_candidates_batch1b.py",
+        "scripts/tests/test_relay_factor_candidates_batch1b.py",
+        "scripts/tests/test_transfer_factor_candidates_batch1b.py",
+        "scripts/transfer_factor_candidates_batch1b.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7ad008c48a239bb30f5ed435fa4e9811a153bd99",
+      "date": "2026-11-05",
+      "subject": "feat: admit the batch1b source scope and publish verified transfer contract",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "候选数值、诊断、生产恢复、输入传输或验收。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/project_factor_candidates_batch1b.py",
+        "scripts/relay_factor_candidates_batch1b.py",
+        "scripts/tests/test_relay_factor_candidates_batch1b.py",
+        "scripts/transfer_factor_candidates_batch1b.py"
+      ]
+    }
+  ]
+}
