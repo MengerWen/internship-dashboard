@@ -63,7 +63,7 @@
     "at": "2026-11-07T01:24:23.185334+00:00"
   },
   "publication": {
-    "status": "build-pending-or-not-deployed",
+    "status": "deployed-online-unverified",
     "checks": [
       {
         "id": 128254589173,
@@ -109,9 +109,26 @@
           ]
         }
       ],
-      "unique_new_active_deployment": null,
-      "version_detail": null,
-      "scope": "与目标SHA的Workers检查和本次前后快照关联。版本列表不含Git SHA。"
+      "unique_new_active_deployment": {
+        "id": "d82e784a-d289-4201-b28e-69000a94b02d",
+        "created_on": "2026-11-07T01:30:51.021986Z",
+        "versions": [
+          {
+            "version_id": "6ac3e65b-885a-4bb6-ace6-01a44969d404",
+            "percentage": 100
+          }
+        ]
+      },
+      "version_detail": {
+        "id": "6ac3e65b-885a-4bb6-ace6-01a44969d404",
+        "number": 276
+      },
+      "scope": "与目标SHA的Workers检查和本次前后快照关联。版本列表不含Git SHA。",
+      "status_query_verified": true
+    },
+    "correction": {
+      "previous_audit_commit": "7f3a9daf094e0d5c4ae059aaa65937719102a9d1",
+      "reason": "部署列表按时间升序返回。上一份收据误用列表首项判断当前部署，改用创建时间和当前部署查询交叉核对。"
     }
   },
   "online_browser": {
