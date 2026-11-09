@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>沪深日内模型基准｜2026-11-09</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #192b36;
+  --muted: #4f626d;
+  --paper: #f2f5f6;
+  --panel: #fff;
+  --rule: #d4dfe3;
+  --navy: #152e3f;
+  --sse: #00657a;
+  --szse: #9e481d;
+  --negative: #892b31;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 15px/1.65 system-ui, "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+h1, h2, h3, p, figure { margin: 0; }
+a { color: var(--sse); text-underline-offset: .2em; }
+:focus-visible { outline: 2px solid #087f9a; outline-offset: 4px; }
+.shell { max-width: 1192px; margin: auto; padding-inline: clamp(16px, 4vw, 44px); }
+.hero { background: var(--navy); color: #fff; border-top: 5px solid #6bc9ce; }
+.hero a { color: #e1f4f5; }
+.topline {
+  display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center;
+  gap: 0 22px; min-height: 58px; border-bottom: 1px solid #587080;
+}
+.topline nav { display: flex; flex-wrap: wrap; gap: 0 18px; }
+.topline a { display: inline-flex; align-items: center; min-height: 44px; font-size: .9rem; }
+.topline time { color: #d2e4ea; }
+.hero-grid {
+  display: grid; grid-template-columns: 1fr minmax(345px, .78fr); align-items: end;
+  gap: 26px 48px; padding-block: clamp(22px, 4vw, 45px);
+}
+h1 { font-size: clamp(2rem, 5vw, 3.35rem); line-height: 1.12; letter-spacing: -.035em; }
+.hero-copy { max-width: 32em; margin-top: 13px; color: #d5e5eb; }
+.hero-score { border-top: 1px solid #7c929f; }
+.hero-score > p { color: #e0edf2; font-size: .86rem; padding-block: 8px; }
+.hero-pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.hero-period { border-top: 1px solid #5b7381; padding-top: 8px; }
+.hero-period h2 { font-size: .95rem; font-weight: 650; }
+.hero-period > div { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.hero-value { display: flex; flex-direction: column; }
+.hero-value small { color: #d9edf2; }
+.hero-value strong { font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.3; }
+.hero-value.sse strong { color: #9ee0e7; }
+.hero-value.szse strong { color: #ffd4b7; }
+main { padding-bottom: 42px; }
+section { scroll-margin-top: 14px; margin-top: 30px; }
+h2 { font-size: clamp(1.25rem, 3vw, 1.65rem); line-height: 1.3; }
+h3 { font-size: 1.05rem; }
+.hint { color: var(--muted); margin-top: 5px; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-block: 16px; }
+fieldset { padding: 0; margin: 0; border: 0; min-width: 0; }
+legend { padding: 0; font-weight: 650; margin-bottom: 5px; }
+.options { display: flex; flex-wrap: wrap; gap: 4px; }
+.options label { position: relative; display: inline-flex; }
+.options input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; }
+.options span {
+  display: inline-flex; align-items: center; min-height: 44px; min-width: 44px;
+  justify-content: center; padding-inline: 11px; border: 1px solid #aebfc7;
+  background: var(--panel); border-radius: 4px; cursor: pointer;
+}
+.options input:checked + span { background: var(--navy); color: #fff; border-color: var(--navy); }
+.options input:focus-visible + span { outline: 2px solid #087f9a; outline-offset: 2px; }
+.chart-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 18px; margin-bottom: 8px; }
+.chart-meta p { color: var(--muted); }
+.chart-key { display: flex; gap: 16px; }
+.chart-key span { display: inline-flex; align-items: center; gap: 7px; }
+.swatch { display: inline-block; width: 11px; height: 11px; background: var(--market); }
+.sse { --market: var(--sse); }
+.szse { --market: var(--szse); }
+.chart-grid, .evidence-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.chart-panel {
+  background: var(--panel); border: 1px solid var(--rule);
+  border-top: 3px solid var(--navy); padding: 13px clamp(10px, 2vw, 20px) 15px;
+}
+.chart-panel figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.chart-panel figcaption small { color: var(--muted); }
+.axis, .bar-row { display: grid; grid-template-columns: 2.2rem minmax(0, 1fr) 4.2rem; gap: 6px; align-items: center; }
+.axis { margin-top: 6px; color: var(--muted); font-size: .8rem; }
+.axis-values { grid-column: 2; display: grid; grid-template-columns: repeat(3, 1fr); }
+.axis-values span:nth-child(2) { text-align: center; }
+.axis-values span:last-child { text-align: right; }
+.stage { margin-top: 7px; border-top: 1px solid var(--rule); padding-top: 6px; }
+.stage h4 { margin: 0 0 2px; font-size: .9rem; }
+.bar-row { min-height: 25px; font-size: .86rem; }
+.bar-track {
+  position: relative; height: 14px; background: #edf2f4;
+  border-inline: 1px solid #b2c2ca;
+}
+.bar-track::after {
+  content: ""; position: absolute; top: -2px; bottom: -2px; left: 50%;
+  width: 1px; background: #526673;
+}
+.bar { position: absolute; top: 1px; bottom: 1px; background: var(--market); }
+.bar-value { text-align: right; font-weight: 700; }
+.table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--rule); }
+#results .table-wrap { margin-top: 10px; }
+table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: .88rem; }
+th, td { padding: .53rem .65rem; border-bottom: 1px solid var(--rule); text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+thead th { background: #e6edf1; }
+thead .sse, thead .szse { border-top: 3px solid var(--market); color: var(--market); }
+table small { color: var(--muted); font-size: .8rem; }
+tbody tr:last-child > * { border-bottom: 0; }
+tbody tr[data-stage="unseen"] { background: #f5f1ed; }
+.negative { color: var(--negative); }
+.samples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+.samples > div { background: #e6edf1; padding: 10px 12px; }
+.samples dt { font-weight: 700; }
+.samples dd { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; margin: 0; font-size: .9rem; }
+.contract-notes { margin: 8px 0 0; padding-left: 1.3em; }
+.contract-notes li { margin-top: 4px; }
+.freeze-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 8px 14px; margin-top: 12px; }
+.freeze, .evidence { background: var(--panel); border: 1px solid var(--rule); border-left: 3px solid var(--market); min-width: 0; }
+.freeze summary { cursor: pointer; min-height: 46px; padding: 10px 12px; }
+.freeze summary code { margin-left: .6rem; }
+.freeze-body { padding: 0 12px 12px; }
+.freeze-body p { color: var(--muted); margin-bottom: 8px; font-size: .9rem; }
+.evidence-grid { margin-top: 12px; }
+.evidence { padding: 12px; }
+.evidence h3 { color: var(--market); }
+.evidence p { margin-top: 4px; }
+.evidence-links { display: flex; flex-wrap: wrap; gap: 0 15px; }
+.evidence-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.revision { color: var(--muted); overflow-wrap: anywhere; font-size: .82rem; }
+code { font: .88em ui-monospace, Consolas, monospace; }
+@media (max-width: 760px) {
+  .hero-grid, .chart-grid, .evidence-grid, .freeze-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-grid { align-items: start; gap: 18px; }
+  .samples { grid-template-columns: minmax(0, 1fr); }
+  .samples dd { justify-content: space-between; }
+  .freeze summary code { display: inline-block; margin-left: .35rem; }
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="shell">
+    <div class="topline">
+      <time datetime="2026-11-09">2026 年 11 月 9 日</time>
+      <nav aria-label="本页导航"><a href="#compare">成绩对照</a><a href="#results">数值表</a><a href="#freeze">冻结配置</a><a href="#evidence">登记证据</a></nav>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <h1>沪深日内模型基准</h1>
+        <p class="hero-copy">沪市 340 列、深市 344 列，双周期均已冻结并完成两段测试。82 日未看段，四组全市场 L5 均转负。</p>
+      </div>
+      <div class="hero-score">
+        <p>未看测试段 · 纯多前 5% · 日均收益（bp）</p>
+        <div class="hero-pairs"><div class="hero-period"><h2>11:30</h2><div><span class="hero-value sse"><small>沪市</small><strong>−31.45</strong></span><span class="hero-value szse"><small>深市</small><strong>−14.23</strong></span></div></div>
+<div class="hero-period"><h2>收盘</h2><div><span class="hero-value sse"><small>沪市</small><strong>−48.94</strong></span><span class="hero-value szse"><small>深市</small><strong>−16.37</strong></span></div></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="shell">
+  <section id="compare" aria-labelledby="compare-heading">
+    <h2 id="compare-heading">两个周期，三个样本阶段</h2>
+    <p class="hint">两幅图共用坐标。选股比例 q 对应纯多的头部比例，或多空两腿合计的比例。</p>
+    <form id="filters" class="filters" hidden aria-label="调整对照图">
+      <fieldset><legend>组合</legend><div class="options">
+        <label><input type="radio" name="strategy" value="L" checked><span>纯多 L</span></label>
+        <label><input type="radio" name="strategy" value="A"><span>多空 A</span></label>
+      </div></fieldset>
+      <fieldset><legend>选股比例</legend><div class="options">
+        <label><input type="radio" name="q" value="1"><span>1%</span></label>
+        <label><input type="radio" name="q" value="5" checked><span>5%</span></label>
+        <label><input type="radio" name="q" value="10"><span>10%</span></label>
+        <label><input type="radio" name="q" value="20"><span>20%</span></label>
+      </div></fieldset>
+      <fieldset><legend>图上指标</legend><div class="options">
+        <label><input type="radio" name="metric" value="0" checked><span>日均 bp</span></label>
+        <label><input type="radio" name="metric" value="1"><span>年化 Sharpe</span></label>
+      </div></fieldset>
+    </form>
+    <div id="charts" hidden>
+      <div class="chart-meta">
+        <p id="chart-status" role="status"></p>
+        <div class="chart-key"><span><i class="swatch sse" aria-hidden="true"></i>沪市</span><span><i class="swatch szse" aria-hidden="true"></i>深市</span></div>
+      </div>
+      <div id="chart-grid" class="chart-grid"></div>
+    </div>
+    <noscript><p>完整成绩可在下表查阅。交互对照图需要 JavaScript。</p></noscript>
+  </section>
+
+  <section id="results" aria-labelledby="results-heading">
+    <h2 id="results-heading">全市场集成成绩</h2>
+    <p id="table-status" class="hint">全组合、全档位。日均收益单位为 bp，Sharpe 按 252 日年化。</p>
+    <div class="table-wrap" role="region" tabindex="0" aria-label="沪深基准数值对照">
+      <table aria-describedby="table-status">
+        <colgroup span="3"></colgroup><colgroup span="3"></colgroup><colgroup span="3"></colgroup>
+        <thead>
+          <tr><th scope="col" rowspan="2">样本</th><th scope="col" rowspan="2">周期</th><th scope="col" rowspan="2">组合</th>
+            <th scope="colgroup" colspan="3" class="sse">沪市</th><th scope="colgroup" colspan="3" class="szse">深市</th></tr>
+          <tr><th scope="col">日均 bp</th><th scope="col">Sharpe</th><th scope="col">t 值</th>
+            <th scope="col">日均 bp</th><th scope="col">Sharpe</th><th scope="col">t 值</th></tr>
+        </thead>
+        <tbody id="score-rows">
+          <tr data-stage="development" data-horizon="morning" data-strategy="L" data-q="1"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>L1</td><td data-value="46.08586467821766">46.09</td><td data-value="5.883912583227128">5.88</td><td data-value="6.504910112605058">6.50</td><td data-value="72.04645521669262">72.05</td><td data-value="7.364178099499293">7.36</td><td data-value="8.141405215130558">8.14</td></tr>
+          <tr data-stage="development" data-horizon="morning" data-strategy="L" data-q="5"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>L5</td><td data-value="21.4380093605766">21.44</td><td data-value="3.451472817460398">3.45</td><td data-value="3.8157467698756506">3.82</td><td data-value="38.247232852489354">38.25</td><td data-value="5.0657247548128295">5.07</td><td data-value="5.600369434309752">5.60</td></tr>
+          <tr data-stage="development" data-horizon="morning" data-strategy="L" data-q="10"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>L10</td><td data-value="13.954129378668851">13.95</td><td data-value="2.336505338306163">2.34</td><td data-value="2.5831038426079838">2.58</td><td data-value="25.894399042373134">25.89</td><td data-value="3.6424483159142516">3.64</td><td data-value="4.026878127383162">4.03</td></tr>
+          <tr data-stage="development" data-horizon="morning" data-strategy="L" data-q="20"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>L20</td><td data-value="9.225510759197334">9.23</td><td data-value="1.6142399000510501">1.61</td><td data-value="1.7846093566967118">1.78</td><td data-value="17.346675245182745">17.35</td><td data-value="2.526477187640944">2.53</td><td data-value="2.793125624265782">2.79</td></tr>
+          <tr data-stage="development" data-horizon="morning" data-strategy="A" data-q="1"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>A1</td><td data-value="8.302354562289178">8.30</td><td data-value="1.8142913478518445">1.81</td><td data-value="2.00577455373758">2.01</td><td data-value="48.01651543917118">48.02</td><td data-value="8.911198838372563">8.91</td><td data-value="9.85170099304423">9.85</td></tr>
+          <tr data-stage="development" data-horizon="morning" data-strategy="A" data-q="5"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>A5</td><td class="negative" data-value="-5.842813967842989">−5.84</td><td class="negative" data-value="-2.2096812919037534">−2.21</td><td class="negative" data-value="-2.4428945838375116">−2.44</td><td data-value="9.046823361213018">9.05</td><td data-value="2.723071036875012">2.72</td><td data-value="3.0104683022661494">3.01</td></tr>
+          <tr data-stage="development" data-horizon="morning" data-strategy="A" data-q="10"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>A10</td><td class="negative" data-value="-9.246674265900925">−9.25</td><td class="negative" data-value="-3.9802333977965523">−3.98</td><td class="negative" data-value="-4.400313586177518">−4.40</td><td data-value="0.951969844428205">0.95</td><td data-value="0.3405204128131619">0.34</td><td data-value="0.3764594809193958">0.38</td></tr>
+          <tr data-stage="development" data-horizon="morning" data-strategy="A" data-q="20"><th scope="row">开发段 OOF <small>308 日</small></th><td>11:30</td><td>A20</td><td class="negative" data-value="-11.159008004149376">−11.16</td><td class="negative" data-value="-5.5828859293154505">−5.58</td><td class="negative" data-value="-6.172112624964655">−6.17</td><td class="negative" data-value="-4.626936896162163">−4.63</td><td class="negative" data-value="-2.008558051495828">−2.01</td><td class="negative" data-value="-2.2205444754863337">−2.22</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="L" data-q="1"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>L1</td><td data-value="37.61178201202242">37.61</td><td data-value="3.6299457752279904">3.63</td><td data-value="4.013056048589001">4.01</td><td data-value="61.873645172045556">61.87</td><td data-value="5.075481530352697">5.08</td><td data-value="5.611155955519573">5.61</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="L" data-q="5"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>L5</td><td data-value="16.840301817052314">16.84</td><td data-value="1.8887675988540475">1.89</td><td data-value="2.0881111471931257">2.09</td><td data-value="34.02080317776844">34.02</td><td data-value="3.2496991459815434">3.25</td><td data-value="3.5926775829197197">3.59</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="L" data-q="10"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>L10</td><td data-value="11.642481118207712">11.64</td><td data-value="1.378040259075286">1.38</td><td data-value="1.5234808284522905">1.52</td><td data-value="23.209691441159222">23.21</td><td data-value="2.2833197332533217">2.28</td><td data-value="2.524304943871882">2.52</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="L" data-q="20"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>L20</td><td data-value="7.272655691351873">7.27</td><td data-value="0.9009977526898483">0.90</td><td data-value="0.9960904942085516">1.00</td><td data-value="14.983006860596484">14.98</td><td data-value="1.5223072110973959">1.52</td><td data-value="1.682973944954138">1.68</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="A" data-q="1"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>A1</td><td data-value="31.814903450512276">31.81</td><td data-value="5.588127713676815">5.59</td><td data-value="6.1779076356175215">6.18</td><td data-value="72.92904063836049">72.93</td><td data-value="11.336028942441692">11.34</td><td data-value="12.532451538229475">12.53</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="A" data-q="5"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>A5</td><td class="negative" data-value="-0.2810272613146265">−0.28</td><td class="negative" data-value="-0.08983818505426089">−0.09</td><td class="negative" data-value="-0.09931985055716587">−0.10</td><td data-value="23.79733910081595">23.80</td><td data-value="6.6012195665948115">6.60</td><td data-value="7.297922820382494">7.30</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="A" data-q="10"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>A10</td><td class="negative" data-value="-5.201597754055647">−5.20</td><td class="negative" data-value="-2.022780553130338">−2.02</td><td class="negative" data-value="-2.2362680426536286">−2.24</td><td data-value="9.078557980853933">9.08</td><td data-value="2.9774845024608902">2.98</td><td data-value="3.291732971253601">3.29</td></tr>
+          <tr data-stage="development" data-horizon="close" data-strategy="A" data-q="20"><th scope="row">开发段 OOF <small>308 日</small></th><td>收盘</td><td>A20</td><td class="negative" data-value="-8.089818873758666">−8.09</td><td class="negative" data-value="-3.9399478238711523">−3.94</td><td class="negative" data-value="-4.355776208452625">−4.36</td><td data-value="0.37493016789454164">0.37</td><td data-value="0.14353849329453808">0.14</td><td data-value="0.15868777507697576">0.16</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="L" data-q="1"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>L1</td><td data-value="35.60672883104549">35.61</td><td data-value="4.330722090218334">4.33</td><td data-value="3.6192316298436427">3.62</td><td data-value="29.101903102632104">29.10</td><td data-value="3.2962024409106987">3.30</td><td data-value="2.754672288821558">2.75</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="L" data-q="5"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>L5</td><td data-value="19.404383511452956">19.40</td><td data-value="2.7134421279203558">2.71</td><td data-value="2.267653146642916">2.27</td><td data-value="17.175722230078655">17.18</td><td data-value="2.502244609454933">2.50</td><td data-value="2.091153079667709">2.09</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="L" data-q="10"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>L10</td><td data-value="12.508198729037911">12.51</td><td data-value="1.899629845806395">1.90</td><td data-value="1.587541356778886">1.59</td><td data-value="11.680886474840053">11.68</td><td data-value="1.816527552141299">1.82</td><td data-value="1.5180918646434745">1.52</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="L" data-q="20"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>L20</td><td data-value="5.372724822657393">5.37</td><td data-value="0.9310614315002279">0.93</td><td data-value="0.7780981813227456">0.78</td><td data-value="5.144306244880201">5.14</td><td data-value="0.8683285453015586">0.87</td><td data-value="0.7256716249121126">0.73</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="A" data-q="1"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>A1</td><td data-value="10.482532277627175">10.48</td><td data-value="2.110763550286114">2.11</td><td data-value="1.7639880937110486">1.76</td><td data-value="23.022949065740313">23.02</td><td data-value="4.326251157430187">4.33</td><td data-value="3.61549522260608">3.62</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="A" data-q="5"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>A5</td><td class="negative" data-value="-0.40121375923247443">−0.40</td><td class="negative" data-value="-0.09988570266514002">−0.10</td><td class="negative" data-value="-0.08347556987583259">−0.08</td><td data-value="4.998710027861644">5.00</td><td data-value="1.4240406415172697">1.42</td><td data-value="1.1900862776679118">1.19</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="A" data-q="10"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>A10</td><td class="negative" data-value="-2.823816504913395">−2.82</td><td class="negative" data-value="-0.7308530116042986">−0.73</td><td class="negative" data-value="-0.6107818237377144">−0.61</td><td data-value="1.0043193125989403">1.00</td><td data-value="0.30125955976988633">0.30</td><td data-value="0.25176589603258864">0.25</td></tr>
+          <tr data-stage="seen" data-horizon="morning" data-strategy="A" data-q="20"><th scope="row">已看测试段 <small>176 日</small></th><td>11:30</td><td>A20</td><td class="negative" data-value="-4.603358397754875">−4.60</td><td class="negative" data-value="-1.3154319537367316">−1.32</td><td class="negative" data-value="-1.0993208141026154">−1.10</td><td class="negative" data-value="-1.6780329779163758">−1.68</td><td class="negative" data-value="-0.5569479035068224">−0.56</td><td class="negative" data-value="-0.4654474303719115">−0.47</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="L" data-q="1"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>L1</td><td data-value="41.330512902538196">41.33</td><td data-value="3.7667659730888956">3.77</td><td data-value="3.14792735899957">3.15</td><td data-value="32.33629448559415">32.34</td><td data-value="3.0276108307694862">3.03</td><td data-value="2.530207354179516">2.53</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="L" data-q="5"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>L5</td><td data-value="24.173327763102858">24.17</td><td data-value="2.469432266686918">2.47</td><td data-value="2.0637314473575916">2.06</td><td data-value="21.872459022524918">21.87</td><td data-value="2.457633516446858">2.46</td><td data-value="2.053871103245948">2.05</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="L" data-q="10"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>L10</td><td data-value="16.276560251318152">16.28</td><td data-value="1.80522336886712">1.81</td><td data-value="1.5086448355330486">1.51</td><td data-value="15.887979477856002">15.89</td><td data-value="1.8769704833705863">1.88</td><td data-value="1.56860468073934">1.57</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="L" data-q="20"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>L20</td><td data-value="7.352441503374687">7.35</td><td data-value="0.9422996938885216">0.94</td><td data-value="0.7874901196306928">0.79</td><td data-value="9.59250748441642">9.59</td><td data-value="1.2060046765193613">1.21</td><td data-value="1.0078712464272144">1.01</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="A" data-q="1"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>A1</td><td data-value="30.909795068700774">30.91</td><td data-value="5.082585283324421">5.08</td><td data-value="4.2475718911481035">4.25</td><td data-value="46.529202268287904">46.53</td><td data-value="7.796944631000305">7.80</td><td data-value="6.515991568332942">6.52</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="A" data-q="5"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>A5</td><td data-value="9.973337048265584">9.97</td><td data-value="2.3856164503078694">2.39</td><td data-value="1.993685656516987">1.99</td><td data-value="15.667256329354554">15.67</td><td data-value="3.923469798011696">3.92</td><td data-value="3.2788864526248758">3.28</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="A" data-q="10"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>A10</td><td data-value="3.2947812853363505">3.29</td><td data-value="0.8224972959988326">0.82</td><td data-value="0.6873699505824831">0.69</td><td data-value="8.310198308669193">8.31</td><td data-value="2.312145867513809">2.31</td><td data-value="1.9322854900847175">1.93</td></tr>
+          <tr data-stage="seen" data-horizon="close" data-strategy="A" data-q="20"><th scope="row">已看测试段 <small>176 日</small></th><td>收盘</td><td>A20</td><td class="negative" data-value="-0.8601324038743612">−0.86</td><td class="negative" data-value="-0.24189977500699855">−0.24</td><td class="negative" data-value="-0.20215827723853136">−0.20</td><td data-value="3.101810518212813">3.10</td><td data-value="0.957008419401574">0.96</td><td data-value="0.7997823617793557">0.80</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="L" data-q="1"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>L1</td><td data-value="2.001123861522666">2.00</td><td data-value="0.19466098121084635">0.19</td><td data-value="0.11104156242627998">0.11</td><td data-value="12.596274151628684">12.60</td><td data-value="1.3667559785866925">1.37</td><td data-value="0.7796463285743948">0.78</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="L" data-q="5"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>L5</td><td class="negative" data-value="-31.446630106542667">−31.45</td><td class="negative" data-value="-2.8182690467663707">−2.82</td><td class="negative" data-value="-1.6076411222421367">−1.61</td><td class="negative" data-value="-14.228231787496497">−14.23</td><td class="negative" data-value="-1.647573966488015">−1.65</td><td class="negative" data-value="-0.9398349187068561">−0.94</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="L" data-q="10"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>L10</td><td class="negative" data-value="-34.740437888761974">−34.74</td><td class="negative" data-value="-3.314326435156281">−3.31</td><td class="negative" data-value="-1.8906099386802533">−1.89</td><td class="negative" data-value="-23.021891352019946">−23.02</td><td class="negative" data-value="-2.6519866736030067">−2.65</td><td class="negative" data-value="-1.512787729409342">−1.51</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="L" data-q="20"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>L20</td><td class="negative" data-value="-33.193934620921226">−33.19</td><td class="negative" data-value="-3.6395680855687322">−3.64</td><td class="negative" data-value="-2.076139369402594">−2.08</td><td class="negative" data-value="-27.604541158441474">−27.60</td><td class="negative" data-value="-3.2222090854547556">−3.22</td><td class="negative" data-value="-1.8380629188625217">−1.84</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="A" data-q="1"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>A1</td><td data-value="2.779155429863553">2.78</td><td data-value="0.501532576126599">0.50</td><td data-value="0.2860920586876796">0.29</td><td data-value="10.096920999975323">10.10</td><td data-value="1.897860648772613">1.90</td><td data-value="1.0826073638188465">1.08</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="A" data-q="5"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>A5</td><td class="negative" data-value="-30.392040390132003">−30.39</td><td class="negative" data-value="-5.167277508428587">−5.17</td><td class="negative" data-value="-2.947599279819692">−2.95</td><td class="negative" data-value="-15.481827962457078">−15.48</td><td class="negative" data-value="-3.5139782435666764">−3.51</td><td class="negative" data-value="-2.004498446840549">−2.00</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="A" data-q="10"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>A10</td><td class="negative" data-value="-35.013725165275446">−35.01</td><td class="negative" data-value="-5.762348349621506">−5.76</td><td class="negative" data-value="-3.2870488990980977">−3.29</td><td class="negative" data-value="-23.15619507310987">−23.16</td><td class="negative" data-value="-5.380515453461916">−5.38</td><td class="negative" data-value="-3.0692378045912436">−3.07</td></tr>
+          <tr data-stage="unseen" data-horizon="morning" data-strategy="A" data-q="20"><th scope="row">未看测试段 <small>82 日</small></th><td>11:30</td><td>A20</td><td class="negative" data-value="-35.022177079427415">−35.02</td><td class="negative" data-value="-6.31363388733164">−6.31</td><td class="negative" data-value="-3.6015218205308717">−3.60</td><td class="negative" data-value="-26.48777678001289">−26.49</td><td class="negative" data-value="-6.463863546352878">−6.46</td><td class="negative" data-value="-3.6872181730136355">−3.69</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="L" data-q="1"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>L1</td><td class="negative" data-value="-38.39846213524754">−38.40</td><td class="negative" data-value="-2.455287946657707">−2.46</td><td class="negative" data-value="-1.4005837641801293">−1.40</td><td data-value="3.9001463691390206">3.90</td><td data-value="0.2920807841202311">0.29</td><td data-value="0.166613290561161">0.17</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="L" data-q="5"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>L5</td><td class="negative" data-value="-48.93636446703199">−48.94</td><td class="negative" data-value="-2.9735166259342476">−2.97</td><td class="negative" data-value="-1.6961998752416727">−1.70</td><td class="negative" data-value="-16.367568713715023">−16.37</td><td class="negative" data-value="-1.1874332591875711">−1.19</td><td class="negative" data-value="-0.6773542574220361">−0.68</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="L" data-q="10"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>L10</td><td class="negative" data-value="-43.358237974335054">−43.36</td><td class="negative" data-value="-2.8849095173926225">−2.88</td><td class="negative" data-value="-1.645655222105049">−1.65</td><td class="negative" data-value="-26.671378828157692">−26.67</td><td class="negative" data-value="-1.9716040459128172">−1.97</td><td class="negative" data-value="-1.1246732261510644">−1.12</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="L" data-q="20"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>L20</td><td class="negative" data-value="-33.68567781267198">−33.69</td><td class="negative" data-value="-2.5912830773452997">−2.59</td><td class="negative" data-value="-1.4781602343077491">−1.48</td><td class="negative" data-value="-27.538039131794957">−27.54</td><td class="negative" data-value="-2.119192942045756">−2.12</td><td class="negative" data-value="-1.208863193351632">−1.21</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="A" data-q="1"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>A1</td><td data-value="3.832203563142008">3.83</td><td data-value="0.4784336314497321">0.48</td><td data-value="0.27291559727583004">0.27</td><td data-value="38.71754364035176">38.72</td><td data-value="5.236826606704561">5.24</td><td data-value="2.9872725645728297">2.99</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="A" data-q="5"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>A5</td><td class="negative" data-value="-20.836135902293442">−20.84</td><td class="negative" data-value="-3.110829597568331">−3.11</td><td class="negative" data-value="-1.7745280888199697">−1.77</td><td class="negative" data-value="-12.769398249936316">−12.77</td><td class="negative" data-value="-2.3086887534221057">−2.31</td><td class="negative" data-value="-1.3169583587904317">−1.32</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="A" data-q="10"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>A10</td><td class="negative" data-value="-30.387352986274724">−30.39</td><td class="negative" data-value="-4.445671735894836">−4.45</td><td class="negative" data-value="-2.5359696253324384">−2.54</td><td class="negative" data-value="-20.281948903088303">−20.28</td><td class="negative" data-value="-3.5288490846566463">−3.53</td><td class="negative" data-value="-2.0129813046734424">−2.01</td></tr>
+          <tr data-stage="unseen" data-horizon="close" data-strategy="A" data-q="20"><th scope="row">未看测试段 <small>82 日</small></th><td>收盘</td><td>A20</td><td class="negative" data-value="-31.12576939799743">−31.13</td><td class="negative" data-value="-5.086192380418067">−5.09</td><td class="negative" data-value="-2.9013454325010533">−2.90</td><td class="negative" data-value="-26.499551510510134">−26.50</td><td class="negative" data-value="-4.929959916657772">−4.93</td><td class="negative" data-value="-2.8122248662235223">−2.81</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint">在 5% 档，已看段的沪市 L5 两周期都略高于深市，未看段两周期都更低。切到 1% 档，未看段的四组 A1 均为正，沪市收盘 L1 仍为负。</p>
+  </section>
+
+  <section id="contract" aria-labelledby="contract-heading">
+    <h2 id="contract-heading">样本与成交口径</h2>
+    <dl class="samples"><div><dt>开发段 OOF</dt><dd>2024-07-01 至 2025-09-30<strong>308 日</strong></dd></div>
+<div><dt>已看测试段</dt><dd>2025-10-09 至 2026-06-30<strong>176 日</strong></dd></div>
+<div><dt>未看测试段</dt><dd>2026-07-01 至 2026-10-30<strong>82 日</strong></dd></div></dl>
+    <ul class="contract-notes">
+      <li>开发期共 425 个交易日。先用 15 折扩张训练生成 308 日 OOF，再以全部开发数据拟合最终模型。已看段曾被旧信号研究使用，未看段在冻结后首次用于评价。</li>
+      <li>09:35 截止信息，09:35–09:36 进场。11:30 周期在 [11:00, 11:30) 出场，收盘周期在 [14:27, 14:57) 出场。买入按卖一、卖出按买一时间加权均价。</li>
+      <li>纯多 L 买分数最高的 q。多空 A 在头尾各取 q/2，两腿各用一半资金，按各腿实际成交股票等权。每天计算组合收益，再按交易日等权。</li>
+      <li>图表使用对手价绝对毛收益，假设已有底仓和一档报价量可成交，未计计算与下单延迟、手续费和印花税。沪市 H13 的双侧无报价情形按登记规则处理。</li>
+    </ul>
+  </section>
+
+  <section id="freeze" aria-labelledby="freeze-heading">
+    <h2 id="freeze-heading">冻结配置</h2>
+    <p class="hint">每个市场和周期均为 5 套树 × 5 个种子，25 个最终模型的预测等权平均。种子为 20260918–20260922，学习率为 0.10。</p>
+    <div class="freeze-grid">
+<details class="freeze sse">
+  <summary><strong>沪市 11:30</strong><code>R1-a0-rolling_252</code></summary>
+  <div class="freeze-body">
+    <p>H9，先过 Sharpe ≥ 3，再按 L5 排序。种子标准差使用开发段绝对 L5，在同一套树的五个种子间计算。</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="沪市 11:30 冻结成员">
+      <table><thead><tr><th scope="col">树 ID</th><th scope="col">轮数</th><th scope="col">检查点 L5（bp）</th><th scope="col">检查点 Sharpe</th><th scope="col">种子标准差（bp）</th></tr></thead>
+      <tbody><tr><th scope="row"><code>t330-2e2daecdec4b64cd</code></th><td>170</td><td>21.92</td><td>3.66</td><td>0.74</td></tr><tr><th scope="row"><code>t330-f3f937c924b1bf58</code></th><td>200</td><td>21.57</td><td>3.49</td><td>1.13</td></tr><tr><th scope="row"><code>t330-5173e747443d3aa7</code></th><td>100</td><td>21.52</td><td>3.48</td><td>1.11</td></tr><tr><th scope="row"><code>t330-629ac830010da9bf</code></th><td>50</td><td>21.17</td><td>3.48</td><td>0.43</td></tr><tr><th scope="row"><code>t330-210170a794dc5a4c</code></th><td>60</td><td>21.14</td><td>3.35</td><td>1.03</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+<details class="freeze sse">
+  <summary><strong>沪市 收盘</strong><code>R1-a0-full_hl120</code></summary>
+  <div class="freeze-body">
+    <p>H14，按 L5 排序，记录 Sharpe。种子标准差使用开发段绝对 L5，在同一套树的五个种子间计算。</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="沪市 收盘 冻结成员">
+      <table><thead><tr><th scope="col">树 ID</th><th scope="col">轮数</th><th scope="col">检查点 L5（bp）</th><th scope="col">检查点 Sharpe</th><th scope="col">种子标准差（bp）</th></tr></thead>
+      <tbody><tr><th scope="row"><code>t330-25e7bb54e67326f1</code></th><td>90</td><td>17.33</td><td>1.94</td><td>1.40</td></tr><tr><th scope="row"><code>t330-5173e747443d3aa7</code></th><td>90</td><td>17.14</td><td>1.95</td><td>1.21</td></tr><tr><th scope="row"><code>t330-8163f87e94fa3686</code></th><td>120</td><td>16.30</td><td>1.82</td><td>1.17</td></tr><tr><th scope="row"><code>t330-5de07a79d06558f5</code></th><td>190</td><td>16.28</td><td>1.90</td><td>0.57</td></tr><tr><th scope="row"><code>t330-629ac830010da9bf</code></th><td>100</td><td>16.08</td><td>1.87</td><td>0.89</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+<details class="freeze szse">
+  <summary><strong>深市 11:30</strong><code>R1-a0-full_no_decay</code></summary>
+  <div class="freeze-body">
+    <p>D18–D20，先过 Sharpe ≥ 3，再按 L5 排序，绝对口径复核后沿用冻结成员。种子标准差使用D19 开发段历史超额 L5，在同一套树的五个种子间计算。</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="深市 11:30 冻结成员">
+      <table><thead><tr><th scope="col">树 ID</th><th scope="col">轮数</th><th scope="col">种子标准差（bp）</th></tr></thead>
+      <tbody><tr><th scope="row"><code>t330-5173e747443d3aa7</code></th><td>110</td><td>0.95</td></tr><tr><th scope="row"><code>t330-40ba810a472e4896</code></th><td>170</td><td>0.53</td></tr><tr><th scope="row"><code>t330-f3f937c924b1bf58</code></th><td>60</td><td>0.43</td></tr><tr><th scope="row"><code>t330-210170a794dc5a4c</code></th><td>50</td><td>0.92</td></tr><tr><th scope="row"><code>t330-e77755d77e29752f</code></th><td>60</td><td>0.68</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+<details class="freeze szse">
+  <summary><strong>深市 收盘</strong><code>R1-a0-full_no_decay</code></summary>
+  <div class="freeze-body">
+    <p>D18–D20，先过 Sharpe ≥ 3，再按 L5 排序，绝对口径复核后沿用冻结成员。种子标准差使用D19 开发段历史超额 L5，在同一套树的五个种子间计算。</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="深市 收盘 冻结成员">
+      <table><thead><tr><th scope="col">树 ID</th><th scope="col">轮数</th><th scope="col">种子标准差（bp）</th></tr></thead>
+      <tbody><tr><th scope="row"><code>t330-25e7bb54e67326f1</code></th><td>90</td><td>1.74</td></tr><tr><th scope="row"><code>t330-8f0ac4eb66eaa045</code></th><td>100</td><td>1.24</td></tr><tr><th scope="row"><code>t330-e77755d77e29752f</code></th><td>60</td><td>0.55</td></tr><tr><th scope="row"><code>t330-34e9f4cf59dcf568</code></th><td>50</td><td>1.53</td></tr><tr><th scope="row"><code>t330-8163f87e94fa3686</code></th><td>110</td><td>1.39</td></tr></tbody></table>
+    </div>
+  </div>
+</details>
+    </div>
+  </section>
+
+  <section id="evidence" aria-labelledby="evidence-heading">
+    <h2 id="evidence-heading">登记证据</h2>
+    <p class="hint">图和数值表取自以下固定版本的登记文件。原始链接也列在同日汇报正文。</p>
+    <div class="evidence-grid">
+<article class="evidence sse">
+  <h3>沪市 <code>sse340-baseline-v1</code></h3>
+  <p>118 个登记对象通过 S3 字节数与 SHA-256 读回。沿 wenjie 的 S3FS 索引直接访问目录仍遇到权限限制。</p>
+  <p class="evidence-links"><a href="https://github.com/MengerWen/sirui-quant-research/blob/9cc02ee6f6c2962f179ca01c2e2050be6fef6353/reports/2026-11/2026-11-09-model-sse340-baseline-registration.md" target="_blank" rel="noopener">登记报告</a>
+    <a href="https://github.com/MengerWen/sirui-quant-research/blob/9cc02ee6f6c2962f179ca01c2e2050be6fef6353/reports/2026-11/2026-11-09-model-sse340-baseline-registration.json" target="_blank" rel="noopener">登记 JSON</a></p>
+  <p class="revision">来源提交 <code>9cc02ee6f6c2962f179ca01c2e2050be6fef6353</code></p>
+</article>
+<article class="evidence szse">
+  <h3>深市 <code>szse344-baseline-v1</code></h3>
+  <p>登记包含冻结模型、预测和逐日评价。当前表格使用 D20 的绝对 L 与 D23 的 A。</p>
+  <p class="evidence-links"><a href="https://github.com/MengerWen/sirui-quant-research/blob/31ce1672cbed55ba89175ea5a565c4a6b0eb8c96/reports/2026-11/2026-11-08-model-szse344-baseline-registration.md" target="_blank" rel="noopener">登记报告</a>
+    <a href="https://github.com/MengerWen/sirui-quant-research/blob/31ce1672cbed55ba89175ea5a565c4a6b0eb8c96/reports/2026-11/2026-11-08-model-szse344-baseline-registration.json" target="_blank" rel="noopener">登记 JSON</a></p>
+  <p class="revision">来源提交 <code>31ce1672cbed55ba89175ea5a565c4a6b0eb8c96</code></p>
+</article>
+    </div>
+  </section>
+</main>
+<script>
+(() => {
+  const form = document.getElementById('filters');
+  const rows = Array.from(document.querySelectorAll('#score-rows tr'));
+  const grid = document.getElementById('chart-grid');
+  const horizons = [
+    { key: 'morning', label: '11:30', window: '[11:00, 11:30)' },
+    { key: 'close', label: '收盘', window: '[14:27, 14:57)' }
+  ];
+  const markets = [{ key: 'sse', label: '沪市' }, { key: 'szse', label: '深市' }];
+  const number = value => value.toFixed(2).replace('-', '−');
+
+  function bar(market, value, limit, unit) {
+    const width = Math.abs(value) / limit * 50;
+    const left = value < 0 ? 50 - width : 50;
+    return '<div class="bar-row ' + market.key + '">' +
+      '<span>' + market.label + '</span>' +
+      '<span class="bar-track" aria-hidden="true"><i class="bar" style="left:' + left +
+      '%;width:' + width + '%"></i></span>' +
+      '<span class="bar-value" aria-label="' + number(value) + ' ' + unit + '">' + number(value) + '</span></div>';
+  }
+
+  function render() {
+    const selection = new FormData(form);
+    const strategy = selection.get('strategy');
+    const q = selection.get('q');
+    const metric = Number(selection.get('metric'));
+    const metricLabel = metric === 0 ? '日均收益（bp）' : '年化 Sharpe';
+    const unit = metric === 0 ? 'bp' : 'Sharpe';
+    const portfolio = (strategy === 'L' ? '纯多 ' : '多空 ') + strategy + q;
+    const active = [];
+    for (const row of rows) {
+      const match = row.dataset.strategy === strategy && row.dataset.q === q;
+      row.hidden = !match;
+      if (!match) continue;
+      active.push({
+        horizon: row.dataset.horizon,
+        stage: row.cells[0].textContent,
+        values: [Number(row.cells[3 + metric].dataset.value), Number(row.cells[6 + metric].dataset.value)]
+      });
+    }
+    const step = metric === 0 ? 10 : 1;
+    const maximum = Math.max(...active.flatMap(row => row.values.map(Math.abs)));
+    const limit = Math.max(step, Math.ceil(maximum / step) * step);
+    const ticks = '<div class="axis" aria-hidden="true"><div class="axis-values"><span>−' +
+      limit + '</span><span>0</span><span>' + limit + '</span></div></div>';
+
+    grid.innerHTML = horizons.map(horizon => {
+      const stages = active.filter(row => row.horizon === horizon.key).map(row =>
+        '<div class="stage"><h4>' + row.stage + '</h4>' +
+        markets.map((market, i) => bar(market, row.values[i], limit, unit)).join('') + '</div>'
+      ).join('');
+      return '<figure class="chart-panel" aria-label="' + horizon.label + ' ' + portfolio + ' ' + metricLabel +
+        '"><figcaption><h3>' + horizon.label + '</h3><small>' + horizon.window +
+        '</small></figcaption>' + ticks + stages + '</figure>';
+    }).join('');
+    document.getElementById('chart-status').textContent = portfolio + ' · ' + metricLabel;
+    document.getElementById('table-status').textContent = portfolio + ' · 日均收益单位为 bp，Sharpe 按 252 日年化。';
+  }
+
+  form.addEventListener('change', render);
+  render();
+  form.hidden = false;
+  document.getElementById('charts').hidden = false;
+})();
+</script>
+</body>
+</html>
