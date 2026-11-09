@@ -3,20 +3,25 @@
 数据只读研究仓库已提交的证据和报告，来源及 SHA-256 写入 source.json。
 
 用法：python scripts/build_model_line_figures_20261107.py <sirui-quant-research 仓库根>
+生成全列相关热力图时追加 --correlation-npz <已签收的 mean-correlation.npz>
 """
 
 from __future__ import annotations
 
+import argparse
 import hashlib
+import io
 import json
 import subprocess
-import sys
+from itertools import groupby
 from pathlib import Path
 
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
 from matplotlib.patches import FancyBboxPatch, Rectangle  # noqa: E402
 
@@ -154,6 +159,7 @@ def canvas(width, height):
 
 COLS = (0.05, 4.25)
 W = 3.7
+CORRELATION_FIGURE = "factor-correlation-heatmap.png"
 
 
 def wrap_down(ax, src_x, src_y, dst_x, dst_y, **kw):
@@ -512,6 +518,76 @@ def shares(eigs: list[float]) -> list[float]:
     return out
 
 
+def factor_correlation_heatmap(path: Path, evidence: dict) -> None:
+    docs = evidence["documents"]
+    s1 = docs["s1.json"]["value"]
+    receipt = s1["artifacts"]["correlation"]
+    raw = path.read_bytes()
+    if len(raw) != receipt["bytes"] or hashlib.sha256(raw).hexdigest() != receipt["sha256"]:
+        raise ValueError("相关矩阵与 S1 签收字节不符")
+    with np.load(io.BytesIO(raw), allow_pickle=False) as arrays:
+        matrix = arrays["correlation"]
+        counts = arrays["pair_day_counts"]
+        columns = arrays["columns"].tolist()
+    groups = docs["groups.json"]["value"]["rows"]
+    if columns != docs["inputs.json"]["value"]["columns"] or columns != [row["column"] for row in groups]:
+        raise ValueError("相关矩阵列序与 S1 输入或分组不符")
+    size = s1["columns"]
+    if (
+        len(columns) != size
+        or matrix.shape != (size, size)
+        or counts.shape != matrix.shape
+        or not np.all(counts == s1["days"])
+        or not np.isfinite(matrix).all()
+        or not np.array_equal(matrix, matrix.T)
+        or not np.all(np.diag(matrix) == 1.0)
+        or np.any(np.abs(matrix) > 1.0)
+    ):
+        raise ValueError("S1 矩阵的形状、覆盖天数或数值无效")
+
+    palette = {
+        "algorithm": ("算法因子", "#596c72"),
+        "cancel_phase": ("撤单相位", "#b59850"),
+        "depth_match": ("深度匹配", "#739588"),
+    }
+    scale = LinearSegmentedColormap.from_list("signed_spearman", [BLUE, "#f8f5ed", CORAL])
+    fig, ax = plt.subplots(figsize=(7.7, 7.1))
+    fig.subplots_adjust(left=0.135, right=0.89, top=0.79, bottom=0.16)
+    fig.text(0.075, 0.94, f"深市 {size} 列因子的两两相关", color=INK, fontsize=16, fontweight="bold")
+    fig.text(0.075, 0.891, f"逐日截面 Spearman 相关 · {s1['days']} 个开发日等权平均",
+             color=MUTED, fontsize=10)
+    plotted = ax.imshow(matrix, cmap=scale, vmin=-1, vmax=1, interpolation="nearest", origin="upper")
+    ax.grid(False)
+    ticks = [*range(0, size, 64), size - 1]
+    ax.set_xticks(ticks)
+    ax.set_yticks(ticks)
+    ax.set_xlabel("模型因子列号", fontsize=9.5)
+    ax.set_ylabel("模型因子列号", fontsize=9.5)
+    ax.tick_params(labelsize=8, length=2)
+    start = 0
+    for category, rows in groupby(groups, key=lambda row: row["category"]):
+        length = len(list(rows))
+        _, color = palette[category]
+        edge = start - 0.5
+        ax.add_patch(Rectangle((edge, -9), length, 4, facecolor=color, linewidth=0, clip_on=False))
+        if start:
+            ax.axvline(edge, color=INK, alpha=0.34, linewidth=0.5)
+            ax.axhline(edge, color=INK, alpha=0.34, linewidth=0.5)
+        start += length
+    colorbar = fig.colorbar(plotted, ax=ax, fraction=0.046, pad=0.045, ticks=[-1, -0.5, 0, 0.5, 1])
+    colorbar.set_label("有符号 Spearman 相关系数", fontsize=9.5)
+    colorbar.ax.tick_params(labelsize=8)
+    handles = [
+        Line2D([], [], marker="s", linestyle="none", color=color,
+               label=f"{label} {s1['category_counts'][category]} 列")
+        for category, (label, color) in palette.items()
+    ]
+    fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.07, 0.055), ncol=3, fontsize=9)
+    fig.text(0.075, 0.032, "顶部色带标出因子大类。保留原模型列序及对角线，列号从 0 开始。",
+             color=MUTED, fontsize=9)
+    save(fig, CORRELATION_FIGURE)
+
+
 def pca_cumulative(s1: dict) -> None:
     series = [
         ("因子值（344 列）", GOLD, shares(s1["feature_pca"]["all"]["eigenvalues"])),
@@ -618,7 +694,11 @@ def comparison_flow() -> None:
 
 
 def main() -> None:
-    repo = Path(sys.argv[1]).resolve()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("research_repo", type=Path)
+    parser.add_argument("--correlation-npz", type=Path)
+    args = parser.parse_args()
+    repo = args.research_repo.resolve()
     OUT.mkdir(parents=True, exist_ok=True)
     abs_ev, abs_sha = load(repo, ABS_EVIDENCE)
     shap_ev, shap_sha = load(repo, SHAP_EVIDENCE)
@@ -642,6 +722,8 @@ def main() -> None:
     selection_flow()
     return_basis_recheck(abs_ev)
     l5_test_distribution(abs_ev)
+    if args.correlation_npz is not None:
+        factor_correlation_heatmap(args.correlation_npz, shap_ev)
     pca_cumulative(s1)
     shap_concentration(s2)
     class_share(s1, s2)
@@ -663,6 +745,14 @@ def main() -> None:
         },
         "figures": sorted(p.name for p in OUT.glob("*.png")),
     }
+    if CORRELATION_FIGURE in source["figures"]:
+        receipt = s1["artifacts"]["correlation"]
+        source["s1_correlation"] = {
+            "sha256": receipt["sha256"],
+            "bytes": receipt["bytes"],
+            "columns": s1["columns"],
+            "days": s1["days"],
+        }
     (OUT / "source.json").write_text(json.dumps(source, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
