@@ -72,9 +72,9 @@ def test_csv_mapping_overlap_and_asset_identity():
 
 
 def test_page_contract_and_scope():
-    page=(ROOT/'content/daily/2026-11.01.show.html').read_text(encoding='utf-8')
+    page=(ROOT/'content/daily/2026-11-01.show.html').read_text(encoding='utf-8')
     assert not re.search(r'__[A-Z_]+__',page)
     for t in ['ic','monthly','groups','scatter','shape','periods','definition']:assert f'data-tab="{t}"' in page
     for text in ['核心研究结论','重点因子','提速成果','业务耗时','峰值内存']:assert text not in page
     assert 'sample-context' in page and 'horizon-context' in page
-    assert 'show_source: 2026-11.01.show.html' in (ROOT/'content/daily/2026-11-01.md').read_text(encoding='utf-8')
+    assert 'show_source: 2026-11-01.show.html' in (ROOT/'content/daily/2026-11-01.md').read_text(encoding='utf-8')

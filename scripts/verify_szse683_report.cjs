@@ -20,7 +20,7 @@ let browser,page;
  await page.evaluate(fs.readFileSync(path.join(root,'site/js/router.js'),'utf8'));
  await page.evaluate(fs.readFileSync(path.join(root,'site/js/daily.js'),'utf8'));
  const manifest=JSON.parse(fs.readFileSync(path.join(root,'dist/manifest.json'),'utf8')),item=manifest.daily.find(r=>r.date==='2026-11-01');
- assert.equal(item.show_path,'daily/2026-11.01.show.html');
+ assert.equal(item.show_path,'daily/2026-11-01.show.html');
  await page.evaluate(async item=>{window.DailyView.showEl=document.querySelector('#report');window.DailyView.app=window.DashboardApp;await window.DailyView.renderShow(item)},item);
  assert.equal(await page.locator('iframe').getAttribute('sandbox'),'allow-scripts allow-downloads');
  const frame=page.frames().find(f=>f.parentFrame());

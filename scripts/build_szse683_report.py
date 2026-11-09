@@ -108,7 +108,7 @@ def main():
     output_root=a.output_root.resolve() if a.trial else ROOT
     slug=f'sse683-{a.date.isoformat()}' if sse else 'szse683-2026-11-01'
     assets=output_root/'content/assets'/slug
-    target=output_root/'content/daily'/f'{a.date:%Y-%m.%d}.show.html' if sse else ROOT/'content/daily/2026-11.01.show.html'
+    target=output_root/'content/daily'/f'{a.date:%Y-%m.%d}.show.html' if sse else ROOT/'content/daily/2026-11-01.show.html'
     if a.html_relative_path:target=resolve_daily_show_source(output_root/'content/daily',a.html_relative_path)
     markdown=output_root/'content/daily'/f'{a.date.isoformat()}.md' if sse else None
     if sse and (target.exists() or markdown.exists() or assets.exists()):
