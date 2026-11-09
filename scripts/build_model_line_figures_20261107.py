@@ -1,8 +1,6 @@
-"""生成 2026-11-07 模型线汇报的六张插图。
+"""生成 2026-11-07 模型线汇报的插图。
 
-数据只读研究仓库已提交的两份证据：
-- reports/2026-11/2026-11-08-model-szse344-absolute-returns-evidence.json（选优检查点曲线、入选点）
-- reports/2026-11/2026-11-09-model-szse344-collinearity-shap-evidence.json（PCA 特征值、SHAP 分组份额）
+数据只读研究仓库已提交的证据和报告，来源及 SHA-256 写入 source.json。
 
 用法：python scripts/build_model_line_figures_20261107.py <sirui-quant-research 仓库根>
 """
@@ -19,13 +17,27 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib.patches import FancyBboxPatch  # noqa: E402
+from matplotlib.lines import Line2D  # noqa: E402
+from matplotlib.patches import FancyBboxPatch, Rectangle  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "content" / "assets" / "model-line-2026-11-07"
 
 ABS_EVIDENCE = "reports/2026-11/2026-11-08-model-szse344-absolute-returns-evidence.json"
 SHAP_EVIDENCE = "reports/2026-11/2026-11-09-model-szse344-collinearity-shap-evidence.json"
+U7_EVIDENCE = "reports/2026-11/2026-11-03-model-szse344-u7-evidence"
+V4_RESULTS = (
+    "reports/2026-11/2026-11-04-model-szse344-learning-rates-v4-rerun-evidence"
+    "/final-acceptance-and-unit-summary.json"
+)
+V5_REPLAY = "reports/2026-11/2026-11-05-model-szse344-stopping-v5-evidence/replay.json"
+STAGE1_RESULTS = "reports/2026-11/2026-11-05-model-szse344-b6-stage1-evidence/stage1-complete-source.json"
+METHOD_REFERENCES = (
+    "decisions/2026-11-03-szse344-model-design.md",
+    "reports/2026-11/2026-11-05-model-szse344-b6-stage1.md",
+    "reports/2026-11/2026-11-06-model-szse344-b6-w5-resume2.md",
+    "reports/2026-11/2026-11-08-model-szse344-baseline-registration.md",
+)
 
 # 站点 DESIGN.md 的墨色与三种已过色盲校验的类别色（dataviz validate_palette，浅色底）
 INK = "#15212b"
@@ -76,8 +88,6 @@ def save(fig, name: str) -> None:
 
 def selection_curves(abs_ev: dict) -> None:
     """每个周期一张横图：文章样式把图高限制在 560px，竖排两面板会被压窄。"""
-    from matplotlib.lines import Line2D
-
     d18 = abs_ev["d18"]
     chosen = {(s["horizon"], s["tree_id"]): s for s in d18["selected"]}
     for horizon, name in (("morning", "selection-curves-morning.png"), ("close", "selection-curves-close.png")):
@@ -150,6 +160,321 @@ def wrap_down(ax, src_x, src_y, dst_x, dst_y, **kw):
     """从上一行的框底部下到行间，再水平移到目标框上方，最后进入目标框顶部。"""
     mid = (src_y + dst_y) / 2
     arrow(ax, [(src_x, src_y), (src_x, mid), (dst_x, mid), (dst_x, dst_y)], **kw)
+
+
+def sample_splits() -> None:
+    fig, ax = canvas(8.2, 4.15)
+    ax.text(0.1, 3.83, "308 个 OOF 日来自 425 日开发段内部", fontsize=14, fontweight="bold", color=INK)
+
+    spans = (
+        (0.1, 1.93, "前 117 日", "初始训练", SOFT, INK),
+        (1.93, 4.85, "后 308 日", "逐折生成 OOF", BLUE, "white"),
+        (5.1, 6.66, "176 日", "已看 Test", "#ded8cb", INK),
+        (6.66, 7.9, "82 日", "未看 Test", "#fbe9e4", INK),
+    )
+    ax.text(2.47, 3.28, "Development · 425 日", ha="center", fontweight="bold", color=INK)
+    ax.text(6.5, 3.28, "冻结后评价", ha="center", fontweight="bold", color=INK)
+    for left, right, count, label, fill, text in spans:
+        ax.add_patch(Rectangle((left, 2.57), right - left, 0.55, facecolor=fill, edgecolor=PAPER))
+        ax.text((left + right) / 2, 2.85, f"{count}  {label}", color=text, ha="center", va="center", fontsize=9.3)
+    ax.vlines(4.97, 2.46, 3.18, color=CORAL, linestyles="--", linewidth=1.4)
+    ax.text(4.97, 2.36, "冻结", color=CORAL, ha="center", va="top", fontsize=9.5)
+
+    ax.text(0.1, 2.06, "扩张训练示意", fontweight="bold", color=INK)
+    for y, label, stop in ((1.66, "第 1 折", 1.93), (1.17, "第 2 折", 2.44), (0.68, "第 15 折", 4.34)):
+        ax.text(0.1, y, label, va="center", color=INK, fontsize=9.5)
+        ax.barh(y, stop - 0.95, left=0.95, height=0.26, color=SOFT, zorder=1)
+        ax.barh(y, 0.51, left=stop, height=0.26, color=BLUE, zorder=1)
+    ax.scatter([5.23, 5.23], [1.56, 1.05], marker="s", s=63, color=[SOFT, BLUE])
+    ax.text(5.39, 1.56, "只用之前的日期训练", va="center", color=INK, fontsize=9.5)
+    ax.text(5.39, 1.05, "预测当月，拼入 OOF", va="center", color=INK, fontsize=9.5)
+    ax.text(0.1, 0.17, "只示意第 1、2、15 折。横向长度不按交易日数等比绘制。", color=MUTED, fontsize=9)
+    save(fig, "sample-splits-oof.png")
+
+
+def trade_timeline() -> None:
+    fig, axes = plt.subplots(
+        1, 3, figsize=(8.2, 3.45), sharey=True, gridspec_kw={"width_ratios": [2.8, 1.15, 1.15]}
+    )
+    fig.subplots_adjust(left=0.07, right=0.96, top=0.74, bottom=0.29, wspace=0.19)
+    fig.text(0.07, 0.9, "09:35 决策，之后按各窗口计算标签", color=INK, fontsize=14, fontweight="bold")
+    fig.text(0.07, 0.08, "分段时间轴。横线两端是窗口边界，窗口不含右端时刻。", color=MUTED, fontsize=9)
+    morning, noon, close = axes
+    ticks = (([0, 5, 6, 15, 16], ["09:30", "09:35", "09:36", "09:45", "09:46"]),
+             ([0, 30], ["11:00", "11:30"]), ([0, 30], ["14:27", "14:57"]))
+    for ax, (positions, labels) in zip(axes, ticks):
+        ax.set_facecolor(PAPER)
+        ax.set_ylim(-0.4, 2.75)
+        ax.set_yticks([])
+        ax.set_xticks(positions, labels, fontsize=9)
+        ax.tick_params(axis="x", length=3)
+        ax.spines["left"].set_visible(False)
+        ax.grid(False)
+    morning.set_xlim(-0.7, 16.8)
+    morning.set_xticklabels(["09:30", "", "", "", ""])
+    morning.text(5.5, -0.78, "09:35–09:36", ha="center", va="top", color=INK, fontsize=8.7)
+    morning.text(15.5, -0.78, "09:45–09:46", ha="center", va="top", color=INK, fontsize=8.7)
+    morning.vlines(5, -0.35, 2.45, color=CORAL, linestyle="--", linewidth=1.35)
+    morning.text(5.2, 2.36, "09:35 选股", color=CORAL, fontweight="bold", va="top")
+    morning.barh(1.63, 5, left=0, height=0.25, color=SOFT)
+    morning.text(0, 1.94, "可见因子", color=INK, fontsize=9.5)
+    morning.barh(0.73, 1, left=5, height=0.25, color=GOLD)
+    morning.text(6.35, 0.38, "入场 · 卖一 TWAP", ha="left", va="top", color=INK, fontsize=9)
+    morning.barh(0.73, 1, left=15, height=0.25, color=MUTED)
+    morning.text(15.4, 1.03, "10 分钟对照\n买一 TWAP", ha="right", va="bottom", color=INK, fontsize=9)
+    for ax, title, color in ((noon, "午间退出", BLUE), (close, "收盘退出", CORAL)):
+        ax.set_xlim(-4, 34)
+        ax.barh(0.73, 30, left=0, height=0.25, color=color)
+        ax.text(15, 1.33, f"{title}\n买一 TWAP", ha="center", va="bottom", color=INK, fontsize=9.5)
+        ax.plot(
+            [-0.055, 0.035], [-0.04, 0.04], transform=ax.transAxes,
+            clip_on=False, color=MUTED, linewidth=1.1,
+        )
+    save(fig, "trade-timeline.png")
+
+
+def search_throughput(resource: dict, stops: dict) -> None:
+    assert stops["common_stops_bitwise_equal"]
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 3.5), sharey=True)
+    fig.subplots_adjust(left=0.19, right=0.94, top=0.72, bottom=0.29, wspace=0.28)
+    ratio = resource["throughput_ratio"]
+    fig.text(0.07, 0.91, f"独立进程评价后，模型轮吞吐提高到 {ratio:.2f} 倍", color=INK, fontsize=14, fontweight="bold")
+    jobs = [
+        ("全程有效核", "核", "effective_cores", "effective_core_ratio", 17.5),
+        ("模型轮吞吐", "模型·轮次 / 秒", "model_rounds_per_second", "throughput_ratio", 50),
+    ]
+    for ax, (title, unit, field, ratio, bound) in zip(axes, jobs):
+        new = resource[field]
+        values = [new / resource[ratio], new]
+        ax.set_facecolor(PAPER)
+        ax.barh([1, 0], values, height=0.48, color=[SOFT, BLUE], zorder=3)
+        ax.set_title(title, loc="left", color=INK, pad=12)
+        ax.set_xlim(0, bound)
+        ax.set_xlabel(unit, fontsize=9)
+        ax.set_yticks([1, 0], ["B5b 试跑", "U7 复测"], fontsize=9.5)
+        ax.tick_params(axis="y", length=0)
+        ax.grid(axis="y", visible=False)
+        ax.spines["left"].set_visible(False)
+        for y, value in zip([1, 0], values):
+            ax.text(value + bound * 0.025, y, f"{value:.2f}", va="center", color=INK, fontsize=10)
+    total = stops["new_completed"] + resource["censored"]
+    fig.text(
+        0.07, 0.12,
+        f"同一 {total} 单元：B5b 完成 {stops['old_completed']}/{total}，U7 完成 {stops['new_completed']}/{total}。",
+        color=INK, fontsize=9.5,
+    )
+    fig.text(
+        0.07, 0.055, f"重叠的 {stops['comparisons']} 个单元，停止轮次和原因一致。", color=MUTED, fontsize=9.5,
+    )
+    save(fig, "search-throughput.png")
+
+
+def learning_rate_results(v4: dict) -> None:
+    rates = (0.01, 0.03, 0.05, 0.10)
+    colors = {"R1": BLUE, "R3": GOLD, "R5": CORAL}
+    lines = {"S": "-", "D": "--"}
+    units = {
+        (row["horizon"], row["target"], row["tree"], row["rate"]): row["best"]["L:0.2"]["metrics"]
+        for row in v4["unit_summary"] if row["target"] in colors
+    }
+    assert len(units) == 48 and all(row["days"] == 104 for row in units.values())
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 4.2), sharex=True, sharey=True)
+    fig.subplots_adjust(left=0.13, right=0.96, top=0.74, bottom=0.28, wspace=0.13)
+    fig.text(0.065, 0.91, "V4 实测：同一目标、同一套树换四档学习率",
+             color=INK, fontsize=14, fontweight="bold")
+    for ax, (horizon, (label, _)) in zip(axes, HORIZON.items()):
+        ax.set_title(label, loc="left", color=INK)
+        ax.set_facecolor(PAPER)
+        ax.axhline(0, linewidth=0.8, color=MUTED, zorder=1)
+        for target, color in colors.items():
+            for tree, line in lines.items():
+                y = [units[horizon, target, tree, rate]["mean_bp"] for rate in rates]
+                ax.plot(rates, y, color=color, linestyle=line, marker="o", markersize=3.6, linewidth=1.5)
+        ax.set_xticks(rates, [f"{rate:.2f}" for rate in rates])
+        ax.set_xlabel("学习率", fontsize=9.5)
+    axes[0].set_ylabel("最佳超额 L20（bp）", fontsize=9.5)
+    handles = [Line2D([], [], marker="o", linestyle="none", color=color, label=target)
+               for target, color in colors.items()]
+    handles.extend(Line2D([], [], linestyle=style, color=MUTED, label=label)
+                   for style, label in (("-", "浅树"), ("--", "深树")))
+    fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.06, 0.1), ncol=5, fontsize=9)
+    fig.text(0.065, 0.052, "每个点是一次独立试跑的最佳检查点。5 折、104 个 OOF 日，仅画回归试验。",
+             color=MUTED, fontsize=9)
+    save(fig, "learning-rate-v4-results.png")
+
+
+def stopping_replay_results(replay: dict) -> None:
+    units = [row for row in replay["candidates"] if row["rate"] == 0.1 and row["k"] == 0.5]
+    summary = replay["summary"]["primary_lr_0.10"]["k=0.5"]
+    assert len(units) == summary["units"] == 14 and not any(row["censored"] for row in units)
+    fig, ax = plt.subplots(figsize=(8.2, 3.75))
+    fig.subplots_adjust(left=0.14, right=0.96, top=0.77, bottom=0.28)
+    fig.text(0.065, 0.91, "V5 回放：少跑多少轮，损失多少最佳 L20",
+             color=INK, fontsize=14, fontweight="bold")
+    ax.set_facecolor(PAPER)
+    for horizon, (label, color) in HORIZON.items():
+        rows = [row for row in units if row["horizon"] == horizon]
+        ax.scatter([row["rounds_saved_fraction"] * 100 for row in rows],
+                   [row["lanes"]["L:0.2"]["loss"]["mean_bp"] for row in rows],
+                   label=label, color=color, s=43, alpha=0.75, edgecolors=PAPER, linewidths=0.6, zorder=3)
+    loss = summary["lanes"]["L:0.2"]["mean_bp"]["max_loss"]
+    saved = summary["pooled_rounds_saved_fraction"] * 100
+    ax.text(0.04, 0.92, f"合计少跑 {saved:.2f}% 的轮数\n最佳 L20 最大损失 {loss:.2f} bp",
+            transform=ax.transAxes, ha="left", va="top", color=INK, fontsize=9.5)
+    ax.set_xlim(-2, 52)
+    ax.set_ylim(-0.032, 0.36)
+    ax.set_xlabel("相对原停止规则节省的轮数（%）", fontsize=9.5)
+    ax.set_ylabel("最佳超额 L20 损失（bp）", fontsize=9.5)
+    ax.legend(loc="upper right", fontsize=9)
+    fig.text(0.065, 0.05, "学习率 0.10、门槛 0.5 倍标准误。14 个单元按已有检查点回放，相同坐标的点重叠。",
+             color=MUTED, fontsize=9)
+    save(fig, "stopping-v5-replay.png")
+
+
+def stage1_regression_results(stage1: dict) -> None:
+    targets = ("R1", "R2", "R3", "R4", "R5")
+    methods = stage1["summary"]["methods"]
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 4.05), sharex=True, sharey=True)
+    fig.subplots_adjust(left=0.12, right=0.96, top=0.74, bottom=0.23, wspace=0.16)
+    fig.text(0.065, 0.91, "B6 第一段：两个周期的回归 L5 均由 R1 领先",
+             color=INK, fontsize=14, fontweight="bold")
+    for ax, (horizon, (label, color)) in zip(axes, HORIZON.items()):
+        ax.set_title(label, loc="left", color=INK)
+        ax.set_facecolor(PAPER)
+        ax.axvline(0, color=MUTED, linestyle="--", linewidth=0.8)
+        for y, target in enumerate(targets):
+            rows = [row for row in methods if row["horizon"] == horizon and row["target_id"] == target]
+            values = [row["lanes"]["L:0.05"]["mean_bp"] for row in rows]
+            assert len({row["history_id"] for row in rows}) == 7
+            full = next(row["lanes"]["L:0.05"]["mean_bp"] for row in rows if row["history_id"] == "full_no_decay")
+            ink = color if target == "R1" else MUTED
+            ax.scatter(values, [y] * len(values), color=ink, alpha=0.64, s=24, linewidths=0, zorder=3)
+            ax.scatter(full, y, color=ink, edgecolors=PAPER, marker="D", s=53, zorder=4)
+            if target == "R1":
+                ax.text(full, y - 0.25, f"{full:.2f}", ha="center", va="bottom",
+                        fontsize=9, color=color, fontweight="bold")
+        ax.set_xlim(-6, 27)
+        ax.set_ylim(4.53, -0.63)
+        ax.set_yticks(range(len(targets)), targets)
+        ax.set_xlabel("最佳超额 L5（bp）", fontsize=9.5)
+        ax.grid(axis="y", visible=False)
+    fig.text(0.065, 0.06, "每个目标试 7 个历史窗口。◆ 全历史不衰减。5 折、104 个 OOF 日，仅回归方法。",
+             color=MUTED, fontsize=9)
+    save(fig, "b6-stage1-regression-results.png")
+
+
+def two_stage_search() -> None:
+    fig, ax = canvas(8.2, 3.8)
+    ax.text(0.1, 3.48, "先缩方法，再把全折预算给树", color=INK, fontsize=14, fontweight="bold")
+    box(
+        ax, 0.08, 0.98, 3.35, 1.97, "第一段 · 比方法",
+        "63 种方法 · 5 折 · 104 个 OOF 日\n两个周期的回归 L5 均由 R1 领先\n全历史 L5：24.26 / 21.65 bp\n预算每周期只容 1 个回归名额",
+    )
+    box(
+        ax, 4.57, 0.98, 3.35, 1.97, "第二段 · 比树",
+        "每周期 31 套树 · 15 折\n308 个 OOF 日，按检查点减半\n保存各树已完成的检查点，\n供下一节按 L5 与 Sharpe 选优",
+    )
+    arrow(ax, [(3.43, 1.79), (4.57, 1.79)], accent=True)
+    ax.text(4, 2.06, "R1\n全历史", ha="center", color=CORAL, fontsize=9.5, fontweight="bold")
+    ax.text(0.1, 0.35, "第一段比较目标和历史窗口。进入第二段后固定方法，再扩大树配置和折数。", color=MUTED, fontsize=9.5)
+    save(fig, "two-stage-search.png")
+
+
+def return_basis_recheck(abs_ev: dict) -> None:
+    audit = abs_ev["d18"]
+    checkpoint_rows = {(row["horizon"], row["tree_id"]): row["curve"] for row in audit["checkpoints"]}
+    fig, (flow, chart) = plt.subplots(
+        1, 2, figsize=(8.2, 4.5), gridspec_kw={"width_ratios": [1, 1.28]}
+    )
+    fig.subplots_adjust(left=0.05, right=0.95, top=0.8, bottom=0.23, wspace=0.33)
+    fig.text(0.05, 0.91, "同一批预测重算收益，再复核 Sharpe 门槛", color=INK, fontsize=14, fontweight="bold")
+    flow.set_xlim(0, 3.6)
+    flow.set_ylim(0, 4.1)
+    flow.axis("off")
+    box(flow, 0.1, 3.13, 3.4, 0.91, "冻结预测", "相同成员、轮数、种子")
+    box(flow, 0.1, 1.84, 3.4, 0.92, "D19 · 超额 L5", "纯多收益 − 同期中间价基准")
+    box(flow, 0.1, 0.45, 3.4, 1.0, "D20 · 绝对 L5", "按对手价计算纯多收益", accent=True)
+    arrow(flow, [(0.1, 3.52), (0.025, 3.52), (0.025, 2.26), (0.1, 2.26)])
+    arrow(flow, [(3.5, 3.52), (3.58, 3.52), (3.58, 0.93), (3.5, 0.93)], accent=True)
+
+    chart.set_title("10 个入选检查点 · 配对核对", loc="left", color=INK, pad=9)
+    chart.set_facecolor(PAPER)
+    chart.axvline(audit["threshold"], color=MUTED, linestyle="--", linewidth=1)
+    for i, row in enumerate(audit["selected"]):
+        points = checkpoint_rows[row["horizon"], row["tree_id"]]
+        old = next(point["old_sharpe"] for point in points if point["iteration"] == row["iteration"])
+        new = row["sharpe"]
+        y = 10 - i - (1 if i >= 5 else 0)
+        chart.plot([old, new], [y, y], color=SOFT, linewidth=1.5)
+        chart.scatter(old, y, s=25, facecolors=PAPER, edgecolors=MUTED, zorder=3)
+        chart.scatter(new, y, s=26, color=HORIZON[row["horizon"]][1], zorder=4)
+    chart.set_ylim(-0.55, 10.7)
+    chart.set_xlim(2.8, 5.65)
+    chart.set_yticks([8, 2], ["11:30", "收盘"], fontsize=9)
+    chart.set_xticks([3, 3.5, 4, 4.5, 5, 5.5])
+    chart.set_xlabel("年化 Sharpe", fontsize=9.5)
+    chart.grid(axis="y", visible=False)
+    chart.spines["left"].set_visible(False)
+    chart.tick_params(axis="y", length=0)
+    fig.text(0.5, 0.089, "○ 超额口径   ● 绝对口径   虚线 = 3", color=MUTED, fontsize=9)
+    count = sum(len(row["curve"]) for row in audit["checkpoints"])
+    assert audit["unchanged"]
+    fig.text(0.05, 0.045, f"另复核全部 {count} 个检查点，成员和固定轮数沿用。", color=INK, fontsize=9.5)
+    save(fig, "return-basis-recheck.png")
+
+
+def l5_metric(summary: dict) -> dict:
+    metric = next(
+        row for row in summary["metrics"] if (row["strategy"], row["subset"], row["q"]) == ("L", "all", 0.05)
+    )
+    assert metric["return_basis"] == "absolute" and metric["status"] == "complete"
+    return metric
+
+
+def l5_test_distribution(abs_ev: dict) -> None:
+    groups = {(row["stage"], row["horizon"]): row for row in abs_ev["evaluation"]}
+    stages = (
+        ("development", "开发 OOF", BLUE, "o"),
+        ("seen", "已看 Test", GOLD, "^"),
+        ("unseen", "未看 Test", CORAL, "s"),
+    )
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 4.15), sharex=True, sharey=True)
+    fig.subplots_adjust(left=0.13, right=0.96, top=0.74, bottom=0.29, wspace=0.14)
+    fig.text(0.065, 0.91, "未看段两个周期的单模型 L5 都低于零", color=INK, fontsize=14, fontweight="bold")
+    for ax, (horizon, (label, _)) in zip(axes, HORIZON.items()):
+        ax.set_facecolor(PAPER)
+        ax.set_title(label, loc="left", color=INK)
+        ax.axvline(0, color=MUTED, linestyle="--", linewidth=1, zorder=2)
+        ax.axhline(0, color=MUTED, linestyle="--", linewidth=1, zorder=2)
+        for stage, _, color, marker in stages:
+            group = groups[stage, horizon]
+            models = [l5_metric(model) for model in group["models"]]
+            ensemble = l5_metric(group["ensemble"])
+            assert len({(row["tree_id"], row["seed"]) for row in group["models"]}) == len(models) == 25
+            assert stage != "unseen" or all(row["mean_bp"] < 0 for row in models)
+            ax.scatter([row["mean_bp"] for row in models], [row["sharpe"] for row in models],
+                       color=color, marker=marker, alpha=0.46, s=20, linewidths=0, zorder=3)
+            ax.scatter(ensemble["mean_bp"], ensemble["sharpe"],
+                       color=color, edgecolors=INK, marker="D", s=41, linewidths=0.75, zorder=4)
+            ax.annotate(
+                f"{ensemble['mean_bp']:+.2f}",
+                (ensemble["mean_bp"], ensemble["sharpe"]),
+                xytext=(-6, 9), textcoords="offset points", ha="right", fontsize=8.2, color=INK,
+            )
+        ax.set_ylim(-2.65, 6.1)
+        ax.set_xlim(-30, 44)
+        ax.set_xticks([-20, 0, 20, 40])
+        ax.set_xlabel("全市场绝对 L5（bp）", fontsize=9.2)
+    axes[0].set_ylabel("年化 Sharpe", fontsize=9.5)
+    handles = [
+        Line2D([], [], marker=marker, color=color, linestyle="none",
+               label=f"{label} · {groups[stage, 'morning']['days']} 日")
+        for stage, label, color, marker in stages
+    ]
+    fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.06, 0.095), ncol=3, fontsize=9)
+    fig.text(0.065, 0.05, "每组 25 个单模型。描边菱形为集成。横纵坐标均为原始统计值，重叠点保留。",
+             color=MUTED, fontsize=9)
+    save(fig, "l5-test-distribution.png")
 
 
 def selection_flow() -> None:
@@ -297,10 +622,26 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     abs_ev, abs_sha = load(repo, ABS_EVIDENCE)
     shap_ev, shap_sha = load(repo, SHAP_EVIDENCE)
+    resource_path = f"{U7_EVIDENCE}/resource-summary.json"
+    stops_path = f"{U7_EVIDENCE}/common-stops.json"
+    resource, resource_sha = load(repo, resource_path)
+    stops, stops_sha = load(repo, stops_path)
+    v4, v4_sha = load(repo, V4_RESULTS)
+    v5, v5_sha = load(repo, V5_REPLAY)
+    stage1, stage1_sha = load(repo, STAGE1_RESULTS)
     s1 = shap_ev["documents"]["s1.json"]["value"]
     s2 = shap_ev["documents"]["s2.json"]["value"]
+    sample_splits()
+    trade_timeline()
+    search_throughput(resource, stops)
+    learning_rate_results(v4)
+    stopping_replay_results(v5)
+    stage1_regression_results(stage1)
+    two_stage_search()
     selection_curves(abs_ev)
     selection_flow()
+    return_basis_recheck(abs_ev)
+    l5_test_distribution(abs_ev)
     pca_cumulative(s1)
     shap_concentration(s2)
     class_share(s1, s2)
@@ -310,7 +651,16 @@ def main() -> None:
         "report_date": "2026-11-07",
         "generator": "scripts/build_model_line_figures_20261107.py",
         "research_repo_head": head,
-        "inputs": {ABS_EVIDENCE: abs_sha, SHAP_EVIDENCE: shap_sha},
+        "inputs": {
+            ABS_EVIDENCE: abs_sha,
+            SHAP_EVIDENCE: shap_sha,
+            resource_path: resource_sha,
+            stops_path: stops_sha,
+            V4_RESULTS: v4_sha,
+            V5_REPLAY: v5_sha,
+            STAGE1_RESULTS: stage1_sha,
+            **{path: hashlib.sha256((repo / path).read_bytes()).hexdigest() for path in METHOD_REFERENCES},
+        },
         "figures": sorted(p.name for p in OUT.glob("*.png")),
     }
     (OUT / "source.json").write_text(json.dumps(source, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
