@@ -112,7 +112,7 @@ h3 { font-size: 18px; }
 }
 #results h2, #contract h2, #freeze h2, #evidence h2 { border-top: 1px solid var(--line); padding-top: 10px; }
 .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line-soft); }
-#results .table-wrap { margin-top: 10px; }
+#results .table-wrap { margin: 10px 0 0; border-color: var(--line-soft); border-radius: 0; }
 table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: .88rem; }
 th, td { padding: .53rem .65rem; border-bottom: 1px solid var(--line-soft); text-align: right; }
 th:first-child, td:first-child { text-align: left; }
@@ -209,7 +209,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 
 
 /* Score sheet: three column groups and three sample blocks. */
-#results .score-table { min-width: 880px; table-layout: fixed; }
+#results .score-table { width: 100%; min-width: 880px; table-layout: fixed; }
 .score-table .score-stage-col { width: 19%; }
 .score-table .score-cycle-col { width: 7%; }
 .score-table .score-portfolio-col { width: 6%; }
@@ -414,7 +414,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <h2 id="results-heading">分段集成成绩</h2>
 <strong id="index-view-label">全市场原基准</strong>
 <p class="hint" id="table-status">全组合、全档位。日均收益单位为 bp，Sharpe 按 252 日年化。</p>
-<div aria-label="沪深基准数值对照" class="table-wrap" role="region" tabindex="0">
+<div aria-label="沪深基准数值对照" class="table-wrap enhanced-table-scroll" role="region" tabindex="0">
 <table aria-describedby="table-status" class="score-table" id="score-rows">
 
 
