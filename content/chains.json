@@ -3304,20 +3304,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-01",
-        "days": 7,
+        "days": 8,
         "span": [
           "2026-10-31",
-          "2026-11-07"
+          "2026-11-08"
         ],
         "unreviewed_days": [],
         "scope": "31日独立目标、固定实现、原始结果及消息核对；整体来源仍不完整。",
         "incremental_review": {
-          "on": "2026-11-08",
-          "scope": "11月7日实际工作和固定证据；来源覆盖仍不完整。"
+          "on": "2026-11-09",
+          "scope": "11月8日原始工作及午夜前运行状态，整体来源覆盖仍不完整。"
         }
       },
       "fate": "landed",
-      "fate_note": "D18/D19冻结选优与两段测试完成，未看段两个L5收益为负。",
+      "fate_note": "保留冻结成员和轮数，按对手价绝对收益登记深市基准。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3415,6 +3415,30 @@
           ],
           "title": "深市344冻结选优、重训和双段测试报告",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/00ab49aebcced117b1caf7a1506289e05d082fbb/reports/2026-11/2026-11-07-model-szse344-selection-test.md#L1-L321"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-szse344-absolute-returns.md",
+          "lines": [
+            1,
+            283
+          ],
+          "title": "D20绝对收益更正",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-szse344-absolute-returns.md#L1-L283"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-szse344-baseline-registration.md",
+          "lines": [
+            1,
+            251
+          ],
+          "title": "冻结基准登记",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-szse344-baseline-registration.md#L1-L251"
         }
       ]
     },
@@ -3778,16 +3802,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-06",
-        "days": 1,
+        "days": 2,
         "span": [
           "2026-11-05",
-          "2026-11-05"
+          "2026-11-08"
         ],
         "unreviewed_days": [],
-        "scope": "11月5日原始用户要求及范围修订；当前为讨论阶段。"
+        "scope": "11月5日原始用户要求及范围修订；当前为讨论阶段。",
+        "incremental_review": {
+          "on": "2026-11-09",
+          "scope": "11月8日原始工作及午夜前运行状态，整体来源覆盖仍不完整。"
+        }
       },
       "fate": "landed",
-      "fate_note": "范围确定为两市全部新版列，保留两步方案，去掉整组替换与重训消融。",
+      "fate_note": "深市首轮版本检查停止，修订后进入重训。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3813,8 +3841,95 @@
           ],
           "title": "沪市340列既有评价输入（新研究范围见当日会话）",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/7ad008c48a239bb30f5ed435fa4e9811a153bd99/reports/2026-11/2026-11-05-sse683-factor-atlas.md#L1-L59"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-szse344-collinearity-shap.md",
+          "lines": [
+            1,
+            77
+          ],
+          "title": "首轮合同指纹停止记录",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-szse344-collinearity-shap.md#L1-L77"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-szse344-collinearity-shap-execution.md",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "深市共线性和SHAP执行范围",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-szse344-collinearity-shap-execution.md#L1-L46"
         }
       ]
+    },
+    {
+      "id": "sse340-baseline-model",
+      "track": "model",
+      "label": "沪市340列基准模型",
+      "short": "沪市340基准模型",
+      "purpose": "用沪市340列正式因子和对手价标签建立独立基准模型，完成两段搜索、冻结选优和分段测试，以便与深市基准对照。",
+      "status": "active",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-09",
+        "days": 1,
+        "span": [
+          "2026-11-08",
+          "2026-11-08"
+        ],
+        "unreviewed_days": [],
+        "scope": "独立模型目标、标签初次停止与续跑、搜索准备。"
+      },
+      "fate": "landed",
+      "fate_note": "标签通过复审后继续生产，搜索等待完整标签和多空停止口径。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "decisions/2026-11-08-sse340-model-design.md",
+          "lines": [
+            1,
+            25
+          ],
+          "title": "沪市独立模型决定",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/decisions/2026-11-08-sse340-model-design.md#L1-L25"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-sse340-labels.md",
+          "lines": [
+            1,
+            122
+          ],
+          "title": "沪市对手价标签",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-sse340-labels.md#L1-L122"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-sse340-search.md",
+          "lines": [
+            1,
+            69
+          ],
+          "title": "沪市搜索准备",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-sse340-search.md#L1-L69"
+        }
+      ],
+      "report_coverage": "curated"
     }
   ],
   "handoffs": [
@@ -5874,6 +5989,115 @@
         "on": "2026-11-06",
         "basis": "固定输入清单、验收和实际输出相互对应。",
         "scope": "只连接当日实际消费的产物。"
+      }
+    },
+    {
+      "from": "sse-factor-340",
+      "to": "sse340-baseline-model",
+      "type": "派生",
+      "date": "2026-11-08",
+      "source_date": "2026-11-05",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "标签入口绑定已验收的沪市683日340列因子集合，逐日复核股票池。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-sse340-labels.md",
+          "lines": [
+            1,
+            122
+          ],
+          "title": "标签实际使用的因子集合",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-sse340-labels.md#L1-L122"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-09",
+        "basis": "固定产物和实际入口的版本相互对应。",
+        "scope": "仅登记实际消费。"
+      }
+    },
+    {
+      "from": "szse344-multih",
+      "to": "sse340-baseline-model",
+      "type": "派生",
+      "date": "2026-11-08",
+      "source_date": "2026-11-08",
+      "confidence": "confirmed",
+      "evidence_kind": "method_reuse",
+      "note": "搜索准备直接复用深市B6五折设计和D20绝对L5评价，诊断多空停止序列的适用范围。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-sse340-search.md",
+          "lines": [
+            1,
+            69
+          ],
+          "title": "B6与D20实际复用及停止条件",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-sse340-search.md#L1-L69"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "d43e5c95b103dc53d7cbe3e3496daa70be6ce25d",
+          "title": "沪市绝对L5消费实现",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/d43e5c95b103dc53d7cbe3e3496daa70be6ce25d"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-09",
+        "basis": "固定产物和实际入口的版本相互对应。",
+        "scope": "仅登记实际消费。"
+      }
+    },
+    {
+      "from": "szse344-multih",
+      "to": "algorithm-factor-contribution",
+      "type": "派生",
+      "date": "2026-11-08",
+      "source_date": "2026-11-08",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "深市诊断实际读取冻结基准的成员和输入清单，保留原成员、轮数及种子。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-szse344-baseline-registration.md",
+          "lines": [
+            1,
+            251
+          ],
+          "title": "冻结基准登记",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-szse344-baseline-registration.md#L1-L251"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+          "path": "reports/2026-11/2026-11-08-model-szse344-collinearity-shap-execution.md",
+          "lines": [
+            1,
+            46
+          ],
+          "title": "S1与S2实际输入",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b6febbd5737c6130fe1d12597f8d925ef5368998/reports/2026-11/2026-11-08-model-szse344-collinearity-shap-execution.md#L1-L46"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-09",
+        "basis": "固定产物和实际入口的版本相互对应。",
+        "scope": "仅登记实际消费。"
       }
     }
   ],

@@ -1,0 +1,753 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-08",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "8a19cf0d7ad66bd52e3a56179fc2c50557ab4f6dfa5f4c57caf5a884afe619c9",
+  "rules_sha256": "2e61729a0570b26970ea697fdea7be26fb179ffb5a5c5377a98baa7763dd7384",
+  "revisions": {
+    "sirui-quant-research": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+    "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
+    "internship-dashboard": "3862d8811262a7de5bdce65990a7973f95e8aeea"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "c92f2d1a3afddff6a0b181e457e5e115ab6dc069",
+      "date": "2026-11-08",
+      "subject": "补入11月7日冻结模型测试和候选全期验收",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "11月7日日卡及其来源核对和发布收据。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-11-07.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "3862d8811262a7de5bdce65990a7973f95e8aeea",
+      "date": "2026-11-08",
+      "subject": "保存11月8日来源缺口与日志发布收据",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "11月7日日卡及其来源核对和发布收据。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-11-08.md",
+        "docs/journal-review/daily-updates/2026-11-08/browser-verification.json",
+        "docs/journal-review/daily-updates/2026-11-08/receipt.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8cc53ec2a59cee80acfe69d21d78087247fa6be3",
+      "date": "2026-11-08",
+      "subject": "登记 D20 绝对收益口径并新增离线重算 PLAN",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-absolute-returns.md",
+        "decisions/2026-11-03-szse344-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "133346a063e541df2fee14c19a311253e6b0bb4e",
+      "date": "2026-11-08",
+      "subject": "实现 D20 绝对收益评价并保留超额复现路径",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-absolute-returns.md",
+        "scripts/benchmark_szse344.py",
+        "scripts/measure_szse344_learning_rates.py",
+        "scripts/measure_szse344_search_design.py",
+        "scripts/report_szse344_d19.py",
+        "scripts/run_szse344_d19.py",
+        "scripts/run_szse344_multih.py",
+        "scripts/tests/test_cohort_evaluation_workers.py",
+        "scripts/tests/test_measure_szse344_learning_rates.py",
+        "因子/algobench/src/algobench/ml/cohort_scheduler.py",
+        "因子/algobench/src/algobench/ml/szse344_evaluation.py",
+        "因子/algobench/src/algobench/ml/szse344_runtime.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "429759c820bfc86672397330a0e3d2c89607ddab",
+      "date": "2026-11-08",
+      "subject": "增加签收预测的 D20 离线重算与 D18 核对入口",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-absolute-returns.md",
+        "scripts/recompute_szse344_absolute_returns.py",
+        "scripts/tests/test_recompute_szse344_absolute_returns.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f69b5546db1ca98c27bd99244078787dc6ac9c71",
+      "date": "2026-11-08",
+      "subject": "按任务前缀核验 D20 存储探针凭证",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-absolute-returns.md",
+        "scripts/recompute_szse344_absolute_returns.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2c9c55556f40767eac7f98ce6372e1017fe78b0b",
+      "date": "2026-11-08",
+      "subject": "分别核对保存精度与原生精度的 OOF 累计量",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-absolute-returns.md",
+        "scripts/recompute_szse344_absolute_returns.py",
+        "scripts/tests/test_recompute_szse344_absolute_returns.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d32792e40f9f620113aa3da33900636993c890d1",
+      "date": "2026-11-08",
+      "subject": "发布 D20 绝对收益更正与 D18 沿用核对结果",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-absolute-returns.md",
+        "reports/2026-11/2026-11-07-model-szse344-selection-test.md",
+        "reports/2026-11/2026-11-08-model-szse344-absolute-returns-evidence.json",
+        "reports/2026-11/2026-11-08-model-szse344-absolute-returns-models.md",
+        "reports/2026-11/2026-11-08-model-szse344-absolute-returns.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3990b75fc89678633ad99cdaf6d58984dba34559",
+      "date": "2026-11-08",
+      "subject": "登记 D21 不再单独报告纯空 S 与 D22 新因子比较方法",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "decisions/2026-11-03-szse344-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3b9272d7786c189635ee8aeaa6598b0a91dbfc76",
+      "date": "2026-11-08",
+      "subject": "新增深市 344 基准登记与新因子比较 PLAN",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-baseline-registration.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3e400b01d3e3c261c758fb6443d685ce9bb34e78",
+      "date": "2026-11-08",
+      "subject": "新增沪市 340 对手价标签 PLAN",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-sse340-labels.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a222f79722855f5cab4a0e79dd693fdae3e26311",
+      "date": "2026-11-08",
+      "subject": "新建沪市 340 基准模型设计决定",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "decisions/2026-11-08-sse340-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "570cd5bc943b13306a5f7a836ccf28424893d76d",
+      "date": "2026-11-08",
+      "subject": "登记沪市 H4 完整搜两段并授权标签 L1–L3",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-sse340-labels.md",
+        "decisions/2026-11-08-sse340-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ae126454b6af05afed9eade5ac3aac74f3f394fa",
+      "date": "2026-11-08",
+      "subject": "登记沪市 H5–H11 搜索与选优规则",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "decisions/2026-11-08-sse340-model-design.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d20cb2d947cf4bea9969d41b8a27827dd9839644",
+      "date": "2026-11-08",
+      "subject": "新增沪市 340 两段搜索、选优与 test PLAN",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-sse340-search.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "97230b9b87fd21149afeef33bb1295d01627b7fc",
+      "date": "2026-11-08",
+      "subject": "登记深市344基准对象与正式索引",
+      "status": "assigned",
+      "chains": [
+        "szse344-multih"
+      ],
+      "reason": "深市绝对收益、D18核对及基准登记。",
+      "shares": {
+        "szse344-multih": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-szse344-baseline-registration.json",
+        "reports/2026-11/2026-11-08-model-szse344-baseline-registration.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bc6320ae4bad9909e39aa205fd4b093f7d3b9d16",
+      "date": "2026-11-08",
+      "subject": "核对沪市340标签参考覆盖并保留深市合同身份",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-sse340-labels.md",
+        "scripts/audit_sse340_reference.py",
+        "scripts/sse340_sources.py",
+        "scripts/tests/test_sse340_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9722603df800dd59e41fa6e1b712e9672b15f41e",
+      "date": "2026-11-08",
+      "subject": "支持沪市已签收的无涨跌幅限制价格状态",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/audit_sse340_reference.py",
+        "scripts/sse340_sources.py",
+        "scripts/tests/test_sse340_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d83fc68d7098c37a12f773717276c8a902e40157",
+      "date": "2026-11-08",
+      "subject": "复用深市报价流程执行沪市标签放行与日级生产",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-sse340-labels.md",
+        "scripts/run_sse340_labels.py",
+        "scripts/tests/test_run_sse340_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "75883913ac57130d216127c71bddd7f97425488d",
+      "date": "2026-11-08",
+      "subject": "新增深市344共线性诊断与分组SHAP PLAN",
+      "status": "assigned",
+      "chains": [
+        "algorithm-factor-contribution"
+      ],
+      "reason": "深市共线性、模型贡献预检与分组SHAP实施。",
+      "shares": {
+        "algorithm-factor-contribution": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-collinearity-shap.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ae20829192aee2872cecf9e3142a5947525bcd0b",
+      "date": "2026-11-08",
+      "subject": "保存沪市三日报价审计并严格阻止未放行标签生产",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse340_labels.py",
+        "scripts/tests/test_run_sse340_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "25da5d1a4e865cf18941aa408a425ce8f0eb68e7",
+      "date": "2026-11-08",
+      "subject": "按签收数值类型计算沪市T减一容量市值",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse340_labels.py",
+        "scripts/tests/test_run_sse340_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "957a3923fdc06c8ad99684f0252dc5c2837a782a",
+      "date": "2026-11-08",
+      "subject": "记录SZSE344共线性与SHAP的合同身份预检停止",
+      "status": "assigned",
+      "chains": [
+        "algorithm-factor-contribution"
+      ],
+      "reason": "深市共线性、模型贡献预检与分组SHAP实施。",
+      "shares": {
+        "algorithm-factor-contribution": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-szse344-collinearity-shap-evidence.json",
+        "reports/2026-11/2026-11-08-model-szse344-collinearity-shap.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ba666fc75ac4285521f0bd46e211ba1df4648533",
+      "date": "2026-11-08",
+      "subject": "修正深市344共线性PLAN的合同身份门",
+      "status": "assigned",
+      "chains": [
+        "algorithm-factor-contribution"
+      ],
+      "reason": "深市共线性、模型贡献预检与分组SHAP实施。",
+      "shares": {
+        "algorithm-factor-contribution": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-szse344-collinearity-shap.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bdef70890ef21f01e6227ae1992afacc6a586259",
+      "date": "2026-11-08",
+      "subject": "从沪市三日窗口汇总生成L2价格对照",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/summarize_sse340_labels.py",
+        "scripts/tests/test_summarize_sse340_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "75e8479821830aa6ec4ba795795a5b9935b262d5",
+      "date": "2026-11-08",
+      "subject": "逐字节保护深市标签累计量与结果签收清单",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/tests/test_sse340_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b6a1d5e4eba3ce670425bb91ac7ead8184799df3",
+      "date": "2026-11-08",
+      "subject": "记录沪市340标签L2停止与搜索前置状态",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-sse340-labels-evidence.json",
+        "reports/2026-11/2026-11-08-model-sse340-labels.md",
+        "reports/2026-11/2026-11-08-model-sse340-search.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cfb7411c11154231607489154adc75c3d690d674",
+      "date": "2026-11-08",
+      "subject": "复用D19训练入口执行市场共线性与分组SHAP诊断",
+      "status": "assigned",
+      "chains": [
+        "algorithm-factor-contribution"
+      ],
+      "reason": "深市共线性、模型贡献预检与分组SHAP实施。",
+      "shares": {
+        "algorithm-factor-contribution": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-szse344-collinearity-shap-execution.md",
+        "scripts/_market_diagnostics.py",
+        "scripts/run_market_collinearity_shap.py",
+        "scripts/tests/test_market_diagnostics.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7922939bec1b9431d71fb6bfc9e2a629d71f89cd",
+      "date": "2026-11-08",
+      "subject": "沪市标签 PLAN：审定两侧无报价口径并改速度门",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-08-model-sse340-labels.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "63f5998fbd4a246e50bf2240d563548039e626f6",
+      "date": "2026-11-08",
+      "subject": "按7922939b复用沪市L2材料并接续并行标签生产",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-sse340-labels.md",
+        "scripts/run_sse340_labels.py",
+        "scripts/tests/test_run_sse340_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d43e5c95b103dc53d7cbe3e3496daa70be6ce25d",
+      "date": "2026-11-08",
+      "subject": "复用B6实现沪市绝对L5选优消费与D8准入检查",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-sse340-search.md",
+        "scripts/sse340_search.py",
+        "scripts/tests/test_sse340_search.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e5caa9bfba675975250e79ae8fac90fec59c2866",
+      "date": "2026-11-08",
+      "subject": "复用日级收据生成沪市全期标签审计和缺侧秒数",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-sse340-labels.md",
+        "scripts/finalize_sse340_labels.py",
+        "scripts/tests/test_finalize_sse340_labels.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b6febbd5737c6130fe1d12597f8d925ef5368998",
+      "date": "2026-11-08",
+      "subject": "用签收标签核对沪市D8停止序列的定义覆盖",
+      "status": "assigned",
+      "chains": [
+        "sse340-baseline-model"
+      ],
+      "reason": "沪市独立基准、对手价标签及搜索准备。",
+      "shares": {
+        "sse340-baseline-model": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-08-model-sse340-search.md",
+        "scripts/audit_sse340_search_admission.py",
+        "scripts/tests/test_sse340_search.py"
+      ]
+    }
+  ]
+}
