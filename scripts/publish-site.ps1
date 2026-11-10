@@ -62,6 +62,7 @@ try {
     if (-not $FullAssets) {
         $env:DASHBOARD_ASSET_COPY_MANIFEST = Join-Path $gitDir 'dashboard-asset-copies.json'
         $buildArgs += @('--asset-copy-manifest', $env:DASHBOARD_ASSET_COPY_MANIFEST)
+        $buildArgs += @('--daily-cache', (Join-Path $gitDir 'dashboard-daily-cache.json'))
     }
     & $python @buildArgs
     if ($LASTEXITCODE -ne 0) { throw "站点构建失败，退出码 $LASTEXITCODE。" }

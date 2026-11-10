@@ -150,6 +150,8 @@ D:\MG\anaconda3\python.exe build.py --offline
 
 首次发布会填充本地资源哈希缓存。以后构建时记录源文件和产物的文件标识，Wrangler 对源文件未变且仍与本次复制记录一致的产物复用哈希。升级到不兼容的 Wrangler 版本时，发布自动恢复全量计算。需要手动走原流程时，运行 `npm run deploy -- -FullAssets`。
 
+增量构建保留经核对的附件，删除已经移出源码的附件，并复用未变日报的 Markdown 渲染和 Git 时间查询。合并提交、历史改写或浅克隆会使 Git 时间重新查询。发布仍重建全文搜索索引，`-FullAssets` 可同时绕过日报缓存和附件复用。
+
 ## 5. 在线标签存储
 
 `wrangler.jsonc` 已配置生产入口 `worker/index.mjs`、`ASSETS` 静态资源绑定和 `REPORT_TAGS` SQLite Durable Object。首次部署通过 `report-tags-v1` migration 建立持久存储，不需要手工创建数据库 ID。后续发布不会用仓库快照覆盖已保存标签。

@@ -18,6 +18,7 @@ import markdown
 from pymdownx.slugs import uslugify
 from pymdownx.superfences import fence_div_format
 from scripts.daily_show_source import resolve_daily_show_source
+from scripts.daily_release_cache import DailyReleaseCache
 
 
 ROOT = Path(__file__).resolve().parent
@@ -43,6 +44,7 @@ class Builder:
         self.offline = offline
         self.release = release
         self.asset_copy_manifest: Path | None = None
+        self.daily_cache: DailyReleaseCache | None = None
         self.tags_snapshot = tags_snapshot or CONTENT_DIR / "report-tags.json"
         self.out_dir = OFFLINE_DIR if offline else DIST_DIR
         self.build_stamp = datetime.now(CN_TZ).strftime("%Y%m%d%H%M%S")
@@ -109,11 +111,18 @@ class Builder:
             output_format="html5",
         )
 
-    def render_markdown_file(self, path: Path) -> tuple[dict[str, Any], str] | None:
+    def render_daily_markdown(self, path: Path, body: str) -> str:
+        def render(text: str) -> str:
+            return self.markdown_renderer().convert(text)
+
+        if self.daily_cache is not None:
+            return self.daily_cache.render(path.relative_to(ROOT).as_posix(), body, render)
+        return render(body)
+
+    def render_markdown_file(self, path: Path, *, daily: bool = False) -> tuple[dict[str, Any], str] | None:
         try:
             post = frontmatter.loads(path.read_text(encoding="utf-8"))
-            md = self.markdown_renderer()
-            html = md.convert(post.content)
+            html = self.render_daily_markdown(path, post.content) if daily else self.markdown_renderer().convert(post.content)
             return dict(post.metadata), html
         except Exception as exc:  # noqa: BLE001 - build should continue with warnings.
             self.warnings.append(f"{path.relative_to(ROOT)} 渲染失败: {exc}")
@@ -194,6 +203,14 @@ class Builder:
         if not self.ensure_git_available():
             return None, None
         rel = path.relative_to(ROOT).as_posix()
+        if self.daily_cache is not None:
+            cached = self.daily_cache.saved_times(rel, include_first)
+            if cached is not None:
+                first, last = map(self.parse_datetime_value, cached)
+                if last is not None and (first is not None or not include_first):
+                    self.daily_cache.time_hits += 1
+                    self.daily_cache.times[rel] = cached
+                    return first if include_first else None, last
         first_lines = []
         try:
             if include_first:
@@ -224,6 +241,8 @@ class Builder:
         latest_lines = [line.strip() for line in latest.stdout.splitlines() if line.strip()]
         first = self.parse_datetime_value(first_lines[-1]) if first_lines else None
         last = self.parse_datetime_value(latest_lines[0]) if latest_lines else None
+        if self.daily_cache is not None and last is not None and (first is not None or not include_first):
+            self.daily_cache.times[rel] = [first.isoformat() if first else None, last.isoformat()]
         return first, last
 
     def mtime_for(self, path: Path) -> datetime:
@@ -393,7 +412,7 @@ class Builder:
         return path.stem
 
     def split_show_markdown(self, path: Path, date_key: str) -> tuple[str, str] | None:
-        rendered = self.render_markdown_file(path)
+        rendered = self.render_markdown_file(path, daily=True)
         if not rendered:
             return None
         meta, html = rendered
@@ -485,8 +504,7 @@ class Builder:
                 stage_id = "unclassified"
 
             try:
-                md = self.markdown_renderer()
-                html = md.convert(post.content)
+                html = self.render_daily_markdown(path, post.content)
             except Exception as exc:  # noqa: BLE001
                 self.warnings.append(f"{path.relative_to(ROOT)} 渲染失败: {exc}")
                 continue
@@ -1131,6 +1149,8 @@ class Builder:
             self.inline_offline_data(manifest)
         else:
             self.run_pagefind()
+        if self.daily_cache is not None:
+            self.daily_cache.save()
         self.print_summary(stage_entries, daily_entries)
 
     def print_summary(self, stage_entries: list[dict[str, Any]], daily_entries: list[dict[str, Any]]) -> None:
@@ -1190,13 +1210,16 @@ def main() -> int:
     parser.add_argument("--serve", action="store_true", help="build dist and serve locally")
     parser.add_argument("--release", action="store_true", help="exclude assets not checked into Git")
     parser.add_argument("--asset-copy-manifest", type=Path, help="record static file copies for the release hash cache")
+    parser.add_argument("--daily-cache", type=Path, help="reuse daily Markdown and Git timestamps in a release build")
     parser.add_argument("--tags-snapshot", type=Path, help="use an exported report-tags JSON snapshot, including for offline builds")
     args = parser.parse_args()
 
     builder = Builder(offline=args.offline, tags_snapshot=args.tags_snapshot, release=args.release)
-    if args.asset_copy_manifest and (not args.release or args.offline):
-        parser.error("--asset-copy-manifest requires an online --release build")
+    if (args.asset_copy_manifest or args.daily_cache) and (not args.release or args.offline):
+        parser.error("release caches require an online --release build")
     builder.asset_copy_manifest = args.asset_copy_manifest
+    if args.daily_cache:
+        builder.daily_cache = DailyReleaseCache(ROOT, args.daily_cache)
     builder.build()
     if args.serve:
         serve()
