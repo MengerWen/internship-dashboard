@@ -278,12 +278,29 @@ class Builder:
 
         def ignore_untracked(directory: str, names: list[str]) -> list[str]:
             relative_dir = Path(directory).relative_to(ROOT)
-            return [name for name in names if relative_dir / name not in tracked_assets]
+            return [
+                name for name in names
+                if relative_dir / name not in tracked_assets
+                or (self.asset_copy_manifest is not None and relative_dir == Path("site") and name == "assets")
+            ]
 
         if self.out_dir.exists():
-            shutil.rmtree(self.out_dir)
+            if self.asset_copy_manifest is None:
+                shutil.rmtree(self.out_dir)
+            else:
+                if self.out_dir.is_symlink() or self.out_dir.is_junction():
+                    raise ValueError(f"发布目录不能是链接 {self.out_dir}")
+                for entry in self.out_dir.iterdir():
+                    if entry.name == "assets":
+                        continue
+                    if entry.is_symlink() or entry.is_junction():
+                        raise ValueError(f"发布目录中存在链接 {entry}")
+                    if entry.is_dir():
+                        shutil.rmtree(entry)
+                    else:
+                        entry.unlink()
         ignore = ignore_untracked if self.release else None
-        shutil.copytree(SITE_DIR, self.out_dir, ignore=ignore)
+        shutil.copytree(SITE_DIR, self.out_dir, ignore=ignore, dirs_exist_ok=self.asset_copy_manifest is not None)
         content_assets = CONTENT_DIR / "assets"
         if self.asset_copy_manifest is not None:
             subprocess.run(
