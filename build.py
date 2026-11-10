@@ -42,6 +42,7 @@ class Builder:
     def __init__(self, offline: bool = False, tags_snapshot: Path | None = None, release: bool = False) -> None:
         self.offline = offline
         self.release = release
+        self.asset_copy_manifest: Path | None = None
         self.tags_snapshot = tags_snapshot or CONTENT_DIR / "report-tags.json"
         self.out_dir = OFFLINE_DIR if offline else DIST_DIR
         self.build_stamp = datetime.now(CN_TZ).strftime("%Y%m%d%H%M%S")
@@ -282,7 +283,13 @@ class Builder:
         ignore = ignore_untracked if self.release else None
         shutil.copytree(SITE_DIR, self.out_dir, ignore=ignore)
         content_assets = CONTENT_DIR / "assets"
-        if content_assets.exists():
+        if self.asset_copy_manifest is not None:
+            subprocess.run(
+                ["node", str(ROOT / "scripts/publish-assets.cjs"), str(self.out_dir), str(self.asset_copy_manifest)],
+                cwd=ROOT,
+                check=True,
+            )
+        elif content_assets.exists():
             shutil.copytree(
                 content_assets,
                 self.out_dir / "assets",
@@ -1163,10 +1170,14 @@ def main() -> int:
     parser.add_argument("--offline", action="store_true", help="build dist-offline for file:// use")
     parser.add_argument("--serve", action="store_true", help="build dist and serve locally")
     parser.add_argument("--release", action="store_true", help="exclude assets not checked into Git")
+    parser.add_argument("--asset-copy-manifest", type=Path, help="record static file copies for the release hash cache")
     parser.add_argument("--tags-snapshot", type=Path, help="use an exported report-tags JSON snapshot, including for offline builds")
     args = parser.parse_args()
 
     builder = Builder(offline=args.offline, tags_snapshot=args.tags_snapshot, release=args.release)
+    if args.asset_copy_manifest and (not args.release or args.offline):
+        parser.error("--asset-copy-manifest requires an online --release build")
+    builder.asset_copy_manifest = args.asset_copy_manifest
     builder.build()
     if args.serve:
         serve()

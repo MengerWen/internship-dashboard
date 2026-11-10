@@ -1,8 +1,9 @@
-﻿param([switch]$DryRun)
+﻿param([switch]$DryRun, [switch]$FullAssets)
 
 $ErrorActionPreference = 'Stop'
 $total = [Diagnostics.Stopwatch]::StartNew()
 $lock = $null
+$previousCopyManifest = $env:DASHBOARD_ASSET_COPY_MANIFEST
 
 function Assert-ReleaseSource([string]$Commit) {
     $branch = git symbolic-ref --quiet --short HEAD
@@ -57,7 +58,12 @@ try {
     $python = 'python'
     if ($env:DASHBOARD_PYTHON) { $python = $env:DASHBOARD_PYTHON }
     $build = [Diagnostics.Stopwatch]::StartNew()
-    & $python build.py --release
+    $buildArgs = @('build.py', '--release')
+    if (-not $FullAssets) {
+        $env:DASHBOARD_ASSET_COPY_MANIFEST = Join-Path $gitDir 'dashboard-asset-copies.json'
+        $buildArgs += @('--asset-copy-manifest', $env:DASHBOARD_ASSET_COPY_MANIFEST)
+    }
+    & $python @buildArgs
     if ($LASTEXITCODE -ne 0) { throw "站点构建失败，退出码 $LASTEXITCODE。" }
     foreach ($asset in @('dist/index.html', 'dist/manifest.json', 'dist/pagefind/pagefind-entry.json', 'dist/pagefind/pagefind-ui.js')) {
         if (-not (Test-Path -LiteralPath $asset -PathType Leaf)) { throw "缺少构建产物 $asset" }
@@ -68,10 +74,15 @@ try {
     $deployArgs = @('deploy', '--strict', '--keep-vars', '--tag', "git-$commit", '--message', "Git $commit")
     if ($DryRun) { $deployArgs += '--dry-run' }
     $deploy = [Diagnostics.Stopwatch]::StartNew()
-    & $wrangler @deployArgs
+    if ($FullAssets) {
+        & $wrangler @deployArgs
+    } else {
+        node --require ./scripts/publish-assets.cjs ./node_modules/wrangler/bin/wrangler.js @deployArgs
+    }
     if ($LASTEXITCODE -ne 0) { throw "Wrangler 失败，退出码 $LASTEXITCODE。" }
     Write-Host ('Wrangler 耗时 {0:F1} 秒' -f $deploy.Elapsed.TotalSeconds)
 } finally {
+    $env:DASHBOARD_ASSET_COPY_MANIFEST = $previousCopyManifest
     if ($lock) { $lock.Dispose() }
     Pop-Location
     Write-Host ('总耗时 {0:F1} 秒' -f $total.Elapsed.TotalSeconds)

@@ -148,6 +148,8 @@ D:\MG\anaconda3\python.exe build.py --offline
 
 发布命令要求 Windows 上的干净 `main` 与 GitHub `origin/main` 一致。它复用 `dist/`，仅复制已入库的站点静态文件，确认构建产物和搜索索引齐全后发布到 `wrangler.jsonc` 指定的 Worker。Wrangler 版本记录 Git SHA，终端显示构建、Wrangler 和总耗时。`npm run deploy -- -DryRun` 只做本机构建及 Wrangler 打包检查。
 
+首次发布会填充本地资源哈希缓存。以后构建时记录源文件和产物的文件标识，Wrangler 对源文件未变且仍与本次复制记录一致的产物复用哈希。升级到不兼容的 Wrangler 版本时，发布自动恢复全量计算。需要手动走原流程时，运行 `npm run deploy -- -FullAssets`。
+
 ## 5. 在线标签存储
 
 `wrangler.jsonc` 已配置生产入口 `worker/index.mjs`、`ASSETS` 静态资源绑定和 `REPORT_TAGS` SQLite Durable Object。首次部署通过 `report-tags-v1` migration 建立持久存储，不需要手工创建数据库 ID。后续发布不会用仓库快照覆盖已保存标签。
