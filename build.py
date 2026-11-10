@@ -190,21 +190,24 @@ class Builder:
                 self.warnings.append("当前仍为浅克隆,首次提交时间可能不可得")
         return True
 
-    def git_times_for(self, path: Path) -> tuple[datetime | None, datetime | None]:
+    def git_times_for(self, path: Path, *, include_first: bool = True) -> tuple[datetime | None, datetime | None]:
         if not self.ensure_git_available():
             return None, None
         rel = path.relative_to(ROOT).as_posix()
+        first_lines = []
         try:
-            added = subprocess.run(
-                ["git", "log", "--follow", "--diff-filter=A", "--format=%aI", "--", rel],
-                cwd=ROOT,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                capture_output=True,
-                timeout=15,
-                check=False,
-            )
+            if include_first:
+                added = subprocess.run(
+                    ["git", "log", "--follow", "--diff-filter=A", "--format=%aI", "--", rel],
+                    cwd=ROOT,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    capture_output=True,
+                    timeout=15,
+                    check=False,
+                )
+                first_lines = [line.strip() for line in added.stdout.splitlines() if line.strip()]
             latest = subprocess.run(
                 ["git", "log", "-1", "--format=%aI", "--", rel],
                 cwd=ROOT,
@@ -218,7 +221,6 @@ class Builder:
         except Exception as exc:  # noqa: BLE001
             self.warnings.append(f"{rel} git 时间读取失败,降级 mtime: {exc}")
             return None, None
-        first_lines = [line.strip() for line in added.stdout.splitlines() if line.strip()]
         latest_lines = [line.strip() for line in latest.stdout.splitlines() if line.strip()]
         first = self.parse_datetime_value(first_lines[-1]) if first_lines else None
         last = self.parse_datetime_value(latest_lines[0]) if latest_lines else None
@@ -228,7 +230,7 @@ class Builder:
         return datetime.fromtimestamp(path.stat().st_mtime, tz=CN_TZ)
 
     def file_updated_time(self, path: Path) -> tuple[str, str]:
-        _, git_last = self.git_times_for(path)
+        _, git_last = self.git_times_for(path, include_first=False)
         source = "git" if git_last else "mtime"
         updated = git_last or self.mtime_for(path)
         if source == "mtime":
@@ -237,7 +239,7 @@ class Builder:
 
     def daily_times(self, path: Path, meta: dict[str, Any]) -> tuple[str, str, str]:
         published_override = self.parse_datetime_value(meta.get("published"))
-        git_first, git_last = self.git_times_for(path)
+        git_first, git_last = self.git_times_for(path, include_first=published_override is None)
         mtime = self.mtime_for(path)
         source = "mtime"
         if published_override:
