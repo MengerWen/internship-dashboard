@@ -39,8 +39,9 @@ class RenderedPage:
 
 
 class Builder:
-    def __init__(self, offline: bool = False, tags_snapshot: Path | None = None) -> None:
+    def __init__(self, offline: bool = False, tags_snapshot: Path | None = None, release: bool = False) -> None:
         self.offline = offline
+        self.release = release
         self.tags_snapshot = tags_snapshot or CONTENT_DIR / "report-tags.json"
         self.out_dir = OFFLINE_DIR if offline else DIST_DIR
         self.build_stamp = datetime.now(CN_TZ).strftime("%Y%m%d%H%M%S")
@@ -261,15 +262,32 @@ class Builder:
         )
 
     def prepare_output(self) -> None:
+        tracked_assets: set[Path] = set()
+        if self.release:
+            paths = subprocess.check_output(
+                ["git", "ls-files", "-z", "--cached", "--", "content/assets", "site"],
+                cwd=ROOT,
+                encoding="utf-8",
+            ).split("\0")
+            for name in filter(None, paths):
+                path = Path(name)
+                tracked_assets.update((path, *path.parents))
+
+        def ignore_untracked(directory: str, names: list[str]) -> list[str]:
+            relative_dir = Path(directory).relative_to(ROOT)
+            return [name for name in names if relative_dir / name not in tracked_assets]
+
         if self.out_dir.exists():
             shutil.rmtree(self.out_dir)
-        shutil.copytree(SITE_DIR, self.out_dir)
+        ignore = ignore_untracked if self.release else None
+        shutil.copytree(SITE_DIR, self.out_dir, ignore=ignore)
         content_assets = CONTENT_DIR / "assets"
         if content_assets.exists():
             shutil.copytree(
                 content_assets,
                 self.out_dir / "assets",
                 dirs_exist_ok=True,
+                ignore=ignore,
             )
         self.inject_asset_versions()
 
@@ -1144,10 +1162,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Build internship dashboard.")
     parser.add_argument("--offline", action="store_true", help="build dist-offline for file:// use")
     parser.add_argument("--serve", action="store_true", help="build dist and serve locally")
+    parser.add_argument("--release", action="store_true", help="exclude assets not checked into Git")
     parser.add_argument("--tags-snapshot", type=Path, help="use an exported report-tags JSON snapshot, including for offline builds")
     args = parser.parse_args()
 
-    builder = Builder(offline=args.offline, tags_snapshot=args.tags_snapshot)
+    builder = Builder(offline=args.offline, tags_snapshot=args.tags_snapshot, release=args.release)
     builder.build()
     if args.serve:
         serve()

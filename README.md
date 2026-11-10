@@ -142,9 +142,10 @@ D:\MG\anaconda3\python.exe build.py
 git add content config.json README.md DEPLOY.md DECISIONS.md build.py site requirements.txt .gitignore
 git commit -m "update dashboard content"
 git push
+npm run deploy
 ```
 
-Cloudflare Workers Builds 连接 dashboard 仓库后,每次 push 会自动重新构建并部署静态资产。
+`npm run deploy` 核对本地 `main` 与 GitHub 一致后，在本机重建 `dist/` 并用 Wrangler 发布。首次使用需要安装依赖并授权 Wrangler，见[部署手册](DEPLOY.md#4-日常发布流程)。
 
 ## 导出离线版
 

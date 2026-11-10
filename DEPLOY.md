@@ -13,7 +13,7 @@ git push
 ```
 
 3. 日常日报的 commit/push 发生在 `dashboard` 子仓库内。父仓库中的 submodule 指针不会自动前进;如果希望父仓库记录最新 dashboard 版本,再到父仓库执行 `git add dashboard && git commit`。
-4. Cloudflare Workers Builds 直接连接 `internship-dashboard` 仓库,网站发布只取决于 dashboard 子仓库的 push,与父仓库 submodule 指针是否更新无关。
+4. 网站从 `internship-dashboard` 仓库的 `main` 发布，与父仓库 submodule 指针是否更新无关。
 5. 重新 clone 父仓库时使用:
 
 ```powershell
@@ -28,7 +28,9 @@ git submodule update --init
 
 6. 权限边界提醒:如果父仓库是 public,submodule 会暴露子仓库 URL 和 commit hash,但不会暴露 private 子仓库内容。子仓库必须保持 private。
 
-## 2. Cloudflare Workers 静态资产
+## 2. Cloudflare Workers Builds 旧流程与回退配置
+
+本地直发成功并核对生产版本后，在现有 Worker 的 **Settings → Builds** 断开旧的 Git 构建连接。需要恢复自动构建时，按本节重新连接。
 
 1. 进入 Cloudflare Dashboard -> Workers & Pages -> 导入 Git 仓库,选择 `internship-dashboard` private repo。
 2. Build command 填:
@@ -119,6 +121,14 @@ Cloudflare Access 配置:
 
 ## 4. 日常发布流程
 
+首次在本机安装依赖并登录 Wrangler。`python` 应能导入 `requirements.txt` 中的依赖，也可用 `DASHBOARD_PYTHON` 指定已经配置好的解释器。
+
+```powershell
+npm ci
+python -m pip install -r requirements.txt
+npm exec -- wrangler login
+```
+
 ```powershell
 # 1. 写日报
 notepad content\daily\2026-07-08.md
@@ -130,12 +140,13 @@ D:\MG\anaconda3\python.exe build.py --serve
 git add content
 git commit -m "add daily report 2026-07-08"
 git push
+npm run deploy
 
 # 4. 导出离线版
 D:\MG\anaconda3\python.exe build.py --offline
 ```
 
-正常情况下 push 后 1-2 分钟线上页面会更新。
+发布命令要求 Windows 上的干净 `main` 与 GitHub `origin/main` 一致。它复用 `dist/`，仅复制已入库的站点静态文件，确认构建产物和搜索索引齐全后发布到 `wrangler.jsonc` 指定的 Worker。Wrangler 版本记录 Git SHA，终端显示构建、Wrangler 和总耗时。`npm run deploy -- -DryRun` 只做本机构建及 Wrangler 打包检查。
 
 ## 5. 在线标签存储
 
