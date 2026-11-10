@@ -30,7 +30,7 @@ git submodule update --init
 
 ## 2. Cloudflare Workers Builds 旧流程与回退配置
 
-本地直发成功并核对生产版本后，在现有 Worker 的 **Settings → Builds** 断开旧的 Git 构建连接。需要恢复自动构建时，按本节重新连接。
+本地直发成功并核对生产版本后，在现有 Worker 的 **Settings → Builds** 启用 **Disable builds** 并保存。Git 连接和旧配置可留作回退。需要恢复自动构建时，关闭 **Disable builds** 并保存。
 
 1. 进入 Cloudflare Dashboard -> Workers & Pages -> 导入 Git 仓库,选择 `internship-dashboard` private repo。
 2. Build command 填:
