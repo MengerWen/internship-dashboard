@@ -1,6 +1,9 @@
 ﻿param([switch]$DryRun, [switch]$FullAssets)
 
 $ErrorActionPreference = 'Stop'
+# 仓库路径含非 GBK 字符（❗），按 UTF-8 读取 git 等命令的输出，避免路径被替换成 ?
+[Console]::OutputEncoding = [Text.Encoding]::UTF8
+$OutputEncoding = [Text.Encoding]::UTF8
 $total = [Diagnostics.Stopwatch]::StartNew()
 $lock = $null
 $previousCopyManifest = $env:DASHBOARD_ASSET_COPY_MANIFEST
