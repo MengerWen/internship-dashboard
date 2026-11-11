@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-11-11T09:30:46.297266+08:00",
+  "coverage": "open",
+  "tests_passed": 22,
+  "build": {
+    "status": "pass",
+    "isolated": true,
+    "journal_days": 122,
+    "reports": 47,
+    "track_warnings": {
+      "factor": 18,
+      "model": 11
+    }
+  },
+  "retention": {
+    "older_evidence_unchanged": 108,
+    "older_attribution_items_unchanged": 108,
+    "older_source_days_unchanged": 120,
+    "older_documents_unchanged": 1109,
+    "new_chains": 1,
+    "new_handoffs": 2,
+    "new_fixed_refs": 8,
+    "attribution": {
+      "assigned": 19,
+      "maintenance": 2
+    }
+  },
+  "local_browser": {
+    "status": "verified",
+    "points": 5,
+    "excerpts": 8,
+    "git_summary_count": 21,
+    "checked_chains": [
+      {
+        "id": "intraday-baseline-diagnostics",
+        "label": "两市基准诊断与成交修正",
+        "parents": [
+          "sse340-baseline-model",
+          "szse344-multih"
+        ]
+      },
+      {
+        "id": "intraday-index-selection",
+        "label": "沪深日内模型指数对标",
+        "parents": [
+          "sse340-baseline-model",
+          "szse344-multih"
+        ]
+      }
+    ],
+    "site_script_errors": 0,
+    "static_preview_api_note": "静态预览没有日报标签接口，返回404；日卡及依据返回200。"
+  },
+  "github_push": {
+    "content_sha": "aaee05f59766b5a9a699347bedceb9a0f6a539da",
+    "remote_main": "aaee05f59766b5a9a699347bedceb9a0f6a539da",
+    "github_api_main": "aaee05f59766b5a9a699347bedceb9a0f6a539da",
+    "checked_at": "2026-11-11T09:22:40.439415+08:00"
+  },
+  "wrangler_production": {
+    "git_sha": "aaee05f59766b5a9a699347bedceb9a0f6a539da",
+    "version_id": "0d551842-31e1-47ab-a5d4-86300d4d188a",
+    "deployment_id": "fe7bf2ee-8406-4ea4-940b-ba7f6d00acd6",
+    "traffic_percent": 100,
+    "deployment_created_at": "2026-11-11T01:24:47.155176Z",
+    "build_seconds": 14.5,
+    "wrangler_upload_seconds": 72.4,
+    "wrangler_trigger_seconds": 1.32,
+    "command_total_seconds_including_wait": 394.2,
+    "command_exit": 1,
+    "wrangler_child_exit": -1,
+    "publication": "production-confirmed-before-and-after-cli-stop",
+    "command_status": "stopped-after-production-readback",
+    "cli_stop": {
+      "stopped_pid": 3692,
+      "wrapper_pid": 3812,
+      "stopped_at": "2026-11-11T09:29:27.7951755+08:00",
+      "production_version": "0d551842-31e1-47ab-a5d4-86300d4d188a",
+      "reason": "生产版本确认后，本轮 CLI 超过四分钟未退出"
+    },
+    "production_receipt_sha256": "f6964b57db9d3ceaf7e949df495b80d5dd56f84b10a1264373bc241fa0a49e36"
+  },
+  "online_content": {
+    "status": "unverified",
+    "browser_attempts": [
+      {
+        "line": 931,
+        "timestamp": "2026-11-11T01:25:17.326Z",
+        "sha256": "c6d1819aef421f614f730dc18c3e26851872ddc45323ae30abe758bd7ff4ccd2",
+        "status": "Chrome connection timed out"
+      },
+      {
+        "line": 947,
+        "timestamp": "2026-11-11T01:26:15.495Z",
+        "sha256": "26a4eac61dac135fa0952213596bb66f11c21b0c951a5fc6208675f681c0c4b1",
+        "status": "Chrome connection timed out"
+      },
+      {
+        "line": 954,
+        "timestamp": "2026-11-11T01:26:46.112Z",
+        "sha256": "5d860f7b2d8ed69036ab42ce5061399722849b214a6ad76ccff815a54fc9f7d8",
+        "status": "Chrome connection timed out"
+      },
+      {
+        "line": 963,
+        "timestamp": "2026-11-11T01:26:54.759Z",
+        "sha256": "fc5157dfdca09d3f31dfd19cbc8a7f5f746cba0ce6436046ab4563884b223843",
+        "status": "iab unavailable"
+      }
+    ],
+    "http_status": 0,
+    "http_curl_exit": 28,
+    "scope": "Chrome连接超时、隐藏内置浏览器不可用、HTTPS读取超时；未读取生产日卡。"
+  },
+  "workspace_audit": {
+    "result": "pass-before-receipt",
+    "untracked": 0,
+    "temporary_mib": 918.85
+  },
+  "preview_cleanup": {
+    "removed": true,
+    "files": 9065,
+    "logical_bytes": 2370462032,
+    "retained_representatives": [
+      {
+        "name": "journal/2026-11-10.html",
+        "bytes": 6484,
+        "sha256": "9b0ccfef2473934e3f04841d66c362696f4116deb31cfd0be4fbaf6ad2d1f870"
+      },
+      {
+        "name": "journal/_evidence/2026-11-10.json",
+        "bytes": 21305,
+        "sha256": "5ff714f27291dd44fa2706482de50062ed851b075232b98d509206510297def4"
+      },
+      {
+        "name": "manifest.json",
+        "bytes": 1530983,
+        "sha256": "6bc913e48b85625740b749436f0a4fdca47e14e24fd975e05616fbdf0572966b"
+      }
+    ]
+  },
+  "source_end_check": [
+    {
+      "repo": "sirui-quant-research",
+      "head": "a643b5e6534000db9b87b5aba5567caeb6890fc4",
+      "refs_unchanged": true,
+      "status_unchanged": false
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "head": "616e99e13e03beef243eace4c72f8be4a67941f1",
+      "refs_unchanged": true,
+      "status_unchanged": false
+    }
+  ],
+  "retention_review": "2026-11-18"
+}
