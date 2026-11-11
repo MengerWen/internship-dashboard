@@ -1,0 +1,473 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "b036f652c72594c36db6c949e4de24dc10acf0a9a837a6a98b49149ac0180c38",
+  "rules_sha256": "6bcff96d24ef838c7e8bd63a130f7e683f81d559612273734f5e2adc28c8f758",
+  "revisions": {
+    "sirui-quant-research": "a643b5e6534000db9b87b5aba5567caeb6890fc4",
+    "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
+    "internship-dashboard": "45927186f9c0fbf3456014d51fccfe25a9ca5396"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "81209ff541178adc87087ec25d2ec8c28f169f11",
+      "date": "2026-11-10",
+      "subject": "发布沪深日内策略指数对标与扣费展示",
+      "status": "assigned",
+      "chains": [
+        "intraday-index-selection"
+      ],
+      "reason": "成分对标、扣费、风险及超额比较写入汇报展示。",
+      "shares": {
+        "intraday-index-selection": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-09.md",
+        "content/daily/2026-11-09.show/.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "802463c690bb464579fa206aa973e3706904de74",
+      "date": "2026-11-10",
+      "subject": "修复分段成绩表在网站嵌入时的宽度",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "报告专属的嵌入表宽修复或A5资金分配口径说明。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-09.show/.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "06fcc3ae02386082153ba1922771b9629c621f3b",
+      "date": "2026-11-10",
+      "subject": "补入11月9日沪深模型基准与指数对标",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "前一轮日志入库。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-11-09.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "17c6ddbdfccc16215374bfc4ddbfba8e9272b52b",
+      "date": "2026-11-10",
+      "subject": "记录11月10日研究日志发布核验",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "前一轮核对收据。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-11-10.md",
+        "docs/journal-review/daily-updates/2026-11-10/delivery-receipt.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "3d8ff7a28e0ffc26bed0e0cfa10eee8423c40693",
+      "date": "2026-11-10",
+      "subject": "更新沪深指数对标图表并精简分段成绩表",
+      "status": "assigned",
+      "chains": [
+        "intraday-index-selection"
+      ],
+      "reason": "成分对标、扣费、风险及超额比较写入汇报展示。",
+      "shares": {
+        "intraday-index-selection": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-09.show/.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "9876b6a0224991ddf12e8dde3fd5bb80418e466b",
+      "date": "2026-11-10",
+      "subject": "支持本地构建并直发汇报网站",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "切换本机直发，并缓存未变附件、资源哈希及日报构建。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DEPLOY.md",
+        "README.md",
+        "build.py",
+        "docs/journal-review/daily-update-rules.md",
+        "package.json",
+        "scripts/publish-site.ps1"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "feec11d22fc1797f8adbda4b686d63ad06067d0a",
+      "date": "2026-11-10",
+      "subject": "记录停用 Cloudflare 自动构建的开关",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "切换本机直发，并缓存未变附件、资源哈希及日报构建。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DEPLOY.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "5c9a68e5c29e49f21a00f954467b903519f3d16b",
+      "date": "2026-11-10",
+      "subject": "复用已验证的 Wrangler 静态资源哈希",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "切换本机直发，并缓存未变附件、资源哈希及日报构建。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DEPLOY.md",
+        "build.py",
+        "scripts/publish-assets.cjs",
+        "scripts/publish-site.ps1"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "41862f77d8b8b5ab5176ff57524ce0c7179560fa",
+      "date": "2026-11-10",
+      "subject": "跳过日报构建中用不到的首次提交查询",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "切换本机直发，并缓存未变附件、资源哈希及日报构建。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "build.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "d658a83ca5335c0dd708a47878d872ad46bd18b2",
+      "date": "2026-11-10",
+      "subject": "增量复用发布目录中未变的附件",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "切换本机直发，并缓存未变附件、资源哈希及日报构建。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "build.py",
+        "scripts/publish-assets.cjs"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "6533ca2aa98f0649658171d30fc3cab0d31a9a88",
+      "date": "2026-11-10",
+      "subject": "缓存未变日报的渲染结果和 Git 时间",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "切换本机直发，并缓存未变附件、资源哈希及日报构建。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DEPLOY.md",
+        "build.py",
+        "scripts/daily_release_cache.py",
+        "scripts/publish-site.ps1",
+        "tests/test_daily_release_cache.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "45927186f9c0fbf3456014d51fccfe25a9ca5396",
+      "date": "2026-11-10",
+      "subject": "补充 11 月 9 日汇报的深市 A5 口径",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "报告专属的嵌入表宽修复或A5资金分配口径说明。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-09.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "663b3e2c622af5d99163e1ecff7065b776bb24e1",
+      "date": "2026-11-10",
+      "subject": "签收深市 344 D24 七套新因子正式比较",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "七组开发折外正式对照的报告及逐日机器证据。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-10-model-szse344-factor-comparison.json",
+        "reports/2026-11/2026-11-10-model-szse344-factor-comparison.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "50c0d8a273f08a7fce6c996ee984b49e858f8a6b",
+      "date": "2026-11-10",
+      "subject": "记录 baseline 成交延迟与实时性第一轮调研方案",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-10-baseline-diag-latency.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "312d2dfa42de99cd646704ed5d6c2f0e012034b4",
+      "date": "2026-11-10",
+      "subject": "记录基准未看段诊断第一轮调研与检查方案",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-10-baseline-diag-unseen.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "26b105e188d9ae010820a0a127bc7dc2744db9f9",
+      "date": "2026-11-10",
+      "subject": "记录基准诊断第一轮：多重比较、OOF 泄漏核查与约束方案",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-10-baseline-diag-oof.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ebde7316b77c8595cf1f1984fa5e6dc21fbcfd62",
+      "date": "2026-11-10",
+      "subject": "新增 D2e 成交比例和结转收益计算",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/ml/szse344_fill_correction.py",
+        "因子/algobench/tests/test_szse344_fill_correction.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ae1c1637011ef1ffcacfd6a04e04e0e7b9160578",
+      "date": "2026-11-10",
+      "subject": "回放两市冻结基准的 D2e 成交修正",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/replay_baseline_d2e_fills.py",
+        "scripts/tests/test_replay_baseline_d2e_fills.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d1f82fa2c264eabc93a1be283725a2dff55485d9",
+      "date": "2026-11-10",
+      "subject": "统一 D2e 参考字段类型并登记结转试跑",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/replay_baseline_d2e_fills.py",
+        "scripts/tests/test_replay_baseline_d2e_fills.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2dfb0fb68e953fdfa5e1e42dc4690ee57cb8a6a8",
+      "date": "2026-11-10",
+      "subject": "合并 D2e 结转股票的精确代码范围页",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/replay_baseline_d2e_fills.py",
+        "scripts/tests/test_replay_baseline_d2e_fills.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ee7fabe33f592cf9b989449d25c8d0db21661df9",
+      "date": "2026-11-10",
+      "subject": "签收两市冻结基准的 D2e 修正成绩",
+      "status": "assigned",
+      "chains": [
+        "intraday-baseline-diagnostics"
+      ],
+      "reason": "两市冻结模型的成绩可信度、延迟或成交约束诊断，及无对手价时成交修正。",
+      "shares": {
+        "intraday-baseline-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-10-baseline-d2e-fill-correction.json",
+        "reports/2026-11/2026-11-10-baseline-d2e-fill-correction.md"
+      ]
+    }
+  ]
+}
