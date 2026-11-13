@@ -1,0 +1,575 @@
+{
+  "schema_version": 1,
+  "commits": [
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cb4b369dda51019060e65e6d2609e9a33c58fb42",
+      "author": "2026-11-12T11:40:37+08:00",
+      "committer": "2026-11-12T11:40:37+08:00",
+      "subject": "audit: verify CSI2000 June weight recovery and timing",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery.md",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/closeout.json",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/manifest.json",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/probe-r01.json",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/probe-r02.json",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/recovery-audit.json",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/rq-daily.json.xz",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/rq-event-weights-2026-08-17.json.xz",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/rq-monthly.json.xz",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/rq-pcf.json.xz",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/rq-prices.json.xz",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/rq-shares.json.xz",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/wangly-preflight.json",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/wangly-sync.json",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery/wenjie-preflight.json",
+        "scripts/audit_csi2000_weight_recovery.py"
+      ],
+      "diff_sha256": "940237144e289376f45bd7cd55ea8af26513ad5ad5695055a2f4482c7f83f3e8",
+      "diff_bytes": 83107,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1cd48-f350-75e0-bda0-3b381f078619",
+          "line": 547,
+          "time": "2026-11-12T11:40:51.826000+08:00",
+          "sha256": "60f9d186d8ab2b108c9a870472670391ff48745333b6798fc58388cea79e927f",
+          "before": "ccd52f30",
+          "head": "cb4b369d",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ccd52f3002f44b903ce7d36bc5455e594ce8ef72",
+      "author": "2026-11-12T11:25:57+08:00",
+      "committer": "2026-11-12T11:25:57+08:00",
+      "subject": "audit: probe CSI2000 June weight recovery sources",
+      "paths": [
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery.md",
+        "scripts/probe_baseline_base_position.py"
+      ],
+      "diff_sha256": "686ccd09c41fa3c76635e503986b843b59eb20d7718c4b1e6a8078d02e05cb98",
+      "diff_bytes": 7747,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1cd48-f350-75e0-bda0-3b381f078619",
+          "line": 339,
+          "time": "2026-11-12T11:26:03.842000+08:00",
+          "sha256": "fbd572920967e30751968f18a64d3040a873b5fce0e5b241fc2afff163423cbc",
+          "before": "2dc17b31",
+          "head": "ccd52f30",
+          "command_exit": 1,
+          "post_push_check": "TLS EOF"
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2dc17b31e82166fe1f29a247f58dc3cbb0cd9b5d",
+      "author": "2026-11-12T10:42:01+08:00",
+      "committer": "2026-11-12T10:42:01+08:00",
+      "subject": "audit: classify CSI2000 event weight coverage and timing",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-events.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/event-probes-closeout.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/event-weight-coverage.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/manifest.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-probe-r01.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-probe-r02.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-probe-r03.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2024-08-07.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2024-08-12.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2024-08-26.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2024-09-11.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2024-09-18.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2024-12-16.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-03-17.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-04-14.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-05-12.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-06-16.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-08-11.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-09-15.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-10-13.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-11-17.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2025-12-15.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2026-01-12.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2026-02-05.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-event-weights-2026-03-16.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-publication-review.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/wangly-event-sync-r01.json",
+        "scripts/audit_base_position_events.py"
+      ],
+      "diff_sha256": "c53d26b259e237a1bb1771d1154c338612a616736532aef9e6105b047eb163f2",
+      "diff_bytes": 245905,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 1566,
+          "time": "2026-11-12T10:42:17.504000+08:00",
+          "sha256": "52e5da99bbdcfdd223530aa2d7d8732320d84a56df11284d2d83fa5bdb6bfe27",
+          "before": "f46b5478",
+          "head": "2dc17b31",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f46b5478a28eb663db0e92b4d9aded30d4d6be25",
+      "author": "2026-11-12T10:28:56+08:00",
+      "committer": "2026-11-12T10:28:56+08:00",
+      "subject": "audit: probe bounded CSI2000 event weights",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "scripts/probe_baseline_base_position.py"
+      ],
+      "diff_sha256": "c996f2abd03e9dc6681890ef080b7a64738b741389cf0444b32e7438031d851f",
+      "diff_bytes": 7072,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 1412,
+          "time": "2026-11-12T10:29:17.506000+08:00",
+          "sha256": "5cd5a0ac28fb6393f70500e41341af4525b530dcb8889735e19576fb0fc2f58f",
+          "before": "9740057c",
+          "head": "f46b5478",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9740057cd77fc2fb259287634e88aee69ade288e",
+      "author": "2026-11-12T09:46:17+08:00",
+      "committer": "2026-11-12T09:46:17+08:00",
+      "subject": "audit: record CSI2000 event weight sources and gaps",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-events.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/csi-authorized-agents.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/csi-technical-documents.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/doris-catalog.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/doris-relevant-schemas.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/events.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/local-cleanup.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/manifest.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-initialization-2024-06-27.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-initialization-2024-06-28.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-initialization-probe.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/rq-sdk-interfaces.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/server-data-catalog.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/server-source-entries.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/source-ledger.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/wangly-data-subcatalog.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/wangly-preflight.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/wangly-sync.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/wenjie-preflight.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-events/wind-connection-probe.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0.md",
+        "scripts/audit_base_position_events.py"
+      ],
+      "diff_sha256": "5cde08631a9ffda676b340d7291f4177cf693e0f7be085649464ddb652c6168b",
+      "diff_bytes": 101369,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 1309,
+          "time": "2026-11-12T09:46:32.218000+08:00",
+          "sha256": "831f82cbebd44aa0ba8b95de9b2459ab7e55981a0f4962bf5b88e2737939421b",
+          "before": "2f610f91",
+          "head": "9740057c",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2f610f91a5f844d196ed6ad7fd7896c367367843",
+      "author": "2026-11-12T09:25:35+08:00",
+      "committer": "2026-11-12T09:25:35+08:00",
+      "subject": "audit: probe pre-evaluation CSI2000 weight snapshots",
+      "paths": [
+        "scripts/probe_baseline_base_position.py"
+      ],
+      "diff_sha256": "b0ff9124beeb3259443a6ab3f531bda8a51ca6ca820da6d7335222624ebe24b8",
+      "diff_bytes": 2887,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 933,
+          "time": "2026-11-12T09:25:42.265000+08:00",
+          "sha256": "6388766ea576bf8ce694b91f47a366117d6b1339f7d98f6d23ab98b8b3e86ad3",
+          "before": "af7e920b",
+          "head": "2f610f91",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "af7e920b37240bc750fda1f4505a1a029ceab1b5",
+      "author": "2026-11-12T09:17:59+08:00",
+      "committer": "2026-11-12T09:17:59+08:00",
+      "subject": "归约底仓初始化候选与25个成分变动事件",
+      "paths": [
+        "reports/2026-11/2026-11-12-baseline-base-position-events/events.json",
+        "scripts/audit_base_position_events.py"
+      ],
+      "diff_sha256": "d1d83a324e6a7679dbba6eedd817e7a943cefced36268ce5ba42517775fbcfb3",
+      "diff_bytes": 61992,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 812,
+          "time": "2026-11-12T09:18:05.722000+08:00",
+          "sha256": "4c4bbc19a9b831eb1e2cc4721a5ce6074a0dc10a0dcfc49a55df56a10d160798",
+          "before": "df3971f1",
+          "head": "af7e920b",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "df3971f14df9cc7a53b310c221ee1d65f67af8fc",
+      "author": "2026-11-12T09:16:47+08:00",
+      "committer": "2026-11-12T09:16:47+08:00",
+      "subject": "按沪深范围澄清权重缺口并限定事件补源",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "decisions/2026-11-11-base-position.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0.md"
+      ],
+      "diff_sha256": "ebce0bb36c860f66c64aea059af59585d322e8b1e4bdf95cc237d0581b2bdec1",
+      "diff_bytes": 14618,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 796,
+          "time": "2026-11-12T09:16:53.875000+08:00",
+          "sha256": "662657c7e4546fb342e6544b826ac40eb018f335e8a89be78da19aa40202161a",
+          "before": "efdb8f62",
+          "head": "df3971f1",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "efdb8f62ebaef2ff4063516d0625a37d93b4c343",
+      "author": "2026-11-12T09:04:42+08:00",
+      "committer": "2026-11-12T09:04:42+08:00",
+      "subject": "确认双底仓待正式权重补齐后共同续跑",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0.md"
+      ],
+      "diff_sha256": "3c6f4f1777b3a86f3563de3d98d39c7c3ed41d3a877c4559cd443f0e7d8f4bfd",
+      "diff_bytes": 3734,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 739,
+          "time": "2026-11-12T09:04:49.549000+08:00",
+          "sha256": "f7214ef7f3e225a9befda4c5d3ce127c4182fcda1916b17eb2f506fb1141d2b6",
+          "before": "3cfb2dba",
+          "head": "efdb8f62",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3cfb2dba7abb59c90990e5607f26c6e3d151c013",
+      "author": "2026-11-12T09:03:00+08:00",
+      "committer": "2026-11-12T09:03:00+08:00",
+      "subject": "完成底仓P0独立核查并记录正式权重缺口",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0.md",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/factor-asof-audit.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/gate-result.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/manifest.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/rq-daily-probe.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/rq-factor-events.json.xz",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/rq-factor-probe.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/server-closeout.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wangly-coverage-receipt.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wangly-coverage.jsonl",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wangly-reference-inventory.jsonl",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wangly-schemas.jsonl",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wenjie-coverage-receipt.json",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wenjie-coverage.jsonl",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wenjie-reference-inventory.jsonl",
+        "reports/2026-11/2026-11-12-baseline-base-position-p0/wenjie-schemas.jsonl"
+      ],
+      "diff_sha256": "aaf55a3d4205692877c36941614d9ce5c43ffa13bc701c6685a8e331b4ec4545",
+      "diff_bytes": 456374,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 711,
+          "time": "2026-11-12T09:03:07.068000+08:00",
+          "sha256": "eab607f346756db3deba9a3d9cab10a0e4f13919f63b47ea4ce1cff278c65bcc",
+          "before": "c4b31a36",
+          "head": "3cfb2dba",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c4b31a365833b3d8c0e82cea70c71e00a49ad777",
+      "author": "2026-11-12T08:57:00+08:00",
+      "committer": "2026-11-12T08:57:00+08:00",
+      "subject": "核查底仓复权事件及建仓前因子来源",
+      "paths": [
+        "scripts/probe_baseline_base_position.py"
+      ],
+      "diff_sha256": "74e5ca0f666807e5f1b51c4a9e1f0ed3d039918052e346f0dae7cb86b103251f",
+      "diff_bytes": 5038,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 639,
+          "time": "2026-11-12T08:57:11.502000+08:00",
+          "sha256": "8dd4e5ae678f8c2938517716518b894211438adec983e0ba7f836041a4f25aa1",
+          "before": "594b2b0d",
+          "head": "c4b31a36",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "594b2b0de32e1baf0179a7528af9c5dd59448031",
+      "author": "2026-11-12T08:54:13+08:00",
+      "committer": "2026-11-12T08:54:13+08:00",
+      "subject": "记录本次底仓核查的开盘窗口授权",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "scripts/audit_base_position_coverage.py"
+      ],
+      "diff_sha256": "34217ee553161a52b05e1e4b95a682ea869bad29db38d0f7cbbc2f9f4821d393",
+      "diff_bytes": 2936,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 602,
+          "time": "2026-11-12T08:54:24.808000+08:00",
+          "sha256": "5b89fdfb4ef799bb46f8f42e7f08b6af9f6fc84bc93d718d70f2075cd9f96215",
+          "before": "262c9db2",
+          "head": "594b2b0d",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "262c9db232fac395b01e7fd60959e0a59b5990d7",
+      "author": "2026-11-12T08:51:13+08:00",
+      "committer": "2026-11-12T08:51:13+08:00",
+      "subject": "以签收压缩成分控制P0核查输入传输量",
+      "paths": [
+        "scripts/audit_base_position_coverage.py"
+      ],
+      "diff_sha256": "48938bb94fe45078090318d84561a8a74012be90a18f79cd60fb6e35c87d3d47",
+      "diff_bytes": 2199,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 559,
+          "time": "2026-11-12T08:51:19.361000+08:00",
+          "sha256": "f270c9963085cbc9acd7a38c7ac39bdd020afcc59fb70e335a59504df4493899",
+          "before": "1b3bdc6c",
+          "head": "262c9db2",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1b3bdc6ce6729b409cd24f45b8146b2b4de16669",
+      "author": "2026-11-12T08:47:40+08:00",
+      "committer": "2026-11-12T08:47:40+08:00",
+      "subject": "核查底仓成分的签收价格与冻结分数覆盖",
+      "paths": [
+        "scripts/audit_base_position_coverage.py"
+      ],
+      "diff_sha256": "2cee0f1623c7d049305cb7dcd1617cf4f7a2e7855d7cc4b0f2a1c9b7aca13384",
+      "diff_bytes": 5233,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 502,
+          "time": "2026-11-12T08:47:45.425000+08:00",
+          "sha256": "f807ed118c44de6418b74479b2a5f1d8d695c53d3856f238a85556f1f393d833",
+          "before": "ea3448a9",
+          "head": "1b3bdc6c",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ea3448a9a4887cfd7e921651eda93562dc9402c2",
+      "author": "2026-11-12T08:43:56+08:00",
+      "committer": "2026-11-12T08:43:56+08:00",
+      "subject": "增加中证2000权重与指数日线只读核查入口",
+      "paths": [
+        "scripts/probe_baseline_base_position.py"
+      ],
+      "diff_sha256": "417b8134491c0c97f1ae47714b5f9786b698875335d0d0a7700505bc0d3026e0",
+      "diff_bytes": 3869,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 420,
+          "time": "2026-11-12T08:44:03.770000+08:00",
+          "sha256": "e8eab1728e5ad1a9e79ea4b4bad91ea0149136614ba2e8693caa71cd255fe750",
+          "before": "13778a65",
+          "head": "ea3448a9",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "13778a654cc663a36e8523ef5cd380b3a84b62ee",
+      "author": "2026-11-12T08:42:51+08:00",
+      "committer": "2026-11-12T08:42:51+08:00",
+      "subject": "明确底仓权重历史可得性与同量做T金额口径",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "decisions/2026-11-11-base-position.md"
+      ],
+      "diff_sha256": "e2d1d143881a23319ff17ded44c5c15a44e024eb0f851abe91e0c9ff0570d59d",
+      "diff_bytes": 19047,
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "status": "assigned",
+      "reason": "核查两种底仓所需的成分、行情及历史权重。",
+      "remote_main_contains": true,
+      "push_receipts": [
+        {
+          "session_id": "01a1c9ef-a85b-7493-a54e-1a2e9ec90ce6",
+          "line": 396,
+          "time": "2026-11-12T08:42:58.045000+08:00",
+          "sha256": "8c58c504f69df02405b187afd0063d33f051a2801127b15807b965d03c991de3",
+          "before": "74c5f918",
+          "head": "13778a65",
+          "command_exit": 0,
+          "post_push_check": null
+        }
+      ]
+    }
+  ]
+}

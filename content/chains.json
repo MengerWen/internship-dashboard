@@ -4352,16 +4352,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-12",
-        "days": 1,
+        "days": 2,
         "span": [
           "2026-11-11",
-          "2026-11-11"
+          "2026-11-12"
         ],
         "unreviewed_days": [],
-        "scope": "已核对底仓设计和首次建仓数据的停止证据，后续回测尚未启动。"
+        "scope": "已核对底仓设计和首次建仓数据的停止证据，后续回测尚未启动。",
+        "incremental_review": {
+          "on": "2026-11-13",
+          "scope": "核对 11 月 12 日 P0 及成分调整日权重，回测仍待正式权重。"
+        }
       },
       "fate": "landed",
-      "fate_note": "定下两种底仓和资金收益口径。566个评价日成分可读，首个建仓日的权重仍是调整前名单，前置核查暂停。",
+      "fate_note": "两种底仓及资金收益口径已确定。成分、价格、复权来源和冻结分数完成前置核查。米筐接口在部分调整日缺新成分或有零权重，仍缺可证明当时已知的正式目标权重，两种底仓回测均待续。",
       "source_refs": [
         {
           "kind": "file",
@@ -4400,6 +4404,63 @@
           "revision": "74c5f918e6fd982ba46ad422b4e02657e3b9a395",
           "title": "事前可知的底仓股本规则",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/74c5f918e6fd982ba46ad422b4e02657e3b9a395"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "cb4b369dda51019060e65e6d2609e9a33c58fb42",
+          "path": "reports/2026-11/2026-11-12-baseline-base-position-p0.md",
+          "lines": [
+            1,
+            37
+          ],
+          "title": "底仓成分、价格与复权核查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/cb4b369dda51019060e65e6d2609e9a33c58fb42/reports/2026-11/2026-11-12-baseline-base-position-p0.md#L1-L37"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "cb4b369dda51019060e65e6d2609e9a33c58fb42",
+          "path": "reports/2026-11/2026-11-12-baseline-base-position-events.md",
+          "lines": [
+            1,
+            14
+          ],
+          "title": "25 次名单调整的权重核查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/cb4b369dda51019060e65e6d2609e9a33c58fb42/reports/2026-11/2026-11-12-baseline-base-position-events.md#L1-L14"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "cb4b369dda51019060e65e6d2609e9a33c58fb42",
+          "path": "reports/2026-11/2026-11-12-csi2000-weight-recovery.md",
+          "lines": [
+            23,
+            70
+          ],
+          "title": "6 月调样权重缺口复核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/cb4b369dda51019060e65e6d2609e9a33c58fb42/reports/2026-11/2026-11-12-csi2000-weight-recovery.md#L23-L70"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "3cfb2dba7abb59c90990e5607f26c6e3d151c013",
+          "title": "底仓前置核查及停止回执",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/3cfb2dba7abb59c90990e5607f26c6e3d151c013"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "2dc17b31e82166fe1f29a247f58dc3cbb0cd9b5d",
+          "title": "名单调整日权重回执",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2dc17b31e82166fe1f29a247f58dc3cbb0cd9b5d"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "cb4b369dda51019060e65e6d2609e9a33c58fb42",
+          "title": "6 月调样及 8 月事件实测回执",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/cb4b369dda51019060e65e6d2609e9a33c58fb42"
         }
       ],
       "report_coverage": "curated"
