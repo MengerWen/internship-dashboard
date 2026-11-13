@@ -1599,20 +1599,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 9,
+        "days": 10,
         "span": [
           "2026-07-07",
-          "2026-11-10"
+          "2026-11-11"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-11",
-          "scope": "11月10日已核实的新增工作和固定依据，来源仍有缺口。"
+          "on": "2026-11-12",
+          "scope": "11月11日已核实的工作和依据，来源仍有缺口。"
         }
       },
       "fate": "landed",
-      "fate_note": "站点的构建、离线阅读和部署一直在维护。11 月 5 日两市同名列的对照下载改用页面内嵌的完整精度数据；11 月 10 日停用旧的自动构建，改为推送后在本机直接发布，有缓存时单篇日报从提交到上线约 59 秒。",
+      "fate_note": "站点的构建、离线阅读和部署一直在维护。11 月 5 日两市同名列的对照下载改用页面内嵌的完整精度数据；11 月 10 日停用旧的自动构建，改为推送后在本机直接发布，有缓存时单篇日报从提交到上线约 59 秒。。修复了GBK控制台下的发布锁。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1649,6 +1649,13 @@
           "revision": "6533ca2aa98f0649658171d30fc3cab0d31a9a88",
           "title": "缓存日报渲染和 Git 时间",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/6533ca2aa98f0649658171d30fc3cab0d31a9a88"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "d59b089430657f3c35d916a82eaad01ad6129517",
+          "title": "修复GBK控制台下的发布锁",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/d59b089430657f3c35d916a82eaad01ad6129517"
         }
       ]
     },
@@ -1684,20 +1691,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 45,
+        "days": 46,
         "span": [
           "2026-07-07",
-          "2026-11-10"
+          "2026-11-11"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-11",
-          "scope": "11月10日已核实的新增工作和固定依据，来源仍有缺口。"
+          "on": "2026-11-12",
+          "scope": "11月11日已核实的工作和依据，来源仍有缺口。"
         }
       },
       "fate": "landed",
-      "fate_note": "各阶段的研究报告和展示页都从这里发布。11 月 9 日补齐模型线方法报告的图表，发布沪深两市基准模型的逐日收益展示；10 日修复嵌入时的表格宽度，补上深市多空收益的算法说明。",
+      "fate_note": "各阶段的研究报告和展示页都从这里发布。11 月 9 日补齐模型线方法报告的图表，发布沪深两市基准模型的逐日收益展示；10 日修复嵌入时的表格宽度，补上深市多空收益的算法说明。。11月9日汇报已补成交顺延重算。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1763,6 +1770,20 @@
           "revision": "45927186f9c0fbf3456014d51fccfe25a9ca5396",
           "title": "补深市 A5 资金分配说明",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/45927186f9c0fbf3456014d51fccfe25a9ca5396"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "e79c1b0c1bd0499c55e7154b37a9d92695908918",
+          "title": "汇报加入成交重算和顺延",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/e79c1b0c1bd0499c55e7154b37a9d92695908918"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "f2342e063c743727c76c52732dc860ff6523002e",
+          "title": "保留11月9日汇报首发时间",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/f2342e063c743727c76c52732dc860ff6523002e"
         }
       ]
     },
@@ -4243,21 +4264,27 @@
       "purpose": "用已登记的沪深冻结预测检验基准成绩对选优、时间划分、交易条件和延迟的敏感性。先修正无对手价的成交假设，再分阶段诊断收益缩水和可执行性。",
       "status": "active",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-11-09"
+        ]
       },
       "review": {
         "by": "Codex",
         "on": "2026-11-11",
-        "days": 1,
+        "days": 2,
         "span": [
           "2026-11-10",
-          "2026-11-10"
+          "2026-11-11"
         ],
         "unreviewed_days": [],
-        "scope": "两市冻结预测的成交修正回放已完成；未看段、多重比较和实时性为首轮诊断。"
+        "scope": "两市冻结预测的成交修正回放已完成；未看段、多重比较和实时性为首轮诊断。",
+        "incremental_review": {
+          "on": "2026-11-12",
+          "scope": "11月11日已核实的工作和依据，来源仍有缺口。"
+        }
       },
       "fate": "landed",
-      "fate_note": "重算两市成交收益，查折外成绩与延迟",
+      "fate_note": "两市已用冻结预测完成成交修正和逐股顺延重算。开盘过滤只能覆盖部分顺延，未看段前5%纯多仍为负。折外可信度和实时性已做首轮诊断。",
       "source_refs": [
         {
           "kind": "file",
@@ -4277,6 +4304,102 @@
           "revision": "ee7fabe33f592cf9b989449d25c8d0db21661df9",
           "title": "两市冻结基准成交修正报告",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/ee7fabe33f592cf9b989449d25c8d0db21661df9"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "0455475a8397a8ed29ccd9fdd3d49a591e5b7278",
+          "path": "reports/2026-11/2026-11-11-baseline-fill-rules-rerun.md",
+          "lines": [
+            1,
+            28
+          ],
+          "title": "两市未看段与顺延持仓对照",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/0455475a8397a8ed29ccd9fdd3d49a591e5b7278/reports/2026-11/2026-11-11-baseline-fill-rules-rerun.md#L1-L28"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "0455475a8397a8ed29ccd9fdd3d49a591e5b7278",
+          "title": "两市冻结基准重算报告与机器结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/0455475a8397a8ed29ccd9fdd3d49a591e5b7278"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "975d011b823663303c00171be7cb336210d35910",
+          "path": "decisions/2026-11-11-fill-rules.md",
+          "lines": [
+            5,
+            52
+          ],
+          "title": "选股过滤、成交与顺延规则",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/975d011b823663303c00171be7cb336210d35910/decisions/2026-11-11-fill-rules.md#L5-L52"
+        }
+      ],
+      "report_coverage": "curated"
+    },
+    {
+      "id": "csi2000-base-position",
+      "track": "model",
+      "label": "中证2000底仓与日内资金评价",
+      "short": "中证2000底仓",
+      "purpose": "在中证2000成分内用实际底仓金额限制两市日内交易，比较指数权重和等权底仓下的资金收益。",
+      "status": "active",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-12",
+        "days": 1,
+        "span": [
+          "2026-11-11",
+          "2026-11-11"
+        ],
+        "unreviewed_days": [],
+        "scope": "已核对底仓设计和首次建仓数据的停止证据，后续回测尚未启动。"
+      },
+      "fate": "landed",
+      "fate_note": "定下两种底仓和资金收益口径。566个评价日成分可读，首个建仓日的权重仍是调整前名单，前置核查暂停。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "1b9adafb6168e8a84719aeab36e3fa821edc03f6",
+          "path": "reports/2026-11/2026-11-11-baseline-base-position-p0.md",
+          "lines": [
+            1,
+            37
+          ],
+          "title": "建仓日权重与成分名单核查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/1b9adafb6168e8a84719aeab36e3fa821edc03f6/reports/2026-11/2026-11-11-baseline-base-position-p0.md#L1-L37"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "1b9adafb6168e8a84719aeab36e3fa821edc03f6",
+          "title": "中证2000成分权重核查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/1b9adafb6168e8a84719aeab36e3fa821edc03f6"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "74c5f918e6fd982ba46ad422b4e02657e3b9a395",
+          "path": "PLAN/2026-11-11-baseline-base-position.md",
+          "lines": [
+            35,
+            57
+          ],
+          "title": "底仓核查和逐股成交复用",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/74c5f918e6fd982ba46ad422b4e02657e3b9a395/PLAN/2026-11-11-baseline-base-position.md#L35-L57"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "74c5f918e6fd982ba46ad422b4e02657e3b9a395",
+          "title": "事前可知的底仓股本规则",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/74c5f918e6fd982ba46ad422b4e02657e3b9a395"
         }
       ],
       "report_coverage": "curated"
@@ -6671,6 +6794,85 @@
         "on": "2026-11-11",
         "basis": "两市运行回执、输入SHA和96格原成绩复现互相对应。",
         "scope": "冻结预测与原标签实际被回放读取。"
+      }
+    },
+    {
+      "from": "intraday-baseline-diagnostics",
+      "to": "csi2000-base-position",
+      "type": "派生",
+      "date": "2026-11-11",
+      "source_date": "2026-11-11",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "底仓评价计划沿用两市成交重算的筛选、顺延与估值规则。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "975d011b823663303c00171be7cb336210d35910",
+          "path": "decisions/2026-11-11-fill-rules.md",
+          "lines": [
+            5,
+            52
+          ],
+          "title": "选股过滤、成交与顺延规则",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/975d011b823663303c00171be7cb336210d35910/decisions/2026-11-11-fill-rules.md#L5-L52"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "74c5f918e6fd982ba46ad422b4e02657e3b9a395",
+          "path": "PLAN/2026-11-11-baseline-base-position.md",
+          "lines": [
+            35,
+            57
+          ],
+          "title": "底仓核查和逐股成交复用",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/74c5f918e6fd982ba46ad422b4e02657e3b9a395/PLAN/2026-11-11-baseline-base-position.md#L35-L57"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-12",
+        "basis": "底仓决策和实施计划明确引用成交规则及已验逐股结果。",
+        "scope": "仅登记已进入计划或展示的实际依据。"
+      }
+    },
+    {
+      "from": "intraday-baseline-diagnostics",
+      "to": "report-publish",
+      "type": "派生",
+      "date": "2026-11-11",
+      "source_date": "2026-11-11",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "11月9日汇报使用本次回放的分段成绩、顺延和资金占用数据。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "0455475a8397a8ed29ccd9fdd3d49a591e5b7278",
+          "path": "reports/2026-11/2026-11-11-baseline-fill-rules-rerun.md",
+          "lines": [
+            1,
+            28
+          ],
+          "title": "两市未看段与顺延持仓对照",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/0455475a8397a8ed29ccd9fdd3d49a591e5b7278/reports/2026-11/2026-11-11-baseline-fill-rules-rerun.md#L1-L28"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "e79c1b0c1bd0499c55e7154b37a9d92695908918",
+          "title": "汇报加入成交重算和顺延",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/e79c1b0c1bd0499c55e7154b37a9d92695908918"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-12",
+        "basis": "展示构建脚本读取重算结果，页面提交含相应数据和切换。",
+        "scope": "仅登记已进入计划或展示的实际依据。"
       }
     }
   ],
