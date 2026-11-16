@@ -26,7 +26,7 @@ def read_encoded(page):
     parts = []
     for part in index['parts']:
         source = ASSETS / part['file']
-        raw = source.read_bytes()
+        raw = source.read_bytes().replace(b"\r\n", b"\n")
         if sha256(raw).hexdigest() != part['sha256']:
             raise ValueError(f'Market packet part hash differs: {source.name}')
         parsed = PART.fullmatch(raw.decode('ascii'))
