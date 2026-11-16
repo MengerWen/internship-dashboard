@@ -115,6 +115,14 @@ async function main() {
             }
             const expectedMean = returns.reduce((s, value) => s + value, 0) / 82 * 10000;
             const row = bodies[2].rows[lane];
+            if (data.trading) {
+              const trading = data.trading[key].slice(start).map(day => day[group]);
+              const weighted = trading.filter(amounts => amounts[0] > 0).map(
+                amounts => (amounts[1] - amounts[2]) / amounts[0]);
+              close(numeric(row.querySelector('[data-metric="tradeMean"]')),
+                weighted.reduce((sum, value) => sum + value, 0) / weighted.length * 10000);
+              assert.match(get('table-status').textContent, /扣税费后/);
+            }
             close(numeric(row.querySelector('[data-metric="mean"]')), expectedMean);
             const wins = returns.filter(value => value > 0).length / returns.length * 100;
             close(numeric(row.querySelector('[data-metric="winRate"]')), wins);

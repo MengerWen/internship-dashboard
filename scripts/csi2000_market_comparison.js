@@ -28,7 +28,7 @@
   const format = (v, digits = 2) => Number.isFinite(v) ? v.toFixed(digits).replace('-', '−') : '—';
   const coord = value => Number(value.toFixed(2));
   const style = info => info.market + (info.dashed ? ' close-line' : '');
-  const metrics = ['mean', 'cumulative', 'sharpe', 'sharpeThrough', 'drawdown', 'calmar', 'volatility', 'winRate', 'payoff', 't'];
+  const metrics = ['tradeMean', 'mean', 'cumulative', 'sharpe', 'sharpeThrough', 'drawdown', 'calmar', 'volatility', 'winRate', 'payoff', 't'];
   const focusedLanes = { returns: null, signal: null };
   let data;
   let timeline;
@@ -46,6 +46,7 @@
   let expandedFrom = null;
   const isEnhancement = () => view === 'enhancement';
   const returnLabel = () => isEnhancement() ? '超额收益' : '绝对收益';
+  const feeLabel = () => data.fees ? '扣税费后' : '费用前';
   const hasPoolReference = () => !isEnhancement();
 
   function moments() {
@@ -83,7 +84,7 @@
       const phase = data.stages[at];
       if (!staged[phase]) {
         staged[phase] = series.map(() => ({
-          sample: moments(), peak: isEnhancement() ? 0 : 1, drawdown: 0, cumulative: null
+          sample: moments(), trade: moments(), peak: isEnhancement() ? 0 : 1, drawdown: 0, cumulative: null
         }));
         dateRanges[phase] = [at, at];
       }
@@ -107,6 +108,10 @@
         const b0 = start ? bases[start - 1][group] : capital;
         const relative = isEnhancement() ? (a - a0) / capital : (b0 + a0 > 0 ? (b + a) / (b0 + a0) : null);
         const local = staged[phase][lane];
+        const tradeKey = [weight, sorting, series[lane].cycle, ...portfolio].join('-');
+        const tradeAmounts = data.trading?.[tradeKey]?.[at]?.[group];
+        const tradeReturn = tradeAmounts?.[0] > 0 ? (tradeAmounts[1] - tradeAmounts[2]) / tradeAmounts[0] : null;
+        add(local.trade, tradeReturn);
         add(local.sample, daily);
         add(all[lane], daily);
         if (Number.isFinite(relative)) {
@@ -123,6 +128,7 @@
           addition: a / capital * 100, enhancement: enhancement === null ? null : enhancement * 10000,
           poolCumulative: (baseNav - 1) * 100, selectedN: row[2 + group], filledN: row[4 + group],
           sharpe: sharpe(all[lane]), ic, rankic, validN, eligibleN,
+          tradeReturn: tradeReturn === null ? null : tradeReturn * 10000,
           cumulativeIC: history.nIC ? history.ic : null,
           cumulativeRankIC: history.nRank ? history.rankic : null,
           meanIC: history.nIC ? history.ic / history.nIC : null,
@@ -153,8 +159,8 @@
         format(row.ic, 3), format(row.rankic, 3), format(row.cumulativeIC, 3), format(row.cumulativeRankIC, 3)
       ], lane);
     }
-    return head + detailsTable(['当日增强 bp', '累计增强 %', '研究净值', '底仓净值', '入选', '有价成交'],
-      point.values, row => [format(row.enhancement), format(row.addition), format(row.nav, 4),
+    return head + detailsTable(['交易净收益 bp', '当日增强 bp', '累计增强 %', '研究净值', '底仓净值', '入选', '有价成交'],
+      point.values, row => [format(row.tradeReturn), format(row.enhancement), format(row.addition), format(row.nav, 4),
         format(row.baseNav, 4), row.selectedN, row.filledN], lane);
   }
 
@@ -178,7 +184,7 @@
 
   function updateScoreRows() {
     const table = get('score-rows');
-    table.querySelector('[data-score-column="mean"]').textContent = isEnhancement() ? '日均超额 bp' : '日均绝对 bp';
+    table.querySelector('[data-score-column="mean"]').textContent = isEnhancement() ? '底仓日均增强 bp' : '账户日均净收益 bp';
     table.querySelector('[data-score-column="cumulative"]').textContent = isEnhancement() ? '累计超额 %' : '累计绝对 %';
     table.querySelector('.score-fields [data-score-column="drawdown"]').textContent =
       isEnhancement() ? '回撤 pp' : '回撤 %';
@@ -186,12 +192,13 @@
       const phase = body.dataset.stageBlock;
       body.hidden = phaseChoice !== 'all' && phaseChoice !== phase;
       for (const row of body.rows) {
-        const { sample, through, cumulative, drawdown } = timeline.staged[phase][Number(row.dataset.lane)];
+        const { sample, trade, through, cumulative, drawdown } = timeline.staged[phase][Number(row.dataset.lane)];
         const sd = deviation(sample);
         const annual = cumulative === null || !sample.n ? null :
           isEnhancement() ? cumulative * 252 / sample.n :
             cumulative > -1 ? (1 + cumulative) ** (252 / sample.n) - 1 : null;
         const values = {
+          tradeMean: trade.n ? trade.mean * 10000 : null,
           mean: sample.n ? sample.mean * 10000 : null,
           cumulative: cumulative === null ? null : cumulative * 100,
           sharpe: sharpe(sample), sharpeThrough: through, drawdown: sample.n ? drawdown * 100 : null,
@@ -214,10 +221,10 @@
       ' · ' + (sorting === 'combined' ? '沪深合并排序' : '分市场排序');
     get('index-view-label').textContent = title;
     get('table-status').textContent = portfolio.join('') + ' · ' +
-      (phaseChoice === 'all' ? '全部阶段' : phases[phaseChoice].label) + ' · ' + returnLabel() + ' · 费用前';
-    get('score-note').textContent = isEnhancement()
+      (phaseChoice === 'all' ? '全部阶段' : phases[phaseChoice].label) + ' · ' + returnLabel() + ' · ' + feeLabel();
+    get('score-note').textContent = '交易日均净收益：每日按实际进场金额加权批次净收益率，再对有交易日期等权平均；跨日按进场日归属。其余指标按下述账户口径计算。' + (isEnhancement()
       ? '日超额为当日做 T 增量损益除以该市场昨日底仓价值。分段累计超额和回撤按该市场初始底仓折算，回撤单位为百分点。胜率统计做 T 增量为正的天数占比。'
-      : '绝对收益包含底仓与做 T。各段累计收益和回撤以段前研究净值为起点，胜率统计整体日收益为正的天数占比。Sharpe 的「截至本段」从首个交易日算至该段末。';
+      : '绝对收益包含底仓与做 T。各段累计收益和回撤以段前研究净值为起点，胜率统计整体日收益为正的天数占比。Sharpe 的「截至本段」从首个交易日算至该段末。');
   }
 
   function drawAll() {
@@ -249,7 +256,7 @@
       selection = null;
       pinned = false;
     }
-    const title = '中证 2000 · 全程累计' + returnLabel() + ' · 费用前';
+    const title = '中证 2000 · 全程累计' + returnLabel() + ' · ' + feeLabel();
     get('compare-heading').textContent = title;
     panels.returns.svg.setAttribute('aria-label', title);
     for (const button of optionButtons) button.setAttribute('aria-pressed', String(button.dataset.returnView === view));

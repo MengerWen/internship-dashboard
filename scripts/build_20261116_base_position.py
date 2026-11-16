@@ -25,6 +25,7 @@ SCRIPT = Path(__file__).with_name('csi2000_market_comparison.js')
 TEMPLATE_REVISION = '916ed8c3029b7f6cdd38736b3d00f0e43bd9ce81'
 TITLE = '中证 2000 底仓做 T：沪深冻结模型基准'
 SCHEMA = 'csi2000-market-attribution-v1'
+NET_SCHEMA = 'csi2000-market-attribution-v2'
 STAGES = {'oof': ('development', '开发 OOF', 308), 'test_seen': ('seen', '已看测试', 176),
           'test_unseen': ('unseen', '未看测试', 82)}
 WEIGHTS = ('index', 'equal')
@@ -62,7 +63,7 @@ def read_results(path, expected_sha256):
 def pack(results):
     dates, stages, nominal = (results[k] for k in ('dates', 'stages', 'nominal'))
     expected = [stage for stage, (_, _, count) in STAGES.items() for _ in range(count)]
-    if (results['schema'] != SCHEMA or dates != sorted(set(dates)) or len(dates) != len(expected)
+    if (results['schema'] not in (SCHEMA, NET_SCHEMA) or dates != sorted(set(dates)) or len(dates) != len(expected)
             or (dates[0], dates[-1]) != ('2024-07-01', '2026-10-30') or stages != expected
             or not isfinite(nominal) or nominal <= 0):
         raise ValueError('Invalid market attribution calendar or nominal capital')
@@ -93,6 +94,17 @@ def pack(results):
                 raise ValueError(f'Invalid market result: {key}')
             values.append([round(sh / nominal, 12), round(sz / nominal, 12), n_sh, n_sz, f_sh, f_sz])
         result['series'][key] = values
+    if results['schema'] == NET_SCHEMA:
+        if results.get('fees') != dict(buy=.9e-4, sell=5.9e-4) or set(results['trading']) != CONFIGURATIONS:
+            raise ValueError('Missing actual-fill cost or trading-return contract')
+        result['fees'] = results['fees']
+        result['trading'] = {}
+        for key, rows in results['trading'].items():
+            if len(rows) != len(dates) or any(len(row) != 2 or any(
+                    len(market) != 3 or not all(isfinite(v) for v in market)
+                    or market[0] < 0 or market[2] < 0 for market in row) for row in rows):
+                raise ValueError(f'Invalid actual trading amounts: {key}')
+            result['trading'][key] = [[[value / nominal for value in market] for market in row] for row in rows]
     return result
 
 
@@ -116,7 +128,7 @@ def csi_signals(source):
 
 
 def score_bodies():
-    keys = ('mean', 'cumulative', 'sharpe', 'sharpeThrough', 'drawdown', 'calmar',
+    keys = ('tradeMean', 'mean', 'cumulative', 'sharpe', 'sharpeThrough', 'drawdown', 'calmar',
             'volatility', 'winRate', 'payoff', 't')
     bands = {'mean', 'sharpe', 'drawdown', 'winRate', 't'}
     sections = []
@@ -175,6 +187,10 @@ def comparison_markup(source):
                    '<strong id="index-view-label">中证 2000</strong>\n'
                    '<p class="hint" id="table-status"></p>\n<p class="chart-foot" id="score-note"></p>\n')
     view = replace(view, chunk(view, '<tbody data-stage-block', '</table>\n</div>'), score_bodies())
+    view = view.replace('<colgroup><col><col></colgroup>', '<colgroup><col><col><col></colgroup>', 1)
+    view = replace(view, '<th scope="colgroup" colspan="2">收益</th>', '<th scope="colgroup" colspan="3">收益</th>')
+    view = re.sub(r'(<th\b[^>]*data-score-column="mean"[^>]*>)',
+                  '<th class="score-num score-band-start" scope="col" data-score-column="tradeMean">交易日均净收益 bp</th>\\1', view, count=1)
     view = re.sub(r'<p class="hint" id="all-market-note">.*?</p>\n', '', view)
     return view
 
@@ -223,7 +239,7 @@ def render(source, data, report_url):
   <h2 id="contract-heading">样本与成交口径</h2>
   <ul class="contract-notes">
     <li>底仓使用中证 2000 沪深成分，按指数权重或等权建仓。名单和权重齐备后使用截至前一交易日的快照调仓。</li>
-    <li>入选股票的做 T 额度为该股昨收底仓市值的 10%。多空各取 q/2，亏盈按当日盯市计入，周转资金零利率，曲线为费用前结果。</li>
+    <li>入选股票的做 T 额度为该股昨收底仓市值的 10%。多空各取 q/2，亏盈按当日盯市计入，周转资金零利率。实际成交按买入 0.9 bp、卖出 5.9 bp 扣税费，底仓建仓与调仓同样计费。</li>
     <li>沪深曲线按证券所属市场归集交易现金及持仓市值。初始底仓按两市建仓金额分配，调仓买卖的现金与持仓变动相抵。两市的金额相加可还原合并组合。</li>
   </ul>
 </section>
@@ -259,9 +275,11 @@ summary: "在同一张图比较中证2000沪深底仓做T结果，分段成绩�
 
 沪市和深市使用已冻结的 11:30、收盘两个模型集成。评价覆盖 566 个交易日，其中开发段 OOF 308 日、已看测试 176 日、未看测试 82 日。
 
-在中证 2000 沪深成分上分别使用指数权重和等权底仓。可切换沪深合并排序或分市场排序、纯多 L 或多空 A，以及四档选股比例。入选股票按昨收底仓市值的 10% 做 T，增量损益逐日盯市，结果为费用前。
+在中证 2000 沪深成分上分别使用指数权重和等权底仓。可切换沪深合并排序或分市场排序、纯多 L 或多空 A，以及四档选股比例。入选股票按昨收底仓市值的 10% 做 T，增量损益逐日盯市。实际买入按成交额扣 0.9 bp，卖出扣 5.9 bp，底仓建仓与调仓同样计费。
 
 **HTML 展示版** 在同一张图比较沪市和深市的两个周期，可切换绝对与超额收益。收益图下方的「分段集成成绩」随口径和筛选更新，再下方为累计 IC／RankIC。绝对收益包含底仓和做 T，超额按做 T 增量计算；市场曲线按该市场的初始底仓金额归一化。 [11.16 研究报告]({report_url})
+
+“交易日均净收益 bp”先用实际进场金额加权每天交易批次的扣费收益率，再对有交易日期等权平均；跨日批次按进场日归属。账户收益与底仓增强另列，净值曲线按日历日逐日盯市。
 
 {links}
 '''
@@ -282,7 +300,10 @@ def main():
     targets = {args.page.resolve(), args.note.resolve()}
     if sources & targets or len(targets) != 2:
         parser.error('Output paths must differ from the protected 11.9 sources')
-    data = pack(read_results(args.aggregate, args.sha256))
+    results = read_results(args.aggregate, args.sha256)
+    if results['schema'] != NET_SCHEMA:
+        raise ValueError('11.16 publication requires signed actual-fill tax and trading-return results')
+    data = pack(results)
     html = render(template_text(args.source), data, args.report_url)
     note = render_note(template_text(args.source_note), args.report_url, published=args.published)
     args.page.parent.mkdir(parents=True, exist_ok=True)

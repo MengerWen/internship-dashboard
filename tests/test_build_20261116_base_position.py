@@ -87,6 +87,19 @@ def test_market_values_and_note(document):
             build.pack(bad)
 
 
+def test_net_trading_amounts_require_actual_fill_cost_contract(document):
+    net = deepcopy(document)
+    net.update(schema=build.NET_SCHEMA, fees=dict(buy=.9e-4, sell=5.9e-4),
+               trading={key: [[[4., .4, .002956], [6., -.6, .003726]] for _ in range(566)]
+                        for key in build.CONFIGURATIONS})
+    packed = build.pack(net)
+    assert packed['fees'] == net['fees']
+    assert packed['trading'] == net['trading']
+    net['fees']['sell'] = 0.
+    with pytest.raises(ValueError, match='cost'):
+        build.pack(net)
+
+
 def test_protected_target_is_rejected_before_opening_input():
     output = subprocess.run([sys.executable, str(Path(build.__file__)),
         '--aggregate', 'not-used.json', '--sha256', 'not-used',
