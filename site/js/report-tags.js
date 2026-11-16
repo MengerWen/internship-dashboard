@@ -212,7 +212,10 @@
       if (this.collapsed) params.set("list", "hidden");
       return params.size ? `?${params}` : "";
     },
-    route(date, mode = "doc") { return `#/daily/${date}${mode === "show" ? "/show" : ""}${this.suffix()}`; },
+    route(date, mode) {
+      const view = mode === "show" || mode === "doc" ? `/${mode}` : "";
+      return `#/daily/${date}${view}${this.suffix()}`;
+    },
     writeURL() {
       if (location.hash.startsWith("#/daily")) history.replaceState(null, "", `${location.hash.split("?")[0]}${this.suffix()}`);
     },

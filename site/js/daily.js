@@ -15,6 +15,7 @@
     currentIndex: 0,
     currentMode: "doc",
     currentScene: 0,
+    renderRequest: 0,
     timelineEl: null,
     contentEl: null,
     showEl: null,
@@ -116,6 +117,7 @@
     },
 
     async show(date, subview) {
+      const request = ++this.renderRequest;
       window.ReportTagsUI.readURL();
       window.ReportTagsUI.render();
       if (!this.manifest.daily.length) {
@@ -125,24 +127,31 @@
       const index = this.manifest.daily.findIndex((item) => item.date === date);
       this.currentIndex = index >= 0 ? index : 0;
       const item = this.manifest.daily[this.currentIndex];
-      this.contentEl.innerHTML = await this.app.loadFragment(item.path, `daily-${item.date}`);
-      await this.app.enhanceContent(this.contentEl);
+      this.contentEl.innerHTML = "";
       this.showEl.innerHTML = "";
+      this.tocEl.innerHTML = "";
+      this.headingObserver?.disconnect();
       this.currentScene = 0;
       this.renderMeta(item);
-      this.renderToc();
       this.updateTimeline(item.date);
       this.updateNav();
-      const requestedMode = subview === "show" ? "show" : "doc";
+      const defaultMode = item.has_show && item.show_type === "html" ? "show" : "doc";
+      const requestedMode = subview === "show" || subview === "doc" ? subview : defaultMode;
+      let mode = requestedMode;
       if (requestedMode === "show" && !item.has_show) {
-        this.notice("当天未撰写展示版,已回到文档。");
-        this.switchMode("doc", false);
-      } else {
-        await this.switchMode(requestedMode, false);
+        this.notice("当天未撰写展示版，已回到文档。");
+        mode = "doc";
       }
-      const suffix = this.currentMode === "show" ? "/show" : "";
-      if (date !== item.date || subview !== (this.currentMode === "show" ? "show" : undefined)) {
-        window.history.replaceState(null, "", `#/daily/${item.date}${suffix}${window.ReportTagsUI.suffix()}`);
+      const routeMode = mode === "show" || subview === "doc" ? mode : undefined;
+      const route = window.ReportTagsUI.route(item.date, routeMode);
+      if (window.location.hash !== route) window.history.replaceState(null, "", route);
+      await this.switchMode(mode, false);
+      if (mode === "doc") {
+        const html = await this.app.loadFragment(item.path, `daily-${item.date}`);
+        if (request !== this.renderRequest) return;
+        this.contentEl.innerHTML = html;
+        await this.app.enhanceContent(this.contentEl);
+        if (request === this.renderRequest) this.renderToc();
       }
     },
 
@@ -334,6 +343,10 @@
         this.notice("当天未撰写展示版");
         return;
       }
+      if (updateHash) {
+        window.location.hash = window.ReportTagsUI.route(item.date, mode);
+        return;
+      }
       this.currentMode = mode;
       const docTab = document.getElementById("daily-doc-tab");
       const showTab = document.getElementById("daily-show-tab");
@@ -351,23 +364,23 @@
       if (mode === "show") {
         await this.renderShow(item);
       }
-      if (updateHash) {
-        window.location.hash = window.ReportTagsUI.route(item.date, mode);
-      }
     },
 
     async renderShow(item) {
+      const request = this.renderRequest;
       if (item.show_type === "html") {
         const inline = document.getElementById(`daily-show-html-${item.date}`);
         const html = inline
           ? JSON.parse(inline.textContent)
           : await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
+        if (request !== this.renderRequest) return;
         const sandbox = item.show_allow_downloads === true ? "allow-scripts allow-downloads" : "allow-scripts";
         this.showEl.innerHTML = `<iframe class="daily-show-frame" sandbox="${sandbox}" title="${escapeHtml(item.title)} 展示版"></iframe>`;
         this.showEl.querySelector("iframe").srcdoc = this.app.prepareIsolatedHtml(html);
         return;
       }
       const html = await this.app.loadFragment(item.show_path, `daily-show-${item.date}`);
+      if (request !== this.renderRequest) return;
       this.showEl.innerHTML = `
         <div class="daily-show-player">
           <div class="daily-show-scenes">${html}</div>
