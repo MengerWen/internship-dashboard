@@ -49,6 +49,8 @@ def test_template_and_payload_are_preserved(document):
     assert 'date: 2026-11-16' in note
     assert 'show_source: 2026-11-16.show/.html' in note
     assert 'published:' not in note
+    timed = build.render_note(old_note, document, report, published='2026-11-16T15:17:43+08:00')
+    assert 'published: "2026-11-16T15:17:43+08:00"' in timed
     assert '+0.12 bp' in note
     assert '2026.11.16' in page
     assert page.index('id="csi-base-position"') < page.index('id="index-switcher"')

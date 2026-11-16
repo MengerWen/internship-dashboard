@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from datetime import datetime
 import hashlib
 from html import escape
 import itertools
@@ -116,9 +117,15 @@ def render(source, data, report_url):
     return source
 
 
-def render_note(source, result, report_url):
+def render_note(source, result, report_url, *, published=None):
     source = replace(source, 'date: 2026-11-09', 'date: 2026-11-16')
-    source = re.sub(r'^published: [^\n]+\n', '', source, count=1, flags=re.M)
+    publication = ''
+    if published is not None:
+        stamp = datetime.fromisoformat(published)
+        if stamp.tzinfo is None:
+            raise ValueError('Published timestamp requires an explicit timezone')
+        publication = f'published: "{stamp.isoformat(timespec="seconds")}"\n'
+    source = re.sub(r'^published: [^\n]+\n', lambda _: publication, source, count=1, flags=re.M)
     source = replace(source, 'show_source: 2026-11-09.show/.html', 'show_source: 2026-11-16.show/.html')
     source = re.sub(r'^title: [^\n]+', f'title: "{TITLE}"', source, count=1, flags=re.M)
     source = re.sub(r'^summary: [^\n]+',
@@ -149,6 +156,7 @@ def main():
     parser.add_argument('--aggregate', type=Path, required=True)
     parser.add_argument('--sha256', required=True)
     parser.add_argument('--report-url', required=True)
+    parser.add_argument('--published', help='ISO timestamp of the report’s first Git commit')
     parser.add_argument('--source', type=Path, default=OLD_PAGE)
     parser.add_argument('--source-note', type=Path, default=OLD_NOTE)
     parser.add_argument('--page', type=Path, default=PAGE)
@@ -164,7 +172,7 @@ def main():
     result = read_results(args.aggregate, args.sha256)
     data = pack(result)
     payload = render(args.source.read_text(encoding='utf-8'), data, args.report_url)
-    note = render_note(args.source_note.read_text(encoding='utf-8'), result, args.report_url)
+    note = render_note(args.source_note.read_text(encoding='utf-8'), result, args.report_url, published=args.published)
     args.page.parent.mkdir(parents=True, exist_ok=True)
     args.page.write_text(payload, encoding='utf-8', newline='\n')
     args.note.write_text(note, encoding='utf-8', newline='\n')
