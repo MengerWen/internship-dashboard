@@ -504,17 +504,17 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
   </div>
   <div class="report-title">
     <h1>中证 2000 底仓做 T · 沪深扩因子对照</h1>
-    <p>收益按单市场替换模型与 B0 对照。沪深合排共用入选名额，一个市场的打分变化会改变两市的入选名单。信号图按各市场成分池同时展示两套新模型。</p>
-    <p class="chart-foot-long">566 个交易日 · 192 套回放条件</p>
+    <p>默认沪深各用自己的旧因子加新因子，各自在本市场选股，再与两市旧模型对照。沪市新增 144 列，深市新增 34 列。</p>
+    <p class="chart-foot-long">566 个交易日 · 默认口径覆盖 96 套回放条件</p>
   </div>
 </header>
 <main class="shell">
 <section id="compare" class="demo-dashboard" aria-label="逐日收益与信号诊断">
   <div class="demo-toolbar">
     <form id="filters" class="filters" aria-label="调整图表">
-      <label>收益模型（对 B0） <select name="candidate"><option value="SSE+" selected>沪市 SSE+ ／ 深市 B0</option><option value="G2">沪市 B0 ／ 深市 G2</option></select></label>
+      <label>收益对照（基准为两市旧模型） <select name="candidate"><option value="both" selected>两市各用自己的新模型</option><option value="SSE+">沪市新模型 ／ 深市旧模型</option><option value="G2">沪市旧模型 ／ 深市新模型</option></select></label>
       <label>底仓 <select name="weight"><option value="index">指数权重</option><option value="equal" selected>等权</option></select></label>
-      <label>排序 <select name="sorting"><option value="combined">沪深合并排序</option><option value="separate">分市场排序</option></select></label>
+      <label>排序 <select name="sorting" aria-describedby="sorting-note"><option value="separate" selected>各自在本市场排序</option><option id="combined-sorting-option" value="combined" disabled>沪深合并排序</option></select></label>
       <label>组合 <select name="strategy"><option value="L">纯多 L</option><option value="A">多空 A</option></select></label>
       <label>选股比例 <select name="q"><option value="1">1%</option><option value="5" selected>5%</option><option value="10">10%</option><option value="20">20%</option></select></label>
       <label>做 T 比例 <select name="tradeFraction"><option value="10">10%</option><option value="20">20%</option><option value="30">30%</option></select></label>
@@ -522,6 +522,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     </form>
     <button id="reset-range" type="button" class="demo-button" disabled>恢复全段</button>
     <span id="visible-range" class="demo-window" aria-live="polite"></span>
+    <span id="sorting-note" class="visually-hidden">两市新模型的对照采用分市场排序。</span>
     <button id="close-expanded" type="button" class="demo-button is-emphasis" hidden>退出放大</button>
   </div>
   <figure class="chart-plate" id="return-figure">
@@ -543,18 +544,18 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <button type="button" data-curve-kind="returns" data-curve-lane="3" data-market="szse" aria-pressed="false">
           <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
         </button></div>
-    <div class="compare-keys" aria-label="模型线型"><span><i class="version-key b0-key"></i>B0 固定模型</span><span><i class="version-key"></i><span id="candidate-key">沪市 SSE+ ／ 深市 B0</span></span><span><i class="version-key pool-key"></i>同市场底仓（绝对视图）</span></div>
+    <div class="compare-keys" aria-label="模型线型"><span><i class="version-key b0-key"></i>两市旧模型</span><span><i class="version-key"></i><span id="candidate-key">两市各用自己的新模型</span></span><span><i class="version-key pool-key"></i>同市场底仓（绝对视图）</span></div>
     <p id="pool-reference-note" class="chart-foot" hidden>粗线为底仓加做 T 的研究收益，细点线为同市场底仓收益。各市场以自身初始底仓为基准。</p>
     <div id="return-plot" class="plot" tabindex="0" role="group" aria-label="收益图。左右方向键逐日查看，回车固定日期。">
       <svg id="return-chart" class="chart" role="img" aria-label="沪深两个周期的全程累计收益" xmlns="http://www.w3.org/2000/svg"></svg>
       <aside id="return-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
     </div>
-    <figcaption class="chart-foot">收益按证券所属市场归因。沪深合并排序共用名额。切到分市场排序，可查看各自独立选股时的结果。拖动框选日期，悬浮读数，点击固定。</figcaption>
+    <figcaption class="chart-foot"><span id="return-method">沪深分别选股，做 T 额度按个股底仓计算。两市各自的净收益来自已签收的逐日回放。</span> 拖动框选日期，悬浮读数，点击固定。</figcaption>
   </figure>
   <figure class="chart-plate difference-plate" id="difference-figure">
-    <div class="chart-tools"><h2 id="difference-heading">SSE+ 相对 B0 的累计收益差</h2><div class="figure-controls"><button type="button" class="demo-button is-emphasis" data-enlarge="difference">放大差值图</button></div></div>
+    <div class="chart-tools"><h2 id="difference-heading">两市新模型相对旧模型的累计收益差</h2><div class="figure-controls"><button type="button" class="demo-button is-emphasis" data-enlarge="difference">放大差值图</button></div></div>
     <div id="difference-plot" class="plot" tabindex="0" role="group" aria-label="收益差值图，与收益主图共用市场筛选、日期游标和缩放区间。">
-      <svg id="difference-chart" class="chart" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="候选模型相对 B0 的累计收益差"></svg>
+      <svg id="difference-chart" class="chart" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新旧模型的累计收益差"></svg>
       <aside id="difference-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
     </div>
     <figcaption class="chart-foot">差值按同一初始底仓折算。以 % 显示两条收益率之差，例如 10% 减 8% 显示为 +2.00%。</figcaption>
@@ -595,12 +596,12 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <div class="score-toolbar">
       <strong id="index-view-label">中证 2000</strong>
       <div class="figure-controls index-method-group" role="group" aria-label="分段成绩展示">
-        <button type="button" id="score-paired-option" data-score-mode="paired" aria-pressed="true">SSE+ 与 B0</button>
-        <button type="button" id="score-candidate-option" data-score-mode="candidate" aria-pressed="false">单看 SSE+</button>
-        <button type="button" data-score-mode="B0" aria-pressed="false">单看 B0</button>
+        <button type="button" id="score-paired-option" data-score-mode="paired" aria-pressed="true">新旧模型对照</button>
+        <button type="button" id="score-candidate-option" data-score-mode="candidate" aria-pressed="false">查看新模型</button>
+        <button type="button" data-score-mode="B0" aria-pressed="false">查看旧模型</button>
       </div>
     </div>
-    <p id="score-key" class="hint">主数字为 SSE+。下行显示 SSE+ − B0，悬停单元格可查两版原值。</p>
+    <p id="score-key" class="hint">主数字为两市各用新模型时的成绩。下行显示与两市旧模型的差值，悬停可查两版原值。</p>
 <p class="hint" id="table-status"></p>
 <p class="chart-foot" id="score-note"></p>
 <div aria-label="沪深基准数值对照" class="table-wrap enhanced-table-scroll" role="region" tabindex="0">
@@ -638,16 +639,16 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     <div id="signal-body">
       <div class="curve-legend index-method-group" role="group" aria-label="IC／RankIC 曲线"><button type="button" data-curve-kind="signal" data-curve-lane="all" aria-pressed="true">沪深双周期</button>
   <button type="button" data-curve-kind="signal" data-curve-lane="0" data-market="sse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse"/></svg>沪市 11:30 SSE+
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse"/></svg>沪市 11:30
           </button>
   <button type="button" data-curve-kind="signal" data-curve-lane="1" data-market="sse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse close-line"/></svg>沪市 收盘 SSE+
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse close-line"/></svg>沪市 收盘
           </button>
   <button type="button" data-curve-kind="signal" data-curve-lane="2" data-market="szse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse"/></svg>深市 11:30 G2
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse"/></svg>深市 11:30
           </button>
   <button type="button" data-curve-kind="signal" data-curve-lane="3" data-market="szse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘 G2
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
           </button></div>
       <div id="signal-stage-summary" class="table-wrap signal-summary" role="region" tabindex="0" aria-label="沪深分段平均 IC 与 RankIC"></div>
       <div id="signal-plot" class="plot" tabindex="0" role="group" aria-label="IC 与 RankIC 图。左右方向键逐日查看，回车固定日期。">
@@ -655,7 +656,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
         <aside id="signal-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
       </div>
     </div>
-    <figcaption class="chart-foot">表内为各段日均相关系数，按 B0 → 本市场新模型排列。上图累计有效日的相关系数，下图为单日值。每市新旧模型使用同日、同股、同一 F1–F9 多头毛收益标签。浅线 B0，深线为沪市 SSE+、深市 G2。各图共用日期游标和缩放区间。</figcaption>
+    <figcaption class="chart-foot">表内为各段日均相关系数，按旧模型 → 新模型排列。上图累计有效日的相关系数，下图为单日值。每市的新旧模型使用同日、同股、同一 F1–F9 多头毛收益标签。浅线为旧模型，深线为本市场新模型。各图共用日期游标和缩放区间。</figcaption>
   </figure>
   <p id="date-status" class="visually-hidden" aria-live="polite"></p>
   <noscript><p class="chart-foot">逐日交互图需要 JavaScript。各阶段汇总见下表。</p></noscript>
@@ -671,7 +672,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 </section>
   <section id="freeze" aria-labelledby="freeze-heading">
     <h2 id="freeze-heading">冻结配置</h2>
-    <p class="hint">以下为 B0 冻结配置。G2 沿用深市树、种子、轮数与窗口。每个市场和周期均为 5 套树 × 5 个种子，25 个最终模型的预测等权平均。种子为 20260918–20260922，学习率为 0.10。</p>
+    <p class="hint">B0 指两市各自的旧模型。SSE+ 是沪市新模型的研究编号，G2 是深市新模型的研究编号。两市的新模型各自沿用本市场的树参数、种子、轮数和窗口。每个市场和周期均为 5 套树 × 5 个种子，25 个最终模型的预测等权平均。种子为 20260918–20260922，学习率为 0.10。</p>
     <div class="freeze-grid">
 <details class="freeze sse">
   <summary><strong>沪市 11:30</strong><code>R1-a0-rolling_252</code></summary>
@@ -854,8 +855,11 @@ function renderEvidence(data) {
   const dailyMetrics = [['tradeReturn', '交易净收益'], ['accountReturn', '账户净收益'], ['enhancement', '底仓增强']];
   let data;
   const signalVersions = { sse:'SSE+', szse:'G2' };
-  const versionLabels = {'SSE+':'沪市 SSE+ ／ 深市 B0', G2:'沪市 B0 ／ 深市 G2'};
-  let candidateVersion = 'SSE+';
+  const versionLabels = {
+    both:'两市各用自己的新模型', 'SSE+':'沪市新模型 ／ 深市旧模型', G2:'沪市旧模型 ／ 深市新模型'
+  };
+  const shortVersionLabels = { both:'两市新模型', 'SSE+':'仅沪市更新', G2:'仅深市更新' };
+  let candidateVersion = 'both';
   let signalPoints;
   const laneFor = kind => focusedLanes[kind === 'difference' ? 'returns' : kind];
   const showLane = (lane,i) => lane === null || i === lane;
@@ -885,22 +889,22 @@ function renderEvidence(data) {
       if (kind === 'signal') {
         columns = ['日 IC','日 RankIC','累计 IC','累计 RankIC','配对股票'];
         const vals = row => ['ic','rankic','cumulativeIC','cumulativeRankIC'].map(key=>format(row[key],3)).concat(row.validN ?? '—');
-        return [tr(label+' · B0',vals(base)),tr(label+' · '+signalVersions[series[i].market],vals(g2))];
+        return [tr(label+' · 旧模型',vals(base)),tr(label+' · 新模型',vals(g2))];
       }
       if (kind === 'difference') {
-        columns = ['B0 累计',candidateVersion + ' 累计','累计差值','当日增强差 bp'];
+        columns = ['两市旧模型累计',shortVersionLabels[candidateVersion] + '累计','累计差值','当日增强差 bp'];
         return [tr(label,[pct(base.cumulative),pct(g2.cumulative),signedPercent(base.difference),
                           signed(g2.enhancement-base.enhancement)])];
       }
       if (kind === 'daily') {
         columns = dailyMetrics.map(([,title]) => title + ' bp');
         const vals = row => dailyMetrics.map(([field]) => format(row[field],3));
-        return [tr(label+' · B0',vals(base)),tr(label+' · '+candidateVersion,vals(g2))];
+        return [tr(label+' · 旧模型',vals(base)),tr(label+' · '+shortVersionLabels[candidateVersion],vals(g2))];
       }
       columns = ['累计收益','交易净收益 bp','当日增强 bp','研究净值','底仓净值','入选／成交'];
       const values = row => [pct(row.cumulative),format(row.tradeReturn,3),format(row.enhancement,3),format(row.nav,4),
                              format(row.baseNav,4),(row.selectedN ?? '—') + '／' + (row.filledN ?? '—')];
-      return [tr(label+' · B0',values(base)),tr(label+' · '+candidateVersion,values(g2))];
+      return [tr(label+' · 旧模型',values(base)),tr(label+' · '+shortVersionLabels[candidateVersion],values(g2))];
     });
     return '<div class="note-table"><table><thead><tr><th scope="col">市场／周期</th>'+
       columns.map(t=>'<th scope="col">'+t+'</th>').join('')+'</tr></thead><tbody>'+items.join('')+'</tbody></table></div>';
@@ -930,7 +934,7 @@ function renderEvidence(data) {
     const delta = Number.isFinite(b0) && Number.isFinite(g2) ? g2-b0 : null;
     cell.textContent = format(value,precision);
     cell.classList.toggle('negative',Number.isFinite(value) && value < 0);
-    cell.title = 'B0 ' + format(b0,precision) + ' / ' + candidateVersion + ' ' + format(g2,precision) + ' / 差值 ' + signed(delta);
+    cell.title = '两市旧模型 ' + format(b0,precision) + ' / ' + shortVersionLabels[candidateVersion] + ' ' + format(g2,precision) + ' / 差值 ' + signed(delta);
     if (scoreMode === 'paired') {
       const span = document.createElement('small');
       span.className = 'score-delta';
@@ -954,7 +958,7 @@ function renderEvidence(data) {
     });
     const head = windows.map(({phase,rows}) => '<th scope="col" class="phase-'+phase+'">'+
       (phases[phase]?.label ?? '全程')+'（'+rows.length+' 日）</th>').join('');
-    const body = series.map(({label,market}, i) => {
+    const body = series.map(({label}, i) => {
       const cells = windows.map(({rows}) => {
         const metrics = [['ic','IC'],['rankic','RankIC']].map(([field,title]) => {
           const base = moments(), next = moments();
@@ -970,7 +974,7 @@ function renderEvidence(data) {
         });
         return '<td>'+metrics.join('')+'</td>';
       });
-      return '<tr><th scope="row">'+label+'<small>B0 → '+signalVersions[market]+'</small></th>'+cells.join('')+'</tr>';
+      return '<tr><th scope="row">'+label+'<small>旧模型 → 新模型</small></th>'+cells.join('')+'</tr>';
     });
     get('signal-stage-summary').innerHTML = '<table><caption class="visually-hidden">沪深各阶段日均 IC 与 RankIC</caption>'+
       '<thead><tr><th scope="col">市场／周期</th>'+head+'</tr></thead><tbody>'+body.join('')+'</tbody></table>';
@@ -1467,8 +1471,13 @@ function renderEvidence(data) {
   }
 
   function timelineFor(version) {
-    const source = version === 'B0' ? data : version === 'G2' ? data.candidate : data.sseStrategy;
-    const byLane = series.map(({cycle}) => source.series[configurationKey(cycle)]);
+    const sources = { B0:data, G2:data.candidate, 'SSE+':data.sseStrategy };
+    // The market-specific paths are independent when each market selects its own stocks.
+    const byLane = series.map(({market,cycle}) => {
+      const source = sources[version === 'both' ? signalVersions[market] : version];
+      const key = configurationKey(cycle);
+      return { rows:source.series[key], trades:version === 'B0' ? source.trading?.[key] : source.tradeReturns[key] };
+    });
     const staged = {};
     const dateRanges = {};
     const all = series.map(moments);
@@ -1484,9 +1493,10 @@ function renderEvidence(data) {
       }
       dateRanges[phase][1] = at;
       const values = series.map(({group}, lane) => {
-        const row = byLane[lane][at];
+        const { rows, trades } = byLane[lane];
+        const row = rows[at];
         const a = row[group];
-        const priorA = at ? byLane[lane][at - 1][group] : 0;
+        const priorA = at ? rows[at - 1][group] : 0;
         const b = bases[at][group];
         const priorB = at ? bases[at - 1][group] : initial[group];
         const capital = initial[group];
@@ -1498,13 +1508,12 @@ function renderEvidence(data) {
         const daily = isEnhancement() ? enhancement : wealthReturn;
         const cumulative = isEnhancement() ? a / capital : nav - 1;
         const start = dateRanges[phase][0];
-        const a0 = start ? byLane[lane][start - 1][group] : 0;
+        const a0 = start ? rows[start - 1][group] : 0;
         const b0 = start ? bases[start - 1][group] : capital;
         const relative = isEnhancement() ? (a - a0) / capital : (b0 + a0 > 0 ? (b + a) / (b0 + a0) : null);
         const local = staged[phase][lane];
-        const tradeKey = configurationKey(series[lane].cycle);
-        const tradeAmounts = data.trading?.[tradeKey]?.[at]?.[group];
-        const tradeReturn = version !== 'B0' ? source.tradeReturns[tradeKey][at][group] : (tradeAmounts?.[0] > 0 ? (tradeAmounts[1] - tradeAmounts[2]) / tradeAmounts[0] : null);
+        const trade = trades?.[at]?.[group];
+        const tradeReturn = version !== 'B0' ? trade : (trade?.[0] > 0 ? (trade[1] - trade[2]) / trade[0] : null);
         add(local.trade, tradeReturn);
         add(local.sample, daily);
         add(all[lane], daily);
@@ -1728,7 +1737,7 @@ function renderEvidence(data) {
           const mean = samples.reduce((sum,value) => sum + value,0) / samples.length;
           const y = area.y(mean);
           out.push(line(left,y,right,y,'mean-line ' + series[lane].market + (secondary ? '' : ' b0-series')));
-          summaries.push((secondary ? candidateVersion + ' ' : 'B0 ') + format(mean));
+          summaries.push((secondary ? shortVersionLabels[candidateVersion] : '两市旧模型') + ' ' + format(mean));
         }
         if (summaries.length) out.push(text(right,area.top-11,summaries.join(' / ')+' bp','mean-text','end'));
       }
@@ -1759,7 +1768,7 @@ function renderEvidence(data) {
         if (lane !== null && i !== lane) return [];
         const { cumulative } = end.values[i].candidate;
         const { poolCumulative } = end.values[i];
-        const modelLabel = lane !== null ? candidateVersion : wide ? info.label : info.label.replace('市', '');
+        const modelLabel = lane !== null ? '对照' : wide ? info.label : info.label.replace('市', '');
         const items = [{ label: modelLabel, value: cumulative, pool: false }];
         if (reference && lane !== null) {
           items.push({ label: '底仓', value: poolCumulative, pool: true });
@@ -1858,7 +1867,7 @@ function renderEvidence(data) {
       if (!showLane(lane,i)) return '';
       const detail = kind === 'signal' ? format(value.candidate[signalMode.value],3) :
         kind === 'difference' ? signedPercent(value.difference) :
-        kind === 'daily' ? dailyMetrics.map(([field,title]) => title + ' ' + format(value.candidate[field]) + ' bp').join('，') : candidateVersion + ' ' + format(value.candidate.cumulative,4) + '%';
+        kind === 'daily' ? dailyMetrics.map(([field,title]) => title + ' ' + format(value.candidate[field]) + ' bp').join('，') : shortVersionLabels[candidateVersion] + ' ' + format(value.candidate.cumulative,4) + '%';
       return series[i].label + ' ' + detail;
     }).filter(Boolean).join('，');
   }
@@ -2013,14 +2022,21 @@ function renderEvidence(data) {
     const state = new FormData(form);
     candidateVersion = state.get('candidate');
     get('candidate-key').textContent = versionLabels[candidateVersion];
-    get('difference-heading').textContent = candidateVersion + ' 相对 B0 的累计收益差';
+    const candidateLabel = shortVersionLabels[candidateVersion];
+    get('difference-heading').textContent = candidateLabel + '相对旧模型的累计收益差';
     panels.difference.svg.setAttribute('aria-label', get('difference-heading').textContent);
-    get('score-paired-option').textContent = candidateVersion + ' 与 B0';
-    get('score-candidate-option').textContent = '单看 ' + candidateVersion;
-    get('score-key').textContent = '主数字为 ' + candidateVersion + '。下行显示 ' +
-      candidateVersion + ' − B0，悬停单元格可查两版原值。';
+    get('score-candidate-option').textContent = '查看' + candidateLabel;
+    get('score-key').textContent = '主数字为「' + versionLabels[candidateVersion] + '」时的成绩。下行显示与两市旧模型的差值，悬停可查两版原值。';
     weight = state.get('weight');
-    sorting = state.get('sorting');
+    const independent = candidateVersion === 'both';
+    get('combined-sorting-option').disabled = independent;
+    sorting = independent ? 'separate' : state.get('sorting');
+    form.elements.sorting.value = sorting;
+    get('sorting-note').textContent = independent
+      ? '两市新模型的对照采用分市场排序。' : '分市场排序各选各的股票，合并排序让两市股票竞争同一批入选名额。';
+    get('return-method').textContent = sorting === 'combined'
+      ? '两市股票共用入选名额。一个市场换模型后，两市的入选名单都可能变化。'
+      : '沪深分别选股，做 T 额度按个股底仓计算。两市各自的净收益来自已签收的逐日回放。';
     tradeFraction = state.get('tradeFraction');
     portfolio = [state.get('strategy'), state.get('q')];
     const phase = state.get('phase');
@@ -2136,10 +2152,10 @@ function renderEvidence(data) {
         data.versions.splice(2, 0, {id:'SSE+', markets:'沪市扩因子、深市原模型',
           features:'沪市新增 ' + candidate.retained + ' 列', coverage:566, status:'训练与回放已签收'});
       } catch {
-        form.elements.candidate.options[0].disabled = true;
+        for (const option of form.elements.candidate.options) option.disabled = option.value !== 'G2';
         form.elements.candidate.value = 'G2';
         get('fill-status').hidden = false;
-        get('fill-status').textContent = '沪市 SSE+ 数据加载失败，收益和信号暂显示深市 G2 对照。';
+        get('fill-status').textContent = '沪市新模型数据加载失败，收益和信号暂显示深市新模型对照。';
         for (const button of curveLegend) {
           if (button.dataset.curveKind === 'signal' && button.dataset.market === 'sse') button.disabled = true;
         }
