@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "b59625e48b5994629ce2c51d00832413e50418a525026e22039579026f771155",
+  "rules_sha256": "a9e22d18a64222fc400b8aa2979947dbcee607c79465d20c2cae0e7e2c400dae",
+  "revisions": {
+    "sirui-quant-research": "cb12a0d05675f455a53c7dfb8505005716f56552",
+    "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
+    "internship-dashboard": "570809227ef8a3e94b26a28fe3afd6d9c8ece76f"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "c6823bf15dade2da354a78d126d4beb22f6c21d7",
+      "date": "2026-11-13",
+      "subject": "补记11月11日两市成交重算与中证2000底仓核查",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "随上轮交付的历史日卡和审计收据，按实际归属日期保留。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-11-11.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "8c46cb8dd033db1653ee22f53bcaf8d3a433289a",
+      "date": "2026-11-13",
+      "subject": "补记11月12日中证2000调样权重核查",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "随上轮交付的历史日卡和审计收据，按实际归属日期保留。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-11-12.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "570809227ef8a3e94b26a28fe3afd6d9c8ece76f",
+      "date": "2026-11-13",
+      "subject": "记录11月13日研究日志发布与线上核验",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "随上轮交付的历史日卡和审计收据，按实际归属日期保留。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-11-13.md",
+        "docs/journal-review/daily-updates/2026-11-13/delivery-receipt.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4e57a4b1c50ea3bf301bca5e39a1b068e76391b8",
+      "date": "2026-11-13",
+      "subject": "audit: add bounded CSI2000 zero-weight recovery windows",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "底仓调样、权重或按历史可得时点调仓的同一研究目标。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-13-csi2000-membership-weight-audit.md",
+        "scripts/probe_baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5caaef82f0bd1171a25911385ee5d080f80c8c87",
+      "date": "2026-11-13",
+      "subject": "audit: bound PCF checks for recurring zero weights",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "底仓调样、权重或按历史可得时点调仓的同一研究目标。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-13-csi2000-membership-weight-audit.md",
+        "scripts/probe_baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e4af8a3007710e1676fe5b85df32ab05087018e4",
+      "date": "2026-11-13",
+      "subject": "policy: remove cumulative Ricequant API call caps",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "变更米筐累计调用规则，留作核查条件。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "PLAN/2026-11-13-csi2000-membership-weight-audit.md",
+        "scripts/audit_csi2000_weight_recovery.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0dd9ea32ae4c49314cd8429d61f389675c45d8bc",
+      "date": "2026-11-13",
+      "subject": "audit: explain CSI2000 interim changes and zero-weight recovery",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "底仓调样、权重或按历史可得时点调仓的同一研究目标。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-13-csi2000-membership-weight-audit.md",
+        "reports/2026-11/2026-11-12-csi2000-weight-recovery.md",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit.md",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2024-08-12-600831.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-04-14-000793.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-04-14-300052.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-04-14-300147.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-05-12-000518.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-05-12-002047.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-05-12-002253.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-05-12-002305.json",
+        "reports/2026-11/2026-11-13-csi2000-membership-weight-audit/cninfo-2025-05-12-002306.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "371938cc00a2f679b0e9d7cbb4523ed292a4d5a4",
+      "date": "2026-11-13",
+      "subject": "docs: use Ricequant inputs with PIT-aligned delayed rebalancing",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "底仓调样、权重或按历史可得时点调仓的同一研究目标。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "decisions/2026-11-11-base-position.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "289ef4baf00369bfb53dd6423c0577578e1dad95",
+      "date": "2026-11-13",
+      "subject": "audit: preserve monthly index snapshots for PIT alignment",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "底仓调样、权重或按历史可得时点调仓的同一研究目标。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "scripts/probe_baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "905c56e3e2a68b193630810fde98f9d82ff04927",
+      "date": "2026-11-13",
+      "subject": "audit: align CSI2000 snapshots and document historical availability gap",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "底仓调样、权重或按历史可得时点调仓的同一研究目标。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit.md",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/lookup-status.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/manifest.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/pit-audit.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/preflight.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/probe.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/source-contract.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/supplier-question.md",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/sync.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/verification.json",
+        "scripts/audit_csi2000_pit.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cb12a0d05675f455a53c7dfb8505005716f56552",
+      "date": "2026-11-13",
+      "subject": "docs: record CSI2000 PIT evidence limits and contact restriction",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "底仓调样、权重或按历史可得时点调仓的同一研究目标。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit.md",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/lookup-status.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/manifest.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/source-contract.json",
+        "reports/2026-11/2026-11-13-csi2000-pit-audit/supplier-question.md"
+      ]
+    }
+  ]
+}
