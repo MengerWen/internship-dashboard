@@ -26,6 +26,22 @@ def replace(source, before, after):
     return source.replace(before, after, 1)
 
 
+def comparison_layout(source):
+    """Keep scores beside returns and both charts inside their shared dashboard."""
+    scores = re.search(r'  <section\b[^>]*\bid="results"[^>]*>.*?</section>\n', source, re.S)
+    if scores is None:
+        raise ValueError('Missing segmented comparison scores')
+    source = replace(source, scores[0], '')
+    anchor = '  <figure class="chart-plate" id="signal-figure">'
+    source = replace(source, anchor, scores[0] + anchor)
+    names = {'absolute': '绝对', 'excess': '超额', 'wealth': '绝对', 'enhancement': '超额'}
+    source = re.sub(
+        r'(<button\b[^>]*data-return-(?:basis|view)="(absolute|excess|wealth|enhancement)"[^>]*>)[^<]*(</button>)',
+        lambda match: match[1] + names[match[2]] + match[3], source)
+    return re.sub(r'(<a href="#signal-figure"[^>]*>.*?</a>)(\s*)(<a href="#results"[^>]*>.*?</a>)',
+                  r'\3\2\1', source)
+
+
 def script_json(html, name):
     match = re.search(r'<script type="application/json" id="' + re.escape(name) + r'">\s*(.*?)\s*</script>',
                       html, re.S)
@@ -158,7 +174,7 @@ def render(html, data, summaries, report_url):
     if carry is None or opening is None:
         raise ValueError('Missing execution summary or introduction')
     html = replace(html, carry[0], summary_table(summaries))
-    return replace(html, opening[0], intro(report_url))
+    return comparison_layout(replace(html, opening[0], intro(report_url)))
 
 
 def update_note(path, summaries, report_url):

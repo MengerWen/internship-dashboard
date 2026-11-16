@@ -48,6 +48,10 @@ def test_original_comparison_layout_and_data_contract(document):
     assert page.count('data-curve-kind="returns"') == 5
     assert 'name="weight"' in page and 'name="sorting"' in page
     assert 'data-return-view="wealth"' in page and 'data-return-view="enhancement"' in page
+    assert page.index('id="return-figure"') < page.index('id="results"') < page.index('id="signal-figure"')
+    assert 'data-return-view="wealth" aria-pressed="true">绝对</button>' in page
+    assert 'data-return-view="enhancement" aria-pressed="false">超额</button>' in page
+    assert build.comparison_layout(page) == page
     payload = re.search(r'id="csi2000-market-data">([^<]+)</script>', page).group(1)
     packed = json.loads(gzip.decompress(base64.b64decode(payload)))
     assert set(packed['series']) == build.CONFIGURATIONS

@@ -116,6 +116,13 @@ async function main() {
             const expectedMean = returns.reduce((s, value) => s + value, 0) / 82 * 10000;
             const row = bodies[2].rows[lane];
             close(numeric(row.querySelector('[data-metric="mean"]')), expectedMean);
+            const wins = returns.filter(value => value > 0).length / returns.length * 100;
+            close(numeric(row.querySelector('[data-metric="winRate"]')), wins);
+            const mean = expectedMean / 10000;
+            const sd = Math.sqrt(returns.reduce((sum, value) => sum + (value - mean) ** 2, 0) / (returns.length - 1));
+            close(numeric(row.querySelector('[data-metric="sharpe"]')), mean / sd * Math.sqrt(252));
+            assert.match(get('table-status').textContent, view === 'wealth' ? /绝对收益/ : /超额收益/);
+            assert.match(get('score-note').textContent, view === 'wealth' ? /整体日收益/ : /做 T 增量/);
             const lastA = rows[565][group], lastB = base[565][group];
             const initial = data.initial[weight][group];
             const expectedCumulative = view === 'wealth'

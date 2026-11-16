@@ -45,7 +45,7 @@
   let expanded = null;
   let expandedFrom = null;
   const isEnhancement = () => view === 'enhancement';
-  const returnLabel = () => isEnhancement() ? '增强' : '研究收益';
+  const returnLabel = () => isEnhancement() ? '超额收益' : '绝对收益';
   const hasPoolReference = () => !isEnhancement();
 
   function moments() {
@@ -178,8 +178,8 @@
 
   function updateScoreRows() {
     const table = get('score-rows');
-    table.querySelector('[data-score-column="mean"]').textContent = isEnhancement() ? '日均增强 bp' : '日均 bp';
-    table.querySelector('[data-score-column="cumulative"]').textContent = isEnhancement() ? '累计增强 %' : '累计 %';
+    table.querySelector('[data-score-column="mean"]').textContent = isEnhancement() ? '日均超额 bp' : '日均绝对 bp';
+    table.querySelector('[data-score-column="cumulative"]').textContent = isEnhancement() ? '累计超额 %' : '累计绝对 %';
     table.querySelector('.score-fields [data-score-column="drawdown"]').textContent =
       isEnhancement() ? '回撤 pp' : '回撤 %';
     for (const body of table.tBodies) {
@@ -216,8 +216,8 @@
     get('table-status').textContent = portfolio.join('') + ' · ' +
       (phaseChoice === 'all' ? '全部阶段' : phases[phaseChoice].label) + ' · ' + returnLabel() + ' · 费用前';
     get('score-note').textContent = isEnhancement()
-      ? '日增强为当日做 T 损益除以该市场昨日底仓价值。分段累计增强和回撤按该市场初始底仓折算，回撤单位为百分点。'
-      : '各段累计收益和回撤以段前研究净值为起点。Sharpe 的「截至本段」从首个交易日算至该段末。';
+      ? '日超额为当日做 T 增量损益除以该市场昨日底仓价值。分段累计超额和回撤按该市场初始底仓折算，回撤单位为百分点。胜率统计做 T 增量为正的天数占比。'
+      : '绝对收益包含底仓与做 T。各段累计收益和回撤以段前研究净值为起点，胜率统计整体日收益为正的天数占比。Sharpe 的「截至本段」从首个交易日算至该段末。';
   }
 
   function drawAll() {

@@ -363,7 +363,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <header class="shell">
   <div class="report-meta">
     <time datetime="2026-11-09">2026.11.09 · 模型基准</time><span class="review-edition">指数对标</span>
-    <nav aria-label="本页导航"><a href="#index-switcher">指数与收益</a><a href="#signal-figure">IC／RankIC</a><a href="#results">分段成绩</a><a href="#freeze">冻结配置</a><a href="#evidence">登记证据</a></nav>
+    <nav aria-label="本页导航"><a href="#index-switcher">指数与收益</a><a href="#results">分段成绩</a><a href="#signal-figure">IC／RankIC</a><a href="#freeze">冻结配置</a><a href="#evidence">登记证据</a></nav>
   </div>
   <div class="report-title">
     <h1>沪深基准的逐日收益</h1>
@@ -428,8 +428,8 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
           <button type="button" aria-pressed="true" data-fee-basis="net">扣税费</button>
         </div>
         <div class="index-method-group" role="group" aria-label="收益视图" aria-describedby="return-basis-note">
-          <button type="button" aria-pressed="true" data-return-basis="absolute">绝对收益</button>
-          <button type="button" aria-pressed="false" data-return-basis="excess" disabled>超额收益</button>
+          <button type="button" aria-pressed="true" data-return-basis="absolute">绝对</button>
+          <button type="button" aria-pressed="false" data-return-basis="excess" disabled>超额</button>
         </div><button type="button" class="demo-button is-emphasis" data-enlarge="returns">放大收益图</button></div>
     </div>
     <p id="fill-status" class="chart-foot" role="status" hidden></p>
@@ -456,40 +456,11 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     <p id="pool-focus-note" class="chart-foot" aria-live="polite" hidden></p>
     <figcaption class="chart-foot">从首个 OOF 日起按日复利，三段连续。进入 Test 时，预测来源从折外模型切换到冻结集成。拖动框选日期，悬浮读数，点击固定。</figcaption>
   </figure>
-  <figure class="chart-plate" id="signal-figure">
-    <div class="chart-tools">
-      <h2 id="signal-heading">IC 与 RankIC</h2>
-      <div class="figure-controls">
-        <label>信号指标 <select id="signal-mode"><option value="rankic">RankIC</option><option value="ic">IC</option></select></label>
-        <button type="button" class="demo-button is-emphasis" data-enlarge="signal">放大信号图</button>
-      </div>
-    </div>
-    <div class="curve-legend index-method-group" role="group" aria-label="IC／RankIC 曲线"><button type="button" data-curve-kind="signal" data-curve-lane="all" aria-pressed="true">全选</button>
-<button type="button" data-curve-kind="signal" data-curve-lane="0" data-market="sse" aria-pressed="false">
-          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse"/></svg>沪市 11:30
-        </button>
-<button type="button" data-curve-kind="signal" data-curve-lane="1" data-market="sse" aria-pressed="false">
-          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse close-line"/></svg>沪市 收盘
-        </button>
-<button type="button" data-curve-kind="signal" data-curve-lane="2" data-market="szse" aria-pressed="false">
-          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse"/></svg>深市 11:30
-        </button>
-<button type="button" data-curve-kind="signal" data-curve-lane="3" data-market="szse" aria-pressed="false">
-          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
-        </button></div>
-    <div id="signal-plot" class="plot" tabindex="0" role="group" aria-label="IC 与 RankIC 图。左右方向键逐日查看，回车固定日期。">
-      <svg id="signal-chart" class="chart" role="img" aria-label="沪深两个周期的单日和累计相关系数" xmlns="http://www.w3.org/2000/svg"></svg>
-      <aside id="signal-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
-    </div>
-    <figcaption class="chart-foot">上图为有效日相关系数的累计和，下图为单日值。每个交易日用同市场、同周期的有效股票配对预测分数与对手价毛收益。两幅图的日期游标联动。</figcaption>
-  </figure>
-  <p id="date-status" class="visually-hidden" aria-live="polite"></p>
-  <noscript><p class="chart-foot">逐日图表和分段成绩表需要 JavaScript。</p></noscript>
-</section>
   <section aria-labelledby="results-heading" id="results">
 <h2 id="results-heading">分段集成成绩</h2>
 <strong id="index-view-label">全市场</strong>
 <p class="hint" id="table-status">全组合、全档位。日均收益单位为 bp，Sharpe 按 252 日年化。</p>
+<p class="chart-foot" id="score-note"></p>
       <p class="chart-foot">累计收益和回撤各段从 1 起算。Sharpe 的「截至本段」从首个有效日算到该段末，开发段两者相同，合为一格。卡玛为本段年化收益除以最大回撤，赔率为平均盈利除以平均亏损幅度。</p>
 <div aria-label="沪深基准数值对照" class="table-wrap enhanced-table-scroll" role="region" tabindex="0">
 <table aria-describedby="table-status" class="score-table" id="score-rows"><colgroup><col class="score-stage-col"><col class="score-key-col"><col class="score-key-col"></colgroup><colgroup><col><col></colgroup><colgroup><col><col></colgroup><colgroup><col><col><col></colgroup><colgroup><col><col></colgroup><colgroup><col></colgroup><thead><tr class="score-group"><th scope="colgroup" colspan="3">评价样本</th><th scope="colgroup" colspan="2">收益</th><th scope="colgroup" colspan="2">年化 Sharpe</th><th scope="colgroup" colspan="3">风险</th><th scope="colgroup" colspan="2">胜负</th><th scope="colgroup" colspan="1">统计</th></tr><tr class="score-fields"><th scope="col" data-score-column="stage">样本阶段</th><th scope="col" data-score-column="market">市场</th><th scope="col" data-score-column="cycle">周期</th><th class="score-num score-band-start" scope="col" data-score-column="mean">日均 bp</th><th class="score-num" scope="col" data-score-column="cumulative">累计 %</th><th class="score-num score-band-start" scope="col" data-score-column="sharpe">本段</th><th class="score-num" scope="col" data-score-column="sharpeThrough">截至本段</th><th class="score-num score-band-start" scope="col" data-score-column="drawdown">回撤 %</th><th class="score-num" scope="col" data-score-column="calmar">卡玛</th><th class="score-num" scope="col" data-score-column="volatility">年化波动 %</th><th class="score-num score-band-start" scope="col" data-score-column="winRate">胜率 %</th><th class="score-num" scope="col" data-score-column="payoff">赔率</th><th class="score-num score-band-start" scope="col" data-score-column="t">t 值</th></tr></thead>
@@ -597,6 +568,36 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 </tbody>
 </table>
 </div>
+</section>
+  <figure class="chart-plate" id="signal-figure">
+    <div class="chart-tools">
+      <h2 id="signal-heading">IC 与 RankIC</h2>
+      <div class="figure-controls">
+        <label>信号指标 <select id="signal-mode"><option value="rankic">RankIC</option><option value="ic">IC</option></select></label>
+        <button type="button" class="demo-button is-emphasis" data-enlarge="signal">放大信号图</button>
+      </div>
+    </div>
+    <div class="curve-legend index-method-group" role="group" aria-label="IC／RankIC 曲线"><button type="button" data-curve-kind="signal" data-curve-lane="all" aria-pressed="true">全选</button>
+<button type="button" data-curve-kind="signal" data-curve-lane="0" data-market="sse" aria-pressed="false">
+          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse"/></svg>沪市 11:30
+        </button>
+<button type="button" data-curve-kind="signal" data-curve-lane="1" data-market="sse" aria-pressed="false">
+          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse close-line"/></svg>沪市 收盘
+        </button>
+<button type="button" data-curve-kind="signal" data-curve-lane="2" data-market="szse" aria-pressed="false">
+          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse"/></svg>深市 11:30
+        </button>
+<button type="button" data-curve-kind="signal" data-curve-lane="3" data-market="szse" aria-pressed="false">
+          <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
+        </button></div>
+    <div id="signal-plot" class="plot" tabindex="0" role="group" aria-label="IC 与 RankIC 图。左右方向键逐日查看，回车固定日期。">
+      <svg id="signal-chart" class="chart" role="img" aria-label="沪深两个周期的单日和累计相关系数" xmlns="http://www.w3.org/2000/svg"></svg>
+      <aside id="signal-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
+    </div>
+    <figcaption class="chart-foot">上图为有效日相关系数的累计和，下图为单日值。每个交易日用同市场、同周期的有效股票配对预测分数与对手价毛收益。两幅图的日期游标联动。</figcaption>
+  </figure>
+  <p id="date-status" class="visually-hidden" aria-live="polite"></p>
+  <noscript><p class="chart-foot">逐日图表和分段成绩表需要 JavaScript。</p></noscript>
 </section>
 
   </div>
@@ -1556,8 +1557,8 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
   }
 
   function updateScoreRows() {
-    scoreMeanHeading.textContent = isExcess() ? '日均超额 bp' : '日均 bp';
-    scoreCumulativeHeading.textContent = isExcess() ? '累计超额 %' : '累计 %';
+    scoreMeanHeading.textContent = isExcess() ? '日均超额 bp' : '日均绝对 bp';
+    scoreCumulativeHeading.textContent = isExcess() ? '累计超额 %' : '累计绝对 %';
     const histories = new Map();
     for (const { stage, lane, key, cells } of scoreRows) {
       const data = indexData[stage][methodFor(activeIndex)][key];
@@ -1642,6 +1643,11 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     get('index-panel').dataset.market = market;
     get('index-panel').dataset.method = indexed ? activeMethod : 'all';
     get('index-view-label').textContent = indexed ? basket + ' · ' + method : '全市场';
+    get('score-note').textContent = isExcess()
+      ? '表内全部指标按日超额计算，胜率统计日超额为正的天数占比。日超额＝策略收益减基准收益；' + (portfolio.startsWith('A')
+        ? '基准为同市场、同周期、同选股比例及同税费口径的全市场 A。'
+        : '基准为同市场、同周期成分池的等权中间价毛收益。')
+      : '表内全部指标按策略本身的绝对日收益计算，胜率统计策略日收益为正的天数占比。';
   }
 
   function refreshReturns() {

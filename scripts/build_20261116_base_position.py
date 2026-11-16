@@ -14,7 +14,7 @@ from pathlib import Path
 import re
 import subprocess
 
-from build_20261109_fill_rules import ASSET_LIMIT, encode_data, replace
+from build_20261109_fill_rules import ASSET_LIMIT, comparison_layout, encode_data, replace
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -238,7 +238,7 @@ def render(source, data, report_url):
               + '<script>\n' + comparison_script(source) + '\n</script>\n</body>\n</html>\n')
     if len(output.encode()) > ASSET_LIMIT:
         raise ValueError('Comparison exceeds the single asset limit')
-    return output
+    return comparison_layout(output)
 
 
 def render_note(source, report_url, *, published):
@@ -261,7 +261,7 @@ summary: "在同一张图比较中证2000沪深底仓做T结果，分段成绩�
 
 在中证 2000 沪深成分上分别使用指数权重和等权底仓。可切换沪深合并排序或分市场排序、纯多 L 或多空 A，以及四档选股比例。入选股票按昨收底仓市值的 10% 做 T，增量损益逐日盯市，结果为费用前。
 
-**HTML 展示版** 在同一张图比较沪市和深市的两个周期，可切换研究收益和累计增强。原位置的「分段集成成绩」随筛选更新。市场曲线按该市场的初始底仓金额归一化。 [11.16 研究报告]({report_url})
+**HTML 展示版** 在同一张图比较沪市和深市的两个周期，可切换绝对与超额收益。收益图下方的「分段集成成绩」随口径和筛选更新，再下方为累计 IC／RankIC。绝对收益包含底仓和做 T，超额按做 T 增量计算；市场曲线按该市场的初始底仓金额归一化。 [11.16 研究报告]({report_url})
 
 {links}
 '''
