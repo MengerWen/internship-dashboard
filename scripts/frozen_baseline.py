@@ -13,7 +13,10 @@ MANIFEST = ROOT / 'artifacts/factor-strategy-comparison/baseline-frozen.json'
 
 
 def sha256(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    raw = path.read_bytes()
+    if path.suffix in ('.md', '.html', '.json'):
+        raw = raw.replace(b'\r\n', b'\n')
+    return hashlib.sha256(raw).hexdigest()
 
 
 def baseline_data(page):

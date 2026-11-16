@@ -1,6 +1,7 @@
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 import pytest
@@ -11,7 +12,9 @@ from frozen_baseline import MANIFEST, ROOT, baseline_data, protect_outputs, veri
 
 def test_migrated_baseline_keeps_every_amount_and_condition():
     document = verify()
-    before = baseline_data((ROOT / document['migration_source']['page']).read_text(encoding='utf-8'))
+    source = document['migration_source']
+    before = baseline_data(subprocess.check_output(
+        ['git', 'show', f'{source["dashboard_revision"]}:{source["page"]}'], cwd=ROOT).decode('utf-8'))
     after = baseline_data((ROOT / 'content/daily/2026-11-13.show.html').read_text(encoding='utf-8'))
     assert before == after
     assert len(after['dates']) == 566

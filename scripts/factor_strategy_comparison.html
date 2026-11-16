@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>因子评测与策略比较</title>
+<style>
+@font-face{font-family:"Libre Baskerville";src:url("../fonts/LibreBaskerville-Regular.woff2") format("woff2");font-display:swap}
+@font-face{font-family:"Noto Serif SC";src:url("../fonts/NotoSerifSC-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+:root{--bg:#f2eee4;--surface:#f8f4eb;--line:#1e2a31;--soft:#c8c1b4;--text:#15212b;--muted:#4c565b;--blue:#345f79;--base:#545b60;--basket:#8d8d80;--focus:#9e4333;--g2:#0d6675}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 "Microsoft YaHei UI","PingFang SC",sans-serif;font-variant-numeric:tabular-nums}h1,h2,h3{font-family:"Libre Baskerville","Noto Serif SC","Songti SC",serif;margin:0 0 .5em;line-height:1.3}h1{font-size:clamp(28px,4vw,48px)}h2{font-size:clamp(20px,2.5vw,27px)}h3{font-size:17px}
+.shell{width:min(1460px,100% - 2 * clamp(12px,3.5vw,54px));margin-inline:auto}header{padding:22px 0 14px;border-bottom:1px solid var(--line)}nav{display:flex;gap:10px 23px;flex-wrap:wrap;margin-bottom:14px}a{color:var(--blue);text-underline-offset:.23em}p{margin:.35em 0 .75em}section{margin:24px 0 34px}small,.muted{color:var(--muted)}
+.filters{display:flex;align-items:end;flex-wrap:wrap;gap:8px 14px;margin:12px 0}label{display:grid;gap:3px}input,select,button{font:inherit;color:inherit}button,select,input[type="search"],input[type="date"]{min-height:40px;border:1px solid var(--soft);background:var(--surface);border-radius:2px;padding:5px 10px}button{cursor:pointer}button:hover{border-color:var(--blue)}button[aria-pressed="true"]{border-color:var(--blue);background:var(--blue);color:white}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid.single{grid-template-columns:minmax(0,1fr)}.panel{min-width:0;margin:0;border:1px solid var(--soft);background:var(--surface);padding:8px 12px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.panel h3{margin:0}.plot{display:block;width:100%;height:auto;color:var(--muted);touch-action:pan-y}.legend{display:flex;gap:8px 20px;flex-wrap:wrap;padding:0;margin:8px 0;list-style:none}.legend li{display:flex;align-items:center;gap:7px}.legend svg{width:28px;height:10px}.readout{padding:6px 0;min-height:2.7em}.range-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.range-wrap label{display:flex;align-items:center;gap:8px}.range-wrap input{width:min(300px,50vw)}
+.scroll{overflow:auto;max-width:100%}table{border-collapse:collapse;width:100%;text-align:left}th,td{padding:.46em .65em;border-bottom:1px solid var(--soft);vertical-align:top}thead th{border-bottom:1px solid var(--line);white-space:nowrap}.number{text-align:right;white-space:nowrap}.no-wrap{white-space:nowrap}caption{text-align:left;color:var(--muted);padding:.3em 0}.detail{border-block:1px solid var(--soft);padding:14px 0;max-width:90ch}.detail dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 12px;margin:.5em 0}.detail dd{margin:0;overflow-wrap:anywhere}.detail strong{color:var(--blue)}summary{cursor:pointer}tfoot,footer{color:var(--muted)}footer{border-top:1px solid var(--line);padding:12px 0 20px}
+@media(max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}.filters{gap:7px 10px}.panel{padding-inline:8px}th,td{padding:.4em .45em}}
+</style></head>
+<body>
+<header class="shell"><nav aria-label="本页导航"><a href="#strategy">策略比较</a><a href="#factors">因子评价</a><a href="#protocol">口径与来源</a><a href="2026-11-13.show.html">11.13 固定基准</a></nav>
+<h1>因子评测与策略比较</h1>
+<p>以 11.13 固定 B0 为比较起点。B0 已签收 566 个交易日、192 个条件组合；G2 已签收 __COVERAGE__ 日，仅替换深市模型。高频批次的准备状态见因子表。</p>
+</header>
+<main class="shell">
+<section id="strategy" aria-labelledby="strategy-title"><h2 id="strategy-title">策略比较</h2>
+<form class="filters" id="comparison-filters" aria-label="图表共同筛选">
+<label>底仓<select name="weight"><option value="index">指数权重</option><option value="equal" selected>等权</option></select></label>
+<label>排序<select name="sorting"><option value="combined">沪深合并</option><option value="separate">分市场</option></select></label>
+<label>组合<select name="strategy"><option value="L">纯多 L</option><option value="A">多空 A</option></select></label>
+<label>选股比例<select name="q"><option value="1">1%</option><option value="5" selected>5%</option><option value="10">10%</option><option value="20">20%</option></select></label>
+<label>做 T 比例<select name="trade"><option value="10">10%</option><option value="20">20%</option><option value="30">30%</option></select></label>
+<label>候选版本<select name="candidate" aria-label="候选版本"></select></label>
+<label>再比较<select name="extra"><option value="">无</option></select></label>
+<label>收益口径<select name="view"><option value="both">绝对与超额</option><option value="wealth">绝对收益</option><option value="excess">同底仓超额</option></select></label>
+<label>市场视图<select name="market"><option value="split">沪深分面</option><option value="all">沪深合计</option></select></label>
+<label>起始日<input name="from" type="date"></label><label>截止日<input name="to" type="date"></label>
+<button type="button" id="comparison-reset">恢复全期</button><button type="button" id="comparison-download">下载当前金额和收益 CSV</button>
+</form>
+<p id="comparison-status" class="muted" role="status">正在读取签收数据。</p>
+<ul class="legend" id="comparison-legend" aria-label="版本图例"></ul>
+<div class="range-wrap"><label>查看日期 <input id="comparison-cursor" type="range" min="0" max="565" value="565"></label><button type="button" id="comparison-pin" aria-pressed="false">固定读数</button></div>
+<p class="readout" id="comparison-readout" aria-live="polite"></p>
+<p class="muted">移动指针查看，点击固定读数；在图内横向拖动可选日期。累计曲线以全期起点为基准，下表按所选区间的期初金额计算。</p>
+<div class="grid" id="comparison-panels"></div>
+<h3 style="margin-top:16px">版本与区间成绩</h3>
+<div class="scroll" tabindex="0" aria-label="横向滚动查看版本成绩"><table>
+<caption id="comparison-table-caption">所有版本保留在表中。</caption>
+<thead><tr><th scope="col">版本</th><th scope="col">父版本</th><th scope="col">模型／特征</th><th scope="col">市场 · 周期</th><th scope="col">覆盖</th><th scope="col" class="number">绝对 %</th><th scope="col" class="number">超额 %</th><th scope="col" class="number">较 B0 pp</th><th scope="col" class="number">较父版 pp</th><th scope="col" class="number">最大回撤 %</th><th scope="col" class="number">做 T 费用 bp</th><th scope="col" class="number">进场额／底仓 %</th></tr></thead>
+<tbody id="comparison-rows"></tbody></table></div>
+</section>
+<section id="factors" aria-labelledby="factor-title"><h2 id="factor-title">因子评价总表</h2>
+<div class="filters"><label>查找族、变体或旧列<input id="factor-search" type="search" placeholder="例如 队列、H03 或 x07"></label><label>批次<select id="factor-batch"><option value="">全部</option><option>H01</option><option>H02</option><option>H03</option><option>H04</option></select></label></div>
+<div class="scroll" tabindex="0" aria-label="横向滚动查看因子评价"><table><caption>沪深分别核对；— 表示尚无签收值。Buy／Sell 指因子侧别。</caption>
+<thead><tr><th scope="col">因子／变体</th><th scope="col">市场／侧别</th><th scope="col">覆盖／日数</th><th scope="col">零值／常数</th><th scope="col">IC</th><th scope="col">Rank IC</th><th scope="col">ICIR</th><th scope="col">HAC</th><th scope="col">G10−G1</th><th scope="col">旧列／相关性</th><th scope="col">入模状态</th></tr></thead>
+<tbody id="factor-rows"></tbody></table></div>
+</section>
+<section id="factor-detail" aria-labelledby="detail-heading"><h2 id="detail-heading">单因子详情</h2><div id="factor-definition" class="detail"><p>从总表选择一个因子。</p></div></section>
+<section id="protocol"><details><summary>比较协议与数据来源</summary>
+<p>绝对收益 =（底仓金额＋扣费做 T 增量）÷ 初始金额 − 1；同底仓超额 = 做 T 增量 ÷ 初始金额；相对 B0 增量使用相同初始金额，单位为百分点。沪深合计先合并金额再计算。</p>
+<p>底仓使用中证 2000 沪深成分持仓篮子。费用为实际买入 0.9 bp、卖出 5.9 bp，沿用 F1–F9、顺延、公司行动和固定股数。该篮子不是官方指数收益。</p>
+<p>策略样本为开发 OOF 308 日与历史 Test 176＋82 日。历史 Test 已用于研发。新因子只使用 09:35:00 前可用信息；诊断计划覆盖 683 日。</p>
+<p><a href="2026-11-13.show.html">固定 B0 档案</a> · <a href="__REPORT__">研究记录、阶段及签收来源</a></p>
+</details></section>
+</main><footer class="shell">思瑞投资 · 研究记录</footer>
+<noscript><p class="shell">开启 JavaScript 后查看可筛选图表，或打开固定基准档案和研究记录。</p></noscript>
+<script id="comparison-data" type="application/octet-stream">__PAYLOAD__</script>
+<script>__SCRIPT__</script>
+</body></html>

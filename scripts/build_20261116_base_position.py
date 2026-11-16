@@ -306,12 +306,14 @@ def main():
     parser.add_argument('--page', type=Path, default=PAGE)
     parser.add_argument('--note', type=Path, default=NOTE)
     args = parser.parse_args()
-    from frozen_baseline import protect_outputs
-    protect_outputs([args.page, args.note])
     sources = {p.resolve() for p in (args.source, args.source_note, *SOURCE_HASHES)}
     targets = {args.page.resolve(), args.note.resolve()}
     if sources & targets or len(targets) != 2:
         parser.error('Output paths must differ from the protected 11.9 sources')
+    from frozen_baseline import MANIFEST, protect_outputs
+    protect_outputs(targets)
+    if MANIFEST.exists() and targets & {PAGE.resolve(), NOTE.resolve()}:
+        parser.error('11.16 是版本比较页；原基准生成器只允许写入单独的导出路径')
     results = read_results(args.aggregate, args.sha256)
     if results['schema'] != NET_SCHEMA:
         raise ValueError('11.16 publication requires signed actual-fill tax and trading-return results')
