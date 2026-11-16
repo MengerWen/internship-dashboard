@@ -1,0 +1,2446 @@
+{
+  "schema": "frozen-baseline-v1",
+  "archive_date": "2026-11-13",
+  "computed_and_published": "2026-11-16",
+  "migration_source": {
+    "page": "content/daily/2026-11-16.show.html",
+    "page_sha256": "f70b76a62e3979a22f09b784e1bc3f71e8aeda3491d5ac806e1689f79e2a0f0b",
+    "note_sha256": "5d7e867975c1adbf7cc6fdce118a757c9b3b22f9fc9c16e8403b70f4fc22c2f7",
+    "dashboard_revision": "9b0e558fa35073fc3612bfbe795c68ff80d1d16c"
+  },
+  "result": {
+    "path": "/home/wangly/hdd-store/outputs/sirui/wangly-csi2000-base-position-20261116-ratios-01a1e3a7/market-comparison.json",
+    "sha256": "cccc7033c09e85bd4e4f1a5c7d1712d3acbb8bd04a2cb836f537b6a3217ecb4c"
+  },
+  "days": 566,
+  "configurations": 192,
+  "science_sources": [
+    {
+      "path": "reports/2026-11/2026-11-08-model-szse344-baseline-registration.json",
+      "sha256": "0f132ef7c7d52bc25d21871be952dbd93bcf40fb13d9d005e563300b35be9d24",
+      "identity": {
+        "contract_version": "szse344_multih_v2",
+        "contract_hash": "55752d4523d31665b4160f367a17383b09497228fc90c9d8d24ceb5b9d8804d5",
+        "input_hash": "75d55670c8f2feaea7e0a1f9a8b3b3df6deb96c7beb6b200bba9bc58e39941e5",
+        "member_manifest_schema": "szse344-d19-members-v1",
+        "members_logical_hash": "cc3d1008ec6814162967e6fa805a0083d17b808239ce37140e8cdfbe7dc82267",
+        "feature_count": 344,
+        "method": "R1-a0-full_no_decay",
+        "learning_rate": 0.1,
+        "seeds": [
+          20260918,
+          20260919,
+          20260920,
+          20260921,
+          20260922
+        ],
+        "folds": 15,
+        "members": {
+          "morning": [
+            {
+              "tree_id": "t330-5173e747443d3aa7",
+              "rounds": 110,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-40ba810a472e4896",
+              "rounds": 170,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-f3f937c924b1bf58",
+              "rounds": 60,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-210170a794dc5a4c",
+              "rounds": 50,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-e77755d77e29752f",
+              "rounds": 60,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            }
+          ],
+          "close": [
+            {
+              "tree_id": "t330-25e7bb54e67326f1",
+              "rounds": 90,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-8f0ac4eb66eaa045",
+              "rounds": 100,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-e77755d77e29752f",
+              "rounds": 60,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-34e9f4cf59dcf568",
+              "rounds": 50,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            },
+            {
+              "tree_id": "t330-8163f87e94fa3686",
+              "rounds": 110,
+              "method_id": "R1-a0-full_no_decay",
+              "learning_rate": 0.1
+            }
+          ]
+        },
+        "ensemble": {
+          "models_per_horizon": 25,
+          "weight": "equal",
+          "stored_prediction_dtype": "float32",
+          "mean_dtype": "float64"
+        },
+        "native_library_sha256": "573d57e8a2c6290c2271b99b87afa7a802e796eafc9e8d66aefa0913cbc1616a",
+        "D20_D18_audit": {
+          "status": "unchanged",
+          "unchanged": true,
+          "threshold": 3.0
+        }
+      },
+      "objects": [
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260918,
+          "bytes": 4115019,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-5173e747443d3aa7-20260918.parquet",
+          "sha256": "3699676dcdc6c39062064446a944845f1d40b40e741371369546b2746ed32286"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260919,
+          "bytes": 4113888,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-5173e747443d3aa7-20260919.parquet",
+          "sha256": "2368330e597ee68833b7c8a4fd1aff06964ef39b5d790a9bd02b4376f23fbb1f"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260920,
+          "bytes": 4116210,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-5173e747443d3aa7-20260920.parquet",
+          "sha256": "585aad52060af54c82aa94030be1409f5640c7f1140a1895407c1a743b7920aa"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260921,
+          "bytes": 4114951,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-5173e747443d3aa7-20260921.parquet",
+          "sha256": "75193a6098db94bc4bdc3485926c48ebd60aef36da97886b318278880cd41b03"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260922,
+          "bytes": 4114749,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-5173e747443d3aa7-20260922.parquet",
+          "sha256": "9ccb862c6e5a82693f72c157989e71df2d4136b3e3fc5711c36c47fe17646936"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-40ba810a472e4896-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260918,
+          "bytes": 4120639,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-40ba810a472e4896-20260918.parquet",
+          "sha256": "6ea67471b54923c4a9e1d93e36c98e9d9dd4c27726e6e268edf0012716c37b05"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-40ba810a472e4896-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260919,
+          "bytes": 4120381,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-40ba810a472e4896-20260919.parquet",
+          "sha256": "739911d5be8dcca13179f172f5657cc458f2388d99684e02122b31a93167b1fc"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-40ba810a472e4896-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260920,
+          "bytes": 4120806,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-40ba810a472e4896-20260920.parquet",
+          "sha256": "6a4dbdf39524acc9de9834d60d455f706230e7ce8ef3ddc0d5f8b8fd2b13fe39"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-40ba810a472e4896-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260921,
+          "bytes": 4119826,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-40ba810a472e4896-20260921.parquet",
+          "sha256": "7f76204da7b3f0dea850ab25eec894919e911d047c1062efe2e48e6f17b845bb"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-40ba810a472e4896-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260922,
+          "bytes": 4118480,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-40ba810a472e4896-20260922.parquet",
+          "sha256": "e1f24703d16561810be1c4e6bc59c92a84b9290b9b14e67f0c7e11eafb6218b0"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260918,
+          "bytes": 4103673,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-f3f937c924b1bf58-20260918.parquet",
+          "sha256": "5e83bf8647702152a2e69b00eb158e67ce7aebe638607b7e52eaffffb2489ad7"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260919,
+          "bytes": 4102861,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-f3f937c924b1bf58-20260919.parquet",
+          "sha256": "2a7b30aa1d5ac32d802a3cfc137c1dfd5c12cc0e7d5859bdf2ca5befc383f51a"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260920,
+          "bytes": 4103258,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-f3f937c924b1bf58-20260920.parquet",
+          "sha256": "9c8622087022858cb9d2118aa22912243f197f6c8dbfcfe033736d0feed70841"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260921,
+          "bytes": 4102921,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-f3f937c924b1bf58-20260921.parquet",
+          "sha256": "04f18550a69ee4bbf5fb59c21a24e39983ed777f56ed972bfd95c3ae1673a7ca"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260922,
+          "bytes": 4103161,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-f3f937c924b1bf58-20260922.parquet",
+          "sha256": "4b3368d5a8c5bc0a5e35c3d9171d354903088024676666bed0d2788f1913393e"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260918,
+          "bytes": 4118114,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-210170a794dc5a4c-20260918.parquet",
+          "sha256": "0769514fac3aa17026a4b503c8ad5c3ab7a8e5902ad850a3e8709bcb2825182f"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260919,
+          "bytes": 4117016,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-210170a794dc5a4c-20260919.parquet",
+          "sha256": "97d6695984120c7182f617707aab0f6577a99d16d2c89c2ad3920c8a4e5cc149"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260920,
+          "bytes": 4118646,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-210170a794dc5a4c-20260920.parquet",
+          "sha256": "482f259251038025dbec8ca86bcfcb581404e4f87f686e4d2b843219da48d39c"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260921,
+          "bytes": 4118038,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-210170a794dc5a4c-20260921.parquet",
+          "sha256": "6ea30577195504c3cff661341b3599b9dffe3055a1b7a98363e6f11c2934bfe9"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260922,
+          "bytes": 4117720,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-210170a794dc5a4c-20260922.parquet",
+          "sha256": "dc420d0b33979d0243181f483f572bfb0c69b7b103b0960d143b8dda74c82703"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-e77755d77e29752f-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260918,
+          "bytes": 4110030,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-e77755d77e29752f-20260918.parquet",
+          "sha256": "858311bc8961aa5e7a2c3d24aa660c126c597c33f6e54930eeea09e475756631"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-e77755d77e29752f-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260919,
+          "bytes": 4109942,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-e77755d77e29752f-20260919.parquet",
+          "sha256": "84fa56fefe62dd80d6323659ffea906013c35d06d79ccd16408d16ede874d7ff"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-e77755d77e29752f-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260920,
+          "bytes": 4110361,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-e77755d77e29752f-20260920.parquet",
+          "sha256": "72243583f4d16f9d22711596d206fa66865c30a91b9d169d827f02fdf6329535"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-e77755d77e29752f-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260921,
+          "bytes": 4109543,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-e77755d77e29752f-20260921.parquet",
+          "sha256": "2688570deb50b3c6a1ddb0ee57a26a579aee160da165d3b3c333e62b3a637245"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "morning-t330-e77755d77e29752f-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260922,
+          "bytes": 4109805,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/morning-t330-e77755d77e29752f-20260922.parquet",
+          "sha256": "e5ba7bed7b89a9001bb40628c170945e3f3937df8dfd3ba5c9019d1df569002d"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260918",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260918,
+          "bytes": 4096949,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-25e7bb54e67326f1-20260918.parquet",
+          "sha256": "38ccd3fd89ff0dbeea1db9aa57a98ce811c5d21d9018a499ea2f0fb1cd6f76e8"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260919",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260919,
+          "bytes": 4097291,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-25e7bb54e67326f1-20260919.parquet",
+          "sha256": "de7576b77aa72101fa664c9785258a25facade000c9732daa99adb6c4050e5bc"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260920",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260920,
+          "bytes": 4095751,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-25e7bb54e67326f1-20260920.parquet",
+          "sha256": "f1f7e7d69c7c4f83731a247802bd28775640e92f1185131629d40a44f8fb360d"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260921",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260921,
+          "bytes": 4096351,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-25e7bb54e67326f1-20260921.parquet",
+          "sha256": "41674531365ca3d50b126f196877e2d62b8a30edf8e5321b6e92a16b65ca0513"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260922",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260922,
+          "bytes": 4097622,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-25e7bb54e67326f1-20260922.parquet",
+          "sha256": "3d59aaa0737556b933f669104ee7a565e378b85e4ac065542e9c22187d19fe11"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8f0ac4eb66eaa045-20260918",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260918,
+          "bytes": 4084646,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8f0ac4eb66eaa045-20260918.parquet",
+          "sha256": "cf116324d6448c9c27055498b78e9d4bcf97b43280672d5dc45eadde99a10970"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8f0ac4eb66eaa045-20260919",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260919,
+          "bytes": 4085891,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8f0ac4eb66eaa045-20260919.parquet",
+          "sha256": "9a9de1f0e4de563f77125f45bccf23710b7cbdf97e440a6ec87cd95005400a9a"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8f0ac4eb66eaa045-20260920",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260920,
+          "bytes": 4085278,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8f0ac4eb66eaa045-20260920.parquet",
+          "sha256": "1c33f813d5be35571dcb8ceed1dab8a557e39bacbe70546ecc91724736d21991"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8f0ac4eb66eaa045-20260921",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260921,
+          "bytes": 4085057,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8f0ac4eb66eaa045-20260921.parquet",
+          "sha256": "d5102f5733a961fd510a187a894e31086eb2370c822f18f9cb2b1b8a2d001446"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8f0ac4eb66eaa045-20260922",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260922,
+          "bytes": 4084355,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8f0ac4eb66eaa045-20260922.parquet",
+          "sha256": "fa96e96ae1b3fa74acd53b5a9613946156d17aee9d7ce80a1b6fa693bbffdebb"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-e77755d77e29752f-20260918",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260918,
+          "bytes": 4072294,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-e77755d77e29752f-20260918.parquet",
+          "sha256": "903dd46b4b60732451aec81ca82e3bcda2e91c1e9d8e2bed40acf87b8aa0b776"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-e77755d77e29752f-20260919",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260919,
+          "bytes": 4072450,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-e77755d77e29752f-20260919.parquet",
+          "sha256": "7edcd28a1a5a9a26f811de9a8e1eb8ff2351af857e2d6b6ce6063a76bd11d933"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-e77755d77e29752f-20260920",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260920,
+          "bytes": 4072594,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-e77755d77e29752f-20260920.parquet",
+          "sha256": "d2297b4c36ddded9d16f4f89b52ccd36d7e596d04c044256e3123d560027151b"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-e77755d77e29752f-20260921",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260921,
+          "bytes": 4072537,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-e77755d77e29752f-20260921.parquet",
+          "sha256": "4a4616c573069ada7a05badeba9e1a88b705627affb080f2ae44f43611a9c5f7"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-e77755d77e29752f-20260922",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260922,
+          "bytes": 4072594,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-e77755d77e29752f-20260922.parquet",
+          "sha256": "71950aab504cec07890ba55939be93590126d2dcbfc951667af452a792617854"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-34e9f4cf59dcf568-20260918",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260918,
+          "bytes": 4088579,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-34e9f4cf59dcf568-20260918.parquet",
+          "sha256": "fba6a0cbe33e9748a43c79cd9e125902c6f69f2ce836f46048cb2c2468ad6006"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-34e9f4cf59dcf568-20260919",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260919,
+          "bytes": 4089091,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-34e9f4cf59dcf568-20260919.parquet",
+          "sha256": "70eb9300ee5448dc3dc8a4e00ef0f4b62d88c56ac32a3d60c684026258b7ed3e"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-34e9f4cf59dcf568-20260920",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260920,
+          "bytes": 4088861,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-34e9f4cf59dcf568-20260920.parquet",
+          "sha256": "308acb18e5d02d162d730997f7c21a20bf005548ea28f9829ae1f4af0c92aebb"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-34e9f4cf59dcf568-20260921",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260921,
+          "bytes": 4088718,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-34e9f4cf59dcf568-20260921.parquet",
+          "sha256": "f35bae48439c5430d67c9236e2d15edb1fe7596a1004736a47ad1548d65cfba3"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-34e9f4cf59dcf568-20260922",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260922,
+          "bytes": 4088333,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-34e9f4cf59dcf568-20260922.parquet",
+          "sha256": "85d3ffa1a3075b7ca0d2070c442c9deea00b8f91c5b26b947283edb6f861f4b0"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260918",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260918,
+          "bytes": 4091432,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8163f87e94fa3686-20260918.parquet",
+          "sha256": "e3241b8c4e116db0479b5d162badef75c3c42aaee3a43745cb811363f9ca0c98"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260919",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260919,
+          "bytes": 4093016,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8163f87e94fa3686-20260919.parquet",
+          "sha256": "7d6a7cf58414e8944b87cd1bc718aa732c47a988e8e69564ecb941e89352d538"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260920",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260920,
+          "bytes": 4092200,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8163f87e94fa3686-20260920.parquet",
+          "sha256": "c408472af00270115787d59c7735b08bbb1fd772aad32f9f58d5ded03f951321"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260921",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260921,
+          "bytes": 4091052,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8163f87e94fa3686-20260921.parquet",
+          "sha256": "f717aad5341c7a875788ceab4c9152975614ba40c39c6c1a0ede59cabfc2f0e9"
+        },
+        {
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260922",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260922,
+          "bytes": 4092596,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/oof/close-t330-8163f87e94fa3686-20260922.parquet",
+          "sha256": "20d0344226f166607424510e2f69a89dd2447d150575b70d04cbc0734a0281be"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260918,
+          "bytes": 198595,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-5173e747443d3aa7-20260918.txt",
+          "sha256": "7e4ba9f76b83aba4b64a9a78785da1a8c7de2df6d6f4e530149d7f76bddd29fd"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260919,
+          "bytes": 198520,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-5173e747443d3aa7-20260919.txt",
+          "sha256": "141f210704f316fc1b0e7d4709ed6cba7b61af008db256ccd918b463a7bb50b6"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260920,
+          "bytes": 198175,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-5173e747443d3aa7-20260920.txt",
+          "sha256": "30377ad57dccc7bc371dadf75c59a7085f0f73702ab636d3baddcc6e55869809"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260921,
+          "bytes": 198286,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-5173e747443d3aa7-20260921.txt",
+          "sha256": "ab86080c63bbecf60c5f942aeec51bec600ed095c0156fa367bceb263205825d"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-5173e747443d3aa7",
+          "iteration": 110,
+          "seed": 20260922,
+          "bytes": 198689,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-5173e747443d3aa7-20260922.txt",
+          "sha256": "d7afb820aa6d066bde9dc31b95e4e8a9a4ea647febea5527cb008ac3f56e2db6"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-40ba810a472e4896-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260918,
+          "bytes": 294169,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-40ba810a472e4896-20260918.txt",
+          "sha256": "d8214c7ccfa362b8c6c78e1a72ed39c850abfe5da15ecf4c9bab7956a943a1a2"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-40ba810a472e4896-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260919,
+          "bytes": 293961,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-40ba810a472e4896-20260919.txt",
+          "sha256": "82e93f36a9332066345798b135bd42fe9132b6190e7aae99dfa4fc44d727635a"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-40ba810a472e4896-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260920,
+          "bytes": 294128,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-40ba810a472e4896-20260920.txt",
+          "sha256": "6ab357fddd2cd1ca687c6d1ed24d09d7c1e5927a23a9cf04e3fab761becad17e"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-40ba810a472e4896-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260921,
+          "bytes": 294289,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-40ba810a472e4896-20260921.txt",
+          "sha256": "2849b8e29525786709b79e919ff19e7509a6ad126369c4758d0390c0024f5b37"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-40ba810a472e4896-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-40ba810a472e4896",
+          "iteration": 170,
+          "seed": 20260922,
+          "bytes": 294154,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-40ba810a472e4896-20260922.txt",
+          "sha256": "a1ed06bcc904f917a2639add8db560c8e7b25c9ade96624e22554986956fbe94"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260918,
+          "bytes": 119025,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-f3f937c924b1bf58-20260918.txt",
+          "sha256": "d85879792742592c710e891a0ca20ef5937933ff6fe4f0bbee511be2209062aa"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260919,
+          "bytes": 119289,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-f3f937c924b1bf58-20260919.txt",
+          "sha256": "7efc8403b25e88fd969901b66da5c059c1319e06157c0e46ce016e01bb2d97c1"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260920,
+          "bytes": 118583,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-f3f937c924b1bf58-20260920.txt",
+          "sha256": "a5134630366dc330e78eead403068c24e5c146ff7743d87b575a3ae8f5bbe7a7"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260921,
+          "bytes": 119301,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-f3f937c924b1bf58-20260921.txt",
+          "sha256": "984ac5edd439eed125f9f410af2f3ab52834412b07ef28776ab290ad1d318612"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-f3f937c924b1bf58",
+          "iteration": 60,
+          "seed": 20260922,
+          "bytes": 118873,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-f3f937c924b1bf58-20260922.txt",
+          "sha256": "37c044c42c12caf7fc75adba2db9be1b4313a2f45eca1332e8145318b4143968"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260918,
+          "bytes": 335295,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-210170a794dc5a4c-20260918.txt",
+          "sha256": "40663f0992dbe2ee982fe2288a4bf178768424c74576e70f9912ee98816e7ac7"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260919,
+          "bytes": 335203,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-210170a794dc5a4c-20260919.txt",
+          "sha256": "1a0484e9f80998d838a9122094974e4cdf112e5fb154511ad37a3971933f94e1"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260920,
+          "bytes": 335041,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-210170a794dc5a4c-20260920.txt",
+          "sha256": "ed12b96c4b672e3f4d56918d9aa447c9248a9a50a1d59ac09c7b359dc7ed6b93"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260921,
+          "bytes": 334956,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-210170a794dc5a4c-20260921.txt",
+          "sha256": "114fdba3c814445034b1ee8b8dd8d45cf834f4cffef148e0323d55c83a297f94"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-210170a794dc5a4c",
+          "iteration": 50,
+          "seed": 20260922,
+          "bytes": 334869,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-210170a794dc5a4c-20260922.txt",
+          "sha256": "255796711e52e1c17e1ff72f8c5f8cb76e0bde8fafdb3e5f354933afd9efdd73"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-e77755d77e29752f-20260918",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260918,
+          "bytes": 210730,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-e77755d77e29752f-20260918.txt",
+          "sha256": "7b6d26d136be2b2ed180bbfd7738b83189ded5b1d58febd4a2abb58836e94b57"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-e77755d77e29752f-20260919",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260919,
+          "bytes": 210919,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-e77755d77e29752f-20260919.txt",
+          "sha256": "599fd66adafa55278b6b98d267995f33b4a15fcfabc5e0f00fff9f8fba96fd55"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-e77755d77e29752f-20260920",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260920,
+          "bytes": 210779,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-e77755d77e29752f-20260920.txt",
+          "sha256": "0591166fd4788fd0dd5dee19c509201a77e446646740fc7cbe0dd56422abc6ca"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-e77755d77e29752f-20260921",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260921,
+          "bytes": 211157,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-e77755d77e29752f-20260921.txt",
+          "sha256": "bb190a28ba0fc31deaef9a69f80f696ddad0d244e776dda41a2179886165032d"
+        },
+        {
+          "kind": "final_model",
+          "id": "morning-t330-e77755d77e29752f-20260922",
+          "horizon": "morning",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260922,
+          "bytes": 210949,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/morning-t330-e77755d77e29752f-20260922.txt",
+          "sha256": "4f9a51f80ec20e74ad017dbc84e2535b6a25f83570796ab0ffbacfee86dc3bdf"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260918",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260918,
+          "bytes": 555990,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-25e7bb54e67326f1-20260918.txt",
+          "sha256": "9f0ec7f87c6da5660980cdef31b673b86997fafa1b07c1ea92335e124d94b395"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260919",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260919,
+          "bytes": 549382,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-25e7bb54e67326f1-20260919.txt",
+          "sha256": "929875e28af0f44b3f7d41463a3eaa6e98a7f2f20e5d5ab7cdbcaf222f0eaec9"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260920",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260920,
+          "bytes": 560400,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-25e7bb54e67326f1-20260920.txt",
+          "sha256": "f5a7cfe508668f462ae3eabc335b5d72b310b37318485e8874620372525f0613"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260921",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260921,
+          "bytes": 554351,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-25e7bb54e67326f1-20260921.txt",
+          "sha256": "6ffcb3c571fe25adb5e9db792801fcc6b3962c94c9d5a4795bf6bcbb4843de2b"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260922",
+          "horizon": "close",
+          "tree_id": "t330-25e7bb54e67326f1",
+          "iteration": 90,
+          "seed": 20260922,
+          "bytes": 555441,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-25e7bb54e67326f1-20260922.txt",
+          "sha256": "dfcc15d9879919cf1af2c3199e415fc7a9a2abb3d6238305654d6dc4c3af6072"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8f0ac4eb66eaa045-20260918",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260918,
+          "bytes": 264724,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8f0ac4eb66eaa045-20260918.txt",
+          "sha256": "52fa2354459e2b53f8fe486bd2fd019dc3364c67280786f75a3aa1ef0c435524"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8f0ac4eb66eaa045-20260919",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260919,
+          "bytes": 263850,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8f0ac4eb66eaa045-20260919.txt",
+          "sha256": "e692a690556d1933cc935ead8715b4df23f380c6b278bbcdc250322c5e8be3d9"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8f0ac4eb66eaa045-20260920",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260920,
+          "bytes": 264037,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8f0ac4eb66eaa045-20260920.txt",
+          "sha256": "0be9e8f8c75026de298e21a22efd62a66db8409576ec34ebaf181942c017e464"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8f0ac4eb66eaa045-20260921",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260921,
+          "bytes": 261337,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8f0ac4eb66eaa045-20260921.txt",
+          "sha256": "a88ba6df46b717d13cf86f35d1f53baeeffa5bceae32d14bc6cb2bbf1b90a4e0"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8f0ac4eb66eaa045-20260922",
+          "horizon": "close",
+          "tree_id": "t330-8f0ac4eb66eaa045",
+          "iteration": 100,
+          "seed": 20260922,
+          "bytes": 266424,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8f0ac4eb66eaa045-20260922.txt",
+          "sha256": "4a84fd71c1592b8866eb8f36496144484c4d2eb7da7eb7a04db9adc284e969fd"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-e77755d77e29752f-20260918",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260918,
+          "bytes": 210864,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-e77755d77e29752f-20260918.txt",
+          "sha256": "671cf27eac09cc2a87255eee533a3c34666f4dce6e332824db848cf790d398fe"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-e77755d77e29752f-20260919",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260919,
+          "bytes": 210994,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-e77755d77e29752f-20260919.txt",
+          "sha256": "9e52d7159677e282d236eb6ea4410ddacc50d0ecdf49ca238547a94ac50726b6"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-e77755d77e29752f-20260920",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260920,
+          "bytes": 210930,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-e77755d77e29752f-20260920.txt",
+          "sha256": "b1f1fbb405b1b73885010d8e1b9630a2af2a8cc96d117453088fb94bf5e75466"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-e77755d77e29752f-20260921",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260921,
+          "bytes": 210888,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-e77755d77e29752f-20260921.txt",
+          "sha256": "f7962b406fe6c6d826ba385ba4aa85d72630f860b029fec88878e9f2c3bbf985"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-e77755d77e29752f-20260922",
+          "horizon": "close",
+          "tree_id": "t330-e77755d77e29752f",
+          "iteration": 60,
+          "seed": 20260922,
+          "bytes": 210810,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-e77755d77e29752f-20260922.txt",
+          "sha256": "deec95928b1ab174e87fdff716f9cb7dac4dbf7ea57b49d2b1747afebf754d50"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-34e9f4cf59dcf568-20260918",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260918,
+          "bytes": 333045,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-34e9f4cf59dcf568-20260918.txt",
+          "sha256": "2c4ee72336a915fa3bdbf7da55459f7507e58d347852d6d527e9263ccae57205"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-34e9f4cf59dcf568-20260919",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260919,
+          "bytes": 333211,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-34e9f4cf59dcf568-20260919.txt",
+          "sha256": "9761d5382b31aa088c91694a3ef3c4b1c6c01a187e802b0589ef50a687301121"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-34e9f4cf59dcf568-20260920",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260920,
+          "bytes": 332868,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-34e9f4cf59dcf568-20260920.txt",
+          "sha256": "4782bd3fd491d01e1d19a4d6ac16af50e435b9c6abaaaf404b1fb38a424c18ff"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-34e9f4cf59dcf568-20260921",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260921,
+          "bytes": 332833,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-34e9f4cf59dcf568-20260921.txt",
+          "sha256": "061d8eab484b0586a8e971795d5a07491dccc97621880f8c8ca3277ad8964bcd"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-34e9f4cf59dcf568-20260922",
+          "horizon": "close",
+          "tree_id": "t330-34e9f4cf59dcf568",
+          "iteration": 50,
+          "seed": 20260922,
+          "bytes": 333206,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-34e9f4cf59dcf568-20260922.txt",
+          "sha256": "ebb7336e49c2aa9b1e8c1439f91ff84ae1fe3eae8684d5d1c20b081bbc74033a"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260918",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260918,
+          "bytes": 364678,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8163f87e94fa3686-20260918.txt",
+          "sha256": "df6498155646316b792a76b05bbbf7b11c58059d81a9cf1a9983e7f3e237038f"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260919",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260919,
+          "bytes": 365187,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8163f87e94fa3686-20260919.txt",
+          "sha256": "ca82399df9bfd62c23f56c561b13c3f381f2cb510869fc6d39277f04b3ab4773"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260920",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260920,
+          "bytes": 364903,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8163f87e94fa3686-20260920.txt",
+          "sha256": "3a829fc86cf68bf168a101b149a40503f1323cb4b5e6cf6598f6b31e70c17347"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260921",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260921,
+          "bytes": 363375,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8163f87e94fa3686-20260921.txt",
+          "sha256": "b3d79af79a1521fb061639333c9e6a2bcefa3dcf3cc0189da10126b4496f67ba"
+        },
+        {
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260922",
+          "horizon": "close",
+          "tree_id": "t330-8163f87e94fa3686",
+          "iteration": 110,
+          "seed": 20260922,
+          "bytes": 365539,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/models/close-t330-8163f87e94fa3686-20260922.txt",
+          "sha256": "4c6e11e3eda1336b8869cda62061659d825ff0879652a264022f32b77ba404c4"
+        },
+        {
+          "kind": "test_prediction",
+          "id": "morning-seen",
+          "horizon": "morning",
+          "stage": "seen",
+          "bytes": 62977507,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/test/morning-seen.parquet",
+          "sha256": "0f3a3350f216f482f81a107847d1aa51a85bfcfab4428165477b1c0428822a4e"
+        },
+        {
+          "kind": "test_prediction",
+          "id": "close-seen",
+          "horizon": "close",
+          "stage": "seen",
+          "bytes": 62377550,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/test/close-seen.parquet",
+          "sha256": "e0432ce45d9b2ee9406ae76b0d2a831183b47ba63e8ba24c794c99904e68b586"
+        },
+        {
+          "kind": "test_prediction",
+          "id": "morning-unseen",
+          "horizon": "morning",
+          "stage": "unseen",
+          "bytes": 35569009,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/test/morning-unseen.parquet",
+          "sha256": "6e8f4a391abf0c879cd5e050c57e2c2274a027361490f65a4b928dc9ce30b8e4"
+        },
+        {
+          "kind": "test_prediction",
+          "id": "close-unseen",
+          "horizon": "close",
+          "stage": "unseen",
+          "bytes": 35302156,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-selection-test-20261107/test/close-unseen.parquet",
+          "sha256": "9f1f5a093d5e0b125a6c2bbbed09712367aeec70d5448583fe99d7e3680bbaa0"
+        },
+        {
+          "kind": "d20_daily",
+          "id": "development-morning",
+          "bytes": 8356207,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-absolute-returns-20261108/development-morning.parquet",
+          "sha256": "47bda1130c48b3b57ed967ee25d48514bc575ce3844382cdb037aea986f9bea2"
+        },
+        {
+          "kind": "d20_daily",
+          "id": "development-close",
+          "bytes": 8482921,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-absolute-returns-20261108/development-close.parquet",
+          "sha256": "dc7ac1706d21d7153bcf11df56579a365e6d0f38f3236fe910af3e3c0c14d546"
+        },
+        {
+          "kind": "d20_daily",
+          "id": "test-morning-seen",
+          "bytes": 4801055,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-absolute-returns-20261108/test-morning-seen.parquet",
+          "sha256": "42933a7aaedc506f801b52ecb1206c72ef70443b90fdc95460ba1dd849cdfc07"
+        },
+        {
+          "kind": "d20_daily",
+          "id": "test-close-seen",
+          "bytes": 4919389,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-absolute-returns-20261108/test-close-seen.parquet",
+          "sha256": "50aa02a9a27ed4ce10f40d9f0d2d43a3c8e178c7241e88a352b4af8e7a05372c"
+        },
+        {
+          "kind": "d20_daily",
+          "id": "test-morning-unseen",
+          "bytes": 2245201,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-absolute-returns-20261108/test-morning-unseen.parquet",
+          "sha256": "102449d79bea717204912232d1824aa4b4e5bba83aae1ab266f9832da3f7146b"
+        },
+        {
+          "kind": "d20_daily",
+          "id": "test-close-unseen",
+          "bytes": 2303118,
+          "path": "/home/wangly/hdd-store/outputs/sirui/szse344-absolute-returns-20261108/test-close-unseen.parquet",
+          "sha256": "d7c9e6685b5934147497c26196b3fc3e787d60e20124bbfcfdcbcf5e8dc40831"
+        }
+      ]
+    },
+    {
+      "path": "reports/2026-11/2026-11-09-model-sse340-baseline-registration.json",
+      "sha256": "9adb0fe811eb11590ff49e3ed26741ecc09b8e00f4aa6cbf1a654c3e0fcd42be",
+      "identity": {
+        "contract_version": "sse340_multih_v1",
+        "contract_hash": "899511acdaeaa9aa2b2ac0bd3fc4dc5b15bbc038c67f2c8802b8aaf0cd7b02a0",
+        "contract_sha256": "6f5a200fa16331410f096851ffb5f62cf423818bf906546c898af5c15a29f426",
+        "label_collection_sha256": "3233be64d5542a4e4e72617aff6fafa771269aa0907055834e927d9f182552c1",
+        "feature_count": 340,
+        "learning_rate": 0.1,
+        "seeds": [
+          20260918,
+          20260919,
+          20260920,
+          20260921,
+          20260922
+        ],
+        "folds": 15,
+        "ensemble": "25 个最终模型等权平均。预测以 float32 保存，集成均值用 float64。",
+        "horizons": {
+          "morning": {
+            "member_manifest_schema": "sse340-d19-members-v1",
+            "members_logical_hash": "b4da691edbba29072348d51d7a340aae009af06cdd1cfbd8556a995dfaec9c52",
+            "members": [
+              {
+                "tree_id": "t330-2e2daecdec4b64cd",
+                "unit_id": "1f21ca1c9be2c056c90da8da",
+                "iteration": 170,
+                "mean_bp": 21.919011596430583,
+                "sharpe": 3.6619459762481408,
+                "se_bp": 5.414195649898537,
+                "halving_eliminated": false,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-final/1f21ca1c9be2c056c90da8da.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-final/1f21ca1c9be2c056c90da8da.json.gz",
+                  "payload_sha256": "fbc3f6181d4ca327874edfe31e840d1460af647073645f1ee025565ec5eedfbb",
+                  "through": null
+                }
+              },
+              {
+                "tree_id": "t330-f3f937c924b1bf58",
+                "unit_id": "3404362a9c91163c9951d27c",
+                "iteration": 200,
+                "mean_bp": 21.573796955329815,
+                "sharpe": 3.4910989452106334,
+                "se_bp": 5.58971083008651,
+                "halving_eliminated": false,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-final/3404362a9c91163c9951d27c.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-final/3404362a9c91163c9951d27c.json.gz",
+                  "payload_sha256": "2faefe8b1ff3de90ad10f576d506dc1b77fa1e7c40dec6f4b525cb6abb325920",
+                  "through": null
+                }
+              },
+              {
+                "tree_id": "t330-5173e747443d3aa7",
+                "unit_id": "b8fe45185a03ce0159f180e3",
+                "iteration": 100,
+                "mean_bp": 21.523062600829157,
+                "sharpe": 3.4816202104083858,
+                "se_bp": 5.5917479380493775,
+                "halving_eliminated": true,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-200/b8fe45185a03ce0159f180e3.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-200/b8fe45185a03ce0159f180e3.json.gz",
+                  "payload_sha256": "a5803c883bcc9c10f2d52f14031a59087dece8a5f9b269a4ac5cb9b3e6701356",
+                  "through": 200
+                }
+              },
+              {
+                "tree_id": "t330-629ac830010da9bf",
+                "unit_id": "f0ae062e6a9e5cb82e5346e8",
+                "iteration": 50,
+                "mean_bp": 21.16706716680933,
+                "sharpe": 3.481616165586302,
+                "se_bp": 5.499265782353499,
+                "halving_eliminated": true,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-150/f0ae062e6a9e5cb82e5346e8.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-150/f0ae062e6a9e5cb82e5346e8.json.gz",
+                  "payload_sha256": "0e437f841decd9db563ebbb37399d00a10daca759014714301b6eaf21ed201b1",
+                  "through": 150
+                }
+              },
+              {
+                "tree_id": "t330-210170a794dc5a4c",
+                "unit_id": "894fd165c0bd903ff0c79c37",
+                "iteration": 60,
+                "mean_bp": 21.140630016213905,
+                "sharpe": 3.3533131083678223,
+                "se_bp": 5.702545132606665,
+                "halving_eliminated": true,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-150/894fd165c0bd903ff0c79c37.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/morning-stage2-150/894fd165c0bd903ff0c79c37.json.gz",
+                  "payload_sha256": "ba6b01617d304eeab6f5f81aabdddb00559b076fc13a365dbb076d57c59c1107",
+                  "through": 150
+                }
+              }
+            ],
+            "method": "R1-a0-rolling_252",
+            "rule": "H9",
+            "sharpe_threshold": 3,
+            "original_seed_replay_rows": 900,
+            "native_library_sha256": "573d57e8a2c6290c2271b99b87afa7a802e796eafc9e8d66aefa0913cbc1616a"
+          },
+          "close": {
+            "member_manifest_schema": "sse340-h14-members-v1",
+            "members_logical_hash": "60b4dcbca6384f9d5fc709f15fcb23035f30aec303ec808dd576d12e2b51e770",
+            "members": [
+              {
+                "tree_id": "t330-25e7bb54e67326f1",
+                "unit_id": "ea977b7bfea0e770ef80cdb5",
+                "iteration": 90,
+                "mean_bp": 17.32679198321134,
+                "sharpe": 1.9367294233723034,
+                "se_bp": 8.092340032167206,
+                "halving_eliminated": true,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-150/ea977b7bfea0e770ef80cdb5.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-150/ea977b7bfea0e770ef80cdb5.json.gz",
+                  "payload_sha256": "bb3c8b9fc1523c2ecc87aacc960aa81d7fd7f5f45126042d9f39600b9915f5f7",
+                  "through": 150
+                }
+              },
+              {
+                "tree_id": "t330-5173e747443d3aa7",
+                "unit_id": "0ec6c867a6a407cb2cf72ba4",
+                "iteration": 90,
+                "mean_bp": 17.13786377483451,
+                "sharpe": 1.9513907341188566,
+                "se_bp": 7.94396569522632,
+                "halving_eliminated": true,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-200/0ec6c867a6a407cb2cf72ba4.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-200/0ec6c867a6a407cb2cf72ba4.json.gz",
+                  "payload_sha256": "26d25d02d95ff216a9cfa141349e566e091cfa6aa8bb7c8057f8e2a3967b7683",
+                  "through": 200
+                }
+              },
+              {
+                "tree_id": "t330-8163f87e94fa3686",
+                "unit_id": "0cf56b0816e8924199ffd3bf",
+                "iteration": 120,
+                "mean_bp": 16.302950816155878,
+                "sharpe": 1.8249857494813495,
+                "se_bp": 8.080377541404811,
+                "halving_eliminated": true,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-200/0cf56b0816e8924199ffd3bf.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-200/0cf56b0816e8924199ffd3bf.json.gz",
+                  "payload_sha256": "a19612b057aae16e77311d714ecc14633007ca2d116748d787fea9ed6e5d012f",
+                  "through": 200
+                }
+              },
+              {
+                "tree_id": "t330-5de07a79d06558f5",
+                "unit_id": "e3671c68ad427276fcd6a5da",
+                "iteration": 190,
+                "mean_bp": 16.276016408362356,
+                "sharpe": 1.8985887552515957,
+                "se_bp": 7.754291567482862,
+                "halving_eliminated": false,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-final/e3671c68ad427276fcd6a5da.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-final/e3671c68ad427276fcd6a5da.json.gz",
+                  "payload_sha256": "d233033452831f25a4fca5a423f94bb591fe19c0acb02e53ec158c4efa8d7b51",
+                  "through": null
+                }
+              },
+              {
+                "tree_id": "t330-629ac830010da9bf",
+                "unit_id": "792b02f6b767e4372eff4453",
+                "iteration": 100,
+                "mean_bp": 16.07958570915338,
+                "sharpe": 1.867920782685335,
+                "se_bp": 7.786482519537778,
+                "halving_eliminated": true,
+                "source": {
+                  "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-150/792b02f6b767e4372eff4453.json",
+                  "payload_path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/phases/close-stage2-150/792b02f6b767e4372eff4453.json.gz",
+                  "payload_sha256": "5a93bdada6946f730110ef30a5e5a1bb380226a2473748f3cd8086a8a4c77934",
+                  "through": 150
+                }
+              }
+            ],
+            "method": "R1-a0-full_hl120",
+            "rule": "H14",
+            "sharpe_threshold": null,
+            "original_seed_replay_rows": 900,
+            "native_library_sha256": "573d57e8a2c6290c2271b99b87afa7a802e796eafc9e8d66aefa0913cbc1616a"
+          }
+        }
+      },
+      "objects": [
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/contract.json",
+          "bytes": 273937,
+          "sha256": "6f5a200fa16331410f096851ffb5f62cf423818bf906546c898af5c15a29f426",
+          "kind": "contract"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/labels/collection.json",
+          "bytes": 965763,
+          "sha256": "3233be64d5542a4e4e72617aff6fafa771269aa0907055834e927d9f182552c1",
+          "kind": "label_collection"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/members.json",
+          "bytes": 9716,
+          "sha256": "8242139fc2c265b730a942133328683e5750c87df97987ca269ace4f7f6cbb00",
+          "kind": "members",
+          "horizon": "morning"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof.json",
+          "bytes": 23079,
+          "sha256": "3c6633cf2cc8c8640d5e312d45ef86a9d54e579e7d843079a90ea6f59a353a35",
+          "kind": "oof",
+          "horizon": "morning"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/development.json",
+          "bytes": 3337808,
+          "sha256": "baa6948aa3f5111472aaa2ed710e6949a3aef9d1716b2829a087c3370467640d",
+          "kind": "development",
+          "horizon": "morning"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/frozen.json",
+          "bytes": 120607,
+          "sha256": "f91f9db87e61371b2c8399a8d4710842ca90cce900626f0198688ae3f14d69da",
+          "kind": "frozen",
+          "horizon": "morning"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/test.json",
+          "bytes": 3806623,
+          "sha256": "70f762e194023428a27651c2c12e33f856a8328abacfc29e19b98a4fc4857a98",
+          "kind": "test",
+          "horizon": "morning"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/complete.json",
+          "bytes": 247,
+          "sha256": "17120def3fc9e5e20168b9872cd7a08f951bbf5bcb788e1336804b5bdd368f68",
+          "kind": "complete",
+          "horizon": "morning"
+        },
+        {
+          "bytes": 3345862,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-2e2daecdec4b64cd-20260918.parquet",
+          "sha256": "f1f0c93fd5be2936d1fd98bd4209faace5263ebdaf862db9b2155e9baabfabc7",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-2e2daecdec4b64cd-20260918"
+        },
+        {
+          "bytes": 3345573,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-2e2daecdec4b64cd-20260919.parquet",
+          "sha256": "45d3b7755bd13018caef90687a0d7d36af152b1742835d0ea4f2a047395b3f29",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-2e2daecdec4b64cd-20260919"
+        },
+        {
+          "bytes": 3345337,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-2e2daecdec4b64cd-20260920.parquet",
+          "sha256": "4ba2f532235300ba1ff509f3ee3ad0e46baf4692fe7cd1e6c61e9aeee8fcbbe4",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-2e2daecdec4b64cd-20260920"
+        },
+        {
+          "bytes": 3345855,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-2e2daecdec4b64cd-20260921.parquet",
+          "sha256": "bdc6efdd63a5363567884c784e3d8b1af4121e4105948ffd3ee02f163fb6b2bd",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-2e2daecdec4b64cd-20260921"
+        },
+        {
+          "bytes": 3345787,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-2e2daecdec4b64cd-20260922.parquet",
+          "sha256": "738ab8928db5593ef4ecfb2e8d0242ce47fb7e0ab6056399abd9308dea15c0b4",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-2e2daecdec4b64cd-20260922"
+        },
+        {
+          "bytes": 3352009,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-f3f937c924b1bf58-20260918.parquet",
+          "sha256": "fa88ebb60546fc2b7d721fa90150ddb00aebf6ee4444a19ded6f11dc385bfbcd",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260918"
+        },
+        {
+          "bytes": 3351970,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-f3f937c924b1bf58-20260919.parquet",
+          "sha256": "877cf480d3a84bd84132cdbe8a7507016f254325b3e23eec81d8a1b406384ea7",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260919"
+        },
+        {
+          "bytes": 3352003,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-f3f937c924b1bf58-20260920.parquet",
+          "sha256": "f983f6415f6bf643d48e8abea23906bf0957e089599133b4355c69da738f6b9b",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260920"
+        },
+        {
+          "bytes": 3351654,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-f3f937c924b1bf58-20260921.parquet",
+          "sha256": "509fa04d227947ae8f2e2463e392cb06f68139b080c7daab69a8133a90bb183d",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260921"
+        },
+        {
+          "bytes": 3351228,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-f3f937c924b1bf58-20260922.parquet",
+          "sha256": "a2b071c04a990055d0724ccdc5ae1e458ec655914b56afe4d7647af9f2b3affc",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-f3f937c924b1bf58-20260922"
+        },
+        {
+          "bytes": 3349146,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-5173e747443d3aa7-20260918.parquet",
+          "sha256": "faebb74d8c941abc31d841f649632030e348616f4f6db0c18fb03af6f499a9d9",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260918"
+        },
+        {
+          "bytes": 3349354,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-5173e747443d3aa7-20260919.parquet",
+          "sha256": "ba6f0297064a62264c4f065dce4f39c13ba6b4c1fd59fef669f34ab0ce100977",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260919"
+        },
+        {
+          "bytes": 3349688,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-5173e747443d3aa7-20260920.parquet",
+          "sha256": "917ea160cf3a95e48c3be8e10b4a99cf9fe436e20b74c0c1a19907c6464297c6",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260920"
+        },
+        {
+          "bytes": 3349467,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-5173e747443d3aa7-20260921.parquet",
+          "sha256": "71ea70379ffc06ea968a2dc8875f78056c61a7eec3c4811c3148ff2c454e7c21",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260921"
+        },
+        {
+          "bytes": 3349489,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-5173e747443d3aa7-20260922.parquet",
+          "sha256": "121491a4ac171152de05b19375d7891415e4e0af4d4e940b89ffc846faf930a1",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-5173e747443d3aa7-20260922"
+        },
+        {
+          "bytes": 3342021,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-629ac830010da9bf-20260918.parquet",
+          "sha256": "4d0a83a3c6e1ed504d4a750a3445d5f40ccfac2255be16f5c10839b3e1f0917f",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-629ac830010da9bf-20260918"
+        },
+        {
+          "bytes": 3340229,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-629ac830010da9bf-20260919.parquet",
+          "sha256": "ed4d485d759fc931fefbff09df69383aa44c035f7f2dcf43f6ebc7c01f54474d",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-629ac830010da9bf-20260919"
+        },
+        {
+          "bytes": 3340780,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-629ac830010da9bf-20260920.parquet",
+          "sha256": "018cb4e2a48667569d339a0ff887666c66a2af14b17253141b2c4e97d3658787",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-629ac830010da9bf-20260920"
+        },
+        {
+          "bytes": 3340123,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-629ac830010da9bf-20260921.parquet",
+          "sha256": "feddc2ea3c0a669862ce771e75bbf3900f729df99c7488a12d989cf81b669864",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-629ac830010da9bf-20260921"
+        },
+        {
+          "bytes": 3340482,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-629ac830010da9bf-20260922.parquet",
+          "sha256": "67ce71fa0705dab5f644d2ba4aa59fec6f11c1c6060a4d053503b4992b6a42cf",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-629ac830010da9bf-20260922"
+        },
+        {
+          "bytes": 3355484,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-210170a794dc5a4c-20260918.parquet",
+          "sha256": "0ac6d97ae751d0c4d338eb9cd991dd0dc11584c2e3db4ba6bf0de0c130350e9e",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260918"
+        },
+        {
+          "bytes": 3355803,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-210170a794dc5a4c-20260919.parquet",
+          "sha256": "00e22ce248c5ef0e5ca1441b511aa3f7647fd30f07abc46c57942dd2d88859de",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260919"
+        },
+        {
+          "bytes": 3355406,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-210170a794dc5a4c-20260920.parquet",
+          "sha256": "280870e8597d6359079e4d4178af355bbc2bd886d413a43535d4fd008adc3db3",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260920"
+        },
+        {
+          "bytes": 3355806,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-210170a794dc5a4c-20260921.parquet",
+          "sha256": "8dbe7cc89cbc70105ce9118b494d9ed8c409974166742946d23746d56dfa9889",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260921"
+        },
+        {
+          "bytes": 3354842,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/oof/morning-t330-210170a794dc5a4c-20260922.parquet",
+          "sha256": "505555521bd9ab37d7f54687c344a5e094ba9fdeb95660bc707fd285df13758f",
+          "horizon": "morning",
+          "kind": "oof_prediction",
+          "id": "morning-t330-210170a794dc5a4c-20260922"
+        },
+        {
+          "bytes": 160496,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-2e2daecdec4b64cd-20260918.txt",
+          "sha256": "d81979c99f866d4dec11a1303d6de0c625dd0d62d557ba6b20fd74a37e193a33",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-2e2daecdec4b64cd-20260918"
+        },
+        {
+          "bytes": 160840,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-2e2daecdec4b64cd-20260919.txt",
+          "sha256": "96032182a1d978be201dc7d67c11cf355ee19db9cb86b848ce76f81f52a45f30",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-2e2daecdec4b64cd-20260919"
+        },
+        {
+          "bytes": 160616,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-2e2daecdec4b64cd-20260920.txt",
+          "sha256": "bd48b67b6f992006859c74c4bb89ca7a9e5fdfe68bf2a676b4cc4df23a68b18e",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-2e2daecdec4b64cd-20260920"
+        },
+        {
+          "bytes": 160576,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-2e2daecdec4b64cd-20260921.txt",
+          "sha256": "8344b781e0aeecc34e4841e3623b31bf5b7a54210ffaf522c152b1fc57062355",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-2e2daecdec4b64cd-20260921"
+        },
+        {
+          "bytes": 160558,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-2e2daecdec4b64cd-20260922.txt",
+          "sha256": "42de68c4cf4720f3ed0826e948ea8b9c84fb067023fe1451729bd6435f51e03c",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-2e2daecdec4b64cd-20260922"
+        },
+        {
+          "bytes": 332046,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-f3f937c924b1bf58-20260918.txt",
+          "sha256": "a43bfd35a3f2c14bc075890778f4addd28bf8773bd13328ae9ca22ae39ccc326",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260918"
+        },
+        {
+          "bytes": 332714,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-f3f937c924b1bf58-20260919.txt",
+          "sha256": "f9960cba2b15a30103c4e8531d04a3a28d6c168c550996547309b398fa6fc342",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260919"
+        },
+        {
+          "bytes": 332456,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-f3f937c924b1bf58-20260920.txt",
+          "sha256": "dd3c316bc16266fb8e57d879c777b648a38e7b71914e0f2a683f14b5a89aa061",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260920"
+        },
+        {
+          "bytes": 332587,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-f3f937c924b1bf58-20260921.txt",
+          "sha256": "91b7d64af5d30947b5427405d136b524d0fd81b5dd45bf85ddeecd5a899975d6",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260921"
+        },
+        {
+          "bytes": 332572,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-f3f937c924b1bf58-20260922.txt",
+          "sha256": "1e99888992048aa8cc32b56766d6c1fedac44742577bc25393f340451b1e9812",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-f3f937c924b1bf58-20260922"
+        },
+        {
+          "bytes": 178243,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-5173e747443d3aa7-20260918.txt",
+          "sha256": "10e1cfc8a533d0ddfdbb63ce93aa02d7c8b386d0fd9b6e78da14039529ebf0d9",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260918"
+        },
+        {
+          "bytes": 178192,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-5173e747443d3aa7-20260919.txt",
+          "sha256": "7bbc1f432a4d5e2f735bd4ec7122bc137342ced1a1d2720114d823811c65bda2",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260919"
+        },
+        {
+          "bytes": 178145,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-5173e747443d3aa7-20260920.txt",
+          "sha256": "ae91060f9acea962301c39f3a94b5d3c9d3cfb84620622da2e1a8b8448fefb22",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260920"
+        },
+        {
+          "bytes": 178133,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-5173e747443d3aa7-20260921.txt",
+          "sha256": "29cb80ea0a105972dd5c0ba5513a6bb11d95ce7c4ef16320e57571e6c6c9c2d3",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260921"
+        },
+        {
+          "bytes": 177968,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-5173e747443d3aa7-20260922.txt",
+          "sha256": "c0dc3deb61ca214e33a3b1d1646b7d02ea04dbacc008eccf4843d66d8534d800",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-5173e747443d3aa7-20260922"
+        },
+        {
+          "bytes": 97827,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-629ac830010da9bf-20260918.txt",
+          "sha256": "08a23987a43e5897d6718d2006014c9be9f3832450a9df434b721df2610b076f",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-629ac830010da9bf-20260918"
+        },
+        {
+          "bytes": 97809,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-629ac830010da9bf-20260919.txt",
+          "sha256": "05123658df5dc495da52a7d1f3fbe096fbfda4ed1a594ad0c23de480fc79d876",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-629ac830010da9bf-20260919"
+        },
+        {
+          "bytes": 97782,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-629ac830010da9bf-20260920.txt",
+          "sha256": "0c0686f6a988d6b05e74ff7d99fd6a2deee0aa98a5a7a4276ddf675cfc235a32",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-629ac830010da9bf-20260920"
+        },
+        {
+          "bytes": 98031,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-629ac830010da9bf-20260921.txt",
+          "sha256": "4ceac937131bd5894311d04ff5bb08b1731010d6b6e01336d5a6b34314edd06c",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-629ac830010da9bf-20260921"
+        },
+        {
+          "bytes": 97956,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-629ac830010da9bf-20260922.txt",
+          "sha256": "4956c0f9ceb8ba829b4a6f599d57e135bb1ccadfbb6d27b79d5dfe9b95279572",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-629ac830010da9bf-20260922"
+        },
+        {
+          "bytes": 395370,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-210170a794dc5a4c-20260918.txt",
+          "sha256": "b1b6442b6df9e717fe0ba96c795a62196495374dcadac832f0ef738c0bf927c2",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260918"
+        },
+        {
+          "bytes": 395380,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-210170a794dc5a4c-20260919.txt",
+          "sha256": "bd2c7dba6260bf978d4b44aa7f5e85e83ee03b705aa26b5b04953c6449819612",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260919"
+        },
+        {
+          "bytes": 395141,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-210170a794dc5a4c-20260920.txt",
+          "sha256": "52288bb30d9a62270a0cc092668184a9aafc8cd76a82b7719536b13d54e26273",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260920"
+        },
+        {
+          "bytes": 395257,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-210170a794dc5a4c-20260921.txt",
+          "sha256": "1d74e4f886eb507321f9f7d76761759c77411ae792e5ae6787e359ccaa9e3915",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260921"
+        },
+        {
+          "bytes": 395597,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/models/morning-t330-210170a794dc5a4c-20260922.txt",
+          "sha256": "5303cd4e1f0f7403d8585b9b0ec6cb9f022556728e112043ce1beefc593afba8",
+          "horizon": "morning",
+          "kind": "final_model",
+          "id": "morning-t330-210170a794dc5a4c-20260922"
+        },
+        {
+          "bytes": 53263317,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/test/morning-seen.parquet",
+          "sha256": "204fe2e6fd0501134f09b7b1b9f5990313d9f000c4af37ccbf43d87283e35514",
+          "horizon": "morning",
+          "kind": "test_prediction",
+          "id": "seen"
+        },
+        {
+          "bytes": 28395197,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/test/morning-unseen.parquet",
+          "sha256": "2991dd7b1714ccc959c9d7d4b5c52b1ede9d8d8bc665d072b182d4530492cfd2",
+          "horizon": "morning",
+          "kind": "test_prediction",
+          "id": "unseen"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/members.json",
+          "bytes": 63625,
+          "sha256": "809ba81572df90151db47800bca3dc094367f9e63c58f4592c5e86bbbc399ee5",
+          "kind": "members",
+          "horizon": "close"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof.json",
+          "bytes": 23389,
+          "sha256": "b65e120401ee05bf0d2b5502eb53b91ecd55365809a24a35d28d8702fcc97f2e",
+          "kind": "oof",
+          "horizon": "close"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/development.json",
+          "bytes": 3336271,
+          "sha256": "d4b0cb889c7303d7f78b75bbd5912c8aac23598dabe84b4319d637ef51f9acc8",
+          "kind": "development",
+          "horizon": "close"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/frozen.json",
+          "bytes": 120692,
+          "sha256": "497192bdc26a84823b1dd5dd67750a141935528a22df29f0769b908307e4a4ff",
+          "kind": "frozen",
+          "horizon": "close"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/test.json",
+          "bytes": 3800093,
+          "sha256": "2be74df261d007754b35ab4f299b41106a9f26d12f4ffecfbc6e7be356922205",
+          "kind": "test",
+          "horizon": "close"
+        },
+        {
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/complete.json",
+          "bytes": 150,
+          "sha256": "859fad57d6a1dfd6e9e54f01f5f070c063fa2ff02d46f37e33a29e46f8c063d0",
+          "kind": "complete",
+          "horizon": "close"
+        },
+        {
+          "bytes": 3349395,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-25e7bb54e67326f1-20260918.parquet",
+          "sha256": "95be635f7d34f00b33af40ab77bca4a74c0fab5069559f6af7cabec52d6c8166",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260918"
+        },
+        {
+          "bytes": 3347780,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-25e7bb54e67326f1-20260919.parquet",
+          "sha256": "c9579ec124b137c39466fcf31ee906848d8ed309e3ce3a7e1c080b41b16dfba7",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260919"
+        },
+        {
+          "bytes": 3346977,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-25e7bb54e67326f1-20260920.parquet",
+          "sha256": "e8ed33c674a0dea7b468b301f83bd7223b7e94686c41a4d26815ea91db301217",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260920"
+        },
+        {
+          "bytes": 3347502,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-25e7bb54e67326f1-20260921.parquet",
+          "sha256": "b315726c55beb09537f78f856962039258b00df91715823013198592d8cb1b60",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260921"
+        },
+        {
+          "bytes": 3346627,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-25e7bb54e67326f1-20260922.parquet",
+          "sha256": "484d2ea10608d532f1f232dc31e13dae70bbe31ef776ee365e2e81ea0159e810",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-25e7bb54e67326f1-20260922"
+        },
+        {
+          "bytes": 3335388,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5173e747443d3aa7-20260918.parquet",
+          "sha256": "f7158486775ae386e34c2c3938e288c3a45649738569420bfcf722223d10c1c7",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5173e747443d3aa7-20260918"
+        },
+        {
+          "bytes": 3336119,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5173e747443d3aa7-20260919.parquet",
+          "sha256": "95a41132211e30c3c20c2c1920939032256d75fce36b4c6c1f05f0b13dffa214",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5173e747443d3aa7-20260919"
+        },
+        {
+          "bytes": 3335816,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5173e747443d3aa7-20260920.parquet",
+          "sha256": "1a6e5f5609147b954c1d5f2073fbff9078ddf078da0a823e37e6a44a731763df",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5173e747443d3aa7-20260920"
+        },
+        {
+          "bytes": 3336498,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5173e747443d3aa7-20260921.parquet",
+          "sha256": "658e0b98ac903f62fa395026c518275d19fa6594b5287db8d7b36737c299c265",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5173e747443d3aa7-20260921"
+        },
+        {
+          "bytes": 3335937,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5173e747443d3aa7-20260922.parquet",
+          "sha256": "7f46f4705bdf17d51ae06206836d602643cc130993f62cc83e869cf55f62c241",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5173e747443d3aa7-20260922"
+        },
+        {
+          "bytes": 3344864,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-8163f87e94fa3686-20260918.parquet",
+          "sha256": "7857ef48c7fd6d41773bed647c0a1d7f5e93541c356be6033e4bee141e80a90b",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260918"
+        },
+        {
+          "bytes": 3345702,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-8163f87e94fa3686-20260919.parquet",
+          "sha256": "3e4505fa9c16fc161cd5ddcbba954d3932307f7d08de62a981b1e957235c7617",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260919"
+        },
+        {
+          "bytes": 3346257,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-8163f87e94fa3686-20260920.parquet",
+          "sha256": "3a7147175d63632660d2e75c1d6e65e9433664b00e91d5a12284cd39d8e4071a",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260920"
+        },
+        {
+          "bytes": 3345954,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-8163f87e94fa3686-20260921.parquet",
+          "sha256": "7ac029e1261e6c8c41befbae2ad6e56836cc1c7f8baa8aec3bf61c25eb82f4fb",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260921"
+        },
+        {
+          "bytes": 3347598,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-8163f87e94fa3686-20260922.parquet",
+          "sha256": "c48eec2016c75103a9e3758a7cdf4ae275ce5e137b63e2bb8aac31e0d04f4db6",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-8163f87e94fa3686-20260922"
+        },
+        {
+          "bytes": 3334078,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5de07a79d06558f5-20260918.parquet",
+          "sha256": "b760d320ee6941fb30c42fd169789ec25900dc90f895d085796c6e4c80b88c8a",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5de07a79d06558f5-20260918"
+        },
+        {
+          "bytes": 3335082,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5de07a79d06558f5-20260919.parquet",
+          "sha256": "3ac602739feb7772b733f03e15cdf50d77e389eb1c612c9bedea3b020730a031",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5de07a79d06558f5-20260919"
+        },
+        {
+          "bytes": 3334327,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5de07a79d06558f5-20260920.parquet",
+          "sha256": "f049d225e8e28c5b34541d906081e43536416ecd4725ccc8e378e579a647335a",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5de07a79d06558f5-20260920"
+        },
+        {
+          "bytes": 3334622,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5de07a79d06558f5-20260921.parquet",
+          "sha256": "244499298a42978bd3865241dffd4258b22b17a0e602cef639e824cd8e6b2361",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5de07a79d06558f5-20260921"
+        },
+        {
+          "bytes": 3335001,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-5de07a79d06558f5-20260922.parquet",
+          "sha256": "2d6461f8fd5bab5628b1e02a87c27c643b1963269010c1f07c0ae9d3bdef26aa",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-5de07a79d06558f5-20260922"
+        },
+        {
+          "bytes": 3333561,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-629ac830010da9bf-20260918.parquet",
+          "sha256": "b7a7a0580b4a4695081ee37eccb45b3ce125c508a8d143018211377a080d43dc",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-629ac830010da9bf-20260918"
+        },
+        {
+          "bytes": 3333362,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-629ac830010da9bf-20260919.parquet",
+          "sha256": "18d2b3f56922a22436e5bb8a79f070e838c9be155a5544e7b696d53f5720699c",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-629ac830010da9bf-20260919"
+        },
+        {
+          "bytes": 3333287,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-629ac830010da9bf-20260920.parquet",
+          "sha256": "a45a65183d28dc98e065ebe00f3b776cb7278184cb7a669bdf81b3ceb68a9fa9",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-629ac830010da9bf-20260920"
+        },
+        {
+          "bytes": 3333312,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-629ac830010da9bf-20260921.parquet",
+          "sha256": "cf28e98471d08c0e0489783a859a9ed3e4cca8b7e4d54f3968742f0f142dced7",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-629ac830010da9bf-20260921"
+        },
+        {
+          "bytes": 3333556,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/oof/close-t330-629ac830010da9bf-20260922.parquet",
+          "sha256": "c800a61127e7fdb26cc047d4cf1d8c5984cb5d1d06ce99a6a0c1a42c09416f6e",
+          "horizon": "close",
+          "kind": "oof_prediction",
+          "id": "close-t330-629ac830010da9bf-20260922"
+        },
+        {
+          "bytes": 640450,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-25e7bb54e67326f1-20260918.txt",
+          "sha256": "d224b943504e66661bd04e0f0eaf2b2a6a99a6c7948cdda0d35abcc1583764e7",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260918"
+        },
+        {
+          "bytes": 642715,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-25e7bb54e67326f1-20260919.txt",
+          "sha256": "3aaeb29964d80f975b2b9c8b9a2140ac9f82c68127ccb3324984f392dccb9132",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260919"
+        },
+        {
+          "bytes": 640786,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-25e7bb54e67326f1-20260920.txt",
+          "sha256": "1ff5d2521e173497587eae5e7d2dcb44d5bc661e8c1e6fe7de1639596bab3139",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260920"
+        },
+        {
+          "bytes": 637289,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-25e7bb54e67326f1-20260921.txt",
+          "sha256": "68777ffd5e6f1857d409552164743b78837cdc2c089b819ce82ccd4bf54dd013",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260921"
+        },
+        {
+          "bytes": 649839,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-25e7bb54e67326f1-20260922.txt",
+          "sha256": "c49d8cc51f5f55cf193f8a3360f4272368730d4584c7a39521c39603417c1a42",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-25e7bb54e67326f1-20260922"
+        },
+        {
+          "bytes": 183210,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5173e747443d3aa7-20260918.txt",
+          "sha256": "d61d8b2b0028bce034b11344709eb7703e97d9557f82b0cf2689ba94177fc162",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5173e747443d3aa7-20260918"
+        },
+        {
+          "bytes": 183246,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5173e747443d3aa7-20260919.txt",
+          "sha256": "d8b37d77999b9c7ad1437078014786ddf3eba32f2de5514bbaf850af1c948d91",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5173e747443d3aa7-20260919"
+        },
+        {
+          "bytes": 183273,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5173e747443d3aa7-20260920.txt",
+          "sha256": "0be68a009a8c09c2f446ff98a5292fd4b34e30d590e0acc1706bb9bf13fb4559",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5173e747443d3aa7-20260920"
+        },
+        {
+          "bytes": 183393,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5173e747443d3aa7-20260921.txt",
+          "sha256": "d70eb949986ff288252b1198e416bd1c5494b12a8387fc80b1af9322da1c8673",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5173e747443d3aa7-20260921"
+        },
+        {
+          "bytes": 183022,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5173e747443d3aa7-20260922.txt",
+          "sha256": "eb5bd86a4ea69747a766fad2b9bb066844167040f649980ed335153eb8ab7b04",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5173e747443d3aa7-20260922"
+        },
+        {
+          "bytes": 445026,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-8163f87e94fa3686-20260918.txt",
+          "sha256": "86c08544ef5216a02354acd1172aff2501fa96fa8ee8c2a151eb63deb3f0b21e",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260918"
+        },
+        {
+          "bytes": 449121,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-8163f87e94fa3686-20260919.txt",
+          "sha256": "0a4853a6f27e7e329419b6669945cecd274d9706afcc7fe0f8653f537dfecebc",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260919"
+        },
+        {
+          "bytes": 453203,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-8163f87e94fa3686-20260920.txt",
+          "sha256": "4e90999210d015873d0006968e72e7a7882441469571e5b03a04ed800a39c353",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260920"
+        },
+        {
+          "bytes": 451895,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-8163f87e94fa3686-20260921.txt",
+          "sha256": "9b20afcde5914028c38bc61175b38d2ea2856a81f2dcb4478e663f3fd8bf3702",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260921"
+        },
+        {
+          "bytes": 449491,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-8163f87e94fa3686-20260922.txt",
+          "sha256": "98c3314810aa9ecbf5c05a6496cf9c47edb9c0922f1cbe415fb5bab46b6a23ad",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-8163f87e94fa3686-20260922"
+        },
+        {
+          "bytes": 195101,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5de07a79d06558f5-20260918.txt",
+          "sha256": "a6a248fefb295bbfc3b878142867fdd54a0cadff9c40b71406309232f8c84150",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5de07a79d06558f5-20260918"
+        },
+        {
+          "bytes": 194895,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5de07a79d06558f5-20260919.txt",
+          "sha256": "47cd6d147ca415a1b348779cfcbf67927772d8cd88784a8c6441867c252e04ff",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5de07a79d06558f5-20260919"
+        },
+        {
+          "bytes": 195273,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5de07a79d06558f5-20260920.txt",
+          "sha256": "372bd6815a3f85f998c531becd0bd9f3fcdc1fdd1a93f353cc232eaf2d99bb21",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5de07a79d06558f5-20260920"
+        },
+        {
+          "bytes": 195044,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5de07a79d06558f5-20260921.txt",
+          "sha256": "64ad3d797ba7cb596cd6d69c0ba5170394474327e20597e0fb27d0c3b1b325e1",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5de07a79d06558f5-20260921"
+        },
+        {
+          "bytes": 195214,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-5de07a79d06558f5-20260922.txt",
+          "sha256": "a3fa0f421276635364fd02a3a932af74621c551098ada5f786c28214a7af3056",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-5de07a79d06558f5-20260922"
+        },
+        {
+          "bytes": 200600,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-629ac830010da9bf-20260918.txt",
+          "sha256": "4f846a00ef9bc56634147418bc308e72a8d3593a2a400964bd6d56009feab1d7",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-629ac830010da9bf-20260918"
+        },
+        {
+          "bytes": 200451,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-629ac830010da9bf-20260919.txt",
+          "sha256": "af670ed73ee3ef555ae81c5f079ef5bae8dc21457c384b905c800c85cb7a1418",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-629ac830010da9bf-20260919"
+        },
+        {
+          "bytes": 200686,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-629ac830010da9bf-20260920.txt",
+          "sha256": "fe588f7928ce6d1b3a607d0e5920bdb60f3c4101ccd9309ecf53150801f958ae",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-629ac830010da9bf-20260920"
+        },
+        {
+          "bytes": 200539,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-629ac830010da9bf-20260921.txt",
+          "sha256": "5b0d1e687348ff0c19f8d4622a9ed37cbf96b1431eaf716cfbbd4f4c770df1bc",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-629ac830010da9bf-20260921"
+        },
+        {
+          "bytes": 200720,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/models/close-t330-629ac830010da9bf-20260922.txt",
+          "sha256": "6acdd4518f2b33b2991eac36f54128e959f7fc98129a3476df4a78239d2d13e2",
+          "horizon": "close",
+          "kind": "final_model",
+          "id": "close-t330-629ac830010da9bf-20260922"
+        },
+        {
+          "bytes": 53132353,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/test/close-seen.parquet",
+          "sha256": "2f1322262370afc4473d38f4f422146db4eea7cb04975d37a53af213e7ef737d",
+          "horizon": "close",
+          "kind": "test_prediction",
+          "id": "seen"
+        },
+        {
+          "bytes": 28388854,
+          "path": "/home/wenjie/hdd-store/outputs/sirui/sse340-20261108-01a1bb92/search/close-h14/test/close-unseen.parquet",
+          "sha256": "8180715a8c490c06a4b2a8f4b2aca2554bd1bec6c5240f38fa29aeedaeb446af",
+          "horizon": "close",
+          "kind": "test_prediction",
+          "id": "unseen"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "content/daily/2026-11-13.md",
+      "sha256": "542d25bfebf06f57cada793a31d02adbc093f3c47706a96f1b0b6369ef6ba5fb",
+      "bytes": 2671
+    },
+    {
+      "path": "content/daily/2026-11-13.show.html",
+      "sha256": "5b343992e0be28269406643fdcac30a8670dfb7e489943011109218e8e60f0c1",
+      "bytes": 10445654
+    },
+    {
+      "path": "site/fonts/LibreBaskerville-Regular.woff2",
+      "sha256": "3d9f385ed612c054f29fcc2ab443bdfc2540fc8fa7c53a44946895ae63d618ee",
+      "bytes": 36928
+    },
+    {
+      "path": "site/fonts/NotoSerifSC-Bold.woff2",
+      "sha256": "57b235a8fe4c939bbb1a6f89d46a2be9189a8746912b5339200fa45bea5dc756",
+      "bytes": 5901960
+    }
+  ]
+}

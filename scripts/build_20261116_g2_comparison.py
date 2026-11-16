@@ -101,6 +101,8 @@ def main():
     parser.add_argument('--input', type=Path, required=True)
     parser.add_argument('--sha256', required=True)
     args = parser.parse_args()
+    from frozen_baseline import protect_outputs
+    protect_outputs([ROOT / 'content/daily/2026-11-16.show.html', ROOT / 'content/daily/2026-11-16.md', ASSET])
     raw = args.input.read_bytes()
     if hashlib.sha256(raw).hexdigest() != args.sha256:
         raise ValueError('G2 source hash differs')

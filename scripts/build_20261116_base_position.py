@@ -306,6 +306,8 @@ def main():
     parser.add_argument('--page', type=Path, default=PAGE)
     parser.add_argument('--note', type=Path, default=NOTE)
     args = parser.parse_args()
+    from frozen_baseline import protect_outputs
+    protect_outputs([args.page, args.note])
     sources = {p.resolve() for p in (args.source, args.source_note, *SOURCE_HASHES)}
     targets = {args.page.resolve(), args.note.resolve()}
     if sources & targets or len(targets) != 2:
