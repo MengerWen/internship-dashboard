@@ -107,3 +107,25 @@ def test_protected_target_is_rejected_before_opening_input():
         '--published', '2026-11-16T15:17:43+08:00'], capture_output=True, text=True)
     assert output.returncode != 0
     assert 'protected 11.9 sources' in output.stderr
+
+
+def test_three_fractions_keep_separate_trading_and_shared_base(document):
+    net = deepcopy(document)
+    net.update(schema=build.NET_SCHEMA, fees=dict(buy=.9e-4, sell=5.9e-4),
+               trade_fractions=[.1, .2, .3], trading={})
+    net['series'] = {}
+    for fraction in net['trade_fractions']:
+        suffix = '' if fraction == .1 else f'-t{fraction * 100:g}'
+        for key, rows in document['series'].items():
+            net['series'][key + suffix] = rows
+            net['trading'][key + suffix] = [[[4., .4, .002956], [6., -.6, .003726]] for _ in rows]
+    packed = build.pack(net)
+    assert packed['tradeFractions'] == [10, 20, 30]
+    assert len(packed['series']) == len(packed['trading']) == 192
+    page = build.render(build.template_text(build.OLD_PAGE), packed, 'https://example.com')
+    assert page.count('name="tradeFraction"') == 1
+    for value in (10, 20, 30):
+        assert f'<option value="{value}">{value}%</option>' in page
+    del net['series']['index-combined-morning-L-5-t30']
+    with pytest.raises(ValueError, match='configurations'):
+        build.pack(net)

@@ -43,8 +43,11 @@ const get = id => {
 };
 get('csi2000-market-data').textContent = encoded;
 get('signal-mode').value = 'rankic';
-const controls = {weight: 'index', sorting: 'combined', strategy: 'L', q: '5', phase: 'all'};
-get('filters').elements = {phase: {set value(value) { controls.phase = value; }}};
+const controls = {weight: 'index', sorting: 'combined', strategy: 'L', q: '5', phase: 'all', tradeFraction: '10'};
+get('filters').elements = {
+  phase: {set value(value) { controls.phase = value; }},
+  tradeFraction: {options: ['10', '20', '30'].map(value => ({value}))}
+};
 const metrics = ['mean', 'cumulative', 'sharpe', 'sharpeThrough', 'drawdown',
   'calmar', 'volatility', 'winRate', 'payoff', 't'];
 const bodies = ['development', 'seen', 'unseen'].map(phase => ({
@@ -89,6 +92,8 @@ async function main() {
   get('fill-status').hidden = true;
   await main();
   let checks = 0;
+  for (const fraction of data.tradeFractions) {
+  controls.tradeFraction = String(fraction);
   for (const weight of ['index', 'equal']) {
     for (const sorting of ['combined', 'separate']) {
       for (const strategy of ['L', 'A']) {
@@ -99,7 +104,8 @@ async function main() {
             const html = get('return-chart').innerHTML;
             assert.equal((html.match(/class="series-line /g) || []).length, 4);
             assert.equal((html.match(/class="pool-line /g) || []).length, view === 'wealth' ? 4 : 0);
-            const key = [weight, sorting, 'morning', strategy, q].join('-');
+            const key = [weight, sorting, 'morning', strategy, q].join('-') +
+              (fraction === 10 ? '' : '-t' + fraction);
             const start = 484;
             const lane = 0;
             const group = 0;
@@ -130,6 +136,7 @@ async function main() {
             const sd = Math.sqrt(returns.reduce((sum, value) => sum + (value - mean) ** 2, 0) / (returns.length - 1));
             close(numeric(row.querySelector('[data-metric="sharpe"]')), mean / sd * Math.sqrt(252));
             assert.match(get('table-status').textContent, view === 'wealth' ? /绝对收益/ : /超额收益/);
+            assert.ok(get('table-status').textContent.includes('做 T ' + fraction + '%'));
             assert.match(get('score-note').textContent, view === 'wealth' ? /整体日收益/ : /做 T 增量/);
             const lastA = rows[565][group], lastB = base[565][group];
             const initial = data.initial[weight][group];
@@ -142,6 +149,7 @@ async function main() {
         }
       }
     }
+  }
   }
   controls.phase = 'unseen';
   get('filters').handlers.change();

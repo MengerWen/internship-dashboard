@@ -67,10 +67,16 @@ def pack(results):
             or (dates[0], dates[-1]) != ('2024-07-01', '2026-10-30') or stages != expected
             or not isfinite(nominal) or nominal <= 0):
         raise ValueError('Invalid market attribution calendar or nominal capital')
-    if (set(results['series']) != CONFIGURATIONS or set(results['base']) != set(WEIGHTS)
+    fractions = results.get('trade_fractions', [.1])
+    if (fractions not in ([.1], [.1, .2, .3])):
+        raise ValueError('Invalid T fraction coverage')
+    configurations = {key + ('' if fraction == .1 else f'-t{fraction * 100:g}')
+                      for fraction in fractions for key in CONFIGURATIONS}
+    if (set(results['series']) != configurations or set(results['base']) != set(WEIGHTS)
             or set(results['initial']) != set(WEIGHTS)):
         raise ValueError('Missing market configurations')
-    result = dict(dates=dates, stages=[STAGES[s][0] for s in stages], base={}, initial={}, series={})
+    result = dict(dates=dates, stages=[STAGES[s][0] for s in stages], base={}, initial={}, series={},
+                  tradeFractions=[round(fraction * 100) for fraction in fractions])
     for weight in WEIGHTS:
         initial = results['initial'][weight]
         if len(initial) != 2 or any(not isfinite(x) or x <= 0 for x in initial) or not isclose(sum(initial), nominal):
@@ -95,7 +101,7 @@ def pack(results):
             values.append([round(sh / nominal, 12), round(sz / nominal, 12), n_sh, n_sz, f_sh, f_sz])
         result['series'][key] = values
     if results['schema'] == NET_SCHEMA:
-        if results.get('fees') != dict(buy=.9e-4, sell=5.9e-4) or set(results['trading']) != CONFIGURATIONS:
+        if results.get('fees') != dict(buy=.9e-4, sell=5.9e-4) or set(results['trading']) != configurations:
             raise ValueError('Missing actual-fill cost or trading-return contract')
         result['fees'] = results['fees']
         result['trading'] = {}
@@ -165,6 +171,10 @@ def comparison_markup(source):
         '<option value="separate">分市场排序</option></select></label>\n      '
     )
     view = replace(view, '<label>组合 <select', selectors + '<label>组合 <select')
+    view = replace(view, '<label>阶段 <select',
+                   '<label>做 T 比例 <select name="tradeFraction">'
+                   '<option value="10">10%</option><option value="20">20%</option>'
+                   '<option value="30">30%</option></select></label>\n      <label>阶段 <select')
     view = replace(view, chunk(view, '<div class="figure-controls"><div class="index-method-group"',
                               '<button type="button" class="demo-button is-emphasis" data-enlarge="returns"'),
                    '<div class="figure-controls"><div class="index-method-group" role="group" aria-label="收益视图">'
@@ -205,7 +215,7 @@ def comparison_script(source):
     helpers += chunk(source, '  function detailsTable(', '  function dateNote(')
     selection = chunk(source, '  function refreshSelection()', '  function choose(')
     previous = "const context = kind === 'returns' ? [isExcess(), activeMethod, portfolio, feeBasis, focusedLanes.returns] : [focusedLanes.signal];"
-    selection = replace(selection, previous, "const context = [weight, sorting, view, portfolio, signalMode.value, focusedLanes[kind]];")
+    selection = replace(selection, previous, "const context = [weight, sorting, tradeFraction, view, portfolio, signalMode.value, focusedLanes[kind]];")
     selection = replace(selection, '[activeIndex, selection.index, pinned, ...context]',
                         '[selection.index, pinned, ...context]')
     script = SCRIPT.read_text(encoding='utf-8')
@@ -239,7 +249,7 @@ def render(source, data, report_url):
   <h2 id="contract-heading">样本与成交口径</h2>
   <ul class="contract-notes">
     <li>底仓使用中证 2000 沪深成分，按指数权重或等权建仓。名单和权重齐备后使用截至前一交易日的快照调仓。</li>
-    <li>入选股票的做 T 额度为该股昨收底仓市值的 10%。多空各取 q/2，亏盈按当日盯市计入，周转资金零利率。实际成交按买入 0.9 bp、卖出 5.9 bp 扣税费，底仓建仓与调仓同样计费。</li>
+    <li>入选股票的做 T 额度可选该股昨收底仓市值的 10%、20%、30%，各档独立按库存与顺延规则回放。多空各取 q/2，亏盈按当日盯市计入，周转资金零利率。实际成交按买入 0.9 bp、卖出 5.9 bp 扣税费，底仓建仓与调仓同样计费。</li>
     <li>沪深曲线按证券所属市场归集交易现金及持仓市值。初始底仓按两市建仓金额分配，调仓买卖的现金与持仓变动相抵。两市的金额相加可还原合并组合。</li>
   </ul>
 </section>
@@ -275,7 +285,7 @@ summary: "在同一张图比较中证2000沪深底仓做T结果，分段成绩�
 
 沪市和深市使用已冻结的 11:30、收盘两个模型集成。评价覆盖 566 个交易日，其中开发段 OOF 308 日、已看测试 176 日、未看测试 82 日。
 
-在中证 2000 沪深成分上分别使用指数权重和等权底仓。可切换沪深合并排序或分市场排序、纯多 L 或多空 A，以及四档选股比例。入选股票按昨收底仓市值的 10% 做 T，增量损益逐日盯市。实际买入按成交额扣 0.9 bp，卖出扣 5.9 bp，底仓建仓与调仓同样计费。
+在中证 2000 沪深成分上分别使用指数权重和等权底仓。可切换沪深合并排序或分市场排序、纯多 L 或多空 A，以及四档选股比例。做 T 比例可选每只入选股票昨收底仓市值的 **10%、20%、30%**，三档分别按实际库存、部分成交和跨日顺延回放，共192组配置；收益曲线和分段成绩同步切换。增量损益逐日盯市。实际买入按成交额扣 0.9 bp，卖出扣 5.9 bp，底仓建仓与调仓同样计费。
 
 **HTML 展示版** 在同一张图比较沪市和深市的两个周期，可切换绝对与超额收益。收益图下方的「分段集成成绩」随口径和筛选更新，再下方为累计 IC／RankIC。绝对收益包含底仓和做 T，超额按做 T 增量计算；市场曲线按该市场的初始底仓金额归一化。 [11.16 研究报告]({report_url})
 

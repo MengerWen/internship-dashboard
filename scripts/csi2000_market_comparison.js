@@ -36,6 +36,7 @@
   let portfolio;
   let weight;
   let sorting;
+  let tradeFraction = '10';
   let phaseChoice = 'all';
   let view = 'wealth';
   let zoom = null;
@@ -48,6 +49,8 @@
   const returnLabel = () => isEnhancement() ? '超额收益' : '绝对收益';
   const feeLabel = () => data.fees ? '扣税费后' : '费用前';
   const hasPoolReference = () => !isEnhancement();
+  const configurationKey = cycle => [weight, sorting, cycle, ...portfolio].join('-') +
+    (tradeFraction === '10' ? '' : '-t' + tradeFraction);
 
   function moments() {
     return { n: 0, mean: 0, m2: 0, wins: 0, losses: 0, gain: 0, loss: 0 };
@@ -73,7 +76,7 @@
   }
 
   function timelineFor() {
-    const byLane = series.map(({cycle}) => data.series[[weight, sorting, cycle, ...portfolio].join('-')]);
+    const byLane = series.map(({cycle}) => data.series[configurationKey(cycle)]);
     const staged = {};
     const dateRanges = {};
     const all = series.map(moments);
@@ -108,7 +111,7 @@
         const b0 = start ? bases[start - 1][group] : capital;
         const relative = isEnhancement() ? (a - a0) / capital : (b0 + a0 > 0 ? (b + a) / (b0 + a0) : null);
         const local = staged[phase][lane];
-        const tradeKey = [weight, sorting, series[lane].cycle, ...portfolio].join('-');
+        const tradeKey = configurationKey(series[lane].cycle);
         const tradeAmounts = data.trading?.[tradeKey]?.[at]?.[group];
         const tradeReturn = tradeAmounts?.[0] > 0 ? (tradeAmounts[1] - tradeAmounts[2]) / tradeAmounts[0] : null;
         add(local.trade, tradeReturn);
@@ -149,7 +152,7 @@
 
   function dateNote(point, index, kind) {
     const lane = focusedLanes[kind];
-    const label = kind === 'returns' ? ' · ' + portfolio.join('') + ' · 累计' + returnLabel() : '';
+    const label = kind === 'returns' ? ' · ' + portfolio.join('') + ' · 做 T ' + tradeFraction + '% · 累计' + returnLabel() : '';
     const head = '<div class="note-head"><div class="note-date"><time datetime="' + point.date + '">' +
       point.date + '</time><span>' + phases[point.phase].label + label + '</span></div>' +
       (pinned ? '<button class="demo-button note-dismiss" type="button" data-close-note>关闭</button>' : '') +
@@ -220,7 +223,7 @@
     const title = '中证 2000 · ' + (weight === 'index' ? '指数权重' : '等权') +
       ' · ' + (sorting === 'combined' ? '沪深合并排序' : '分市场排序');
     get('index-view-label').textContent = title;
-    get('table-status').textContent = portfolio.join('') + ' · ' +
+    get('table-status').textContent = portfolio.join('') + ' · 做 T ' + tradeFraction + '% · ' +
       (phaseChoice === 'all' ? '全部阶段' : phases[phaseChoice].label) + ' · ' + returnLabel() + ' · ' + feeLabel();
     get('score-note').textContent = '交易日均净收益：每日按实际进场金额加权批次净收益率，再对有交易日期等权平均；跨日按进场日归属。其余指标按下述账户口径计算。' + (isEnhancement()
       ? '日超额为当日做 T 增量损益除以该市场昨日底仓价值。分段累计超额和回撤按该市场初始底仓折算，回撤单位为百分点。胜率统计做 T 增量为正的天数占比。'
@@ -248,6 +251,7 @@
     const state = new FormData(form);
     weight = state.get('weight');
     sorting = state.get('sorting');
+    tradeFraction = state.get('tradeFraction');
     portfolio = [state.get('strategy'), state.get('q')];
     const phase = state.get('phase');
     if (phase !== phaseChoice) {
@@ -256,7 +260,7 @@
       selection = null;
       pinned = false;
     }
-    const title = '中证 2000 · 全程累计' + returnLabel() + ' · ' + feeLabel();
+    const title = '中证 2000 · 做 T ' + tradeFraction + '% · 全程累计' + returnLabel() + ' · ' + feeLabel();
     get('compare-heading').textContent = title;
     panels.returns.svg.setAttribute('aria-label', title);
     for (const button of optionButtons) button.setAttribute('aria-pressed', String(button.dataset.returnView === view));
@@ -270,6 +274,9 @@
   try {
     const bytes = Uint8Array.from(atob(get('csi2000-market-data').textContent), letter => letter.charCodeAt(0));
     data = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).json();
+    for (const option of form.elements.tradeFraction.options) {
+      option.disabled = !data.tradeFractions.includes(Number(option.value));
+    }
   } catch {
     get('fill-status').hidden = false;
     get('fill-status').textContent = '回放数据加载失败。请重新打开展示，或查看研究报告。';
