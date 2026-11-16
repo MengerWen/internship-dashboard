@@ -38,12 +38,32 @@ class DailyShowSourceTests(unittest.TestCase):
     def test_nested_show_source_preserves_route_and_runtime_prefix(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            builder, content = self.build_fixture(root,'2026-11.04.show/.html')
-            source=content/'daily/2026-11.04.show/.html'
+            builder, content = self.build_fixture(root,'nested/report.html')
+            source=content/'daily/nested/report.html'
             source.parent.mkdir()
             source.write_text('<html><head></head><body>沪市完整评价</body></html>',encoding='utf-8')
             with patch('build.ROOT',root), patch('build.CONTENT_DIR',content):
                 entries=builder.build_daily()
-            self.assertEqual(entries[0]['show_path'],'daily/2026-11.04.show/.html')
-            result=root/'out/daily/2026-11.04.show/.html'
+            self.assertEqual(entries[0]['show_path'],'daily/nested/report.html')
+            result=root/'out/daily/nested/report.html'
             self.assertIn('../../vendor/mathjax/tex-svg.js',result.read_text(encoding='utf-8'))
+
+    def test_flat_show_files_use_default_routes_and_runtime_prefix(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            content = root/'content'
+            daily = content/'daily'
+            daily.mkdir(parents=True)
+            dates = ('2026-11-04', '2026-11-09', '2026-11-16')
+            for day in dates:
+                (daily/f'{day}.md').write_text('---\ntitle: 汇报\nstage: model\n---\n正文', encoding='utf-8')
+                (daily/f'{day}.show.html').write_text('<html><head></head><body>展示</body></html>', encoding='utf-8')
+            builder = Builder()
+            builder.out_dir = root/'out'
+            with patch('build.ROOT',root), patch('build.CONTENT_DIR',content):
+                entries = builder.build_daily()
+            self.assertEqual({entry['show_path'] for entry in entries}, {f'daily/{day}.show.html' for day in dates})
+            for day in dates:
+                page = root/f'out/daily/{day}.show.html'
+                self.assertIn('../vendor/mathjax/tex-svg.js', page.read_text(encoding='utf-8'))
+            self.assertFalse(any('缺少对应主日报' in warning for warning in builder.warnings))

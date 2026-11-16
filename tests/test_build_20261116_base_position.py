@@ -56,6 +56,8 @@ def test_original_comparison_layout_and_data_contract(document):
     assert '__CHART_HELPERS__' not in page and 'isExcess()' not in page
     assert 'activeIndex' not in page and 'feeBasis' not in page
     assert len(page.encode()) <= build.ASSET_LIMIT
+    assert 'url("../fonts/LibreBaskerville-Regular.woff2")' in page
+    assert 'url("../../site/fonts/LibreBaskerville-Regular.woff2")' in page
     script = re.search(r'<script>\s*(.*?)\s*</script>', page, re.S).group(1)
     checked = subprocess.run(['node', '--check', '-'], input=script, encoding='utf-8', capture_output=True)
     assert checked.returncode == 0, checked.stderr
@@ -66,7 +68,7 @@ def test_original_comparison_layout_and_data_contract(document):
 def test_market_values_and_note(document):
     note = build.render_note(build.template_text(build.OLD_NOTE), 'https://example.com',
                              published='2026-11-16T15:17:43+08:00')
-    assert 'show_source: 2026-11-16.show/.html' in note
+    assert 'show_source: 2026-11-16.show.html' in note
     assert 'published: "2026-11-16T15:17:43+08:00"' in note
     assert '原登记口径' not in note and '历史对照' not in note
     for field in ('initial', 'base', 'series'):

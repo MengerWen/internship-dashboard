@@ -15,7 +15,7 @@ from statistics import fmean
 SERIES = (('wenjie', 'morning'), ('wenjie', 'close'), ('wangly', 'morning'), ('wangly', 'close'))
 PORTFOLIOS = tuple(f'{side}{q}' for side in ('L', 'A') for q in (1, 5, 10, 20))
 STAGES = {'development': '开发 OOF', 'seen': '已看测试', 'unseen': '未看测试'}
-REPORT_PAGE = Path('content/daily/2026-11-09.show/.html')
+REPORT_PAGE = Path('content/daily/2026-11-09.show.html')
 DAILY_NOTE = Path('content/daily/2026-11-09.md')
 ASSET_LIMIT = 25 << 20
 

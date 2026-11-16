@@ -19,8 +19,8 @@ from build_20261109_fill_rules import ASSET_LIMIT, encode_data, replace
 
 ROOT = Path(__file__).resolve().parents[1]
 DAILY = ROOT / 'content/daily'
-OLD_NOTE, OLD_PAGE = DAILY / '2026-11-09.md', DAILY / '2026-11-09.show/.html'
-NOTE, PAGE = DAILY / '2026-11-16.md', DAILY / '2026-11-16.show/.html'
+OLD_NOTE, OLD_PAGE = DAILY / '2026-11-09.md', DAILY / '2026-11-09.show.html'
+NOTE, PAGE = DAILY / '2026-11-16.md', DAILY / '2026-11-16.show.html'
 SCRIPT = Path(__file__).with_name('csi2000_market_comparison.js')
 TEMPLATE_REVISION = '916ed8c3029b7f6cdd38736b3d00f0e43bd9ce81'
 TITLE = '中证 2000 底仓做 T：沪深冻结模型基准'
@@ -40,7 +40,8 @@ def template_text(path):
     path = path.resolve()
     if path not in SOURCE_HASHES:
         raise ValueError('Use one of the protected template paths')
-    relative = path.relative_to(ROOT).as_posix()
+    relative = ('content/daily/2026-11-09.show/.html' if path == OLD_PAGE
+                else path.relative_to(ROOT).as_posix())
     raw = subprocess.check_output(['git', 'show', TEMPLATE_REVISION + ':' + relative], cwd=ROOT)
     normalized = raw.replace(b'\r\n', b'\n')
     if hashlib.sha256(raw).hexdigest() == SOURCE_HASHES[path]:
@@ -203,6 +204,7 @@ def comparison_script(source):
 
 def render(source, data, report_url):
     prefix = source[:source.index('<header class="shell">')]
+    prefix = prefix.replace('../../fonts/', '../fonts/').replace('../../../site/fonts/', '../../site/fonts/')
     prefix = replace(prefix, '<title>沪深模型基准｜指数对标</title>', f'<title>{TITLE}</title>')
     header = f'''<header class="shell">
   <div class="report-meta">
@@ -249,7 +251,7 @@ title: "{TITLE}"
 date: 2026-11-16
 published: "{stamp.isoformat(timespec='seconds')}"
 stage: model
-show_source: 2026-11-16.show/.html
+show_source: 2026-11-16.show.html
 summary: "在同一张图比较中证2000沪深底仓做T结果，分段成绩随底仓、排序和组合筛选更新。"
 ---
 
