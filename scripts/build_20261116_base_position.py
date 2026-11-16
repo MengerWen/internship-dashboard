@@ -315,7 +315,9 @@ def main():
         raise ValueError('11.16 publication requires signed actual-fill tax and trading-return results')
     data = pack(results)
     html = render(template_text(args.source), data, args.report_url)
-    note = render_note(template_text(args.source_note), args.report_url, published=args.published)
+    from build_20261116_g2_comparison import append_section, append_note
+    html = append_section(html)
+    note = append_note(render_note(template_text(args.source_note), args.report_url, published=args.published))
     args.page.parent.mkdir(parents=True, exist_ok=True)
     args.page.write_text(html, encoding='utf-8', newline='\n')
     args.note.write_text(note, encoding='utf-8', newline='\n')
