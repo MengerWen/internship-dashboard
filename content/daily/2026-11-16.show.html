@@ -459,10 +459,13 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 #score-key { font-size: 12px; }
 .score-delta { display: block; font: 11px/1.22 var(--font-mono); color: #44473f; }
 #score-rows [data-metric] { cursor: default; }
-.signal-summary { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 0; margin: 0 14px 5px; border-block: 1px solid var(--line-soft); }
-.signal-summary > div { display: flex; flex-direction: column; padding: 4px 8px; background: var(--phase-tone); font-size: 12px; }
-.signal-summary > div + div { border-inline-start: 1px solid var(--line-soft); }
-.signal-summary small { color: #51534b; }
+.signal-summary { margin: 0 14px 5px; }
+.signal-summary table { width: 100%; white-space: nowrap; font-size: 12px; }
+.signal-summary th, .signal-summary td { padding: 4px 8px; }
+.signal-summary thead th[class] { background: var(--phase-tone); }
+.signal-summary td > span { display: block; font: 12px/1.55 var(--font-mono); }
+.signal-summary td small { color: #51534b; }
+.signal-summary tbody th small { display: block; font: inherit; font-weight: 400; }
 #factor-results h2 { border-top: 1px solid var(--line); padding-top: 10px; }
 #factor-results .chart-plate { margin-block: 9px 13px; }
 #factor-results .filters { padding: 7px 14px; }
@@ -481,7 +484,6 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 .factor-empty { padding: 10px 14px; background: var(--surface); }
 @media (max-width: 710px) {
   .factor-panel-grid { grid-template-columns: minmax(0, 1fr); }
-  .signal-summary > div + div { border-inline-start: 0; }
 }
 .chart .mean-line {
   stroke: var(--text); stroke-width: 1.3; stroke-dasharray: 7 4;
@@ -502,7 +504,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
   </div>
   <div class="report-title">
     <h1>中证 2000 底仓做 T · 沪深扩因子对照</h1>
-    <p>沪市 SSE+ 和深市 G2 分别与固定基准 B0 对照。每版只替换对应市场的模型，合并排序时两市入选都可能变化。</p>
+    <p>收益按单市场替换模型与 B0 对照。沪深合排共用入选名额，一个市场的打分变化会改变两市的入选名单。信号图按各市场成分池同时展示两套新模型。</p>
     <p class="chart-foot-long">566 个交易日 · 192 套回放条件</p>
   </div>
 </header>
@@ -510,7 +512,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <section id="compare" class="demo-dashboard" aria-label="逐日收益与信号诊断">
   <div class="demo-toolbar">
     <form id="filters" class="filters" aria-label="调整图表">
-      <label>模型对照 <select name="candidate"><option value="SSE+" selected>沪市 SSE+ 与 B0</option><option value="G2">深市 G2 与 B0</option></select></label>
+      <label>收益模型（对 B0） <select name="candidate"><option value="SSE+" selected>沪市 SSE+ ／ 深市 B0</option><option value="G2">沪市 B0 ／ 深市 G2</option></select></label>
       <label>底仓 <select name="weight"><option value="index">指数权重</option><option value="equal" selected>等权</option></select></label>
       <label>排序 <select name="sorting"><option value="combined">沪深合并排序</option><option value="separate">分市场排序</option></select></label>
       <label>组合 <select name="strategy"><option value="L">纯多 L</option><option value="A">多空 A</option></select></label>
@@ -541,13 +543,13 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <button type="button" data-curve-kind="returns" data-curve-lane="3" data-market="szse" aria-pressed="false">
           <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
         </button></div>
-    <div class="compare-keys" aria-label="模型线型"><span><i class="version-key b0-key"></i>B0 固定模型</span><span><i class="version-key"></i><span id="candidate-key">SSE+ 沪市扩因子</span></span><span><i class="version-key pool-key"></i>同市场底仓（绝对视图）</span></div>
+    <div class="compare-keys" aria-label="模型线型"><span><i class="version-key b0-key"></i>B0 固定模型</span><span><i class="version-key"></i><span id="candidate-key">沪市 SSE+ ／ 深市 B0</span></span><span><i class="version-key pool-key"></i>同市场底仓（绝对视图）</span></div>
     <p id="pool-reference-note" class="chart-foot" hidden>粗线为底仓加做 T 的研究收益，细点线为同市场底仓收益。各市场以自身初始底仓为基准。</p>
     <div id="return-plot" class="plot" tabindex="0" role="group" aria-label="收益图。左右方向键逐日查看，回车固定日期。">
       <svg id="return-chart" class="chart" role="img" aria-label="沪深两个周期的全程累计收益" xmlns="http://www.w3.org/2000/svg"></svg>
       <aside id="return-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
     </div>
-    <figcaption class="chart-foot">两市收益按证券所属市场归因。拖动框选日期，悬浮读数，点击固定。</figcaption>
+    <figcaption class="chart-foot">收益按证券所属市场归因。沪深合并排序共用名额。切到分市场排序，可查看各自独立选股时的结果。拖动框选日期，悬浮读数，点击固定。</figcaption>
   </figure>
   <figure class="chart-plate difference-plate" id="difference-figure">
     <div class="chart-tools"><h2 id="difference-heading">SSE+ 相对 B0 的累计收益差</h2><div class="figure-controls"><button type="button" class="demo-button is-emphasis" data-enlarge="difference">放大差值图</button></div></div>
@@ -626,7 +628,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 </section>
   <figure class="chart-plate" id="signal-figure">
     <div class="chart-tools">
-      <h2 id="signal-heading">沪市扩因子 SSE+ · 成分池 IC 与 RankIC</h2>
+      <h2 id="signal-heading">沪深成分池 IC 与 RankIC</h2>
       <div class="figure-controls">
         <label>信号指标 <select id="signal-mode"><option value="ic" selected>IC</option><option value="rankic">RankIC</option></select></label>
         <button type="button" class="demo-button is-emphasis" data-enlarge="signal">放大信号图</button>
@@ -634,25 +636,26 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
       </div>
     </div>
     <div id="signal-body">
-      <div class="curve-legend index-method-group" role="group" aria-label="IC／RankIC 曲线"><button type="button" data-curve-kind="signal" data-curve-lane="all" aria-pressed="true">双周期</button>
+      <div class="curve-legend index-method-group" role="group" aria-label="IC／RankIC 曲线"><button type="button" data-curve-kind="signal" data-curve-lane="all" aria-pressed="true">沪深双周期</button>
   <button type="button" data-curve-kind="signal" data-curve-lane="0" data-market="sse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse"/></svg>沪市 11:30
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse"/></svg>沪市 11:30 SSE+
           </button>
   <button type="button" data-curve-kind="signal" data-curve-lane="1" data-market="sse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse close-line"/></svg>沪市 收盘
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse close-line"/></svg>沪市 收盘 SSE+
           </button>
   <button type="button" data-curve-kind="signal" data-curve-lane="2" data-market="szse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse"/></svg>深市 11:30
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse"/></svg>深市 11:30 G2
           </button>
   <button type="button" data-curve-kind="signal" data-curve-lane="3" data-market="szse" aria-pressed="false">
-            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
+            <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘 G2
           </button></div>
-      <div id="signal-stage-summary" class="signal-summary" aria-label="分段平均相关系数"></div><div id="signal-plot" class="plot" tabindex="0" role="group" aria-label="IC 与 RankIC 图。左右方向键逐日查看，回车固定日期。">
+      <div id="signal-stage-summary" class="table-wrap signal-summary" role="region" tabindex="0" aria-label="沪深分段平均 IC 与 RankIC"></div>
+      <div id="signal-plot" class="plot" tabindex="0" role="group" aria-label="IC 与 RankIC 图。左右方向键逐日查看，回车固定日期。">
         <svg id="signal-chart" class="chart" role="img" aria-label="沪深两个周期的单日和累计相关系数" xmlns="http://www.w3.org/2000/svg"></svg>
         <aside id="signal-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
       </div>
     </div>
-    <figcaption class="chart-foot">上图累计有效日的相关系数，下图为单日值。每组对照使用 11.16 回放中同一批可用成分股和同一笔 F1–F9 多头毛收益标签。浅线 B0，深线为候选模型。各图共用日期游标和缩放区间。</figcaption>
+    <figcaption class="chart-foot">表内为各段日均相关系数，按 B0 → 本市场新模型排列。上图累计有效日的相关系数，下图为单日值。每市新旧模型使用同日、同股、同一 F1–F9 多头毛收益标签。浅线 B0，深线为沪市 SSE+、深市 G2。各图共用日期游标和缩放区间。</figcaption>
   </figure>
   <p id="date-status" class="visually-hidden" aria-live="polite"></p>
   <noscript><p class="chart-foot">逐日交互图需要 JavaScript。各阶段汇总见下表。</p></noscript>
@@ -850,11 +853,13 @@ function renderEvidence(data) {
   const focusedLanes = { returns: null, daily: null, signal: null };
   const dailyMetrics = [['tradeReturn', '交易净收益'], ['accountReturn', '账户净收益'], ['enhancement', '底仓增强']];
   let data;
-  const versionMarkets = {'SSE+':'sse', G2:'szse'};
-  const versionLabels = {'SSE+':'沪市扩因子', G2:'深市扩因子'};
+  const signalVersions = { sse:'SSE+', szse:'G2' };
+  const versionLabels = {'SSE+':'沪市 SSE+ ／ 深市 B0', G2:'沪市 B0 ／ 深市 G2'};
   let candidateVersion = 'SSE+';
+  let signalPoints;
   const laneFor = kind => focusedLanes[kind === 'difference' ? 'returns' : kind];
-  const showLane = (kind,lane,i) => (lane === null || i === lane) && (kind !== 'signal' || series[i].market === versionMarkets[candidateVersion]);
+  const showLane = (lane,i) => lane === null || i === lane;
+  const pointsFor = kind => kind === 'signal' ? signalPoints : timeline.points;
   const valueFor = (value,field,secondary) => (secondary ? value.candidate : value)[field];
   const signed = (x,digits=4) => {
     if (!Number.isFinite(x)) return '—';
@@ -875,12 +880,12 @@ function renderEvidence(data) {
     const pct = x => percentage(x,4);
     let columns;
     const items = point.values.flatMap((base,i) => {
-      if (!showLane(kind,lane,i)) return [];
+      if (!showLane(lane,i)) return [];
       const g2 = base.candidate, label = series[i].label;
       if (kind === 'signal') {
         columns = ['日 IC','日 RankIC','累计 IC','累计 RankIC','配对股票'];
         const vals = row => ['ic','rankic','cumulativeIC','cumulativeRankIC'].map(key=>format(row[key],3)).concat(row.validN ?? '—');
-        return [tr(label+' · B0',vals(base)),tr(label+' · '+candidateVersion,vals(g2))];
+        return [tr(label+' · B0',vals(base)),tr(label+' · '+signalVersions[series[i].market],vals(g2))];
       }
       if (kind === 'difference') {
         columns = ['B0 累计',candidateVersion + ' 累计','累计差值','当日增强差 bp'];
@@ -942,24 +947,33 @@ function renderEvidence(data) {
   }
 
   function refreshSignalSummary() {
-    const lane = laneFor('signal');
-    const field = signalMode.value;
-    const title = field === 'ic' ? 'IC' : 'RankIC';
-    get('signal-stage-summary').innerHTML = Object.entries(phases).filter(([phase]) => phaseChoice==='all'||phase===phaseChoice).map(([phase,info])=>{
-      const [start,stop] = timeline.dateRanges[phase];
-      const rows = timeline.points.slice(start,stop+1);
-      const stats = series.flatMap((track,i)=>{
-        if (!showLane('signal',lane,i)) return [];
-        const a=moments(), b=moments();
-        for (const row of rows) {
-          const v=row.values[i];
-          if (!Number.isFinite(v[field]) || !Number.isFinite(v.candidate[field])) continue;
-          add(a,v[field]); add(b,v.candidate[field]);
-        }
-        return '<span>'+track.label.slice(3)+'　'+format(a.n?a.mean:null,4)+' → '+format(b.n?b.mean:null,4)+'<small>（'+b.n+' 日）</small></span>';
+    const periods = phaseChoice === 'all' ? ['all', ...Object.keys(phases)] : [phaseChoice];
+    const windows = periods.map(phase => {
+      const [first,last] = timeline.dateRanges[phase] ?? [0,signalPoints.length-1];
+      return { phase, rows:signalPoints.slice(first,last+1) };
+    });
+    const head = windows.map(({phase,rows}) => '<th scope="col" class="phase-'+phase+'">'+
+      (phases[phase]?.label ?? '全程')+'（'+rows.length+' 日）</th>').join('');
+    const body = series.map(({label,market}, i) => {
+      const cells = windows.map(({rows}) => {
+        const metrics = [['ic','IC'],['rankic','RankIC']].map(([field,title]) => {
+          const base = moments(), next = moments();
+          for (const { values } of rows) {
+            const pair = values[i];
+            if (!Number.isFinite(pair[field]) || !Number.isFinite(pair.candidate[field])) continue;
+            add(base,pair[field]);
+            add(next,pair.candidate[field]);
+          }
+          const pairedMeans = base.n ? format(base.mean,4)+' → '+format(next.mean,4) : '—';
+          const valid = base.n !== rows.length ? ' <small>('+base.n+'/'+rows.length+' 日)</small>' : '';
+          return '<span>'+title+' '+pairedMeans+valid+'</span>';
+        });
+        return '<td>'+metrics.join('')+'</td>';
       });
-      return '<div class="phase-'+phase+'"><strong>'+info.label+' · 平均 '+title+'</strong>'+stats.join('')+'</div>';
-    }).join('');
+      return '<tr><th scope="row">'+label+'<small>B0 → '+signalVersions[market]+'</small></th>'+cells.join('')+'</tr>';
+    });
+    get('signal-stage-summary').innerHTML = '<table><caption class="visually-hidden">沪深各阶段日均 IC 与 RankIC</caption>'+
+      '<thead><tr><th scope="col">市场／周期</th>'+head+'</tr></thead><tbody>'+body.join('')+'</tbody></table>';
   }
 
   function renderFactorBook(data) {
@@ -1454,12 +1468,10 @@ function renderEvidence(data) {
 
   function timelineFor(version) {
     const source = version === 'B0' ? data : version === 'G2' ? data.candidate : data.sseStrategy;
-    const pairedSignal = candidateVersion === 'G2' ? data.pairedSignal : data.sseStrategy.pairedSignal;
     const byLane = series.map(({cycle}) => source.series[configurationKey(cycle)]);
     const staged = {};
     const dateRanges = {};
     const all = series.map(moments);
-    const signal = series.map(() => ({ ic: 0, rankic: 0, nIC: 0, nRank: 0 }));
     const initial = data.initial[weight];
     const bases = data.base[weight];
     const points = data.dates.map((date, at) => {
@@ -1501,21 +1513,13 @@ function renderEvidence(data) {
           local.drawdown = Math.max(local.drawdown, isEnhancement() ? local.peak - relative : 1 - relative / local.peak);
           local.cumulative = isEnhancement() ? relative : relative - 1;
         }
-        const [ic, rankic, validN, eligibleN] = pairedSignal[version][phase][lane][at - start] ?? [];
-        const history = signal[lane];
-        if (Number.isFinite(ic)) { history.ic += ic; history.nIC += 1; }
-        if (Number.isFinite(rankic)) { history.rankic += rankic; history.nRank += 1; }
         return {
           daily: daily === null ? null : daily * 10000, cumulative: cumulative * 100, nav, baseNav,
           addition: a / capital * 100, enhancement: enhancement === null ? null : enhancement * 10000,
           poolCumulative: (baseNav - 1) * 100, selectedN: row[2 + group], filledN: row[4 + group],
-          sharpe: sharpe(all[lane]), ic, rankic, validN, eligibleN,
+          sharpe: sharpe(all[lane]),
           tradeReturn: tradeReturn === null ? null : tradeReturn * 10000,
-          accountReturn: wealthReturn === null ? null : wealthReturn * 10000,
-          cumulativeIC: history.nIC ? history.ic : null,
-          cumulativeRankIC: history.nRank ? history.rankic : null,
-          meanIC: history.nIC ? history.ic / history.nIC : null,
-          meanRankIC: history.nRank ? history.rankic / history.nRank : null
+          accountReturn: wealthReturn === null ? null : wealthReturn * 10000
         };
       });
       for (const local of staged[phase].entries()) local[1].through = sharpe(all[local[0]]);
@@ -1526,6 +1530,25 @@ function renderEvidence(data) {
       point.stageDays = end - start + 1;
     }
     return { points, dateRanges, staged };
+  }
+
+  function buildSignalPoints(points) {
+    const sources = { sse:data.sseStrategy?.pairedSignal, szse:data.pairedSignal };
+    const histories = series.map(() => [0, 1].map(() => ({ cumulativeIC:null, cumulativeRankIC:null })));
+    function readSignal(lane, version, {phase,stageDay}, history) {
+      const source = sources[series[lane].market];
+      const [ic,rankic,validN] = source?.[version]?.[phase]?.[lane]?.[stageDay-1] ?? [];
+      if (Number.isFinite(ic)) history.cumulativeIC = (history.cumulativeIC ?? 0) + ic;
+      if (Number.isFinite(rankic)) history.cumulativeRankIC = (history.cumulativeRankIC ?? 0) + rankic;
+      return { ic, rankic, validN, ...history };
+    }
+    return points.map(point => ({
+      date:point.date, phase:point.phase, stageDay:point.stageDay, stageDays:point.stageDays,
+      values:series.map(({market},lane) => ({
+        ...readSignal(lane,'B0',point,histories[lane][0]),
+        candidate:readSignal(lane,signalVersions[market],point,histories[lane][1])
+      }))
+    }));
   }
 
   function line(x1, y1, x2, y2, cls) {
@@ -1635,6 +1658,7 @@ function renderEvidence(data) {
 
   function drawChart(kind) {
     const panel = panels[kind];
+    const points = pointsFor(kind).slice(visible.first, visible.last + 1);
     const width = Math.max(265, panel.plot.clientWidth);
     const height = kind === 'difference' && expanded !== kind ? 194 : displayHeight(kind);
     const wide = width >= 940;
@@ -1644,9 +1668,9 @@ function renderEvidence(data) {
     const left = width < 540 ? 47 : 70;
     const right = width - (labelEnds ? (wide ? 156 : 110) : 20);
     const bottom = height - 34;
-    const unit = (right - left) / visible.points.length;
+    const unit = (right - left) / points.length;
     const x = index => left + unit * (index + 1);
-    const values = field => visible.points.flatMap(point => point.values.flatMap((value,i) => showLane(kind,lane,i) ? [value[field], value.candidate[field]] : []));
+    const values = field => points.flatMap(point => point.values.flatMap((value,i) => showLane(lane,i) ? [value[field], value.candidate[field]] : []));
     const label = signalMode.value === 'ic' ? 'IC' : 'RankIC';
     const cumulativeField = signalMode.value === 'ic' ? 'cumulativeIC' : 'cumulativeRankIC';
     const midpoint = Math.round(height * .51);
@@ -1669,7 +1693,7 @@ function renderEvidence(data) {
     panel.layout = layout;
     const out = [
       '<desc>横轴为交易日，曲线按市场和持有周期区分，数据缺失处留空。开发与两段测试用底纹区分。</desc>',
-      ...phaseBands(layout, visible.points)
+      ...phaseBands(layout, points)
     ];
 
     for (const area of areas) {
@@ -1684,10 +1708,10 @@ function renderEvidence(data) {
       }
     }
 
-    const ticks = dateTicks(x, visible.points, left, right);
+    const ticks = dateTicks(x, points, left, right);
     ticks.forEach((index, i) => {
-      const date = visible.points[index].date;
-      const previous = i ? visible.points[ticks[i - 1]].date : null;
+      const date = points[index].date;
+      const previous = i ? points[ticks[i - 1]].date : null;
       const stamp = previous && previous.slice(0, 4) === date.slice(0, 4) ? date.slice(5) : date.slice(0, 7);
       for (const area of areas) out.push(line(x(index), area.top, x(index), area.bottom, 'grid-line'));
       const anchor = i === 0 ? 'start' : i === ticks.length - 1 ? 'end' : 'middle';
@@ -1718,8 +1742,8 @@ function renderEvidence(data) {
       }
       for (const secondary of kind === 'difference' ? [false] : [false, true]) {
         series.forEach((info, i) => {
-          if (!showLane(kind,lane,i)) return;
-          const coords = visible.points.map((point,j) => [x(j), area.y(valueFor(point.values[i],area.field,secondary))]);
+          if (!showLane(lane,i)) return;
+          const coords = points.map((point,j) => [x(j), area.y(valueFor(point.values[i],area.field,secondary))]);
           if (visible.first === 0 && Number.isFinite(coords[0][1]) && (area.field.startsWith('cumulative') || kind === 'difference')) coords.unshift([left,area.y(0)]);
           const cls = 'series-line ' + style(info) + (kind !== 'difference' && !secondary ? ' b0-series' : '') +
             (kind === 'daily' || area.field === 'ic' || area.field === 'rankic' ? ' signal-daily' : '');
@@ -1788,7 +1812,7 @@ function renderEvidence(data) {
         note.hidden = true;
         continue;
       }
-      const point = timeline.points[selection.index];
+      const point = pointsFor(kind)[selection.index];
       const layout = panel.layout;
       const x = layout.x(selection.index - visible.first);
       const firstArea = layout.areas[0];
@@ -1799,7 +1823,7 @@ function renderEvidence(data) {
       }).join('') : '';
       cursor.innerHTML = line(x, firstArea.top, x, layout.bottom, 'date-rule') +
         layout.areas.flatMap(area => point.values.flatMap((value, index) => {
-          if (!showLane(kind,layout.lane,index)) return [];
+          if (!showLane(layout.lane,index)) return [];
           return (kind === 'difference' ? [false] : [false,true]).flatMap(secondary => {
             const y = area.y(valueFor(value,area.field,secondary));
             return Number.isFinite(y) ? [circle(x,y,secondary ? 3.7 : 2.6,series[index].market + ' date-ring' + (secondary ? '' : ' b0-series'))] : [];
@@ -1828,10 +1852,10 @@ function renderEvidence(data) {
     selection = { index, kind, y };
     refreshSelection();
     if (!announce) return;
-    const point = timeline.points[index];
+    const point = pointsFor(kind)[index];
     const lane = laneFor(kind);
     status.textContent = point.date + ' ' + point.values.map((value, i) => {
-      if (!showLane(kind,lane,i)) return '';
+      if (!showLane(lane,i)) return '';
       const detail = kind === 'signal' ? format(value.candidate[signalMode.value],3) :
         kind === 'difference' ? signedPercent(value.difference) :
         kind === 'daily' ? dailyMetrics.map(([field,title]) => title + ' ' + format(value.candidate[field]) + ' bp').join('，') : candidateVersion + ' ' + format(value.candidate.cumulative,4) + '%';
@@ -1978,7 +2002,6 @@ function renderEvidence(data) {
       }
       drawChart(kind);
     }
-    refreshSignalSummary();
     get('pool-reference-note').hidden = !hasPoolReference();
     rangeText.textContent = visible.points[0].date + ' 至 ' + visible.points.at(-1).date +
       ' · ' + visible.points.length + ' 日';
@@ -1988,25 +2011,14 @@ function renderEvidence(data) {
 
   function changeFilters() {
     const state = new FormData(form);
-    const version = state.get('candidate');
-    if (version !== candidateVersion) {
-      candidateVersion = version;
-      focusedLanes.signal = null;
-    }
-    const label = versionLabels[candidateVersion];
-    get('candidate-key').textContent = candidateVersion + ' ' + label;
+    candidateVersion = state.get('candidate');
+    get('candidate-key').textContent = versionLabels[candidateVersion];
     get('difference-heading').textContent = candidateVersion + ' 相对 B0 的累计收益差';
     panels.difference.svg.setAttribute('aria-label', get('difference-heading').textContent);
-    get('signal-heading').textContent = label + ' ' + candidateVersion + ' · 成分池 IC 与 RankIC';
     get('score-paired-option').textContent = candidateVersion + ' 与 B0';
     get('score-candidate-option').textContent = '单看 ' + candidateVersion;
     get('score-key').textContent = '主数字为 ' + candidateVersion + '。下行显示 ' +
       candidateVersion + ' − B0，悬停单元格可查两版原值。';
-    for (const button of curveLegend) {
-      if (button.dataset.curveKind === 'signal' && button.dataset.market) {
-        button.hidden = button.dataset.market !== versionMarkets[candidateVersion];
-      }
-    }
     weight = state.get('weight');
     sorting = state.get('sorting');
     tradeFraction = state.get('tradeFraction');
@@ -2024,12 +2036,14 @@ function renderEvidence(data) {
     panels.returns.svg.setAttribute('aria-label', title);
     for (const button of optionButtons) button.setAttribute('aria-pressed', String(button.dataset.returnView === view));
     timeline = timelineFor('B0');
+    signalPoints ??= buildSignalPoints(timeline.points);
     comparison = timelineFor(candidateVersion);
     timeline.points.forEach((point,at) => point.values.forEach((value,i) => {
       value.candidate = comparison.points[at].values[i];
       value.difference = value.candidate.addition - value.addition;
     }));
     updateScoreRows();
+    refreshSignalSummary();
     drawAll();
   }
 
@@ -2125,7 +2139,10 @@ function renderEvidence(data) {
         form.elements.candidate.options[0].disabled = true;
         form.elements.candidate.value = 'G2';
         get('fill-status').hidden = false;
-        get('fill-status').textContent = '沪市 SSE+ 数据加载失败，当前显示 G2 与 B0。';
+        get('fill-status').textContent = '沪市 SSE+ 数据加载失败，收益和信号暂显示深市 G2 对照。';
+        for (const button of curveLegend) {
+          if (button.dataset.curveKind === 'signal' && button.dataset.market === 'sse') button.disabled = true;
+        }
       }
     })();
     // Shanghai candidate atlas
