@@ -392,7 +392,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <section id="compare" class="demo-dashboard" aria-label="逐日收益与信号诊断">
   <div class="demo-toolbar">
     <form id="filters" class="filters" aria-label="调整图表">
-      <label>底仓 <select name="weight"><option value="index">指数权重</option><option value="equal">等权</option></select></label>
+      <label>底仓 <select name="weight"><option value="index">指数权重</option><option value="equal" selected>等权</option></select></label>
       <label>排序 <select name="sorting"><option value="combined">沪深合并排序</option><option value="separate">分市场排序</option></select></label>
       <label>组合 <select name="strategy"><option value="L">纯多 L</option><option value="A">多空 A</option></select></label>
       <label>选股比例 <select name="q"><option value="1">1%</option><option value="5" selected>5%</option><option value="10">10%</option><option value="20">20%</option></select></label>
@@ -405,8 +405,8 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
   </div>
   <figure class="chart-plate" id="return-figure">
     <div class="chart-tools">
-      <h2 id="compare-heading">全程累计收益</h2>
-      <div class="figure-controls"><div class="index-method-group" role="group" aria-label="收益视图"><button type="button" data-return-view="wealth" aria-pressed="true">绝对</button><button type="button" data-return-view="enhancement" aria-pressed="false">超额</button></div><button type="button" class="demo-button is-emphasis" data-enlarge="returns">放大收益图</button></div>
+      <h2 id="compare-heading">全程累计超额收益</h2>
+      <div class="figure-controls"><div class="index-method-group" role="group" aria-label="收益视图"><button type="button" data-return-view="wealth" aria-pressed="false">绝对</button><button type="button" data-return-view="enhancement" aria-pressed="true">超额</button></div><button type="button" class="demo-button is-emphasis" data-enlarge="returns">放大收益图</button></div>
     </div>
     <p id="fill-status" class="chart-foot" role="status" hidden></p>
     <div class="curve-legend index-method-group" role="group" aria-label="收益图曲线"><button type="button" data-curve-kind="returns" data-curve-lane="all" aria-pressed="true">全选</button>
@@ -422,7 +422,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <button type="button" data-curve-kind="returns" data-curve-lane="3" data-market="szse" aria-pressed="false">
           <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
         </button></div>
-    <p id="pool-reference-note" class="chart-foot">粗线为底仓加做 T 的研究收益，细点线为同市场底仓收益。各市场以自身初始底仓为基准。</p>
+    <p id="pool-reference-note" class="chart-foot" hidden>粗线为底仓加做 T 的研究收益，细点线为同市场底仓收益。各市场以自身初始底仓为基准。</p>
     <div id="return-plot" class="plot" tabindex="0" role="group" aria-label="收益图。左右方向键逐日查看，回车固定日期。">
       <svg id="return-chart" class="chart" role="img" aria-label="沪深两个周期的全程累计收益" xmlns="http://www.w3.org/2000/svg"></svg>
       <aside id="return-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
@@ -457,15 +457,15 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 </table>
 </div>
 </section>
-  <figure class="chart-plate" id="daily-figure">
+  <figure class="chart-plate is-folded" id="daily-figure">
     <div class="chart-tools">
       <h2 id="daily-heading">逐日收益</h2>
       <div class="figure-controls">
         <button type="button" class="demo-button is-emphasis" data-enlarge="daily">放大逐日收益图</button>
-        <button type="button" class="demo-button" data-chart-toggle="daily" aria-controls="daily-body" aria-expanded="true">收起</button>
+        <button type="button" class="demo-button" data-chart-toggle="daily" aria-controls="daily-body" aria-expanded="false">展开</button>
       </div>
     </div>
-    <div id="daily-body">
+    <div id="daily-body" hidden>
       <div class="curve-legend index-method-group" role="group" aria-label="逐日收益曲线">
         <button type="button" data-curve-kind="daily" data-curve-lane="all" aria-pressed="true">全选</button>
         <button type="button" data-curve-kind="daily" data-curve-lane="0" data-market="sse" aria-pressed="false">
@@ -640,7 +640,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
   let sorting;
   let tradeFraction = '10';
   let phaseChoice = 'all';
-  let view = 'wealth';
+  let view = optionButtons.find(button => button.getAttribute('aria-pressed') === 'true').dataset.returnView;
   let zoom = null;
   let selection = null;
   let pinned = false;

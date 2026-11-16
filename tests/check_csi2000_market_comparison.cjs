@@ -26,6 +26,7 @@ class Element {
   }
   addEventListener(type, callback) { this.handlers[type] = callback; }
   setAttribute(key, value) { this.attributes[key] = value; }
+  getAttribute(key) { return this.attributes[key]; }
   querySelector(selector) {
     if (!this.children.has(selector)) this.children.set(selector, new Element());
     return this.children.get(selector);
@@ -44,7 +45,10 @@ const get = id => {
 };
 get('csi2000-market-data').textContent = encoded;
 get('signal-mode').value = source.match(/<select id="signal-mode">\s*<option value="([^"]+)"/)[1];
-const controls = {weight: 'index', sorting: 'combined', strategy: 'L', q: '5', phase: 'all', tradeFraction: '10'};
+const weightOptions = source.match(/<select name="weight">([^]*?)<\/select>/)[1];
+const defaultWeight = weightOptions.match(/<option value="([^"]+)" selected>/)?.[1]
+  ?? weightOptions.match(/<option value="([^"]+)"/)[1];
+const controls = {weight: defaultWeight, sorting: 'combined', strategy: 'L', q: '5', phase: 'all', tradeFraction: '10'};
 get('filters').elements = {
   phase: {set value(value) { controls.phase = value; }},
   tradeFraction: {options: ['10', '20', '30'].map(value => ({value}))}
@@ -60,10 +64,21 @@ const chartKinds = hasDaily ? ['returns', 'daily', 'signal'] : ['returns', 'sign
 const legends = chartKinds.flatMap(kind => ['all', '0', '1', '2', '3'].map(
   lane => new Element({curveKind: kind, curveLane: lane})
 ));
-const options = ['wealth', 'enhancement'].map(returnView => new Element({returnView}));
+const options = [...source.matchAll(/data-return-view="([^"]+)" aria-pressed="(true|false)"/g)]
+  .map(([, returnView, pressed]) => {
+    const button = new Element({returnView});
+    button.setAttribute('aria-pressed', pressed);
+    return button;
+  });
 const expanders = chartKinds.map(enlarge => new Element({enlarge}));
-const toggles = [...source.matchAll(/data-chart-toggle="([^"]+)" aria-controls="([^"]+)" aria-expanded="true"/g)]
-  .map(([, chartToggle, body]) => ({button: new Element({chartToggle}), body: get(body)}));
+const toggles = [...source.matchAll(/data-chart-toggle="([^"]+)" aria-controls="([^"]+)" aria-expanded="(true|false)"/g)]
+  .map(([, chartToggle, bodyId, expanded]) => {
+    const button = new Element({chartToggle});
+    button.setAttribute('aria-expanded', expanded);
+    const body = get(bodyId);
+    body.hidden = source.includes('id="' + bodyId + '" hidden>');
+    return {button, body};
+  });
 const document = {
   getElementById: get,
   querySelectorAll(selector) {
@@ -90,6 +105,22 @@ function close(actual, expected, tolerance = .00501) {
 async function main() {
   await vm.runInNewContext(code, context);
   assert.notEqual(get('fill-status').hidden, false, 'Data failed to load');
+}
+
+function checkDefaultView() {
+  assert.match(get('index-view-label').textContent, /等权/);
+  assert.match(get('compare-heading').textContent, /超额收益/);
+  assert.equal(options.find(b => b.dataset.returnView === 'enhancement').getAttribute('aria-pressed'), 'true');
+  assert.ok(!get('return-chart').innerHTML.includes('pool-line'));
+  const daily = toggles.find(({button}) => button.dataset.chartToggle === 'daily');
+  assert.equal(daily.body.hidden, true);
+  assert.equal(daily.button.getAttribute('aria-expanded'), 'false');
+  assert.equal(get('daily-chart').innerHTML, '');
+  const signal = toggles.find(({button}) => button.dataset.chartToggle === 'signal');
+  assert.equal(signal.body.hidden, false);
+  assert.equal(signal.button.getAttribute('aria-expanded'), 'true');
+  assert.match(get('signal-chart').innerHTML, /累计 IC</);
+  daily.button.handlers.click();
 }
 
 function checkDailyChart() {
@@ -120,9 +151,9 @@ function checkDailyChart() {
     controls.tradeFraction = fraction;
     get('filters').handlers.change();
     assert.ok(note.innerHTML.includes('做 T ' + fraction + '%'));
-    const key = 'index-combined-morning-L-5' + (fraction === '10' ? '' : '-t30');
+    const key = controls.weight + '-combined-morning-L-5' + (fraction === '10' ? '' : '-t30');
     const [entry, gross, fees] = data.trading[key][at][0];
-    const b0 = data.base.index[at - 1][0], b = data.base.index[at][0];
+    const b0 = data.base[controls.weight][at - 1][0], b = data.base[controls.weight][at][0];
     const a0 = data.series[key][at - 1][0], a = data.series[key][at][0];
     const match = note.innerHTML.match(/沪市 11:30<\/th><td>([^<]+)<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td>/);
     assert.ok(match, 'Hover shows all three daily values');
@@ -185,6 +216,7 @@ function checkChartTogglesAndMean() {
   // The HTML keeps the error status hidden until loading actually fails.
   get('fill-status').hidden = true;
   await main();
+  if (toggles.length) checkDefaultView();
   if (hasDaily) checkDailyChart();
   if (toggles.length) checkChartTogglesAndMean();
   let checks = 0;
