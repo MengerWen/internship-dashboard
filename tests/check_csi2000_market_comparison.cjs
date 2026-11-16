@@ -62,10 +62,13 @@ const legends = chartKinds.flatMap(kind => ['all', '0', '1', '2', '3'].map(
 ));
 const options = ['wealth', 'enhancement'].map(returnView => new Element({returnView}));
 const expanders = chartKinds.map(enlarge => new Element({enlarge}));
+const toggles = [...source.matchAll(/data-chart-toggle="([^"]+)" aria-controls="([^"]+)" aria-expanded="true"/g)]
+  .map(([, chartToggle, body]) => ({button: new Element({chartToggle}), body: get(body)}));
 const document = {
   getElementById: get,
   querySelectorAll(selector) {
-    return {'[data-enlarge]': expanders, '[data-return-view]': options, '[data-curve-lane]': legends}[selector] || [];
+    return {'[data-enlarge]': expanders, '[data-return-view]': options, '[data-curve-lane]': legends,
+      '[data-chart-toggle]': toggles.map(({button}) => button)}[selector] || [];
   },
   addEventListener() {},
   body: {classList: {add() {}, remove() {}}}
@@ -142,11 +145,48 @@ function checkDailyChart() {
   assert.equal(note.hidden, true);
 }
 
+function checkChartTogglesAndMean() {
+  assert.deepEqual(toggles.map(({button}) => button.dataset.chartToggle), ['daily', 'signal']);
+  for (const {button, body} of toggles) {
+    const other = toggles.find(toggle => toggle.button !== button).body;
+    button.handlers.click();
+    assert.equal(button.attributes['aria-expanded'], 'false');
+    assert.equal(body.hidden, true);
+    assert.equal(other.hidden, false);
+    button.handlers.click();
+    assert.equal(button.attributes['aria-expanded'], 'true');
+    assert.equal(body.hidden, false);
+  }
+
+  controls.tradeFraction = '10';
+  controls.phase = 'development';
+  get('filters').handlers.change();
+  const dailyLegend = lane => legends.find(b => b.dataset.curveKind === 'daily' && b.dataset.curveLane === lane);
+  dailyLegend('0').handlers.click();
+  const chart = get('daily-chart');
+  const means = [...chart.innerHTML.matchAll(/class="mean-text"[^>]*>均值 ([^ ]+) bp/g)];
+  assert.equal(means.length, 3);
+  assert.equal((chart.innerHTML.match(/class="mean-line"/g) || []).length, 3);
+  const total = metric => {
+    const cell = bodies[0].rows[0].querySelector('[data-metric="' + metric + '"]');
+    return numeric(cell);
+  };
+  close(numeric({textContent: means[0][1]}), total('tradeMean'));
+  close(numeric({textContent: means[1][1]}), total('mean'));
+  options[1].handlers.click();
+  close(numeric({textContent: means[2][1]}), total('mean'));
+  options[0].handlers.click();
+  dailyLegend('all').handlers.click();
+  assert.ok(!chart.innerHTML.includes('mean-line'));
+  get('reset-range').handlers.click();
+}
+
 (async () => {
   // The HTML keeps the error status hidden until loading actually fails.
   get('fill-status').hidden = true;
   await main();
   if (hasDaily) checkDailyChart();
+  if (toggles.length) checkChartTogglesAndMean();
   let checks = 0;
   for (const fraction of data.tradeFractions) {
   controls.tradeFraction = String(fraction);
