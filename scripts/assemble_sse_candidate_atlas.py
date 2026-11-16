@@ -13,6 +13,8 @@ import sys
 
 import yaml
 
+from pack_factor_comparison_data import read_market_data
+
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "content/daily/2026-11-16.show.html"
@@ -120,12 +122,13 @@ def assemble(template, atlas_data, output, *, inline=False, receipts=()):
     block = re.search(fr'(<script\b[^>]*\bid="{key}"[^>]*>)([^<]+)(</script>)',template)
     if block is None or template.count(NEEDLE)!=1:
         raise ValueError("11.16 报告模板缺少已知数据或渲染入口")
-    data = json.loads(gzip.decompress(base64.b64decode(block.group(2))))
+    data = read_market_data(template)
     if data["dates"] != atlas_data["dates"]:
         raise ValueError("沪市因子与策略报告的日历不同")
     if inline:
         data["shFactorAtlas"] = atlas_data
-        template = template[:block.start(2)]+encode(data)+template[block.end(2):]
+        start = '<script id="csi2000-market-data" type="application/octet-stream">'
+        template = template[:block.start()]+start+encode(data)+block.group(3)+template[block.end():]
     else:
         packed = encode(atlas_data)
         asset = "sse-diagnostics-" + sha256(packed.encode()).hexdigest()[:12] + ".js"
