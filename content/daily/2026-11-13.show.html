@@ -173,7 +173,7 @@ code { font: .88em var(--font-mono); }
 .chart .zero-line { stroke: var(--line); stroke-width: 1; }
 .chart .phase-divider { stroke: var(--line); stroke-width: .8; stroke-dasharray: 3 4; }
 .chart .series-line { stroke-width: 2.2; vector-effect: non-scaling-stroke; }
-.chart .signal-daily { stroke-width: 1.25; }
+.chart .daily-line { stroke-width: 1.25; }
 .chart .date-rule { vector-effect: non-scaling-stroke; }
 .chart .range-band { fill: var(--focus); fill-opacity: .15; stroke: var(--focus); stroke-width: .8; }
 .demo-dashboard .journal-return-note { width: min(620px, calc(100% - 12px)); }
@@ -372,7 +372,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 <header class="shell">
   <div class="report-meta">
     <time datetime="2026-11-13">2026.11.13 · 固定模型基准</time>
-    <nav aria-label="本页导航"><a href="#compare">沪深收益</a><a href="#results">分段成绩</a><a href="#signal-figure">IC / RankIC</a><a href="#freeze">冻结配置</a><a href="#evidence">登记证据</a></nav>
+    <nav aria-label="本页导航"><a href="#compare">沪深收益</a><a href="#results">分段成绩</a><a href="#daily-figure">逐日收益</a><a href="#signal-figure">IC / RankIC</a><a href="#freeze">冻结配置</a><a href="#evidence">登记证据</a></nav>
   </div>
   <div class="report-title">
     <h1>中证 2000 底仓做 T：固定 baseline</h1>
@@ -450,11 +450,39 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 </table>
 </div>
 </section>
+  <figure class="chart-plate" id="daily-figure">
+    <div class="chart-tools">
+      <h2 id="daily-heading">逐日收益</h2>
+      <div class="figure-controls">
+        <button type="button" class="demo-button is-emphasis" data-enlarge="daily">放大逐日收益图</button>
+      </div>
+    </div>
+    <div class="curve-legend index-method-group" role="group" aria-label="逐日收益曲线">
+      <button type="button" data-curve-kind="daily" data-curve-lane="all" aria-pressed="true">全选</button>
+      <button type="button" data-curve-kind="daily" data-curve-lane="0" data-market="sse" aria-pressed="false">
+        <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse"/></svg>沪市 11:30
+      </button>
+      <button type="button" data-curve-kind="daily" data-curve-lane="1" data-market="sse" aria-pressed="false">
+        <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line sse close-line"/></svg>沪市 收盘
+      </button>
+      <button type="button" data-curve-kind="daily" data-curve-lane="2" data-market="szse" aria-pressed="false">
+        <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse"/></svg>深市 11:30
+      </button>
+      <button type="button" data-curve-kind="daily" data-curve-lane="3" data-market="szse" aria-pressed="false">
+        <svg width="24" height="10" aria-hidden="true"><line x1="1" y1="5" x2="23" y2="5" class="series-line szse close-line"/></svg>深市 收盘
+      </button>
+    </div>
+    <div id="daily-plot" class="plot" tabindex="0" role="group" aria-label="逐日收益图。左右方向键逐日查看，回车固定日期。">
+      <svg id="daily-chart" class="chart" role="img" aria-label="交易净收益、账户净收益和底仓增强" xmlns="http://www.w3.org/2000/svg"></svg>
+      <aside id="daily-note" class="journal-return-note" aria-label="日期详情" hidden></aside>
+    </div>
+    <figcaption class="chart-foot">三行分别使用各自的纵轴，单位均为 bp。交易净收益按实际进场金额加权，跨日批次按进场日归属，无进场日留空。账户净收益和底仓增强按交易日逐日盯市。悬浮看当天数值，点击固定，拖动框选日期。</figcaption>
+  </figure>
   <figure class="chart-plate" id="signal-figure">
     <div class="chart-tools">
       <h2 id="signal-heading">中证 2000 · 成分池 IC 与 RankIC</h2>
       <div class="figure-controls">
-        <label>信号指标 <select id="signal-mode"><option value="rankic">RankIC</option><option value="ic">IC</option></select></label>
+        <label>信号指标 <select id="signal-mode"><option value="ic" selected>IC</option><option value="rankic">RankIC</option></select></label>
         <button type="button" class="demo-button is-emphasis" data-enlarge="signal">放大信号图</button>
       </div>
     </div>
@@ -582,13 +610,15 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
   };
   const panels = {
     returns: { plot: get('return-plot'), svg: get('return-chart'), note: get('return-note'), figure: get('return-figure') },
+    daily: { plot: get('daily-plot'), svg: get('daily-chart'), note: get('daily-note'), figure: get('daily-figure') },
     signal: { plot: get('signal-plot'), svg: get('signal-chart'), note: get('signal-note'), figure: get('signal-figure') }
   };
+  const dailyMetrics = [['tradeReturn', '交易净收益'], ['accountReturn', '账户净收益'], ['enhancement', '底仓增强']];
   const format = (v, digits = 2) => Number.isFinite(v) ? v.toFixed(digits).replace('-', '−') : '—';
   const coord = value => Number(value.toFixed(2));
   const style = info => info.market + (info.dashed ? ' close-line' : '');
   const metrics = ['tradeMean', 'mean', 'cumulative', 'sharpe', 'sharpeThrough', 'drawdown', 'calmar', 'volatility', 'winRate', 'payoff', 't'];
-  const focusedLanes = { returns: null, signal: null };
+  const focusedLanes = { returns: null, daily: null, signal: null };
   let data;
   let timeline;
   let visible;
@@ -688,6 +718,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
         return {
           daily: daily === null ? null : daily * 10000, cumulative: cumulative * 100, nav, baseNav,
           addition: a / capital * 100, enhancement: enhancement === null ? null : enhancement * 10000,
+          accountReturn: wealthReturn === null ? null : wealthReturn * 10000,
           poolCumulative: (baseNav - 1) * 100, selectedN: row[2 + group], filledN: row[4 + group],
           sharpe: sharpe(all[lane]), ic, rankic, validN, eligibleN,
           tradeReturn: tradeReturn === null ? null : tradeReturn * 10000,
@@ -761,8 +792,9 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     return { first, last, points };
   }
 
-  function displayHeight() {
+  function displayHeight(kind) {
     const available = window.innerHeight;
+    if (kind === 'daily') return Math.max(600, expanded ? available - 170 : Math.min(760, Math.round(available * .74)));
     return expanded ? Math.max(440, available - 170) : Math.max(440, Math.min(670, Math.round(available * .61)));
   }
 
@@ -814,13 +846,13 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
   function drawChart(kind) {
     const panel = panels[kind];
     const width = Math.max(265, panel.plot.clientWidth);
-    const height = displayHeight();
+    const height = displayHeight(kind);
     const wide = width >= 940;
     const lane = focusedLanes[kind];
     const reference = kind === 'returns' && hasPoolReference();
     const labelEnds = kind === 'returns' && width >= 550;
     const left = width < 540 ? 47 : 70;
-    const right = width - (wide ? 156 : labelEnds ? 110 : 20);
+    const right = width - (kind !== 'daily' && wide ? 156 : labelEnds ? 110 : 20);
     const bottom = height - 34;
     const unit = (right - left) / visible.points.length;
     const x = index => left + unit * (index + 1);
@@ -828,13 +860,24 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     const label = signalMode.value === 'ic' ? 'IC' : 'RankIC';
     const cumulativeField = signalMode.value === 'ic' ? 'cumulativeIC' : 'cumulativeRankIC';
     const midpoint = Math.round(height * .51);
-    const cumulativeValues = reference ? [...values('cumulative'), ...values('poolCumulative')] : values('cumulative');
-    const areas = kind === 'returns'
-      ? [plotArea('cumulative', '累计' + returnLabel() + '（%）', '%', cumulativeValues, 61, bottom)]
-      : [
-          plotArea(cumulativeField, '累计 ' + label, '', values(cumulativeField), 61, midpoint),
-          plotArea(signalMode.value, '单日 ' + label, '', values(signalMode.value), midpoint + 55, bottom, true)
-        ];
+    let areas;
+    if (kind === 'returns') {
+      const cumulativeValues = reference ? [...values('cumulative'), ...values('poolCumulative')] : values('cumulative');
+      areas = [plotArea('cumulative', '累计' + returnLabel() + '（%）', '%', cumulativeValues, 61, bottom)];
+    } else if (kind === 'daily') {
+      const gap = 40;
+      const rowHeight = (bottom - 61 - (dailyMetrics.length - 1) * gap) / dailyMetrics.length;
+      areas = dailyMetrics.map(([field, caption], i) => {
+        const top = 61 + i * (rowHeight + gap);
+        const samples = lane === null ? values(field) : visible.points.map(point => point.values[lane][field]);
+        return plotArea(field, caption + '（bp）', '', samples, top, top + rowHeight);
+      });
+    } else {
+      areas = [
+        plotArea(cumulativeField, '累计 ' + label, '', values(cumulativeField), 61, midpoint),
+        plotArea(signalMode.value, '单日 ' + label, '', values(signalMode.value), midpoint + 55, bottom, true)
+      ];
+    }
     const layout = { width, height, left, right, bottom, x, unit, areas, lane, reference };
     panel.layout = layout;
     const out = [
@@ -878,7 +921,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
         const coords = visible.points.map((point, j) => [x(j), area.y(point.values[i][area.field])]);
         if (visible.first === 0 && Number.isFinite(coords[0][1]) && area.field.startsWith('cumulative')) coords.unshift([left, area.y(0)]);
         const cls = 'series-line ' + style(info) +
-          (area.field === 'ic' || area.field === 'rankic' ? ' signal-daily' : '');
+          (kind === 'daily' || area.field === 'ic' || area.field === 'rankic' ? ' daily-line' : '');
         if (coords.some(([, y]) => Number.isFinite(y))) out.push(path(coords, cls));
       });
     }
@@ -923,7 +966,8 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
 
   function dateNote(point, index, kind) {
     const lane = focusedLanes[kind];
-    const label = kind === 'returns' ? ' · ' + portfolio.join('') + ' · 做 T ' + tradeFraction + '% · 累计' + returnLabel() : '';
+    const configuration = ' · ' + portfolio.join('') + ' · 做 T ' + tradeFraction + '%';
+    const label = kind === 'signal' ? '' : configuration + (kind === 'returns' ? ' · 累计' + returnLabel() : '');
     const head = '<div class="note-head"><div class="note-date"><time datetime="' + point.date + '">' +
       point.date + '</time><span>' + phases[point.phase].label + label + '</span></div>' +
       (pinned ? '<button class="demo-button note-dismiss" type="button" data-close-note>关闭</button>' : '') +
@@ -932,6 +976,10 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
       return head + detailsTable(['日 IC', '日 RankIC', '累计 IC', '累计 RankIC'], point.values, row => [
         format(row.ic, 3), format(row.rankic, 3), format(row.cumulativeIC, 3), format(row.cumulativeRankIC, 3)
       ], lane);
+    }
+    if (kind === 'daily') {
+      return head + detailsTable(dailyMetrics.map(([, label]) => label + ' bp'), point.values,
+        row => dailyMetrics.map(([field]) => format(row[field])), lane);
     }
     return head + detailsTable(['交易净收益 bp', '当日增强 bp', '累计增强 %', '研究净值', '底仓净值', '入选', '有价成交'],
       point.values, row => [format(row.tradeReturn), format(row.enhancement), format(row.addition), format(row.nav, 4),
@@ -990,7 +1038,8 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     status.textContent = point.date + ' ' + point.values.map((value, i) => {
       if (lane !== null && i !== lane) return '';
       const detail = kind === 'signal' ? format(value[signalMode.value], 3) :
-        '累计' + returnLabel() + ' ' + format(value.cumulative) + '%';
+        kind === 'daily' ? dailyMetrics.map(([field, label]) => label + ' ' + format(value[field]) + ' bp').join('，') :
+          '累计' + returnLabel() + ' ' + format(value.cumulative) + '%';
       return series[i].label + ' ' + detail;
     }).filter(Boolean).join('，');
   }
@@ -1172,6 +1221,7 @@ body.demo-expanded .demo-dashboard .chart-plate { scroll-margin-top: 65px; }
     const title = '中证 2000 · 做 T ' + tradeFraction + '% · 全程累计' + returnLabel() + ' · ' + feeLabel();
     get('compare-heading').textContent = title;
     panels.returns.svg.setAttribute('aria-label', title);
+    get('daily-heading').textContent = '逐日收益 · 做 T ' + tradeFraction + '% · ' + feeLabel();
     for (const button of optionButtons) button.setAttribute('aria-pressed', String(button.dataset.returnView === view));
     timeline = timelineFor();
     updateScoreRows();

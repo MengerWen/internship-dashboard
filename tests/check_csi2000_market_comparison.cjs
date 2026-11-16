@@ -7,6 +7,7 @@ const source = fs.readFileSync(process.argv[2], 'utf8');
 const encoded = source.match(/id="csi2000-market-data">([^<]+)<\/script>/)[1];
 const data = JSON.parse(gunzipSync(Buffer.from(encoded, 'base64')));
 const code = source.match(/<script>\s*([\s\S]*?)\s*<\/script>/)[1];
+const hasDaily = source.includes('id="daily-figure"');
 
 class Element {
   constructor(dataset = {}) {
@@ -42,7 +43,7 @@ const get = id => {
   return elements.get(id);
 };
 get('csi2000-market-data').textContent = encoded;
-get('signal-mode').value = 'rankic';
+get('signal-mode').value = source.match(/<select id="signal-mode">\s*<option value="([^"]+)"/)[1];
 const controls = {weight: 'index', sorting: 'combined', strategy: 'L', q: '5', phase: 'all', tradeFraction: '10'};
 get('filters').elements = {
   phase: {set value(value) { controls.phase = value; }},
@@ -55,11 +56,12 @@ const bodies = ['development', 'seen', 'unseen'].map(phase => ({
   rows: [0, 1, 2, 3].map(lane => new Element({lane: String(lane)}))
 }));
 get('score-rows').tBodies = bodies;
-const legends = ['returns', 'signal'].flatMap(kind => ['all', '0', '1', '2', '3'].map(
+const chartKinds = hasDaily ? ['returns', 'daily', 'signal'] : ['returns', 'signal'];
+const legends = chartKinds.flatMap(kind => ['all', '0', '1', '2', '3'].map(
   lane => new Element({curveKind: kind, curveLane: lane})
 ));
 const options = ['wealth', 'enhancement'].map(returnView => new Element({returnView}));
-const expanders = ['returns', 'signal'].map(enlarge => new Element({enlarge}));
+const expanders = chartKinds.map(enlarge => new Element({enlarge}));
 const document = {
   getElementById: get,
   querySelectorAll(selector) {
@@ -87,10 +89,64 @@ async function main() {
   assert.notEqual(get('fill-status').hidden, false, 'Data failed to load');
 }
 
+function checkDailyChart() {
+  const chart = get('daily-chart');
+  const note = get('daily-note');
+  const cursor = svg => svg.querySelector('[data-cursor]').innerHTML;
+  assert.ok(source.indexOf('id="results"') < source.indexOf('id="daily-figure"'));
+  assert.ok(source.indexOf('id="daily-figure"') < source.indexOf('id="signal-figure"'));
+  for (const caption of ['交易净收益', '账户净收益', '底仓增强']) {
+    assert.ok(chart.innerHTML.includes(caption + '（bp）'));
+  }
+  assert.equal((chart.innerHTML.match(/class="series-line /g) || []).length, 12);
+  assert.match(get('signal-chart').innerHTML, /累计 IC</);
+  const at = 308;
+  const clientX = 70 + (1180 - 70) * (at + 1) / data.dates.length;
+  const event = {clientX, clientY: 100, pointerType: 'mouse', pointerId: 1, button: 0};
+  chart.handlers.pointermove(event);
+  assert.equal(note.hidden, false);
+  assert.ok(note.innerHTML.includes(data.dates[at]));
+  assert.ok(cursor(chart).includes('date-rule'));
+  assert.ok(cursor(get('return-chart')).includes('date-rule'));
+  assert.ok(cursor(get('signal-chart')).includes('date-rule'));
+  chart.handlers.pointerdown(event);
+  chart.handlers.pointerup(event);
+  chart.handlers.pointerleave();
+  assert.equal(note.hidden, false);
+  for (const fraction of ['10', '30']) {
+    controls.tradeFraction = fraction;
+    get('filters').handlers.change();
+    assert.ok(note.innerHTML.includes('做 T ' + fraction + '%'));
+    const key = 'index-combined-morning-L-5' + (fraction === '10' ? '' : '-t30');
+    const [entry, gross, fees] = data.trading[key][at][0];
+    const b0 = data.base.index[at - 1][0], b = data.base.index[at][0];
+    const a0 = data.series[key][at - 1][0], a = data.series[key][at][0];
+    const match = note.innerHTML.match(/沪市 11:30<\/th><td>([^<]+)<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td>/);
+    assert.ok(match, 'Hover shows all three daily values');
+    const expected = [entry > 0 ? (gross - fees) / entry : null, (b + a) / (b0 + a0) - 1, (a - a0) / b0];
+    match.slice(1).forEach((cell, i) => {
+      if (expected[i] === null) assert.equal(cell, '—');
+      else close(numeric({textContent: cell}), expected[i] * 10000);
+    });
+    options[1].handlers.click();
+    assert.ok(note.innerHTML.includes(match[0]));
+    options[0].handlers.click();
+  }
+  const plot = get('daily-plot');
+  plot.handlers.keydown({target: plot, key: 'Home', preventDefault() {}});
+  assert.match(note.innerHTML, /沪市 11:30<\/th><td>—<\/td>/);
+  get('signal-mode').value = 'rankic';
+  get('signal-mode').handlers.change();
+  assert.match(get('signal-chart').innerHTML, /累计 RankIC</);
+  note.handlers.click({target: {closest: () => true}});
+  assert.equal(note.hidden, true);
+}
+
 (async () => {
   // The HTML keeps the error status hidden until loading actually fails.
   get('fill-status').hidden = true;
   await main();
+  if (hasDaily) checkDailyChart();
   let checks = 0;
   for (const fraction of data.tradeFractions) {
   controls.tradeFraction = String(fraction);
@@ -162,7 +218,7 @@ async function main() {
   get('signal-mode').value = 'ic';
   get('signal-mode').handlers.change();
   assert.match(get('signal-chart').innerHTML, /累计 IC/);
-  expanders[0].handlers.click();
+  expanders.find(b => b.dataset.enlarge === (hasDaily ? 'daily' : 'returns')).handlers.click();
   get('close-expanded').handlers.click();
   get('reset-range').handlers.click();
   assert.match(get('visible-range').textContent, /566 日/);
