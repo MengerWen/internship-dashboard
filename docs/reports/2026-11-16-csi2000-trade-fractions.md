@@ -21,3 +21,9 @@
 正式来源为日报、展示页、生成脚本与上述测试；完整数据由研究仓库签收对象保留。临时目录为`.local/runs/csi2000-ratios-20261116`，预算100MiB，消费者为本次生成与发布；关键收据入库后释放可重建材料，复查日期2026-11-23。发布复用现有dist、附件、日报渲染及资源哈希，收据保存于`artifacts/csi2000-ratios-20261116/release-receipt.json`。
 
 本次参考：Code、shuorenhua、frontend-design、design-taste-frontend、impeccable、ui-ux-pro-max、emil-design-eng、brainstorming。
+
+## 发布与收尾
+
+源码`c0b50483a2c042cd5db042c32b6c16f10f3f112e`已推送，本地`npm run deploy`退出码0，总耗时105秒。Worker版本`c4be7906-72cf-4e67-98ff-7a1cc163957b`，上传53个变动资源，复用既有资源。部署日志与[发布收据](../../artifacts/csi2000-ratios-20261116/release-receipt.json)保留在正式证据目录。
+
+本任务两份临时日志共4,430逻辑字节已普通删除，临时目录已不存在。研究任务的本机中转与测试、两账户热暂存也已完成清理，唯一数据来源及清单保留在研究仓库和签收S3根。其他任务的临时材料与共享构建缓存保留。
