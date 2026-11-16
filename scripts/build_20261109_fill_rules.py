@@ -30,7 +30,7 @@ def script_json(html, name):
     match = re.search(r'<script type="application/json" id="' + re.escape(name) + r'">\s*(.*?)\s*</script>',
                       html, re.S)
     if match is None:
-        raise ValueError(f'Missing original page data: {name}')
+        raise ValueError(f'Missing page data: {name}')
     return json.loads(match.group(1))
 
 
@@ -52,23 +52,26 @@ def read_export(path, expected, account):
 
 
 def assemble(html, exports):
-    returns = script_json(html, 'return-data')
-    names = ['all', *re.findall(r'id="index-data-([a-z0-9]+)"', html)]
-    if len(set(names)) != 19:
+    calendar = script_json(html, 'evaluation-calendar')
+    names = re.findall(r'data-index="([a-z0-9]+)"', html)
+    if len(names) != 19 or len(set(names)) != 19 or names[0] != 'all':
         raise ValueError('Expected full market and 18 constituent pools')
+    days = {day for phase in calendar for day in phase['dates']}
+    for account, _ in SERIES:
+        exported_days = {day for _, _, day in exports[account]}
+        if days != exported_days:
+            raise ValueError(f'Export calendar differs: {account}')
     out = {}
     for name in names:
         out[name] = {}
-        old = script_json(html, 'index-data-' + name) if name != 'all' else None
-        for phase in returns['phases']:
+        for phase in calendar:
             stage, dates = phase['id'], phase['dates']
             series = [[exports[account][stage, horizon, day].get(name) for day in dates]
                       for account, horizon in SERIES]
             data = {'signals': [[row['signal'] if row else None for row in lane] for lane in series],
                     'poolMid': [[row['pool_mid'] if row else None for row in lane] for lane in series]}
-            if old and [[point is not None for point in lane] for lane in data['signals']] != [
-                    [point is not None for point in lane] for lane in old[stage]['signals']]:
-                raise ValueError(f'Index start or market coverage changed: {name}/{stage}')
+            if not any(row is not None for lane in series for row in lane):
+                raise ValueError(f'Missing constituent data: {name}/{stage}')
             for method in ('within', 'intersect'):
                 if method == 'intersect' and name == 'all':
                     continue
@@ -146,106 +149,20 @@ def intro(report_url):
 
 
 def render(html, data, summaries, report_url):
-    names = [name for name in data if name != 'all']
-    original = {name: script_json(html, 'index-data-' + name) for name in names}
-    html, removed = re.subn(r'<script type="application/json" id="index-data-[a-z0-9]+">.*?</script>\n',
-                            '', html, flags=re.S)
-    if removed != len(original):
-        raise ValueError('Original constituent data could not be moved to the compressed payload')
-    encoded = encode_data(data)
-    historic = encode_data(original)
-    html = replace(html, '  </div>\n</header>\n<main', intro(report_url) + '\n  </div>\n</header>\n<main')
-    html = replace(html, '<section id="contract"', summary_table(summaries) + '\n<section id="contract"')
-    html = replace(html, '<div class="figure-controls"><div class="index-method-group" role="group" aria-label="收益口径"',
-        '<div class="figure-controls"><div class="index-method-group" role="group" aria-label="成交口径">'
-        '<button type="button" data-fill-basis="main" aria-pressed="true">主口径</button>'
-        '<button type="button" data-fill-basis="original" aria-pressed="false">原登记口径</button></div>'
-        '<div class="index-method-group" role="group" aria-label="收益口径"')
-    html = replace(html, '    <p id="fee-note"', '    <p id="fill-status" class="chart-foot" role="status" hidden></p>\n    <p id="fee-note"')
-    html = replace(html, '<script>\n(() => {', '<script type="application/octet-stream" id="fill-data">' +
-        encoded + '</script>\n<script type="application/octet-stream" id="original-index-data">' +
-        historic + '</script>\n<script>\n(async () => {')
-    html = replace(html, "  let indexData = null;", """  let correction = null;
-  let fillBasis = 'main';
-  async function readData(id) {
-    const zipped = Uint8Array.from(atob(get(id).textContent), value => value.charCodeAt(0));
-    const stream = new Blob([zipped]).stream().pipeThrough(new DecompressionStream('gzip'));
-    return new Response(stream).json();
-  }
-  const originalIndexes = readData('original-index-data').catch(() => null);
-  try {
-    correction = await readData('fill-data');
-  } catch {
-    fillBasis = 'original';
-    get('fill-status').textContent = '主口径数据读取失败，当前显示原登记口径。';
-    get('fill-status').hidden = false;
-    document.querySelector('[data-fill-basis="main"]').disabled = true;
-  }
-  const originalData = await originalIndexes;
-  let indexData = correction?.all ?? null;""")
-    html = replace(html, "const isExcess = () => returnBasis === 'excess' && indexData !== null;",
-        "const isExcess = () => returnBasis === 'excess' && activeIndex !== 'all';\n"
-        "  const methodFor = pool => pool === 'all' ? 'within' : activeMethod;")
-    html = replace(html, "    if (feeBasis !== 'net' || !Number.isFinite(gross)) return gross;",
-        "    if (feeBasis !== 'net' || !Number.isFinite(gross)) return gross;\n"
-        "    if (fillBasis === 'main') return correction[pool][phase][methodFor(pool)][port][seriesIndex][dayIndex]?.[3] ?? null;")
-    html = replace(html, "const benchmark = !indexData ? null", "const benchmark = activeIndex === 'all' ? null")
-    html = replace(html, "returnsByPhase[phase][port][seriesIndex][dayIndex], phase, seriesIndex, dayIndex, port, 'all'",
-        "(fillBasis === 'main' ? correction.all[phase].within[port][seriesIndex][dayIndex]?.[0]\n"
-        "        : returnsByPhase[phase][port][seriesIndex][dayIndex]), phase, seriesIndex, dayIndex, port, 'all'")
-    html = replace(html, "indexed[activeMethod][port]", "indexed[methodFor(activeIndex)][port]")
-    html = replace(html, "indexData?.[stage][activeMethod][key]", "indexData?.[stage][methodFor(activeIndex)][key]")
-    html = replace(html, "Boolean(indexData && portfolio?.startsWith('L')", "Boolean(activeIndex !== 'all' && indexData && portfolio?.startsWith('L')")
-    html = replace(html, "    indexData = activeIndex === 'all' ? null : JSON.parse(get('index-data-' + activeIndex).textContent);",
-        "    loadActiveIndex();")
-    html = replace(html, "  function switchIndex(tab, keyboard = false) {", """  function loadActiveIndex() {
-    indexData = fillBasis === 'main' ? correction[activeIndex]
-      : activeIndex === 'all' ? null : originalData?.[activeIndex] ?? null;
-  }
-  const fillButtons = [...document.querySelectorAll('[data-fill-basis]')];
-  function syncFillBasis() {
-    fillButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.fillBasis === fillBasis)));
-    const adjusted = fillBasis === 'main';
-    get('carry-summary').hidden = !adjusted;
-    indexTabs.forEach(tab => { tab.disabled = !adjusted && !originalData && tab.dataset.index !== 'all'; });
-    const contract = get('contract');
-    contract.querySelectorAll('[data-original-fill]').forEach(item => { item.hidden = adjusted; });
-    contract.querySelectorAll('[data-main-fill]').forEach(item => { item.hidden = !adjusted; });
-    get('indexed-contract').textContent = adjusted
-      ? '指数页使用原有月末成分。成分池中间价基准按 F2 过滤后等权，旧仓按成分池自己的全选多头持仓跟踪。A 的超额基准沿用同口径全市场 A。IC 与 RankIC 以符合静态可交易条件的个股计划资金毛收益计算。'
-      : originalIndexContract;
-  }
-  const originalIndexContract = get('indexed-contract').textContent;
-  fillButtons.forEach(button => button.addEventListener('click', () => {
-    if (button.disabled || button.dataset.fillBasis === fillBasis) return;
-    fillBasis = button.dataset.fillBasis;
-    if (fillBasis === 'original' && !originalData && activeIndex !== 'all') switchIndex(tabsByIndex.all);
-    loadActiveIndex();
-    syncFillBasis();
-    refreshReturns();
-  }));
-  syncFillBasis();
-
-  function switchIndex(tab, keyboard = false) {
-    if (tab.disabled) return;""")
-    html = replace(html, " : '全市场原基准';", " : (fillBasis === 'main' ? '全市场主口径' : '全市场原基准');")
-    html = replace(html, "  function refreshIndexCaption() {", """  function refreshIndexCaption() {
-    get('carry-summary').querySelectorAll('[data-carry-port]').forEach(row => {
-      row.hidden = row.dataset.carryPort !== portfolio || (phaseChoice !== 'all' && row.dataset.carryStage !== phaseChoice);
-    });""")
-    html = replace(html, '<li>纯多 L 买分数最高的 q。', '<li data-original-fill>纯多 L 买分数最高的 q。')
-    html = replace(html, '<li>图表使用对手价绝对毛收益，', '<li data-original-fill>图表使用对手价绝对毛收益，')
-    html = replace(html, '<li id="indexed-contract" hidden>',
-        '<li data-main-fill>主口径在过滤后的股票池里选股。每腿按入选只数等分资金，'
-        '未成交部分留在现金。费用按实际成交金额计算。</li>\n      <li id="indexed-contract" hidden>')
-    html = replace(html, '<details class="index-rankings">', '<details class="index-rankings" data-original-rank>')
-    html = re.sub(r'(<details class="index-rankings" data-original-rank>\s*<summary>)', r'\1原登记口径 · ', html, count=1)
-    return html
+    payload_pattern = r'(<script type="application/octet-stream" id="fill-data">)[^<]*(</script>)'
+    html, count = re.subn(payload_pattern, lambda m: m[1] + encode_data(data) + m[2], html)
+    if count != 1:
+        raise ValueError('Expected one execution data block')
+    carry = re.search(r'<section id="carry-summary"[^>]*>.*?</section>\n', html, re.S)
+    opening = re.search(r'^    <p class="fill-intro">.*?</p>', html, re.M)
+    if carry is None or opening is None:
+        raise ValueError('Missing execution summary or introduction')
+    html = replace(html, carry[0], summary_table(summaries))
+    return replace(html, opening[0], intro(report_url))
 
 
 def update_note(path, summaries, report_url):
     source = path.read_text(encoding='utf-8')
-    old = '以上为对手价绝对毛收益。'
     revised = []
     for account, market in (('wenjie', '沪市'), ('wangly', '深市')):
         result = {(r['strategy'], r['horizon']): r['main']['mean_bp'] for r in summaries[account]['metrics']
@@ -253,10 +170,13 @@ def update_note(path, summaries, report_url):
         long = f'{result["L", "morning"]:.2f} / {result["L", "close"]:.2f}'
         combined = f'{result["A", "morning"]:.2f} / {result["A", "close"]:.2f}'
         revised.append(f'{market} L5 为 {long} bp，A5 为 {combined} bp')
-    suffix = ('\n\n按 F1–F9 重算后，未看段全市场的日均绝对毛收益按 11:30 / 收盘列出。'
-              + '。'.join(revised).replace('-', '−') + '。展示页默认显示主口径，可切回原登记口径。'
-              + f' [重算报告]({report_url})')
-    return replace(source, old, old + suffix)
+    paragraph = ('按 F1–F9 重算后，未看段全市场的日均绝对毛收益按 11:30 / 收盘列出。'
+                 + '。'.join(revised).replace('-', '−') + '。'
+                 + f' [重算报告]({report_url})')
+    current = re.search(r'^按 F1–F9 重算后，[^\n]+', source, re.M)
+    if current is None:
+        raise ValueError('Missing execution results in the daily note')
+    return replace(source, current[0], paragraph)
 
 
 def main():
@@ -283,9 +203,6 @@ def main():
     page_bytes = page.encode()
     if len(page_bytes) >= ASSET_LIMIT:
         raise ValueError(f'Standalone page exceeds the deployment asset budget: {len(page_bytes)} bytes')
-    for name in ('return-data', 'demo-signals', 'fee-data'):
-        if script_json(source, name) != script_json(page, name):
-            raise ValueError(f'Original page data changed: {name}')
     args.page.write_bytes(page_bytes)
     args.note.write_text(note, encoding='utf-8', newline='\n')
     print(f'{len(page_bytes):,} bytes, {len(adjusted) - 1} constituent pools, four market/horizon series')

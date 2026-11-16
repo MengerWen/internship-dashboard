@@ -11,6 +11,7 @@ import json
 import math
 from pathlib import Path
 import re
+import subprocess
 
 from build_20261109_fill_rules import ASSET_LIMIT, encode_data, replace
 
@@ -26,10 +27,22 @@ STAGES = {'oof': 308, 'test_seen': 176, 'test_unseen': 82}
 AXES = [('index', 'equal'), ('combined', 'separate'), ('morning', 'close'), ('L', 'A'),
         ('1', '5', '10', '20')]
 CONFIGURATIONS = {'-'.join(row) for row in itertools.product(*AXES)}
+TEMPLATE_REVISION = 'f2342e063c743727c76c52732dc860ff6523002e'
 SOURCE_HASHES = {
     OLD_NOTE: 'f30d3c0d0e50bdbf24ffbf2fff088fccb24b5bea816790fea36c0b1c1c75915a',
     OLD_PAGE: '9bebcb4838d547e5b5f8917eaf3740ffbff7d5170c7ff3a952e6d8649f61dcda',
 }
+
+
+def read_template(path, template):
+    if path is None:
+        git_path = template.relative_to(ROOT).as_posix()
+        raw = subprocess.check_output(['git', 'show', f'{TEMPLATE_REVISION}:{git_path}'], cwd=ROOT)
+    else:
+        raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != SOURCE_HASHES[template]:
+        raise ValueError(f'Template SHA-256 differs: {template.name}')
+    return raw.decode('utf-8')
 
 
 def read_results(path, expected_sha256):
@@ -157,22 +170,19 @@ def main():
     parser.add_argument('--sha256', required=True)
     parser.add_argument('--report-url', required=True)
     parser.add_argument('--published', help='ISO timestamp of the report’s first Git commit')
-    parser.add_argument('--source', type=Path, default=OLD_PAGE)
-    parser.add_argument('--source-note', type=Path, default=OLD_NOTE)
+    parser.add_argument('--source', type=Path, help='Local copy of the signed 11.9 HTML template')
+    parser.add_argument('--source-note', type=Path, help='Local copy of the signed 11.9 Markdown template')
     parser.add_argument('--page', type=Path, default=PAGE)
     parser.add_argument('--note', type=Path, default=NOTE)
     args = parser.parse_args()
-    sources = {Path(p).resolve() for p in (args.source, args.source_note, *SOURCE_HASHES)}
+    sources = {p.resolve() for p in (args.source, args.source_note, *SOURCE_HASHES) if p is not None}
     targets = {args.page.resolve(), args.note.resolve()}
     if sources & targets or len(targets) != 2:
         parser.error('Output paths must differ from the protected 11.9 sources')
-    for path in (args.source.resolve(), args.source_note.resolve()):
-        if path not in SOURCE_HASHES or hashlib.sha256(path.read_bytes()).hexdigest() != SOURCE_HASHES[path]:
-            raise ValueError(f'Template SHA-256 differs: {path.name}')
     result = read_results(args.aggregate, args.sha256)
     data = pack(result)
-    payload = render(args.source.read_text(encoding='utf-8'), data, args.report_url)
-    note = render_note(args.source_note.read_text(encoding='utf-8'), result, args.report_url, published=args.published)
+    payload = render(read_template(args.source, OLD_PAGE), data, args.report_url)
+    note = render_note(read_template(args.source_note, OLD_NOTE), result, args.report_url, published=args.published)
     args.page.parent.mkdir(parents=True, exist_ok=True)
     args.page.write_text(payload, encoding='utf-8', newline='\n')
     args.note.write_text(note, encoding='utf-8', newline='\n')
