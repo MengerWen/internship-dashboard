@@ -1599,20 +1599,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 10,
+        "days": 11,
         "span": [
           "2026-07-07",
-          "2026-11-11"
+          "2026-11-16"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-12",
-          "scope": "11月11日已核实的工作和依据，来源仍有缺口。"
+          "on": "2026-11-17",
+          "scope": "有HTML展示时优先加载，固定回放数据独立缓存。"
         }
       },
       "fate": "landed",
-      "fate_note": "站点的构建、离线阅读和部署一直在维护。11 月 5 日两市同名列的对照下载改用页面内嵌的完整精度数据；11 月 10 日停用旧的自动构建，改为推送后在本机直接发布，有缓存时单篇日报从提交到上线约 59 秒。。修复了GBK控制台下的发布锁。",
+      "fate_note": "看板维护构建、离线阅读和部署。11月5日两市同名列的下载改用完整精度数据。11月10日改为本机增量发布，修复GBK控制台下的发布锁。日报有HTML时优先打开展示，稳定回放数据拆成独立附件。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1656,6 +1656,20 @@
           "revision": "d59b089430657f3c35d916a82eaad01ad6129517",
           "title": "修复GBK控制台下的发布锁",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/d59b089430657f3c35d916a82eaad01ad6129517"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "c4e2fe56853b35c92cdae0940c6eb315e94bac76",
+          "title": "日报优先打开HTML展示",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/c4e2fe56853b35c92cdae0940c6eb315e94bac76"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "0ac510213babb833b4d28b5c772349aeef2610f2",
+          "title": "稳定回放分片资产",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/0ac510213babb833b4d28b5c772349aeef2610f2"
         }
       ]
     },
@@ -1685,26 +1699,28 @@
           "2026-11-03",
           "2026-11-04",
           "2026-11-07",
-          "2026-11-09"
+          "2026-11-09",
+          "2026-11-13",
+          "2026-11-16"
         ]
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 46,
+        "days": 47,
         "span": [
           "2026-07-07",
-          "2026-11-11"
+          "2026-11-16"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-12",
-          "scope": "11月11日已核实的工作和依据，来源仍有缺口。"
+          "on": "2026-11-17",
+          "scope": "11月13日归档固定基准，11月16日展示费后账簿、因子和新旧模型对照。"
         }
       },
       "fate": "landed",
-      "fate_note": "各阶段的研究报告和展示页都从这里发布。11 月 9 日补齐模型线方法报告的图表，发布沪深两市基准模型的逐日收益展示；10 日修复嵌入时的表格宽度，补上深市多空收益的算法说明。。11月9日汇报已补成交顺延重算。",
+      "fate_note": "两市基准预测的逐日收益、成交顺延及费用陆续进入汇报。11月9日汇报现只展示修正后的成交口径。11月13日归档固定底仓基准，11月16日展示扣费做T三档比例、深市扩因子全期对照及沪市165列诊断。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1784,6 +1800,20 @@
           "revision": "f2342e063c743727c76c52732dc860ff6523002e",
           "title": "保留11月9日汇报首发时间",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/f2342e063c743727c76c52732dc860ff6523002e"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "676f4f725464f2c0620f2c8905e08d629efd65bb",
+          "title": "固定基准与G2展示",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/676f4f725464f2c0620f2c8905e08d629efd65bb"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "7ba457b1ec8bb782abb1f3f0f5131ca94d97087c",
+          "title": "沪市候选诊断入展示",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/7ba457b1ec8bb782abb1f3f0f5131ca94d97087c"
         }
       ]
     },
@@ -2290,20 +2320,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 31,
+        "days": 32,
         "span": [
           "2026-08-19",
-          "2026-11-09"
+          "2026-11-16"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-10",
-          "scope": "11月9日实际工作及当日固定依据，来源覆盖仍不完整。"
+          "on": "2026-11-17",
+          "scope": "定义八族16种高频候选及两类中低频备选。"
         }
       },
       "fate": "landed",
-      "fate_note": "8 月起研判 B/C/D/V 系列想法。10 月底转向在算法单信号之外找新信息，建成候选表，到 11 月初目录有 64 个因子族，分批定稿定义后交给计算链。11 月 9 日在看三个外部工具里能借用的思路。",
+      "fate_note": "8月起研判B/C/D/V系列，10月底转向在算法单信号之外找新信息。11月初目录有64个因子族，分批定稿后交给计算。后续查了外部工具可复用的思路，又登记十档、补单和队列等八族高频候选。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2461,6 +2491,18 @@
           ],
           "title": "TradingAgents因子研究路径",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/7fd5bd831e8ac78625af81398c3d4f7219b913d8/reports/2026-11/2026-11-09-tradingagents-factor-research.md#L1-L340"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "path": "reports/2026-11/2026-11-16-high-frequency-factor-research.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "高频候选与数据边界",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/529357913adb7e1720064ca17c3478cc3ab319db/reports/2026-11/2026-11-16-high-frequency-factor-research.md#L1-L30"
         }
       ]
     },
@@ -3627,20 +3669,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-03",
-        "days": 6,
+        "days": 7,
         "span": [
           "2026-11-02",
-          "2026-11-07"
+          "2026-11-16"
         ],
         "unreviewed_days": [],
         "scope": "11月2日原始要求、固定产物与实际运行结果；历史来源缺口继续留账。",
         "incremental_review": {
-          "on": "2026-11-08",
-          "scope": "11月7日实际工作和固定证据；来源覆盖仍不完整。"
+          "on": "2026-11-17",
+          "scope": "调整技术核查流程，加入十档盘口计算及实数探针。"
         }
       },
       "fate": "landed",
-      "fate_note": "11 月 2 日起分批计算和验收：日线类（1a）、个股控制和期指市场类（1c）、第二批 25 列、第三批 39 列和 ETF/公告类、市场变体（4a）、依赖现有因子的 16 列（1b）、成交量和竞价类（4c）。到 11 月 7 日各批主要的列通过 683 日验收，11 月 9 日用于深市新因子比较。",
+      "fate_note": "已有新因子分批通过683日验收，并进入深市比较。新一批高频候选完成十档计算代码和合成检查，沪市实数探针已写好，分族核对后再运行全历史。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3738,6 +3780,20 @@
           ],
           "title": "GAP第21轮正式签收与历史停点",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/00ab49aebcced117b1caf7a1506289e05d082fbb/research/factor-candidates/reviews/2026-11-07-batch4c-round21-acceptance.md#L1-L92"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "c61e02a6ca9da44281833e226096488a2c8dce8a",
+          "title": "十档盘口计算及合成检查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/c61e02a6ca9da44281833e226096488a2c8dce8a"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "title": "沪市实数探针",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/529357913adb7e1720064ca17c3478cc3ab319db"
         }
       ]
     },
@@ -3794,25 +3850,27 @@
       "purpose": "在固定的开发段样本上，按预测、调节、控制、市场四种角色给已算出的候选因子做单因子诊断。结果只存档，不作入库或入模的门槛。",
       "status": "active",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-11-16"
+        ]
       },
       "review": {
         "by": "Codex",
         "on": "2026-11-04",
-        "days": 2,
+        "days": 3,
         "span": [
           "2026-11-03",
-          "2026-11-04"
+          "2026-11-16"
         ],
         "unreviewed_days": [],
         "scope": "11月3日目标、固定产物及真实消息，11月4日后续不提前计入。",
         "incremental_review": {
-          "on": "2026-11-05",
-          "scope": "11月4日原始要求、逐项产物与午夜前工具结果；5日后续单列，来源仍不完整。"
+          "on": "2026-11-17",
+          "scope": "按四类作用域完成沪市165列、两个周期的566日诊断。"
         }
       },
       "fate": "landed",
-      "fate_note": "11 月 3 日做完深市开发段 61 列的诊断。4 日补正：信号自身的 Rank IC 要先够可靠（t 值绝对值到 2），才解读方向和控制项比例。沪市和测试段没做。",
+      "fate_note": "先完成深市开发段61列的分角色诊断，再完成沪市165列的双周期评测，分为个股连续、类别、市场同值与行业。沪市原值覆盖683日，主诊断覆盖566日。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3838,6 +3896,18 @@
           ],
           "title": "11月4日阶段结果与停止位置",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/1599fb7492b7a5b40d8342fc2490acd729008bb5/reports/2026-11/2026-11-03-candidate-diagnostics-szse-dev.md#L1-L1933"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "path": "reports/2026-11/2026-11-16-sse-candidate-diagnostics.md",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "沪市165列的四类统计",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/529357913adb7e1720064ca17c3478cc3ab319db/reports/2026-11/2026-11-16-sse-candidate-diagnostics.md#L1-L20"
         }
       ]
     },
@@ -4105,25 +4175,27 @@
       "purpose": "固定深市基准模型的训练设置、评价方法和样本，在开发段比较加入六组新增因子（及一个联合组）前后的差别：收益、风险、稳定性和成交。",
       "status": "active",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-11-16"
+        ]
       },
       "review": {
         "by": "Codex",
         "on": "2026-11-10",
-        "days": 2,
+        "days": 3,
         "span": [
           "2026-11-09",
-          "2026-11-10"
+          "2026-11-16"
         ],
         "unreviewed_days": [],
         "scope": "独立目标、输入承接、实施与截至当晚的状态。",
         "incremental_review": {
-          "on": "2026-11-11",
-          "scope": "11月10日已核实的新增工作和固定依据，来源仍有缺口。"
+          "on": "2026-11-17",
+          "scope": "将隔夜、集合竞价和持仓成本组接入冻结底仓，完成全期对照。"
         }
       },
       "fate": "landed",
-      "fate_note": "11 月 10 日七套比较在 308 个开发折外日上验收。隔夜、集合竞价与持仓成本这组新因子有三项收益改善（每天约 5.7—11.3 bp），通过多重比较校正；六组合并加入没有显著增益。结果只限开发段，原基准保留。",
+      "fate_note": "开发段的隔夜、集合竞价与持仓成本组有三项收益改善。接入扣费底仓后，566日16项主配置均略改善，最后82日有8项改善，整体未通过多重比较校正。固定基准继续保留。",
       "source_refs": [
         {
           "kind": "file",
@@ -4174,6 +4246,18 @@
           "revision": "663b3e2c622af5d99163e1ecff7065b776bb24e1",
           "title": "深市七套新因子正式比较",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/663b3e2c622af5d99163e1ecff7065b776bb24e1"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "path": "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+          "lines": [
+            1,
+            33
+          ],
+          "title": "深市G2全期增益与不确定性",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/529357913adb7e1720064ca17c3478cc3ab319db/reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison.md#L1-L33"
         }
       ],
       "report_coverage": "curated"
@@ -4347,25 +4431,27 @@
       "purpose": "在中证2000成分内用实际底仓金额限制两市日内交易，比较指数权重和等权底仓下的资金收益。",
       "status": "active",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-11-13"
+        ]
       },
       "review": {
         "by": "Codex",
         "on": "2026-11-12",
-        "days": 3,
+        "days": 4,
         "span": [
           "2026-11-11",
-          "2026-11-13"
+          "2026-11-16"
         ],
         "unreviewed_days": [],
         "scope": "已核对底仓设计和首次建仓数据的停止证据，后续回测尚未启动。",
         "incremental_review": {
-          "on": "2026-11-16",
-          "scope": "核对调样、零权重恢复和候选调仓日；历史权重可得性仍待证。"
+          "on": "2026-11-17",
+          "scope": "采用完整权重日期约定，完成566日底仓、扣费与规模敏感性回放。"
         }
       },
       "fate": "landed",
-      "fate_note": "沿用米筐权重及名单变动记录，数据齐备后延后调仓。30 期快照已对齐 566 个评价日，仍缺当年盘前可得与修订记录。两种底仓回测待续。",
+      "fate_note": "按米筐完整权重日期约定延后调仓，历史首次可得与修订仍待证。等权和指数权重底仓已完成566日扣费回放。增加做T比例约按比例放大超额与波动。",
       "source_refs": [
         {
           "kind": "file",
@@ -4485,6 +4571,83 @@
           ],
           "title": "候选调仓日与历史可得性",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/cb12a0d05675f455a53c7dfb8505005716f56552/reports/2026-11/2026-11-13-csi2000-pit-audit.md#L1-L33"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "path": "reports/2026-11/2026-11-16-csi2000-baseline-implementation.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "566日底仓及沪深分项回放",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/529357913adb7e1720064ca17c3478cc3ab319db/reports/2026-11/2026-11-16-csi2000-baseline-implementation.md#L1-L30"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "path": "reports/2026-11/2026-11-16-csi2000-trade-fractions.md",
+          "lines": [
+            1,
+            21
+          ],
+          "title": "三档做T比例回放",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/529357913adb7e1720064ca17c3478cc3ab319db/reports/2026-11/2026-11-16-csi2000-trade-fractions.md#L1-L21"
+        }
+      ],
+      "report_coverage": "curated"
+    },
+    {
+      "id": "sse-factor-extension",
+      "track": "model",
+      "label": "沪市新因子受控比较",
+      "short": "沪市扩因子",
+      "purpose": "固定沪市340列基准的训练、评价和成交设置，单独比较加入沪市候选因子后的预测及连续账簿表现。",
+      "status": "active",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-17",
+        "days": 1,
+        "span": [
+          "2026-11-16",
+          "2026-11-16"
+        ],
+        "unreviewed_days": [],
+        "scope": "原值投影、训练设置及午夜前的运行回执。"
+      },
+      "fate": "landed",
+      "fate_note": "已冻结沪市独立方案并启动训练。11月16日午夜前完成9个训练单元，完整预测与策略回放待次日核对。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "path": "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+          "lines": [
+            1,
+            29
+          ],
+          "title": "沪市独立扩因子方案",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/529357913adb7e1720064ca17c3478cc3ab319db/PLAN/2026-11-16-sse-candidate-diagnostics.md#L1-L29"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "b1c8112e85a09ba79ea0e806cc24bb367f4c7281",
+          "title": "固定沪市输入与比较设置",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/b1c8112e85a09ba79ea0e806cc24bb367f4c7281"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "691a94573253068099a0b1624ef82ae6fc7799f7",
+          "title": "沿用沪市基准参数训练",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/691a94573253068099a0b1624ef82ae6fc7799f7"
         }
       ],
       "report_coverage": "curated"
@@ -6958,6 +7121,102 @@
         "on": "2026-11-12",
         "basis": "展示构建脚本读取重算结果，页面提交含相应数据和切换。",
         "scope": "仅登记已进入计划或展示的实际依据。"
+      }
+    },
+    {
+      "from": "csi2000-base-position",
+      "to": "szse344-factor-comparison",
+      "type": "派生",
+      "date": "2026-11-16",
+      "source_date": "2026-11-16",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "深市G2对照复用中证2000扣费底仓及连续成交账簿。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "aced0b3be36ca8f13a4cd305b21999c09729ec9a",
+          "title": "底仓扣费账簿",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/aced0b3be36ca8f13a4cd305b21999c09729ec9a"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "9c940d1163437ee2d4b1cd46d2eea34e02c8073e",
+          "title": "G2复用连续账簿",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/9c940d1163437ee2d4b1cd46d2eea34e02c8073e"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-17",
+        "basis": "两版结果使用同一套记账与分段规则。",
+        "scope": "按已发生的输入承接登记。"
+      }
+    },
+    {
+      "from": "sse340-baseline-model",
+      "to": "sse-factor-extension",
+      "type": "派生",
+      "date": "2026-11-16",
+      "source_date": "2026-11-09",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "沪市独立扩因子训练复用原340列及冻结参数。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "b1c8112e85a09ba79ea0e806cc24bb367f4c7281",
+          "title": "冻结沪市对照输入",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/b1c8112e85a09ba79ea0e806cc24bb367f4c7281"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "691a94573253068099a0b1624ef82ae6fc7799f7",
+          "title": "沿用沪市基准参数训练",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/691a94573253068099a0b1624ef82ae6fc7799f7"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-17",
+        "basis": "冻结训练清单保留沪市B0的成员、训练窗与参数。",
+        "scope": "按已发生的输入承接登记。"
+      }
+    },
+    {
+      "from": "candidate-factor-diagnostics",
+      "to": "report-publish",
+      "type": "派生",
+      "date": "2026-11-16",
+      "source_date": "2026-11-16",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "沪市165列统计进入11月16日报告的独立评测面板。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "02edbdef37e69dfd1dd932c9a4be1cc607bb0ee0",
+          "title": "沪市候选诊断结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/02edbdef37e69dfd1dd932c9a4be1cc607bb0ee0"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "7ba457b1ec8bb782abb1f3f0f5131ca94d97087c",
+          "title": "接入沪市165列评测",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/7ba457b1ec8bb782abb1f3f0f5131ca94d97087c"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-17",
+        "basis": "汇报使用两账户已核对的聚合数据。",
+        "scope": "按已发生的输入承接登记。"
       }
     }
   ],

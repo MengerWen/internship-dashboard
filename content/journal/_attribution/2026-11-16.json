@@ -1,0 +1,1765 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-16",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "0cfe38c3ada63c8ffe93ae1989252e1e43794400d4d8f1b540f1b03ca16d437f",
+  "rules_sha256": "732eb3a1eb5636a608071ecd45cfc1a65810e783856b34ae972f0df9af3c76c7",
+  "revisions": {
+    "sirui-quant-research": "529357913adb7e1720064ca17c3478cc3ab319db",
+    "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
+    "internship-dashboard": "de6c4828a7cad6bd9aa3338481021e6ca353d8a6"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "973df6d691756cdeda7f8a62bf04ac949c3c693c",
+      "date": "2026-11-16",
+      "subject": "补记11月13日底仓权重核查与指数成分演示",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "上一轮补记 11 月 13 日的日卡与收据，保留原工作日期。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-11-13.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "276d82d2e9a7430e28a8473e608a80e7af2183d1",
+      "date": "2026-11-16",
+      "subject": "记录11月16日研究日志来源核对与发布",
+      "status": "maintenance",
+      "chains": [],
+      "reason": "上一轮补记 11 月 13 日的日卡与收据，保留原工作日期。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-11-16.md",
+        "docs/journal-review/daily-updates/2026-11-16/delivery-receipt.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "1500c9d83f2f971d1bc1a53cb314d793c662a33b",
+      "date": "2026-11-16",
+      "subject": "发布 11.16 中证2000底仓做T日报与展示",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "发布 11.16 中证2000底仓做T日报与展示。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-16.md",
+        "scripts/build_20261116_base_position.py",
+        "tests/test_build_20261116_base_position.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "29fbc05fb6602c66614108e5c1011a4df85b475c",
+      "date": "2026-11-16",
+      "subject": "固定 11.16 日报的首次提交时间",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "固定 11.16 日报的首次提交时间。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-16.md",
+        "scripts/build_20261116_base_position.py",
+        "tests/test_build_20261116_base_position.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "916ed8c3029b7f6cdd38736b3d00f0e43bd9ce81",
+      "date": "2026-11-16",
+      "subject": "记录 11.16 中证2000页面部署回执",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "记录 11.16 中证2000页面部署回执。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/csi2000-base-position-20261116/release-receipt.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "6e826a941343beb08675cbcce095aaea2a948d63",
+      "date": "2026-11-16",
+      "subject": "11-09 汇报仅展示修正后的成交口径",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "11-09 汇报仅展示修正后的成交口径。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-09.md",
+        "scripts/build_20261109_fill_rules.py",
+        "scripts/build_20261116_base_position.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "d6372cb0acaeddf0432caf2da16bf7baa3c796e4",
+      "date": "2026-11-16",
+      "subject": "用中证2000底仓回放更新沪深对比图与分段成绩",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "用中证2000底仓回放更新沪深对比图与分段成绩。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-16.md",
+        "scripts/build_20261116_base_position.py",
+        "tests/test_build_20261116_base_position.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "86335535adaeda7d22502e11d5d08672905830f6",
+      "date": "2026-11-16",
+      "subject": "签收11.16沪深对比图与分段成绩发布",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "签收11.16沪深对比图与分段成绩发布。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/csi2000-base-position-20261116/market-comparison-release.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "46e0dfe4ca77fa77ef7136329ea65a785ee62b58",
+      "date": "2026-11-16",
+      "subject": "统一三份日报展示文件与生成路径",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "统一三份日报展示文件与生成路径。按差异将主要交付归入该链。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-04.md",
+        "content/daily/2026-11-09.md",
+        "content/daily/2026-11-16.md",
+        "scripts/build_20261109_fill_rules.py",
+        "scripts/build_20261116_base_position.py",
+        "scripts/build_szse683_report.py",
+        "tests/test_build_20261116_base_position.py",
+        "tests/test_daily_show_source.py",
+        "tests/test_sse683_report.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "e5bc5166221f59eee3f0249c313e21a1b8050721",
+      "date": "2026-11-16",
+      "subject": "调整两份模型汇报的成绩表顺序与收益口径切换",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "调整两份模型汇报的成绩表顺序与收益口径切换。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-09.md",
+        "content/daily/2026-11-16.md",
+        "docs/reports/2026-11-16-model-comparison-presentation.md",
+        "scripts/build_20261109_fill_rules.py",
+        "scripts/build_20261116_base_position.py",
+        "tests/test_build_20261116_base_position.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "56b88c3dd1abb160a689750d58e1a40740e3faf9",
+      "date": "2026-11-16",
+      "subject": "记录两份模型汇报的发布与清理回执",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "记录两份模型汇报的发布与清理回执。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/model-comparison-presentation-20261116/release-receipt.json",
+        "docs/reports/2026-11-16-model-comparison-presentation.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "9ea883c711b9392f91a9cea60ab5a615c8314b98",
+      "date": "2026-11-16",
+      "subject": "展示中证2000扣税费曲线与成交金额加权日均收益",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "展示中证2000扣税费曲线与成交金额加权日均收益。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-16.md",
+        "scripts/build_20261116_base_position.py",
+        "tests/test_build_20261116_base_position.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "e9d636584c5bb83d01983cbc91d01d30ea63740f",
+      "date": "2026-11-16",
+      "subject": "记录中证2000扣税费展示发布回执",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "记录中证2000扣税费展示发布回执。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/csi2000-fees-20261116/release-receipt.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c0b50483a2c042cd5db042c32b6c16f10f3f112e",
+      "date": "2026-11-16",
+      "subject": "在11.16汇报中切换10%至30%的做T比例",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "在11.16汇报中切换10%至30%的做T比例。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-16.md",
+        "docs/reports/2026-11-16-csi2000-trade-fractions.md",
+        "scripts/build_20261116_base_position.py",
+        "tests/test_build_20261116_base_position.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "0cee60b7a170da22ed04f4b97d2a8259fa91c79a",
+      "date": "2026-11-16",
+      "subject": "记录做T比例汇报的发布和收尾结果",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "记录做T比例汇报的发布和收尾结果。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/csi2000-ratios-20261116/release-receipt.json",
+        "docs/reports/2026-11-16-csi2000-trade-fractions.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "9b0e558fa35073fc3612bfbe795c68ff80d1d16c",
+      "date": "2026-11-16",
+      "subject": "加入G2与扣费底仓基准的共同开发期对比图",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "加入G2与扣费底仓基准的共同开发期对比图。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/csi2000-g2-20261116/comparison.json",
+        "content/daily/2026-11-16.md",
+        "scripts/build_20261116_base_position.py",
+        "scripts/build_20261116_g2_comparison.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "bdfca2fc1f7c88f5d89935cb5be291e900ec0eec",
+      "date": "2026-11-16",
+      "subject": "冻结11月13日基准档案及模型和金额来源",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "冻结11月13日基准档案及模型和金额来源。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/factor-strategy-comparison/baseline-frozen.json",
+        "content/daily/2026-11-13.md",
+        "scripts/build_20261116_base_position.py",
+        "scripts/build_20261116_g2_comparison.py",
+        "scripts/frozen_baseline.py",
+        "tests/test_frozen_baseline.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "676f4f725464f2c0620f2c8905e08d629efd65bb",
+      "date": "2026-11-16",
+      "subject": "发布固定基准与G2全期共同比较页",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "发布固定基准与G2全期共同比较页。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/factor-strategy-comparison/manifest.json",
+        "content/daily/2026-11-16.md",
+        "scripts/build_20261116_base_position.py",
+        "scripts/build_20261116_g2_comparison.py",
+        "scripts/build_factor_strategy_comparison.py",
+        "scripts/frozen_baseline.py",
+        "tests/test_frozen_baseline.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c91b9a679b2d230941bd21f03ce71c2290385df0",
+      "date": "2026-11-16",
+      "subject": "给11.13固定基准增加逐日收益图并默认显示IC",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "给11.13固定基准增加逐日收益图并默认显示IC。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/factor-strategy-comparison/baseline-frozen.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "1ed3c6e6ac3fb1b91097379b03e8ee40e6379e73",
+      "date": "2026-11-16",
+      "subject": "明确量化成果展示改动的默认发布流程",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "明确量化成果展示改动的默认发布流程。按差异将主要交付归入该链。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "AGENTS.md"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "3c8229db625f3b81cb6394a8cbe2b5eacbf17105",
+      "date": "2026-11-16",
+      "subject": "增加11.13图表收展和逐日收益均值线",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "增加11.13图表收展和逐日收益均值线。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/factor-strategy-comparison/baseline-frozen.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "7ba457b1ec8bb782abb1f3f0f5131ca94d97087c",
+      "date": "2026-11-16",
+      "subject": "在11月16日汇报接入165列沪市实测和差值标记",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "在11月16日汇报接入165列沪市实测和差值标记。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/assets/factor-strategy-comparison/sse-atlas.json",
+        "content/daily/2026-11-16.md",
+        "scripts/assemble_sse_candidate_atlas.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "1b1521adf8fc211ec7845af1c4516c532a542764",
+      "date": "2026-11-16",
+      "subject": "设置11.13页的底仓、超额和图表默认状态",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "设置11.13页的底仓、超额和图表默认状态。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/factor-strategy-comparison/baseline-frozen.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "c4e2fe56853b35c92cdae0940c6eb315e94bac76",
+      "date": "2026-11-16",
+      "subject": "让有HTML展示的每日报告优先打开展示",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "让有HTML展示的每日报告优先打开展示。按差异将主要交付归入该链。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "package.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "9afc412862ba57f446ed95185e7b4b6fd0fd7e8f",
+      "date": "2026-11-16",
+      "subject": "更换11.13展示页的标题字体",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "更换11.13展示页的标题字体。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "artifacts/factor-strategy-comparison/baseline-frozen.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "2663b1f0f25f31410eb1b57dd0bee4201591408f",
+      "date": "2026-11-16",
+      "subject": "同步11月16日汇报的收益图和默认展示",
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "同步11月16日汇报的收益图和默认展示。按差异将主要交付归入该链。",
+      "shares": {
+        "report-publish": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "content/daily/2026-11-16.show.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "0ac510213babb833b4d28b5c772349aeef2610f2",
+      "date": "2026-11-16",
+      "subject": "将11月16日的稳定数据拆成可独立上传的资产",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "将11月16日的稳定数据拆成可独立上传的资产。按差异将主要交付归入该链。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/assemble_sse_candidate_atlas.py",
+        "scripts/pack_factor_comparison_data.py"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "de6c4828a7cad6bd9aa3338481021e6ca353d8a6",
+      "date": "2026-11-16",
+      "subject": "跨平台核对回放分片的内容身份",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "跨平台核对回放分片的内容身份。按差异将主要交付归入该链。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/pack_factor_comparison_data.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aab21a34b72c163fccb3a6fb23da148f85237d06",
+      "date": "2026-11-16",
+      "subject": "说明中证2000权重可用时间与底仓收益计算",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "说明中证2000权重可用时间与底仓收益计算。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-weight-availability.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3dc902b6264e0db372bd3470f7fa398e47bc1db7",
+      "date": "2026-11-16",
+      "subject": "按实际可卖股数保留调仓日做T交易",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "按实际可卖股数保留调仓日做T交易。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-weight-availability.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a6780c223bd6e1a52dff12b7fce5b7feb3ebe645",
+      "date": "2026-11-16",
+      "subject": "明确底仓做T长期净值与周转资金口径",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "明确底仓做T长期净值与周转资金口径。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-base-position-account-nav.md",
+        "reports/2026-11/2026-11-16-csi2000-weight-availability.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0bc32fa5744c2f7a248a6ed1062896d782b13b3c",
+      "date": "2026-11-16",
+      "subject": "确定米筐完整权重延后跟随的研究日期约定",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "确定米筐完整权重延后跟随的研究日期约定。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "decisions/2026-11-11-base-position.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dac71c07094839b0189c6d84f1973cc8c863ea57",
+      "date": "2026-11-16",
+      "subject": "统一名义底仓基准与逐日增强曲线口径",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "统一名义底仓基准与逐日增强曲线口径。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "decisions/2026-11-11-base-position.md",
+        "reports/2026-11/2026-11-16-base-position-account-nav.md",
+        "reports/2026-11/2026-11-16-csi2000-weight-availability.md",
+        "reports/2026-11/2026-11-16-notional-base-position-baseline.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "15b5f46437bf8a40ab0ee6aba6cbd2417a684ef9",
+      "date": "2026-11-16",
+      "subject": "制定中证2000基准实施与11月16日页面发布计划",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "制定中证2000基准实施与11月16日页面发布计划。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-11-baseline-base-position.md",
+        "PLAN/2026-11-16-csi2000-baseline-implementation-and-release.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c620dea33cb0df065e8dd8dcefc044add3efc8c1",
+      "date": "2026-11-16",
+      "subject": "实现中证2000底仓与做T日度金额账簿",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "实现中证2000底仓与做T日度金额账簿。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/src/algobench/ml/baseline_base_position.py",
+        "因子/algobench/tests/test_baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a5ac0f087d56dd077b289dfe8626bc4d83ddea4c",
+      "date": "2026-11-16",
+      "subject": "接入沪深签收输入与中证2000组合回放",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "接入沪深签收输入与中证2000组合回放。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/baseline_base_evaluation.py",
+        "scripts/baseline_base_sources.py",
+        "scripts/run_baseline_base_position.py",
+        "scripts/run_baseline_fill_rules.py",
+        "scripts/tests/test_run_baseline_base_position.py",
+        "因子/algobench/src/algobench/ml/baseline_base_position.py",
+        "因子/algobench/tests/test_baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d793c15fd1911f546e734dda2052c78cc07bf708",
+      "date": "2026-11-16",
+      "subject": "按股票键复用已签收顺延切片",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "按股票键复用已签收顺延切片。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/baseline_base_sources.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9830095363e5d4875fe5646901c76d98884484ef",
+      "date": "2026-11-16",
+      "subject": "交付沪深中证2000底仓正式回放结果",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "交付沪深中证2000底仓正式回放结果。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-baseline-implementation-evidence/run-receipt.json",
+        "reports/2026-11/2026-11-16-csi2000-baseline-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3c6e9872be73b8ddf74d830c4422a424d04131aa",
+      "date": "2026-11-16",
+      "subject": "记录中证2000页面发布与运行收尾",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "记录中证2000页面发布与运行收尾。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-baseline-implementation-evidence/closeout.json",
+        "reports/2026-11/2026-11-16-csi2000-baseline-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d45e92dcfc4ca62a2cbd0f55ebae7d5d513ee225",
+      "date": "2026-11-16",
+      "subject": "归因中证2000回放的沪深底仓与做T收益",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "归因中证2000回放的沪深底仓与做T收益。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/baseline_base_evaluation.py",
+        "scripts/run_baseline_base_position.py",
+        "scripts/tests/test_run_baseline_base_position.py",
+        "因子/algobench/src/algobench/ml/baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cea658cea6e1e85b8b4bcf3a63db533dc0b58a00",
+      "date": "2026-11-16",
+      "subject": "记录中证2000沪深分项与曲线对账",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "记录中证2000沪深分项与曲线对账。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-baseline-implementation-evidence/market-comparison-receipt.json",
+        "reports/2026-11/2026-11-16-csi2000-baseline-implementation.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dbeba59147629e9b3a2226536f644349afb03498",
+      "date": "2026-11-16",
+      "subject": "签收中证2000市场分项发布与清理",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "签收中证2000市场分项发布与清理。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-baseline-implementation-evidence/market-comparison-receipt.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aced0b3be36ca8f13a4cd305b21999c09729ec9a",
+      "date": "2026-11-16",
+      "subject": "计入底仓与做T实际成交税费并统计成交金额加权收益",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "计入底仓与做T实际成交税费并统计成交金额加权收益。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-csi2000-fees-and-trading-returns.md",
+        "decisions/2026-11-11-base-position.md",
+        "scripts/baseline_base_evaluation.py",
+        "scripts/baseline_fill_evaluation.py",
+        "scripts/run_baseline_base_position.py",
+        "scripts/tests/test_run_baseline_base_position.py",
+        "因子/algobench/src/algobench/ml/baseline_base_position.py",
+        "因子/algobench/src/algobench/ml/baseline_fill_rules.py",
+        "因子/algobench/tests/test_baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9a0e7d6306dedcbbbaf10e5331ae6a29fca7f28f",
+      "date": "2026-11-16",
+      "subject": "发布中证2000扣税费与成交金额加权收益结果",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "发布中证2000扣税费与成交金额加权收益结果。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns-evidence/runtime-receipt.json",
+        "reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns-evidence/statistics.json",
+        "reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b975d84c7312ea199b113ead9fc16ac22f321f13",
+      "date": "2026-11-16",
+      "subject": "签收扣税费汇报发布与临时材料收尾",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "签收扣税费汇报发布与临时材料收尾。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns-evidence/closeout.json",
+        "reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns-evidence/local-cleanup-manifest.json",
+        "reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns-evidence/release-receipt.json",
+        "reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1e74e18b154a71a8548b42284e3d46cdc066032d",
+      "date": "2026-11-16",
+      "subject": "比较中证2000底仓做T的10%至30%交易比例",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "比较中证2000底仓做T的10%至30%交易比例。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-csi2000-trade-fractions.md",
+        "scripts/baseline_base_evaluation.py",
+        "scripts/run_baseline_base_position.py",
+        "scripts/tests/test_run_baseline_base_position.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c165f1656f556f6fc366dd05cd9e8d86e3e11219",
+      "date": "2026-11-16",
+      "subject": "记录三档做T比例的全期结果与运行证据",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "记录三档做T比例的全期结果与运行证据。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-trade-fractions-evidence/runtime-receipt.json",
+        "reports/2026-11/2026-11-16-csi2000-trade-fractions-evidence/statistics.json",
+        "reports/2026-11/2026-11-16-csi2000-trade-fractions.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "766124ffc37857c93045a58e4437bbcb4e80b105",
+      "date": "2026-11-16",
+      "subject": "签收三档做T比例汇报发布与材料清理",
+      "status": "assigned",
+      "chains": [
+        "csi2000-base-position"
+      ],
+      "reason": "签收三档做T比例汇报发布与材料清理。按差异将主要交付归入该链。",
+      "shares": {
+        "csi2000-base-position": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-csi2000-trade-fractions-evidence/accounting-tests.json",
+        "reports/2026-11/2026-11-16-csi2000-trade-fractions-evidence/release-receipt.json",
+        "reports/2026-11/2026-11-16-csi2000-trade-fractions.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f657efbcf090d754c70b043fce0a69e1dc43800e",
+      "date": "2026-11-16",
+      "subject": "接入G2开发期预测与中证2000扣费基准比较",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "接入G2开发期预测与中证2000扣费基准比较。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-high-frequency-factor-expansion.md",
+        "scripts/run_baseline_g2_comparison.py",
+        "scripts/tests/test_baseline_g2_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9eab1f3d280ca37bf5614dc4cd8b174f12cdc185",
+      "date": "2026-11-16",
+      "subject": "核对既有扩因子结果及高频候选复用依据",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "核对既有扩因子结果及高频候选复用依据。按差异将主要交付归入该链。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-factor-expansion-evidence-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cba095eabf49545f8dd670d5f1d98a244625be0f",
+      "date": "2026-11-16",
+      "subject": "登记八类高频增量与两类中低频辅助因子候选",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "登记八类高频增量与两类中低频辅助因子候选。按差异将主要交付归入该链。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-high-frequency-factor-research.md",
+        "research/factor-candidates/OVERVIEW.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "190cf4a39dceab6ce2f615181ae4654eafd2facb",
+      "date": "2026-11-16",
+      "subject": "签收G2在扣费底仓上的开发期比较及恢复证据",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "签收G2在扣费底仓上的开发期比较及恢复证据。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-high-frequency-factor-expansion.md",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/config-wangly.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/config-wenjie.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/guards-wangly.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/guards-wenjie.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/retained-objects.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/statistics.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/tests-r01.log.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison.md",
+        "reports/2026-11/2026-11-16-factor-chart-design-skills.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "969119cb823067ff1355a6f047be2e55bd9fcd93",
+      "date": "2026-11-16",
+      "subject": "记录G2图表发布与高频候选研究收尾",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "记录G2图表发布与高频候选研究收尾。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/cleanup-local-before.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/cleanup-result.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/cleanup-wangly-before.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/cleanup-wenjie-before.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/dashboard-release.json",
+        "reports/2026-11/2026-11-16-baseline-g2-comparison-evidence/dashboard-tests.log.json",
+        "reports/2026-11/2026-11-16-factor-expansion-closeout.md",
+        "reports/2026-11/2026-11-16-factor-expansion-evidence-audit.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d01516f3b1da28edfd1c85ec7125837b870801bc",
+      "date": "2026-11-16",
+      "subject": "制定固定基准与因子评测全期实施计划",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "制定固定基准与因子评测全期实施计划。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-factor-evaluation-and-strategy-comparison.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7d1c4446c0dba5495e63614472121a72a97e42b7",
+      "date": "2026-11-16",
+      "subject": "Register frozen baseline and factor comparison contracts",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "Register frozen baseline and factor comparison contracts。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "decisions/2026-11-16-factor-evaluation-and-model-versions.md",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/claude-review-r01.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7c11825f8d554e14ab784d1388caae773e6d59ea",
+      "date": "2026-11-16",
+      "subject": "扩展签收候选读取以覆盖冻结测试区间",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "扩展签收候选读取以覆盖冻结测试区间。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/prepare_szse344_d24.py",
+        "scripts/szse344_d24_inventory.py",
+        "scripts/tests/test_factor_model_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "634d79e086cfb7eb526124e6fb81c046a400861e",
+      "date": "2026-11-16",
+      "subject": "复用冻结拟合管线补全G2最终模型和测试预测",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "复用冻结拟合管线补全G2最终模型和测试预测。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+        "scripts/run_factor_model_comparison.py",
+        "scripts/tests/test_factor_model_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "af5f838ad33c425fe8254d8be2502ab5e06951a8",
+      "date": "2026-11-16",
+      "subject": "补充G2有界输入检查与可复用运行收据",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "补充G2有界输入检查与可复用运行收据。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_factor_model_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9c940d1163437ee2d4b1cd46d2eea34e02c8073e",
+      "date": "2026-11-16",
+      "subject": "接入G2完整测试并沿用连续底仓账簿",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "接入G2完整测试并沿用连续底仓账簿。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_baseline_g2_comparison.py",
+        "scripts/tests/test_baseline_g2_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e22a2e579b67086af75f0ccb8fa61f4110d7f1ee",
+      "date": "2026-11-16",
+      "subject": "补齐八个高频族的审核前定义",
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "补齐八个高频族的审核前定义。按差异将主要交付归入该链。",
+      "shares": {
+        "behavior-design": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "research/factor-candidates/OVERVIEW.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "41b65c7a89b59c689a1eab9e6add7827998778be",
+      "date": "2026-11-16",
+      "subject": "复用日度统计原语建立增量因子诊断",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-diagnostics"
+      ],
+      "reason": "复用日度统计原语建立增量因子诊断。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/evaluate_factor_increment.py",
+        "scripts/tests/test_factor_increment.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a630a3b34f7896dc8005183e0310c4d2e3ac4575",
+      "date": "2026-11-16",
+      "subject": "签收G2全期结果、发布回执及高频审核缺口",
+      "status": "assigned",
+      "chains": [
+        "szse344-factor-comparison"
+      ],
+      "reason": "签收G2全期结果、发布回执及高频审核缺口。按差异将主要交付归入该链。",
+      "shares": {
+        "szse344-factor-comparison": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+        "decisions/2026-11-16-factor-evaluation-and-model-versions.md",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/dashboard-release.json",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/guards-native-wangly.json",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/guards-native-wenjie.json",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/ledger-config.json",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/ledger-evidence.json",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/local-release.json",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/storage-readback.json",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e547047c57e8520f014cc50ecba7772f03aebe59",
+      "date": "2026-11-16",
+      "subject": "接入沪市签收候选并按因子类型评测",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-diagnostics"
+      ],
+      "reason": "接入沪市签收候选并按因子类型评测。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+        "scripts/run_sse_candidate_diagnostics.py",
+        "scripts/szse344_d24_inventory.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "592bfe85fb08321084deb554ce9269f74bde1eb3",
+      "date": "2026-11-16",
+      "subject": "按时点行业成分补齐沪市行业因子评测",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-diagnostics"
+      ],
+      "reason": "按时点行业成分补齐沪市行业因子评测。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_candidate_diagnostics.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e1c47038ecc89d45193ba0d51f2a2317ab6da5fc",
+      "date": "2026-11-16",
+      "subject": "补齐沪市连续因子的原值分布和拟合诊断",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-diagnostics"
+      ],
+      "reason": "补齐沪市连续因子的原值分布和拟合诊断。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_candidate_diagnostics.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "02edbdef37e69dfd1dd932c9a4be1cc607bb0ee0",
+      "date": "2026-11-16",
+      "subject": "签收沪市165列候选的全期诊断",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-diagnostics"
+      ],
+      "reason": "签收沪市165列候选的全期诊断。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-diagnostics": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+        "reports/2026-11/2026-11-16-sse-candidate-diagnostics.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "10ea1d6842c25a1582529716dcc3f90de0925383",
+      "date": "2026-11-16",
+      "subject": "取消候选因子的指定模型审核前置",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "取消候选因子的指定模型审核前置。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+        "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+        "decisions/2026-11-16-factor-evaluation-and-model-versions.md",
+        "research/factor-candidates/README.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b1c8112e85a09ba79ea0e806cc24bb367f4c7281",
+      "date": "2026-11-16",
+      "subject": "冻结沪市扩因子比较并投影签收输入",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "冻结沪市扩因子比较并投影签收输入。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+        "scripts/project_sse_extension_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "58a06ab8cd84c70a51858f48290b8a2596678b8c",
+      "date": "2026-11-16",
+      "subject": "采用签收登记的候选日历镜像",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "采用签收登记的候选日历镜像。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/project_sse_extension_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "691a94573253068099a0b1624ef82ae6fc7799f7",
+      "date": "2026-11-16",
+      "subject": "按沪市 B0 参数训练独立扩因子模型",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "按沪市 B0 参数训练独立扩因子模型。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_factor_model_comparison.py",
+        "scripts/run_sse_factor_extension.py",
+        "scripts/sse340_model_inputs.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3742d32129c94d90f1ab2adcea4ebf037dcfda08",
+      "date": "2026-11-16",
+      "subject": "按冻结账簿回放沪市模型并配对计算 IC",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "按冻结账簿回放沪市模型并配对计算 IC。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_baseline_g2_comparison.py",
+        "scripts/tests/test_baseline_g2_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d40d64bc7880647b2ff08571dde8e46752018c03",
+      "date": "2026-11-16",
+      "subject": "以沪市已签收合同校验独立模型",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "以沪市已签收合同校验独立模型。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_factor_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b843ccb12ad4ed0e2851909ebd9e7779dcc8a148",
+      "date": "2026-11-16",
+      "subject": "按沪市特征规模分配探针内存并复用同次准备",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "按沪市特征规模分配探针内存并复用同次准备。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/prepare_szse344_d24.py",
+        "scripts/run_sse_factor_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c61e02a6ca9da44281833e226096488a2c8dce8a",
+      "date": "2026-11-16",
+      "subject": "落实16列高频因子的技术准入并实现十档计算",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "落实16列高频因子的技术准入并实现十档计算。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+        "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+        "scripts/audit_high_frequency_open_depth.py",
+        "因子/algobench/src/algobench/high_frequency_open_depth.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4d0e47edad7b9eab805ca2c7d8ee9597d4e97cd6",
+      "date": "2026-11-16",
+      "subject": "保留扩因子模型与基准训练目录的隔离校验",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "保留扩因子模型与基准训练目录的隔离校验。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_sse_factor_extension.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f63e303f383da66af8c9ab6d0ab168a454d4f672",
+      "date": "2026-11-16",
+      "subject": "接通仅预测的分折训练队列",
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "接通仅预测的分折训练队列。按差异将主要交付归入该链。",
+      "shares": {
+        "sse-factor-extension": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_d19.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "529357913adb7e1720064ca17c3478cc3ab319db",
+      "date": "2026-11-16",
+      "subject": "增加沪市十档流量的连续交易日数据探针",
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "增加沪市十档流量的连续交易日数据探针。按差异将主要交付归入该链。",
+      "shares": {
+        "candidate-factor-compute": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+        "scripts/probe_sse_high_frequency_depth.py"
+      ]
+    }
+  ]
+}
