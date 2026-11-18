@@ -1266,15 +1266,85 @@ details > :not(summary) { margin-top: 8px; }
     R16:[225,"主动续持"], R15:[520,"组合交互"], R17:[759,"新因子入账"],
     R18:[530,"统一核验"], R19:[530,"统一汇报"]
   };
-  // One x coordinate per intermediate layer where a direct curve would meet a task box.
-  const flowChannels = {
-    "R03-R12":[278],
-    "R02-R12":[420],
-    "R02-R13":[440],
-    "R01-R14":[714],
-    "R09-R15":[414],
-    "R05-R18":[892,854,677],
-    "R14-R18":[648]
+  // Cross-layer curves use the chart's viewBox coordinates. Port order keeps converging lines distinct.
+  const flowCurves = {
+    "R03-R12": {
+      portOrder: [278, 278],
+      segments: `C275 66.5 275.06 75 276.05 83.5
+        C277.05 92 278.98 100.5 280.39 109
+        C281.8 117.5 282.68 126 284.07 134.5
+        C285.45 143 287.34 151.5 290.19 160
+        C293.05 168.5 296.88 177 300.62 185.5
+        C304.35 194 308 202.5`
+    },
+    "R02-R12": {
+      portOrder: [420, 420],
+      segments: `C393 66.5 397.52 75 403.95 83.5
+        C410.37 92 418.7 100.5 425.43 109
+        C432.17 117.5 437.31 126 437.07 134.5
+        C436.83 143 431.21 151.5 417.5 160
+        C403.79 168.5 381.99 177 364.04 185.5
+        C346.1 194 332 202.5`
+    },
+    "R02-R13": {
+      portOrder: [440, 440],
+      segments: `C405 66.5 406.4 75 408.55 83.5
+        C410.7 92 413.6 100.5 416.48 109
+        C419.36 117.5 422.22 126 426.83 134.5
+        C431.43 143 437.78 151.5 447.5 160
+        C457.22 168.5 470.3 177 480.75 185.5
+        C491.19 194 499 202.5`
+    },
+    "R01-R14": {
+      portOrder: [714, 714],
+      segments: `C547 66.5 626.35 75 667.5 83.5
+        C708.65 92 711.59 100.5 713.05 109
+        C714.5 117.5 714.47 126 714.47 134.5
+        C714.47 143 714.5 151.5 714.5 160
+        C714.5 168.5 714.47 177 727.34 185.5
+        C740.22 194 766 202.5`
+    },
+    "R09-R15": {
+      portOrder: [414, 414],
+      segments: `C511 166.5 500.46 175 486.07 183.5
+        C471.67 192 453.43 200.5 440.03 209
+        C426.62 217.5 418.06 226 416.83 234.5
+        C415.59 243 421.67 251.5 435.5 260
+        C449.33 268.5 470.91 277 488.58 285.5
+        C506.25 294 520 302.5`
+    },
+    "R05-R18": {
+      portOrder: [892, 677],
+      segments: `C901 65.354 901 72.708 900.999 80.062
+        C900.999 87.417 900.999 94.771 900.998 102.125
+        C900.996 109.479 900.995 116.833 900.99 124.188
+        C900.986 131.542 900.979 138.896 900.961 146.25
+        C900.943 153.604 900.917 160.958 900.844 168.312
+        C900.771 175.667 900.664 183.021 900.357 190.375
+        C900.049 197.729 899.593 205.083 898.279 212.438
+        C896.965 219.792 894.949 227.146 889.498 234.5
+        C884.048 241.854 874.928 249.208 856.545 256.562
+        C838.162 263.917 808.784 271.271 777.295 278.625
+        C745.806 285.979 715.731 293.333 694.522 300.688
+        C673.314 308.042 659.202 315.396 647.525 322.75
+        C635.848 330.104 626.5 337.458 617.536 344.812
+        C608.571 352.167 600.118 359.521 591.731 366.875
+        C583.343 374.229 575.057 381.583 566.783 388.938
+        C558.508 396.292 550.253 403.646`
+    },
+    "R14-R18": {
+      portOrder: [648, 648],
+      segments: `C766 263.1 757.518 268.2 744.384 273.3
+        C731.249 278.4 714.03 283.5 698.661 288.6
+        C683.293 293.7 669.89 298.8 659.216 303.9
+        C648.543 309 640.274 314.1 633.093 319.2
+        C625.912 324.3 619.778 329.4 613.916 334.5
+        C608.054 339.6 602.489 344.7 596.952 349.8
+        C591.414 354.9 585.918 360 580.394 365.1
+        C574.87 370.2 569.324 375.3 563.748 380.4
+        C558.171 385.5 552.566 390.6 546.939 395.7
+        C541.312 400.8 535.663 405.9`
+    }
   };
   let records = {};
   let selected = "R01";
@@ -1492,31 +1562,20 @@ details > :not(summary) { margin-top: 8px; }
   }
   function edgePosition(edge, peers, endpoint) {
     const approach = endpoint === "from"
-      ? peer => peer.channel[0] ?? flowNodes[peer.to][0]
-      : peer => peer.channel.at(-1) ?? flowNodes[peer.from][0];
+      ? peer => peer.curve?.portOrder[0] ?? flowNodes[peer.to][0]
+      : peer => peer.curve?.portOrder[1] ?? flowNodes[peer.from][0];
     peers.sort((a,b) => approach(a) - approach(b));
     return flowNodes[edge[endpoint]][0] + 12 * (peers.indexOf(edge) - (peers.length - 1) / 2);
   }
   function flowPath(edge) {
-    const fromLevel = byId.get(edge.from).level;
-    const toLevel = byId.get(edge.to).level;
-    const clearance = nodeHalfHeight + 6;
-    const points = [[edge.start, flowY(fromLevel) + nodeHalfHeight]];
-    edge.channel.forEach((x, i) => {
-      const y = flowY(fromLevel + i + 1);
-      points.push([x, y - clearance], [x, y + clearance]);
-    });
-    points.push([edge.end, flowY(toLevel) - nodeHalfHeight - 3]);
+    const y1 = flowY(byId.get(edge.from).level) + nodeHalfHeight;
+    const y2 = flowY(byId.get(edge.to).level) - nodeHalfHeight - 3;
+    const start = `M${edge.start} ${y1}`;
+    const end = `${edge.end} ${y2}`;
+    if (edge.curve) return `${start} ${edge.curve.segments} ${end}`;
 
-    let path = "M" + points[0].join(" ");
-    for (let i = 1; i < points.length; i++) {
-      const [x1, y1] = points[i - 1];
-      const [x2, y2] = points[i];
-      const third = (y2 - y1) / 3;
-      // Vertical tangents join the curves through the gaps between rows.
-      path += ` C${x1} ${y1 + third} ${x2} ${y2 - third} ${x2} ${y2}`;
-    }
-    return path;
+    const third = (y2 - y1) / 3;
+    return `${start} C${edge.start} ${y1 + third} ${edge.end} ${y2 - third} ${end}`;
   }
   function renderFlowchart() {
     const overview = ui.overview;
@@ -1524,7 +1583,7 @@ details > :not(summary) { margin-top: 8px; }
     const edges = tasks.flatMap(t => t.need.map(from => ({from,to:t.id,optional:false})));
     edges.push(...byId.get("R18").side.map(from => ({from,to:"R18",optional:true})));
     for (const edge of edges) {
-      edge.channel = flowChannels[edge.from+"-"+edge.to] ?? [];
+      edge.curve = flowCurves[edge.from+"-"+edge.to];
     }
     for (const edge of edges) {
       edge.start = edgePosition(edge,edges.filter(e=>e.from===edge.from),"from");
