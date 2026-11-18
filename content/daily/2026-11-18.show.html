@@ -1416,6 +1416,33 @@ details > :not(summary) { margin-top: 8px; }
     }
     panel.append(list);
   }
+  async function copyPrompt(text) {
+    const clipboard = navigator.clipboard;
+    if (clipboard && document.featurePolicy?.allowsFeature("clipboard-write") !== false) {
+      try {
+        await clipboard.writeText(text);
+        return true;
+      } catch {
+        // Some embedded or offline views only support the synchronous copy event.
+      }
+    }
+
+    let copied = false;
+    const write = event => {
+      if (!event.clipboardData) return;
+      event.clipboardData.setData("text/plain", text);
+      event.preventDefault();
+      copied = true;
+    };
+    document.addEventListener("copy", write, {once:true});
+    try {
+      return document.execCommand("copy") && copied;
+    } catch {
+      return false;
+    } finally {
+      document.removeEventListener("copy", write);
+    }
+  }
   function renderDetails(t) {
     const panel = ui.body; panel.replaceChildren();
     if (tab === "graph") {
@@ -1436,14 +1463,22 @@ details > :not(summary) { margin-top: 8px; }
         const scope=el("label","会话范围　"),select=el("select");
         const full=el("option","整项任务");full.value="-1";select.append(full);
         phases[t.id].forEach(([name],i)=>{const opt=el("option","阶段 "+(i+1)+" · "+name);opt.value=String(i);select.append(opt);});
-        select.addEventListener("change",()=>{box.value=makePrompt(t,Number(select.value));ui.feedback.textContent="已切换本次会话范围。";});
+        select.addEventListener("change", () => {
+          box.value = makePrompt(t, Number(select.value));
+          copyFeedback.textContent = "";
+        });
         scope.append(select);panel.append(scope);
       }
       const bar = el("div",undefined,"tools actionrow");
-      bar.append(button("复制完整 Prompt",async () => {
-        try { await navigator.clipboard.writeText(box.value); ui.feedback.textContent="已复制完整 Prompt。"; }
-        catch {box.focus();box.select();ui.feedback.textContent="已选中完整 Prompt，请复制选中文字。";}
-      },"btn primary"));
+      const copyFeedback = el("span",undefined,"hint");
+      copyFeedback.setAttribute("role","status");
+      bar.append(button("复制 Prompt", async () => {
+        const text = box.value;
+        const copied = await copyPrompt(text);
+        if (box.value === text) {
+          copyFeedback.textContent = copied ? "已复制。" : "浏览器未能写入剪贴板，请手动复制。";
+        }
+      },"btn primary"), copyFeedback);
       panel.append(bar,box);
     } else {
       const needed = t.need.filter(id => !isDone(id));
