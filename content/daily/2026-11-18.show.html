@@ -52,11 +52,6 @@ body {
 }
 
 .mast {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
-  justify-content: space-between;
-  gap: 12px 32px;
   padding: 16px 0;
   border-top: 3px double var(--line);
   border-bottom: 1px solid var(--line);
@@ -65,15 +60,6 @@ body {
 .mast h1 {
   font-size: clamp(28px, 4vw, 44px);
   line-height: 1.3;
-}
-
-.mast h1 + p { margin-top: 7px; }
-.progress {
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  padding: 6px 10px;
-  background: var(--surface-2);
-  border: 1px solid var(--line-soft);
 }
 
 .flow-head {
@@ -140,6 +126,7 @@ body {
 .flow-edge {
   stroke: var(--muted);
   stroke-width: 1.1;
+  stroke-linecap: round;
   fill: none;
   vector-effect: non-scaling-stroke;
 }
@@ -147,7 +134,7 @@ body {
 .flow-edge[data-optional] { stroke-dasharray: 4 4; }
 .flow-edge[data-related] {
   stroke: var(--focus);
-  stroke-width: 2;
+  stroke-width: 1.9;
 }
 
 .flow-rank {
@@ -414,7 +401,6 @@ details > :not(summary) { margin-top: 8px; }
 
 @media (max-width: 620px) {
   .grid, .depflow { grid-template-columns: minmax(0, 1fr); }
-  .mast { align-items: start; }
   .flow-head { margin-top: 18px; }
   .rail button { padding-inline: 8px; }
   :is(.btn, .linkbtn, .tabs button, .switch button, select, summary) { min-height: 44px; }
@@ -433,11 +419,7 @@ details > :not(summary) { margin-top: 8px; }
 <body>
 <main id="intraday-roadmap">
   <header class="mast">
-    <div>
-      <h1>日内策略研究路线图</h1>
-      <p>两亿元账户 · 现金、旧仓与滚动预测 · 思瑞投资</p>
-    </div>
-    <p class="progress" data-ui="progress" aria-live="polite"></p>
+    <h1>日内策略研究路线图</h1>
   </header>
 
   <section aria-labelledby="intraday-flow-title">
@@ -1284,10 +1266,15 @@ details > :not(summary) { margin-top: 8px; }
     R16:[225,"主动续持"], R15:[520,"组合交互"], R17:[759,"新因子入账"],
     R18:[530,"统一核验"], R19:[530,"统一汇报"]
   };
-  // Keep dependencies that skip a layer in the gaps between its task boxes.
-  const throughX = {
-    "R07-R16":136, "R03-R12":260, "R02-R12":285, "R02-R13":433,
-    "R01-R14":714, "R09-R15":414, "R14-R18":866, "R05-R18":904
+  // One x coordinate per intermediate layer where a direct curve would meet a task box.
+  const flowChannels = {
+    "R03-R12":[278],
+    "R02-R12":[420],
+    "R02-R13":[440],
+    "R01-R14":[714],
+    "R09-R15":[414],
+    "R05-R18":[892,854,677],
+    "R14-R18":[648]
   };
   let records = {};
   let selected = "R01";
@@ -1504,48 +1491,56 @@ details > :not(summary) { margin-top: 8px; }
     return n;
   }
   function edgePosition(edge, peers, endpoint) {
-    const other = endpoint === "from" ? "to" : "from";
-    peers.sort((a,b) => flowNodes[a[other]][0] - flowNodes[b[other]][0]);
-    return flowNodes[edge[endpoint]][0] + 10 * (peers.indexOf(edge) - (peers.length - 1) / 2);
+    const approach = endpoint === "from"
+      ? peer => peer.channel[0] ?? flowNodes[peer.to][0]
+      : peer => peer.channel.at(-1) ?? flowNodes[peer.from][0];
+    peers.sort((a,b) => approach(a) - approach(b));
+    return flowNodes[edge[endpoint]][0] + 12 * (peers.indexOf(edge) - (peers.length - 1) / 2);
   }
-  function flowPath(points) {
-    const vertices = points.filter(([x,y],i) => i === 0 || x !== points[i-1][0] || y !== points[i-1][1]);
-    const toward = (a,b,r) => a.map((v,i) => v + Math.sign(b[i] - v) * r);
-    const distance = (a,b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
-    let d = "M" + vertices[0].join(" ");
-    for (let i=1;i<vertices.length-1;i++) {
-      const prev = vertices[i-1], corner = vertices[i], next = vertices[i+1];
-      const radius = Math.min(6,distance(prev,corner)/2,distance(corner,next)/2);
-      d += " L" + toward(corner,prev,radius).join(" ") + " Q" + corner.join(" ") + " " + toward(corner,next,radius).join(" ");
+  function flowPath(edge) {
+    const fromLevel = byId.get(edge.from).level;
+    const toLevel = byId.get(edge.to).level;
+    const clearance = nodeHalfHeight + 6;
+    const points = [[edge.start, flowY(fromLevel) + nodeHalfHeight]];
+    edge.channel.forEach((x, i) => {
+      const y = flowY(fromLevel + i + 1);
+      points.push([x, y - clearance], [x, y + clearance]);
+    });
+    points.push([edge.end, flowY(toLevel) - nodeHalfHeight - 3]);
+
+    let path = "M" + points[0].join(" ");
+    for (let i = 1; i < points.length; i++) {
+      const [x1, y1] = points[i - 1];
+      const [x2, y2] = points[i];
+      const third = (y2 - y1) / 3;
+      // Vertical tangents join the curves through the gaps between rows.
+      path += ` C${x1} ${y1 + third} ${x2} ${y2 - third} ${x2} ${y2}`;
     }
-    return d + " L" + vertices.at(-1).join(" ");
+    return path;
   }
   function renderFlowchart() {
     const overview = ui.overview;
     overview.replaceChildren();
     const edges = tasks.flatMap(t => t.need.map(from => ({from,to:t.id,optional:false})));
     edges.push(...byId.get("R18").side.map(from => ({from,to:"R18",optional:true})));
-    const bendsByLevel = new Map(levels.slice(0,-1).map((_,i) => [i+1,[]]));
     for (const edge of edges) {
-      edge.source = byId.get(edge.from).level;
-      edge.target = byId.get(edge.to).level;
+      edge.channel = flowChannels[edge.from+"-"+edge.to] ?? [];
+    }
+    for (const edge of edges) {
       edge.start = edgePosition(edge,edges.filter(e=>e.from===edge.from),"from");
       edge.end = edgePosition(edge,edges.filter(e=>e.to===edge.to),"to");
-      const via = throughX[edge.from+"-"+edge.to];
-      edge.bends = via === undefined
-        ? [{level:edge.source,from:edge.start,to:edge.end}]
-        : [{level:edge.source,from:edge.start,to:via},{level:edge.target-1,from:via,to:edge.end}];
-      for (const bend of edge.bends) bendsByLevel.get(bend.level).push(bend);
-    }
-    for (const [level,bends] of bendsByLevel) {
-      bends.sort((a,b) => (a.from+a.to) - (b.from+b.to));
-      bends.forEach((bend,i) => { bend.y = flowY(level) + 28 + (i+1)*44/(bends.length+1); });
     }
     const svg = svgNode("svg",{viewBox:"0 0 "+flowWidth+" "+flowHeight,preserveAspectRatio:"none","aria-hidden":"true"});
     const defs = svgNode("defs",{});
     for (const [id,fill] of [["intraday-arrow","var(--muted)"],["intraday-active-arrow","var(--focus)"]]) {
-      const marker = svgNode("marker",{id,viewBox:"0 0 8 8",refX:7,refY:4,markerWidth:6,markerHeight:6,orient:"auto"});
-      marker.append(svgNode("path",{d:"M0 0 L8 4 L0 8 Z",fill}));
+      const marker = svgNode("marker",{
+        id,viewBox:"0 0 7 8",refX:6,refY:4,markerWidth:7,markerHeight:8,
+        markerUnits:"userSpaceOnUse",orient:"auto"
+      });
+      marker.append(svgNode("path",{
+        d:"M1 1 L6 4 L1 7",stroke:fill,fill:"none",
+        "stroke-width":1.25,"stroke-linecap":"round","stroke-linejoin":"round"
+      }));
       defs.append(marker);
     }
     svg.append(defs);
@@ -1556,11 +1551,8 @@ details > :not(summary) { margin-top: 8px; }
     const related = new Set();
     const activeEdges = [];
     for (const edge of edges) {
-      const points = [[edge.start,flowY(edge.source)+nodeHalfHeight]];
-      for (const bend of edge.bends) points.push([bend.from,bend.y],[bend.to,bend.y]);
-      points.push([edge.end,flowY(edge.target)-nodeHalfHeight-2]);
       const active = edge.from === selected || edge.to === selected;
-      const path = svgNode("path",{d:flowPath(points),class:"flow-edge",
+      const path = svgNode("path",{d:flowPath(edge),class:"flow-edge",
         "data-from":edge.from,"data-to":edge.to,"marker-end":active?"url(#intraday-active-arrow)":"url(#intraday-arrow)"});
       if (edge.optional) path.setAttribute("data-optional","");
       if (active) {
@@ -1583,8 +1575,7 @@ details > :not(summary) { margin-top: 8px; }
       const task = byId.get(id);
       const node = button("",() => {
         openTask(id);
-        ui.panel.scrollIntoView?.({block:"start"});
-        ui.tabs.firstElementChild.focus();
+        ui.overview.querySelector(`[data-task="${id}"]`).focus({preventScroll:true});
       },"flow-node");
       node.style.left = 100*x/flowWidth+"%";
       node.style.top = flowY(task.level)+"px";
@@ -1600,7 +1591,7 @@ details > :not(summary) { margin-top: 8px; }
   function render() {
     const t=byId.get(selected);
     renderFlowchart();
-    ui.progress.textContent=tasks.filter(x=>isDone(x.id)).length+" / "+tasks.length+" 已交接 · "+tasks.filter(ready).length+" 项可开始";
+
     ui.rail.replaceChildren();
     levels.forEach(([name],i)=>{
       const members=tasks.filter(x=>x.level===i+1);
