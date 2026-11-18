@@ -42794,6 +42794,137 @@
         "content/journal/_attribution/2026-07-06.json",
         "content/journal/_attribution/2026-07-07.json"
       ]
+    },
+    "b4114a33caa5a86787e4dcabd8db94fe18b935ae": {
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "记录两市各自更新因子的分市场收益。按差异核对主要交付。",
+      "anchors": [
+        "reports/2026-11/2026-11-17-sse-factor-extension.md"
+      ]
+    },
+    "019168b954cfbb0f724dc0683db59fa48f34d628": {
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "量化沪深合排中的深市收益归因。按差异核对主要交付。",
+      "anchors": [
+        "reports/2026-11/2026-11-17-sse-factor-extension.md"
+      ]
+    },
+    "ee4a6c39ef1dd350c512acecfd078828b2398b56": {
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "签收沪市独立模型与566日回放结果。按差异核对主要交付。",
+      "anchors": [
+        "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/sse-model-ledger.json",
+        "reports/2026-11/2026-11-17-sse-factor-extension.md"
+      ]
+    },
+    "ce9da0236c2e560c7de25fe06156c99bc401dea4": {
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "从签收预测核对沪市逐日覆盖与精度。按差异核对主要交付。",
+      "anchors": [
+        "scripts/run_baseline_g2_comparison.py"
+      ]
+    },
+    "6bdb6f5792308934b20ceb9f45cb12ce0010e8b4": {
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "从冻结清单核对沪市测试成员并签收预测。按差异核对主要交付。",
+      "anchors": [
+        "scripts/run_sse_factor_extension.py"
+      ]
+    },
+    "d1eb76f2f0507c8d39f478808413c08e3a634cf1": {
+      "status": "assigned",
+      "chains": [
+        "sse-factor-extension"
+      ],
+      "reason": "复用独立分箱继续沪市训练并检查已签收预测。按差异核对主要交付。",
+      "anchors": [
+        "PLAN/2026-11-16-sse-candidate-diagnostics.md",
+        "scripts/run_sse_factor_extension.py",
+        "scripts/run_szse344_d19.py",
+        "scripts/szse344_d24_bins.py"
+      ]
+    },
+    "76a2de5670c60345baa6023f2cab5e72e1bf0028": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "签收沪市十档流量的实际样本。按差异核对主要交付。",
+      "anchors": [
+        "reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison-evidence/h01-development-sample.json",
+        "reports/2026-11/2026-11-17-sse-high-frequency-depth-pilot.md"
+      ]
+    },
+    "9600da8a2365512ab2462f24cd8ad7b8fdf13a3b": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "上一轮日卡和核对收据，沿用实际工作日期。",
+      "anchors": [
+        "docs/journal-review/daily-updates/2026-11-17.md",
+        "docs/journal-review/daily-updates/2026-11-17/delivery-receipt.json"
+      ]
+    },
+    "64166b4543e79c38de9cc8f8a31dff89320f0f49": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "上一轮日卡和核对收据，沿用实际工作日期。",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-11-16.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    "e592ae6d1e75140dc4baa3ebbe0a83a171c9aa5f": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "默认展示沪深各用新因子并分市场选股。按差异核对主要交付。",
+      "anchors": []
+    },
+    "ab2547dbfb17b44a86fdffde86c232a20f5a7500": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "并排展示沪深扩因子信号并明确收益模型组合。按差异核对主要交付。",
+      "anchors": []
+    },
+    "2aedf0b0c510d56453ad271cda382f08045d614d": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "发布沪市独立模型的566日收益与IC对照。按差异核对主要交付。",
+      "anchors": [
+        "content/assets/factor-strategy-comparison/sse-strategy.json",
+        "scripts/assemble_sse_strategy_comparison.py"
+      ]
     }
   },
   "context_rules": [
@@ -42888,5 +43019,5 @@
       "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分"
     }
   ],
-  "reviewed_through": "2026-11-16"
+  "reviewed_through": "2026-11-17"
 }

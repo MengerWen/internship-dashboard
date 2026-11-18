@@ -1707,20 +1707,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 47,
+        "days": 48,
         "span": [
           "2026-07-07",
-          "2026-11-16"
+          "2026-11-17"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-17",
-          "scope": "11月13日归档固定基准，11月16日展示费后账簿、因子和新旧模型对照。"
+          "on": "2026-11-18",
+          "scope": "补齐沪市模型结果，展示两市的信号并注明选股范围。"
         }
       },
       "fate": "landed",
-      "fate_note": "两市基准预测的逐日收益、成交顺延及费用陆续进入汇报。11月9日汇报现只展示修正后的成交口径。11月13日归档固定底仓基准，11月16日展示扣费做T三档比例、深市扩因子全期对照及沪市165列诊断。",
+      "fate_note": "两市固定基准、成交和费用陆续进入汇报。11月16日汇报展示三档做T、沪深新旧模型信号和分市场收益，默认两市各用新模型、各自选股。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1814,6 +1814,20 @@
           "revision": "7ba457b1ec8bb782abb1f3f0f5131ca94d97087c",
           "title": "沪市候选诊断入展示",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/7ba457b1ec8bb782abb1f3f0f5131ca94d97087c"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "2aedf0b0c510d56453ad271cda382f08045d614d",
+          "title": "发布沪市模型的566日对照",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/2aedf0b0c510d56453ad271cda382f08045d614d"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "e592ae6d1e75140dc4baa3ebbe0a83a171c9aa5f",
+          "title": "默认两市分开选股",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/e592ae6d1e75140dc4baa3ebbe0a83a171c9aa5f"
         }
       ]
     },
@@ -2630,20 +2644,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 7,
+        "days": 8,
         "span": [
           "2026-09-17",
-          "2026-11-06"
+          "2026-11-17"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-07",
-          "scope": "11月6日实际工作和固定证据；来源覆盖仍不完整。"
+          "on": "2026-11-18",
+          "scope": "核对同日顶层设计讨论、内部会议记录和辅助笔记。"
         }
       },
       "fate": "landed",
-      "fate_note": "一直停留在讨论和资料整理：10 月底决定成交和费用先不建模，先研究纯信号；11 月 6 日讨论对手价、税费、可成交数量和容量怎么估。没有做严格成交回测。",
+      "fate_note": "先研究股票池、风险调整、对手价和容量。11月17日讨论预留现金、动态库存、滚动观测与信号退出，固定比例和单次进场保留作对照。方案待实现与回放。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3669,20 +3683,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-03",
-        "days": 7,
+        "days": 8,
         "span": [
           "2026-11-02",
-          "2026-11-16"
+          "2026-11-17"
         ],
         "unreviewed_days": [],
         "scope": "11月2日原始要求、固定产物与实际运行结果；历史来源缺口继续留账。",
         "incremental_review": {
-          "on": "2026-11-17",
-          "scope": "调整技术核查流程，加入十档盘口计算及实数探针。"
+          "on": "2026-11-18",
+          "scope": "核对H01沪市24日实数样本的覆盖、时点和残差。"
         }
       },
       "fate": "landed",
-      "fate_note": "已有新因子分批通过683日验收，并进入深市比较。新一批高频候选完成十档计算代码和合成检查，沪市实数探针已写好，分族核对后再运行全历史。",
+      "fate_note": "已有新因子分批通过683日验收。十档净流的沪市24日样本中，两只股票各有两列、4日有效残差，第三只保留缺失。其余变体和全期仍待准入。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3794,6 +3808,25 @@
           "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
           "title": "沪市实数探针",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/529357913adb7e1720064ca17c3478cc3ab319db"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "path": "reports/2026-11/2026-11-17-sse-high-frequency-depth-pilot.md",
+          "lines": [
+            1,
+            15
+          ],
+          "revision": "b4114a33caa5a86787e4dcabd8db94fe18b935ae",
+          "title": "H01十档净流实数样本",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b4114a33caa5a86787e4dcabd8db94fe18b935ae/reports/2026-11/2026-11-17-sse-high-frequency-depth-pilot.md#L1-L15"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "76a2de5670c60345baa6023f2cab5e72e1bf0028",
+          "title": "签收沪市十档样本",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/76a2de5670c60345baa6023f2cab5e72e1bf0028"
         }
       ]
     },
@@ -4607,21 +4640,27 @@
       "purpose": "固定沪市340列基准的训练、评价和成交设置，单独比较加入沪市候选因子后的预测及连续账簿表现。",
       "status": "active",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-11-16"
+        ]
       },
       "review": {
         "by": "Codex",
         "on": "2026-11-17",
-        "days": 1,
+        "days": 2,
         "span": [
           "2026-11-16",
-          "2026-11-16"
+          "2026-11-17"
         ],
         "unreviewed_days": [],
-        "scope": "原值投影、训练设置及午夜前的运行回执。"
+        "scope": "原值投影、训练设置及午夜前的运行回执。",
+        "incremental_review": {
+          "on": "2026-11-18",
+          "scope": "签收沪市模型，按同一扣费账簿核对沪深合排及分排。"
+        }
       },
       "fate": "landed",
-      "fate_note": "已冻结沪市独立方案并启动训练。11月16日午夜前完成9个训练单元，完整预测与策略回放待次日核对。",
+      "fate_note": "沪市144列扩因子模型与566日账簿已签收。沪深分开选股时，两市各用新模型的合计超额改善有限，沪市收盘分项下降。原留出段沪市两周期均低于基准。",
       "source_refs": [
         {
           "kind": "file",
@@ -4648,6 +4687,25 @@
           "revision": "691a94573253068099a0b1624ef82ae6fc7799f7",
           "title": "沿用沪市基准参数训练",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/691a94573253068099a0b1624ef82ae6fc7799f7"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "path": "reports/2026-11/2026-11-17-sse-factor-extension.md",
+          "lines": [
+            1,
+            48
+          ],
+          "revision": "b4114a33caa5a86787e4dcabd8db94fe18b935ae",
+          "title": "沪市扩因子与分市场扣费回放",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/b4114a33caa5a86787e4dcabd8db94fe18b935ae/reports/2026-11/2026-11-17-sse-factor-extension.md#L1-L48"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "ee4a6c39ef1dd350c512acecfd078828b2398b56",
+          "title": "签收训练、预测与连续账簿",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/ee4a6c39ef1dd350c512acecfd078828b2398b56"
         }
       ],
       "report_coverage": "curated"
@@ -7217,6 +7275,70 @@
         "on": "2026-11-17",
         "basis": "汇报使用两账户已核对的聚合数据。",
         "scope": "按已发生的输入承接登记。"
+      }
+    },
+    {
+      "from": "sse-factor-extension",
+      "to": "report-publish",
+      "type": "派生",
+      "date": "2026-11-17",
+      "source_date": "2026-11-17",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "沪市新模型的扣费收益账簿与同股信号进入11月16日汇报。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "ee4a6c39ef1dd350c512acecfd078828b2398b56",
+          "title": "沪市预测与账簿签收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/ee4a6c39ef1dd350c512acecfd078828b2398b56"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "2aedf0b0c510d56453ad271cda382f08045d614d",
+          "title": "独立模型对照入汇报",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/2aedf0b0c510d56453ad271cda382f08045d614d"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-18",
+        "basis": "汇报读取沪市签收预测和费后账簿。",
+        "scope": "实际使用的已签收结果。"
+      }
+    },
+    {
+      "from": "szse344-factor-comparison",
+      "to": "report-publish",
+      "type": "派生",
+      "date": "2026-11-17",
+      "source_date": "2026-11-16",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "深市G2的签收账簿进入两市各用新模型的分市场展示。",
+      "source_refs": [
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "b4114a33caa5a86787e4dcabd8db94fe18b935ae",
+          "title": "分市场账簿拼接与金额核对",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/b4114a33caa5a86787e4dcabd8db94fe18b935ae"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "e592ae6d1e75140dc4baa3ebbe0a83a171c9aa5f",
+          "title": "汇报默认使用分市场账簿",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/e592ae6d1e75140dc4baa3ebbe0a83a171c9aa5f"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-18",
+        "basis": "两市组合展示直接取已回放的各市场账簿，金额相加后按合计起始底仓折算。",
+        "scope": "实际使用的已签收结果。"
       }
     }
   ],
