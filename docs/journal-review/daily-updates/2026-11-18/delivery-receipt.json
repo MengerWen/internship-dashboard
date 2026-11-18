@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "run_date": "2026-11-18",
+  "review_window": [
+    "2026-11-11",
+    "2026-11-17"
+  ],
+  "target_dates": [
+    "2026-11-17"
+  ],
+  "changed_dates": [
+    "2026-11-17"
+  ],
+  "recorded_at": "2026-11-18T09:28:27.900335+08:00",
+  "model_check": {
+    "at": "2026-11-18T09:28:27.874904+08:00",
+    "global_default": [
+      "gpt-6.2-sol",
+      "xhigh"
+    ],
+    "automation": [
+      "gpt-6.2-sol",
+      "xhigh"
+    ],
+    "turn_contexts": [
+      {
+        "line": 11,
+        "timestamp": "2026-11-18T01:00:14.494Z",
+        "sha256": "6c6d621a097059dbf2001f4f13452087870735849d866d2a1083b54d1f4a787e",
+        "model": "gpt-6.1-sol",
+        "effort": "xhigh"
+      },
+      {
+        "line": 91,
+        "timestamp": "2026-11-18T01:03:25.475Z",
+        "sha256": "08740fbbc27a9bc1e3f89f3a5a80f847d0984afa79569d4a64ff51cbcb8e24f9",
+        "model": "gpt-6.2-sol",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "sources": {
+    "inventory_exit": 1,
+    "reconcile_exit": 1,
+    "coverage": "open",
+    "counts": {
+      "coverage": "open",
+      "official": {
+        "active": {
+          "pages": 11,
+          "ids": 538,
+          "unmatched": 0
+        },
+        "archived": {
+          "pages": 10,
+          "ids": 481,
+          "unmatched": 0
+        }
+      },
+      "registered": 1812,
+      "physical": 410,
+      "source_fragments": 401,
+      "physical_messages": 6399,
+      "unique_messages": 3876,
+      "session_read_failures": 0,
+      "late_physical_messages": 0,
+      "database_new_window": {
+        "2026-11-17": 12
+      },
+      "issues": {
+        "not-in-reviewed-session-snapshot": 716,
+        "registered-body-unavailable": 57
+      },
+      "new_issues": {
+        "not-in-reviewed-session-snapshot": 32
+      },
+      "recovered_to_last_page": 30,
+      "recovery_policy_block_count": 1,
+      "materials": 62034,
+      "material_changes": 130,
+      "material_failures": 0,
+      "material_read_changes": 0,
+      "material_pending": 0,
+      "all_ref_commits": 5809,
+      "new_all_ref_commits": 2,
+      "historical_versions": 9455,
+      "historical_failures": 0,
+      "actions": 4009,
+      "action_failures": 0,
+      "remote_push": {
+        "sirui-quant-research": {
+          "total": 7,
+          "with_receipt": 6
+        },
+        "Quant_Research-Trading": {
+          "total": 0,
+          "with_receipt": 0
+        },
+        "internship-dashboard": {
+          "total": 5,
+          "with_receipt": 5
+        }
+      }
+    },
+    "snapshots": [
+      {
+        "repo": "sirui-quant-research",
+        "head": "b4114a33caa5a86787e4dcabd8db94fe18b935ae",
+        "cutoff": "b4114a33caa5a86787e4dcabd8db94fe18b935ae",
+        "captured_at": "2026-11-18T09:05:04.320752+08:00",
+        "remote_main": "b4114a33caa5a86787e4dcabd8db94fe18b935ae"
+      },
+      {
+        "repo": "Quant_Research-Trading",
+        "head": "616e99e13e03beef243eace4c72f8be4a67941f1",
+        "cutoff": "616e99e13e03beef243eace4c72f8be4a67941f1",
+        "captured_at": "2026-11-18T09:05:06.432408+08:00",
+        "remote_main": "616e99e13e03beef243eace4c72f8be4a67941f1"
+      },
+      {
+        "repo": "internship-dashboard",
+        "head": "9600da8a2365512ab2462f24cd8ad7b8fdf13a3b",
+        "cutoff": "9600da8a2365512ab2462f24cd8ad7b8fdf13a3b",
+        "captured_at": "2026-11-18T09:05:08.936638+08:00",
+        "remote_main": "9600da8a2365512ab2462f24cd8ad7b8fdf13a3b"
+      }
+    ],
+    "source_closeout": [
+      {
+        "repo": "sirui-quant-research",
+        "same_head": true,
+        "same_refs": true,
+        "same_worktree_status": true,
+        "refs": 23,
+        "ref_fingerprint": "8b321faf133c3af8d06afdc950d8ad79acf85470642a0d504b3190dd9f6b3ff6"
+      },
+      {
+        "repo": "Quant_Research-Trading",
+        "same_head": true,
+        "same_refs": true,
+        "same_worktree_status": true,
+        "refs": 27,
+        "ref_fingerprint": "6c2e8b1ac2c266d71f1b31a1ad788236edf74c5e47b708a29bfa01196853e99e"
+      },
+      {
+        "repo": "internship-dashboard",
+        "same_head": true,
+        "same_refs": true,
+        "same_worktree_status": false,
+        "refs": 11,
+        "ref_fingerprint": "f413eb4e36f279b9dacc8bb3b1ee1f1774287bdd0d7cc90accdb0538e9fec42f"
+      }
+    ],
+    "post_capture_dashboard_head": "acc89d4034fb4a40e2abef54ba587c948927fbdc"
+  },
+  "validation": {
+    "pytest_passed": 22,
+    "legacy_fixed_refs": 104,
+    "reviewed_excerpts": 3,
+    "build": {
+      "ok": true,
+      "elapsed_seconds": 108.75,
+      "journal_days": 127,
+      "daily_reports": 49,
+      "point_statuses": {
+        "sse-factor-extension": "artifact",
+        "candidate-factor-compute": "artifact",
+        "strategy-research": "discussion",
+        "report-publish": "artifact"
+      }
+    },
+    "local_browser": {
+      "scope": "local",
+      "started": "2026-11-18T01:22:17.111Z",
+      "errors": [],
+      "failedRequests": [],
+      "httpErrors": [
+        {
+          "path": "/api/report-tags",
+          "status": 404
+        }
+      ],
+      "origin": "http://127.0.0.1:1919",
+      "sseChainFixedSource": true,
+      "sseChainIncomingHandoff": true,
+      "checks": {
+        "date": "2026-11-17",
+        "points": 4,
+        "excerpts": 3,
+        "commits": 12,
+        "tokens": [
+          "566日",
+          "0.6262%",
+          "217,344",
+          "动态现金与库存",
+          "当天还有没核全的来源"
+        ],
+        "chainPages": 4
+      },
+      "ok": true,
+      "finished": "2026-11-18T01:22:26.779Z"
+    },
+    "preservation": {
+      "_evidence": 113,
+      "_attribution": 113,
+      "historical_register_days": 125,
+      "historical_register_docs": 1142,
+      "new_chains": 0,
+      "new_handoffs": 2,
+      "fixed_refs": 5
+    },
+    "attribution_difference_count": 0,
+    "evidence_difference_count": 0
+  },
+  "git_content": {
+    "sha": "ee87d97bab435bddd25dccceea61f0babefd3def",
+    "remote_main": "ee87d97bab435bddd25dccceea61f0babefd3def",
+    "github_api_main": "ee87d97bab435bddd25dccceea61f0babefd3def",
+    "github_api_exit": 0,
+    "at": "2026-11-18T09:23:16.338286+08:00"
+  },
+  "production": {
+    "git_sha": "ee87d97bab435bddd25dccceea61f0babefd3def",
+    "npm_exit": 1,
+    "deployment_id": "b6f66c8b-00c2-4f53-b66c-b99ece7a336e",
+    "version_id": "788349d1-e0d6-4553-8399-53b9f91e0653",
+    "traffic_percent": 100,
+    "deployment_created_at": "2026-11-18T01:26:01.545815Z",
+    "checked_at": "2026-11-18T09:28:19.664085+08:00",
+    "process_seconds": 288.67,
+    "build_seconds": 53.9,
+    "wrangler_seconds": null,
+    "script_seconds": 287.2,
+    "wrangler_upload_seconds": 62.57,
+    "wrangler_trigger_seconds": 2.85
+  },
+  "online_browser": {
+    "scope": "production",
+    "started": "2026-11-18T01:25:45.315Z",
+    "errors": [],
+    "failedRequests": [],
+    "httpErrors": [],
+    "origin": "https://mengerwenjie.cloudflareaccess.com",
+    "accessGate": true,
+    "ok": false,
+    "error": "Error: Cloudflare Access requires an authenticated browser",
+    "finished": "2026-11-18T01:25:47.911Z"
+  },
+  "workspace": {
+    "audit": [
+      "未跟踪条目：0",
+      "临时输出：7099 个文件，927.36 MiB"
+    ],
+    "preview_files_removed": 9109,
+    "preview_bytes_removed": 2423955050,
+    "retained": [
+      {
+        "sha256": "A7AE6FEB50CCFC5D3424FEA12647E91977FF8972BD963E9A0B625073DAAE08E0",
+        "file": "index.html"
+      },
+      {
+        "sha256": "FDF4E6E441E1BF0F0DBB42768BCAB98E42F6D242BE480F2047942A626660D53E",
+        "file": "manifest.json"
+      },
+      {
+        "sha256": "3343BF1B19C5FA677522A69D4F7F2724827680A6AB3A078A0ACEB2F82DF68A02",
+        "file": "journal\\_evidence\\2026-11-17.json"
+      }
+    ],
+    "review_after": "2026-11-25"
+  },
+  "local_evidence_hashes": {
+    "reconcile.log": "9a052842f973278a7b2a56a81ba9c6e340091742538520059b15892770fac546",
+    "source-summary-counts.json": "f7d45d75cdd726e304f4cc3e677a110115e1fbd03f6a62c63f997820ca49de45",
+    "official-list-verification.json": "26e943bb27550e73e91908fc5f24a8b62e4666a2f4b320cd076edda84015d8a1",
+    "recovery-verification.json": "f11684f44733fef3a576c037d8df8292ecac7edbe783d3297982eb2d20ead146",
+    "deploy.log": "ec3106117c90b7c71930f8caf801e36730a11a8dc6cac0495fe57899064e4a8a",
+    "workspace-audit.log": "2e49de6d81ae3a15690442f329b20a2ff5cfc79ce86496fd48bc54277a1212a7"
+  }
+}
