@@ -112,3 +112,34 @@ test('external links, downloads and modified clicks keep their existing handling
   });
   expect(prevented).toEqual(Array(8).fill(false));
 });
+
+test('roadmap arrowheads follow the visible end of every dependency', async ({ page }) => {
+  const html = fs.readFileSync(path.join(root, 'content/daily/2026-11-18.show.html'), 'utf8');
+  const { frame } = await embed(page, html);
+  const edges = frame.locator('.flow-edge');
+  await expect(edges).toHaveCount(28);
+  await expect(frame.locator('.flow-edge[data-optional]')).toHaveCount(2);
+
+  for (const width of [1360, 390]) {
+    await page.locator('iframe').evaluate((iframe, width) => {
+      iframe.style.width = width + 'px';
+    }, width);
+    const headings = await edges.evaluateAll(paths => paths.map(edge => {
+      const length = edge.getTotalLength();
+      const screen = edge.getScreenCTM();
+      const point = distance => edge.getPointAtLength(Math.max(0, length - distance)).matrixTransform(screen);
+      const tip = point(0);
+      const direction = distance => {
+        const origin = point(distance);
+        return Math.atan2(tip.y - origin.y, tip.x - origin.x) * 180 / Math.PI;
+      };
+      return {
+        dependency: edge.dataset.from + ' → ' + edge.dataset.to,
+        deviation: Math.abs(direction(18) - direction(.15)),
+      };
+    }));
+    for (const { dependency, deviation } of headings) {
+      expect(deviation, dependency + ' at ' + width + 'px').toBeLessThan(20);
+    }
+  }
+});
