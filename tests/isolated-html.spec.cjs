@@ -118,7 +118,8 @@ test('roadmap arrowheads follow the visible end of every dependency', async ({ p
   const { frame } = await embed(page, html);
   const edges = frame.locator('.flow-edge');
   await expect(edges).toHaveCount(28);
-  await expect(frame.locator('.flow-edge[data-optional]')).toHaveCount(2);
+  await expect(frame.locator('.flow-edge[data-optional]')).toHaveCount(1);
+  await expect(frame.locator('.flow-edge[data-from="R17"][data-to="R18"]')).not.toHaveAttribute('data-optional', '');
 
   for (const width of [1360, 390]) {
     await page.locator('iframe').evaluate((iframe, width) => {
