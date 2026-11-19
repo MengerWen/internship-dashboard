@@ -422,9 +422,9 @@ details > :not(summary) { margin-top: 8px; }
     <h1>日内策略研究路线图</h1>
   </header>
 <section aria-label="研究进展">
-  <p><strong>现在可并行开四个会话。</strong> R08 建连续账户，R09 定每轮买入门槛，R10 查重新旧因子，R11 验证盘中新信息。点任务的「会话 Prompt」可复制整项或单阶段指令。</p>
-  <details><summary>一亿元账户怎么比</summary><p>以中证 2000 等权现货 5,000 万元、现金 5,000 万元起步。每轮先筛出所有值得买的股票，再按现金和同股可卖旧股决定订单。R12 比较股现比，R13 检验多次判断；以全仓扣费收益、同配比被动底仓、回撤和次日逐股周转一起判断。</p><p>中性成交取决策后预定窗口的 VWAP，买卖使用相同规则，费用按实际买额 0.9 bp、卖额 5.9 bp。通过较好／较差价格和容量做敏感性。两亿元历史样例、三日逐档探针继续用原分母。</p></details>
-  <details><summary>历轮因子研究有什么价值</summary><p>外部研究、Claude 审阅和本地核验留下 74 个登记族，44 族有正式计算结果。深市比较从 165 个候选变体留下 143 个新列。G2 的 9 族 34 列在三个研发折外主档显著改善；六组一起加入未见显著改善。</p><p>沿旧账户规则，仅替换深市 G2 后，566 日的 16 个主配置均有小幅改善，每日仅 0.00630–0.01971 bp，均未通过多重比较校正。沪市扩因子也因时段而异。R10 先将两份外部候选逐项对回旧库，R14 验预测，R17 再验全仓。研究仓库的完整评议和原始对照列在 R10 的原始资料中。</p></details>
+  <p><strong>现在可并行开展五项研究。</strong> R08 建连续账户，R09 定每轮买入门槛，R10 查重新旧因子，R11 验证盘中新信息。另可直接复制<a href="#R14-pools">R14 已有模型跨股票池比较 Prompt</a>。点任务的「会话 Prompt」可复制整项或单阶段指令。</p>
+  <details><summary>一亿元账户怎么比</summary><p>中证 2000 保留作历史参照。中证 500、1000、2000 各用一亿元、等权现货和现金各 5,000 万元独立建账。国证 2000 用于核对小盘结论是否依赖成分名单。每轮先筛出所有值得买的股票，再按现金和同股可卖旧股决定订单。R12 比较股现比，R13 检验多次判断；以全仓扣费收益、同配比被动底仓、回撤和次日逐股周转一起判断。</p><p>中性成交取决策后预定窗口的 VWAP，买卖使用相同规则，费用按实际买额 0.9 bp、卖额 5.9 bp。通过较好／较差价格和容量做敏感性。两亿元历史样例、三日逐档探针继续用原分母。</p></details>
+  <details><summary>历轮因子研究有什么价值</summary><p>外部研究、Claude 审阅和本地核验留下 74 个登记族，44 族有正式计算结果。深市比较从 165 个候选变体留下 143 个新列。G2 的 9 族 34 列在三个研发折外主档显著改善；六组一起加入未见显著改善。</p><p>沿旧账户规则，仅替换深市 G2 后，566 日的 16 个主配置均有小幅改善，每日仅 0.00630–0.01971 bp，均未通过多重比较校正。沪市扩因子也因时段而异。R04 已登记三个会话，①②报告的 142 和 159 行可先对回旧库。③当前仅见研究启动回执，终稿到齐后交 R10 续查，R14 验预测，R17 再验全仓。研究仓库的完整评议和原始对照列在 R10 的原始资料中。</p></details>
 </section>
 
   <section aria-labelledby="intraday-flow-title">
@@ -506,15 +506,15 @@ details > :not(summary) { margin-top: 8px; }
   "levels": [
     [
       "既有证据",
-      "R01–R07 已有可交接结果。R04 为外部研究交付，其余六项保留各自的历史样本范围。"
+      "R01–R07 有可复用交接。R04 已定位三个来源，①②报告已有交付，③待取得终稿。"
     ],
     [
       "当前可并行",
-      "同时开展 R08 连续账户、R09 机会门槛、R10 查重准入和 R11 可得时点。四项共享数据，独立交接。"
+      "R08–R11 四项可并行。R14 的冻结模型跨池比较也可另开会话，只需 R01。"
     ],
     [
       "分项比较",
-      "R12 先用固定信号比较股现比，R13 从 50/50 试滚动，R14 逐批比较预测。滚动规则冻结后回测相同股现网格。"
+      "R12 先用固定信号比较股现比，R13 从 50/50 试滚动，R14 逐批比较预测。滚动规则冻结后回测相同股现网格。跨池预测与新候选准入可并行。"
     ],
     [
       "账户贡献",
@@ -542,10 +542,11 @@ details > :not(summary) { margin-top: 8px; }
     "horiz": "旧深市持有期｜reports/2026-10/2026-10-29-signal-horizon-decay.md",
     "night": "旧深市隔夜分段｜reports/2026-10/2026-10-30-signal-overnight-hold.md",
     "fee": "现有税费与交易收益口径｜reports/2026-11/2026-11-16-csi2000-fees-and-trading-returns.md",
-    "review": "历轮候选工作评议与两份外部原件入口｜reports/2026-11/2026-11-19-factor-candidate-workflow-review.md",
+    "review": "历轮候选工作评议与三个外部会话入口｜reports/2026-11/2026-11-19-factor-candidate-workflow-review.md",
     "depth": "三日逐档成交与同股库存算例｜reports/2026-11/2026-11-18-intraday-execution-depth-and-account.md",
     "d24": "深市七方案冻结列与折外比较｜reports/2026-11/2026-11-10-model-szse344-factor-comparison.md",
-    "full": "G2 全期对照｜reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison.md"
+    "full": "G2 全期对照｜reports/2026-11/2026-11-16-factor-evaluation-and-strategy-comparison.md",
+    "inputs": "R01 原预测、标签与覆盖边界｜reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md"
   },
   "tasks": [
     {
@@ -570,7 +571,7 @@ details > :not(summary) { margin-top: 8px; }
       "phases": [
         ["核对冻结输入",
          "冻结模型登记、R01 报告及其中的逐股样例。",
-         "核对沪市 340 列、深市 344 列 B0，各自分市场排名；核对 566 日、点时成分、缺分股票日、11:30／收盘两个目标、公司行动及底仓来源。",
+         "核对沪市 340 列、深市 344 列 B0，各自分市场排名；核对 566 日、点时成分、缺分股票日、11:30／收盘两个目标、公司行动及底仓来源。 为跨池比较登记可替换的指数、成分生效／可知时点、权重和调仓事件，标明全市场原分数与只含中证 2000 的成分分片。",
          "交回模型、样本键、缺失和交易日历的版本表。"],
         ["对齐新旧账户",
          "原两亿元样例及冻结的现金、股数、费用和次晨估值。",
@@ -654,30 +655,30 @@ details > :not(summary) { margin-top: 8px; }
     {
       "id": "R04",
       "level": 1,
-      "title": "接收两份广义因子调研",
+      "title": "登记三个外部因子研究会话",
       "track": "因子研究",
-      "effort": "已交接 · 外部研究",
+      "effort": "①②可交接 · ③待终稿",
       "need": [],
       "side": [],
       "ref": [
         "review",
         "cat"
       ],
-      "why": "把已经完成的两份广搜交给本地查重；候选效果由本项目数据判断。",
-      "out": "已交接两份原研究；附件逐行落地和查重归 R10。",
-      "gate": "能定位两份原件并分清 142 与 159 的计数口径。",
-      "branch": "附件失效时保留可核验的正文与缺行范围，交给 R10 做部分映射。",
+      "why": "三次独立调研逐一保留来源和原编号，先将已取得的材料交给 R10。",
+      "out": "三个会话的来源清单；①②报告和附件入口可交接，③保留终稿待取状态。",
+      "gate": "区分启动回执、最终报告、附件实收与逐行验真；只有读到第三份原表才登记其行数。",
+      "branch": "附件不可读时保留已核验的正文和缺行范围；③补齐后增量交接。",
       "phases": [
         ["定位与交付",
-         "读历轮因子流程评议最后一节列出的两份 11.18 原会话和可读附件。",
-         "逐份核对 142 条规格、159 行候选的标题、行号、字段、来源及版本；保留各自编号。检查日线量价、RSI/MACD、Barra 水平与变化、竞价、逐笔续流及其他机制的实际覆盖。",
-         "原件索引，各自可取回的行和附件缺口清单。"],
+         "读历轮因子工作评议“现在怎样接手”中的①②③三个原会话。",
+         "核对①的 142 条规格、30 列和②的 159 行候选、26 个字段，按原文定位报告、CSV、工作簿和来源表。重读③并检查是否新增终稿或附件；只有启动回执时，保留状态和空行数。",
+         "列三份来源的会话、交付状态、已取附件、实际行数和缺口；先交①②，③可单独补交。"],
         ["限定补充范围",
-         "两份报告已有的机理、公式、数据时点、证据和排重说明。",
+         "已取得的各份报告所列机理、公式、时点、来源及排重说明。",
          "区分原文实证、A 股迁移和新假设，只对 R10 指出的机制／字段缺口补充一手来源与最小证伪实验。",
          "逐份来源与缺口交给 R10，本地合并行数由 R10 核实。"]
       ],
-      "result": "两份外部调研已交付，分别为 142 条规格、159 行候选。原会话可定位；下载附件尚待逐行核验，查重归 R10。",
+      "result": "已登记①②③。①报告 142 条规格，②报告 159 行候选；③仅见 Deep Research 启动回执，终稿和行数待核对。①②可先交 R10，附件待逐行核验。",
       "report": "reports/2026-11/2026-11-19-factor-candidate-workflow-review.md"
     },
     {
@@ -799,7 +800,7 @@ details > :not(summary) { margin-top: 8px; }
       "phases": [
         ["冻结两本账",
          "R01 资产估值、R02 成交回报、R03 底仓与现有连续账簿。",
-         "以一亿元、等权股票／现金各五千万起步。单列初始化买底仓和已持有可卖底仓。信号表保存全候选；订单表保存目标与实成、现金／旧股占用、双方撤单释放、买入锁定、成交费用。定义下一日解锁与公司行动顺序。",
+         "以一亿元、等权股票／现金各五千万起步。单列初始化买底仓和已持有可卖底仓。信号表保存全候选；订单表保存目标与实成、现金／旧股占用、双方撤单释放、买入锁定、成交费用。定义下一日解锁与公司行动顺序。 将池、当时有效成分、权重、调仓事件作为输入；为每个指数独立记账，以中证 2000 对回历史。",
          "事件顺序、键、数量／金额单位、净值恒等式及现有函数复用表。"],
         ["两天逐股验账",
          "上一阶段的合同和 R01 真实估值样例。",
@@ -849,7 +850,7 @@ details > :not(summary) { margin-top: 8px; }
     {
       "id": "R10",
       "level": 2,
-      "title": "两份新候选与历轮因子的查重准入",
+      "title": "三个来源的候选与历轮因子查重",
       "track": "因子研究",
       "effort": "P0 · 立即并行",
       "need": [
@@ -875,12 +876,12 @@ details > :not(summary) { margin-top: 8px; }
       "branch": "批间互不阻塞。某外部表缺行时先验有原件的族，完整覆盖声明等附件对齐。",
       "phases": [
         ["找回原件并映射",
-         "两份 R04 原会话、历轮评议、候选 YAML、D24 P1 与沪市冻结列。",
-         "逐份核对原号和附件行数，保留原命题和一手出处。按观测对象／时点／公式与方向对照 74 族、B0、G2、SSE+ 和 H01–04；写明等价、现有变体、条件项、真正新增、待证或仅用于执行。",
+         "R04 的三个原会话与交付状态、历轮评议、候选 YAML、D24 P1 和沪市冻结列。",
+         "先接①②；用“来源会话＋原编号”作键，分别核对原件行数、表内及跨表重复，再按观测、时点和公式对照旧 74 族、B0、G2、SSE+ 及 H01–04。③回执只登记来源；读到终稿后按同一程序加入。",
          "双向对照表可找回每个原编号；缺失附件和未覆盖项可计数。"],
         ["按族交付第一批",
          "已定位的候选、原始字段定义、两市覆盖和现有实现。",
-         "优先日频／Barra 风格及其变化、可复用竞价／缺口、滚动续流／承接，各写最接近列、假说和可证伪对照。核实历史可得日、到达时点、字段授权及缺失，估输入与算量。按现行登记规则记录实际核验人，外部评议按需。",
+         "优先日频／Barra 风格及其变化、可复用竞价／缺口、滚动续流／承接，各写最接近列、假说和可证伪对照。核实历史可得日、到达时点、字段授权及缺失，估输入与算量。按现行登记规则记录实际核验人，外部评议按需。 按中证 500／1000／2000 分别记数据覆盖，国证 2000 作小盘名单对照。",
          "至少一批可复用或新准入的 family/variant、字段/时间合同、时钟证据、优先理由和负清单。首批可交 R14，余批继续映射。"]
       ]
     },
@@ -959,7 +960,7 @@ details > :not(summary) { margin-top: 8px; }
          "在全账户净收益、被动底仓增强、回撤、次日恢复和受限机会之间给出可行区间。"],
         ["滚动后复验",
          "固定时点配比表；后续读取 R13 已冻结滚动策略和 R09 对应门槛。",
-         "固定同一滚动规则和预算，在相同日期重放原网格；比较机会是否真的转移到仍有旧股的股票，早平释放的现金和已耗尽的旧股分别计。用更晚时段验证所选范围的稳定性。",
+         "固定同一滚动规则和预算，在相同日期重放原网格；比较机会是否真的转移到仍有旧股的股票，早平释放的现金和已耗尽的旧股分别计。用更晚时段验证所选范围的稳定性。 标明各结论适用池。R17 同配置跨池回放后，才对有竞争力的池复验相同的配比网格。",
          "两轮分别签收；固定轮可先供 R13/R15，滚动复验结果供 R15/R18。"]
       ]
     },
@@ -1007,7 +1008,7 @@ details > :not(summary) { margin-top: 8px; }
       "level": 3,
       "title": "新增因子能否提高预测能力",
       "track": "因子研究",
-      "effort": "P1 · 首批准入即开",
+      "effort": "P0 冻结模型跨池 · 新族待 R10",
       "need": [
         "R01",
         "R10"
@@ -1028,7 +1029,7 @@ details > :not(summary) { margin-top: 8px; }
       ],
       "why": "在相同决策时点和未来标签下，新增的一族信息能否改善模型判别与头部收益。",
       "out": "预测增量和逐组分数，注明是否有足够理由进入账户比较。",
-      "gate": "旧组、全组和新组的证据分别列示；开发段定方案，已看晚段只用于复核。",
+      "gate": "旧组、全组和新组的证据分别列示；开发段定方案，已看晚段只用于复核。 单列冻结模型跨池结果与本轮新族结论。",
       "branch": "尚无新族胜出时交付明确负结果，R17 可用 G2/SSE+ 对照说明账户影响；不强制替换 B0。",
       "phases": [
         ["冻结第一批",
@@ -1041,9 +1042,26 @@ details > :not(summary) { margin-top: 8px; }
          "逐组样本、特征增减、折外分数和正负结果；计算范围及复现凭证。"],
         ["预测验收",
          "逐日共同有效股票及预先冻结的纯多主档与周期。",
-         "对照 RankIC、头部未来毛／净 bp、覆盖与风险；按交易日配对区间与多重比较，列强弱市及样本分期。日频背景可检验能否调节原信号；滚动批按 R11 可得时点重新验证。",
+         "对照 RankIC、头部未来毛／净 bp、覆盖与风险；按交易日配对区间与多重比较，列强弱市及样本分期。日频背景可检验能否调节原信号；滚动批按 R11 可得时点重新验证。 各池分别报告新旧水平及池内增量，用相同股票日配对。",
          "交 R17 版本化分数、近邻对照、适用时钟；不足或负增量同样可签收。"]
-      ]
+      ],
+      "early": {
+        "need": [
+          "R01"
+        ],
+        "ref": [
+          "model",
+          "full",
+          "ext",
+          "inputs"
+        ],
+        "brief": [
+          "冻结模型跨股票池比较",
+          "从 R01 输入索引定位两市未按中证 2000 过滤的 B0 原预测、准入标签与交易窗；从 G2 全期比较和沪市扩因子报告定位深市 G2、沪市 SSE+ 同版本折外／历史预测。核对历史有效成分、日期、证券、交易所、时点和周期键。已按中证 2000 筛过的准备分片只能对回该池。",
+          "固定原训练范围、模型、分数、09:35 决策、11:30／收盘标签和筛选口径。在中证 500／1000／2000 当时有效的成分内分沪深排名，另用国证 2000 检验小盘结论对名单的敏感性。先列各池应有、可打分、可配对、缺行情的股票日，再在各池新旧共同样本取前 5% 纯多作固定对照。区分池内排名和全市场选后取交集。按决策前市值分层，结合行业及流动性控制，查旧模型是否只在小盘或特定市场条件下占优。复用现有预测，不分池重训。",
+          "交回股票池 × 市场 × 周期的 B0、增强、增强减 B0 对照表，注明覆盖、RankIC、前 5% 后续毛／净 bp、扣费规则、配对日数和按日配对区间。分列 308 日研发折外、176 日及末 82 日已看历史。列各池水平和增量两种排序，保留缺失、并列和排序不稳。预测结果供 R17 做等本金账户比较。"
+        ]
+      }
     },
     {
       "id": "R15",
@@ -1138,7 +1156,7 @@ details > :not(summary) { margin-top: 8px; }
       "phases": [
         ["固定设置只换预测",
          "R08 一亿元连续账、R14 版本化分数／负结果、B0、已签收两市历史模型。",
-         "先在相同 09:35、50/50、门槛、费用及退出下，只替换一方或两市模型。默认各市用自己的模型、分市场选股。分列深市 G2、沪市 SSE+ 和本轮新族，合排仅作有标识的重放。",
+         "先在相同 09:35、50/50、门槛、费用及退出下，只替换一方或两市模型。默认各市用自己的模型、分市场选股。分列深市 G2、沪市 SSE+ 和本轮新族，合排仅作有标识的重放。 中证 500／1000／2000 各自建立一亿元、50/50 的独立账户，在同一套规则下比较；各自另配同股现比被动底仓，报告全仓净收益、净增强、回撤、次日受同股旧仓约束的机会。先固定配置跨池，再交 R12 检验配比。",
          "逐日配对净值与成交事件、预测指标、两市及合计金额。先用原设置即可开始。"],
         ["预测与设置交叉",
          "R15 冻结原／新设置，R13 签收对应时点的滚动分数。",
@@ -1177,7 +1195,7 @@ details > :not(summary) { margin-top: 8px; }
          "逐条来源、复算差异和已解决／仍缺证据的结果表。"],
         ["界定结论",
          "共同交易日、分期、成本情景和可用的 R16 证据。",
-         "按 308、176、82 日及全期报告绝对和配对结果、回撤、区间和主检验族。比较 VWAP 双腿的较好／较差成交、时钟推迟及宽松容量；列盈利、零或负增量、未识别项。主动隔夜可选，所有被动留仓必计。",
+         "按 308、176、82 日及全期报告绝对和配对结果、回撤、区间和主检验族。比较 VWAP 双腿的较好／较差成交、时钟推迟及宽松容量；列盈利、零或负增量、未识别项。主动隔夜可选，所有被动留仓必计。 将选池也算入开发期的模型选择；核对候选池预先冻结、晚段身份、模型与股票池的交互。区间重叠或排序不稳时保留中证 2000 参照。",
          "交 R19 可引用的结论、适用条件、反例及下一步需要的新样本。"]
       ]
     },
@@ -1228,7 +1246,7 @@ details > :not(summary) { margin-top: 8px; }
   const nodeHalfHeight = 22;
   const flowNodes = {
     R07:[157,"隔夜证据"], R03:[281,"旧仓覆盖"], R02:[405,"成交情景"],
-    R01:[529,"输入与口径"], R06:[653,"轻量滚动试算"], R04:[777,"两份因子调研"], R05:[901,"信号归因"],
+    R01:[529,"输入与口径"], R06:[653,"轻量滚动试算"], R04:[777,"三个调研来源"], R05:[901,"信号归因"],
     R08:[354,"连续账户"], R09:[511,"阈值与配权"], R11:[650,"滚动预测"], R10:[778,"候选查重"],
     R12:[320,"股现比与周转"], R13:[499,"滚动开平仓"], R14:[772,"分批验因子"],
     R16:[225,"主动续持"], R15:[520,"组合交互"], R17:[759,"模型账户贡献"],
@@ -1372,11 +1390,14 @@ details > :not(summary) { margin-top: 8px; }
   function isDone(id) {
     return record(id).status === "done" && byId.get(id).need.every(isDone);
   }
-  function ready(t) { return record(t.id).status === "todo" && t.need.every(isDone); }
+  function ready(t) {
+    return record(t.id).status === "todo" && (t.need.every(isDone) || t.early?.need.every(isDone) === true);
+  }
   function status(t) {
     const current = record(t.id);
     if (current.status === "done" && !isDone(t.id)) return "上游待复核";
     if (current.status !== "todo") return labels[current.status];
+    if (ready(t) && !t.need.every(isDone)) return "跨池比较可开始";
     return ready(t) ? "可开始" : "待上游";
   }
   function el(tag, text, cls) {
@@ -1405,37 +1426,41 @@ details > :not(summary) { margin-top: 8px; }
     const note = record(id).note;
     const report = signedReports[id];
     const label = "- " + id + " " + task.title;
-    const evidence = [note,report && "原始材料入口 " + report].filter(Boolean).join("。");
+    const evidence = [task.result, note && note!==task.result ? note : "",report && "原始材料入口 " + report].filter(Boolean).join(" · ");
     if (evidence) return label + "。核对 " + evidence;
     return label + "。在路线图交接说明、已登记报告和随消息附上的材料里定位可读产物。需要的结果为" + task.out;
   }
   function makePrompt(t, phaseIndex=-1) {
-    const phase = phases[t.id]?.[phaseIndex];
-    const title = t.id + " " + t.title + (phase ? " · 阶段 "+(phaseIndex+1)+" "+phase[0] : "");
+    const independent = phaseIndex === "pools" ? t.early : null;
+    const phase = independent?.brief || phases[t.id]?.[phaseIndex];
+    const needed = independent?.need || t.need;
+    const sources = independent?.ref || t.ref;
+    const title = t.id + " " + t.title + (independent ? " · "+phase[0] : phase ? " · 阶段 "+(phaseIndex+1)+" "+phase[0] : "");
     const parts = [
       "# "+title,
-      "研究问题：" + t.why,
-      "优先级：" + t.effort + "。"+(t.result ? "本任务已有下列范围的结果。先读取签收，只复核或补明确缺口。" : "使用既有实现和已签收数据，产物应支持新会话独立接续。"),
+      "研究问题：" + (independent ? "加入已经训练好的新因子后，三个指数池的选股表现和相对排名怎样变化？" : t.why),
+      "优先级：" + (independent ? "P0，可立即独立开展" : t.effort) + "。"+(t.result ? "本任务已有下列范围的结果。先读取签收，只复核或补明确缺口。" : "使用既有实现和已签收数据，产物应支持新会话独立接续。"),
       "请在思瑞投资的 sirui-quant-research 研究仓库中工作。读 AGENTS.md，并按仓库相对路径和资料标题核对下列证据及既有交接。"
     ];
-    if (t.need.length) parts.push("## 所需上游结果\n\n"+t.need.map(handoff).join("\n"));
-    const optional = t.side.filter(id=>record(id).note || signedReports[id]);
+    if (needed.length) parts.push("## 所需上游结果\n\n"+needed.map(handoff).join("\n"));
+    const optional = independent ? [] : t.side.filter(id=>record(id).note || signedReports[id]);
     if (optional.length) parts.push("## 可参考的既有材料\n\n"+optional.map(handoff).join("\n"));
     const note = record(t.id).note;
     const report = signedReports[t.id];
     if (note || report) {
       parts.push("## 本任务已有进展\n\n"+handoff(t.id)+"。核对输入版本、范围与验收证据。已覆盖的工作直接复用，继续处理剩余差异。");
     }
-    if (t.ref.length) {
-      parts.push("## 原始资料\n\n"+t.ref.map(ref=>{
+    if (sources.length) {
+      parts.push("## 原始资料\n\n"+sources.map(ref=>{
         const entry = source(ref);
         return "- " + entry.name + "。"+entry.path;
       }).join("\n"));
     }
     parts.push("## 共同口径\n\n" + (
       ["R08","R09","R12","R13","R15","R16","R17","R18","R19"].includes(t.id)
-        ? "总资产一亿元，等权中证 2000 现货和现金各五千万元为起点，分市场选股。每轮先记全部合格机会，再按当前现金、同股剩余可卖旧股和在途订单成交。逐股跟踪收盘和次日恢复。中性取决策后预定窗 VWAP，双腿较好／较差价作敏感性，给可观察量上限。按实际买额 0.9 bp、卖额 5.9 bp 扣费。以整户扣费净值、同配比被动账户、回撤和逐股周转为主要结果。"
+        ? "中证 2000 为历史参照。比较不同股票池时，各自用一亿元、等权现货与现金各五千万元独立起步，按当时有效成分分市场选股。每轮先记全部合格机会，再按当前现金、同股剩余可卖旧股和在途订单成交。逐股跟踪收盘和次日恢复。中性取决策后预定窗 VWAP，双腿较好／较差价作敏感性，给可观察量上限。按实际买额 0.9 bp、卖额 5.9 bp 扣费。以整户扣费净值、同配比被动账户、回撤和逐股周转为主要结果。"
         : "冻结沪深各自的 B0 和分市场基准，09:35 固定预测作对照。区分研究折外 308 日、已看历史 176＋82 日与全期 566 日。历史两亿元、三日执行试验和八个股票日的试算各用原分母。机会评分只用当时可得信息，与此前是否买过该股无关。"));
+    if (t.early && !phase) parts.push("## 可独立开工 · "+t.early.brief[0]+"\n\n"+t.early.brief.slice(1).join("\n\n"));
     if (phase) {
       if (phaseIndex > 0) parts.push("先在本任务记录中定位上一阶段「"+t.phases[phaseIndex-1][0]+"」的产物，核对版本与覆盖。");
       parts.push("## 阶段输入\n\n"+phase[1],"## 本阶段执行\n\n"+phase[2],"## 本阶段交付与验收\n\n"+phase[3]);
@@ -1444,7 +1469,7 @@ details > :not(summary) { margin-top: 8px; }
         (i+1)+". "+name+"\n输入："+input+"\n操作："+action+"\n交回："+receipt).join("\n\n"),
         "## 整项交付与验收\n\n"+t.out+"\n"+t.gate);
     }
-    parts.push("## 结果适用范围\n\n"+t.branch);
+    parts.push("## 结果适用范围\n\n"+(independent ? "覆盖不足的池、时段或费用单列缺口。只有已冻结预测的比较属于本分项；新因子、分池重训与整户回放由各自会话接手。" : t.branch));
     if (t.id !== "R19") {
       parts.push("涉及服务器取数、分发代码或正式批处理时，读 AGENT.md 及其指向的计算与存储规约。核对已有任务、可用资源和恢复点，复用签收对象。正式取数、训练和全历史计算遵循本轮实际授权及原 PLAN。依赖缺失时先做可独立完成的部分，记录具体缺口及影响。");
     }
@@ -1507,9 +1532,13 @@ details > :not(summary) { margin-top: 8px; }
       if (phases[t.id]) {
         const scope=el("label","会话范围　"),select=el("select");
         const full=el("option","整项任务");full.value="-1";select.append(full);
+        if (t.early) {
+          const opt=el("option","独立会话 · "+t.early.brief[0]);opt.value="pools";select.append(opt);
+          if (location.hash==="#"+t.id+"-pools") { select.value="pools";box.value=makePrompt(t,"pools"); }
+        }
         phases[t.id].forEach(([name],i)=>{const opt=el("option","阶段 "+(i+1)+" · "+name);opt.value=String(i);select.append(opt);});
         select.addEventListener("change", () => {
-          box.value = makePrompt(t, Number(select.value));
+          box.value = makePrompt(t, select.value==="pools" ? "pools" : Number(select.value));
           copyFeedback.textContent = "";
         });
         scope.append(select);panel.append(scope);
@@ -1529,6 +1558,7 @@ details > :not(summary) { margin-top: 8px; }
       const needed = t.need.filter(id => !isDone(id));
       panel.append(el("p",needed.length ? "待交接 · " + needed.map(id => id+" "+byId.get(id).title).join("、") : (t.need.length ? "所需上游已交接。" : "可与同层其他任务并行开始。"),"hint"));
       if (t.result) panel.append(el("h3","已有结果"),el("p",t.result),el("p","材料入口 · "+t.report,"hint"));
+      if (t.early) panel.append(el("p","独立分项 · "+t.early.brief[0]+"，只需 "+t.early.need.join("、")+"。新增因子阶段另等 R10。","hint"));
       panel.append(el("h3","执行步骤"));
       const ol = el("ol"); t.phases.forEach(([name,,action])=>ol.append(el("li",name+"。"+action))); panel.append(ol);
       const box = el("div",undefined,"box"); box.append(el("h3","应交回的结果"),el("p",t.out),el("h3","可交接的条件"),el("p",t.gate));panel.append(box);
@@ -1723,9 +1753,17 @@ details > :not(summary) { margin-top: 8px; }
   });
   try { stateFrom(JSON.parse(localStorage.getItem(key)||"null")); } catch {}
   try { stateFrom(window.openai?.widgetState?.privateContent); } catch {}
-  if (byId.has(location.hash.slice(1))) {
-    selected=location.hash.slice(1);level=byId.get(selected).level;mode="layer";
+  function applyTaskLink() {
+    const match = /^#(R\d{2})(-pools)?$/.exec(location.hash);
+    if (!match) return false;
+    const target = byId.get(match[1]);
+    if (!target || (match[2] && !target.early)) return false;
+    selected=target.id;level=target.level;mode="layer";
+    if (match[2]) tab="prompt";
+    return true;
   }
+  applyTaskLink();
+  window.addEventListener("hashchange",()=>{ if (applyTaskLink()) { render();ui.panel?.scrollIntoView({block:"start"}); } });
   window.addEventListener("openai:set_globals",event=>{
     try { if(stateFrom(event.detail?.globals?.widgetState?.privateContent)) render(); } catch {}
   });
