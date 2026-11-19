@@ -1701,26 +1701,27 @@
           "2026-11-07",
           "2026-11-09",
           "2026-11-13",
-          "2026-11-16"
+          "2026-11-16",
+          "2026-11-18"
         ]
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 48,
+        "days": 49,
         "span": [
           "2026-07-07",
-          "2026-11-17"
+          "2026-11-18"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-18",
-          "scope": "补齐沪市模型结果，展示两市的信号并注明选股范围。"
+          "on": "2026-11-19",
+          "scope": "回查11月18日固定材料、原始要求或工具回执。"
         }
       },
       "fate": "landed",
-      "fate_note": "两市固定基准、成交和费用陆续进入汇报。11月16日汇报展示三档做T、沪深新旧模型信号和分市场收益，默认两市各用新模型、各自选股。",
+      "fate_note": "两市固定基准、成交和费用陆续进入汇报。11月16日汇报展示三档做T、沪深新旧模型信号和分市场收益，默认两市各用新模型、各自选股。 11月18日发布六层日内研究路线图，提供任务交接和分阶段提示词。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1828,6 +1829,20 @@
           "revision": "e592ae6d1e75140dc4baa3ebbe0a83a171c9aa5f",
           "title": "默认两市分开选股",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/e592ae6d1e75140dc4baa3ebbe0a83a171c9aa5f"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "42a3d1350d4365947dc132a8fc4d925f8a86af31",
+          "title": "发布六层交互路线图",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/42a3d1350d4365947dc132a8fc4d925f8a86af31"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "9c95872801be4c890779638b2344a75ac610d87a",
+          "title": "核对所有流程连线的进框方向",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/9c95872801be4c890779638b2344a75ac610d87a"
         }
       ]
     },
@@ -2639,25 +2654,27 @@
       "purpose": "研究股票池、等权和风险调整、主动吃档、资金分配和 MarS 的用法，弄清从预测到能成交的策略之间还差什么。",
       "status": "active",
       "closes_into": {
-        "daily": []
+        "daily": [
+          "2026-11-18"
+        ]
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 8,
+        "days": 9,
         "span": [
           "2026-09-17",
-          "2026-11-17"
+          "2026-11-18"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-18",
-          "scope": "核对同日顶层设计讨论、内部会议记录和辅助笔记。"
+          "on": "2026-11-19",
+          "scope": "回查11月18日固定材料、原始要求或工具回执。"
         }
       },
       "fate": "landed",
-      "fate_note": "先研究股票池、风险调整、对手价和容量。11月17日讨论预留现金、动态库存、滚动观测与信号退出，固定比例和单次进场保留作对照。方案待实现与回放。",
+      "fate_note": "已建立股票池、风险、容量和交易设置的比较。冻结两市模型与两亿元账户，用三日样本测成交，用566日底仓测同股可卖上限。多档和时长得到容量样本，最优股现比与滚动净收益待连续账户检验。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2671,6 +2688,54 @@
           ],
           "title": "股票池、资金分配与成交假设",
           "url": "https://github.com/MengerWen/internship-dashboard/blob/21cf064cf6b2e8d2d7085a3b3e0ea664d73e1df3/docs/journal-review/rebuild-2026-10-21/findings.md#L1-L54"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "两亿元账户的冻结输入与评价口径",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md#L1-L26"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r02-execution-scenarios.md",
+          "lines": [
+            1,
+            21
+          ],
+          "title": "三种成交情景及可卖旧仓约束",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r02-execution-scenarios.md#L1-L21"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r03-stock-coverage.md",
+          "lines": [
+            1,
+            24
+          ],
+          "title": "旧仓回转上限及股现档位",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r03-stock-coverage.md#L1-L24"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-execution-depth-and-account.md",
+          "lines": [
+            1,
+            23
+          ],
+          "title": "跨档成本与执行时长",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-execution-depth-and-account.md#L1-L23"
         }
       ]
     },
@@ -3219,6 +3284,25 @@
           ],
           "title": "29日进展与完成范围",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/35be7b4699e90d7e391efae0167d2e65052e1cbe/reports/2026-10/2026-10-29-signal-horizon-followup.md#L1-L1190"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r07-overnight-evidence.md",
+          "lines": [
+            1,
+            24
+          ],
+          "title": "深市175日隔夜三段价格复核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r07-overnight-evidence.md#L1-L24"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "6ce2f339b99f235cfc0ada97aa487621f9240675",
+          "title": "回读深市旧隔夜结果",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/6ce2f339b99f235cfc0ada97aa487621f9240675"
         }
       ],
       "status": "done",
@@ -3228,21 +3312,21 @@
       "review": {
         "by": "Codex",
         "on": "2026-10-28",
-        "days": 4,
+        "days": 5,
         "span": [
           "2026-10-27",
-          "2026-10-30"
+          "2026-11-18"
         ],
         "unreviewed_days": [],
         "scope": "27日固定来源或原始会话定位；来源整体仍不完整，不将讨论当作研究验收。",
         "incremental_review": {
-          "on": "2026-11-03",
-          "scope": "按本次已核实归属修订日点、任务边界、固定引用与复核天数；原始来源覆盖缺口及历史运行记录保留。"
+          "on": "2026-11-19",
+          "scope": "回查11月18日固定材料、原始要求或工具回执。"
         }
       },
       "fate": "landed",
       "report_coverage": "curated",
-      "fate_note": "10 月 29 日测完 176 日的周期、中性化和稳定性：持有到收盘比 10 分钟好，但只有两端各选 1% 时超过 30 bp，中性化后头部收益明显变小。30 日测完隔日持有：不如当日收盘出场，选得越少越差。"
+      "fate_note": "10 月 29 日测完 176 日的周期、中性化和稳定性：持有到收盘比 10 分钟好，但只有两端各选 1% 时超过 30 bp，中性化后头部收益明显变小。30 日测完隔日持有：不如当日收盘出场，选得越少越差。 11月18日同股复核175日盯市，次晨开盘比当日收盘平均少49.79 bp，缺少可执行退出对照。"
     },
     {
       "id": "rqdata-network",
@@ -3683,20 +3767,20 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-03",
-        "days": 8,
+        "days": 9,
         "span": [
           "2026-11-02",
-          "2026-11-17"
+          "2026-11-18"
         ],
         "unreviewed_days": [],
         "scope": "11月2日原始要求、固定产物与实际运行结果；历史来源缺口继续留账。",
         "incremental_review": {
-          "on": "2026-11-18",
-          "scope": "核对H01沪市24日实数样本的覆盖、时点和残差。"
+          "on": "2026-11-19",
+          "scope": "回查11月18日固定材料、原始要求或工具回执。"
         }
       },
       "fate": "landed",
-      "fate_note": "已有新因子分批通过683日验收。十档净流的沪市24日样本中，两只股票各有两列、4日有效残差，第三只保留缺失。其余变体和全期仍待准入。",
+      "fate_note": "已有新因子分批通过683日验收。十档净流的沪市24日样本中，两只股票各有两列、4日有效残差，第三只保留缺失。其余变体和全期仍待准入。 两市四股两日的撤单因子滚动复算通过，分钟接收时点和收益增量待核。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3827,6 +3911,25 @@
           "revision": "76a2de5670c60345baa6023f2cab5e72e1bf0028",
           "title": "签收沪市十档样本",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/76a2de5670c60345baa6023f2cab5e72e1bf0028"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r06-cancel-gap.md",
+          "lines": [
+            15,
+            44
+          ],
+          "title": "分钟级撤单节奏的定义、缺失与复算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r06-cancel-gap.md#L15-L44"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "98a72c38a94605f49562ecba180358026b68c77b",
+          "title": "两市撤单滚动样本回执",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/98a72c38a94605f49562ecba180358026b68c77b"
         }
       ]
     },
@@ -4709,6 +4812,52 @@
         }
       ],
       "report_coverage": "curated"
+    },
+    {
+      "id": "baseline-return-attribution",
+      "track": "model",
+      "label": "沪深基准收益归因与订单流",
+      "short": "基准收益归因",
+      "purpose": "用现行沪深冻结模型固定两端选股和持有窗口，估算市场、行业、市值暴露影响，检查残差排序、事前状态与同向订单流。",
+      "status": "active",
+      "fate": "landed",
+      "fate_note": "566日四主窗扣除市场、行业和市值后仍有头尾中间价差。按可报价对手一档扣费后四窗均为负，原留出历史的残差区间均跨零。四日逐笔探针尚不能量化同向流对价差的贡献。",
+      "report_coverage": "curated",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-19",
+        "days": 1,
+        "span": [
+          "2026-11-18",
+          "2026-11-18"
+        ],
+        "unreviewed_days": [],
+        "scope": "固定报告、原始运行返回及每市读回收益与订单流。"
+      },
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r05-return-attribution.md",
+          "lines": [
+            1,
+            19
+          ],
+          "title": "两市收益归因与订单流",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r05-return-attribution.md#L1-L19"
+        },
+        {
+          "kind": "commit",
+          "repo": "sirui-quant-research",
+          "revision": "365ed29f8b80c8b2eaebcd5eb7b6482464cd69de",
+          "title": "566日收益归因和订单流核验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/365ed29f8b80c8b2eaebcd5eb7b6482464cd69de"
+        }
+      ]
     }
   ],
   "handoffs": [
@@ -7339,6 +7488,211 @@
         "on": "2026-11-18",
         "basis": "两市组合展示直接取已回放的各市场账簿，金额相加后按合计起始底仓折算。",
         "scope": "实际使用的已签收结果。"
+      }
+    },
+    {
+      "from": "csi2000-base-position",
+      "to": "strategy-research",
+      "type": "派生",
+      "date": "2026-11-18",
+      "source_date": "2026-11-16",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "中证2000底仓时序和费用用于核对两亿元账户的输入。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "529357913adb7e1720064ca17c3478cc3ab319db",
+          "path": "reports/2026-11/2026-11-16-csi2000-baseline-implementation.md",
+          "lines": [
+            1,
+            30
+          ],
+          "title": "566日底仓及沪深分项回放",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/529357913adb7e1720064ca17c3478cc3ab319db/reports/2026-11/2026-11-16-csi2000-baseline-implementation.md#L1-L30"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "两亿元账户的冻结输入与评价口径",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md#L1-L26"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-19",
+        "basis": "冻结评价文件明确读取底仓调整、可卖旧股及费率。",
+        "scope": "核对已发生的输入承接。"
+      }
+    },
+    {
+      "from": "strategy-research",
+      "to": "baseline-return-attribution",
+      "type": "派生",
+      "date": "2026-11-18",
+      "source_date": "2026-11-18",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "两亿元评价口径和固定分数用于沪深同窗收益归因。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "两亿元账户的冻结输入与评价口径",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md#L1-L26"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r05-return-attribution.md",
+          "lines": [
+            1,
+            19
+          ],
+          "title": "两市收益归因与订单流",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r05-return-attribution.md#L1-L19"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-19",
+        "basis": "归因使用相同566日、两市冻结分数及成交窗口。",
+        "scope": "核对已发生的输入承接。"
+      }
+    },
+    {
+      "from": "strategy-research",
+      "to": "candidate-factor-compute",
+      "type": "派生",
+      "date": "2026-11-18",
+      "source_date": "2026-11-18",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "账户输入里的样例证券用于两市分钟级撤单试算。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "两亿元账户的冻结输入与评价口径",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md#L1-L26"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r06-cancel-gap.md",
+          "lines": [
+            15,
+            44
+          ],
+          "title": "分钟级撤单节奏的定义、缺失与复算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r06-cancel-gap.md#L15-L44"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-19",
+        "basis": "两只示例证券沿用账户样例，按实际盘口和撤单时间核对。",
+        "scope": "核对已发生的输入承接。"
+      }
+    },
+    {
+      "from": "strategy-research",
+      "to": "signal-expansion",
+      "type": "派生",
+      "date": "2026-11-18",
+      "source_date": "2026-11-18",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "成交清单用于核对旧隔夜样本的可执行退出覆盖。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r02-execution-scenarios.md",
+          "lines": [
+            1,
+            21
+          ],
+          "title": "三种成交情景及可卖旧仓约束",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r02-execution-scenarios.md#L1-L21"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "reports/2026-11/2026-11-18-intraday-roadmap-r07-overnight-evidence.md",
+          "lines": [
+            1,
+            24
+          ],
+          "title": "深市175日隔夜三段价格复核",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/reports/2026-11/2026-11-18-intraday-roadmap-r07-overnight-evidence.md#L1-L24"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-19",
+        "basis": "原检查回读两个后续交易日的原窗口与三日成交清单，对照缺口。",
+        "scope": "核对已发生的输入承接。"
+      }
+    },
+    {
+      "from": "strategy-research",
+      "to": "report-publish",
+      "type": "派生",
+      "date": "2026-11-18",
+      "source_date": "2026-11-18",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "六层研究任务、交接和提示词用于11月18日交互汇报。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "d33b5774e7414c2eb9d00cc2de74f1f55c8b886e",
+          "path": "PLAN/2026-11-18-intraday-research-roadmap.md",
+          "lines": [
+            1,
+            29
+          ],
+          "title": "日内策略任务与交接",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/d33b5774e7414c2eb9d00cc2de74f1f55c8b886e/PLAN/2026-11-18-intraday-research-roadmap.md#L1-L29"
+        },
+        {
+          "kind": "commit",
+          "repo": "internship-dashboard",
+          "revision": "42a3d1350d4365947dc132a8fc4d925f8a86af31",
+          "title": "发布六层交互路线图",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/42a3d1350d4365947dc132a8fc4d925f8a86af31"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-19",
+        "basis": "看板发布稿来自同日研究仓库路线图。",
+        "scope": "核对已发生的输入承接。"
       }
     }
   ],
