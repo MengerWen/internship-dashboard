@@ -429,21 +429,21 @@ details > :not(summary) { margin-top: 8px; }
   </header>
 <section aria-label="研究进展">
   <p>以一亿元账户的扣费净收益衡量策略。日内研究多轮选股能否让更多股票贡献收益，隔日研究全池开仓与已有持仓留仓的价值。两条线同等优先。</p>
-  <p>现在可并行开展 <a href="#N01-start">评价口径</a>、<a href="#N02-start">深市 C++ 提速</a>、<a href="#N03-start">多窗口因子定义</a>、<a href="#N04-start">动态账簿</a>、<a href="#N05-start">冻结模型跨池</a>。<a href="#N07-p1">日内</a>和<a href="#N08-p1">隔日</a>也可先确定比较方案。</p>
+  <p>现在可并行开展 <a href="#N01-start">评价口径</a>、<a href="#N02-start">深市 C++ 提速</a>、<a href="#N03-start">旧因子扩窗</a>、<a href="#N11-start">新因子构建</a>、<a href="#N04-start">动态账簿</a>、<a href="#N05-start">冻结模型跨池</a>。<a href="#N07-p1">日内</a>和<a href="#N08-p1">隔日</a>也可先确定比较方案。</p>
 </section>
 
   <section aria-labelledby="intraday-flow-title">
     <div class="flow-head">
       <h2 id="intraday-flow-title">研究流程</h2>
       <div class="flow-legend" aria-label="流程图图例">
-        <span>阶段交付</span><span class="optional">跨股票池时使用</span>
+        <span>阶段交付</span><span class="optional">专项比较时使用</span>
       </div>
     </div>
     <p class="flow-help" id="intraday-flow-help">横向滚动查看完整流程，点任务查看详情。</p>
     <div class="flow-scroll" role="region" aria-labelledby="intraday-flow-title" aria-describedby="intraday-flow-help" tabindex="0">
       <div class="flowchart" data-ui="overview" role="group" aria-label="五层研究流程图。点任务查看详情"></div>
     </div>
-  <p class="hint">箭头表示哪项交付会被下游使用。N06 等 C++ 两个指定日实测与 683 日保守外推达标后开始。首批面板可同时交 N07、N08，账户回放另需 N04。N09 可先用旧分数比较设置。</p>
+  <p class="hint">箭头表示哪项交付会被下游使用。N06 等 C++ 两个指定日实测与 683 日保守外推达标后开始。首批面板可同时交 N07、N08，账户回放另需 N04。N09 可先用旧分数比较设置。N11 探索的候选由 N06 分批整理成面板，交 <a href="#N12-start">N12 评价新因子的预测与账户增量</a>。</p>
 <details class="legacy-map"><summary>原 R01–R19 的成果与新节点对照</summary><p>R01–R07 已有历史交付。R08–R19 栏内列出可沿用的方法。点原编号可查看旧版 Prompt 和进度记录。</p><div class="table-scroll"><table><thead><tr><th>原任务</th><th>可以复用</th><th>新任务去向</th></tr></thead><tbody>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R01">R01 冻结输入与评价</a></th><td>沪深冻结分数、566 日日历、样本身份、底仓及行情索引。</td><td>保留到<a href="#N01">①</a><a href="#N04">④</a><a href="#N05">⑤</a>。补充多决策点与隔日标签，新时段逐窗核对价量覆盖。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R02">R02 成交与容量</a></th><td>三个开发日母单、对手盘口、参与率、部分成交、费用情景。</td><td>保留到<a href="#N04">④</a><a href="#N09">⑨</a>。作为订单和成交对照。扩时段、次晨卖出和更换规模须补相应证据。</td></tr>
@@ -458,11 +458,11 @@ details > :not(summary) { margin-top: 8px; }
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R11">R11 盘中新信息与滚动预测</a></th><td>同刻旧分数与新分数、时间折外比较。</td><td>拆至<a href="#N03">③</a><a href="#N06">⑥</a><a href="#N07">⑦</a><a href="#N08">⑧</a>。定义与生产共享，两条策略按各自标签训练和评价。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R12">R12 股现比</a></th><td>同本金、同配比被动对照、次日可用现金与逐股库存。</td><td>重写为<a href="#N09">⑨</a>。日内、隔日独立比较。95/5 优先测试，50/50 保留历史对照。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R13">R13 日内多次判断</a></th><td>固定分数与更新分数、多轮开仓与退出的对照。</td><td>重写为<a href="#N07">⑦</a>。用每轮新增股票、实际成交与整户增量评价扩大选股范围的价值。</td></tr>
-<tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R14">R14 跨股票池及新增因子</a></th><td>冻结模型池内配对、当时有效的成分、成组因子增量比较。</td><td>拆成<a href="#N05">⑤</a>和<a href="#N03">③</a><a href="#N06">⑥</a><a href="#N07">⑦</a><a href="#N08">⑧</a>。冻结模型跨池可先做。新增族在同池同窗比较，需要时由<a href="#N09">⑨</a>检验跨池账户结果。</td></tr>
+<tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R14">R14 跨股票池及新增因子</a></th><td>冻结模型池内配对、当时有效的成分、成组因子增量比较。</td><td>分至<a href="#N05">⑤</a>和<a href="#N12">⑫</a>。冻结模型跨池可先做。<a href="#N11">⑪</a>构建新候选，<a href="#N06">⑥</a>交可比较面板，<a href="#N12">⑫</a>逐批检验新因子的预测与账户增量。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R15">R15 交易设置交互</a></th><td>固定预测换设置、固定设置换预测的交叉对照。</td><td>并入<a href="#N09">⑨</a>，交<a href="#N10">⑩</a>。各条线先做可解释的单项比较，再检验值得继续的交互。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R16">R16 主动隔夜与次晨机会竞争</a></th><td>尾盘同状态分叉、主动与被动隔夜区分、次晨资金机会成本。</td><td>扩为独立主线<a href="#N08">⑧</a>。保留已有仓位留仓实验，增加面向全池的专门选股。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R17">R17 预测增强到全账户</a></th><td>相同设置下只替换模型、计算全账户增量。</td><td>拆至<a href="#N09">⑨</a><a href="#N10">⑩</a>。各策略及对应池先分别核算，联合方案须另做共享账户回放。</td></tr>
-<tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R18">R18 归因与边界</a></th><td>预测／成交／账户归因、暴露复核、样本身份。</td><td>并入<a href="#N10">⑩</a>。两线并列比较，保留负结果、风险变化和无法识别的部分。</td></tr>
+<tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R18">R18 归因与边界</a></th><td>预测／成交／账户归因、暴露复核、样本身份。</td><td>并入<a href="#N10">⑩</a>。新因子贡献引用<a href="#N12">⑫</a>的配对结果。两线并列比较，保留负结果、风险变化和无法识别的部分。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R19">R19 汇总与待决问题</a></th><td>面向决策的对照表和下一轮研究问题。</td><td>并入<a href="#N10">⑩</a>。每项判断附适用市场、时段、证据强弱和后续投入建议。</td></tr>
 </tbody></table></div></details>
 </section>
@@ -609,14 +609,14 @@ details > :not(summary) { margin-top: 8px; }
   },
   {
     "id": "N03",
-    "title": "旧因子扩窗与新增因子定义",
-    "why": "同一种订单行为看五分钟、一小时、整个上午、单独下午或全天，捕捉到的信息有何不同？哪些新因子或 filter 真正增加了观测？",
+    "title": "旧因子扩窗与已有候选整理",
+    "why": "同一因子在不同时段衡量什么？已登记的候选与旧库有哪些重合？",
     "level": 1,
     "track": "因子规格",
     "effort": "可分批交付",
     "sequence": "旧逻辑扩窗、新因子查重都可立即开始。",
     "out": "按族列出观测行为、可用窗口、方向、分子分母、跨窗口订单匹配、缺失处理和所需参数。比例因子重算窗口分子与分母，开盘专属因子保留原义。区分从开盘累计到决策时点、决策前最近一段、固定上午或下午。标出时段差异是否需要历史定标，定标只用当时可用的历史。新增候选注明来源、与旧库的重合、预测用途或成交过滤用途。首批给日内、隔日各指定一组可检验的窗口与收益目标。",
-    "common": "每项规格都有信息截止、可用时刻和适用市场。五分钟是扩窗的复算锚点，同时服务日内与隔日。可先交某一族，新增候选按已核实的来源独立进入。",
+    "common": "每项规格都有信息截止、可用时刻和适用市场。五分钟是扩窗的复算锚点，同时服务日内与隔日。可先交某一族，已有报告可按原编号整理。新想法由 N11 自主探索。",
     "sources": [
       [
         "历轮候选与已有增益",
@@ -643,7 +643,7 @@ details > :not(summary) { margin-top: 8px; }
         "delivery": "按市场、因子族、窗口交规格和样例。注明开盘专属因子的限制，列出日内、隔日首批均可用的规格。"
       },
       {
-        "name": "新候选及过滤条件",
+        "name": "整理既有候选及过滤条件",
         "needs": [],
         "action": "逐行核对 R04 已交两份报告的原编号，与旧库和扩窗定义查重，区分预测因子和交易过滤条件。每个候选写清增加了什么信息、何时可知。",
         "delivery": "交候选映射、公式、覆盖与独立批次。每批记录可生产项、排除理由及缺失证据。"
@@ -731,15 +731,46 @@ details > :not(summary) { margin-top: 8px; }
     "side": []
   },
   {
+    "id": "N11",
+    "title": "新因子构建与自主探索",
+    "why": "寻找现有因子尚未充分利用的信息，让日内或隔日策略能更好地识别值得交易的股票，最终看一亿元账户的扣费收益。日内与隔日同等优先，一个想法可以只适用于其中一条。",
+    "level": 1,
+    "track": "新因子研究",
+    "effort": "可立即开展",
+    "sequence": "与旧因子扩窗、C++ 提速和两条策略的实验设计并行。可直接从一个值得研究的问题开始。",
+    "out": "把值得检验的发现交给下一位研究者：它试图补充什么信息，与已有思路有什么联系或差异，决策时能看到什么，以及怎样复现。具备数据的候选可交定义、实现或可复算样例；暂时缺数据的想法写明缺口。每批独立交接，评价结果可用于下一轮探索。",
+    "common": "项目已有思路涉及母单与算法交易痕迹、个股状态与流动性、隔夜与集合竞价、持仓成本、市场与行业联动等。历轮登记和结果供了解覆盖、辨认重合；这些材料也记录了预测排序改善而实际选股收益下降的情况。",
+    "sources": [
+      [
+        "已有因子目录与历史交付",
+        "research/factor-candidates/OVERVIEW.md"
+      ],
+      [
+        "历轮研究及实测结果",
+        "reports/2026-11/2026-11-19-factor-candidate-workflow-review.md"
+      ]
+    ],
+    "phases": [
+      {
+        "name": "探索与构建新因子",
+        "needs": [],
+        "action": "由你自主深入探索因子从哪里来、研究什么问题、用哪些可得数据和怎样构建，也可以在探索中更换方向。",
+        "delivery": "把值得检验的发现交给下一位研究者：它试图补充什么信息，与已有思路有什么联系或差异，决策时能看到什么，以及怎样复现。具备数据的候选可交定义、实现或可复算样例；暂时缺数据的想法写明缺口。每批独立交接，评价结果可用于下一轮探索。"
+      }
+    ],
+    "need": [],
+    "side": []
+  },
+  {
     "id": "N06",
     "title": "长窗口试算与因子分批生产",
     "why": "扩窗后分数是否仍对应原来的订单行为，每种窗口要花多少时间，哪些因子可以共享取数和回放？",
     "level": 2,
     "track": "因子生产",
     "effort": "依交付启动",
-    "sequence": "收到 N01 口径、N02 达标版本及 N03 对应规格后启动。",
+    "sequence": "按分项取输入。旧因子扩窗用 N03 的规格。新因子按 N11 交付的批次接收，长窗口系统试算遵循 N02 的放行条件。",
     "out": "先交普通日、重股日的窗口对照。五分钟锚点回对旧值，长窗口按截点裁剪后独立复算，检查跨段状态、缺失、覆盖及样本排除。计量单独计算与多窗共享回放的总耗时、峰值资源、最慢股和预计全期工期。再按可负担的窗口和族交付带版本的因子面板，分别标记历史事件时间可复算、当时接收及参数可用性的证据。证据不足的列可作研究诊断，交易回放注明可用范围。全历史生产遵守正式运行前验收和存储规约。",
-    "common": "深市的放行条件是 N02 同一冻结版本在 2026-03-19 ≤10 秒、2024-12-30 ≤7 分 30 秒，且 683 日保守外推 ≤2 小时。查收证据后才开始长窗口系统测速；沪市扩窗有独立适配证据。第一批合格面板同时交两条策略线。",
+    "common": "深市长窗口系统试算的放行条件是 N02 同一冻结版本在 2026-03-19 ≤10 秒、2024-12-30 ≤7 分 30 秒，且 683 日保守外推 ≤2 小时。查收证据后才开始长窗口系统测速；沪市扩窗有独立适配证据。第一批合格面板同时交两条策略线。",
     "sources": [
       [
         "正式运行前验收",
@@ -786,14 +817,24 @@ details > :not(summary) { margin-top: 8px; }
         "needs": [
           "N06-p1"
         ],
-        "action": "按已交规格滚动纳入后续窗口或新族。逐批检查参数仅使用当时可用的历史，分别标记历史事件可重建及实际接收、定参可用的证据。新增族先查相应的 N03 候选交付。",
+        "action": "按已交规格滚动纳入后续窗口或新族。逐批检查参数仅使用当时可用的历史，分别标记历史事件可重建及实际接收、定参可用的证据。复用对应的 N03 已有候选或 N11 新候选交付。",
         "delivery": "交批次清单、身份、正确性、成本和预计全期工期。完整历史生产按授权、正式运行及容量规约办理。"
+      },
+      {
+        "name": "交付新因子评价面板",
+        "needs": [
+          "N11-p1",
+          "N01-p1"
+        ],
+        "action": "按本批实际交付读取定义或实现，标出可用市场、时段、数据覆盖及决策时点。已有可复算列和相同身份的基准面板直接复用。需生产深市长窗口数据时，先查收 N02 达标版本，再使用本节点已复核的相应窗口。",
+        "delivery": "交新增列、同窗旧因子基准及可配对的股票日、特征时钟、版本和适用范围。有原窗和扩窗基准时分别交付。N12 按批领取；注明只有规格、尚缺数值的候选。"
       }
     ],
     "need": [
       "N01",
       "N02",
-      "N03"
+      "N03",
+      "N11"
     ],
     "side": []
   },
@@ -981,13 +1022,79 @@ details > :not(summary) { margin-top: 8px; }
     ]
   },
   {
+    "id": "N12",
+    "title": "新因子的预测增量与账户贡献",
+    "why": "在原有信息和交易设置相同的条件下，本批新因子对日内、隔日各增加多少预测能力和扣费收益？",
+    "level": 4,
+    "track": "新因子评价",
+    "effort": "逐批、分策略交付",
+    "sequence": "N06 交付可比较的候选面板后，使用 N07 或 N08 已定义的相应标签，两条线独立评价。账户回放另需 N04。先有结果的分项即可交 N10 并反馈 N11。",
+    "out": "按批次、市场和策略登记结论。分开报告扩窗贡献、新因子预测贡献和固定设置下的账户贡献，注明适用范围及未能识别的部分。",
+    "common": "在同一市场、股票池、决策时点、未来收益标签和配对日期下，按相同训练、调参和费用口径比较。A 用旧因子原窗口，B 用旧因子扩窗，C 在 B 上加入本批新因子。B−A 估计扩窗贡献，C−B 估计新因子的边际贡献。沿用原窗口的候选可直接比较原窗口有无该批因子，明确比较基线。",
+    "sources": [
+      [
+        "冻结输入及比较协议",
+        "reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md"
+      ],
+      [
+        "历轮研究及实测结果",
+        "reports/2026-11/2026-11-19-factor-candidate-workflow-review.md"
+      ]
+    ],
+    "phases": [
+      {
+        "name": "日内预测增量",
+        "needs": [
+          "N06-p3",
+          "N07-p1"
+        ],
+        "action": "核对本批候选面板、基准输入、版本和预先确定的日内标签。固定轮次与决策时点，另列首次入选及可成交股票。按日期做折外比较，记录覆盖变化、排序相关性、头部股票未来收益和配对差值的不确定性。若一次探索多批，记录尝试范围及多重比较的影响。",
+        "delivery": "逐批交日内的基准与增强分数、同股票日和同日期差值、分期结果及可回放的机会表；负增量和覆盖缺口同样登记。"
+      },
+      {
+        "name": "隔日预测增量",
+        "needs": [
+          "N06-p3",
+          "N08-p1"
+        ],
+        "action": "核对本批候选面板、基准输入、版本和预先确定的隔日标签。分别核对全池开仓和已有仓位留仓的可得信息及退出窗。按日期做折外比较，记录覆盖变化、排序相关性、头部股票未来收益和配对差值的不确定性。若一次探索多批，记录尝试范围及多重比较的影响。",
+        "delivery": "逐批交隔日的基准与增强分数、同股票日和同日期差值、分期结果及可回放的机会表；负增量和覆盖缺口同样登记。"
+      },
+      {
+        "name": "日内账户贡献",
+        "needs": [
+          "N12-p1",
+          "N04-p1"
+        ],
+        "action": "对同一批日内折外分数固定门槛、轮次、退出、股现比和成交费用，只替换有无本批因子的预测。在同一本金和逐股库存约束下回放；若候选用于过滤，固定原分数，只切换该过滤条件。",
+        "delivery": "交全账户逐日扣费差额、回撤、成交与资金占用、分期不确定性，注明保留、继续观察、淘汰或证据不足的依据。"
+      },
+      {
+        "name": "隔日账户贡献",
+        "needs": [
+          "N12-p2",
+          "N04-p1"
+        ],
+        "action": "对同一批隔日折外分数固定门槛、轮次、退出、股现比和成交费用，只替换有无本批因子的预测。在同一本金和逐股库存约束下回放；若候选用于过滤，固定原分数，只切换该过滤条件。",
+        "delivery": "交全账户逐日扣费差额、回撤、成交与资金占用、分期不确定性，注明保留、继续观察、淘汰或证据不足的依据。"
+      }
+    ],
+    "need": [
+      "N06",
+      "N07",
+      "N08",
+      "N04"
+    ],
+    "side": []
+  },
+  {
     "id": "N10",
     "title": "两条策略的归因与研究决策",
     "why": "增益来自新信息、更多股票进入策略、资金利用改善，还是单纯承担了更多市场及隔夜风险？下一轮研究投入哪里？",
     "level": 5,
     "track": "决策",
     "effort": "分策略归因",
-    "sequence": "两条线各自产生账户结果即可先归因，两份结论到齐再做综合比较。",
+    "sequence": "两条线各自产生账户结果即可先归因，两份结论到齐再做综合比较。 评价新因子时引入 N12 对应批次及策略线的交付。",
     "out": "一份同口径决策表。并列净收益、同配比被动增强、同敞口表现、回撤、尾部日期、资金与库存占用，逐日配对给出不确定区间及分期表现。按预测、成交、整户三个层次指出增益在哪里出现或消失。已看历史保留其样本身份。分别给出继续、缩小范围或暂缓的依据。若两条都有增益且拟合并使用，再计算共享账簿下的互补与资金竞争。",
     "common": "每条线可以独立给出否定结论或证据缺口。综合表采用相同本金、配对交易日、同配比被动增强及风险口径；联合收益来自共享账簿回放。",
     "sources": [
@@ -1034,11 +1141,13 @@ details > :not(summary) { margin-top: 8px; }
     "need": [
       "N09"
     ],
-    "side": []
+    "side": [
+      "N12"
+    ]
   }
 ];
-  const levels = [["基础研究","五项可直接启动，先复用已签收的历史输入。"],["面板生产","相应规格、达标版本与评价口径齐备后，先交可复核的首批面板。"],["策略研究","日内与隔日同等优先。方案定义、预测和账户回放按各自交付启动。"],["账户比较","旧信号基线可先做。两条线按各自的机会表和连续账比较。"],["归因决策","先归因各条策略；取得两份可复核结论以后再做综合决策。"]];
-  const flowNodes = {"N01":[185,"评价口径"],"N02":[347,"C++ 提速"],"N03":[508,"因子规格"],"N04":[700,"动态账簿"],"N05":[875,"冻结模型跨池"],"N06":[346,"扩窗与生产"],"N07":[253,"日内多轮"],"N08":[535,"隔日开仓与留仓"],"N09":[700,"门槛与股现比"],"N10":[700,"归因与决策"]};
+  const levels = [["基础研究","评价、提速、旧因子扩窗、动态账簿、冻结模型跨池与新因子构建可并行。"],["面板生产","相应规格、达标版本与评价口径齐备后，先交可复核的首批面板。"],["策略研究","日内与隔日同等优先。方案定义、预测和账户回放按各自交付启动。"],["账户比较","分别比较交易设置与新因子增量。日内和隔日按各自的批次交付。"],["归因决策","先归因各条策略；取得两份可复核结论以后再做综合决策。"]];
+  const flowNodes = {"N01":[164,"评价口径"],"N02":[307,"C++ 提速"],"N03":[454,"旧因子扩窗"],"N11":[595,"新因子构建"],"N04":[746,"动态账簿"],"N05":[903,"冻结模型跨池"],"N06":[425,"因子面板生产"],"N07":[295,"日内多轮"],"N08":[594,"隔日开仓与留仓"],"N09":[760,"门槛与股现比"],"N12":[412,"新因子评价"],"N10":[545,"归因与决策"]};
   const flowWidth = 970, flowHeight = 474, nodeHalfHeight = 22;
   const root = document.getElementById("intraday-roadmap");
   const ui = Object.fromEntries(Array.from(root.querySelectorAll("[data-ui]"), node => [node.dataset.ui, node]));
@@ -1151,6 +1260,12 @@ details > :not(summary) { margin-top: 8px; }
       if(delivered.length) parts.push("已登记的交付，读取并核对实际内容\n"+delivered.map(id=>"- "+deliveredName(id)+"　"+record(id).note).join("\n"));
       if(pending.length) parts.push("启动条件，先核对相应产物及覆盖；当前页面尚无有效交接记录："+gateNames(pending)+"。");
       if(t.id==="N09" && t.side.length && isDone("N05-p1")) parts.push("跨池比较可读 N05 的已交付材料："+record("N05-p1").note);
+      if (t.id === "N10") {
+        const index = t.phases.indexOf(p);
+        const receipts = index === 0 ? ["N12-p1","N12-p3"] : index === 1 ? ["N12-p2","N12-p4"] : requirements("N12");
+        const available = receipts.filter(isDone);
+        if (available.length) parts.push("新因子评价已交付材料\n"+available.map(id=>deliveredName(id)+"　"+record(id).note).join("\n"));
+      }
       const own=phaseId(t,t.phases.indexOf(p));
       if(records[own]?.note) parts.push("本阶段记录（"+labels[record(own).status]+"）　"+record(own).note);
       parts.push(p.action,"交付与验收　"+p.delivery); text.push(parts.join("\n\n"));
@@ -1201,7 +1316,7 @@ details > :not(summary) { margin-top: 8px; }
     if (tab === "graph") {
       groupLinks(panel,"上游节点",t.need,"使用已归档材料，可独立启动。");
       for(const p of t.phases) panel.append(el("p",p.name+" · "+(p.needs.length ? gateNames(p.needs) : "使用已有资料，可直接开始。")));
-      if (t.side.length) groupLinks(panel,"跨池复验还需",t.side,"");
+      if (t.side.length) groupLinks(panel,"专项比较的交付",t.side,"");
       groupLinks(panel,"直接下游",tasks.filter(x=>x.need.includes(t.id)||x.side.includes(t.id)).map(x=>x.id),"本项完成综合决策。");
     } else if(tab === "prompt") {
       panel.append(el("p","选择整项或单个阶段。已登记的上游结果会随 Prompt 一起复制。","hint"));
