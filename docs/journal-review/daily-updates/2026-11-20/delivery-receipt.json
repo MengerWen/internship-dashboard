@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "run_date": "2026-11-20",
+  "review_window": [
+    "2026-11-13",
+    "2026-11-19"
+  ],
+  "target_dates": [
+    "2026-11-19"
+  ],
+  "changed_dates": [
+    "2026-11-19"
+  ],
+  "recorded_at": "2026-11-20T09:22:25.039350+08:00",
+  "model_check": {
+    "at": "2026-11-20T09:22:25.019904+08:00",
+    "global_default": [
+      "gpt-6.2-sol",
+      "xhigh"
+    ],
+    "automation": [
+      "gpt-6.2-sol",
+      "xhigh"
+    ],
+    "turn_contexts": [
+      {
+        "line": 11,
+        "timestamp": "2026-11-20T01:02:01.443Z",
+        "sha256": "32f7628c376ec3e5374b842e6a534835d1cce5f57baabfecea8e18c63bc69a8b",
+        "model": "gpt-6.2-sol",
+        "effort": "xhigh"
+      }
+    ]
+  },
+  "sources": {
+    "inventory_exit": 1,
+    "reconcile_exit": 1,
+    "coverage": "open",
+    "counts": {
+      "window": [
+        "2026-11-13",
+        "2026-11-19"
+      ],
+      "coverage": "open",
+      "official": {
+        "active": {
+          "pages": 12,
+          "ids": 554,
+          "unmatched": 0
+        },
+        "archived": {
+          "pages": 11,
+          "ids": 504,
+          "unmatched": 0
+        }
+      },
+      "registered": 1875,
+      "claude_archive_indexes": 2,
+      "physical": 464,
+      "source_fragments": 419,
+      "physical_messages": 6509,
+      "unique_messages": 3986,
+      "session_read_failures": 0,
+      "late_physical_messages": 0,
+      "database_delta": {
+        "2026-11-19": 60
+      },
+      "issues": {
+        "not-in-reviewed-session-snapshot": 721,
+        "registered-body-unavailable": 57
+      },
+      "new_issues": {
+        "not-in-reviewed-session-snapshot": 3
+      },
+      "resolved_issues": {},
+      "verified_api_terminal": 3,
+      "materials": 62137,
+      "material_changes": 194,
+      "material_failures": 0,
+      "material_read_changes": 0,
+      "material_pending": 0,
+      "all_ref_commits": 5888,
+      "new_all_ref_commits": 47,
+      "new_all_ref_pending": 0,
+      "historical_versions": 9507,
+      "historical_failures": 0,
+      "actions": 4363,
+      "action_failures": 0,
+      "remote_push": {
+        "sirui-quant-research": {
+          "total": 33,
+          "with_receipt": 33
+        },
+        "Quant_Research-Trading": {
+          "total": 0,
+          "with_receipt": 0
+        },
+        "internship-dashboard": {
+          "total": 6,
+          "with_receipt": 6
+        }
+      }
+    },
+    "snapshots": [
+      {
+        "repo": "sirui-quant-research",
+        "head": "afaed9e8e882432968a70a44dcdf2400742df755",
+        "cutoff": "0c6915144d0e85c532d9d5411cd6e13a6349459d",
+        "captured_at": "2026-11-20T09:03:48.150774+08:00",
+        "remote_main": "afaed9e8e882432968a70a44dcdf2400742df755"
+      },
+      {
+        "repo": "Quant_Research-Trading",
+        "head": "616e99e13e03beef243eace4c72f8be4a67941f1",
+        "cutoff": "616e99e13e03beef243eace4c72f8be4a67941f1",
+        "captured_at": "2026-11-20T09:03:50.065051+08:00",
+        "remote_main": "616e99e13e03beef243eace4c72f8be4a67941f1"
+      },
+      {
+        "repo": "internship-dashboard",
+        "head": "8e8fd94b93dcfb38d6c289840ee489f6578179e9",
+        "cutoff": "8e8fd94b93dcfb38d6c289840ee489f6578179e9",
+        "captured_at": "2026-11-20T09:03:53.290115+08:00",
+        "remote_main": "8e8fd94b93dcfb38d6c289840ee489f6578179e9"
+      }
+    ],
+    "source_closeout": [
+      {
+        "repo": "sirui-quant-research",
+        "head_unchanged": true,
+        "refs_unchanged": true,
+        "status_unchanged": true
+      },
+      {
+        "repo": "Quant_Research-Trading",
+        "head_unchanged": true,
+        "refs_unchanged": false,
+        "status_unchanged": true
+      },
+      {
+        "repo": "internship-dashboard",
+        "head_unchanged": true,
+        "refs_unchanged": true,
+        "status_unchanged": true
+      }
+    ],
+    "new_codex_tree_reference_added_no_whitelist_commits": true
+  },
+  "validation": {
+    "required_pytest_passed": 35,
+    "extended_pytest_passed": 63,
+    "preexisting_test_failures": [
+      "2026-10-31 signal-expansion source register coverage",
+      "cross-stock-sync historical stop note phrasing"
+    ],
+    "baseline_failures_reproduced": true,
+    "legacy_fixed_refs": 104,
+    "new_fixed_refs": 9,
+    "reviewed_excerpts": 4,
+    "build": {
+      "ok": true,
+      "seconds": 92.95,
+      "journal_days": 129,
+      "daily_reports": 50,
+      "point_statuses": {
+        "baseline-return-attribution": "artifact",
+        "candidate-factor-compute": "artifact",
+        "behavior-design": "artifact",
+        "strategy-research": "artifact",
+        "report-publish": "artifact"
+      }
+    },
+    "local_browser": {
+      "scope": "local",
+      "date": "2026-11-19",
+      "started_at": "2026-11-20T01:17:45.643Z",
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "path": "/api/report-tags",
+          "status": 404
+        }
+      ],
+      "requestFailures": [],
+      "final_origin": "http://127.0.0.1:1772",
+      "checkedUpdatedChainSourceAndHandoff": true,
+      "checks": {
+        "points": 5,
+        "chainPages": 5,
+        "excerpts": 4,
+        "commits": 39,
+        "tokens": [
+          "566 日",
+          "409,457",
+          "702,592",
+          "3,119",
+          "14:27–14:57",
+          "74 个因子族",
+          "当天还有没核全的来源"
+        ]
+      },
+      "ok": true,
+      "completed_at": "2026-11-20T01:17:56.674Z"
+    },
+    "preservation": {
+      "_evidence": 115,
+      "_attribution": 115,
+      "historical_register_days": 127,
+      "historical_register_docs": 1158,
+      "new_chains": 0,
+      "new_handoffs": 2
+    },
+    "attribution_difference_count": 0,
+    "evidence_difference_count": 0
+  },
+  "git_content": {
+    "sha": "c23e8347920336a681f0b636edf0dae0bd306a1a",
+    "remote_main": "c23e8347920336a681f0b636edf0dae0bd306a1a",
+    "github_api_main": "c23e8347920336a681f0b636edf0dae0bd306a1a",
+    "github_api_exit": 0,
+    "at": "2026-11-20T09:19:29.917371+08:00"
+  },
+  "production": {
+    "git_sha": "c23e8347920336a681f0b636edf0dae0bd306a1a",
+    "npm_exit": 0,
+    "deployment_id": "4295b7e4-cecf-4779-bf0b-32823b9b2785",
+    "version_id": "f6ac704f-de1d-475a-87d2-a371921568df",
+    "traffic_percent": 100,
+    "deployment_created_at": "2026-11-20T01:21:28.868316Z",
+    "checked_at": "2026-11-20T09:22:04.434301+08:00",
+    "process_seconds": 121.87,
+    "build_seconds": 16.8,
+    "wrangler_seconds": 100.2,
+    "script_seconds": 120.4,
+    "wrangler_upload_seconds": 86.22,
+    "wrangler_trigger_seconds": 2.02
+  },
+  "online_browser": {
+    "scope": "production",
+    "date": "2026-11-19",
+    "started_at": "2026-11-20T01:21:54.434Z",
+    "pageErrors": [],
+    "httpErrors": [],
+    "requestFailures": [],
+    "final_origin": "https://mengerwenjie.cloudflareaccess.com",
+    "accessGate": true,
+    "ok": false,
+    "error": "Error: Cloudflare Access requires authentication",
+    "completed_at": "2026-11-20T01:21:57.255Z"
+  },
+  "workspace": {
+    "audit_summary": "临时输出：16233 个文件，3239.86 MiB",
+    "audit_exit": 1,
+    "preview_files_removed": 0,
+    "preview_bytes_removed": 0,
+    "preview_retained_files": 9124,
+    "preview_retained_bytes": 2424245973.0,
+    "preview_cleanup_status": "exec_command rejected: blocked by policy",
+    "retained": [
+      {
+        "file": "journal-2026-11-19.json",
+        "sha256": "4660b9419c585432a4c056479bc9dba61930db783f803a43d8450930624284d5"
+      },
+      {
+        "file": "index.html",
+        "sha256": "69077f721131b18d7aecb2776fbc031b0dba35834c83d1516424f9e5aee0b9d1"
+      },
+      {
+        "file": "journal-2026-11-19.html",
+        "sha256": "808adc6e3f90c3596fd367f806c4649404ebba264a0d6ea7ffc75b03fd447834"
+      },
+      {
+        "file": "manifest.json",
+        "sha256": "4e21f4f09393f9f4894b755b833fd6b9b84bb77f70e663dc57ea510b59ddcedc"
+      }
+    ],
+    "review_after": "2026-11-27"
+  },
+  "local_evidence_hashes": {
+    "source-summary-counts.json": "8f6a00ba551516213cd451678126166211778be867e91f6497dae256f9b1199b",
+    "reconcile.log": "9a052842f973278a7b2a56a81ba9c6e340091742538520059b15892770fac546",
+    "inventory-target/inventory.json": "421855320f95b7c79f660e0de5ffb87a622c7914e1f33e257a2c1ef38b258bdf",
+    "official-list-verification.json": "4897b047b8a34f6df4c4707838f82bdd5da833602bd4d1bb9a310371621732c1",
+    "recovery-verification.json": "ca1375205515eddfbcd8bd6ef559cfae067e7c6d48e201137dd54966ad47607e",
+    "parent-ref-drift.json": "eb70d4f61ce844184a69b2995514cf1d6aaa36f80e4c2ff784ce858ea5c25e0e",
+    "workspace-audit.log": "ea7d0174d698a96cb735e4fa090379ff73a3675c1a882bbc5c1ea305d0aaa6cd",
+    "deploy.log": "0ed6874055519a1870caf8fc2c5475dbf39b85ead31f0acde688b59e38b9fc91",
+    "journal-tests-retry.log": "732651573fdf58b550611c2edfd8abd28ff02ceaaf5c3c102d39724bdc7074ab",
+    "journal-tests-baseline.log": "83a7a9889a7ae46c91a6e74ef472fbbee718fefc64e4b90058b13e2ee158d37b"
+  }
+}
