@@ -43275,6 +43275,461 @@
       "anchors": [
         "docs/journal-review/daily-update-rules.md"
       ]
+    },
+    "0c6915144d0e85c532d9d5411cd6e13a6349459d": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "签收沪深 R05 全期严格尾盘 VWAP。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup-evidence/strict-close-vwap-full.json",
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup.md"
+      ]
+    },
+    "5a4624635a8e148a18199ae31cf87ff41a42e68e": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "按签收合同接续 R05 旧分钟分片。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_close_vwap.py",
+        "scripts/tests/test_intraday_r05_close_vwap.py"
+      ]
+    },
+    "eddd6f73d12c652245e5e205ba5b6a41c917f61b": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "签收 R06 沪市滚动值与两市 PIT 原件。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-19-r06-rolling-factor-preflight.md",
+        "reports/2026-11/2026-11-19-r06-rolling-factor-preflight.md",
+        "reports/2026-11/2026-11-19-r06-shanghai-clock-and-pit.md"
+      ]
+    },
+    "71940c2b7ea5c17199251a6eba45d77697c0a26e": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "按准确分钟边界重算 R05 尾盘 VWAP。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_close_vwap.py",
+        "scripts/tests/test_intraday_r05_close_vwap.py"
+      ]
+    },
+    "54d4c0dbcd7a7370a7c3379e0593dd6a577fa7ca": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "Preserve continuous-session prices in rolling Shanghai context。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "因子/algobench/src/algobench/sse_public_adapter.py",
+        "因子/algobench/tests/test_sse_public_adapter.py"
+      ]
+    },
+    "38d2fbf9d74106ca8401df076484222c98de1636": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "Rebuild rolling Shanghai equity clocks for R06 factors。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/intraday_r06_refresh.py",
+        "scripts/intraday_r06_sse_clock.py",
+        "scripts/intraday_r06_sse_controls.py",
+        "scripts/run_intraday_r06_sse_followup.py",
+        "scripts/tests/test_intraday_r06_sse_clock.py",
+        "因子/algobench/src/algobench/formal_sse_inputs.py",
+        "因子/algobench/src/algobench/sse_public_adapter.py"
+      ]
+    },
+    "0de04170fdd0dd4542f3cd5c243b041400f7307f": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "签收 R05 双腿归因和有界逐笔验证。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup-evidence/price-sensitivity-wangly.json",
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup-evidence/price-sensitivity-wenjie.json",
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup-evidence/quote-to-ledger-bridge.json",
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup-evidence/run-receipts.json",
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup-evidence/strict-close-vwap-sse-sample.json",
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup-evidence/strict-close-vwap-szse-sample.json",
+        "reports/2026-11/2026-11-19-intraday-r05-attribution-followup.md"
+      ]
+    },
+    "bf21410c3b23f006dbe98cee6f7282f9d687c065": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "记录 R06 滚动因子实测、成本与停止条件。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-19-r06-rolling-factor-preflight.md",
+        "reports/2026-11/2026-11-19-r06-rolling-factor-preflight.md"
+      ]
+    },
+    "9c9df56dd4ea60f47d9a084f2f98aaedcc4f97f0": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "验证滚动尾点补单和严格一秒滞后边界。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "因子/algobench/tests/test_depth_match_event_contract.py",
+        "因子/algobench/tests/test_formal_f40_stages.py"
+      ]
+    },
+    "c6edcd4a89c244fa1061044a0c751455ee720d90": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "保留独立 R06 更新前验签的 R05 月片。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_prices.py"
+      ]
+    },
+    "ad21a4ecbaf56c71f98a2e2bc2cbca87f73391fc": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "用固定内存前缀测量 R06 因子组合增量。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/intraday_r06_refresh.py",
+        "scripts/intraday_r06_rolling_cost.py",
+        "scripts/intraday_r06_rolling_math.py",
+        "scripts/probe_intraday_r06_rolling_factors.py",
+        "scripts/tests/test_intraday_r06_rolling_factors.py"
+      ]
+    },
+    "d376c5ccbe3bbf9de2cf0370e8ae9f1ee000c9ee": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "按独立内存凭证准入 R06 深市重股。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-19-r06-rolling-factor-sources.json",
+        "scripts/intraday_r06_refresh.py"
+      ]
+    },
+    "94e316e58361466c7fcea114dc57be32133ef2d5": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "接入 R06 卖侧刷新预检与冻结参数核验。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-19-r06-rolling-factor-sources.json",
+        "scripts/intraday_r06_refresh.py",
+        "scripts/probe_intraday_r06_rolling_factors.py",
+        "scripts/tests/test_intraday_r06_rolling_factors.py",
+        "因子/algobench/src/algobench/algorithm_purpose_factors.py",
+        "因子/algobench/src/algobench/formal_contexts.py"
+      ]
+    },
+    "eedd592e792ab38833d9a7be41a574ca8f549d58": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "允许在实测后选择逐股代码分页。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_flow.py"
+      ]
+    },
+    "d514d00ae2b927292a720a250aa822d5227a045a": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "记录 R06 逐窗快照覆盖与迟到差值。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/intraday_r06_rolling_run.py"
+      ]
+    },
+    "98fed201e028679c2f20f0712ee0f896674b5676": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "按行情参考合同解析沪市涨跌停价。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_prices.py"
+      ]
+    },
+    "42b90e28ac90f8c3c9d4c780e33be8b2a55b4b9b": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "核对逐笔查询传输字节与同股持有增量。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_flow.py",
+        "scripts/tests/test_intraday_r05_followup_flow.py"
+      ]
+    },
+    "bffe854eb8f84eb69103051b7a6791df3eb6f8e3": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "在 R09 标签中区分前一日旧仓与当日底仓新增。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_prices.py"
+      ]
+    },
+    "487e42fd85257a398c0ab85be663bc02d1a27e77": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "实现 R06 A 批有界回放和按截点核验。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-19-r06-rolling-factor-sources.json",
+        "scripts/factor_candidates_tplusone_round15.py",
+        "scripts/intraday_r06_rolling_math.py",
+        "scripts/intraday_r06_rolling_run.py",
+        "scripts/intraday_r06_rolling_sources.py",
+        "scripts/probe_intraday_r06_rolling_factors.py",
+        "scripts/tests/test_intraday_r06_rolling_factors.py",
+        "因子/algobench/src/algobench/depth_match_factors.py",
+        "因子/algobench/src/algobench/depth_match_panel.py"
+      ]
+    },
+    "e7575ccaecafe3f4d0303aaa85b02604efc4a092": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "支持在另一账户验签沪市 R05 原生输入。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/r05_followup_inputs.py",
+        "scripts/run_intraday_r05_attribution.py",
+        "scripts/run_intraday_r05_followup_flow.py",
+        "scripts/run_intraday_r05_followup_prices.py",
+        "scripts/tests/test_intraday_r05_followup_prices.py"
+      ]
+    },
+    "13461c16561c9f75a6abc7a3d3557a7dcee3b480": {
+      "status": "assigned",
+      "chains": [
+        "candidate-factor-compute"
+      ],
+      "reason": "登记 R06 沪深滚动预检的正式列和样本。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/probe_intraday_r06_rolling_factors.py",
+        "scripts/tests/test_intraday_r06_rolling_factors.py"
+      ]
+    },
+    "f37579201628deee5d076fc68122b68f21751d87": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "按已验签月片生成 R05 统计索引。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_prices.py",
+        "scripts/tests/test_intraday_r05_followup_prices.py"
+      ]
+    },
+    "c2a63df6ddced40e314779e26f3cd2739bd3eae9": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "按已冻结分层日期验证 R05 订单流与固定持有期。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_flow.py",
+        "scripts/tests/test_intraday_r05_followup_flow.py"
+      ]
+    },
+    "5ba0b960b8e34cbff2130404bc18ce0386408bda": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "按两侧报价齐备的截面归约价格桥接。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_prices.py",
+        "scripts/tests/test_intraday_r05_followup_prices.py"
+      ]
+    },
+    "53cb1a90af2fb78b477e49801d92f43b427c08a7": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "补算 R05 分位、单腿价格桥接与风险归因。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/run_intraday_r05_followup_prices.py",
+        "scripts/tests/test_intraday_r05_followup_prices.py"
+      ]
+    },
+    "db1b8bdb311f24eaa6e2fc94f644321ca9908078": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "按交易腿拆分 R05 冻结名单与账户回放。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "scripts/baseline_base_evaluation.py",
+        "scripts/run_intraday_r05_followup_ledger.py",
+        "scripts/tests/test_run_baseline_base_position.py"
+      ]
+    },
+    "83f1a4dd4d38b75a3cc25af73423041051fe27c4": {
+      "status": "assigned",
+      "chains": [
+        "baseline-return-attribution"
+      ],
+      "reason": "制定 R05 收益归因补算与订单流验证计划。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-19-intraday-r05-attribution-followup.md"
+      ]
+    },
+    "2ee674fdbe2072ada9ca930f95d4fde877ca063a": {
+      "status": "assigned",
+      "chains": [
+        "strategy-research"
+      ],
+      "reason": "按可交付的研究分项校正日内路线与开工提示。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-18-intraday-research-roadmap.html",
+        "PLAN/2026-11-18-intraday-research-roadmap.md",
+        "reports/2026-11/2026-11-19-factor-candidate-workflow-review.md"
+      ]
+    },
+    "c9aa4923e7caedfba11fd6964d0f8136803e88ee": {
+      "status": "assigned",
+      "chains": [
+        "strategy-research"
+      ],
+      "reason": "将冻结模型跨池比较列为可独立开展的研究并接入第三个因子来源。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-18-intraday-research-roadmap.html",
+        "PLAN/2026-11-18-intraday-research-roadmap.md"
+      ]
+    },
+    "d2a5d2eaeea7f9f231504f84f8650800b6204ed7": {
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "补全三个外部因子会话及其可核对交付。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "reports/2026-11/2026-11-19-factor-candidate-workflow-review.md"
+      ]
+    },
+    "9fbe6a7b3ff54e1f54d146366d3f121aead8c2f2": {
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "补充 Claude 因子测量框架和入模决议的实证来源。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "reports/2026-11/2026-11-19-factor-candidate-workflow-review.md"
+      ]
+    },
+    "a3d44f3ae12f2d92c85c9369ae0595f63d0a907d": {
+      "status": "assigned",
+      "chains": [
+        "strategy-research"
+      ],
+      "reason": "按预测与全仓收益重排日内研究任务及会话指令。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "PLAN/2026-11-18-intraday-research-roadmap.html",
+        "PLAN/2026-11-18-intraday-research-roadmap.md"
+      ]
+    },
+    "aac50e329e2c7f8f8917c95190332119614570b3": {
+      "status": "assigned",
+      "chains": [
+        "behavior-design"
+      ],
+      "reason": "评议历轮因子候选、模型比较与账户贡献。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "reports/2026-11/2026-11-19-factor-candidate-workflow-review.md"
+      ]
+    },
+    "8e8fd94b93dcfb38d6c289840ee489f6578179e9": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "同步日内研究的五个开工入口与阶段交接。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "content/daily/2026-11-18.md",
+        "content/daily/2026-11-18.show.html"
+      ]
+    },
+    "991d68e5e4fea102a52b851fecb5adc8d09b6655": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "同步三个因子来源和独立跨池比较的会话入口。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "content/daily/2026-11-18.md",
+        "content/daily/2026-11-18.show.html"
+      ]
+    },
+    "c6d51d91bf0909d3a4cf5ddca0fd9edb2e0a9a13": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "按首次发布记录固定11月18日路线图时间。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "content/daily/2026-11-18.md"
+      ]
+    },
+    "d2244404dd293705e2bd9f657fae4706982aad8e": {
+      "status": "assigned",
+      "chains": [
+        "report-publish"
+      ],
+      "reason": "更新11月18日研究路线、历史成果和逐任务会话指令。对应差异和实际工作目标已核对。",
+      "anchors": [
+        "content/daily/2026-11-18.md",
+        "content/daily/2026-11-18.show.html"
+      ]
+    },
+    "10652b8353db31b526de7dde4e011e527bc0a7be": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "研究日志运行规则或上一轮日卡与收据，排除本轮任务点计重。",
+      "anchors": [
+        "docs/journal-review/daily-updates/2026-11-19.md",
+        "docs/journal-review/daily-updates/2026-11-19/delivery-receipt.json"
+      ]
+    },
+    "d337543c6510d566f0d5f774b8b26f38e88ff03d": {
+      "status": "maintenance",
+      "chains": [],
+      "reason": "研究日志运行规则或上一轮日卡与收据，排除本轮任务点计重。",
+      "anchors": [
+        "content/chains.json",
+        "content/journal/2026-11-18.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
     }
   },
   "context_rules": [
@@ -43369,5 +43824,5 @@
       "reason": "老因子/F40实现与300秒门阶段的公共计算支撑；C3.3、机械撤单等专用目标另分"
     }
   ],
-  "reviewed_through": "2026-11-18"
+  "reviewed_through": "2026-11-19"
 }
