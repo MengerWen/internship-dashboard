@@ -267,7 +267,7 @@ body {
 .items { border-top: 1px solid var(--line); }
 .item {
   display: grid;
-  grid-template-columns: 3ch minmax(0, 1fr);
+  grid-template-columns: max-content minmax(0, 1fr);
   gap: 10px;
   align-items: baseline;
   width: 100%;
@@ -422,7 +422,6 @@ details > :not(summary) { margin-top: 8px; }
 .legacy-map tbody th { min-width: 9em; }
 .launch-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:12px 26px; padding:0; list-style:none; margin:14px 0; }
 .launch-list li { margin:0; padding:8px 0; border-top:1px solid var(--line-soft); }
-.launch-list small { display:block; margin-top:4px; line-height:1.5; }
 .batchbar { margin:10px 0 4px; }
 input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; padding:4px 8px; border:1px solid var(--muted); border-radius:var(--radius); color:inherit; background:var(--bg); }
 [data-ui="evidenceGroup"] label { display:block; margin:8px 0; }
@@ -436,16 +435,9 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
   </header>
 <section aria-label="研究进展">
   <p>以一亿元账户的扣费净收益衡量策略。日内研究多轮选股能否让更多股票贡献收益，隔日研究全池开仓与已有持仓留仓的价值。两条线同等优先。</p>
-  <h2>先开哪些会话</h2>
-  <p>建议先开四个会话，各交一份能被下游直接使用的材料。点击阶段名即可复制开场 Prompt。</p>
-  <ol class="launch-list">
-    <li><a href="#N01-p1">共同比较口径</a><small>冻结日历、信息截止、主成交情景和账户分母，交给两条线。</small></li>
-    <li><a href="#N07-p1">日内多轮选股</a><small>确定决策点和单轮、固定分数多轮、更新分数多轮三组，衡量新增股票。</small></li>
-    <li><a href="#N08-p1">隔日开仓与留仓</a><small>分别定义全池选股、旧仓续持的对照和次日退出窗。</small></li>
-    <li><a href="#N11-p1">开放探索新因子</a><small>交第一批可检验的候选，来源和构建方法交由研究会话探索。</small></li>
-  </ol>
-  <p><strong>工程线同步推进。</strong>建议在已有深市 344 列 C++ 会话使用<a href="#N02-p1">持续提速 Prompt</a>，保留普通日、极端日和整链分析的上下文。</p>
-  <details><summary>还能独立启动的四项工作</summary><p><a href="#N03-p1">旧因子扩窗规格</a>和<a href="#N04-p1">逐股动态账簿</a>是下一批优先项。已有股票池和冻结分数也足以先做<a href="#N05-p1">跨池覆盖基线</a>与<a href="#N09-p4">旧 09:35 分数校准</a>。整理<a href="#N03-p2">历史候选</a>可沿用 N03 会话。</p></details>
+  <h2>可独立启动的阶段</h2>
+  <p>点击阶段编号，打开对应的会话 Prompt。</p>
+  <ul class="launch-list" data-ui="launch"></ul>
 </section>
 
   <section aria-labelledby="intraday-flow-title">
@@ -1363,7 +1355,7 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
     return t.phases.flatMap((p,i) => (record(phaseId(t,i)).status === "todo" || (record(phaseId(t,i)).status === "done" && !isDone(phaseId(t,i)))) && gatesMet(p.needs) ? [i] : []);
   }
   function startScope(t) { return openScopes(t)[0] ?? null; }
-  function scopeName(t,i) { return t.phases[i]?.name || t.title; }
+  function scopeId(t,i) { return i < 0 ? t.id : phaseId(t,i); }
   function status(t) {
     if (isDone(t.id)) return labels.done;
     if (openScopes(t).length) return "有阶段可开始";
@@ -1390,8 +1382,8 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
   }
   function selectReceipt(t,i) {
     ui.receipt.replaceChildren();
-    for (const [j,p] of t.phases.entries()) {
-      const opt=el("option",p.name); opt.value=phaseId(t,j); ui.receipt.append(opt);
+    for (const j of t.phases.keys()) {
+      const id=phaseId(t,j), opt=el("option",deliveredName(id)); opt.value=id; ui.receipt.append(opt);
     }
     ui.receipt.value=phaseId(t,i >= 0 ? i : (startScope(t) ?? 0)); reportProgress(ui.receipt.value);
   }
@@ -1463,14 +1455,15 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
   function makePrompt(t,i=-1) {
     const phase=t.phases[i];
     const stages=phase ? [phase] : t.phases;
-    const text=["# "+t.id+" "+t.title+(phase ? " · "+phase.name : ""),
+    const text=["# "+(phase ? deliveredName(phaseId(t,i))+" · "+t.title : deliveredName(t.id)),
       "请在思瑞投资 sirui-quant-research 仓库完成本项已具备输入的工作。先读 AGENTS.md 及 PLAN/2026-11-21-intraday-and-overnight-research-roadmap-draft.md 中的本节点。涉及服务器、正式训练或批处理时按本次授权、AGENT.md 和正式运行规约执行。",
       "研究问题\n"+t.why, "比较口径\n"+t.common, "启动与并行\n"+t.sequence,
       "原始材料（仓库相对路径）\n"+t.sources.map(([name,path])=>"- "+name+"　"+path).join("\n")];
     for (const p of stages) {
       const delivered=p.needs.flatMap(group=>alternatives(group).filter(id=>isDone(id)));
       const pending=p.needs.filter(group=>!gatesMet([group]));
-      const parts=[p.name+(p.batch?" · 候选批次 "+activeBatch:"")];
+      const own=phaseId(t,t.phases.indexOf(p));
+      const parts=[deliveredName(own)+(p.batch?" · 候选批次 "+activeBatch:"")];
       const describe=(id,batch=activeBatch)=>{const r=record(id,batch);return deliveredName(id)+"　"+r.note+(r.artifact?"　"+r.artifact:"");};
       if(delivered.length) parts.push("已登记交付，请核对路径、窗口与版本\n"+delivered.map(id=>"- "+describe(id)).join("\n"));
       if(pending.length) parts.push("启动前仍须取得并核对以下材料："+gateNames(pending)+"。");
@@ -1492,7 +1485,7 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
           parts.push("本次汇总时的阶段与批次清单\n"+evidence.join("\n"));
         }
       }
-      const own=phaseId(t,t.phases.indexOf(p)), current=record(own);
+      const current=record(own);
       if(current.note) parts.push("本阶段记录（"+labels[current.status]+"）　"+current.note+(current.artifact?"　"+current.artifact:""));
       if(p.proof) parts.push("签收前核对　"+p.proof+"。登记可读路径和版本。");
       parts.push(p.action,"交付与验收　"+p.delivery); text.push(parts.join("\n\n"));
@@ -1542,35 +1535,45 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
     const panel = ui.body; panel.replaceChildren();
     if (tab === "graph") {
       panel.append(el("h3","各阶段的启动条件"));
-      for(const p of t.phases) panel.append(el("p",p.name+" · "+(p.needs.length ? gateNames(p.needs) : "使用已有资料，可直接开始。")));
+      for(const [i,p] of t.phases.entries()) panel.append(el("p",deliveredName(phaseId(t,i))+" · "+(p.needs.length ? gateNames(p.needs) : "使用已有资料，可直接开始。")));
       if (t.side.length) groupLinks(panel,"专项比较的交付",t.side,"");
       groupLinks(panel,"使用本项交付的节点",tasks.filter(x=>x.id!==t.id && (x.side.includes(t.id)||x.phases.some(p=>p.needs.flat().some(id=>id.startsWith(t.id+"-"))))).map(x=>x.id),"本项完成综合决策。");
     } else if(tab === "prompt") {
       panel.append(el("p","选择整项或单个阶段。已登记的上游结果会随 Prompt 一起复制。","hint"));
       const box=el("textarea"); box.readOnly=true;box.setAttribute("aria-label","完整开场 Prompt");
       const scope=el("label","会话范围　"), select=el("select");
-      for(const [i,name] of [[-1,"整项任务"],...t.phases.map((p,i)=>[i,p.name])]){
+      for(const i of [-1,...t.phases.keys()]){
+        const name=i<0 ? t.id+" 整项任务" : deliveredName(phaseId(t,i));
         const opt=el("option",name); opt.value=String(i);select.append(opt);
       }
-      select.value=String(promptScope);box.value=makePrompt(t,promptScope);
-      select.addEventListener("change",()=>{promptScope=Number(select.value);box.value=makePrompt(t,promptScope);selectReceipt(t,promptScope);copyFeedback.textContent="";persist();});
+      select.value=String(promptScope);
       scope.append(select);panel.append(scope);
       const bar = el("div",undefined,"tools actionrow");
       const copyFeedback = el("span",undefined,"hint");
       copyFeedback.setAttribute("role","status");
-      bar.append(button("复制 Prompt", async () => {
+      const copyButton=button("", async () => {
         const text = box.value;
         const copied = await copyPrompt(text);
         if (box.value === text) {
           copyFeedback.textContent = copied ? "已复制。" : "浏览器未能写入剪贴板，请手动复制。";
         }
-      },"btn primary"), copyFeedback);
+      },"btn primary");
+      function showPrompt() {
+        box.value=makePrompt(t,promptScope);
+        copyButton.textContent="复制 "+scopeId(t,promptScope)+" Prompt";
+      }
+      showPrompt();
+      select.addEventListener("change",()=>{
+        promptScope=Number(select.value);
+        showPrompt(); selectReceipt(t,promptScope); copyFeedback.textContent=""; persist();
+      });
+      bar.append(copyButton,copyFeedback);
       panel.append(bar,box);
     } else {
       panel.append(el("p",t.sequence,"hint"),el("p",t.common));
       const steps=el("ol");
-      for(const p of t.phases) {
-        const li=el("li");li.append(el("strong",p.name),el("p",p.action),el("p","交付　"+p.delivery,"hint"));steps.append(li);
+      for(const [i,p] of t.phases.entries()) {
+        const li=el("li");li.append(el("strong",deliveredName(phaseId(t,i))),el("p",p.action),el("p","交付　"+p.delivery,"hint"));steps.append(li);
       }
       panel.append(steps,el("h3","整项交付"),el("p",t.out));
       const detail=el("details"), list=el("ul",undefined,"sources");detail.append(el("summary","原始材料入口"));
@@ -1702,9 +1705,9 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
           tab=mode==="ready" ? "prompt" : "work"; ui.record.open=false; render(); persist();
         },"item");
         b.setAttribute("aria-current",String(item.id===selected && (mode!=="ready" || scope===promptScope)));
-        const body=el("span",mode==="ready" ? scopeName(item,scope) : item.title);
+        const body=el("span",mode==="ready" ? item.phases[scope].name : item.title);
         body.append(el("small",mode==="ready" ? "可开始 · "+item.effort : status(item)+" · "+item.effort));
-        b.append(el("span",item.id,"code"),body);ui.items.append(b);
+        b.append(el("span",mode==="ready" ? phaseId(item,scope) : item.id,"code"),body);ui.items.append(b);
       }
     }
     ui.meta.textContent=t.id+"　/　第 "+t.level+" 层　·　"+t.track+"　·　"+t.effort+"　·　"+status(t);
@@ -1794,6 +1797,13 @@ input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; pa
     if(i>=0 && !task.phases[i]) return false;
     selected=task.id;level=task.level;mode="layer";tab=match[2]?"prompt":"work";promptScope=i;
     return true;
+  }
+  for (const task of tasks) {
+    for (const [i,phase] of task.phases.entries()) {
+      if (phase.needs.length) continue;
+      const id=phaseId(task,i), link=el("a",deliveredName(id)), item=el("li");
+      link.href="#"+id; item.append(link); ui.launch.append(item);
+    }
   }
   const linked=applyTaskLink();
   window.addEventListener("hashchange",()=>{ if (applyTaskLink()) { render();ui.panel?.scrollIntoView({block:"start"}); } });
