@@ -420,6 +420,13 @@ details > :not(summary) { margin-top: 8px; }
 .legacy-map table { width: 100%; border-collapse: collapse; margin: .7rem 0; }
 .legacy-map th, .legacy-map td { text-align: left; vertical-align: top; padding: .55rem; border-bottom: 1px solid var(--line-soft); }
 .legacy-map tbody th { min-width: 9em; }
+.launch-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:12px 26px; padding:0; list-style:none; margin:14px 0; }
+.launch-list li { margin:0; padding:8px 0; border-top:1px solid var(--line-soft); }
+.launch-list small { display:block; margin-top:4px; line-height:1.5; }
+.batchbar { margin:10px 0 4px; }
+input:not([type="checkbox"]) { max-width:100%; min-height:36px; font:inherit; padding:4px 8px; border:1px solid var(--muted); border-radius:var(--radius); color:inherit; background:var(--bg); }
+[data-ui="evidenceGroup"] label { display:block; margin:8px 0; }
+[data-ui="artifact"] { display:block; width:100%; }
 </style>
 </head>
 <body>
@@ -429,7 +436,16 @@ details > :not(summary) { margin-top: 8px; }
   </header>
 <section aria-label="研究进展">
   <p>以一亿元账户的扣费净收益衡量策略。日内研究多轮选股能否让更多股票贡献收益，隔日研究全池开仓与已有持仓留仓的价值。两条线同等优先。</p>
-  <p>现在可并行开展 <a href="#N01-start">评价口径</a>、<a href="#N02-start">深市 C++ 提速</a>、<a href="#N03-start">旧因子扩窗</a>、<a href="#N11-start">新因子构建</a>、<a href="#N04-start">动态账簿</a>、<a href="#N05-start">冻结模型跨池</a>。<a href="#N07-p1">日内</a>和<a href="#N08-p1">隔日</a>也可先确定比较方案。</p>
+  <h2>先开哪些会话</h2>
+  <p>建议先开四个会话，各交一份能被下游直接使用的材料。点击阶段名即可复制开场 Prompt。</p>
+  <ol class="launch-list">
+    <li><a href="#N01-p1">共同比较口径</a><small>冻结日历、信息截止、主成交情景和账户分母，交给两条线。</small></li>
+    <li><a href="#N07-p1">日内多轮选股</a><small>确定决策点和单轮、固定分数多轮、更新分数多轮三组，衡量新增股票。</small></li>
+    <li><a href="#N08-p1">隔日开仓与留仓</a><small>分别定义全池选股、旧仓续持的对照和次日退出窗。</small></li>
+    <li><a href="#N11-p1">开放探索新因子</a><small>交第一批可检验的候选，来源和构建方法交由研究会话探索。</small></li>
+  </ol>
+  <p><strong>工程线同步推进。</strong>建议在已有深市 344 列 C++ 会话使用<a href="#N02-p1">持续提速 Prompt</a>，保留普通日、极端日和整链分析的上下文。</p>
+  <details><summary>还能独立启动的四项工作</summary><p><a href="#N03-p1">旧因子扩窗规格</a>和<a href="#N04-p1">逐股动态账簿</a>是下一批优先项。已有股票池和冻结分数也足以先做<a href="#N05-p1">跨池覆盖基线</a>与<a href="#N09-p4">旧 09:35 分数校准</a>。整理<a href="#N03-p2">历史候选</a>可沿用 N03 会话。</p></details>
 </section>
 
   <section aria-labelledby="intraday-flow-title">
@@ -443,7 +459,7 @@ details > :not(summary) { margin-top: 8px; }
     <div class="flow-scroll" role="region" aria-labelledby="intraday-flow-title" aria-describedby="intraday-flow-help" tabindex="0">
       <div class="flowchart" data-ui="overview" role="group" aria-label="五层研究流程图。点任务查看详情"></div>
     </div>
-  <p class="hint">箭头表示哪项交付会被下游使用。N06 等 C++ 两个指定日实测与 683 日保守外推达标后开始。首批面板可同时交 N07、N08，账户回放另需 N04。N09 可先用旧分数比较设置。N11 探索的候选由 N06 分批整理成面板，交 <a href="#N12-start">N12 评价新因子的预测与账户增量</a>。</p>
+  <p class="hint">箭头表示主要交付关系。各阶段的实际前置见“依赖与去向”。<a href="#N06-p1">深市长窗试算</a>等提速达标；<a href="#N06-p4">现成面板或沪市独立面板</a>按自身证据核验。两条线拿到对应标签和面板即可检验预测，拿到买卖两腿价量后才能核算账户。<a href="#N12-start">新因子与过滤条件</a>按批次、用途分别评价。</p>
 <details class="legacy-map"><summary>原 R01–R19 的成果与新节点对照</summary><p>R01–R07 已有历史交付。R08–R19 栏内列出可沿用的方法。点原编号可查看旧版 Prompt 和进度记录。</p><div class="table-scroll"><table><thead><tr><th>原任务</th><th>可以复用</th><th>新任务去向</th></tr></thead><tbody>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R01">R01 冻结输入与评价</a></th><td>沪深冻结分数、566 日日历、样本身份、底仓及行情索引。</td><td>保留到<a href="#N01">①</a><a href="#N04">④</a><a href="#N05">⑤</a>。补充多决策点与隔日标签，新时段逐窗核对价量覆盖。</td></tr>
 <tr><th scope="row"><a href="https://internship-dashboard.mengerwenjie.workers.dev/daily/2026-11-18-roadmap-archive.html#R02">R02 成交与容量</a></th><td>三个开发日母单、对手盘口、参与率、部分成交、费用情景。</td><td>保留到<a href="#N04">④</a><a href="#N09">⑨</a>。作为订单和成交对照。扩时段、次晨卖出和更换规模须补相应证据。</td></tr>
@@ -469,6 +485,10 @@ details > :not(summary) { margin-top: 8px; }
 
   <section aria-labelledby="intraday-task-title">
     <h2 class="task-heading" id="intraday-task-title">研究任务</h2>
+    <div class="tools batchbar"><label>候选批次 <select data-ui="batchSelect"></select></label>
+      <label>新批次 <input data-ui="batchName" maxlength="40" placeholder="如：尾盘候选-01"></label>
+      <button class="btn" type="button" data-ui="addBatch">建立批次</button><span class="hint" role="status" data-ui="batchInfo"></span></div>
+    <p class="hint">候选整理、构建、数值面板和评价按批登记。共同口径与策略交付供各批复用。</p>
     <nav class="rail" data-ui="rail" aria-label="研究层级"></nav>
     <div class="grid">
       <aside aria-label="任务索引">
@@ -495,6 +515,9 @@ details > :not(summary) { margin-top: 8px; }
               交接记录
               <textarea data-ui="note" rows="2" maxlength="180" placeholder="文件或对象路径、版本，以及适用范围或否定结论"></textarea>
             </label>
+            <div data-ui="inputChoices"></div>
+            <div data-ui="evidenceGroup" hidden><label>可读产物路径与版本 <input data-ui="artifact" maxlength="500" placeholder="仓库相对路径或对象标识及版本"></label>
+              <label><input type="checkbox" data-ui="verified"> <span data-ui="proofLabel"></span></label></div>
             <div class="tools actionrow">
               <label>
                 进度
@@ -531,14 +554,14 @@ details > :not(summary) { margin-top: 8px; }
   const tasks = [
   {
     "id": "N01",
-    "title": "统一评价口径与历史对照",
+    "title": "评价口径与新时点收益标签",
     "why": "怎样区分模型挑对了股票、交易设置用好了资金，以及底仓本身随市场上涨带来的收益？",
     "level": 1,
     "track": "评价",
     "effort": "可并行",
-    "sequence": "与 N02–N05 并行。",
+    "sequence": "先独立冻结共同口径；日内与隔日的时序分别由 N07、N08 提供，按市场和窗口交数值标签。",
     "out": "一张比较口径表。每项实验登记信息截止、决策、最早可成交时点和退出窗，区分预测标签、成交额口径收益及全账户净收益。沪深以分市场排序为主，合排另列。以相同本金、同配比被动底仓及必要的同敞口对照衡量增强。按日期训练和验证，跨边界的未来收益从训练样本剔除。308 日研发折外、176 日和 82 日已看历史分别列示，真正新增的独立样本单列。",
-    "common": "按日期划分 308 日研发折外、176 日与 82 日已看历史，新增独立样本单列。沪深分别排名，在共同交易日比较一亿元整户净收益、同配比被动增强与同敞口表现。",
+    "common": "按日期划分 308 日研发折外、176 日与 82 日已看历史，新增独立样本单列。沪深分别排名，在共同交易日比较一亿元整户净收益、同配比被动增强与同敞口表现。在看到结果前登记主成交情景和敏感性情景。可按 R02 用受深度和参与率限制的对手一档作主情景、窗口 VWAP 作中性对照；若采用其他口径，说明选择并在两条线的买卖两腿统一使用。",
     "sources": [
       [
         "冻结输入及比较协议",
@@ -551,6 +574,10 @@ details > :not(summary) { margin-top: 8px; }
       [
         "旧信号隔夜分段与退出证据",
         "reports/2026-11/2026-11-18-intraday-roadmap-r07-overnight-evidence.md"
+      ],
+      [
+        "成交价量与容量口径",
+        "reports/2026-11/2026-11-18-intraday-roadmap-r02-execution-scenarios.md"
       ]
     ],
     "phases": [
@@ -558,7 +585,27 @@ details > :not(summary) { margin-top: 8px; }
         "name": "冻结比较口径",
         "needs": [],
         "action": "从 R01 的清单核对日期、模型、股票池、标签和交易价量的身份。列出信息截止、决策、最早成交、退出的时序。用同一组股票日和账户日建配对键，处理跨折的未来收益。",
-        "delivery": "交付能按市场、日期和分母重建的口径表，并用一个日内例子和一个跨日例子说明预测收益、成交收益和整户净收益。"
+        "delivery": "交付能按市场、日期和分母重建的口径表，并用一个日内例子和一个跨日例子说明预测收益、成交收益和整户净收益。交日内、隔日共用的日历、配对键、主成交及敏感性情景版本。"
+      },
+      {
+        "name": "日内逐股收益标签",
+        "needs": [
+          "N01-p1",
+          "N07-p1"
+        ],
+        "action": "按已冻结的日内时序制作实际数值，逐股票日登记信息截止、决策时刻、入场和退出标记、收益、价格来源、停牌及缺失原因。同日多轮的标签各自从该轮可观察的起点计算。预测标签与账户模拟成交分表。",
+        "delivery": "交带版本标签表、股票日与时点配对键、覆盖和未覆盖区间。分市场分窗可先交一批。",
+        "proof": "已读回逐股收益数值、配对键与覆盖表"
+      },
+      {
+        "name": "隔日逐股收益标签",
+        "needs": [
+          "N01-p1",
+          "N08-p1"
+        ],
+        "action": "按已冻结的隔日时序制作实际数值，逐股票日登记信息截止、决策时刻、入场和退出标记、收益、价格来源、停牌及缺失原因。隔夜样本核对公司行动与跨日库存时点。预测标签与账户模拟成交分表。",
+        "delivery": "交带版本标签表、股票日与时点配对键、覆盖和未覆盖区间。分市场分窗可先交一批。",
+        "proof": "已读回逐股收益数值、配对键与覆盖表"
       }
     ],
     "need": [],
@@ -601,7 +648,8 @@ details > :not(summary) { margin-top: 8px; }
         "name": "按整链证据持续优化",
         "needs": [],
         "action": "冻结现有可恢复基线。每轮动代码前沿同一份真实行情追到持久回读，说明各处为何读取、转换、复制、展开、重扫或等待，谁消费中间结果。普通日和极端日都要有证据。比较值得尝试的局部改动、数据组织与跨环节重写，写明支持与反对证据、对三项目标的影响、最小判别实验及转向条件。实现方案及迭代轮数由证据决定。",
-        "delivery": "同一候选版本核对 344 列的浮点位、缺失、匹配、同分选择、覆盖、恢复和读回。报告完整业务墙钟、CPU、峰值内存、波动及其他留出负载。指定两日实测和 683 日保守外推均达标才向 N06 交接。683 日实测成绩另凭获准的完整运行签收，仍有差距则进入下一轮。"
+        "delivery": "同一候选版本核对 344 列的浮点位、缺失、匹配、同分选择、覆盖、恢复和读回。报告完整业务墙钟、CPU、峰值内存、波动及其他留出负载。指定两日实测和 683 日保守外推均达标才向 N06 交接。683 日实测成绩另凭获准的完整运行签收，仍有差距则进入下一轮。",
+        "proof": "已核对同一版本、两个指定日达标实测及 683 日达标保守外推"
       }
     ],
     "need": [],
@@ -639,14 +687,15 @@ details > :not(summary) { margin-top: 8px; }
       {
         "name": "旧逻辑扩窗",
         "needs": [],
-        "action": "选一组可累计和一组依赖逐单匹配的旧因子。冻结经济含义，分别定义开盘五分钟、第一小时、上午、单独下午、全天，并区分累计与固定长度回看。交代午间和跨窗状态、分子分母、缺失、参数时钟。",
+        "action": "选一组可累计和一组依赖逐单匹配的旧因子。冻结经济含义，分别定义开盘五分钟、第一小时、上午、单独下午、全天，并区分累计与固定长度回看。交代午间和跨窗状态、分子分母、缺失、参数时钟。为每个入模列登记时钟、参数版本、最晚定标日及可交易或仅历史诊断的身份。",
         "delivery": "按市场、因子族、窗口交规格和样例。注明开盘专属因子的限制，列出日内、隔日首批均可用的规格。"
       },
       {
         "name": "整理既有候选及过滤条件",
         "needs": [],
         "action": "逐行核对 R04 已交两份报告的原编号，与旧库和扩窗定义查重，区分预测因子和交易过滤条件。每个候选写清增加了什么信息、何时可知。",
-        "delivery": "交候选映射、公式、覆盖与独立批次。每批记录可生产项、排除理由及缺失证据。"
+        "delivery": "交候选映射、公式、覆盖与独立批次。每批记录可生产项、排除理由及缺失证据。",
+        "batch": true
       }
     ],
     "need": [],
@@ -654,14 +703,14 @@ details > :not(summary) { margin-top: 8px; }
   },
   {
     "id": "N04",
-    "title": "一亿元动态账簿与逐股周转",
+    "title": "动态账簿与两腿可成交价量",
     "why": "每次判断时实际还有多少钱、每只股票还有多少可卖旧仓？想买或想卖的金额中有多少能成交、能在当天转回？",
     "level": 1,
     "track": "账户",
     "effort": "可并行",
-    "sequence": "先用旧分数及已可重放的成交窗。",
+    "sequence": "先在旧窗口建连续账。新窗口由 N07、N08 各自定时序，按方向、市场和窗口分别交可用的双腿证据。",
     "out": "一笔订单能从信号追到持仓和净值的连续账。逐股逐轮记录计划额、在途单及占款、模拟成交额、费用、可卖旧股、当日锁定股、未成交量和原因。卖出回款按实际模拟成交时点释放，已卖旧股从可卖量扣除。日末和次晨核对现金、持仓、公司行动及解锁。初始股现比可配置，每轮含费预算最高为当时可用现金的 100%。收盘按股票列示已回转、主动隔夜、执行受限或锁定被动隔夜的金额。账簿同时保留没有交易的日子和未平仓头寸。",
-    "common": "初始股现比可配置。一亿元账户的现金、预留费用、在途占款、可卖旧仓和新增锁定仓逐笔连续；实际卖出回款到账才可再用，按股票核实计划、成交与可恢复数量。",
+    "common": "初始股现比可配置。一亿元账户的现金、预留费用、在途占款、可卖旧仓和新增锁定仓逐笔连续；实际卖出回款到账才可再用，按股票核实计划、成交与可恢复数量。在看到结果前登记主成交情景和敏感性情景。可按 R02 用受深度和参与率限制的对手一档作主情景、窗口 VWAP 作中性对照；若采用其他口径，说明选择并在两条线的买卖两腿统一使用。",
     "sources": [
       [
         "成交情景与容量边界",
@@ -688,8 +737,30 @@ details > :not(summary) { margin-top: 8px; }
       {
         "name": "逐股连续记账",
         "needs": [],
-        "action": "用一亿元初始权益和已有成交窗逐笔回放。跟踪逐轮逐股现金占用、可卖旧股、当日新股、在途单、部分成交、费用、卖出回款和次日解锁。每轮按当时含费可用现金最高 100% 编预算。",
-        "delivery": "交可重放账簿和逐笔对账。给出同股多轮、库存不足、主动及被动隔夜的例子，逐日指出每只票计划与可周转金额及缺口，保留零交易日和未售持仓。"
+        "action": "用一亿元初始权益和已有成交窗逐笔回放。跟踪逐轮逐股现金占用、可卖旧股、当日新股、在途单、部分成交、费用、卖出回款和次日解锁。每轮按当时含费可用现金最高 100% 编预算。换池时连续处理底仓建立、成分进出、无分数仍持有的股票及同配比被动账户调仓费用。",
+        "delivery": "交可重放账簿和逐笔对账。给出同股多轮、库存不足、主动及被动隔夜的例子，逐日指出每只票计划与可周转金额及缺口，保留零交易日和未售持仓。逐笔区分现金、可卖旧仓、可观察市场成交量三种约束。"
+      },
+      {
+        "name": "日内买卖两腿可成交价量",
+        "needs": [
+          "N04-p1",
+          "N01-p1",
+          "N07-p1"
+        ],
+        "action": "按日内的冻结决策与退出窗，交逐股逐方向的价格、观察量、容量上限、共享深度、费用、库存与缺失原因。对手价和 VWAP 用同一批订单比较；无法卖出的头寸继续估值。",
+        "delivery": "交可重放的双腿价量表、账户输入、覆盖分母及至少一笔可复核轨迹。已覆盖市场和窗可单独交。",
+        "proof": "已读回对应买卖两腿的价量、库存与缺口表"
+      },
+      {
+        "name": "隔日买卖两腿可成交价量",
+        "needs": [
+          "N04-p1",
+          "N01-p1",
+          "N08-p1"
+        ],
+        "action": "按隔日的冻结决策与退出窗，交逐股逐方向的价格、观察量、容量上限、共享深度、费用、库存与缺失原因。对手价和 VWAP 用同一批订单比较；无法卖出的头寸继续估值。",
+        "delivery": "交可重放的双腿价量表、账户输入、覆盖分母及至少一笔可复核轨迹。已覆盖市场和窗可单独交。",
+        "proof": "已读回对应买卖两腿的价量、库存与缺口表"
       }
     ],
     "need": [],
@@ -697,12 +768,12 @@ details > :not(summary) { margin-top: 8px; }
   },
   {
     "id": "N05",
-    "title": "冻结模型跨股票池对照",
+    "title": "跨股票池对照与模型有效范围",
     "why": "在同一套旧模型下，哪些股票池已有可重复的选股增益？差异有多少来自模型覆盖、市值、行业或流动性？",
     "level": 1,
     "track": "股票池",
     "effort": "可并行",
-    "sequence": "直接读旧 R01 和已有增强分数。",
+    "sequence": "先用冻结分数独立构建分层基线，再按每条线已交的预测与账户轨迹判断覆盖扩展。",
     "out": "中证 500、1000、2000 的池内基准模型、增强模型及两者差值，国证 2000 作小盘敏感性对照。覆盖率保留完整候选池分母，预测差异另在相同股票日上配对。按时期和暴露分层。换业绩基准、换可选股票池、换实际底仓分别登记。⑤给⑨提供值得复验的池。新信号在该池的表现由⑦或⑧及⑨验证。",
     "common": "中证 500、1000、2000 取决策时有效成分，国证 2000 为敏感性对照。固定模型先行，可独立于 C++、新面板和账簿。",
     "sources": [
@@ -724,7 +795,25 @@ details > :not(summary) { margin-top: 8px; }
         "name": "同池配对冻结分数",
         "needs": [],
         "action": "用 R01 已交分数及当时有效成分，分别在中证 500、1000、2000 内对比沪深各自 B0 与相应增强模型，国证 2000 作敏感性。保留全池覆盖分母、相同股票日的配对以及市值、行业、流动性分层。",
-        "delivery": "交各池分期预测水平、增强减 B0 的配对差值、覆盖和候选池意见。分别登记指数作业绩基准、选股池、实际底仓的用途。"
+        "delivery": "交各池分期预测水平、增强减 B0 的配对差值、覆盖和候选池意见。分别登记指数作业绩基准、选股池、实际底仓的用途。冻结旧覆盖、薄弱覆盖的分组定义和时点有效名单，保留不能评分的股票。"
+      },
+      {
+        "name": "日内模型的有效股票范围",
+        "needs": [
+          "N05-p1",
+          "N07-p3"
+        ],
+        "action": "比较相同时点可得的新旧模型，按旧覆盖、薄弱覆盖、首次触及分别统计合格、可评分、入选、实际成交和有净贡献的股票数。检查贡献集中度、剔除主要贡献股的敏感性、样本量和分期稳定性。可复用本批 N12 已签结果。",
+        "delivery": "交分组及配对表，分别说明覆盖扩大、预测改善与可成交净收益是否成立。"
+      },
+      {
+        "name": "隔日模型的有效股票范围",
+        "needs": [
+          "N05-p1",
+          "N08-p3"
+        ],
+        "action": "比较相同时点可得的新旧模型，按旧覆盖、薄弱覆盖、首次触及分别统计合格、可评分、入选、实际成交和有净贡献的股票数。检查贡献集中度、剔除主要贡献股的敏感性、样本量和分期稳定性。可复用本批 N12 已签结果。",
+        "delivery": "交分组及配对表，分别说明覆盖扩大、预测改善与可成交净收益是否成立。"
       }
     ],
     "need": [],
@@ -755,7 +844,8 @@ details > :not(summary) { margin-top: 8px; }
         "name": "探索与构建新因子",
         "needs": [],
         "action": "由你自主深入探索因子从哪里来、研究什么问题、用哪些可得数据和怎样构建，也可以在探索中更换方向。",
-        "delivery": "把值得检验的发现交给下一位研究者：它试图补充什么信息，与已有思路有什么联系或差异，决策时能看到什么，以及怎样复现。具备数据的候选可交定义、实现或可复算样例；暂时缺数据的想法写明缺口。每批独立交接，评价结果可用于下一轮探索。"
+        "delivery": "把值得检验的发现交给下一位研究者：它试图补充什么信息，与已有思路有什么联系或差异，决策时能看到什么，以及怎样复现。具备数据的候选可交定义、实现或可复算样例；暂时缺数据的想法写明缺口。每批独立交接，评价结果可用于下一轮探索。",
+        "batch": true
       }
     ],
     "need": [],
@@ -768,7 +858,7 @@ details > :not(summary) { margin-top: 8px; }
     "level": 2,
     "track": "因子生产",
     "effort": "依交付启动",
-    "sequence": "按分项取输入。旧因子扩窗用 N03 的规格。新因子按 N11 交付的批次接收，长窗口系统试算遵循 N02 的放行条件。",
+    "sequence": "按实际市场、窗口和输入交付。深市新增长窗口系统试算经 N02 放行。已有原窗、轻量或已独立适配的沪市面板可走资料复用分项；历史与自主候选均可送评。",
     "out": "先交普通日、重股日的窗口对照。五分钟锚点回对旧值，长窗口按截点裁剪后独立复算，检查跨段状态、缺失、覆盖及样本排除。计量单独计算与多窗共享回放的总耗时、峰值资源、最慢股和预计全期工期。再按可负担的窗口和族交付带版本的因子面板，分别标记历史事件时间可复算、当时接收及参数可用性的证据。证据不足的列可作研究诊断，交易回放注明可用范围。全历史生产遵守正式运行前验收和存储规约。",
     "common": "深市长窗口系统试算的放行条件是 N02 同一冻结版本在 2026-03-19 ≤10 秒、2024-12-30 ≤7 分 30 秒，且 683 日保守外推 ≤2 小时。查收证据后才开始长窗口系统测速；沪市扩窗有独立适配证据。第一批合格面板同时交两条策略线。",
     "sources": [
@@ -810,24 +900,42 @@ details > :not(summary) { margin-top: 8px; }
           "N03-p1"
         ],
         "action": "查收 N02 同一冻结版本的两份代表日达标实测和 683 日保守外推，以及本批 N03 规格。在普通日和重股日复算五分钟锚点，把行情裁到各决策截点独立复算，核对跨时段订单状态、缺失和覆盖。对比多窗分算与共用回放。",
-        "delivery": "交有版本的首批通过核对面板、时间戳和列字典、分窗耗时、内存、最慢股、适用市场与时期。日内和隔日都可领取。"
+        "delivery": "交有版本的首批通过核对面板、时间戳和列字典、分窗耗时、内存、最慢股、适用市场与时期。日内和隔日都可领取。",
+        "proof": "已读回合格面板、列时钟、定标版本与覆盖"
       },
       {
         "name": "后续窗口及新增族",
         "needs": [
-          "N06-p1"
+          [
+            "N06-p1",
+            "N06-p4"
+          ]
         ],
-        "action": "按已交规格滚动纳入后续窗口或新族。逐批检查参数仅使用当时可用的历史，分别标记历史事件可重建及实际接收、定参可用的证据。复用对应的 N03 已有候选或 N11 新候选交付。",
+        "action": "按已交规格滚动纳入后续窗口或新族。逐批检查参数仅使用当时可用的历史，分别标记历史事件可重建及实际接收、定参可用的证据。复用对应的 N03 已有候选或 N11 新候选交付。新增深市长窗口系统试算先查本方案的 N02 达标交付。",
         "delivery": "交批次清单、身份、正确性、成本和预计全期工期。完整历史生产按授权、正式运行及容量规约办理。"
       },
       {
         "name": "交付新因子评价面板",
         "needs": [
-          "N11-p1",
+          [
+            "N03-p2",
+            "N11-p1"
+          ],
           "N01-p1"
         ],
         "action": "按本批实际交付读取定义或实现，标出可用市场、时段、数据覆盖及决策时点。已有可复算列和相同身份的基准面板直接复用。需生产深市长窗口数据时，先查收 N02 达标版本，再使用本节点已复核的相应窗口。",
-        "delivery": "交新增列、同窗旧因子基准及可配对的股票日、特征时钟、版本和适用范围。有原窗和扩窗基准时分别交付。N12 按批领取；注明只有规格、尚缺数值的候选。"
+        "delivery": "交本批实际数值面板或可重放过滤标记、同窗旧因子及可配对键、入模列的来源与参数截止。仅规格、缺数、整批排除时登记缺口或筛查结论；数值阶段待实物可查后签收。",
+        "batch": true,
+        "proof": "本批已有可读数值、同窗基准、配对键和可用时点"
+      },
+      {
+        "name": "复用已有面板或沪市独立面板",
+        "needs": [
+          "N01-p1"
+        ],
+        "action": "定位本次市场、决策时点和窗口的现成签收对象。原窗、轻量或沪市面板按自身覆盖核验；需新做深市长窗系统试算则走本节点第一阶段。逐列检查参数截止、可得时钟、配对键和是否仅适合历史诊断。",
+        "delivery": "交可用于本次目标的面板身份和覆盖表。窗口 A/B 比较还须两套面板都有数值。",
+        "proof": "已核对可读面板、市场、窗口与可用时钟"
       }
     ],
     "need": [
@@ -845,7 +953,7 @@ details > :not(summary) { margin-top: 8px; }
     "level": 3,
     "track": "日内策略",
     "effort": "同等优先",
-    "sequence": "先定义日内对照。长窗预测等 N06 首批面板，账户回放另需 N04。",
+    "sequence": "先定义日内对照。取得日内数值标签和对应市场、窗口的面板后比较预测；多轮账户回放再取日内两腿价量。",
     "out": "同一决策时点比较不同回看长度，同一窗口规则比较不同判断轮次。先看「单轮」「固定早盘分数、多轮交易」「相同轮次、逐轮更新分数」三组，保持可比的本金、费用和成交规则。每轮从完整合格池评分，记录与此前各轮的名单重叠、首次入选数、首次入选且成交数、新票净损益、挤掉的其他机会及相对单轮的整户增量。允许重复出现的股票继续参与排序，各轮共享现金和剩余可卖旧股。输出折外分数与机会表、日度账户差异及可交给⑨复验的规则。",
     "common": "日内与隔日同优先。多轮的目的在于识别原先未入选的股票。用完整合格池为分母，分别报告新增入选、实际新增成交及其整户增量，保留单票旧仓和现金限制。",
     "sources": [
@@ -877,19 +985,31 @@ details > :not(summary) { margin-top: 8px; }
         "name": "日内折外预测",
         "needs": [
           "N07-p1",
-          "N06-p1"
+          "N01-p2",
+          [
+            "N06-p1",
+            "N06-p4"
+          ]
         ],
-        "action": "同刻换回看长度，同一回看规则换轮次。逐轮在全合格池内排名，按日期折外训练，记录第一次入选、重复入选和落选股票，以及相对沿用早盘分数的变化。",
-        "delivery": "交有截点和模型版本的折外分数、整池机会表、选股并集及同日期配对的预测结果。"
+        "action": "同刻换回看长度，同一回看规则换轮次。逐轮在全合格池内排名，按日期折外训练，记录第一次入选、重复入选和落选股票，以及相对沿用早盘分数的变化。分别以旧因子原窗 A、扩窗 B 用同一目标标签、训练折、市场、决策点和可比参数训练，保留真实入模列、共同股票日和各自全覆盖。只交 A 时先做原窗基线，B 就绪后单独算 B−A，不依赖新因子。",
+        "delivery": "交有截点和模型版本的折外分数、整池机会表、选股并集及同日期配对的预测结果。交标签、可用面板、模型版本与三者的配对范围。"
       },
       {
         "name": "回放多轮账户",
         "needs": [
           "N07-p2",
-          "N04-p1"
+          "N04-p2"
         ],
-        "action": "在一份连续账户中比较三组。各轮共享现金与本股剩余可卖旧仓。正确计入首选晚进场获利、挤掉的机会、费用和库存限制。",
+        "action": "在一份连续账户中比较三组。各轮共享现金与本股剩余可卖旧仓。正确计入首选晚进场获利、挤掉的机会、费用和库存限制。固定交易设置，单独交旧因子 B−A 的逐日整户差额。存在新时点时核对校准净边际和实盘可得列，历史诊断列单列。",
         "delivery": "交每轮首次入选且成交的股票数、新票净损益、周转和相对单轮的整户日度差额。"
+      },
+      {
+        "name": "同一批入场只换退出",
+        "needs": [
+          "N07-p3"
+        ],
+        "action": "冻结已入场股票、时点、数量、费用，比较原退出和替代退出。说明重复入选时持有、补仓或撤单，分别记录早退损益、现金释放和可卖旧仓耗用。",
+        "delivery": "交配对账户差额、现金释放后实际新增成交的股票及次晨持仓偏差。"
       }
     ],
     "need": [
@@ -905,7 +1025,7 @@ details > :not(summary) { margin-top: 8px; }
     "level": 3,
     "track": "隔日策略",
     "effort": "同等优先",
-    "sequence": "先定义跨日对照。长窗预测等 N06 首批面板，账户回放另需 N04。",
+    "sequence": "先定义跨日对照。取得隔日数值标签和对应市场、窗口的面板后比较预测；跨日账户回放再取买入和次日退出价量。",
     "out": "独立报告两个配对实验。全池选股在同一收盘前决策点，用开盘信息与加入上午、下午信息的模型比较，按之后的可交易窗口开仓，次日按预定窗口退出。按日期分别比较只用早盘、扩展窗口及加入新因子的隔日模型。已有仓位实验从同一尾盘账户状态分别执行可行的恢复与留仓策略。逐段列出进场至收盘、隔夜跳空、次日开盘至实际退出，处理公司行动、跌停、停牌、未售头寸和被挤掉的次晨订单。另列完整 T 日因子对后续收益的预测。若收盘后才选股、T+1 才新买入，入场前的跳空只用于预测诊断，并为新买股设置符合可卖约束的退出。交⑨的材料与⑦相同，包括折外分数、机会表、连续账户及分期结果。",
     "common": "隔日与日内同优先。区分尾盘决策与收盘后决策、持仓续持与全池开新仓、研究盯市与可成交收益；T+1 新开仓的收益从可成交入场起算。",
     "sources": [
@@ -941,18 +1061,22 @@ details > :not(summary) { margin-top: 8px; }
         "name": "隔日折外预测",
         "needs": [
           "N08-p1",
-          "N06-p1"
+          "N01-p3",
+          [
+            "N06-p1",
+            "N06-p4"
+          ]
         ],
-        "action": "用同一决策时刻比较早盘、加入上午或下午及新因子的模型。按日期折外训练隔日标签，严格隔离训练期终点。收盘后才可知的全日特征另行评价。",
-        "delivery": "交折外分数、开仓或留仓机会表，以及进场至收盘、隔夜跳空、次日盘中的分段诊断。"
+        "action": "在同一决策时刻比较只看早盘和加入上午或下午信息的模型。按日期折外训练隔日标签，严格隔离训练期终点。收盘后才可知的全日特征另行评价。分别以旧因子原窗 A、扩窗 B 用同一目标标签、训练折、市场、决策点和可比参数训练，保留真实入模列、共同股票日和各自全覆盖。只交 A 时先做原窗基线，B 就绪后单独算 B−A，不依赖新因子。",
+        "delivery": "交折外分数、开仓或留仓机会表，以及进场至收盘、隔夜跳空、次日盘中的分段诊断。交标签、可用面板、模型版本与三者的配对范围。"
       },
       {
         "name": "回放跨日账户",
         "needs": [
           "N08-p2",
-          "N04-p1"
+          "N04-p3"
         ],
-        "action": "全池策略按决策后实际可交易的窗口入场。已有持仓从同一尾盘状态分叉，对比可行的恢复与主动留仓。对 T+1 新买入股票安排合法可卖的退出。核对跌停、停牌、锁定、次晨被挤掉的订单及未平头寸。",
+        "action": "全池策略按决策后实际可交易的窗口入场。已有持仓从同一尾盘状态分叉，对比可行的恢复与主动留仓。对 T+1 新买入股票安排合法可卖的退出。核对跌停、停牌、锁定、次晨被挤掉的订单及未平头寸。固定交易设置，单独交旧因子 B−A 的逐日整户差额。存在新时点时核对校准净边际和实盘可得列，历史诊断列单列。",
         "delivery": "交逐日连续账户、分段净损益和实际退出比例，区分主动留仓、被动隔夜与不可赚取的入场前跳空。"
       }
     ],
@@ -969,7 +1093,7 @@ details > :not(summary) { margin-top: 8px; }
     "level": 4,
     "track": "账户比较",
     "effort": "分策略交付",
-    "sequence": "N04 到齐先做旧信号。日内和隔日分项各自启动，跨池比较另需 N05。",
+    "sequence": "旧 09:35 分数可先校准净边际。冻结账户基线等账簿。新信号按市场、时点和持有期另做开发期校准，两条线分别复验。",
     "out": "一亿元同本金下的策略比较。股／现首批取 **95/5、92/8、90/10、50/50**，每档斜线前后分别为股票和现金占比。95/5 的依据来自单轮前 5% 候选的库存分布。多轮会改变入选并集，隔日会占用次晨资金，两条线分别检验。每一档都允许使用全部可用现金，信号弱时可以零交易。先固定分数比较设置，再固定设置替换分数，对有竞争力的组合交叉验证。报告总账户净收益、相对本档被动底仓的增强、回撤、实际周转、现金或库存不足造成的错失，与不同成交成本情景的敏感性。门槛、配比及池的选择限于开发期，再冻结规则比较其他时期。",
     "common": "比较一亿元账户的 95/5、92/8、90/10、50/50 股现比，含费预算最高为当时可用现金的 100%。各档匹配同配比被动底仓。开发期选设置，再冻结到其他时期。两条线可分别交付。",
     "sources": [
@@ -984,15 +1108,24 @@ details > :not(summary) { margin-top: 8px; }
       [
         "周转与账户算例",
         "reports/2026-11/2026-11-18-intraday-execution-depth-and-account.md"
+      ],
+      [
+        "旧信号分数和样本口径",
+        "reports/2026-11/2026-11-18-intraday-roadmap-r01-inputs-and-evaluation.md"
+      ],
+      [
+        "同窗收益与成本",
+        "reports/2026-11/2026-11-18-intraday-roadmap-r05-return-attribution.md"
       ]
     ],
     "phases": [
       {
         "name": "冻结信号账户基线",
         "needs": [
-          "N04-p1"
+          "N04-p1",
+          "N09-p4"
         ],
-        "action": "先用已有分数校验一亿元账户。固定分数比较门槛和单票金额，在 95/5、92/8、90/10、50/50 四档分别回放本档被动底仓。每档都可动用当时可用现金的 100%，允许少买或空过。",
+        "action": "先用已有分数校验一亿元账户。固定分数比较门槛和单票金额，在 95/5、92/8、90/10、50/50 四档分别回放本档被动底仓。每档都可动用当时可用现金的 100%，允许少买或空过。在相同名单与现金预算下只换单票分配，再固定分配只换门槛，保留每只票从信号资格到限量订单的金额与原因。",
         "delivery": "交设置与使用资金、库存不足、扣费增强的对应表。95/5 作先测配置，最优档位由开发期对照决定。"
       },
       {
@@ -1000,16 +1133,22 @@ details > :not(summary) { margin-top: 8px; }
         "needs": [
           "N07-p3"
         ],
-        "action": "用已交日内机会表及匹配的连续账，先固定分数改变门槛、股现比或退出，再固定设置替换分数，复验有竞争力的交互。跨池项另取 N05 已交结果及相应底仓。",
-        "delivery": "交冻结的日内配置、分期风险与净增强、库存约束、成交成本敏感性及逐日配对表。"
+        "action": "用已交日内机会表及匹配的连续账，先固定分数改变门槛、股现比或退出，再固定设置替换分数，复验有竞争力的交互。跨池项另取 N05 已交结果及相应底仓。先用决策日前样本按市场、决策时点、持有期重新校准净边际。固定名单与预算换配权，再固定配权换门槛。若要归因于同时改变的预测和设置，交原／增强模型 × 原／新设置的四格及配对交互；缺同刻输入的格注明不可识别。",
+        "delivery": "交冻结的日内配置、分期风险与净增强、库存约束、成交成本敏感性及逐日配对表。交独立被动底仓、可复算设置及输入版本。只有允许跨股恢复时再单列同股恢复与总比例恢复的差额。"
       },
       {
         "name": "隔日设置复验",
         "needs": [
           "N08-p3"
         ],
-        "action": "从跨日连续账比较相同四档配比及入场、留仓、退出门槛，计入次晨可用金与未售风险。各自匹配同配比被动账户。跨池项另取 N05 已交结果。",
-        "delivery": "交冻结的隔日配置、分期风险与净增强、次晨机会成本和逐日配对表。"
+        "action": "从跨日连续账比较相同四档配比及入场、留仓、退出门槛，计入次晨可用金与未售风险。各自匹配同配比被动账户。跨池项另取 N05 已交结果。先用决策日前样本按市场、决策时点、持有期重新校准净边际。固定名单与预算换配权，再固定配权换门槛。若要归因于同时改变的预测和设置，交原／增强模型 × 原／新设置的四格及配对交互；缺同刻输入的格注明不可识别。",
+        "delivery": "交冻结的隔日配置、分期风险与净增强、次晨机会成本和逐日配对表。交独立被动底仓、可复算设置及输入版本。只有允许跨股恢复时再单列同股恢复与总比例恢复的差额。"
+      },
+      {
+        "name": "旧 09:35 分数与预期净收益校准",
+        "needs": [],
+        "action": "用已交 R01 冻结分数和 R05 同窗标签，在每个评价日前用严格更早的数据分市场、持有期估计分数对应的毛收益、预计成本和净边际。固定前 5% 作参照，保留阈值附近样本量、全机会分母和零机会日。",
+        "delivery": "交可直接查用的校准表、分期误差、门槛及机会表。这一步可与账簿、C++ 和新因子独立开展。"
       }
     ],
     "need": [
@@ -1028,7 +1167,7 @@ details > :not(summary) { margin-top: 8px; }
     "level": 4,
     "track": "新因子评价",
     "effort": "逐批、分策略交付",
-    "sequence": "N06 交付可比较的候选面板后，使用 N07 或 N08 已定义的相应标签，两条线独立评价。账户回放另需 N04。先有结果的分项即可交 N10 并反馈 N11。",
+    "sequence": "按所选批次领取已有数值与基准。预测因子使用对应逐股标签独立评估，纯交易过滤条件可直接进入相应账户对照。",
     "out": "按批次、市场和策略登记结论。分开报告扩窗贡献、新因子预测贡献和固定设置下的账户贡献，注明适用范围及未能识别的部分。",
     "common": "在同一市场、股票池、决策时点、未来收益标签和配对日期下，按相同训练、调参和费用口径比较。A 用旧因子原窗口，B 用旧因子扩窗，C 在 B 上加入本批新因子。B−A 估计扩窗贡献，C−B 估计新因子的边际贡献。沿用原窗口的候选可直接比较原窗口有无该批因子，明确比较基线。",
     "sources": [
@@ -1046,37 +1185,61 @@ details > :not(summary) { margin-top: 8px; }
         "name": "日内预测增量",
         "needs": [
           "N06-p3",
-          "N07-p1"
+          "N01-p2"
         ],
-        "action": "核对本批候选面板、基准输入、版本和预先确定的日内标签。固定轮次与决策时点，另列首次入选及可成交股票。按日期做折外比较，记录覆盖变化、排序相关性、头部股票未来收益和配对差值的不确定性。若一次探索多批，记录尝试范围及多重比较的影响。",
-        "delivery": "逐批交日内的基准与增强分数、同股票日和同日期差值、分期结果及可回放的机会表；负增量和覆盖缺口同样登记。"
+        "action": "核对本批候选面板、基准输入、版本和预先确定的日内标签。固定轮次与决策时点，另列首次入选及可成交股票。按日期做折外比较，记录覆盖变化、排序相关性、头部股票未来收益和配对差值的不确定性。若一次探索多批，记录尝试范围及多重比较的影响。用可交易列和相同目标重训的旧因子作基线，复用已验证 B−A。整批结论归于整批，要归因到单族时再做分组加入或移除。",
+        "delivery": "逐批交日内的基准与增强分数、同股票日和同日期差值、分期结果及可回放的机会表；负增量和覆盖缺口同样登记。",
+        "batch": true
       },
       {
         "name": "隔日预测增量",
         "needs": [
           "N06-p3",
-          "N08-p1"
+          "N01-p3"
         ],
-        "action": "核对本批候选面板、基准输入、版本和预先确定的隔日标签。分别核对全池开仓和已有仓位留仓的可得信息及退出窗。按日期做折外比较，记录覆盖变化、排序相关性、头部股票未来收益和配对差值的不确定性。若一次探索多批，记录尝试范围及多重比较的影响。",
-        "delivery": "逐批交隔日的基准与增强分数、同股票日和同日期差值、分期结果及可回放的机会表；负增量和覆盖缺口同样登记。"
+        "action": "核对本批候选面板、基准输入、版本和预先确定的隔日标签。分别核对全池开仓和已有仓位留仓的可得信息及退出窗。按日期做折外比较，记录覆盖变化、排序相关性、头部股票未来收益和配对差值的不确定性。若一次探索多批，记录尝试范围及多重比较的影响。用可交易列和相同目标重训的旧因子作基线，复用已验证 B−A。整批结论归于整批，要归因到单族时再做分组加入或移除。",
+        "delivery": "逐批交隔日的基准与增强分数、同股票日和同日期差值、分期结果及可回放的机会表；负增量和覆盖缺口同样登记。",
+        "batch": true
       },
       {
         "name": "日内账户贡献",
         "needs": [
           "N12-p1",
-          "N04-p1"
+          "N04-p2"
         ],
-        "action": "对同一批日内折外分数固定门槛、轮次、退出、股现比和成交费用，只替换有无本批因子的预测。在同一本金和逐股库存约束下回放；若候选用于过滤，固定原分数，只切换该过滤条件。",
-        "delivery": "交全账户逐日扣费差额、回撤、成交与资金占用、分期不确定性，注明保留、继续观察、淘汰或证据不足的依据。"
+        "action": "对同一批日内折外分数固定门槛、轮次、退出、股现比和成交费用，只替换有无本批因子的预测。在同一本金和逐股库存约束下回放。记录共用设置的身份；主张调参后设置的增益须引用 N09 相应版本。",
+        "delivery": "交全账户逐日扣费差额、回撤、成交与资金占用、分期不确定性，注明保留、继续观察、淘汰或证据不足的依据。",
+        "batch": true
       },
       {
         "name": "隔日账户贡献",
         "needs": [
           "N12-p2",
-          "N04-p1"
+          "N04-p3"
         ],
-        "action": "对同一批隔日折外分数固定门槛、轮次、退出、股现比和成交费用，只替换有无本批因子的预测。在同一本金和逐股库存约束下回放；若候选用于过滤，固定原分数，只切换该过滤条件。",
-        "delivery": "交全账户逐日扣费差额、回撤、成交与资金占用、分期不确定性，注明保留、继续观察、淘汰或证据不足的依据。"
+        "action": "对同一批隔日折外分数固定门槛、轮次、退出、股现比和成交费用，只替换有无本批因子的预测。在同一本金和逐股库存约束下回放。记录共用设置的身份；主张调参后设置的增益须引用 N09 相应版本。",
+        "delivery": "交全账户逐日扣费差额、回撤、成交与资金占用、分期不确定性，注明保留、继续观察、淘汰或证据不足的依据。",
+        "batch": true
+      },
+      {
+        "name": "日内纯过滤条件的账户对照",
+        "needs": [
+          "N06-p3",
+          "N04-p2"
+        ],
+        "action": "使用该窗口的冻结分数、相同机会、预算、费用和执行规则，只切换本批过滤条件。按相同可得时点记录被排除的股票、放弃的收益、减少的风险与成本，无需重新训练预测模型。",
+        "delivery": "交有无过滤的逐日扣费净值与配对差异，说明是否值得保留及适用范围。",
+        "batch": true
+      },
+      {
+        "name": "隔日纯过滤条件的账户对照",
+        "needs": [
+          "N06-p3",
+          "N04-p3"
+        ],
+        "action": "使用该窗口的冻结分数、相同机会、预算、费用和执行规则，只切换本批过滤条件。按相同可得时点记录被排除的股票、放弃的收益、减少的风险与成本，无需重新训练预测模型。",
+        "delivery": "交有无过滤的逐日扣费净值与配对差异，说明是否值得保留及适用范围。",
+        "batch": true
       }
     ],
     "need": [
@@ -1094,7 +1257,7 @@ details > :not(summary) { margin-top: 8px; }
     "level": 5,
     "track": "决策",
     "effort": "分策略归因",
-    "sequence": "两条线各自产生账户结果即可先归因，两份结论到齐再做综合比较。 评价新因子时引入 N12 对应批次及策略线的交付。",
+    "sequence": "两条线各自归因后可先交基础策略阶段结论。全路线图另交证据矩阵，即使部分专项仅能给出缺口或暂缓理由。",
     "out": "一份同口径决策表。并列净收益、同配比被动增强、同敞口表现、回撤、尾部日期、资金与库存占用，逐日配对给出不确定区间及分期表现。按预测、成交、整户三个层次指出增益在哪里出现或消失。已看历史保留其样本身份。分别给出继续、缩小范围或暂缓的依据。若两条都有增益且拟合并使用，再计算共享账簿下的互补与资金竞争。",
     "common": "每条线可以独立给出否定结论或证据缺口。综合表采用相同本金、配对交易日、同配比被动增强及风险口径；联合收益来自共享账簿回放。",
     "sources": [
@@ -1129,13 +1292,22 @@ details > :not(summary) { margin-top: 8px; }
         "delivery": "交隔日分期归因、不确定区间和尾部日期。"
       },
       {
-        "name": "共同口径下做决策",
+        "name": "两条基础策略的阶段结论",
         "needs": [
           "N10-p1",
           "N10-p2"
         ],
         "action": "按相同日历、本金及各自同配比被动账户并列两条线。保留负结果与覆盖缺口。条件不足的一线交有证据的缺口结论。若要评价联合配置，共享同一现金和库存重新回放。",
-        "delivery": "交继续、缩小或暂缓的决策表，每项标适用市场、时期、证据和后续投入。"
+        "delivery": "交两条基础策略的可比结果、缺口与阶段决策；另列专项完成情况。"
+      },
+      {
+        "name": "全路线图结论与独立复核",
+        "needs": [
+          "N10-p3"
+        ],
+        "action": "按十二个节点和各批次逐项登记实测结果、明确负结果、证据缺口或有理由暂缓。说明模型是否扩大有效股票范围、扩窗与新因子各自的贡献、设置与预测交互。冻结实际尝试的版本、主指标和入选规则。抽普通日、库存紧张日和最差日，从原始订单复算至次晨净值，对两市按金额汇总。独立新样本到齐按已冻结规则验证，缺少时注明历史复核边界。注明本次汇总的版本、日期和纳入的批次。",
+        "delivery": "交全路线图证据矩阵、批次与样本状态、复算差额、独立验证安排及下一轮取舍。专项缺口必须显式列入结论。",
+        "proof": "已提交逐项证据矩阵、配置冻结记录及抽日复算范围"
       }
     ],
     "need": [
@@ -1146,8 +1318,8 @@ details > :not(summary) { margin-top: 8px; }
     ]
   }
 ];
-  const levels = [["基础研究","评价、提速、旧因子扩窗、动态账簿、冻结模型跨池与新因子构建可并行。"],["面板生产","相应规格、达标版本与评价口径齐备后，先交可复核的首批面板。"],["策略研究","日内与隔日同等优先。方案定义、预测和账户回放按各自交付启动。"],["账户比较","分别比较交易设置与新因子增量。日内和隔日按各自的批次交付。"],["归因决策","先归因各条策略；取得两份可复核结论以后再做综合决策。"]];
-  const flowNodes = {"N01":[164,"评价口径"],"N02":[307,"C++ 提速"],"N03":[454,"旧因子扩窗"],"N11":[595,"新因子构建"],"N04":[746,"动态账簿"],"N05":[903,"冻结模型跨池"],"N06":[425,"因子面板生产"],"N07":[295,"日内多轮"],"N08":[594,"隔日开仓与留仓"],"N09":[760,"门槛与股现比"],"N12":[412,"新因子评价"],"N10":[545,"归因与决策"]};
+  const levels = [["基础研究","评价、提速、旧因子扩窗、动态账簿、冻结模型跨池与新因子构建可并行。"],["面板生产","已有面板先核验；新做深市长窗试算待提速达标。候选按批交付。"],["策略研究","日内与隔日同等优先。方案定义、预测和账户回放按各自交付启动。"],["账户比较","分别比较交易设置与新因子增量。日内和隔日按各自的批次交付。"],["归因决策","先归因各条策略；取得两份可复核结论以后再做综合决策。"]];
+  const flowNodes = {"N01":[164,"口径与标签"],"N02":[307,"C++ 提速"],"N03":[454,"旧因子扩窗"],"N11":[595,"新因子构建"],"N04":[746,"账簿与成交"],"N05":[903,"模型覆盖范围"],"N06":[425,"因子面板生产"],"N07":[295,"日内多轮"],"N08":[594,"隔日开仓与留仓"],"N09":[760,"门槛与股现比"],"N12":[412,"新因子评价"],"N10":[545,"归因与决策"]};
   const flowWidth = 970, flowHeight = 474, nodeHalfHeight = 22;
   const root = document.getElementById("intraday-roadmap");
   const ui = Object.fromEntries(Array.from(root.querySelectorAll("[data-ui]"), node => [node.dataset.ui, node]));
@@ -1158,22 +1330,37 @@ details > :not(summary) { margin-top: 8px; }
   const deliveries = Object.fromEntries(tasks.flatMap(t => t.phases.map((p,i) => [phaseId(t,i), p])));
   let records = {}, selected = "N01", level = 1, mode = "layer", tab = "work", promptScope = -1;
 
+  const firstBatch = "首批";
+  let activeBatch = firstBatch, batches = [firstBatch];
+  const validBatch = name => typeof name === "string" && /^[\p{L}\p{N}._-]{1,40}$/u.test(name);
+  function recordKey(id,batch=activeBatch) { return deliveries[id]?.batch && batch !== firstBatch ? id+"@"+batch : id; }
+  function alternatives(group) { return Array.isArray(group) ? group : [group]; }
+  function usedInputs(id,batch,choices=[]) {
+    return requirements(id).map((group,i)=>{
+      const options=alternatives(group).filter(dep=>isDone(dep,batch));
+      return options.includes(choices[i]) ? choices[i] : options[0];
+    }).filter(Boolean).map(dep=>recordKey(dep,batch));
+  }
   function phaseId(t,i) { return t.id + "-p" + (i + 1); }
   function requirements(id) {
     if (deliveries[id]) return deliveries[id].needs;
     return byId.get(id).phases.map((p,i) => phaseId(byId.get(id),i));
   }
   function deliveredName(id) { return id + " " + (deliveries[id]?.name || byId.get(id).title); }
-  function record(id) {
-    if (records[id]) return records[id];
-    if (byId.has(id) && requirements(id).every(isDone)) return {status:"done",note:"各阶段均已登记交付。"};
-    return {status:"todo",note:""};
+  function record(id,batch=activeBatch) {
+    if (byId.has(id) && isDone(id,batch)) return {status:"done",note:"各阶段均已登记交付。"};
+    return records[recordKey(id,batch)] || {status:"todo",note:""};
   }
-  function isDone(id) { return record(id).status === "done" && gatesMet(requirements(id)); }
-  function gatesMet(needs) { return needs.every(isDone); }
-  function gateNames(needs) { return needs.map(deliveredName).join("、"); }
+  function isDone(id,batch=activeBatch) {
+    if (byId.has(id)) return requirements(id).every(dep => isDone(dep,batch));
+    const phase=deliveries[id], row=records[recordKey(id,batch)];
+    return !!phase && row?.status==="done" && (!phase.proof || !!(row.verified && row.artifact)) && gatesMet(phase.needs,batch)
+      && (!row.inputs || row.inputs.every(input=>isDone(input.split("@")[0],batch)));
+  }
+  function gatesMet(needs,batch=activeBatch) { return needs.every(group=>alternatives(group).some(id=>isDone(id,batch))); }
+  function gateNames(needs) { return needs.map(group => alternatives(group).map(deliveredName).join(" 或 ")).join("；"); }
   function openScopes(t) {
-    return t.phases.flatMap((p,i) => record(phaseId(t,i)).status === "todo" && gatesMet(p.needs) ? [i] : []);
+    return t.phases.flatMap((p,i) => (record(phaseId(t,i)).status === "todo" || (record(phaseId(t,i)).status === "done" && !isDone(phaseId(t,i)))) && gatesMet(p.needs) ? [i] : []);
   }
   function startScope(t) { return openScopes(t)[0] ?? null; }
   function scopeName(t,i) { return t.phases[i]?.name || t.title; }
@@ -1183,7 +1370,24 @@ details > :not(summary) { margin-top: 8px; }
     return record(t.id).status === "todo" ? "待交接或进行中" : labels[record(t.id).status];
   }
   function ready(t) { return openScopes(t).length > 0; }
-  function reportProgress(id) { ui.status.value = record(id).status; ui.note.value = record(id).note; }
+  function reportProgress(id) {
+    ui.feedback.textContent="";
+    const row=record(id), p=deliveries[id];
+    ui.inputChoices.replaceChildren();
+    p.needs.forEach((group,i)=>{
+      if(!Array.isArray(group)) return;
+      const label=el("label","本次实际采用的上游交付　"), select=el("select"); select.dataset.input=String(i);
+      const available=group.filter(dep=>isDone(dep));
+      for(const dep of available) { const option=el("option",deliveredName(dep)); option.value=dep; select.append(option); }
+      const previous=available.find(dep=>row.inputs?.includes(recordKey(dep)));
+      if(previous) select.value=previous;
+      if(!available.length) select.append(el("option","待取得一份可用交付"));
+      select.disabled=!available.length; label.append(select); ui.inputChoices.append(label);
+    });
+    ui.status.value=row.status; ui.note.value=row.note; ui.evidenceGroup.hidden=!p.proof;
+    ui.artifact.value=row.artifact || ""; ui.verified.checked=!!row.verified; ui.proofLabel.textContent=p.proof || "";
+    if (p.proof && row.status==="done" && !isDone(id)) ui.feedback.textContent="已保留原记录。请补核实物和对应版本后签收。";
+  }
   function selectReceipt(t,i) {
     ui.receipt.replaceChildren();
     for (const [j,p] of t.phases.entries()) {
@@ -1195,9 +1399,17 @@ details > :not(summary) { margin-top: 8px; }
     if (!value || typeof value !== "object" || Array.isArray(value)) throw Error("记录结构不正确");
     const clean = {};
     for (const [id, row] of Object.entries(value)) {
-      const valid = Object.hasOwn(deliveries,id) && row && Object.hasOwn(labels,row.status) && typeof row.note === "string" && row.note.length <= 180 && (row.status !== "done" || row.note.trim());
-      if (valid) clean[id] = {status:row.status, note:row.note.trim()};
-      else if (strict) throw Error("有未知任务、无效状态或缺少交接记录");
+      const [phase,batch,...extra]=id.split("@"), p=deliveries[phase];
+      const valid = Object.hasOwn(deliveries,phase) && !extra.length && (batch===undefined || (p.batch && batch!==firstBatch && validBatch(batch)))
+        && row && Object.hasOwn(labels,row.status) && typeof row.note==="string" && row.note.length<=180 && (row.status!=="done" || row.note.trim())
+        && (row.artifact===undefined || (typeof row.artifact==="string" && row.artifact.length<=500));
+      if (valid) {
+        const entry={status:row.status,note:row.note.trim()};
+        if (row.artifact) entry.artifact=row.artifact.trim();
+        if (row.verified===true) entry.verified=true;
+        if (Array.isArray(row.inputs)) entry.inputs=row.inputs.filter(dep=>typeof dep==="string" && p.needs.some(group=>alternatives(group).some(x=>recordKey(x,batch || firstBatch)===dep)));
+        clean[id]=entry;
+      } else if (strict) throw Error("有未知任务、无效状态或缺少交接记录");
     }
     return clean;
   }
@@ -1205,6 +1417,8 @@ details > :not(summary) { margin-top: 8px; }
     if (snapshot?.version !== key) return false;
     const restored = readRecords(snapshot.records);
     records = restored;
+    batches=[...new Set([firstBatch,...(Array.isArray(snapshot.batches)?snapshot.batches:[]).filter(validBatch),...Object.keys(restored).flatMap(k=>k.split("@").slice(1))])];
+    activeBatch=batches.includes(snapshot.activeBatch)?snapshot.activeBatch:firstBatch;
     if (byId.has(snapshot.selected)) selected = snapshot.selected;
     level = byId.get(selected).level;
     mode = snapshot.mode === "ready" ? "ready" : "layer";
@@ -1219,7 +1433,7 @@ details > :not(summary) { margin-top: 8px; }
       const suffix=tab!=="prompt" ? "" : promptScope>=0 ? "-p"+(promptScope+1) : "-start";
       try { history.replaceState(null,"","#"+selected+suffix); } catch {}
     }
-    const snapshot = {version:key, records, selected, mode, tab, promptScope};
+    const snapshot = {version:key, records, batches, activeBatch, selected, mode, tab, promptScope};
     let local = false;
     try { localStorage.setItem(key,JSON.stringify(snapshot)); local = true; } catch {}
     if (window.openai?.setWidgetState) {
@@ -1254,20 +1468,33 @@ details > :not(summary) { margin-top: 8px; }
       "研究问题\n"+t.why, "比较口径\n"+t.common, "启动与并行\n"+t.sequence,
       "原始材料（仓库相对路径）\n"+t.sources.map(([name,path])=>"- "+name+"　"+path).join("\n")];
     for (const p of stages) {
-      const delivered=p.needs.filter(isDone);
-      const pending=p.needs.filter(id=>!isDone(id));
-      const parts=[p.name];
-      if(delivered.length) parts.push("已登记的交付，读取并核对实际内容\n"+delivered.map(id=>"- "+deliveredName(id)+"　"+record(id).note).join("\n"));
-      if(pending.length) parts.push("启动条件，先核对相应产物及覆盖；当前页面尚无有效交接记录："+gateNames(pending)+"。");
-      if(t.id==="N09" && t.side.length && isDone("N05-p1")) parts.push("跨池比较可读 N05 的已交付材料："+record("N05-p1").note);
-      if (t.id === "N10") {
-        const index = t.phases.indexOf(p);
-        const receipts = index === 0 ? ["N12-p1","N12-p3"] : index === 1 ? ["N12-p2","N12-p4"] : requirements("N12");
-        const available = receipts.filter(isDone);
-        if (available.length) parts.push("新因子评价已交付材料\n"+available.map(id=>deliveredName(id)+"　"+record(id).note).join("\n"));
+      const delivered=p.needs.flatMap(group=>alternatives(group).filter(id=>isDone(id)));
+      const pending=p.needs.filter(group=>!gatesMet([group]));
+      const parts=[p.name+(p.batch?" · 候选批次 "+activeBatch:"")];
+      const describe=(id,batch=activeBatch)=>{const r=record(id,batch);return deliveredName(id)+"　"+r.note+(r.artifact?"　"+r.artifact:"");};
+      if(delivered.length) parts.push("已登记交付，请核对路径、窗口与版本\n"+delivered.map(id=>"- "+describe(id)).join("\n"));
+      if(pending.length) parts.push("启动前仍须取得并核对以下材料："+gateNames(pending)+"。");
+      if(t.id==="N09" && t.side.length && isDone("N05-p1")) parts.push("跨池比较可读 "+describe("N05-p1"));
+      if (t.id==="N10") {
+        const index=t.phases.indexOf(p);
+        const ids=index===0?["N12-p1","N12-p3","N12-p5"]:index===1?["N12-p2","N12-p4","N12-p6"]:requirements("N12");
+        const results=batches.flatMap(batch=>ids.filter(id=>isDone(id,batch)).map(id=>"["+batch+"] "+describe(id,batch)));
+        if(results.length) parts.push("已登记的新因子及过滤条件结论\n"+results.join("\n"));
+        if(index===3) {
+          const evidence=[];
+          for (const task of tasks) for (const [j,stage] of task.phases.entries()) {
+            const id=phaseId(task,j); if(id==="N10-p4") continue;
+            for(const batch of stage.batch?batches:[firstBatch]) {
+              const r=record(id,batch);
+              evidence.push((stage.batch?"["+batch+"] ":"")+id+" "+stage.name+" · "+(isDone(id,batch)?"已交接":r.status==="done"?"待复核":labels[r.status])+(r.note?"　"+r.note:"")+(r.artifact?"　"+r.artifact:""));
+            }
+          }
+          parts.push("本次汇总时的阶段与批次清单\n"+evidence.join("\n"));
+        }
       }
-      const own=phaseId(t,t.phases.indexOf(p));
-      if(records[own]?.note) parts.push("本阶段记录（"+labels[record(own).status]+"）　"+record(own).note);
+      const own=phaseId(t,t.phases.indexOf(p)), current=record(own);
+      if(current.note) parts.push("本阶段记录（"+labels[current.status]+"）　"+current.note+(current.artifact?"　"+current.artifact:""));
+      if(p.proof) parts.push("签收前核对　"+p.proof+"。登记可读路径和版本。");
       parts.push(p.action,"交付与验收　"+p.delivery); text.push(parts.join("\n\n"));
     }
     if(!phase) text.push("整项交付\n"+t.out);
@@ -1314,10 +1541,10 @@ details > :not(summary) { margin-top: 8px; }
   function renderDetails(t) {
     const panel = ui.body; panel.replaceChildren();
     if (tab === "graph") {
-      groupLinks(panel,"上游节点",t.need,"使用已归档材料，可独立启动。");
+      panel.append(el("h3","各阶段的启动条件"));
       for(const p of t.phases) panel.append(el("p",p.name+" · "+(p.needs.length ? gateNames(p.needs) : "使用已有资料，可直接开始。")));
       if (t.side.length) groupLinks(panel,"专项比较的交付",t.side,"");
-      groupLinks(panel,"直接下游",tasks.filter(x=>x.need.includes(t.id)||x.side.includes(t.id)).map(x=>x.id),"本项完成综合决策。");
+      groupLinks(panel,"使用本项交付的节点",tasks.filter(x=>x.id!==t.id && (x.side.includes(t.id)||x.phases.some(p=>p.needs.flat().some(id=>id.startsWith(t.id+"-"))))).map(x=>x.id),"本项完成综合决策。");
     } else if(tab === "prompt") {
       panel.append(el("p","选择整项或单个阶段。已登记的上游结果会随 Prompt 一起复制。","hint"));
       const box=el("textarea"); box.readOnly=true;box.setAttribute("aria-label","完整开场 Prompt");
@@ -1451,6 +1678,7 @@ details > :not(summary) { margin-top: 8px; }
   }
   function render() {
     const t=byId.get(selected);
+    ui.batchSelect.replaceChildren(...batches.map(batch=>el("option",batch))); ui.batchSelect.value=activeBatch;
     renderFlowchart();
 
     ui.rail.replaceChildren();
@@ -1485,8 +1713,18 @@ details > :not(summary) { margin-top: 8px; }
       const b=button(v,()=>{tab=k;render();persist();},"");b.setAttribute("aria-pressed",String(tab===k));ui.tabs.append(b);
     }
     renderDetails(t);
-    selectReceipt(t,promptScope);ui.feedback.textContent="";
+    ui.feedback.textContent="";selectReceipt(t,promptScope);
   }
+  function selectBatch(batch) {
+    activeBatch=batch; ui.record.open=false; ui.batchName.value=""; render(); persist();
+  }
+  ui.batchSelect.addEventListener("change",()=>{selectBatch(ui.batchSelect.value);ui.batchInfo.textContent="";});
+  ui.addBatch.addEventListener("click",()=>{
+    const batch=ui.batchName.value.trim();
+    if(!validBatch(batch)){ui.batchInfo.textContent="批次名用 1–40 个中英文字、数字、点、短横线或下划线。";return;}
+    if(!batches.includes(batch)) batches.push(batch);
+    selectBatch(batch);ui.batchInfo.textContent="当前批次："+batch;
+  });
   ui.layerMode.addEventListener("click",()=>{mode="layer";render();persist();});
   ui.readyMode.addEventListener("click",()=>{
     mode="ready";const items=workList();
@@ -1500,26 +1738,36 @@ details > :not(summary) { margin-top: 8px; }
     if(state==="done" && (!note || !gatesMet(requirements(id)))) {
       ui.feedback.textContent=!note ? "请填写可核对的交接结果。" : "签收这项交付还需："+gateNames(requirements(id));return;
     }
-    updateRecords({[id]:{status:state,note}});
+    const row={status:state,note};
+    if(deliveries[id].proof) {
+      row.artifact=ui.artifact.value.trim(); row.verified=ui.verified.checked;
+      if(state==="done" && (!row.artifact || !row.verified)){ui.feedback.textContent="请填写可读产物与版本，并确认已核对本阶段所需材料。";return;}
+    }
+    if(state==="done") {
+      const choices=[];
+      for(const select of ui.inputChoices.querySelectorAll("select")) choices[Number(select.dataset.input)]=select.value;
+      row.inputs=usedInputs(id,activeBatch,choices);
+    }
+    updateRecords({[recordKey(id)]:row});
     mode="layer";render();ui.receipt.value=id;reportProgress(id);ui.feedback.textContent=deliveredName(id)+"的进度已保存。";persist();
   });
   function updateRecords(changes) {
-    const affected=new Set(Object.keys(changes).filter(id=>isDone(id) && (changes[id].status!=="done" || changes[id].note!==record(id).note)));
+    const affected=new Set(Object.keys(changes).filter(k=>{
+      const old=records[k], next=changes[k];
+      return old?.status==="done" && (next.status!==old.status || next.note!==old.note || next.artifact!==old.artifact || !!next.verified!==!!old.verified || (next.inputs && old.inputs && JSON.stringify(next.inputs)!==JSON.stringify(old.inputs)));
+    }));
     records={...records,...changes};
-    let size;
-    do {
-      size=affected.size;
-      for(const id of Object.keys(deliveries)) {
-        if(affected.has(id) || Object.hasOwn(changes,id)) continue;
-        if(requirements(id).some(x=>affected.has(x))) {
-          affected.add(id);
-          if(record(id).status==="done") records[id]={status:"blocked",note:record(id).note};
-        }
+    for(const changed of affected) {
+      for(const [k,row] of Object.entries(records)) {
+        if(affected.has(k) || Object.hasOwn(changes,k) || row.status!=="done") continue;
+        const [id,batch=firstBatch]=k.split("@");
+        const inputs=row.inputs?.length?row.inputs:requirements(id).flat().map(dep=>recordKey(dep,batch));
+        if(inputs.includes(changed)) { affected.add(k); records[k]={...row,status:"blocked"}; }
       }
-    } while(size!==affected.size);
+    }
   }
   ui.exportState.addEventListener("click",()=>{
-    ui.transferText.value=JSON.stringify({version:key,records},null,2);ui.transferText.focus();ui.transferText.select();
+    ui.transferText.value=JSON.stringify({version:key,records,batches,activeBatch},null,2);ui.transferText.focus();ui.transferText.select();
     ui.transferInfo.textContent="已生成并选中当前交接记录，可复制保存。";
   });
   ui.importState.addEventListener("click",()=>{
@@ -1527,6 +1775,8 @@ details > :not(summary) { margin-top: 8px; }
       const input=JSON.parse(ui.transferText.value);
       if(input.version!==key)throw Error("路线图版本不匹配");
       const clean=readRecords(input.records,true);
+      batches=[...new Set([...batches,...(Array.isArray(input.batches)?input.batches:[]).filter(validBatch),...Object.keys(clean).flatMap(k=>k.split("@").slice(1))])];
+      if(batches.includes(input.activeBatch)) activeBatch=input.activeBatch;
       updateRecords(clean);render();persist();ui.transferInfo.textContent="已合并 "+Object.keys(clean).length+" 项。";
     } catch(err) {ui.transferInfo.textContent="未合并。"+err.message;}
   });
@@ -1545,12 +1795,13 @@ details > :not(summary) { margin-top: 8px; }
     selected=task.id;level=task.level;mode="layer";tab=match[2]?"prompt":"work";promptScope=i;
     return true;
   }
-  applyTaskLink();
+  const linked=applyTaskLink();
   window.addEventListener("hashchange",()=>{ if (applyTaskLink()) { render();ui.panel?.scrollIntoView({block:"start"}); } });
   window.addEventListener("openai:set_globals",event=>{
     try { if(stateFrom(event.detail?.globals?.widgetState?.privateContent)) render(); } catch {}
   });
   render();
+  if(linked) requestAnimationFrame(()=>ui.panel.scrollIntoView({block:"start"}));
 })();
 </script>
 </body>
