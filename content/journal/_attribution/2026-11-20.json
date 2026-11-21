@@ -1,0 +1,2512 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-20",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "4d4115e4c643d8589a987c4eb047cea5892dca1ccfd4da5d58067a9545afcba9",
+  "rules_sha256": "bed28f8dfe97ec933cfaf6084e8f4d97455b7fc8db4a1b8752a4df317ffb9735",
+  "revisions": {
+    "sirui-quant-research": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+    "Quant_Research-Trading": "616e99e13e03beef243eace4c72f8be4a67941f1",
+    "internship-dashboard": "4b23b44ddedd8d7632d7e5404fff69eb0ac41d52"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "c23e8347920336a681f0b636edf0dae0bd306a1a",
+      "date": "2026-11-20",
+      "subject": "补记11月19日多空收益归因与滚动因子预检",
+      "status": "excluded",
+      "chains": [],
+      "reason": "前一日的日卡和核对收据，归日志维护。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-11-19.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "4b23b44ddedd8d7632d7e5404fff69eb0ac41d52",
+      "date": "2026-11-20",
+      "subject": "记录11月20日研究日志核对与发布收据",
+      "status": "excluded",
+      "chains": [],
+      "reason": "前一日的日卡和核对收据，归日志维护。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-11-20.md",
+        "docs/journal-review/daily-updates/2026-11-20/delivery-receipt.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "50038d06b67ea54a4511cb70b6264b06572f22fb",
+      "date": "2026-11-20",
+      "subject": "核算开盘因子批处理耗时与 C++ 迁移收益",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "复核既有批处理耗时和局部原生替换实测，形成全链试验的依据。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-factor-computation-cpp-assessment.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1cca1e3f0071bb7e2540861e17b0866ab9b1a91a",
+      "date": "2026-11-20",
+      "subject": "登记深市 344 列 C++ 对照基线与样本",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "PLAN/2026-11-20-szse344-cpp-rewrite-experiment.md",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/baseline.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/protocol.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cf981f7273d9b5b2bfb4972571371b71572f8d5e",
+      "date": "2026-11-20",
+      "subject": "增加独立进程配对评分逐位对照",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_score.py",
+        "因子/algobench/experiments/szse344_cpp/score_cli.cpp",
+        "因子/algobench/experiments/szse344_cpp/score_probe.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ed496a84b2081f98ee3605ed33c0b49c48f7dd47",
+      "date": "2026-11-20",
+      "subject": "限定评分探针对共享内核的编译诊断",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/score_probe.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b595ddd33851ffa6462f1154a04620256271aae9",
+      "date": "2026-11-20",
+      "subject": "保留真实批次探针的原评分引用",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_score.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7e6cfdc68ee172cac0d5d8e1886e919d60184052",
+      "date": "2026-11-20",
+      "subject": "对照独立 SVML 向量评分与冻结 NumPy",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_score.py",
+        "因子/algobench/experiments/szse344_cpp/score_cli.cpp",
+        "因子/algobench/experiments/szse344_cpp/score_probe.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3d6c1582055f69967d2eb06766d9bc670eb25c77",
+      "date": "2026-11-20",
+      "subject": "验证深市原始页和原生事件规范化",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "afaed9e8e882432968a70a44dcdf2400742df755",
+      "date": "2026-11-20",
+      "subject": "记录深市原生分页和评分逐位对照结果",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/native-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0c7563bbda294cd95672944e553102e5bdc3403e",
+      "date": "2026-11-20",
+      "subject": "从深市原始页重建开盘盘口与可见订单",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md",
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_replay.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7f8879f54c8f6f7d4752592f7b0e77b711cae6e9",
+      "date": "2026-11-20",
+      "subject": "把深市原生盘口接入配对候选游标",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md",
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "827378e9e3d13f156b23a2f350d101552ab3561c",
+      "date": "2026-11-20",
+      "subject": "从原生开盘盘口计算深度匹配24列",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md",
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_depth.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a39e57dda5b492dc5caec42e39a7ac3db5ccdffb",
+      "date": "2026-11-20",
+      "subject": "用原生FFT生成深市买卖撤单相位列",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md",
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_cancel_phase.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_depth.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "53d7e2c0eb48a91c74013acb1c4d8e75eef901fa",
+      "date": "2026-11-20",
+      "subject": "限定PocketFFT模板展开的GCC诊断范围",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_cancel_phase.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "907f74da5222ca45af573a09152901b6ae93a333",
+      "date": "2026-11-20",
+      "subject": "记录盘口候选与三来源72列的真实样本核对",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6d19390b815a0ae46b7359e8b8cd7055396faa4b",
+      "date": "2026-11-20",
+      "subject": "在原生候选流内核对评分与逐单选优",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a36fee354a0830c6de5919faaf468cebbcac013e",
+      "date": "2026-11-20",
+      "subject": "登记从原始页到原生评分的逐位验收",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "946bd50bee1170795cbb70c1f750fcfdc57de23c",
+      "date": "2026-11-20",
+      "subject": "计算原行为撤单生命周期的14个方向列",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md",
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_cancel_lifecycle.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "608dd5b04cbb7b120551eca3ef8511a691dddd10",
+      "date": "2026-11-20",
+      "subject": "对整只股票的候选流分批评分和合并胜者",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "61294231b72519bb8997f8c62bc817e1fed78749",
+      "date": "2026-11-20",
+      "subject": "登记原行为撤单生命周期14列核对结果",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1a047e4a7fa061b87e06883c2992ea8af396eea8",
+      "date": "2026-11-20",
+      "subject": "原生归约撤单重报与改价的16个方向列",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a18fb4ff1516b94652c0354c542f8205697f8048",
+      "date": "2026-11-20",
+      "subject": "用原生FIFO状态计算委托撤单与成交前排队量",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_replay.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "09da987340bbecd6d361762c09ea7dfdcfc25d83",
+      "date": "2026-11-20",
+      "subject": "在原生重报胜者上计算F16排队优先级",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f6141baf82dcc1948e7d3b49ea000f830e415fdd",
+      "date": "2026-11-20",
+      "subject": "登记全窗口候选、FIFO及24列重报逐位对账",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ab2b61518db3daaab0b90881eb1ec0371ebeabde",
+      "date": "2026-11-20",
+      "subject": "让Python薄绑定和独立程序共用Arrow页计算库",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/_szse344_cpp_page_core.py",
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7cbf35c456150f41241db9ff29480dece62602ed",
+      "date": "2026-11-20",
+      "subject": "登记共享开盘库的双入口逐字节验收",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3e4b96d2fad6a97477ed91e9934d1c057b651701",
+      "date": "2026-11-20",
+      "subject": "原生归约撤单后转可成交与执行速度两列",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c7b33eb561615886e4e2555a1ff1618491e36b98",
+      "date": "2026-11-20",
+      "subject": "登记F19真实股整窗归约逐位验收",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9257d148a30dbe36992a1e87731bfdba26dc2bbb",
+      "date": "2026-11-20",
+      "subject": "用共同原生入口生成并对账三组辅助因子日面板",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "scripts/run_szse344_cpp_aux_day.py",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "dee7e43ecbbf67bbe42a48dac4a9e9dcc148c29a",
+      "date": "2026-11-20",
+      "subject": "登记2884股三组辅助因子全池逐位验收",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/auxiliary-day.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "396a2dcbed66591f4e75f68540dc6db4766fff0a",
+      "date": "2026-11-20",
+      "subject": "按原生局部胜者构建订单链并计算F29至F31",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_depth.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "24f8c7c1377d718fc10af6f0d3388fc1a3f652ce",
+      "date": "2026-11-20",
+      "subject": "固定链终点的有符号64位时间类型",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0b06f270a357f64353dc664cfc5ad3617dbfe6d2",
+      "date": "2026-11-20",
+      "subject": "登记正式订单链F29至F31的样本对账",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a9eeb504ebe82a7baae78e43b10d66bc207ef41e",
+      "date": "2026-11-20",
+      "subject": "由原生盘口和成交腿构建F40被动成交段",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_f40.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82eb98db4eb506c9cc3c9783a8eab04b06ad6019",
+      "date": "2026-11-20",
+      "subject": "登记F40被动成交段三股对账",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1c1586793f0435b05a55b09f84fbc427b038c166",
+      "date": "2026-11-20",
+      "subject": "分批枚举F40全窗候选并以原生数学计算权重",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_f40.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cb7746894ad857975483694313ef1cca9f3d7c20",
+      "date": "2026-11-20",
+      "subject": "登记F40整窗候选计数及权重对账",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d92bac5bc55ad297e3d27d63dace808c40cd2fdc",
+      "date": "2026-11-20",
+      "subject": "按F40正式稠密和稀疏规则求解原生指派图",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82d4f2e94eafb98d2fe83e6456e73bb09d6f9b53",
+      "date": "2026-11-20",
+      "subject": "从F40全局指派归约两列冰山补量因子",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "aa3d87db6afbd1a1689e3dc264d7e83cd30b7a9f",
+      "date": "2026-11-20",
+      "subject": "登记F40普通股完整指派和两列逐位验收",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f3fbfff84ddcc9e9d3b38e589d74659892fcd8b0",
+      "date": "2026-11-20",
+      "subject": "复用订单链计算改价、排队、成本及完成八列",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a72ee9cdcebafd79c4c7ad1ca4d062849c1e1e5e",
+      "date": "2026-11-20",
+      "subject": "登记八列共享链扩展的真实样本对账",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cd771d1a2e560384e89706637b7311636de83e54",
+      "date": "2026-11-20",
+      "subject": "从原生主动成交簇归约F26和F27",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_aggressive.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "413d5b5ea0b75f229a95a6142644fae616460dd8",
+      "date": "2026-11-20",
+      "subject": "登记三股原生主动成交簇四列逐位验收",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/opening-source-probes.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d249649215f3e050d1ec4475ec9c8532e445689d",
+      "date": "2026-11-20",
+      "subject": "从开盘前态生成响应因子共用的盘口冲击",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_aggressive.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "65a263f74e6949a24b03d71722dbe51290b474f1",
+      "date": "2026-11-20",
+      "subject": "Align opening impact rows with the observable event view",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3861ceac02684da4d68b2493b2eb75ebbda884f3",
+      "date": "2026-11-20",
+      "subject": "Record exact opening impact and cluster replay across three load levels",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/market-impacts.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6ff53a05aee4f7749eee06a2d827287219410b40",
+      "date": "2026-11-20",
+      "subject": "Drive opening impact response factors from native raw pages",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3c77f0e209029529d6af393432c49ea0d59ae09e",
+      "date": "2026-11-20",
+      "subject": "Expose the common Arrow row encoder to response builds",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2e7c89e66f111d3a86c90cfc2bf06aab4a27420c",
+      "date": "2026-11-20",
+      "subject": "Order impact response receipts by the native cancellation sequence",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a302f2afdc3d9a6080402e02fde617f07cd70ecb",
+      "date": "2026-11-20",
+      "subject": "Record exact base impact response winners and 12 factor columns",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/impact-responses.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "da119ff8a4438225695400aaf938586a0da016a8",
+      "date": "2026-11-20",
+      "subject": "Score liquidity switching, quote following and escalation on native chains",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_aggressive.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6db061e4c2d653cdf53f4255524a95328dd6119a",
+      "date": "2026-11-20",
+      "subject": "Record exact switching, quote following and escalation results",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/chains.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5a27c402186c13569c05d72e7b943c71f316facd",
+      "date": "2026-11-20",
+      "subject": "Derive the scope v3 window states from native opening replay",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_cancel_phase.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_window_states.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "9a682a2b428c31cac55cbfa2f0de1be62f937eee",
+      "date": "2026-11-20",
+      "subject": "Record bitwise evidence for all retained opening window states",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/window-states.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37529cfb2114fdc1c1d06a6d444d62c9c127d747",
+      "date": "2026-11-20",
+      "subject": "Share unified market impact queries with adaptive and reactive chains",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e0728b2b8a078023033e6633e49290c5fa4b1aab",
+      "date": "2026-11-20",
+      "subject": "Record bitwise adaptive and reactive chain validation",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/chains.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2220eaac86f411f48d63e94ac54bc51887298990",
+      "date": "2026-11-20",
+      "subject": "Build scope v3 order contexts on the observable opening tape",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c827a737737aacf99c4cd261e48af55cc42a357d",
+      "date": "2026-11-20",
+      "subject": "Reproduce NumPy float64 tanh for native trend contexts",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "396e65f4ee317e069279f9f1fa7a4e1c053351fc",
+      "date": "2026-11-20",
+      "subject": "Record exact per-order context values and masks",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/order-contexts.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0b66f52eacafc85cdd814b500b9965885c199721",
+      "date": "2026-11-20",
+      "subject": "Evaluate active revision cycles on native pair winners",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8239de1b37b90d219d644cf08fc0a0b7dea5ff34",
+      "date": "2026-11-20",
+      "subject": "Record exact active revision cycle results",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/chains.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6c9001db1ebaf4379ea37d974f395a09247301a1",
+      "date": "2026-11-20",
+      "subject": "Record heavy-stock and extreme-stock context parity",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/order-contexts.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2712009c4b57d66e612275c5f481e8b878ad5989",
+      "date": "2026-11-20",
+      "subject": "Unify scored-order evidence and native base projections",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_aggressive.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_cancel_lifecycle.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0a61bbfbe6cc50d532a43c963d3fb9e971bf7919",
+      "date": "2026-11-20",
+      "subject": "Compute opening best-quote response assignments in C++",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b501ff672602ff3cdff4e3cb67ab2c467d0ee8f4",
+      "date": "2026-11-20",
+      "subject": "Bind the residual quantity channel for F42",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1e545d0d1ebda47f72fc60f5061a3f55f8150bd4",
+      "date": "2026-11-20",
+      "subject": "Compute the 21 causal opening response templates in C++",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_response_templates.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8c663344eb22881b053a64e39b61b732ac1e099f",
+      "date": "2026-11-20",
+      "subject": "Record bitwise opening BBO and causal response checks",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/causal-responses.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2b24bd2805750838048a83e41f41dc16d4af070e",
+      "date": "2026-11-20",
+      "subject": "Combine native opening scores, contexts and window states",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c367c4ce81bf123faa2a44e1c60ed5bd115089af",
+      "date": "2026-11-20",
+      "subject": "Compute opening purpose and recovery factors in C++",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a99e1ad855f48c585ff76ee0f2c5a50329337d18",
+      "date": "2026-11-20",
+      "subject": "Keep opening purpose direction index unsigned",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e0719f6ccfff4025ba6a5514e876600a9ef7189b",
+      "date": "2026-11-20",
+      "subject": "Compare native order contributions with the formal stock consumer",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1c5eb26ce21a0adc5bd2ee41863c887a523c50bd",
+      "date": "2026-11-20",
+      "subject": "Materialize the four native sources and 344-column comparison panel",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "scripts/run_szse344_cpp_aux_day.py",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "89cc3ec8cb5b5541dbd414673fc9aa3cabeb93da",
+      "date": "2026-11-20",
+      "subject": "Reproduce the formal vector rounding for opening responses",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6645f33e277f63e6ebbe5e5c6d49f6220642b03e",
+      "date": "2026-11-20",
+      "subject": "Preserve whole-second rounding in chain periodicity",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_chains.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ddb062132e97063a536c19d8b25964dbecccdba7",
+      "date": "2026-11-20",
+      "subject": "Schedule streamed stock pages inside the standalone C++ program",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "scripts/run_szse344_cpp_aux_day.py",
+        "因子/algobench/experiments/szse344_cpp/page_cli.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_stock_stream.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8989a879e510a5edc6c9e72be4224017ae7d2743",
+      "date": "2026-11-20",
+      "subject": "Validate quote ticks at the formal candidate consumption boundary",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6b28886d910dd01f0d8c834767a5883dbaabba92",
+      "date": "2026-11-20",
+      "subject": "Recover native four-source work from verified stock checkpoints",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/_szse344_cpp_checkpoints.py",
+        "scripts/run_szse344_cpp_aux_day.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e8709f7d359e30a0a060d4e2750f7a6e21df22c7",
+      "date": "2026-11-20",
+      "subject": "Return the formal positive zero for empty signed purpose sums",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6939dd50f94015a3f5ebc23e9c1d352c856f8573",
+      "date": "2026-11-20",
+      "subject": "Record exact four-source samples and native recovery evidence",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/four-source-samples.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/native-recovery.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f6bb7c378bf4dda875db45c2004c496dcf71cc5a",
+      "date": "2026-11-20",
+      "subject": "Verify native day panels against signed historical inputs",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_cpp_aux_day.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b4ac9e2fc133a49da9a5b139c8604d4edd6aacef",
+      "date": "2026-11-20",
+      "subject": "Read signed input identities in both acceptance formats",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/compare_formal_window_outputs.py",
+        "scripts/run_szse344_cpp_aux_day.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "760b6c3e6c88536d06eaac831e6cecabdfbe54de",
+      "date": "2026-11-20",
+      "subject": "Record the full-pool native 344-column reconciliation",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/four-source-day.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d6290e4bbafe1ad0001b2e23622cf9c029cc27b4",
+      "date": "2026-11-20",
+      "subject": "Read collection acceptance through the registered native object transport",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/compare_factor_bank_days.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "35d2a68d516f131e15e8692f189c93a468dc9fef",
+      "date": "2026-11-20",
+      "subject": "Reuse the collection contract to verify historical signed days",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/compare_factor_bank_days.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "287660bbd0a8dd1593d6b2933e983b2a302c1b2d",
+      "date": "2026-11-20",
+      "subject": "Emit and compare native directional order attribution digests",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/build_szse_model328_performance_gate.py",
+        "scripts/probe_szse344_cpp_pages.py",
+        "scripts/run_szse344_cpp_aux_day.py",
+        "scripts/tests/test_szse344_cpp_comparison.py",
+        "因子/algobench/experiments/szse344_cpp/opening_attribution.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "77b94c59766161c0368a7490340b952d9194ed5f",
+      "date": "2026-11-20",
+      "subject": "Compare signed cancellation and depth audit fields",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_cpp_aux_day.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ce685625c4519f83fd151dd9cb05d6fefd042e35",
+      "date": "2026-11-20",
+      "subject": "Bound heavy BBO matching by independent factor and side graphs",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_cpp_aux_day.py",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4b0a432b256d839499855d78d6111706bf10d34c",
+      "date": "2026-11-20",
+      "subject": "Record signed input checks and the heavy BBO budget findings",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-days.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "95047e40f3a85ed702363a5edf69fdbbb9b8c077",
+      "date": "2026-11-20",
+      "subject": "Prepare frozen Python benchmark inputs for registered experiment dates",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/prepare_szse344_cpp_benchmark.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3b83ff40c2cceea88c561c3e13c81e7cdb67f2af",
+      "date": "2026-11-20",
+      "subject": "Audit native daily censoring and publish verified experiment panels",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/_szse344_cpp_publication.py",
+        "scripts/run_szse344_cpp_aux_day.py",
+        "因子/algobench/experiments/szse344_cpp/opening_aggressive.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "3d59a5d6198ed40cd6e42f1cb7fb0d4116ad39fd",
+      "date": "2026-11-20",
+      "subject": "Check signed F40 and BBO matching counts for each stock",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_cpp_aux_day.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d87254c5fb2f5c03631bcd9121d285c372c94b53",
+      "date": "2026-11-20",
+      "subject": "Record partitioned BBO acceptance and full-pool winner attribution",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/partition-validation.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "996437cf3efb68d4ac5fb03bd71c74bc2e08cbde",
+      "date": "2026-11-20",
+      "subject": "Tie each proxy column to its native and formal evidence",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/coverage.tsv"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ef24ab1ba3a3ad723bbb31e5b047c794dc237cb1",
+      "date": "2026-11-20",
+      "subject": "Bind native method verification to the signed audit receipt",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/_szse344_cpp_publication.py",
+        "scripts/run_szse344_cpp_aux_day.py",
+        "scripts/tests/test_szse344_cpp_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4d18fa4b7ddd96f9555a2bb451eebaa74d625234",
+      "date": "2026-11-20",
+      "subject": "Admit heavy stock workspaces in both native day schedulers",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_cpp_aux_day.py",
+        "scripts/tests/test_szse344_cpp_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "188035facc7d03c603f6abac65ee3361354bb38a",
+      "date": "2026-11-20",
+      "subject": "Verify real replay invariance to page boundaries and cutoff rows",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4d6920188a175aed34e0e4d35af7b03f95dbee8e",
+      "date": "2026-11-20",
+      "subject": "Record complete heavy stock and representative pool reconciliations",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-pool-and-heavy.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bf113202581e744dd405423dee491309f2837bad",
+      "date": "2026-11-20",
+      "subject": "Record signed P75 native panels and cutoff validation",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/p75-signed-publication.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f58f06a49268fbbeea4088dde4c110769135aeb4",
+      "date": "2026-11-20",
+      "subject": "Compare exact native F40 selected edge identities",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/_szse344_cpp_publication.py",
+        "scripts/run_szse344_cpp_aux_day.py",
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/szse344_cpp/page_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ff1edd5ba9e74a387d885f17c9c372ea2698d70d",
+      "date": "2026-11-20",
+      "subject": "Compare Parquet validity before native panel bit checks",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_cpp_aux_day.py",
+        "scripts/tests/test_szse344_cpp_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "72f9d878fc10c964c96a5850c75271a5db217a9d",
+      "date": "2026-11-20",
+      "subject": "Restrict heavy native BBO scans to the matching side",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cae4d668b89a47fd62ef104f9bb36ebbfdfab171",
+      "date": "2026-11-20",
+      "subject": "Verify both F63 marketability scales on raw-page replay",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "82fca5d76e22d59ed3af1c4a6c38cd23369797a5",
+      "date": "2026-11-20",
+      "subject": "Record exact full-pool reconciliation of the development heavy day",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-pool-and-heavy.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "07ea530650f53c97f2d74bc54519ce81bd236d06",
+      "date": "2026-11-20",
+      "subject": "Measure native gateway arrival and final stock packet latency",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/run_szse344_cpp_aux_day.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "96c5e24435848d18a19c7adbfab232824b0164b4",
+      "date": "2026-11-20",
+      "subject": "Test raw-row order effects in guarded stock-level native comparisons",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "scripts/tests/test_szse344_cpp_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b4ff7d8a59e8cf3cbf930831a021de9d696197e9",
+      "date": "2026-11-20",
+      "subject": "Record final-scope P75 measurements and heavy-day panel identity",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-pool-and-heavy.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/p75-signed-publication.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b19cf2ceb6fdfd69e5317d04c4318ee8be0a7aff",
+      "date": "2026-11-20",
+      "subject": "Record extreme-day exact panels and measured single-stock tail",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-pool-and-heavy.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8dec5f710f89c36fccf271574424427e13a889e5",
+      "date": "2026-11-20",
+      "subject": "Reconcile signed input fingerprints across tied raw rows",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市开盘链的独立 C++ 实现、组件对照、面板核验或故障恢复。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/probe_szse344_cpp_pages.py",
+        "scripts/tests/test_szse344_cpp_comparison.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+      "date": "2026-11-20",
+      "subject": "Close SZSE344 comparison with stock-level audits and measured C results",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "同一深市 344 列 C++ 对照的方案或固定实测材料。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-pool-and-heavy.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/native-recovery.json",
+        "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md"
+      ]
+    }
+  ]
+}

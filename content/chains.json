@@ -2685,20 +2685,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 10,
+        "days": 11,
         "span": [
           "2026-09-17",
-          "2026-11-19"
+          "2026-11-20"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-20",
-          "scope": "核对11月19日固定材料、会话要求和工具回执。"
+          "on": "2026-11-21",
+          "scope": "核对当日对等研究、扩窗、多轮选股和动态账簿的原始决定。"
         }
       },
       "fate": "landed",
-      "fate_note": "已建立股票池、风险、容量和交易设置的比较。冻结两市模型与两亿元账户，用三日样本测成交，用566日底仓测同股可卖上限。多档和时长得到容量样本，最优股现比与滚动净收益待连续账户检验。 新方案拟用一亿元连续账户区分换分数与换设置的收益，并独立比较冻结模型在各股票池的表现。",
+      "fate_note": "已建立股票池、风险、容量和交易设置的比较。冻结两市模型与两亿元账户，用三日样本测成交，用566日底仓测同股可卖上限。多档和时长得到容量样本，最优股现比与滚动净收益待连续账户检验。 新方案拟用一亿元连续账户区分换分数与换设置的收益，并独立比较冻结模型在各股票池的表现。 日内和隔日并列推进，共用旧因子扩窗对照。日内多轮检验能否扩大可选股票范围，连续账簿负责核对现金和可卖库存。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -4932,6 +4932,93 @@
           ],
           "title": "两市严格尾盘VWAP及排序相关",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/0c6915144d0e85c532d9d5411cd6e13a6349459d/reports/2026-11/2026-11-19-intraday-r05-attribution-followup.md#L95-L134"
+        }
+      ]
+    },
+    {
+      "id": "szse344-cpp-rewrite",
+      "track": "infra",
+      "label": "深市344列因子C++全链对照",
+      "short": "深市C++全链",
+      "purpose": "从逐笔行情到深市344列面板复用原公式，比较冻结Python、Python调C++和独立C++的正确性与完整耗时。",
+      "status": "active",
+      "fate": "landed",
+      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。",
+      "report_coverage": "curated",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-21",
+        "days": 1,
+        "span": [
+          "2026-11-20",
+          "2026-11-20"
+        ],
+        "unreviewed_days": [],
+        "scope": "固定原始报告、组件与全池收据、用户立项和验收范围。"
+      },
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+          "path": "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md",
+          "lines": [
+            1,
+            14
+          ],
+          "title": "五日逐位核对与耗时",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/905d37f8a26d62688dcec6c6964d68a18e4c1e9c/reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md#L1-L14"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+          "path": "PLAN/2026-11-20-szse344-cpp-rewrite-experiment.md",
+          "lines": [
+            1,
+            154
+          ],
+          "title": "冻结 Python 基线及独立 C++ 对照方案",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/905d37f8a26d62688dcec6c6964d68a18e4c1e9c/PLAN/2026-11-20-szse344-cpp-rewrite-experiment.md#L1-L154"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+          "path": "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/p75-signed-publication.json",
+          "lines": [
+            1,
+            875
+          ],
+          "title": "普通样本三路计时和读回",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/905d37f8a26d62688dcec6c6964d68a18e4c1e9c/reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/p75-signed-publication.json#L1-L875"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+          "path": "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-pool-and-heavy.json",
+          "lines": [
+            1,
+            3879
+          ],
+          "title": "重日和极端日全池对账、单股拖尾",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/905d37f8a26d62688dcec6c6964d68a18e4c1e9c/reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/development-pool-and-heavy.json#L1-L3879"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+          "path": "reports/2026-11/2026-11-20-factor-computation-cpp-assessment.md",
+          "lines": [
+            1,
+            60
+          ],
+          "title": "原工程耗时与全链试验依据",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/905d37f8a26d62688dcec6c6964d68a18e4c1e9c/reports/2026-11/2026-11-20-factor-computation-cpp-assessment.md#L1-L60"
         }
       ]
     }
@@ -7853,6 +7940,48 @@
         "on": "2026-11-20",
         "basis": "看板沿用研究仓候选报告的来源、数量和第一批材料状态。",
         "scope": "核对已发生的材料承接。"
+      }
+    },
+    {
+      "from": "szse344-cpp-rewrite",
+      "to": "strategy-research",
+      "type": "派生",
+      "date": "2026-11-20",
+      "source_date": "2026-11-20",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "五日C++对照为两条策略线安排旧因子扩窗和后续耗时测试提供基线。",
+      "source_refs": [
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+          "path": "reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md",
+          "lines": [
+            1,
+            14
+          ],
+          "title": "五日逐位核对与耗时",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/905d37f8a26d62688dcec6c6964d68a18e4c1e9c/reports/2026-11/2026-11-20-szse344-cpp-rewrite-results.md#L1-L14"
+        },
+        {
+          "kind": "file",
+          "repo": "sirui-quant-research",
+          "revision": "905d37f8a26d62688dcec6c6964d68a18e4c1e9c",
+          "path": "reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/p75-signed-publication.json",
+          "lines": [
+            1,
+            875
+          ],
+          "title": "普通样本三路计时和读回",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/905d37f8a26d62688dcec6c6964d68a18e4c1e9c/reports/2026-11/2026-11-20-szse344-cpp-rewrite-evidence/p75-signed-publication.json#L1-L875"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-21",
+        "basis": "当日策略会话引用试验结果，约定先续做普通日和极端日提速，再测更长行情窗口。",
+        "scope": "核对实际引用及次序，长窗实验仍待推进。"
       }
     }
   ],
