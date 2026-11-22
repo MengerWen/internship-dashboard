@@ -17,6 +17,7 @@ import frontmatter
 import markdown
 from pymdownx.slugs import uslugify
 from pymdownx.superfences import fence_div_format
+from scripts.page_renderer import render_page
 from scripts.daily_show_source import resolve_daily_show_source
 from scripts.daily_release_cache import DailyReleaseCache
 
@@ -896,132 +897,11 @@ class Builder:
 
     @staticmethod
     def index_page_html(title: str, body: str, redirect_hash: str, meta: dict[str, str]) -> str:
-        title_attr = html_lib.escape(title, quote=True)
-        meta_tags = "\n  ".join(
-            f'<span hidden data-pagefind-meta="{html_lib.escape(f"{key}:{value}", quote=True)}"></span>'
-            for key, value in meta.items()
-            if value
-        )
-        return f"""<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="robots" content="noindex,nofollow">
-  <title>{title_attr}</title>
-  <script>location.replace("{redirect_hash}");</script>
-</head>
-<body>
-  {meta_tags}
-  <main data-pagefind-body>
-    <h1>{title_attr}</h1>
-    {body}
-  </main>
-</body>
-</html>
-"""
+        return render_page("index", title, body, redirect_hash, meta)
 
     @staticmethod
     def downloadable_daily_html(title: str, body: str) -> str:
-        title_attr = html_lib.escape(title, quote=True)
-        body = (
-            body
-            .replace('src="assets/', 'src="../../assets/')
-            .replace("src='assets/", "src='../../assets/")
-            .replace('href="assets/', 'href="../../assets/')
-            .replace("href='assets/", "href='../../assets/")
-        )
-        return f"""<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{title_attr}</title>
-  <script>
-    window.MathJax = {{
-      tex: {{
-        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
-        displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
-        processEscapes: true
-      }},
-      svg: {{fontCache: 'global'}},
-      startup: {{typeset: false}}
-    }};
-  </script>
-  <script defer src="../../vendor/mathjax/tex-svg.js"></script>
-  <script defer src="../../vendor/mermaid/mermaid.min.js"></script>
-  <script defer src="../../js/content-enhance.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {{
-      window.ContentEnhancer?.enhance(document);
-    }});
-  </script>
-  <style>
-    body {{
-      margin: 0;
-      padding: 32px;
-      background: #111827;
-      color: #e5e7eb;
-      font-family: "Noto Serif SC", "Microsoft YaHei", serif;
-      line-height: 1.85;
-    }}
-    main {{
-      max-width: 980px;
-      margin: 0 auto;
-    }}
-    h1, h2, h3, h4 {{
-      line-height: 1.35;
-    }}
-    h2 {{
-      color: #fff6d6;
-      margin-top: 32px;
-    }}
-    a {{
-      color: #fff6d6;
-    }}
-    strong, b {{
-      color: #ffffff;
-      font-family: "Microsoft YaHei", "SimHei", "Noto Sans CJK SC", sans-serif;
-      font-weight: 700;
-    }}
-    table {{
-      width: 100%;
-      border-collapse: collapse;
-      margin: 18px 0;
-    }}
-    th, td {{
-      border: 1px solid #344255;
-      padding: 8px 10px;
-      text-align: left;
-      vertical-align: top;
-    }}
-    th {{
-      background: #202b3b;
-      color: #fff6d6;
-    }}
-    blockquote {{
-      margin: 18px 0;
-      padding: 14px 18px;
-      border: 1px solid rgb(138 149 165 / 0.38);
-      border-left: 4px solid #8a95a5;
-      border-radius: 8px;
-      background: rgb(138 149 165 / 0.16);
-      color: #e5e7eb;
-    }}
-    pre {{
-      overflow: auto;
-      padding: 16px;
-      background: #0a0f1c;
-      border: 1px solid #344255;
-    }}
-  </style>
-</head>
-<body>
-  <main class="markdown-body">
-    {body}
-  </main>
-</body>
-</html>
-"""
+        return render_page("daily", title, body)
 
     @staticmethod
     def html_with_runtime_assets(html_text: str, *, prefix: str = "") -> str:

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@TITLE_ATTR@</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {fontCache: 'global'},
+      startup: {typeset: false}
+    };
+  </script>
+  <script defer src="../../vendor/mathjax/tex-svg.js"></script>
+  <script defer src="../../vendor/mermaid/mermaid.min.js"></script>
+  <script defer src="../../js/content-enhance.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.ContentEnhancer?.enhance(document);
+    });
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px;
+      background: #111827;
+      color: #e5e7eb;
+      font-family: "Noto Serif SC", "Microsoft YaHei", serif;
+      line-height: 1.85;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      line-height: 1.35;
+    }
+    h2 {
+      color: #fff6d6;
+      margin-top: 32px;
+    }
+    a {
+      color: #fff6d6;
+    }
+    strong, b {
+      color: #ffffff;
+      font-family: "Microsoft YaHei", "SimHei", "Noto Sans CJK SC", sans-serif;
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+    }
+    th, td {
+      border: 1px solid #344255;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #202b3b;
+      color: #fff6d6;
+    }
+    blockquote {
+      margin: 18px 0;
+      padding: 14px 18px;
+      border: 1px solid rgb(138 149 165 / 0.38);
+      border-left: 4px solid #8a95a5;
+      border-radius: 8px;
+      background: rgb(138 149 165 / 0.16);
+      color: #e5e7eb;
+    }
+    pre {
+      overflow: auto;
+      padding: 16px;
+      background: #0a0f1c;
+      border: 1px solid #344255;
+    }
+  </style>
+</head>
+<body>
+  <main class="markdown-body">
+    @BODY@
+  </main>
+</body>
+</html>
