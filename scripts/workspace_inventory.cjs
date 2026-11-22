@@ -5,7 +5,9 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const local = path.join(root, ".local", "native");
 const windows = process.platform === "win32";
-const exe = path.join(local, "bin", windows ? "workspace_inventory.exe" : "workspace_inventory");
+const nav = process.argv[2] === "--nav";
+const tool = nav ? "nav_scrollspy" : "workspace_inventory";
+const exe = path.join(local, "bin", tool + (windows ? ".exe" : ""));
 function run(program, args) {
   const child = spawnSync(program, args, { cwd: root, stdio: "inherit", windowsHide: true });
   if (child.error) throw child.error;
@@ -29,8 +31,8 @@ if (process.argv[2] === "--build") {
   run(cmake, ["--install", build, "--config", "Release", "--prefix", local]);
 } else {
   if (!existsSync(exe)) {
-    console.error("请先运行 npm run workspace:build 安装 C++ 盘点工具。");
+    console.error("请先运行 npm run workspace:build 安装 C++ 工具。");
     process.exit(2);
   }
-  run(exe, process.argv.slice(2));
+  run(exe, process.argv.slice(nav ? 3 : 2));
 }

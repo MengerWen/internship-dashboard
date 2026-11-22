@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "workspace:build": "node scripts/workspace_inventory.cjs --build",
+    "nav:check": "node scripts/workspace_inventory.cjs --nav --check",
+    "nav:apply": "node scripts/workspace_inventory.cjs --nav --apply",
     "workspace:audit": "node scripts/workspace_inventory.cjs --check",
     "test": "node --test tests/tag-model.test.cjs tests/tag-api.test.mjs tests/journal-calendar.test.cjs tests/journal-provenance.test.cjs tests/journal-notes.test.cjs tests/journal-selection.test.cjs tests/journal-routing.test.cjs tests/daily-routing.test.cjs",
     "test:browser": "playwright test -c tests/playwright.config.cjs",
