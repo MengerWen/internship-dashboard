@@ -18,7 +18,9 @@
 
 已完成任务的临时输出默认保留 7 天。到期用于提醒复核，不能仅凭时间、扩展名或目录名认定可删。需要继续保留时记录原因及下次复查日期。每周或明显超量时运行同一个盘点入口即可，无需另设自动删除任务。
 
-详细 JSON 可用 `python scripts/workspace_inventory.py --json`；容量检查可通过 `--max-local-mib` 指定本次上限。扫描不跟随链接，并会报告读取错误和链接。
+首次运行或更新盘点源码后，在仓库根目录运行 `npm run workspace:build`。该命令使用 CMake 和 C++17 编译器编译、测试并安装到 `.local/native/bin/`。随后使用 `npm run workspace:audit` 只读盘点，`npm run workspace:audit -- --json` 输出详细 JSON，`--max-local-mib` 指定本次容量上限。也可从仓库根目录直接运行已安装的 `workspace_inventory`。它使用 Git 返回的 NUL 分隔文件名，遇到链接会记录并跳过。
+
+历史盘点程序及其 Python 测试保留作独立对账，冻结版本为 `d59b08943`。日常盘点和构建后的本地测试都可在无 Python 的环境运行。
 
 ## 历史积压
 
