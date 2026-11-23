@@ -46,16 +46,22 @@ def _library():
     lib.dashboard_render_page.restype = ctypes.c_void_p
     lib.dashboard_daily_source_status.argtypes = (ctypes.POINTER(_Field),)
     lib.dashboard_daily_source_status.restype = ctypes.c_int
+    lib.dashboard_daily_scenes.argtypes = (ctypes.c_char_p, ctypes.c_size_t, ctypes.POINTER(ctypes.c_size_t))
+    lib.dashboard_daily_scenes.restype = ctypes.c_void_p
     return lib
 
 
-def daily_source_status(directory, source):
+def _optional_library():
     try:
-        library = _library()
+        return _library()
     except _StalePageRenderer:
         if os.environ.get("DASHBOARD_PAGE_ENGINE", "auto") != "auto":
             raise
         return None
+
+
+def daily_source_status(directory, source):
+    library = _optional_library()
     if library is None:
         return None
     try:
@@ -64,6 +70,28 @@ def daily_source_status(directory, source):
         return None
     fields = (_Field * 2)(*(_Field(value, len(value)) for value in values))
     return library.dashboard_daily_source_status(fields)
+
+
+def render_daily_scenes(body):
+    library = _optional_library()
+    if library is not None:
+        data = body.encode("utf-8")
+        size = ctypes.c_size_t()
+        result = library.dashboard_daily_scenes(data, len(data), ctypes.byref(size))
+        if not result:
+            raise RuntimeError("dashboard daily scene rendering failed")
+        return ctypes.string_at(result, size.value).decode("utf-8")
+    parts = body.split("<h2")
+    scenes = [body]
+    if len(parts) > 1:
+        scenes = ["<h2" + part for part in parts[1:]]
+        intro = parts[0].strip()
+        if intro:
+            scenes[0] = intro + "\n" + scenes[0]
+    return "\n".join(
+        f'<section class="daily-show-scene markdown-body" data-scene="{index}">\n{scene}\n</section>'
+        for index, scene in enumerate(scenes)
+    )
 
 
 @lru_cache(maxsize=2)

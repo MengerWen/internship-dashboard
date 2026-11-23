@@ -41,3 +41,18 @@ if(link STREQUAL "0")
   check_source(2 "external-directory/result.html")
   check_source(2 "external-directory/missing.html")
 endif()
+
+string(ASCII 194 160 nbsp)
+file(WRITE "${body}" "${nbsp}引言 \t<h2>第一节</h2>甲<h2 id=\"next\">第二节</h2>乙")
+execute_process(COMMAND "${TOOL}" daily-scenes INPUT_FILE "${body}"
+  OUTPUT_VARIABLE scenes RESULT_VARIABLE status ENCODING UTF-8)
+set(expected_scenes [=[<section class="daily-show-scene markdown-body" data-scene="0">
+引言
+<h2>第一节</h2>甲
+</section>
+<section class="daily-show-scene markdown-body" data-scene="1">
+<h2 id="next">第二节</h2>乙
+</section>]=])
+if(NOT status EQUAL 0 OR NOT scenes STREQUAL expected_scenes)
+  message(FATAL_ERROR "daily Markdown scenes differ")
+endif()

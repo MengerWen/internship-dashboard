@@ -1,5 +1,6 @@
 #include "page_renderer.hpp"
 #include "compiled_pages.hpp"
+#include <array>
 #include <cstddef>
 #include <filesystem>
 #include <stdexcept>
@@ -39,6 +40,33 @@ bool same_component(const fs::path& first, const fs::path& second) {
 #else
     return first == second;
 #endif
+}
+
+std::string_view strip_scene_intro(std::string_view text) {
+    constexpr std::array<std::string_view, 29> whitespace{
+        "\t", "\n", "\v", "\f", "\r", "\x1c", "\x1d", "\x1e", "\x1f", " ",
+        "\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", "\u2003", "\u2004",
+        "\u2005", "\u2006", "\u2007", "\u2008", "\u2009", "\u200a", "\u2028", "\u2029",
+        "\u202f", "\u205f", "\u3000",
+    };
+    auto trim_edge = [&](bool leading) {
+        while (!text.empty()) {
+            bool found = false;
+            for (auto space : whitespace) {
+                if (space.size() > text.size()) continue;
+                const auto offset = leading ? 0 : text.size() - space.size();
+                if (text.substr(offset, space.size()) != space) continue;
+                if (leading) text.remove_prefix(space.size());
+                else text.remove_suffix(space.size());
+                found = true;
+                break;
+            }
+            if (!found) break;
+        }
+    };
+    trim_edge(true);
+    trim_edge(false);
+    return text;
 }
 
 std::string escape(const std::string& text) {
@@ -103,6 +131,33 @@ DailySourceStatus validate_daily_source(std::string_view directory, std::string_
     }
 }
 
+std::string daily_scenes(std::string_view body) {
+    constexpr std::string_view heading = "<h2";
+    std::string result;
+    result.reserve(body.size());
+    std::size_t start = body.find(heading);
+    if (start == body.npos) {
+        start = 0;
+    }
+    auto intro = start ? strip_scene_intro(body.substr(0, start)) : std::string_view{};
+    for (std::size_t index = 0;; ++index) {
+        const auto next = body.find(heading, start + heading.size());
+        if (index) result += '\n';
+        result += "<section class=\"daily-show-scene markdown-body\" data-scene=\"";
+        result += std::to_string(index);
+        result += "\">\n";
+        if (index == 0 && !intro.empty()) {
+            result.append(intro);
+            result += '\n';
+        }
+        result.append(body.substr(start, next == body.npos ? next : next - start));
+        result += "\n</section>";
+        if (next == body.npos) break;
+        start = next;
+    }
+    return result;
+}
+
 std::string page(bool daily, const std::string& title, const std::string& body,
                  const std::string& redirect, const Metadata& metadata) {
     const std::string safe_title = escape(title);
@@ -154,6 +209,17 @@ PAGE_API int dashboard_daily_source_status(const Field* fields) noexcept {
         return static_cast<int>(dashboard::DailySourceStatus::unreadable_path);
     return static_cast<int>(dashboard::validate_daily_source(
         {fields[0].data, fields[0].size}, {fields[1].data, fields[1].size}));
+}
+PAGE_API const char* dashboard_daily_scenes(const char* body, std::size_t length, std::size_t* bytes) noexcept {
+    try {
+        if (!body || !bytes) return nullptr;
+        thread_local std::string result;
+        result = dashboard::daily_scenes({body, length});
+        *bytes = result.size();
+        return result.data();
+    } catch (...) {
+        return nullptr;
+    }
 }
 PAGE_API const char* dashboard_render_page(int daily, const Field* fields, std::size_t count,
                                          std::size_t* bytes) noexcept {

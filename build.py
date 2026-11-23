@@ -17,7 +17,7 @@ import frontmatter
 import markdown
 from pymdownx.slugs import uslugify
 from pymdownx.superfences import fence_div_format
-from scripts.page_renderer import render_page
+from scripts.page_renderer import render_daily_scenes, render_page
 from scripts.daily_show_source import resolve_daily_show_source
 from scripts.daily_release_cache import DailyReleaseCache
 
@@ -418,23 +418,7 @@ class Builder:
             return None
         meta, html = rendered
         title = str(meta.get("title") or date_key)
-        parts = html.split("<h2")
-        scenes: list[str] = []
-        if len(parts) == 1:
-            scenes = [html]
-        else:
-            intro = parts[0].strip()
-            for part in parts[1:]:
-                scene = "<h2" + part
-                if intro:
-                    scene = intro + "\n" + scene
-                    intro = ""
-                scenes.append(scene)
-        scene_html = "\n".join(
-            f'<section class="daily-show-scene markdown-body" data-scene="{index}">\n{scene}\n</section>'
-            for index, scene in enumerate(scenes)
-        )
-        return title, scene_html
+        return title, render_daily_scenes(html)
 
     def build_daily(self) -> list[dict[str, Any]]:
         daily_entries: list[dict[str, Any]] = []
