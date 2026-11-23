@@ -1599,20 +1599,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 11,
+        "days": 12,
         "span": [
           "2026-07-07",
-          "2026-11-16"
+          "2026-11-22"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-17",
-          "scope": "有HTML展示时优先加载，固定回放数据独立缓存。"
+          "on": "2026-11-23",
+          "scope": "核对当天源码、运行凭证及 GitHub 推送。"
         }
       },
       "fate": "landed",
-      "fate_note": "看板维护构建、离线阅读和部署。11月5日两市同名列的下载改用完整精度数据。11月10日改为本机增量发布，修复GBK控制台下的发布锁。日报有HTML时优先打开展示，稳定回放数据拆成独立附件。",
+      "fate_note": "看板维护构建、离线阅读和部署。11月5日两市同名列的下载改用完整精度数据。11月10日改为本机增量发布，修复GBK控制台下的发布锁。日报有HTML时优先打开展示，稳定回放数据拆成独立附件。 工作区盘点、导航、搜索和日报下载页已接入C++工具，发布构建仍用Python。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1670,6 +1670,30 @@
           "revision": "0ac510213babb833b4d28b5c772349aeef2610f2",
           "title": "稳定回放分片资产",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/0ac510213babb833b4d28b5c772349aeef2610f2"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "scripts/native/CMakeLists.txt",
+          "revision": "74122915935677615d4285fc8be72f960e612aed",
+          "lines": [
+            1,
+            57
+          ],
+          "title": "看板原生构建与三个测试入口",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/74122915935677615d4285fc8be72f960e612aed/scripts/native/CMakeLists.txt#L1-L57"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "scripts/page_renderer.py",
+          "revision": "74122915935677615d4285fc8be72f960e612aed",
+          "lines": [
+            1,
+            40
+          ],
+          "title": "搜索与下载页的发布构建入口",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/74122915935677615d4285fc8be72f960e612aed/scripts/page_renderer.py#L1-L40"
         }
       ]
     },
@@ -5087,7 +5111,7 @@
       "purpose": "从逐笔行情到深市344列面板复用原公式，比较冻结Python、Python调C++和独立C++的正确性与完整耗时。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。",
+      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。 同版代表日23.10和23.12秒、极端日140.90秒，均完成科学核对和持久读回。683日保守外推5.77小时，三项时限和后续交接未完成。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5095,16 +5119,16 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-21",
-        "days": 2,
+        "days": 3,
         "span": [
           "2026-11-20",
-          "2026-11-21"
+          "2026-11-22"
         ],
         "unreviewed_days": [],
         "scope": "固定原始报告、组件与全池收据、用户立项和验收范围。",
         "incremental_review": {
-          "on": "2026-11-22",
-          "scope": "复核固定结果、Git差异和阶段交付。"
+          "on": "2026-11-23",
+          "scope": "核对当天源码、运行凭证及 GitHub 推送。"
         }
       },
       "source_refs": [
@@ -5191,6 +5215,165 @@
           ],
           "title": "冷链计时、逐位核对与保护退出",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/71de695a13992cba6a0f24061fe443dd1f730d24/reports/2026-11/2026-11-21-szse344-n02-evidence/measurements-continuation.json#L1-L30"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-szse344-n02-p1-quote-sweep.md",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            57
+          ],
+          "title": "深市两日验收和683日工期外推",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-szse344-n02-p1-quote-sweep.md#L1-L57"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-szse344-n02-p1-quote-sweep-evidence.json",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            22
+          ],
+          "title": "深市同版两日、连续日及复算凭证",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-szse344-n02-p1-quote-sweep-evidence.json#L1-L22"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-szse344-n02-p1-candidate-reduction.md",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            42
+          ],
+          "title": "候选减量和未采用方案",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-szse344-n02-p1-candidate-reduction.md#L1-L42"
+        }
+      ]
+    },
+    {
+      "id": "project-cpp-migration",
+      "track": "infra",
+      "label": "项目C++迁移与沪深定参提速",
+      "short": "项目C++迁移",
+      "purpose": "按实际入口迁移项目自研Python功能，分别验收沪深定参和正式因子全链的正确性与耗时。",
+      "status": "active",
+      "fate": "landed",
+      "fate_note": "盘点三仓3,649个文件，迁移部分取数、成表、定参、正式计算和看板工具。沪深含重负载三日定参平均660.00和258.19秒，仍高于8秒目标。17:37保存进度并暂停，全面迁移和各项时限待验收。",
+      "report_coverage": "curated",
+      "closes_into": {
+        "daily": []
+      },
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-23",
+        "days": 1,
+        "span": [
+          "2026-11-22",
+          "2026-11-22"
+        ],
+        "unreviewed_days": [],
+        "scope": "独立立项、沪深同标要求、原始运行收据、持久结果及暂停决定。"
+      },
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-project-python-migration.md",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            40
+          ],
+          "title": "三仓迁移清单和沪深实测",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-project-python-migration.md#L1-L40"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-sse-july-extreme-and-xshe-p75-calibration.md",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            3,
+            30
+          ],
+          "title": "沪市含极端股的三日定参数值与签收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-sse-july-extreme-and-xshe-p75-calibration.md#L3-L30"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/sse-july-whole-graph.json",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "沪市三日逐股与跨日持久核对",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/sse-july-whole-graph.json#L1-L20"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-dec-weighted-parity.json",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            16
+          ],
+          "title": "深市三日逐项一致及两市工期参照",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-dec-weighted-parity.json#L1-L16"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-dec-weighted-interval.json",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "深市三日定参和参数包回读",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-dec-weighted-interval.json#L1-L20"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/sse-p75-production-audited.json",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "沪市340列代表日含月内审计",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/sse-p75-production-audited.json#L1-L20"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-bundled-formal-depth.json",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            24
+          ],
+          "title": "深市开盘深度接到正式计算的三股日回读",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-bundled-formal-depth.json#L1-L24"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-native-factor-panel-merge.md",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "两市四来源的原生面板拼接",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-native-factor-panel-merge.md#L1-L20"
         }
       ]
     }
@@ -8196,6 +8379,48 @@
         "on": "2026-11-22",
         "basis": "N07-p1 固定协议直接引用 N03-p1 的 DM01／DM07，并登记 O5、L5 和 C60 对照。",
         "scope": "已有交付和实际引用。"
+      }
+    },
+    {
+      "from": "szse344-cpp-rewrite",
+      "to": "project-cpp-migration",
+      "type": "派生",
+      "date": "2026-11-22",
+      "source_date": "2026-11-22",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "将深市开盘五分钟C++深度内核接入正式因子入口，完成三股日24列对账。",
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-szse344-n02-p1-quote-sweep.md",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            57
+          ],
+          "title": "深市两日验收和683日工期外推",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-szse344-n02-p1-quote-sweep.md#L1-L57"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-bundled-formal-depth.json",
+          "revision": "ec43be5a3df0ecbead91242b5339308347a934d4",
+          "lines": [
+            1,
+            24
+          ],
+          "title": "深市开盘深度接到正式计算的三股日回读",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/ec43be5a3df0ecbead91242b5339308347a934d4/reports/2026-11/2026-11-22-native-calibration-stock-support-evidence/szse-bundled-formal-depth.json#L1-L24"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-23",
+        "basis": "正式消费者使用原试验深度内核，三股日输入、24列及逐项审计均核对。",
+        "scope": "已有实际复用及签收。"
       }
     }
   ],
