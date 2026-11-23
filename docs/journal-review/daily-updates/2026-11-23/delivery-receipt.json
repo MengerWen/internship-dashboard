@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-11-23T09:20:54.106721+08:00",
+  "covered_date": "2026-11-22",
+  "late_review": [
+    "2026-11-16",
+    "2026-11-22"
+  ],
+  "source_snapshot": {
+    "official": {
+      "active": {
+        "pages": 12,
+        "items": 572,
+        "unmatched": 0
+      },
+      "archived": {
+        "pages": 11,
+        "items": 509,
+        "unmatched": 0
+      }
+    },
+    "registered": 1912,
+    "coverage": "open",
+    "claude_archive_indexes": 2,
+    "issues": {
+      "not-in-reviewed-session-snapshot": 722,
+      "registered-body-unavailable": 57
+    },
+    "new_issues": {
+      "not-in-reviewed-session-snapshot": 1
+    },
+    "cleared_issues": {},
+    "physical": 494,
+    "fragments": 453,
+    "physical_messages": 6680,
+    "unique_messages": 4157,
+    "session_failures": 0,
+    "late_messages": 0,
+    "database_message_delta": {
+      "2026-11-22": 27,
+      "2026-11-23": 1
+    },
+    "materials": 72033,
+    "material_changes": 1005,
+    "material_purpose": {
+      "excluded:rebuildable-native-build": 190,
+      "chain:project-cpp-migration": 178,
+      "chain:szse344-cpp-rewrite": 15,
+      "support:separate-dashboard-checkout": 468,
+      "support:frozen-snapshot-source": 1,
+      "chain:dashboard-build": 22,
+      "excluded:journal-maintenance": 131
+    },
+    "material_failures": 1,
+    "materials_changed_during_read": 0,
+    "commits": 6312,
+    "new_all_ref_commits": 140,
+    "version_count": 9682,
+    "version_failures": 0,
+    "actions": 6118,
+    "action_failures": 0,
+    "commit_evidence": {
+      "sirui-quant-research": {
+        "count": 148,
+        "with_push": 148
+      },
+      "Quant_Research-Trading": {
+        "count": 12,
+        "with_push": 12
+      },
+      "internship-dashboard": {
+        "count": 5,
+        "with_push": 5
+      }
+    }
+  },
+  "source_movements": [
+    {
+      "repo": "sirui-quant-research",
+      "start": "ec43be5a3df0ecbead91242b5339308347a934d4",
+      "material_head": "ec43be5a3df0ecbead91242b5339308347a934d4",
+      "final": "ec43be5a3df0ecbead91242b5339308347a934d4",
+      "cutoff_unchanged": true
+    },
+    {
+      "repo": "Quant_Research-Trading",
+      "start": "0158b52f3886615e1d29f4672c864c1ef8f24ff5",
+      "material_head": "0158b52f3886615e1d29f4672c864c1ef8f24ff5",
+      "final": "0158b52f3886615e1d29f4672c864c1ef8f24ff5",
+      "cutoff_unchanged": true
+    },
+    {
+      "repo": "internship-dashboard",
+      "start": "74122915935677615d4285fc8be72f960e612aed",
+      "material_head": "74122915935677615d4285fc8be72f960e612aed",
+      "final": "74122915935677615d4285fc8be72f960e612aed",
+      "cutoff_unchanged": true
+    }
+  ],
+  "preservation": {
+    "_evidence": 118,
+    "_attribution": 118,
+    "day_cards": 131,
+    "source_register_days": 130,
+    "existing_handoffs": 79
+  },
+  "push_retry": {
+    "initial_tls_error": true,
+    "content_verified_on_remote": true
+  },
+  "content_commit": "40cf3f320511919cce9ebb632ee33f423a65be9a",
+  "remote_main_after_content": "40cf3f320511919cce9ebb632ee33f423a65be9a",
+  "github_api_after_content": "40cf3f320511919cce9ebb632ee33f423a65be9a",
+  "tests": {
+    "required_passed": 11,
+    "extended_passed": 63,
+    "extended_existing_failures": [
+      {
+        "test": "test_every_research_source_day_and_chain_has_a_real_card",
+        "date": "2026-10-31",
+        "missing": [
+          "signal-expansion"
+        ]
+      },
+      {
+        "test": "test_new_chain_spans_follow_actual_points_and_preserve_confirmed_stop_date",
+        "chain": "cross-stock-sync",
+        "basis": "已有停止记录，旧测试要求的逐字措辞未出现。"
+      }
+    ],
+    "excerpt_verified": 4,
+    "fixed_objects": 13,
+    "legacy_objects": 104,
+    "target_evidence_differences": 0,
+    "attribution_differences": 0,
+    "local_build": {
+      "exit_code": 0,
+      "seconds": 58.02
+    },
+    "local_build_days": 132,
+    "local_build_reports": 50,
+    "native_ctest_passed": 3,
+    "local_build_warnings": [
+      "infra 11 条链超过提示阈值 10",
+      "factor 和 model 轨道仍触发既有提示"
+    ]
+  },
+  "browser_local": {
+    "ok": true,
+    "checks": {
+      "points": 3,
+      "chainPages": 3,
+      "excerpts": 4,
+      "commits": 165,
+      "tokens": [
+        "23.10",
+        "140.90",
+        "660.00",
+        "258.19",
+        "17:37",
+        "当天来源覆盖仍不完整"
+      ]
+    },
+    "page_errors": 0,
+    "static_tag_endpoint_404": true
+  },
+  "initial_release_failure": {
+    "npm_exit": 1,
+    "diagnosis": "GitHub TLS EOF during remote SHA check, before build"
+  },
+  "publication": {
+    "npm_exit": 0,
+    "git_sha": "40cf3f320511919cce9ebb632ee33f423a65be9a",
+    "version_id": "649c6018-6acb-4777-93b9-a3dfa7315181",
+    "deployment_id": "0c525109-0797-434e-b6f8-561c36ecbac7",
+    "traffic_percent": 100,
+    "production_annotation_matches": true,
+    "production_version_matches": true,
+    "process_seconds": 136.67,
+    "build_seconds": 25.0,
+    "wrangler_seconds": 107.6,
+    "script_seconds": 135.7,
+    "assets_upload_seconds": 94.91,
+    "trigger_seconds": 2.76
+  },
+  "browser_production": {
+    "body_verified": false,
+    "access_gate": true,
+    "error": "Error: Cloudflare Access requires authentication"
+  },
+  "workspace": {
+    "audit_exit": 1,
+    "audit_output": [
+      "> workspace:audit",
+      "> node scripts/workspace_inventory.cjs --check",
+      "",
+      "未跟踪条目：0",
+      "临时输出：16233 个文件，3239.86 MiB"
+    ]
+  },
+  "limits": {
+    "source_coverage": "已有57项缺正文。目标日新增子任务身份 01a200db-ddc5 仍缺独立正文，父会话已核。压缩原件恢复一份，初扫另有一项生成日志文本解码失败，原字节已核。",
+    "push_timestamp": "165项目标日提交均核实远端和推送回执。上一轮的4af4a6001精确推送时间仍待补。",
+    "research_inputs": "深市三项速度目标未过，沪深迁移暂停并保留未完成的沪市区间。第三份外部调研仍缺全文。",
+    "workspace": "沿用旧预览保留记录，复查日 2026-11-27。本轮使用标准 dist，本机原始证据不进入 Git。"
+  }
+}
