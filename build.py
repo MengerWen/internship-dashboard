@@ -17,7 +17,7 @@ import frontmatter
 import markdown
 from pymdownx.slugs import uslugify
 from pymdownx.superfences import fence_div_format
-from scripts.page_renderer import render_daily_scenes, render_page
+from scripts.page_renderer import markdown_title, render_daily_scenes, render_page
 from scripts.daily_show_source import resolve_daily_show_source
 from scripts.daily_release_cache import DailyReleaseCache
 
@@ -407,10 +407,7 @@ class Builder:
     def infer_title(self, path: Path, body: str, meta: dict[str, Any]) -> str:
         if meta.get("title"):
             return str(meta["title"])
-        for line in body.splitlines():
-            if line.startswith("# "):
-                return line[2:].strip()
-        return path.stem
+        return markdown_title(body, path.stem)
 
     def split_show_markdown(self, path: Path, date_key: str) -> tuple[str, str] | None:
         rendered = self.render_markdown_file(path, daily=True)

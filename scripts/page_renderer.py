@@ -48,6 +48,8 @@ def _library():
     lib.dashboard_daily_source_status.restype = ctypes.c_int
     lib.dashboard_daily_scenes.argtypes = (ctypes.c_char_p, ctypes.c_size_t, ctypes.POINTER(ctypes.c_size_t))
     lib.dashboard_daily_scenes.restype = ctypes.c_void_p
+    lib.dashboard_markdown_title.argtypes = (ctypes.POINTER(_Field), ctypes.POINTER(ctypes.c_size_t))
+    lib.dashboard_markdown_title.restype = ctypes.c_void_p
     return lib
 
 
@@ -92,6 +94,26 @@ def render_daily_scenes(body):
         f'<section class="daily-show-scene markdown-body" data-scene="{index}">\n{scene}\n</section>'
         for index, scene in enumerate(scenes)
     )
+
+
+def markdown_title(body, fallback):
+    library = _optional_library()
+    if library is not None:
+        try:
+            values = (body.encode("utf-8"), fallback.encode("utf-8"))
+        except UnicodeEncodeError:
+            values = None
+        if values is not None:
+            fields = (_Field * 2)(*(_Field(value, len(value)) for value in values))
+            size = ctypes.c_size_t()
+            result = library.dashboard_markdown_title(fields, ctypes.byref(size))
+            if not result:
+                raise RuntimeError("dashboard Markdown title extraction failed")
+            return ctypes.string_at(result, size.value).decode("utf-8")
+    for line in body.splitlines():
+        if line.startswith("# "):
+            return line[2:].strip()
+    return fallback
 
 
 @lru_cache(maxsize=2)

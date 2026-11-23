@@ -15,10 +15,16 @@ int run(const std::vector<std::string>& args) {
         std::cout << dashboard::daily_scenes(body);
         return std::cin.bad() || !std::cout ? 1 : 0;
     }
+    if (args.size() == 2 && args[0] == "markdown-title") {
+        std::string body{std::istreambuf_iterator<char>(std::cin),{}};
+        std::cout << dashboard::markdown_title(body, args[1]);
+        return std::cin.bad() || !std::cout ? 1 : 0;
+    }
     const bool daily = args.size() == 2 && args[0] == "daily";
     if (!daily && (args.size() < 3 || args[0] != "index" || (args.size()-3)%2)) {
         std::cerr << "page_renderer daily TITLE | index TITLE REDIRECT [KEY VALUE ...] < body.html\n"
                      "page_renderer daily-scenes < body.html\n"
+                     "page_renderer markdown-title FALLBACK < body.md\n"
                      "page_renderer validate-daily-source DIRECTORY RELATIVE_HTML\n";
         return 2;
     }

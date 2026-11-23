@@ -11,4 +11,5 @@ std::string page(bool daily, const std::string& title, const std::string& body,
 enum class DailySourceStatus { valid, invalid_relative_path, outside_daily_directory, unreadable_path };
 DailySourceStatus validate_daily_source(std::string_view directory, std::string_view source) noexcept;
 std::string daily_scenes(std::string_view body);
+std::string markdown_title(std::string_view body, std::string_view fallback);
 }

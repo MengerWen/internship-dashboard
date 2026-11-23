@@ -7,6 +7,16 @@ from build import Builder
 
 
 class DailyShowSourceTests(unittest.TestCase):
+    def test_inferred_title_keeps_first_heading_and_metadata_precedence(self):
+        builder = Builder()
+        path = Path('默认标题.md')
+        body = '普通段落—继续\u0085## 小标题\u2028# \u3000每日汇报\u00a0\r\n# 第二标题'
+        self.assertEqual(builder.infer_title(path, body, {}), '每日汇报')
+        self.assertEqual(builder.infer_title(path, body, {'title': '指定标题'}), '指定标题')
+        self.assertEqual(builder.infer_title(path, '只有\x1e## 小标题', {}), '默认标题')
+        self.assertEqual(builder.infer_title(path, '# \u3000', {}), '')
+        self.assertEqual(builder.infer_title(path, '# A\0B', {}), 'A\0B')
+
     def build_fixture(self, root, source):
         content = root/'content'
         daily = content/'daily'

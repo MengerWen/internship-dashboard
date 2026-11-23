@@ -42,7 +42,7 @@ bool same_component(const fs::path& first, const fs::path& second) {
 #endif
 }
 
-std::string_view strip_scene_intro(std::string_view text) {
+std::string_view strip_python_whitespace(std::string_view text) {
     constexpr std::array<std::string_view, 29> whitespace{
         "\t", "\n", "\v", "\f", "\r", "\x1c", "\x1d", "\x1e", "\x1f", " ",
         "\u0085", "\u00a0", "\u1680", "\u2000", "\u2001", "\u2002", "\u2003", "\u2004",
@@ -67,6 +67,12 @@ std::string_view strip_scene_intro(std::string_view text) {
     trim_edge(true);
     trim_edge(false);
     return text;
+}
+
+std::size_t line_break_width(std::string_view text) {
+    if (text.substr(0, 2) == "\r\n" || text.substr(0, 2) == "\u0085") return 2;
+    if (text.substr(0, 3) == "\u2028" || text.substr(0, 3) == "\u2029") return 3;
+    return text.front() == '\xc2' || text.front() == '\xe2' ? 0 : 1;
 }
 
 std::string escape(const std::string& text) {
@@ -139,7 +145,7 @@ std::string daily_scenes(std::string_view body) {
     if (start == body.npos) {
         start = 0;
     }
-    auto intro = start ? strip_scene_intro(body.substr(0, start)) : std::string_view{};
+    auto intro = start ? strip_python_whitespace(body.substr(0, start)) : std::string_view{};
     for (std::size_t index = 0;; ++index) {
         const auto next = body.find(heading, start + heading.size());
         if (index) result += '\n';
@@ -156,6 +162,20 @@ std::string daily_scenes(std::string_view body) {
         start = next;
     }
     return result;
+}
+
+std::string markdown_title(std::string_view body, std::string_view fallback) {
+    constexpr std::string_view break_candidates = "\n\r\v\f\x1c\x1d\x1e\xc2\xe2";
+    while (!body.empty()) {
+        auto next = body.find_first_of(break_candidates);
+        while (next != body.npos && !line_break_width(body.substr(next)))
+            next = body.find_first_of(break_candidates, next + 1);
+        const auto line = body.substr(0, next);
+        if (line.substr(0, 2) == "# ") return std::string(strip_python_whitespace(line.substr(2)));
+        if (next == body.npos) break;
+        body.remove_prefix(next + line_break_width(body.substr(next)));
+    }
+    return std::string(fallback);
 }
 
 std::string page(bool daily, const std::string& title, const std::string& body,
@@ -215,6 +235,17 @@ PAGE_API const char* dashboard_daily_scenes(const char* body, std::size_t length
         if (!body || !bytes) return nullptr;
         thread_local std::string result;
         result = dashboard::daily_scenes({body, length});
+        *bytes = result.size();
+        return result.data();
+    } catch (...) {
+        return nullptr;
+    }
+}
+PAGE_API const char* dashboard_markdown_title(const Field* fields, std::size_t* bytes) noexcept {
+    try {
+        if (!fields || !fields[0].data || !fields[1].data || !bytes) return nullptr;
+        thread_local std::string result;
+        result = dashboard::markdown_title({fields[0].data, fields[0].size}, {fields[1].data, fields[1].size});
         *bytes = result.size();
         return result.data();
     } catch (...) {
