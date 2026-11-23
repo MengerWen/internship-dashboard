@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>深市日内负载与工期预检 · 量化实习成果看板</title>
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f2eee4;
+  --surface: #f8f4eb;
+  --surface-2: #e9e2d5;
+  --surface-3: #15212b;
+  --line: #1e2a31;
+  --line-soft: #c8c1b4;
+  --text: #15212b;
+  --focus: #d9654f;
+  --blue: #345f79;
+  --green: #477d75;
+  --ochre: #8d6733;
+  --radius: 2px;
+  --font-serif: "Libre Baskerville", "Noto Serif SC", "Songti SC", SimSun, serif;
+  --font-body: "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  --font-mono: "Cascadia Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(90deg, rgb(21 33 43 / .018) 1px, transparent 1px),
+    linear-gradient(rgb(21 33 43 / .014) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--text);
+  font: 15px/1.72 var(--font-body);
+}
+main {
+  width: min(100%, 1240px);
+  margin-inline: auto;
+  padding: clamp(16px, 3vw, 38px) clamp(14px, 3vw, 38px) 46px;
+}
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  line-height: 1.36;
+  margin: 0;
+}
+h1 { font-size: clamp(28px, 4.2vw, 46px); }
+h2 { font-size: clamp(21px, 2.5vw, 28px); }
+h3 { font-size: 18px; }
+p, figure, dl, dd { margin: 0; }
+a { color: var(--blue); text-underline-offset: .18em; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+time { font-family: var(--font-mono); }
+time, td, output { font-variant-numeric: tabular-nums; }
+.mast {
+  border-top: 3px double var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0 17px;
+  margin-bottom: 23px;
+}
+.mast time { font-size: 13px; }
+.mast h1 { margin: 5px 0 8px; }
+.summary {
+  max-width: 69ch;
+  font: 17px/1.78 var(--font-serif);
+}
+.scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+.scope span { border-right: 1px solid var(--line-soft); padding-right: 12px; }
+.scope span:last-child { border-right: 0; }
+section { margin: 0 0 24px; }
+.plate {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+.plate-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.plate-head p, figcaption, .note { font-size: 13px; }
+.overview {
+  display: grid;
+  grid-template-columns: minmax(0, 3.15fr) minmax(13rem, 1fr);
+  gap: 18px;
+}
+.checkpoints {
+  border-block: 1px solid var(--line);
+  padding: 10px 0;
+}
+.checkpoints h2 { font-size: 21px; }
+.checkpoints dl > div {
+  display: grid;
+  grid-template-columns: 3.8rem 1fr;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.checkpoints dd { display: grid; gap: 1px; }
+.checkpoints dd strong { font: 700 24px/1.3 var(--font-serif); }
+.checkpoints dd small { font-size: 12px; }
+.checkpoints .note { margin-top: 9px; }
+.chart {
+  display: block;
+  width: 100%;
+  height: 234px;
+}
+.chart--runtime { height: 174px; }
+.chart text {
+  fill: var(--text);
+  font: 12px var(--font-body);
+}
+.chart .chart-tick { font-family: var(--font-mono); }
+.chart .chart-grid { stroke: var(--line-soft); stroke-width: 1; }
+.chart .chart-lunch { fill: var(--surface-2); }
+.chart .chart-line { fill: none; stroke-width: 2; }
+.chart .chart-dot { fill: var(--surface); stroke-width: 1.5; }
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 15px;
+  padding: 0 15px 9px;
+  font-size: 13px;
+}
+.legend span::before {
+  display: inline-block;
+  width: 19px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-top: 2px var(--swatch-style, solid) var(--swatch);
+  content: "";
+}
+figcaption {
+  border-top: 1px solid var(--line-soft);
+  padding: 8px 15px;
+}
+.runtime-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 9px;
+}
+.runtime-grid figure { border-color: var(--line-soft); }
+.runtime-grid h3 { padding: 8px 12px 0; }
+.runtime-grid + p { margin-top: 7px; }
+.data-table { margin-top: 12px; }
+.data-table summary {
+  color: var(--blue);
+  cursor: pointer;
+  padding: 7px 0;
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td {
+  padding: 8px 11px;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: right;
+  white-space: nowrap;
+}
+thead th { background: var(--surface-2); font-size: 13px; }
+th:first-child, td:first-child { text-align: left; }
+td:first-child, tbody th { white-space: normal; }
+.data-table table { min-width: 680px; }
+.open-line { font-weight: 700; }
+.range { font-size: 12px; margin-left: 6px; }
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 21px;
+}
+.explain { border-top: 1px solid var(--line); padding-top: 12px; }
+.explain h2 { margin-bottom: 7px; }
+.explain p + p { margin-top: 8px; }
+.explain table { margin-block: 8px; }
+.freq { padding: 14px 15px; border-top-width: 2px; }
+.freq-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 16px;
+}
+label { font-size: 14px; }
+select {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+.freq-meta { margin-top: 6px; font-size: 13px; }
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(10.5em, 15em) 1fr minmax(4em, 7em);
+  align-items: center;
+  gap: 8px;
+  margin-block: 10px;
+  font-size: 14px;
+}
+.bar-track { background: var(--surface-2); height: 10px; }
+.bar-fill { display: block; height: 100%; background: var(--blue); }
+.bar-row:nth-child(2) .bar-fill { background: var(--green); }
+.bar-row:nth-child(3) .bar-fill { background: var(--surface-3); }
+.bar-row output { text-align: right; }
+.foot { border-top: 3px double var(--line); padding-top: 11px; }
+.foot h2 { font-size: 20px; margin-bottom: 6px; }
+.source-links { display: flex; flex-wrap: wrap; gap: 5px 16px; margin-top: 8px; }
+@media (max-width: 720px) {
+  .overview, .columns { grid-template-columns: minmax(0, 1fr); }
+  .mast { margin-bottom: 16px; }
+  .checkpoints dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .checkpoints dl > div { grid-template-columns: 1fr; border-bottom: 0; }
+  .checkpoints dl > div + div { border-left: 1px solid var(--line-soft); padding-left: 8px; }
+  .chart { height: 220px; }
+  .chart--runtime { height: 161px; }
+}
+@media (max-width: 490px) {
+  .runtime-grid { grid-template-columns: minmax(0, 1fr); }
+  .checkpoints dd strong { font-size: 19px; }
+  .summary { font-size: 16px; }
+  .bar-row { grid-template-columns: 1fr auto; row-gap: 4px; }
+  .bar-track { grid-column: 1 / -1; grid-row: 2; }
+}
+</style>
+</head>
+<body>
+<main>
+<header class="mast">
+  <time datetime="2026-11-23">2026.11.23</time>
+  <h1>深市日内负载与工期预检</h1>
+  <p class="summary">用开盘五分钟的行情生产冻结参数因子，683 日整批估计为 <strong>4.76 小时</strong>。扩到 14:57，在等工作量和容量满足的条件下约需 <strong>47.4 小时</strong>，若还要重定参，全流程约 <strong>512 小时</strong>。</p>
+  <p class="scope"><span>683 日生产 · 601 日重定参</span><span>16 核 · 100 GiB · 零交换空间</span><span>长窗工期为条件估算</span></p>
+</header>
+
+<section class="overview" aria-label="日内负载与三个工期截点">
+  <figure class="plate">
+    <div class="plate-head">
+      <h2>日内负载</h2>
+      <p>连续竞价累计倍数 · 09:35 = 1</p>
+    </div>
+    <svg id="workload" class="chart" role="img"
+      aria-label="成交、委托、撤单和撤后同侧配对机会的日内累计倍数"></svg>
+    <div class="legend">
+      <span style="--swatch:var(--blue)">成交 · 16 日分层加权</span>
+      <span style="--swatch:var(--green);--swatch-style:dashed">委托 · 六个股票日</span>
+      <span style="--swatch:var(--ochre);--swatch-style:dotted">撤单 · 六个股票日</span>
+      <span style="--swatch:var(--text);--swatch-style:dashed">同侧配对机会 · 六个股票日</span>
+    </div>
+    <figcaption>成交阴影表示快照边界范围。午休期间累计量不增加，收盘集合竞价单列。同侧配对机会按撤单之后 1 秒内的新委托计数。</figcaption>
+  </figure>
+
+  <aside class="checkpoints" aria-labelledby="checkpoint-title">
+    <h2 id="checkpoint-title">全流程工期</h2>
+    <dl>
+      <div><dt><time>10:30</time></dt><dd><strong>197 小时</strong><small>情景 161–284 小时</small></dd></div>
+      <div><dt><time>11:30</time></dt><dd><strong>324 小时</strong><small>情景 227–443 小时</small></dd></div>
+      <div><dt><time>14:57</time></dt><dd><strong>512 小时</strong><small>情景 367–724 小时</small></dd></div>
+    </dl>
+    <p class="note">先重定参，再用冻结参数产出因子。09:35 的全流程参照为 46.8 小时。</p>
+  </aside>
+</section>
+
+<section aria-labelledby="runtime-title">
+  <h2 id="runtime-title">四项累计工期</h2>
+  <div class="runtime-grid">
+  <figure class="plate">
+    <h3>取数与共享准备</h3>
+    <svg class="chart chart--runtime" data-runtime="0" role="img" aria-label="取数与共享准备的累计情景估算，单位小时"></svg>
+  </figure>
+
+  <figure class="plate">
+    <h3>冻结参数产因子</h3>
+    <svg class="chart chart--runtime" data-runtime="1" role="img" aria-label="冻结参数产因子的累计情景估算，单位小时"></svg>
+  </figure>
+
+  <figure class="plate">
+    <h3>重新定参</h3>
+    <svg class="chart chart--runtime" data-runtime="2" role="img" aria-label="重新定参的累计情景估算，单位小时"></svg>
+  </figure>
+
+  <figure class="plate">
+    <h3>定参至因子产出</h3>
+    <svg class="chart chart--runtime" data-runtime="3" role="img" aria-label="定参至因子产出的累计情景估算，单位小时"></svg>
+  </figure>
+  </div>
+  <p class="note">四图共用北京时间横轴，各用自己的小时刻度。虚线连接长窗的条件估算，阴影为高低情景。逐笔回放与因子计算共用入口，首图只量化可辨识的取数和共享状态准备。</p>
+  <details class="data-table">
+    <summary>查看每个截点的估计、情景范围与五分钟倍数</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="四项工期及范围">
+      <table class="plate">
+        <thead>
+          <tr><th scope="col">截至</th><th scope="col">取数与共享准备（小时）</th><th scope="col">冻结参数产因子（小时）</th><th scope="col">重新定参（小时）</th><th scope="col">定参至因子产出（小时）</th></tr>
+        </thead>
+        <tbody>
+          <tr class="open-line"><th scope="row">09:35</th>
+  <td>1.75 <span class="range">(1.75–2.38)</span><br><small>1.00 倍</small></td>
+  <td>4.76 <span class="range">(4.76–5.77)</span><br><small>1.00 倍</small></td>
+  <td>42.0 <span class="range">(42.0–42.5)</span><br><small>1.00 倍</small></td>
+  <td>46.8 <span class="range">(46.8–48.3)</span><br><small>1.00 倍</small></td>
+</tr>
+<tr><th scope="row">10:00</th>
+  <td>5.05 <span class="range">(4.56–7.32)</span><br><small>2.89 倍</small></td>
+  <td>12.6 <span class="range">(9.55–20.7)</span><br><small>2.65 倍</small></td>
+  <td>125 <span class="range">(101–154)</span><br><small>2.98 倍</small></td>
+  <td>138 <span class="range">(111–175)</span><br><small>2.94 倍</small></td>
+</tr>
+<tr><th scope="row">10:30</th>
+  <td>7.50 <span class="range">(6.98–10.6)</span><br><small>4.29 倍</small></td>
+  <td>17.3 <span class="range">(13.0–34.6)</span><br><small>3.64 倍</small></td>
+  <td>180 <span class="range">(148–249)</span><br><small>4.28 倍</small></td>
+  <td>197 <span class="range">(161–284)</span><br><small>4.22 倍</small></td>
+</tr>
+<tr><th scope="row">11:30</th>
+  <td>10.6 <span class="range">(10.4–14.7)</span><br><small>6.10 倍</small></td>
+  <td>30.6 <span class="range">(17.0–56.0)</span><br><small>6.43 倍</small></td>
+  <td>294 <span class="range">(210–387)</span><br><small>6.99 倍</small></td>
+  <td>324 <span class="range">(227–443)</span><br><small>6.94 倍</small></td>
+</tr>
+<tr><th scope="row">14:00</th>
+  <td>13.6 <span class="range">(13.3–18.8)</span><br><small>7.79 倍</small></td>
+  <td>36.8 <span class="range">(20.9–63.4)</span><br><small>7.73 倍</small></td>
+  <td>363 <span class="range">(264–455)</span><br><small>8.64 倍</small></td>
+  <td>400 <span class="range">(285–518)</span><br><small>8.55 倍</small></td>
+</tr>
+<tr><th scope="row">14:25</th>
+  <td>14.9 <span class="range">(14.8–20.5)</span><br><small>8.55 倍</small></td>
+  <td>43.5 <span class="range">(23.1–85.7)</span><br><small>9.14 倍</small></td>
+  <td>417 <span class="range">(294–579)</span><br><small>9.94 倍</small></td>
+  <td>461 <span class="range">(317–665)</span><br><small>9.86 倍</small></td>
+</tr>
+<tr><th scope="row">14:57</th>
+  <td>17.2 <span class="range">(17.2–23.5)</span><br><small>9.83 倍</small></td>
+  <td>47.4 <span class="range">(26.6–91.7)</span><br><small>9.95 倍</small></td>
+  <td>465 <span class="range">(340–632)</span><br><small>11.07 倍</small></td>
+  <td>512 <span class="range">(367–724)</span><br><small>10.96 倍</small></td>
+</tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<section class="columns" aria-label="输入规模与开盘重定参工期构成">
+  <div class="explain">
+    <h2>输入规模与覆盖</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">输入</th><th scope="col">683 日</th><th scope="col">601 日</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">开盘输入</th><td>140.63 亿行</td><td>120.60 亿行</td></tr>
+          <tr><th scope="row">全天委托表</th><td>729.79 亿行</td><td>621.19 亿行</td></tr>
+          <tr><th scope="row">全天成交表</th><td>476.83 亿行</td><td>408.83 亿行</td></tr>
+          <tr><th scope="row">全天撤单表</th><td>182.07 亿行</td><td>152.47 亿行</td></tr>
+          <tr><th scope="row">全天三表 ÷ 开盘输入</th><td><strong>9.88 倍</strong></td><td>9.81 倍</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>生产期为 2024-01-02 至 2026-10-30，定参期截至 2026-06-30。全天入库行数包含竞价记录。按 12 层、16 日快照推算，连续竞价成交笔数约为五分钟的 <strong>10.55 倍</strong>，快照边界范围为 10.44–10.75 倍。</p>
+  </div>
+  <div class="explain">
+    <h2>开盘重定参什么最耗时</h2>
+    <table>
+      <thead><tr><th scope="col">阶段</th><th scope="col">五分钟等效小时</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">六核观测、归约与冻结</th><td>10.26</td></tr>
+        <tr><th scope="row">v7 结构观测与六组核心归约</th><td>13.12</td></tr>
+        <tr><th scope="row">F40 四阶段、核验与最终包</th><td>10.94</td></tr>
+        <tr><th scope="row">v8 两组重估与交付</th><td>7.66</td></tr>
+      </tbody>
+    </table>
+    <p>约 42 小时来自历史分段重建，包含 v8 约 0.50 小时的重叠收益假设。撤销该抵扣后约为 42.49 小时。长窗计算和匹配图驻留需要验证容量。</p>
+  </div>
+</section>
+
+<section class="plate freq" aria-labelledby="frequency-title">
+  <div class="freq-head">
+    <h2 id="frequency-title">输出频率怎样改变工期</h2>
+    <label for="step">每隔 <select id="step">
+      <option value="5">5 分钟</option>
+      <option value="15">15 分钟</option>
+      <option value="30" selected>30 分钟</option>
+      <option value="60">60 分钟</option>
+    </select> 输出</label>
+  </div>
+  <p id="frequency-meta" class="freq-meta" aria-live="polite"></p>
+  <div id="frequency-bars">
+    <div class="bar-row"><span>累计独立重读与求解</span><span class="bar-track" aria-hidden="true"><i class="bar-fill"></i></span><output for="step"></output></div>
+    <div class="bar-row"><span>累计共享回放，逐点求解</span><span class="bar-track" aria-hidden="true"><i class="bar-fill"></i></span><output for="step"></output></div>
+    <div class="bar-row"><span>最近五分钟，共享回放</span><span class="bar-track" aria-hidden="true"><i class="bar-fill"></i></span><output for="step"></output></div>
+  </div>
+  <p class="note">条长按所选频率使用统一标尺，跨频率时比较数值。DM01、DM07 可复用逐单状态。F13、F40、F99 需要按窗口重建候选或重算匹配。每五分钟都按原方式交付时，每日 48 个截点，预估约 770 GB 的累计发布量。</p>
+</section>
+
+<section class="columns" aria-label="历史对照与成本判断">
+  <div class="explain">
+    <h2>历史换版遇到的重日</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">检验（秒）</th><th scope="col">实际</th><th scope="col">按行数</th><th scope="col">统一系数</th><th scope="col">分阶段</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">普通留出日</th><td>20.19</td><td>20.40</td><td>20.84</td><td>20.60</td></tr>
+          <tr><th scope="row">重留出日</th><td>92.20</td><td>59.09</td><td>60.37</td><td>51.27</td></tr>
+          <tr><th scope="row">十日整批</th><td>363.97</td><td>326.83</td><td>333.89</td><td>307.23</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>十日对照从 <code>40ce5c029</code> 换到 <code>1e202ef4a</code>。分阶段法低估十日 56.74 秒，最大落差出在重日的冲击响应和等待。</p>
+  </div>
+  <div class="explain">
+    <h2>扩窗的成本判断</h2>
+    <p>当前情景下，09:35 延至 11:30 让全流程增加约 <strong>278 小时</strong>，下午再增加约 <strong>188 小时</strong>。这两段的实际等待都取决于同股同侧的匹配分量、共享取数和内存。</p>
+    <p>若 v7 结构和 v8 两组重估能共用取数及前态，并节省 v8 阶段的 25%–50%，五分钟情景约少 1.9–3.8 小时，全天中心情景约少 19–37 小时。需要验证共享输入和关键路径。</p>
+    <p>固定五列的敏感性分析另列在原报告。全池长窗与多截点工期仍待实测。</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <h2>证据与复算</h2>
+  <p>工期中心和高低范围对应不同运行条件。14:57 是连续竞价边界。收盘集合竞价和历史决策时点的参数可用性另行核对。</p>
+  <div class="source-links">
+      <a href="https://github.com/MengerWen/sirui-quant-research/blob/4230f89f9c7b249af3c6f1ad9a55420205a231aa/reports/2026-11/2026-11-23-szse-intraday-workload-preflight.md" target="_blank" rel="noopener">完整预检报告</a>
+      <a href="https://github.com/MengerWen/sirui-quant-research/blob/4230f89f9c7b249af3c6f1ad9a55420205a231aa/reports/2026-11/2026-11-23-szse-intraday-workload-preflight-evidence/daily-coverage.csv" target="_blank" rel="noopener">逐日负载与分层</a>
+      <a href="https://github.com/MengerWen/sirui-quant-research/blob/4230f89f9c7b249af3c6f1ad9a55420205a231aa/reports/2026-11/2026-11-23-szse-intraday-workload-preflight-evidence/workload-curve.csv" target="_blank" rel="noopener">负载曲线数据</a>
+      <a href="https://github.com/MengerWen/sirui-quant-research/blob/4230f89f9c7b249af3c6f1ad9a55420205a231aa/reports/2026-11/2026-11-23-szse-intraday-workload-preflight-evidence/runtime-curve.csv" target="_blank" rel="noopener">工期曲线数据</a>
+      <a href="https://github.com/MengerWen/sirui-quant-research/blob/4230f89f9c7b249af3c6f1ad9a55420205a231aa/reports/2026-11/2026-11-23-szse-intraday-workload-preflight-evidence/output-frequency.csv" target="_blank" rel="noopener">输出频率情景</a>
+      <a href="https://github.com/MengerWen/sirui-quant-research/blob/4230f89f9c7b249af3c6f1ad9a55420205a231aa/reports/2026-11/2026-11-23-szse-intraday-workload-preflight-evidence/historical-comparison.csv" target="_blank" rel="noopener">历史换版对照</a>
+  </div>
+</footer>
+<noscript><p>图表需要脚本绘制。完整数值见上方工期表和复算数据。</p></noscript>
+</main>
+<script>
+"use strict";
+
+const report = {
+  times: ["09:35","10:00","10:30","11:30","13:00","14:00","14:25","14:57"],
+  workload: [
+    [[1,1,1],[3.2321,3.1932,3.2719],[4.7297,4.6768,4.7837],[6.5564,6.4876,6.6432],[6.5564,6.4876,6.6432],[8.4077,8.3171,8.5002],[9.1421,9.0438,9.2426],[10.5532,10.4423,10.7527]],
+    [[1,1,1],[3.8944,3.3251,4.826],[6.113,4.5385,8.4832],[8.9849,5.8625,14.2521],[8.9849,5.8625,14.2521],[11.6382,7.188,18.26],[12.8778,7.4128,20.1977],[14.8291,8.0203,23.0736]],
+    [[1,1,1],[4.0871,2.8048,4.8836],[6.7466,4.2694,8.2601],[10.5503,5.5078,13.5764],[10.5503,5.5078,13.5764],[13.6702,7.3489,17.1115],[15.3278,8.4266,18.559],[17.9301,9.8117,22.1189]],
+    [[1,1,1],[3.2302,1.9321,5.014],[4.3197,2.3861,9.5762],[9.3959,2.582,16.8842],[9.3959,2.582,16.8842],[10.9661,3.0485,18.2139],[13.653,3.3771,26.8658],[14.4262,3.8582,28.0901]]
+  ],
+  runtime: [
+    [[1.746,1.746,2.381,1],[5.049,4.558,7.319,2.891],[7.497,6.981,10.632,4.293],[10.647,10.446,14.673,6.097],[10.647,10.446,14.673,6.097],[13.601,13.288,18.768,7.788],[14.932,14.798,20.532,8.551],[17.169,17.169,23.514,9.832]],
+    [[4.764,4.764,5.769,1],[12.621,9.547,20.658,2.649],[17.333,12.98,34.556,3.638],[30.643,16.994,56.033,6.432],[30.643,16.994,56.033,6.432],[36.832,20.89,63.372,7.731],[43.526,23.119,85.715,9.136],[47.393,26.55,91.667,9.947]],
+    [[41.989,41.989,42.488,1],[124.94,101.226,154.452,2.976],[179.83,148.147,249.152,4.283],[293.653,209.91,386.897,6.994],[293.653,209.91,386.897,6.994],[362.844,264.174,454.949,8.641],[417.343,293.956,579.423,9.939],[464.811,340.302,631.992,11.07]],
+    [[46.754,46.754,48.257,1],[137.561,110.773,175.11,2.942],[197.163,161.127,283.709,4.217],[324.296,226.904,442.931,6.936],[324.296,226.904,442.931,6.936],[399.676,285.064,518.322,8.549],[460.869,317.075,665.138,9.857],[512.204,366.852,723.659,10.955]]
+  ],
+  frequency: [
+    {"step":5,"sections":48,"hours":[1345.25,836.82,65.78]},
+    {"step":15,"sections":16,"hours":[463.17,300.11,33.38]},
+    {"step":30,"sections":8,"hours":[242.65,165.93,25.56]},
+    {"step":60,"sections":4,"hours":[130.47,97.24,21.79]}
+  ]
+};
+
+const workloadStyles = [
+  { color: "var(--blue)" },
+  { color: "var(--green)", dash: "7 4" },
+  { color: "var(--ochre)", dash: "2 4" },
+  { color: "var(--text)", dash: "9 4 2 4" },
+];
+
+const runtimeScales = [
+  { maximum: 25, labels: [0, 10, 20], color: "var(--blue)" },
+  { maximum: 100, labels: [0, 40, 80], color: "var(--green)" },
+  { maximum: 650, labels: [0, 250, 500], color: "var(--ochre)" },
+  { maximum: 750, labels: [0, 300, 600], color: "var(--text)" },
+];
+
+const openingMinutes = 9 * 60 + 35;
+const closingMinutes = 14 * 60 + 57;
+const svgNamespace = "http://www.w3.org/2000/svg";
+
+function timeMinutes(clock) {
+  const [hour, minute] = clock.split(":").map(Number);
+  return hour * 60 + minute;
+}
+
+function appendSvg(parent, name, attributes, label) {
+  const element = document.createElementNS(svgNamespace, name);
+  for (const [attribute, value] of Object.entries(attributes)) {
+    element.setAttribute(attribute, value);
+  }
+  if (label !== undefined) {
+    element.textContent = label;
+  }
+  parent.append(element);
+}
+
+function drawChart(svg, series, scale, width) {
+  const height = svg.clientHeight;
+  const left = 40;
+  const right = 14;
+  const top = 15;
+  const bottom = height - 30;
+  const x = clock => left + (width - left - right) *
+    (timeMinutes(clock) - openingMinutes) / (closingMinutes - openingMinutes);
+  const y = value => bottom - (bottom - top) * value / scale.maximum;
+  const point = (clock, value) => x(clock).toFixed(1) + "," + y(value).toFixed(1);
+  const ticks = width < 320
+    ? ["09:35", "11:30", "13:00", "14:57"]
+    : ["09:35", "10:30", "11:30", "13:00", "14:57"];
+
+  svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+  svg.replaceChildren();
+  appendSvg(svg, "title", {}, svg.getAttribute("aria-label"));
+  appendSvg(svg, "rect", {
+    class: "chart-lunch",
+    x: x("11:30"),
+    y: top,
+    width: x("13:00") - x("11:30"),
+    height: bottom - top,
+  });
+
+  for (const tick of scale.labels) {
+    appendSvg(svg, "line", {
+      class: "chart-grid", x1: left, y1: y(tick), x2: width - right, y2: y(tick),
+    });
+    appendSvg(svg, "text", {
+      class: "chart-tick", x: left - 7, y: y(tick) + 4, "text-anchor": "end",
+    }, tick);
+  }
+
+  const shaded = series[0];
+  const topEdge = shaded.values.map((row, index) => point(report.times[index], row[2]));
+  const bottomEdge = shaded.values.map((row, index) => point(report.times[index], row[1])).reverse();
+  appendSvg(svg, "polygon", {
+    points: [...topEdge, ...bottomEdge].join(" "),
+    fill: shaded.color,
+    "fill-opacity": ".15",
+  });
+
+  for (const item of series) {
+    const points = item.values.map((row, index) => point(report.times[index], row[0]));
+    appendSvg(svg, "polyline", {
+      class: "chart-line",
+      points: points.join(" "),
+      stroke: item.color,
+      "stroke-dasharray": item.dash || "none",
+    });
+    const last = item.values.at(-1)[0];
+    appendSvg(svg, "circle", {
+      class: "chart-dot", cx: x("14:57"), cy: y(last), r: 2.7, stroke: item.color,
+    });
+  }
+
+  for (const clock of ticks) {
+    let anchor = "middle";
+    if (clock === "09:35") anchor = "start";
+    if (clock === "14:57") anchor = "end";
+    appendSvg(svg, "text", {
+      class: "chart-tick", x: x(clock), y: height - 8, "text-anchor": anchor,
+    }, clock);
+  }
+  appendSvg(svg, "text", {
+    x: (x("11:30") + x("13:00")) / 2, y: top + 14, "text-anchor": "middle",
+  }, "午休");
+}
+
+const workload = document.querySelector("#workload");
+const workloadSeries = report.workload.map((values, index) => ({
+  values,
+  ...workloadStyles[index],
+}));
+
+const chartConfigs = [{
+  svg: workload,
+  series: workloadSeries,
+  scale: { maximum: 20, labels: [0, 5, 10, 15, 20] },
+}];
+
+document.querySelectorAll("svg[data-runtime]").forEach(svg => {
+  const index = Number(svg.dataset.runtime);
+  const scale = runtimeScales[index];
+  chartConfigs.push({
+    svg,
+    series: [{ values: report.runtime[index], color: scale.color, dash: "5 4" }],
+    scale,
+  });
+});
+
+function renderCharts() {
+  for (const { svg, series, scale } of chartConfigs) {
+    const width = Math.round(svg.clientWidth);
+    if (width > 0) drawChart(svg, series, scale, width);
+  }
+}
+
+const step = document.querySelector("#step");
+const frequencyMeta = document.querySelector("#frequency-meta");
+const barRows = Array.from(document.querySelectorAll("#frequency-bars .bar-row"));
+
+function renderFrequency() {
+  const current = report.frequency.find(row => row.step === Number(step.value));
+  const maximum = Math.max(...current.hours);
+  frequencyMeta.textContent = "每日 " + current.sections + " 个截点 · 683 日整批小时 · 344 列等工作量情景";
+  barRows.forEach((row, index) => {
+    const hours = current.hours[index];
+    row.querySelector(".bar-fill").style.width = (hours / maximum * 100).toFixed(2) + "%";
+    row.querySelector("output").textContent =
+      hours.toLocaleString("zh-CN", { maximumFractionDigits: 1 }) + " 小时";
+  });
+}
+
+step.addEventListener("change", renderFrequency);
+renderFrequency();
+renderCharts();
+if (typeof ResizeObserver === "function") {
+  const resizeObserver = new ResizeObserver(renderCharts);
+  chartConfigs.forEach(({ svg }) => resizeObserver.observe(svg));
+} else {
+  window.addEventListener("resize", renderCharts);
+}
+</script>
+</body>
+</html>
