@@ -6,7 +6,8 @@ const root = path.resolve(__dirname, "..");
 const local = path.join(root, ".local", "native");
 const windows = process.platform === "win32";
 const nav = process.argv[2] === "--nav";
-const journal = process.argv[2] === "--journal";
+const journalRegister = process.argv[2] === "--journal-register";
+const journal = process.argv[2] === "--journal" || journalRegister;
 const tool = journal ? "journal_sources" : nav ? "nav_scrollspy" : "workspace_inventory";
 const exe = path.join(local, "bin", tool + (windows ? ".exe" : ""));
 function run(program, args) {
@@ -36,5 +37,6 @@ if (process.argv[2] === "--build") {
       "请先运行 npm run workspace:build 安装 C++ 工具。");
     process.exit(2);
   }
-  run(exe, journal ? ["--root", root, ...process.argv.slice(3)] : process.argv.slice(nav ? 3 : 2));
+  const options = process.argv.slice(nav || journal ? 3 : 2);
+  run(exe, journal ? ["--root", root, ...(journalRegister ? ["--register"] : []), ...options] : options);
 }
