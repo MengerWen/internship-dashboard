@@ -6,7 +6,8 @@ const root = path.resolve(__dirname, "..");
 const local = path.join(root, ".local", "native");
 const windows = process.platform === "win32";
 const nav = process.argv[2] === "--nav";
-const tool = nav ? "nav_scrollspy" : "workspace_inventory";
+const journal = process.argv[2] === "--journal";
+const tool = journal ? "journal_sources" : nav ? "nav_scrollspy" : "workspace_inventory";
 const exe = path.join(local, "bin", tool + (windows ? ".exe" : ""));
 function run(program, args) {
   const child = spawnSync(program, args, { cwd: root, stdio: "inherit", windowsHide: true });
@@ -31,8 +32,9 @@ if (process.argv[2] === "--build") {
   run(cmake, ["--install", build, "--config", "Release", "--prefix", local]);
 } else {
   if (!existsSync(exe)) {
-    console.error("请先运行 npm run workspace:build 安装 C++ 工具。");
+    console.error(journal ? "请在研究仓库与 dashboard 同级时运行 npm run workspace:build。" :
+      "请先运行 npm run workspace:build 安装 C++ 工具。");
     process.exit(2);
   }
-  run(exe, process.argv.slice(nav ? 3 : 2));
+  run(exe, journal ? ["--root", root, ...process.argv.slice(3)] : process.argv.slice(nav ? 3 : 2));
 }

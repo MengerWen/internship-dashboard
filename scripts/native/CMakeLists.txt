@@ -16,6 +16,20 @@ else()
   target_compile_options(nav_scrollspy PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 install(TARGETS workspace_inventory nav_scrollspy RUNTIME DESTINATION bin)
+find_path(JOURNAL_JSON_INCLUDE_DIR json.hpp
+    HINTS "${CMAKE_CURRENT_SOURCE_DIR}/../../../sirui-quant-research/third_party/nlohmann-json"
+    PATH_SUFFIXES nlohmann)
+if(JOURNAL_JSON_INCLUDE_DIR)
+  add_executable(journal_sources journal_sources.cpp)
+  target_compile_features(journal_sources PRIVATE cxx_std_17)
+  target_include_directories(journal_sources PRIVATE "${JOURNAL_JSON_INCLUDE_DIR}")
+  if(MSVC)
+    target_compile_options(journal_sources PRIVATE /utf-8 /W4)
+  else()
+    target_compile_options(journal_sources PRIVATE -Wall -Wextra -Wpedantic)
+  endif()
+  install(TARGETS journal_sources RUNTIME DESTINATION bin)
+endif()
 set(template_dir "${CMAKE_CURRENT_SOURCE_DIR}/../templates")
 set(render_sources "${CMAKE_CURRENT_SOURCE_DIR}/page_renderer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/page_renderer.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/compiled_pages.hpp.in"

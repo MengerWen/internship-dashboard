@@ -121,6 +121,8 @@ python scripts/collect_journal_evidence.py --check
 python scripts/collect_journal_attribution.py --check
 ```
 
+固定来源引用通过 `npm run journal:sources -- --output 路径` 核对 Git 对象、版本包含关系、文件行号和父仓白名单。首次使用时，在同级目录检出研究仓库并运行 `npm run workspace:build` 安装 C++ 工具。省略 `--output` 时只打印核对结果。
+
 会话候选索引由 `scripts/collect_journal_sessions.py` 只读生成，全文只存本机被 Git 忽略的 `data/journal-sessions/`。人工核对后，将少量摘录、消息时间、会话 ID、原始行号和行哈希保存到审阅清单，再核验并写入现有日卡正文。原始会话不会随站点发布，也不按会话数或消息数计算成果。命令和证据边界见[会话佐证核对记录](docs/journal-review/session-evidence-2026-10-21.md)。
 
 需要刷新时，先在 `scripts/journal_repos.json` 中更新本地路径与固定 `revision`，运行不带 `--check` 的采集命令，再逐日核对日志和推断归属。采集器只改 `_evidence/*.json`，不会自动改写一句话或确认链条。父仓库只统计白名单子目录。
