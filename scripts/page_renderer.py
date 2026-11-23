@@ -18,6 +18,10 @@ class _Field(ctypes.Structure):
     _fields_ = [("data", ctypes.c_char_p), ("size", ctypes.c_size_t)]
 
 
+class _StalePageRenderer(ValueError):
+    pass
+
+
 @lru_cache(maxsize=1)
 def _library():
     policy = os.environ.get("DASHBOARD_PAGE_ENGINE", "auto")
@@ -36,11 +40,30 @@ def _library():
     lib = ctypes.CDLL(str(path.resolve(strict=True)))
     lib.dashboard_page_identity.restype = ctypes.c_char_p
     if lib.dashboard_page_identity() != identity.encode():
-        raise ValueError("dashboard page renderer requires a rebuild")
+        raise _StalePageRenderer("dashboard page renderer requires a rebuild")
     lib.dashboard_render_page.argtypes = (ctypes.c_int, ctypes.POINTER(_Field), ctypes.c_size_t,
                                           ctypes.POINTER(ctypes.c_size_t))
     lib.dashboard_render_page.restype = ctypes.c_void_p
+    lib.dashboard_daily_source_status.argtypes = (ctypes.POINTER(_Field),)
+    lib.dashboard_daily_source_status.restype = ctypes.c_int
     return lib
+
+
+def daily_source_status(directory, source):
+    try:
+        library = _library()
+    except _StalePageRenderer:
+        if os.environ.get("DASHBOARD_PAGE_ENGINE", "auto") != "auto":
+            raise
+        return None
+    if library is None:
+        return None
+    try:
+        values = (os.fspath(directory).encode("utf-8"), source.encode("utf-8"))
+    except UnicodeEncodeError:
+        return None
+    fields = (_Field * 2)(*(_Field(value, len(value)) for value in values))
+    return library.dashboard_daily_source_status(fields)
 
 
 @lru_cache(maxsize=2)

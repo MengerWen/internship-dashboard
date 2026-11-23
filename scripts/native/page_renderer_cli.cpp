@@ -8,9 +8,12 @@
 #endif
 
 int run(const std::vector<std::string>& args) {
+    if (args.size() == 3 && args[0] == "validate-daily-source")
+        return static_cast<int>(dashboard::validate_daily_source(args[1], args[2]));
     const bool daily = args.size() == 2 && args[0] == "daily";
     if (!daily && (args.size() < 3 || args[0] != "index" || (args.size()-3)%2)) {
-        std::cerr << "page_renderer daily TITLE | index TITLE REDIRECT [KEY VALUE ...] < body.html\n";
+        std::cerr << "page_renderer daily TITLE | index TITLE REDIRECT [KEY VALUE ...] < body.html\n"
+                     "page_renderer validate-daily-source DIRECTORY RELATIVE_HTML\n";
         return 2;
     }
     dashboard::Metadata meta;
