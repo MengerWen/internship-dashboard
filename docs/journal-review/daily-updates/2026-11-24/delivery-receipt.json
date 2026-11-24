@@ -213,8 +213,20 @@
   },
   "browser_production": {
     "body_verified": false,
-    "access_gate": false,
-    "error": "TimeoutError: page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://internship-dashboard.mengerwenjie.workers.dev/#/journal/2026-11-23?view=list\", waiting until \"domcontentloaded\"\u001b[22m\n"
+    "access_gate": true,
+    "error": "Error: Cloudflare Access requires authentication",
+    "attempts": [
+      {
+        "body_verified": false,
+        "access_gate": false,
+        "error": "TimeoutError: page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://internship-dashboard.mengerwenjie.workers.dev/#/journal/2026-11-23?view=list\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      },
+      {
+        "at": "2026-11-24T01:25:33.873Z",
+        "error": "Error: Cloudflare Access requires authentication",
+        "access_gate": true
+      }
+    ]
   },
   "workspace": {
     "audit_exit": 1,
