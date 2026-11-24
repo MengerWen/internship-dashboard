@@ -6,10 +6,12 @@ const root = path.resolve(__dirname, "..");
 const local = path.join(root, ".local", "native");
 const windows = process.platform === "win32";
 const nav = process.argv[2] === "--nav";
+const dashboard = process.argv[2] === "--dashboard";
 const journalRegister = process.argv[2] === "--journal-register";
 const journal = process.argv[2] === "--journal" || journalRegister;
-const tool = journal ? "journal_sources" : nav ? "nav_scrollspy" : "workspace_inventory";
-const exe = path.join(local, "bin", tool + (windows ? ".exe" : ""));
+const tool = journal ? "journal_sources" : nav ? "nav_scrollspy" : dashboard ? "dashboard_builder" : "workspace_inventory";
+const bin = process.env.DASHBOARD_NATIVE_BIN_DIR || path.join(local, "bin");
+const exe = path.resolve(root, bin, tool + (windows ? ".exe" : ""));
 function run(program, args) {
   const child = spawnSync(program, args, { cwd: root, stdio: "inherit", windowsHide: true });
   if (child.error) throw child.error;
@@ -37,6 +39,6 @@ if (process.argv[2] === "--build") {
       "请先运行 npm run workspace:build 安装 C++ 工具。");
     process.exit(2);
   }
-  const options = process.argv.slice(nav || journal ? 3 : 2);
+  const options = process.argv.slice(nav || journal || dashboard ? 3 : 2);
   run(exe, journal ? ["--root", root, ...(journalRegister ? ["--register"] : []), ...options] : options);
 }

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "workspace:build": "node scripts/workspace_inventory.cjs --build",
+    "build:release": "node scripts/workspace_inventory.cjs --dashboard --release",
     "nav:check": "node scripts/workspace_inventory.cjs --nav --check",
     "nav:apply": "node scripts/workspace_inventory.cjs --nav --apply",
     "workspace:audit": "node scripts/workspace_inventory.cjs --check",
@@ -15,5 +16,5 @@
     "deploy": "powershell.exe -NoLogo -NoProfile -File scripts/publish-site.ps1"
   },
   "dependencies": { "jose": "6.2.12" },
-  "devDependencies": { "@playwright/test": "1.63.0", "wrangler": "4.129.0" }
+  "devDependencies": { "@playwright/test": "1.63.0", "pagefind": "1.6.0", "wrangler": "4.129.0" }
 }

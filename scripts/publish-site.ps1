@@ -58,16 +58,14 @@ try {
         throw 'dist 是链接，请使用普通目录构建。'
     }
 
-    $python = 'python'
-    if ($env:DASHBOARD_PYTHON) { $python = $env:DASHBOARD_PYTHON }
     $build = [Diagnostics.Stopwatch]::StartNew()
-    $buildArgs = @('build.py', '--release')
+    $buildArgs = @('scripts/workspace_inventory.cjs', '--dashboard', '--release')
     if (-not $FullAssets) {
         $env:DASHBOARD_ASSET_COPY_MANIFEST = Join-Path $gitDir 'dashboard-asset-copies.json'
         $buildArgs += @('--asset-copy-manifest', $env:DASHBOARD_ASSET_COPY_MANIFEST)
         $buildArgs += @('--daily-cache', (Join-Path $gitDir 'dashboard-daily-cache.json'))
     }
-    & $python @buildArgs
+    node @buildArgs
     if ($LASTEXITCODE -ne 0) { throw "站点构建失败，退出码 $LASTEXITCODE。" }
     foreach ($asset in @('dist/index.html', 'dist/manifest.json', 'dist/pagefind/pagefind-entry.json', 'dist/pagefind/pagefind-ui.js')) {
         if (-not (Test-Path -LiteralPath $asset -PathType Leaf)) { throw "缺少构建产物 $asset" }

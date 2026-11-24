@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(sirui_dashboard_tools LANGUAGES CXX)
+add_library(native_process STATIC native_process.cpp)
+target_compile_features(native_process PUBLIC cxx_std_17)
 add_library(workspace_scan STATIC workspace_scan.cpp)
 target_compile_features(workspace_scan PUBLIC cxx_std_17)
 add_executable(nav_scrollspy nav_scrollspy.cpp)
@@ -21,6 +23,7 @@ find_path(JOURNAL_JSON_INCLUDE_DIR json.hpp
     PATH_SUFFIXES nlohmann)
 if(JOURNAL_JSON_INCLUDE_DIR)
   add_executable(journal_sources journal_sources.cpp)
+  target_link_libraries(journal_sources PRIVATE native_process)
   target_compile_features(journal_sources PRIVATE cxx_std_17)
   target_include_directories(journal_sources PRIVATE "${JOURNAL_JSON_INCLUDE_DIR}")
   if(MSVC)
@@ -58,6 +61,50 @@ if(MSVC)
   target_compile_options(page_renderer PRIVATE /utf-8 /W4)
 endif()
 install(TARGETS page_renderer page_renderer_native RUNTIME DESTINATION bin LIBRARY DESTINATION bin)
+
+option(DASHBOARD_BUILD_RELEASE "Build the native dashboard release tool" ON)
+if(DASHBOARD_BUILD_RELEASE)
+  include(FetchContent)
+  set(JSON_BuildTests OFF CACHE INTERNAL "")
+  set(JSON_Install OFF CACHE INTERNAL "")
+  set(BUILD_TESTING OFF CACHE BOOL "Build third-party tests")
+  FetchContent_Declare(dashboard_json
+    URL https://codeload.github.com/nlohmann/json/tar.gz/refs/tags/v3.12.0
+    URL_HASH SHA256=4b92eb0c06d10683f7447ce9406cb97cd4b453be18d7279320f7b2f025c10187)
+  FetchContent_Declare(dashboard_yaml
+    URL https://codeload.github.com/yaml/libyaml/tar.gz/refs/tags/0.2.5
+    URL_HASH SHA256=fa240dbf262be053f3898006d502d514936c818e422afdcf33921c63bed9bf2e)
+  FetchContent_MakeAvailable(dashboard_json dashboard_yaml)
+  set(dashboard_sources dashboard_builder.cpp dashboard_io.cpp dashboard_assets.cpp
+    dashboard_journal.cpp dashboard_markdown.cpp dashboard_code.cpp dashboard_main.cpp)
+  set(dashboard_renderer_sources "${CMAKE_CURRENT_SOURCE_DIR}/dashboard_io.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/dashboard_markdown.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/dashboard_code.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/dashboard_build.hpp")
+  set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${dashboard_renderer_sources})
+  foreach(source IN LISTS dashboard_renderer_sources)
+    file(SHA256 "${source}" digest)
+    string(APPEND render_hashes "${digest}")
+  endforeach()
+  string(SHA256 dashboard_renderer_id "${render_hashes}")
+  add_executable(dashboard_builder ${dashboard_sources} $<TARGET_OBJECTS:page_objects>)
+  target_compile_features(dashboard_builder PRIVATE cxx_std_17)
+  set_source_files_properties(dashboard_builder.cpp PROPERTIES
+    COMPILE_DEFINITIONS "DASHBOARD_RENDERER_ID=\"${dashboard_renderer_id}\"")
+  target_include_directories(dashboard_builder PRIVATE "${dashboard_json_SOURCE_DIR}/single_include/nlohmann")
+  target_link_libraries(dashboard_builder PRIVATE native_process workspace_scan yaml)
+  if(MSVC)
+    target_compile_options(dashboard_builder PRIVATE /utf-8 /W4)
+    target_link_libraries(dashboard_builder PRIVATE bcrypt)
+  else()
+    find_package(OpenSSL REQUIRED COMPONENTS Crypto)
+    target_compile_options(dashboard_builder PRIVATE -Wall -Wextra -Wpedantic)
+    target_link_libraries(dashboard_builder PRIVATE OpenSSL::Crypto)
+  endif()
+  add_executable(dashboard_compare dashboard_compare.cpp)
+  target_compile_features(dashboard_compare PRIVATE cxx_std_17)
+  install(TARGETS dashboard_builder dashboard_compare RUNTIME DESTINATION bin)
+endif()
 enable_testing()
 add_test(NAME rendered_pages COMMAND ${CMAKE_COMMAND} -DTOOL=$<TARGET_FILE:page_renderer>
   -P ${CMAKE_CURRENT_SOURCE_DIR}/test_page_renderer.cmake)

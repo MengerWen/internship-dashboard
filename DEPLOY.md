@@ -32,6 +32,8 @@ git submodule update --init
 
 本地直发成功并核对生产版本后，在现有 Worker 的 **Settings → Builds** 启用 **Disable builds** 并保存。Git 连接和旧配置可留作回退。需要恢复自动构建时，关闭 **Disable builds** 并保存。
 
+本节记录 Python 构建的旧配置。日常本机发布使用第 4 节的 C++ 构建器。`build.py --release` 冻结为逐文件对照基准，仍保留现有离线导出入口。
+
 1. 进入 Cloudflare Dashboard -> Workers & Pages -> 导入 Git 仓库,选择 `internship-dashboard` private repo。
 2. Build command 填:
 
@@ -121,11 +123,11 @@ Cloudflare Access 配置:
 
 ## 4. 日常发布流程
 
-首次在本机安装依赖并登录 Wrangler。`python` 应能导入 `requirements.txt` 中的依赖，也可用 `DASHBOARD_PYTHON` 指定已经配置好的解释器。
+首次在本机安装 Node 依赖和 C++ 工具，更新 `scripts/native/` 或页面模板后重新编译。CMake 首次配置下载固定版本并核对 SHA-256。Windows 使用 Visual Studio C++ 生成工具。
 
 ```powershell
 npm ci
-python -m pip install -r requirements.txt
+npm run workspace:build
 npm exec -- wrangler login
 ```
 
@@ -133,8 +135,9 @@ npm exec -- wrangler login
 # 1. 写日报
 notepad content\daily\2026-07-08.md
 
-# 2. 本地预览
-D:\MG\anaconda3\python.exe build.py --serve
+# 2. 本地构建和预览
+npm run build:release
+npm run dev
 
 # 3. 提交发布
 git add content
@@ -142,15 +145,17 @@ git commit -m "add daily report 2026-07-08"
 git push
 npm run deploy
 
-# 4. 导出离线版
+# 4. 导出离线版（需要 requirements.txt 中的 Python 依赖）
 D:\MG\anaconda3\python.exe build.py --offline
 ```
 
-发布命令要求 Windows 上的干净 `main` 与 GitHub `origin/main` 一致。它复用 `dist/`，仅复制已入库的站点静态文件，确认构建产物和搜索索引齐全后发布到 `wrangler.jsonc` 指定的 Worker。Wrangler 版本记录 Git SHA，终端显示构建、Wrangler 和总耗时。`npm run deploy -- -DryRun` 只做本机构建及 Wrangler 打包检查。
+发布命令要求 Windows 上的干净 `main` 与 GitHub `origin/main` 一致。它调用 `dashboard_builder` 复用 `dist/`，仅复制已入库的站点静态文件，确认构建产物和搜索索引齐全后发布到 `wrangler.jsonc` 指定的 Worker。构建器直接调用 Git 和 `npm ci` 安装的 Pagefind 二进制。Wrangler 版本记录 Git SHA，终端显示构建、Wrangler 和总耗时。`npm run deploy -- -DryRun` 只做本机构建及 Wrangler 打包检查。
 
 首次发布会填充本地资源哈希缓存。以后构建时记录源文件和产物的文件标识，Wrangler 对源文件未变且仍与本次复制记录一致的产物复用哈希。升级到不兼容的 Wrangler 版本时，发布自动恢复全量计算。需要手动走原流程时，运行 `npm run deploy -- -FullAssets`。
 
 增量构建保留经核对的附件，删除已经移出源码的附件，并复用未变日报的 Markdown 渲染和 Git 时间查询。合并提交、历史改写或浅克隆会使 Git 时间重新查询。发布仍重建全文搜索索引，`-FullAssets` 可同时绕过日报缓存和附件复用。
+
+分支验证可从仓库根目录运行 `npm run build:release -- --output .local-build/release-check`，产物与 `dist/` 分开。`dashboard_compare` 逐路径和逐字节核对两份构建。对照冻结产物时，给 C++ 构建传入冻结清单的 `--build-time` 和首页的 `--asset-version`，两份产物可直接比较。
 
 ## 5. 在线标签存储
 
