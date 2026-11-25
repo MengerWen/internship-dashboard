@@ -294,20 +294,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 38,
+        "days": 39,
         "span": [
           "2026-08-08",
-          "2026-11-23"
+          "2026-11-24"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-24",
+          "on": "2026-11-25",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
       "fate": "landed",
-      "fate_note": "8 月起多次盘点和清理两个账户的存储。较大的几次：10 月 15 日 wangly 清理到期材料约 304 GB，10 月 25 日清定参原料和旧匹配缓存约 128 GB，10 月 31 日两账户清大型 S3 文件净减少约 185 GB。最近一次是 11 月 6 日删三个旧版远程服务端，腾出约 2 GB。 11月23日计算账户热暂存释放16.69 GB、对象存储净释放3.10 GB，另一账户热暂存释放1.42 GB。清理后重新读回代表日与极端日的完整344列。",
+      "fate_note": "8 月起多次盘点和清理两个账户的存储。较大的几次：10 月 15 日 wangly 清理到期材料约 304 GB，10 月 25 日清定参原料和旧匹配缓存约 128 GB，10 月 31 日两账户清大型 S3 文件净减少约 185 GB。最近一次是 11 月 6 日删三个旧版远程服务端，腾出约 2 GB。 11月23日计算账户热暂存释放16.69 GB、对象存储净释放3.10 GB，另一账户热暂存释放1.42 GB。清理后重新读回代表日与极端日的完整344列。 11月24日补了对象列表超时后的逐层核对，深市预检保留日级对象并释放用完的热暂存。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -460,6 +460,13 @@
           "revision": "521abdde9c0a60cc7003ff0feabdb73f3d58f6ed",
           "title": "保留深市去重对象的原签收读取",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/521abdde9c0a60cc7003ff0feabdb73f3d58f6ed"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "f27739ec34b7fe4fcadc15b4b92f4f65153f4189",
+          "title": "对象盘点超时后用分层列表补齐",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/f27739ec34b7fe4fcadc15b4b92f4f65153f4189"
         }
       ]
     },
@@ -1606,20 +1613,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 13,
+        "days": 14,
         "span": [
           "2026-07-07",
-          "2026-11-23"
+          "2026-11-24"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-24",
+          "on": "2026-11-25",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
       "fate": "landed",
-      "fate_note": "看板维护构建、离线阅读和部署。11月5日两市同名列的下载改用完整精度数据。11月10日改为本机增量发布，修复GBK控制台下的发布锁。日报有HTML时优先打开展示，稳定回放数据拆成独立附件。 工作区盘点、导航、搜索和日报下载页已接入C++工具，发布构建仍用Python。 11月23日日报路径校验、Markdown分节和标题提取接入C++构建工具。",
+      "fate_note": "看板维护构建、离线阅读和部署。11月5日两市同名列的下载改用完整精度数据。11月10日改为本机增量发布，修复GBK控制台下的发布锁。日报有HTML时优先打开展示，稳定回放数据拆成独立附件。 工作区盘点、导航、搜索和日报下载页已接入C++工具，发布构建仍用Python。 11月23日日报路径校验、Markdown分节和标题提取接入C++构建工具。 11月24日固定来源核验与来源登记入口接入C++。独立发布构建在本地分支对照冻结产物，尚待进入生产。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1725,6 +1732,32 @@
           ],
           "title": "看板接入日报原生渲染工具",
           "url": "https://github.com/MengerWen/internship-dashboard/blob/8087ccdc26cf58ff2a7db943492d67dd930bfd90/scripts/page_renderer.py#L1-L100"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "scripts/native/journal_sources.cpp",
+          "revision": "fcfac725b3bba5aa1d40455c57b362292b6050eb",
+          "lines": [
+            1,
+            28
+          ],
+          "title": "看板固定Git来源核验入口",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/fcfac725b3bba5aa1d40455c57b362292b6050eb/scripts/native/journal_sources.cpp#L1-L28"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "commit",
+          "revision": "99cdfcdbfef73ef5024dde0de1a543c6fc418a79",
+          "title": "固定研究日志来源改用C++核验",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/99cdfcdbfef73ef5024dde0de1a543c6fc418a79"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "commit",
+          "revision": "74c7064924e6c9ac296d40ca8f3a64bea96374e9",
+          "title": "研究日志来源登记改用C++生成",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/74c7064924e6c9ac296d40ca8f3a64bea96374e9"
         }
       ]
     },
@@ -1758,26 +1791,27 @@
           "2026-11-13",
           "2026-11-16",
           "2026-11-18",
+          "2026-11-22",
           "2026-11-23"
         ]
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 52,
+        "days": 53,
         "span": [
           "2026-07-07",
-          "2026-11-23"
+          "2026-11-24"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-24",
+          "on": "2026-11-25",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
       "fate": "landed",
-      "fate_note": "两市固定基准、成交和费用陆续进入汇报。11月16日汇报展示三档做T、沪深新旧模型信号和分市场收益，默认两市各用新模型、各自选股。 11月18日发布六层日内研究路线图，提供任务交接和分阶段提示词。 次日按两条研究主线调整11月18日路线图，保留任务编号并提供五个直接开工的入口。 11月18日汇报发布日内与隔日双线路线图，保留旧版，并用完整阶段编号选择及复制提示词。 11月23日发布深市日内负载工期预检，展示扩样曲线、章节跳转和条件估算。",
+      "fate_note": "两市固定基准、成交和费用陆续进入汇报。11月16日汇报展示三档做T、沪深新旧模型信号和分市场收益，默认两市各用新模型、各自选股。 11月18日发布六层日内研究路线图，提供任务交接和分阶段提示词。 次日按两条研究主线调整11月18日路线图，保留任务编号并提供五个直接开工的入口。 11月18日汇报发布日内与隔日双线路线图，保留旧版，并用完整阶段编号选择及复制提示词。 11月23日发布深市日内负载工期预检，展示扩样曲线、章节跳转和条件估算。 11月24日将683日负载与工期结果放入11月22日名义日报，227日提速过程另存11月23日名义技术报告。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1935,6 +1969,30 @@
           ],
           "title": "深市日内负载预检展示说明",
           "url": "https://github.com/MengerWen/internship-dashboard/blob/8087ccdc26cf58ff2a7db943492d67dd930bfd90/content/daily/2026-11-23.md#L1-L19"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "content/daily/2026-11-22.md",
+          "revision": "fcfac725b3bba5aa1d40455c57b362292b6050eb",
+          "lines": [
+            1,
+            20
+          ],
+          "title": "深市683日全池结论展示",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/fcfac725b3bba5aa1d40455c57b362292b6050eb/content/daily/2026-11-22.md#L1-L20"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "content/daily/2026-11-23.md",
+          "revision": "fcfac725b3bba5aa1d40455c57b362292b6050eb",
+          "lines": [
+            1,
+            22
+          ],
+          "title": "227日提速技术报告",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/fcfac725b3bba5aa1d40455c57b362292b6050eb/content/daily/2026-11-23.md#L1-L22"
         }
       ]
     },
@@ -5155,7 +5213,7 @@
       "purpose": "从逐笔行情到深市344列面板复用原公式，比较冻结Python、Python调C++和独立C++的正确性与完整耗时。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。 同版代表日23.10和23.12秒、极端日140.90秒，均完成科学核对和持久读回。683日保守外推5.77小时，三项时限和后续交接未完成。 11月23日增加了报价区间复用和跨日预取，响应模板改写已撤回。同版整链耗时待核。",
+      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。 同版代表日23.10和23.12秒、极端日140.90秒，均完成科学核对和持久读回。683日保守外推5.77小时，三项时限和后续交接未完成。 11月23日增加了报价区间复用和跨日预取，响应模板改写已撤回。同版整链耗时待核。 11月24日同版完整对照为代表日27.91秒、极端日140.54秒，三项时限仍未过。保留64列分块，后续按重股候选、构图和指派重新设计内核。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5163,15 +5221,15 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-21",
-        "days": 4,
+        "days": 5,
         "span": [
           "2026-11-20",
-          "2026-11-23"
+          "2026-11-24"
         ],
         "unreviewed_days": [],
         "scope": "固定原始报告、组件与全池收据、用户立项和验收范围。",
         "incremental_review": {
-          "on": "2026-11-24",
+          "on": "2026-11-25",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
@@ -5316,6 +5374,44 @@
           "revision": "51f8d7122501672273f66405cb35a99186fe59a6",
           "title": "恢复响应模板原扫描",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/51f8d7122501672273f66405cb35a99186fe59a6"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-szse344-n02-p1-transport-and-core.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            68
+          ],
+          "title": "深市344列各版完整耗时及同批对照",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-szse344-n02-p1-transport-and-core.md#L1-L68"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-24-szse344-algorithmic-speedup-plan.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            23,
+            119
+          ],
+          "title": "深市重股提速与共用内核规划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/PLAN/2026-11-24-szse344-algorithmic-speedup-plan.md#L23-L119"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "5430d43449d2294c46668e1defe80e974e23147b",
+          "title": "正式深市因子接入预检验证过的二进制取数",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/5430d43449d2294c46668e1defe80e974e23147b"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "title": "压缩配对图并验证指派的代码改动",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/7942582080c8fa17474b34b658a385ca40eb2b32"
         }
       ]
     },
@@ -5327,7 +5423,7 @@
       "purpose": "按实际入口迁移项目自研Python功能，分别验收沪深定参和正式因子全链的正确性与耗时。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "盘点三仓3,649个文件，迁移部分取数、成表、定参、正式计算和看板工具。沪深含重负载三日定参平均660.00和258.19秒，仍高于8秒目标。17:37保存进度并暂停，全面迁移和各项时限待验收。 11月23日完成沪市340列代表日、极端日及独立留出对照。极端日约3小时26分，两市定参仍未达到时限。更新版本的极端日保留三个侧断点。",
+      "fate_note": "盘点三仓3,649个文件，迁移部分取数、成表、定参、正式计算和看板工具。沪深含重负载三日定参平均660.00和258.19秒，仍高于8秒目标。17:37保存进度并暂停，全面迁移和各项时限待验收。 11月23日完成沪市340列代表日、极端日及独立留出对照。极端日约3小时26分，两市定参仍未达到时限。更新版本的极端日保留三个侧断点。 11月24日沪市340列正式因子最快代表日194.30秒，沪市固定上游定参最快代表日140.62秒、七月三日日均141.00秒，均高于目标。存量3,659条记录已分类，并确定8条业务必须有独立C++顶层入口。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5335,15 +5431,15 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-23",
-        "days": 2,
+        "days": 3,
         "span": [
           "2026-11-22",
-          "2026-11-23"
+          "2026-11-24"
         ],
         "unreviewed_days": [],
         "scope": "独立立项、沪深同标要求、原始运行收据、持久结果及暂停决定。",
         "incremental_review": {
-          "on": "2026-11-24",
+          "on": "2026-11-25",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
@@ -5491,6 +5587,80 @@
           ],
           "title": "项目迁移与跨任务复用规约",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/fa3a7b8a2a1e007c91962a61f5b2b43654981c02/docs/agents/cpp-migration.md#L1-L29"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-sse-calibration-throughput.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            12
+          ],
+          "title": "沪市固定上游定参与速度门",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-sse-calibration-throughput.md#L1-L12"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-sse-formal-factor-performance.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            32
+          ],
+          "title": "沪市340列代表日从取数到读回对照",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-sse-formal-factor-performance.md#L1-L32"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-project-python-migration-pause.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            28
+          ],
+          "title": "迁移暂停与已验收边界",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-project-python-migration-pause.md#L1-L28"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-24-project-wide-cpp-migration-master-plan.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            8,
+            33
+          ],
+          "title": "八条主线独立C++入口规划",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/PLAN/2026-11-24-project-wide-cpp-migration-master-plan.md#L8-L33"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-project-python-inventory-triage.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            29
+          ],
+          "title": "三仓3,659条Python及笔记本记录分类",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-project-python-inventory-triage.md#L1-L29"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "797312c90ee022c0906af12ac60afd32797d18e6",
+          "title": "沪市独立入口覆盖回放及首批68列",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/797312c90ee022c0906af12ac60afd32797d18e6"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "822684e1e8e46a5128a175d0590d49f9306779b8",
+          "title": "连续账簿独立C++离线入口",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/822684e1e8e46a5128a175d0590d49f9306779b8"
         }
       ]
     },
@@ -5502,7 +5672,7 @@
       "purpose": "估计逐笔行情窗口从开盘五分钟延到全天时的分阶段工期，检验样本代表性和预检自身速度。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "24日96股日扩样将同侧配对机会估计从14.43倍修至3.27倍。六个全池日已完成；227日按后段实测外推5小时20分，晚间将目标收紧到一小时。",
+      "fate_note": "24日96股日扩样将同侧配对机会估计从14.43倍修至3.27倍。六个全池日已完成；227日按后段实测外推5小时20分，晚间将目标收紧到一小时。 11月24日从空目录重算227日用47分05秒，通过一小时目标。扩至683日后，三表有效逐笔共1,385亿行，全部逐日核对并读回88个截点。延至14:57的定参加正式产出条件估算约352.9小时。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": [
@@ -5513,13 +5683,17 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-24",
-        "days": 1,
+        "days": 2,
         "span": [
           "2026-11-23",
-          "2026-11-23"
+          "2026-11-24"
         ],
         "unreviewed_days": [],
-        "scope": "初版计划、扩样、全池收据、排期外推与次阶段时间目标。"
+        "scope": "初版计划、扩样、全池收据、排期外推与次阶段时间目标。",
+        "incremental_review": {
+          "on": "2026-11-25",
+          "scope": "核对目标日固定材料、原始回执和会话决定。"
+        }
       },
       "source_refs": [
         {
@@ -5569,6 +5743,42 @@
           ],
           "title": "全池科学指纹和持久恢复证据",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/fa3a7b8a2a1e007c91962a61f5b2b43654981c02/reports/2026-11/2026-11-23-szse-intraday-preflight-227d-runtime-evidence.json#L1-L32"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-23-szse-intraday-workload-and-runtime-preflight.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            147,
+            162
+          ],
+          "title": "683日全池验收和恢复计时",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/PLAN/2026-11-23-szse-intraday-workload-and-runtime-preflight.md#L147-L162"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-szse-intraday-preflight-one-hour.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            67
+          ],
+          "title": "227日从空目录重算和逐日验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-szse-intraday-preflight-one-hour.md#L1-L67"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-szse-intraday-preflight-one-hour-evidence.json",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "227日工期与逐股指纹回执",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-szse-intraday-preflight-one-hour-evidence.json#L1-L65"
         }
       ]
     }
@@ -8701,6 +8911,43 @@
       },
       "from": "szse-intraday-workload-preflight",
       "to": "report-publish"
+    },
+    {
+      "from": "szse-intraday-workload-preflight",
+      "to": "szse344-cpp-rewrite",
+      "date": "2026-11-24",
+      "source_date": "2026-11-24",
+      "type": "派生",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "将深市预检核对过的Doris二进制取数接入344列正式因子对照。",
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-24-szse-intraday-preflight-one-hour.md",
+          "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
+          "lines": [
+            1,
+            67
+          ],
+          "title": "227日从空目录重算和逐日验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/7942582080c8fa17474b34b658a385ca40eb2b32/reports/2026-11/2026-11-24-szse-intraday-preflight-one-hour.md#L1-L67"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "5430d43449d2294c46668e1defe80e974e23147b",
+          "title": "正式深市因子接入预检验证过的二进制取数",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/5430d43449d2294c46668e1defe80e974e23147b"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-25",
+        "basis": "正式计算提交明确复用已验预检传输。",
+        "scope": "曾进入试算，后续保留的运输路径见整链复测。"
+      }
     }
   ],
   "evidence_snapshot": {
