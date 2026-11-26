@@ -212,20 +212,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 5,
+        "days": 6,
         "span": [
           "2026-09-29",
-          "2026-10-28"
+          "2026-11-25"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-10-29",
-          "scope": "28日固定来源、独立目录及原始消息增补；来源覆盖仍不完整。"
+          "on": "2026-11-26",
+          "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
       "fate": "landed",
-      "fate_note": "10 月 9 日公共取数入口接入分组定标。10 月 26 日实测后定为账户共用两路 SQL，27 日换新分页形状、在冷数据上改选三路；28 日把有效核数的量法改成按完整的一日周期算。Doris 的详细执行信息没有权限看。",
+      "fate_note": "10 月 9 日公共取数入口接入分组定标。10 月 26 日实测后定为账户共用两路 SQL，27 日换新分页形状、在冷数据上改选三路；28 日把有效核数的量法改成按完整的一日周期算。Doris 的详细执行信息没有权限看。 11月25日同一代表日全池取数、验签和封包从12.00秒降至6.31秒，冻结输入一致。自适应分页进入深市在线复验。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -275,6 +275,32 @@
           ],
           "title": "28日增量结果及最后决定",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/0358f0245461c94066502923dc3be9f9213b761d/docs/agents/compute-efficiency.md#L1-L145"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-track-d1-doris-fetch-profile.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            3,
+            54
+          ],
+          "title": "Doris 同样本传输对照与在线长尾来源",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-track-d1-doris-fetch-profile.md#L3-L54"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "3374877c5ee86bf198841651995e530bb3286a26",
+          "title": "定型文本取数与自适应调度",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/3374877c5ee86bf198841651995e530bb3286a26"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "title": "修复 Arrow 页预算",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1"
         }
       ]
     },
@@ -1613,20 +1639,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 14,
+        "days": 15,
         "span": [
           "2026-07-07",
-          "2026-11-24"
+          "2026-11-25"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-25",
+          "on": "2026-11-26",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
       "fate": "landed",
-      "fate_note": "看板维护构建、离线阅读和部署。11月5日两市同名列的下载改用完整精度数据。11月10日改为本机增量发布，修复GBK控制台下的发布锁。日报有HTML时优先打开展示，稳定回放数据拆成独立附件。 工作区盘点、导航、搜索和日报下载页已接入C++工具，发布构建仍用Python。 11月23日日报路径校验、Markdown分节和标题提取接入C++构建工具。 11月24日固定来源核验与来源登记入口接入C++。独立发布构建在本地分支对照冻结产物，尚待进入生产。",
+      "fate_note": "看板维护构建、离线阅读和部署。11月5日两市同名列的下载改用完整精度数据。11月10日改为本机增量发布，修复GBK控制台下的发布锁。日报有HTML时优先打开展示，稳定回放数据拆成独立附件。 工作区盘点、导航、搜索和日报下载页已接入C++工具，发布构建仍用Python。 11月23日日报路径校验、Markdown分节和标题提取接入C++构建工具。 11月24日固定来源核验与来源登记入口接入C++。独立发布构建在本地分支对照冻结产物，尚待进入生产。 11月25日发布构建的独立 C++ 入口合入主线，冻结产物对照9,136个文件一致。新目录构建22.97秒，暖缓存复跑6.87秒。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1758,6 +1784,25 @@
           "revision": "74c7064924e6c9ac296d40ca8f3a64bea96374e9",
           "title": "研究日志来源登记改用C++生成",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/74c7064924e6c9ac296d40ca8f3a64bea96374e9"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "artifacts/d1-dashboard-builder/validation.md",
+          "revision": "014de2477c8d6ae497000f9f9f310d8d818479e7",
+          "lines": [
+            1,
+            24
+          ],
+          "title": "看板原生构建的冻结产物对照",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/014de2477c8d6ae497000f9f9f310d8d818479e7/artifacts/d1-dashboard-builder/validation.md#L1-L24"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "commit",
+          "revision": "8bf92deff7928f9a6e1110765e05dee7be864a78",
+          "title": "看板发布入口切换为独立 C++",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/8bf92deff7928f9a6e1110765e05dee7be864a78"
         }
       ]
     },
@@ -5213,7 +5258,7 @@
       "purpose": "从逐笔行情到深市344列面板复用原公式，比较冻结Python、Python调C++和独立C++的正确性与完整耗时。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。 同版代表日23.10和23.12秒、极端日140.90秒，均完成科学核对和持久读回。683日保守外推5.77小时，三项时限和后续交接未完成。 11月23日增加了报价区间复用和跨日预取，响应模板改写已撤回。同版整链耗时待核。 11月24日同版完整对照为代表日27.91秒、极端日140.54秒，三项时限仍未过。保留64列分块，后续按重股候选、构图和指派重新设计内核。",
+      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。 同版代表日23.10和23.12秒、极端日140.90秒，均完成科学核对和持久读回。683日保守外推5.77小时，三项时限和后续交接未完成。 11月23日增加了报价区间复用和跨日预取，响应模板改写已撤回。同版整链耗时待核。 11月24日同版完整对照为代表日27.91秒、极端日140.54秒，三项时限仍未过。保留64列分块，后续按重股候选、构图和指派重新设计内核。 11月25日两日在线因子逐位一致，测试发布和独立读回通过。成功重试的双日守护墙钟64.12秒，683日在线两小时目标待实测。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5221,15 +5266,15 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-21",
-        "days": 5,
+        "days": 6,
         "span": [
           "2026-11-20",
-          "2026-11-24"
+          "2026-11-25"
         ],
         "unreviewed_days": [],
         "scope": "固定原始报告、组件与全池收据、用户立项和验收范围。",
         "incremental_review": {
-          "on": "2026-11-25",
+          "on": "2026-11-26",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
@@ -5412,6 +5457,61 @@
           "revision": "7942582080c8fa17474b34b658a385ca40eb2b32",
           "title": "压缩配对图并验证指派的代码改动",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/7942582080c8fa17474b34b658a385ca40eb2b32"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-szse344-track-s-s4-verify-r2.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            1,
+            45
+          ],
+          "title": "深市极端日离线回放与首轮在线阻断",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-szse344-track-s-s4-verify-r2.md#L1-L45"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r2.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            1,
+            37
+          ],
+          "title": "深市两日在线逐位核对及首次发布读回",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r2.md#L1-L37"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r3.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            1,
+            49
+          ],
+          "title": "深市两日在线复验及三日定参",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r3.md#L1-L49"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r3-evidence.json",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "深市在线复验和定参机器收据",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r3-evidence.json#L1-L65"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "3f14178a02c8b77ca2f9136197f217797f429399",
+          "title": "在线取数、发布与有序恢复收据",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/3f14178a02c8b77ca2f9136197f217797f429399"
         }
       ]
     },
@@ -5423,7 +5523,7 @@
       "purpose": "按实际入口迁移项目自研Python功能，分别验收沪深定参和正式因子全链的正确性与耗时。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "盘点三仓3,649个文件，迁移部分取数、成表、定参、正式计算和看板工具。沪深含重负载三日定参平均660.00和258.19秒，仍高于8秒目标。17:37保存进度并暂停，全面迁移和各项时限待验收。 11月23日完成沪市340列代表日、极端日及独立留出对照。极端日约3小时26分，两市定参仍未达到时限。更新版本的极端日保留三个侧断点。 11月24日沪市340列正式因子最快代表日194.30秒，沪市固定上游定参最快代表日140.62秒、七月三日日均141.00秒，均高于目标。存量3,659条记录已分类，并确定8条业务必须有独立C++顶层入口。",
+      "fate_note": "盘点三仓3,649个文件，迁移部分取数、成表、定参、正式计算和看板工具。沪深含重负载三日定参平均660.00和258.19秒，仍高于8秒目标。17:37保存进度并暂停，全面迁移和各项时限待验收。 11月23日完成沪市340列代表日、极端日及独立留出对照。极端日约3小时26分，两市定参仍未达到时限。更新版本的极端日保留三个侧断点。 11月24日沪市340列正式因子最快代表日194.30秒，沪市固定上游定参最快代表日140.62秒、七月三日日均141.00秒，均高于目标。存量3,659条记录已分类，并确定8条业务必须有独立C++顶层入口。 11月25日两台服务器通过原生构建及空 PATH 离线测试。沪市340列和定参入口继续合入，双日实数对照待完成。深市定参连续三日日均15.76秒，仍高于8秒。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5431,15 +5531,15 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-23",
-        "days": 3,
+        "days": 4,
         "span": [
           "2026-11-22",
-          "2026-11-24"
+          "2026-11-25"
         ],
         "unreviewed_days": [],
         "scope": "独立立项、沪深同标要求、原始运行收据、持久结果及暂停决定。",
         "incremental_review": {
-          "on": "2026-11-25",
+          "on": "2026-11-26",
           "scope": "核对目标日固定材料、原始回执和会话决定。"
         }
       },
@@ -5661,6 +5761,51 @@
           "revision": "822684e1e8e46a5128a175d0590d49f9306779b8",
           "title": "连续账簿独立C++离线入口",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/822684e1e8e46a5128a175d0590d49f9306779b8"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-server-cpp-sysroot-parity.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            5,
+            39
+          ],
+          "title": "两台服务器的原生工具链与离线测试",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-server-cpp-sysroot-parity.md#L5-L39"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-24-project-wide-cpp-migration-master-plan.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            122,
+            142
+          ],
+          "title": "独立 C++ 入口的合入与双机验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/PLAN/2026-11-24-project-wide-cpp-migration-master-plan.md#L122-L142"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "21591ef7af8333a13f6d9ff7b46de3b61385a8fd",
+          "title": "沪市340列独立在线入口",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/21591ef7af8333a13f6d9ff7b46de3b61385a8fd"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "a89d81f0dbf577f4c71308ca6d5780a2a19a5bc9",
+          "title": "沪市独立定参及冻结参数核对",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/a89d81f0dbf577f4c71308ca6d5780a2a19a5bc9"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "d664b5159c245c086eb142db41053a79e4775b14",
+          "title": "深市定参共享图预算和跨日预取",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/d664b5159c245c086eb142db41053a79e4775b14"
         }
       ]
     },
@@ -8947,6 +9092,55 @@
         "on": "2026-11-25",
         "basis": "正式计算提交明确复用已验预检传输。",
         "scope": "曾进入试算，后续保留的运输路径见整链复测。"
+      }
+    },
+    {
+      "from": "doris-efficiency",
+      "to": "szse344-cpp-rewrite",
+      "date": "2026-11-25",
+      "source_date": "2026-11-25",
+      "type": "派生",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "把定型文本取数和自适应分页接入深市344列两日在线复验。",
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-track-d1-doris-fetch-profile.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            3,
+            54
+          ],
+          "title": "Doris 同样本传输对照与在线长尾来源",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-track-d1-doris-fetch-profile.md#L3-L54"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "3374877c5ee86bf198841651995e530bb3286a26",
+          "title": "定型文本取数与自适应调度",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/3374877c5ee86bf198841651995e530bb3286a26"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r3.md",
+          "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+          "lines": [
+            1,
+            49
+          ],
+          "title": "深市两日在线复验及三日定参",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1/reports/2026-11/2026-11-25-track-d3-szse-two-quadrant-verify-r3.md#L1-L49"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-26",
+        "basis": "两日原始回执显示文本通道、并发水位和实际页数。",
+        "scope": "测试发布期间的真实取数与面板读回。"
       }
     }
   ],

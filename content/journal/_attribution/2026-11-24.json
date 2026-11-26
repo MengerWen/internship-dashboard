@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "date": "2026-11-24",
   "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
-  "source_config_sha256": "e7f8fa61b19dfd206152f3877c0a6202e0087781ef130447baf4207d506d0901",
-  "rules_sha256": "d6b1fcff785c751f566148889f2ff366909edf2cb4064d6513239a101d23cc5e",
+  "source_config_sha256": "42c2fbcd0e7ca9b137412a38d90345669a39c398073299e33b4a90246155ca1e",
+  "rules_sha256": "dde78eea21026bb19ff0fe613ef03ca73ff4602a40b8393cdc925c3b6c955f21",
   "revisions": {
-    "sirui-quant-research": "7942582080c8fa17474b34b658a385ca40eb2b32",
-    "Quant_Research-Trading": "638767e57acaa6bf55dc74795ed12d1c0f64cce4",
-    "internship-dashboard": "fcfac725b3bba5aa1d40455c57b362292b6050eb"
+    "sirui-quant-research": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
+    "Quant_Research-Trading": "e8f3ca7571a38f0838bbc6b6cc30a848611f7ca8",
+    "internship-dashboard": "014de2477c8d6ae497000f9f9f310d8d818479e7"
   },
   "items": [
     {
@@ -285,6 +285,38 @@
       "paths": [
         "content/daily/2026-11-22.md",
         "content/daily/2026-11-22.show.html"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "8bf92deff7928f9a6e1110765e05dee7be864a78",
+      "date": "2026-11-24",
+      "subject": "将看板发布构建切换到独立 C++ 工具",
+      "status": "assigned",
+      "chains": [
+        "dashboard-build"
+      ],
+      "reason": "看板发布构建切换为独立 C++ 入口及冻结 Python 产物对照。",
+      "shares": {
+        "dashboard-build": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "DEPLOY.md",
+        "artifacts/d1-dashboard-builder/validation.md",
+        "package-lock.json",
+        "package.json",
+        "scripts/native/dashboard_assets.cpp",
+        "scripts/native/dashboard_build.hpp",
+        "scripts/native/dashboard_builder.cpp",
+        "scripts/native/dashboard_code.cpp",
+        "scripts/native/dashboard_compare.cpp",
+        "scripts/native/dashboard_io.cpp",
+        "scripts/native/dashboard_journal.cpp",
+        "scripts/native/dashboard_main.cpp"
       ]
     },
     {
@@ -8556,6 +8588,38 @@
     },
     {
       "repo": "sirui-quant-research",
+      "sha": "cdf0b6d2fdb0974d7dd25ff7e135523ca0900203",
+      "date": "2026-11-24",
+      "subject": "Add standalone C++ sirui_guard runtime",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市正式因子、沪深定参、共享内核、守护、工具链或对象发布的迁移。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/native/sirui_guard/README.md",
+        "lv2_snapshot_workspace/native/sirui_guard/contract.cpp",
+        "lv2_snapshot_workspace/native/sirui_guard/contract.hpp",
+        "lv2_snapshot_workspace/native/sirui_guard/linux.cpp",
+        "lv2_snapshot_workspace/native/sirui_guard/linux_process.cpp",
+        "lv2_snapshot_workspace/native/sirui_guard/linux_process.hpp",
+        "lv2_snapshot_workspace/native/sirui_guard/linux_trading.cpp",
+        "lv2_snapshot_workspace/native/sirui_guard/linux_trading.hpp",
+        "lv2_snapshot_workspace/native/sirui_guard/main.cpp",
+        "lv2_snapshot_workspace/native/sirui_guard/resources.cpp",
+        "lv2_snapshot_workspace/native/sirui_guard/resources.hpp",
+        "lv2_snapshot_workspace/native/sirui_guard/self_test.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
       "sha": "ff506058f47a97735c815a1b8bdb4bd634c05361",
       "date": "2026-11-24",
       "subject": "perf(szse344): prune exact opening response windows",
@@ -8602,6 +8666,30 @@
         "因子/algobench/native/kernels/f40_assignment/f40_assignment_regression.cpp",
         "因子/algobench/native/kernels/f40_assignment/f40_assignment_v1.hpp",
         "因子/algobench/native/kernels/registry/f40_assignment_v1.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "50f0ca0fe95366d8dbb63c84d90fe434e50b40f7",
+      "date": "2026-11-24",
+      "subject": "perf(szse344): sweep BBO quotes and build component CSR",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列入口、盘口匹配与在线逐位对照。联合报告按主要交付记一次。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/native/kernels/bbo_sweep/bbo_sweep.hpp",
+        "因子/algobench/native/kernels/bbo_sweep/bbo_sweep_test.cpp",
+        "因子/algobench/native/kernels/registry/bbo_sweep_v1.md"
       ]
     }
   ]
