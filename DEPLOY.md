@@ -149,7 +149,7 @@ npm run deploy
 D:\MG\anaconda3\python.exe build.py --offline
 ```
 
-发布命令要求 Windows 上的干净 `main` 与 GitHub `origin/main` 一致。它调用 `dashboard_builder` 复用 `dist/`，仅复制已入库的站点静态文件，确认构建产物和搜索索引齐全后发布到 `wrangler.jsonc` 指定的 Worker。构建器直接调用 Git 和 `npm ci` 安装的 Pagefind 二进制。Wrangler 版本记录 Git SHA，终端显示构建、Wrangler 和总耗时。`npm run deploy -- -DryRun` 只做本机构建及 Wrangler 打包检查。
+发布命令要求 Windows 主工作区签出 `main`，且 `HEAD` 与 GitHub `origin/main` 一致。它在持久的 `.local/release-worktree` 中检出该提交，隔离构建并发布。主工作区有未提交、未跟踪或被忽略的源码时，终端会提示，这些改动不阻塞发布，也不会混入生产产物。发布 worktree 复用自己的 `dist/` 和独立构建缓存，并调用主工作区已安装的 C++ 构建器和 Pagefind。主工作区的依赖锁及已安装的 Node 依赖必须与发布提交匹配。确认构建产物和搜索索引齐全后，脚本按该提交的 `wrangler.jsonc` 发布到指定的 Worker。Wrangler 版本记录 Git SHA，终端显示构建、Wrangler 和总耗时。`npm run deploy -- -DryRun` 只做本机构建及 Wrangler 打包检查。
 
 首次发布会填充本地资源哈希缓存。以后构建时记录源文件和产物的文件标识，Wrangler 对源文件未变且仍与本次复制记录一致的产物复用哈希。升级到不兼容的 Wrangler 版本时，发布自动恢复全量计算。需要手动走原流程时，运行 `npm run deploy -- -FullAssets`。
 

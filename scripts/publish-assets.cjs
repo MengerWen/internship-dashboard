@@ -6,7 +6,6 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 
 const ROOT = path.resolve(__dirname, '..');
-const CLI = path.join(ROOT, 'node_modules/wrangler/wrangler-dist/cli.js');
 const ASSET_SOURCES = ['site/assets/', 'content/assets/'];
 
 function sha256(bytes) {
@@ -121,10 +120,11 @@ function enableCache(manifestFile) {
         console.warn('当前 Node.js 不支持加载哈希缓存，使用 Wrangler 全量计算。');
         return;
     }
-    const cliUrl = pathToFileURL(CLI).href;
+    const cli = require.resolve('wrangler');
+    const cliUrl = pathToFileURL(cli).href;
     registerHooks({ load(url, context, nextLoad) {
         if (url !== cliUrl) return nextLoad(url, context);
-        const source = fs.readFileSync(CLI, 'utf8');
+        const source = fs.readFileSync(cli, 'utf8');
         const hashBody = [
             '      const contents = fs12.readFileSync(filepath);',
             '      const base64Contents = contents.toString("base64");',
