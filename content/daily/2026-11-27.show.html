@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>思瑞投资量化策略研究与系统演进总纲（第一性原理版）· 量化实习成果看板</title>
+  <title>1 亿实盘研究总纲与首批实证 · 思瑞量化</title>
   <style>
     :root {
       color-scheme: light;
@@ -21,8 +21,8 @@
       --focus-tint: rgba(217, 101, 79, 0.11);
       --blue: #345f79;
       --blue-tint: rgba(52, 95, 121, 0.11);
-      --green: #356861;
-      --green-tint: rgba(53, 104, 97, 0.11);
+      --green: #2c5e56;
+      --green-tint: rgba(44, 94, 86, 0.12);
       --ochre: #7d5724;
       --ochre-tint: rgba(125, 87, 36, 0.11);
       --danger: #a6382f;
@@ -33,13 +33,8 @@
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
-    ::selection {
-      background: rgba(217, 101, 79, 0.24);
-      color: var(--text);
-    }
+    ::selection { background: rgba(217, 101, 79, 0.24); color: var(--text); }
 
     body {
       margin: 0;
@@ -49,7 +44,7 @@
         linear-gradient(rgba(21, 33, 43, 0.014) 1px, transparent 1px);
       background-size: 32px 32px;
       color: var(--text);
-      font: 15px/1.72 var(--font-body);
+      font: 15px/1.75 var(--font-body);
       -webkit-font-smoothing: antialiased;
     }
 
@@ -57,16 +52,9 @@
     ::-webkit-scrollbar-track { background: var(--bg-deep); }
     ::-webkit-scrollbar-thumb { background: var(--line-soft); border-radius: var(--radius); }
     ::-webkit-scrollbar-thumb:hover { background: var(--ink-soft); }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
-    :focus-visible {
-      outline: 2px solid var(--focus);
-      outline-offset: 3px;
-    }
-
-    a {
-      color: var(--blue);
-      text-underline-offset: 0.2em;
-    }
+    a { color: var(--blue); text-underline-offset: 0.2em; }
     a:hover { color: var(--focus-ink); }
 
     h1, h2, h3, h4 {
@@ -75,17 +63,14 @@
       margin: 0;
       letter-spacing: -0.01em;
     }
-    h1 { font-size: clamp(26px, 3.6vw, 40px); }
-    h2 { font-size: clamp(20px, 2.2vw, 26px); }
+    h1 { font-size: clamp(26px, 3.4vw, 38px); }
+    h2 { font-size: clamp(20px, 2.2vw, 25px); }
     h3 { font-size: 16.5px; }
     p, ul, ol, dl, dd, figure { margin: 0; }
 
-    code, .mono {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-    }
+    code, .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
     code {
-      font-size: 0.87em;
+      font-size: 0.86em;
       background: var(--surface-2);
       padding: 1px 5px;
       border-radius: var(--radius);
@@ -93,28 +78,28 @@
     .num { font-variant-numeric: tabular-nums; }
 
     main {
-      width: min(100%, 1280px);
+      width: min(100%, 1240px);
       margin-inline: auto;
-      padding: clamp(16px, 2.8vw, 34px) clamp(14px, 2.8vw, 34px) 64px;
+      padding: clamp(16px, 2.8vw, 32px) clamp(14px, 2.8vw, 32px) 64px;
     }
 
-    /* Sticky Section Jump Bar */
+    /* Sticky Nav */
     .jump-nav {
       position: sticky;
       top: 0;
       z-index: 40;
-      background: rgba(242, 238, 228, 0.95);
+      background: rgba(242, 238, 228, 0.96);
       border-bottom: 1px solid var(--line);
       backdrop-filter: blur(4px);
     }
     .jump-nav-inner {
-      width: min(100%, 1280px);
+      width: min(100%, 1240px);
       margin-inline: auto;
-      padding: 0 clamp(14px, 2.8vw, 34px);
+      padding: 0 clamp(14px, 2.8vw, 32px);
       display: flex;
       align-items: stretch;
       overflow-x: auto;
-      gap: 2px;
+      gap: 4px;
       scrollbar-width: none;
     }
     .jump-nav-inner::-webkit-scrollbar { display: none; }
@@ -122,22 +107,16 @@
       flex: 0 0 auto;
       display: inline-flex;
       align-items: center;
-      padding: 10px 13px;
-      font-size: 13px;
+      padding: 10px 14px;
+      font-size: 13.5px;
       font-weight: 600;
       color: var(--text);
       text-decoration: none;
       border-bottom: 2px solid transparent;
       transition: background-color 140ms ease, border-color 140ms ease;
     }
-    .jump-nav a:hover {
-      background: var(--surface-2);
-      color: var(--text);
-    }
-    .jump-nav a.active {
-      border-bottom-color: var(--focus);
-      background: var(--surface);
-    }
+    .jump-nav a:hover { background: var(--surface-2); color: var(--text); }
+    .jump-nav a.active { border-bottom-color: var(--focus); background: var(--surface); }
 
     /* Masthead */
     .mast {
@@ -154,6 +133,7 @@
       gap: 8px 16px;
       font-size: 13px;
       margin-bottom: 10px;
+      color: var(--ink-soft);
     }
     .mast-meta-left {
       display: flex;
@@ -169,92 +149,62 @@
     .mast-stamp {
       font-family: var(--font-mono);
       font-size: 12px;
-      border: 1px solid var(--line);
-      background: var(--surface);
+      border: 1px solid var(--green);
+      background: var(--green-tint);
+      color: var(--green);
+      font-weight: 700;
       padding: 2px 9px;
       border-radius: var(--radius);
     }
     .mast h1 { margin-bottom: 10px; }
     .mast-lead {
-      max-width: 78ch;
-      font: 16px/1.8 var(--font-serif);
-      margin-bottom: 12px;
+      max-width: 72ch;
+      font: 16.5px/1.75 var(--font-serif);
+      color: var(--text);
     }
-    .mast-stance {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--line-soft);
-      border: 1px solid var(--line);
-      margin-top: 14px;
-    }
-    .stance-cell {
-      background: var(--surface);
-      padding: 10px 14px;
-      font-size: 13.5px;
-      line-height: 1.6;
-    }
-    .stance-cell strong {
-      font-family: var(--font-serif);
-      display: inline-block;
-      margin-right: 6px;
-    }
+    .mast-lead strong { color: var(--focus-ink); }
 
-    /* Baseline Strip */
-    .baseline-strip {
+    /* Headline KPI Strip */
+    .kpi-strip {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1px;
       background: var(--line-soft);
       border: 1px solid var(--line);
-      margin-bottom: 26px;
+      margin-bottom: 28px;
     }
-    .base-cell {
+    .kpi-cell {
       background: var(--surface);
-      padding: 13px 15px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-    .base-title {
-      font-size: 12.5px;
-      font-weight: 700;
-    }
-    .base-metric {
-      font: 700 clamp(20px, 2.2vw, 26px)/1.2 var(--font-serif);
+    .kpi-label { font-size: 12.5px; font-weight: 700; color: var(--ink-soft); }
+    .kpi-val {
+      font: 700 clamp(21px, 2.2vw, 27px)/1.2 var(--font-serif);
       font-variant-numeric: tabular-nums;
     }
-    .base-metric.is-blue { color: var(--blue); }
-    .base-metric.is-green { color: var(--green); }
-    .base-metric.is-focus { color: var(--focus-ink); }
-    .base-desc {
-      font-size: 12.5px;
-      line-height: 1.55;
-      color: var(--ink-soft);
-    }
+    .kpi-val.is-green { color: var(--green); }
+    .kpi-val.is-focus { color: var(--focus-ink); }
+    .kpi-val.is-blue { color: var(--blue); }
+    .kpi-note { font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
 
-    /* Section Shell */
-    .sec {
-      margin-top: 34px;
-      scroll-margin-top: 52px;
-    }
+    /* Sections */
+    .sec { margin-top: 38px; scroll-margin-top: 52px; }
     .sec-head {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: baseline;
-      gap: 8px 18px;
+      gap: 6px 18px;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--line);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
-    .sec-sub {
-      font-size: 13.5px;
-      color: var(--ink-soft);
-      max-width: 72ch;
-    }
+    .sec-sub { font-size: 13.5px; color: var(--ink-soft); max-width: 70ch; }
 
-    /* Section 1: Interactive First-Principles Equation */
+    /* Section 1: Problem & Equation */
     .eq-box {
       background: var(--surface);
       border: 1px solid var(--line);
@@ -266,23 +216,18 @@
       align-items: center;
       gap: 8px 10px;
       font-family: var(--font-serif);
-      font-size: clamp(15px, 1.7vw, 19px);
-      line-height: 1.6;
+      font-size: clamp(15px, 1.6vw, 18px);
       padding-bottom: 14px;
       border-bottom: 1px solid var(--line-soft);
     }
-    .eq-op {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      color: var(--ink-soft);
-    }
+    .eq-op { font-family: var(--font-mono); font-weight: 700; color: var(--ink-soft); }
     .eq-term {
       appearance: none;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--bg);
       color: var(--text);
-      padding: 7px 12px;
+      padding: 8px 13px;
       font: inherit;
       font-size: 14.5px;
       text-align: left;
@@ -300,21 +245,18 @@
       font-family: var(--font-body);
       font-size: 12px;
       margin-top: 2px;
-      opacity: 0.88;
+      opacity: 0.85;
     }
     .eq-detail {
       display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px 24px;
       padding-top: 14px;
-      font-size: 13.5px;
+      font-size: 14px;
     }
-    .eq-detail h3 {
-      font-size: 15.5px;
-      margin-bottom: 6px;
-    }
-    .eq-detail p { max-width: 68ch; line-height: 1.68; }
-    .eq-coupling {
+    .eq-detail h3 { font-size: 15.5px; margin-bottom: 6px; }
+    .eq-detail p { line-height: 1.7; max-width: 64ch; }
+    .eq-foot {
       margin-top: 14px;
       padding-top: 12px;
       border-top: 1px dashed var(--line-soft);
@@ -322,93 +264,157 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 8px 16px;
-      font-size: 13px;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--ink-soft);
     }
-    .eq-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .eq-chip {
-      border: 1px solid var(--line-soft);
-      background: var(--bg);
-      padding: 3px 9px;
-      font-size: 12.5px;
-      border-radius: var(--radius);
-    }
-    .eq-jump-btn {
-      appearance: none;
+    .eq-foot strong { color: var(--text); }
+
+    /* Section 2: 4 Empirical Findings (Real Data) */
+    .finding-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
       border: 1px solid var(--line);
+      margin-bottom: 14px;
+    }
+    .ftab {
+      appearance: none;
+      border: 0;
       background: var(--surface);
       color: var(--text);
-      font: 600 13px/1.2 var(--font-body);
-      padding: 7px 12px;
-      border-radius: var(--radius);
+      padding: 12px 14px;
+      text-align: left;
       cursor: pointer;
+      transition: background-color 140ms ease;
     }
-    .eq-jump-btn:hover {
+    .ftab:hover { background: var(--surface-2); }
+    .ftab[aria-pressed="true"] {
       background: var(--surface-3);
       color: var(--surface);
     }
+    .ftab-k {
+      display: block;
+      font: 700 11.5px/1.2 var(--font-mono);
+      opacity: 0.78;
+      margin-bottom: 4px;
+    }
+    .ftab-t {
+      display: block;
+      font: 700 14px/1.4 var(--font-serif);
+    }
+    .finding-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 20px 22px;
+    }
+    .finding-panel[hidden] { display: none; }
+    .finding-lead {
+      font-size: 15.5px;
+      line-height: 1.72;
+      padding: 12px 15px;
+      background: var(--bg);
+      border-left: 3px solid var(--focus);
+      margin-bottom: 18px;
+    }
+    .finding-lead strong { color: var(--focus-ink); }
+    .finding-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 18px 22px;
+      align-items: start;
+    }
+    .chart-box {
+      background: var(--bg);
+      border: 1px solid var(--line-soft);
+      padding: 14px 16px;
+    }
+    .chart-title {
+      font: 700 13.5px/1.4 var(--font-serif);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .chart-title span { font-family: var(--font-body); font-size: 12px; font-weight: 400; color: var(--ink-soft); }
+    .chart-box svg { display: block; width: 100%; height: auto; }
+    .plain-list {
+      padding-left: 1.25em;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .plain-list li strong { color: var(--text); }
+    .callout-warn {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: var(--ochre-tint);
+      border-left: 3px solid var(--ochre);
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
 
-    /* Section 2: Interactive Topology Explorer */
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line-soft);
+      background: var(--surface);
+    }
+    table.ledger {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    table.ledger th, table.ledger td {
+      text-align: left;
+      vertical-align: top;
+      padding: 9px 11px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    table.ledger th.num, table.ledger td.num { text-align: right; white-space: nowrap; }
+    table.ledger thead th {
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+    table.ledger tbody tr:last-child td { border-bottom: 0; }
+    table.ledger tbody tr:hover { background: rgba(233, 226, 213, 0.45); }
+    table.ledger tr.is-best { background: var(--green-tint); font-weight: 600; }
+    .pos { color: var(--green); font-weight: 700; }
+    .neg { color: var(--danger); font-weight: 700; }
+
+    /* Section 3: Interactive Dependency Map */
     .topo-controls {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       gap: 10px 14px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-    .seg-group {
-      display: inline-flex;
-      border: 1px solid var(--line);
-      background: var(--line-soft);
-      gap: 1px;
-    }
-    .seg-btn {
-      appearance: none;
-      border: 0;
-      background: var(--surface);
-      color: var(--text);
-      padding: 8px 14px;
-      font: 600 13px/1.3 var(--font-body);
-      cursor: pointer;
-      transition: background-color 140ms ease, color 140ms ease;
-    }
-    .seg-btn:hover { background: var(--surface-2); }
-    .seg-btn[aria-pressed="true"] {
-      background: var(--surface-3);
-      color: var(--surface);
-    }
-
-    .filter-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 6px;
-    }
+    .filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
     .flt-btn {
       appearance: none;
       border: 1px solid var(--line-soft);
       background: var(--surface);
       color: var(--text);
       border-radius: var(--radius);
-      padding: 5px 10px;
+      padding: 6px 11px;
       font: 500 12.5px/1.35 var(--font-body);
       cursor: pointer;
     }
-    .flt-btn:hover {
-      border-color: var(--line);
-      background: var(--surface-2);
-    }
+    .flt-btn:hover { border-color: var(--line); background: var(--surface-2); }
     .flt-btn[aria-pressed="true"] {
       border-color: var(--line);
       background: var(--surface-3);
       color: var(--surface);
     }
-
     .legend-bar {
       display: flex;
       flex-wrap: wrap;
@@ -420,29 +426,13 @@
       border-bottom: 0;
       font-size: 12.5px;
     }
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .swatch-box {
-      width: 14px;
-      height: 10px;
-      border: 1.5px solid var(--line);
-      display: inline-block;
-      border-radius: 1px;
-    }
-    .swatch-box.is-focus { border-color: var(--focus); background: var(--focus-tint); }
-    .swatch-box.is-up { border-color: var(--blue); background: var(--blue-tint); }
-    .swatch-box.is-down { border-color: var(--green); background: var(--green-tint); }
-    .swatch-line {
-      width: 22px;
-      height: 0;
-      border-top: 1.6px solid var(--line);
-      display: inline-block;
-    }
-    .swatch-line.is-dashed { border-top-style: dashed; border-top-color: var(--ochre); }
-    .swatch-line.is-pin { border-top-style: dotted; border-top-color: var(--blue); border-top-width: 2px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 1px; display: inline-block; }
+    .dot.done { background: var(--green); }
+    .dot.next { background: var(--focus); }
+    .dot.later { background: var(--surface-2); border: 1px solid var(--line); }
+    .swatch-line { width: 20px; height: 0; border-top: 1.6px solid var(--line); display: inline-block; }
+    .swatch-line.loop { border-top-style: dashed; border-top-color: var(--ochre); }
 
     .svg-frame {
       background: var(--surface);
@@ -450,53 +440,19 @@
       overflow-x: auto;
       padding: 8px 6px 4px;
     }
-    .svg-frame svg {
-      display: block;
-      width: 100%;
-      min-width: 980px;
-      height: auto;
-    }
-
-    /* Interactive SVG node & edge states */
-    .dag-node {
-      cursor: pointer;
-      transition: opacity 150ms cubic-bezier(.23, 1, .32, 1);
-    }
-    .dag-node rect.node-bg {
-      transition: fill 140ms ease, stroke 140ms ease, stroke-width 140ms ease;
-    }
-    .dag-node:hover rect.node-bg {
-      stroke-width: 1.8;
-    }
-    .dag-edge {
-      fill: none;
-      transition: opacity 150ms cubic-bezier(.23, 1, .32, 1), stroke 140ms ease, stroke-width 140ms ease;
-    }
-    .is-dimmed { opacity: 0.17 !important; }
-    .is-selected rect.node-bg {
-      fill: var(--focus-tint) !important;
-      stroke: var(--focus) !important;
-      stroke-width: 2.2 !important;
-    }
-    .is-upstream rect.node-bg {
-      fill: var(--blue-tint) !important;
-      stroke: var(--blue) !important;
-      stroke-width: 1.8 !important;
-    }
-    .is-downstream rect.node-bg {
-      fill: var(--green-tint) !important;
-      stroke: var(--green) !important;
-      stroke-width: 1.8 !important;
-    }
-    .is-highlight-edge {
-      opacity: 1 !important;
-      stroke-width: 2 !important;
-    }
+    .svg-frame svg { display: block; width: 100%; min-width: 920px; height: auto; }
+    .dag-node { cursor: pointer; transition: opacity 150ms ease; }
+    .dag-node:hover rect.node-bg { stroke-width: 2; }
+    .dag-edge { fill: none; transition: opacity 150ms ease, stroke 140ms ease; }
+    .is-dimmed { opacity: 0.16 !important; }
+    .is-selected rect.node-bg { fill: var(--focus-tint) !important; stroke: var(--focus) !important; stroke-width: 2.3 !important; }
+    .is-upstream rect.node-bg { fill: var(--blue-tint) !important; stroke: var(--blue) !important; stroke-width: 1.8 !important; }
+    .is-downstream rect.node-bg { fill: var(--green-tint) !important; stroke: var(--green) !important; stroke-width: 1.8 !important; }
+    .is-highlight-edge { opacity: 1 !important; stroke-width: 2.1 !important; }
     .edge-up { stroke: var(--blue) !important; }
     .edge-down { stroke: var(--green) !important; }
     .edge-loop { stroke: var(--ochre) !important; }
 
-    /* Inspector Panel below SVG */
     .inspector {
       margin-top: 12px;
       background: var(--surface);
@@ -504,91 +460,40 @@
       display: grid;
       grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
     }
-    .insp-main {
-      padding: 18px 20px;
-      border-right: 1px solid var(--line-soft);
-    }
-    .insp-side {
-      padding: 18px 20px;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .insp-head {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px 10px;
-      margin-bottom: 8px;
-    }
-    .insp-id {
-      font: 700 12.5px/1.2 var(--font-mono);
-      background: var(--surface-3);
-      color: var(--surface);
+    .insp-main { padding: 16px 20px; border-right: 1px solid var(--line-soft); }
+    .insp-side { padding: 16px 20px; background: var(--bg); display: flex; flex-direction: column; gap: 12px; }
+    .insp-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .pill {
+      font: 700 12px/1.2 var(--font-mono);
       padding: 3px 8px;
       border-radius: var(--radius);
+      display: inline-block;
     }
-    .insp-tier {
-      font-size: 12.5px;
-      border: 1px solid var(--line-soft);
-      padding: 2px 8px;
-      background: var(--bg);
-      border-radius: var(--radius);
-    }
-    .insp-status {
-      font-size: 12px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: var(--radius);
-      border: 1px solid var(--green);
-      color: var(--green);
-      background: var(--green-tint);
-    }
-    .insp-status.is-wait {
-      border-color: var(--ochre);
-      color: var(--ochre);
-      background: var(--ochre-tint);
-    }
-    .insp-status.is-gate {
-      border-color: var(--focus-ink);
-      color: var(--focus-ink);
-      background: var(--focus-tint);
-    }
-    .insp-main h3 {
-      font-size: 20px;
-      margin-bottom: 8px;
-    }
-    .insp-summary {
-      font-size: 14px;
-      line-height: 1.72;
-      max-width: 72ch;
-      margin-bottom: 12px;
-    }
+    .pill.id { background: var(--surface-3); color: var(--surface); }
+    .pill.done { background: var(--green-tint); color: var(--green); border: 1px solid var(--green); font-family: var(--font-body); }
+    .pill.next { background: var(--focus-tint); color: var(--focus-ink); border: 1px solid var(--focus); font-family: var(--font-body); }
+    .pill.later { background: var(--bg); color: var(--ink-soft); border: 1px solid var(--line-soft); font-family: var(--font-body); }
+    .insp-main h3 { font-size: 19px; margin-bottom: 8px; }
+    .insp-summary { font-size: 14px; line-height: 1.72; margin-bottom: 12px; max-width: 68ch; }
     .insp-kv {
       display: grid;
-      grid-template-columns: 96px minmax(0, 1fr);
+      grid-template-columns: 84px minmax(0, 1fr);
       gap: 6px 12px;
       font-size: 13.5px;
       padding-top: 10px;
       border-top: 1px solid var(--line-soft);
     }
-    .insp-kv dt { font-weight: 700; }
+    .insp-kv dt { font-weight: 700; color: var(--ink-soft); }
     .insp-kv dd { line-height: 1.62; }
-
     .dep-group h4 {
       font-family: var(--font-body);
       font-size: 12.5px;
       font-weight: 700;
-      padding-bottom: 5px;
+      padding-bottom: 4px;
       border-bottom: 1px solid var(--line-soft);
       margin-bottom: 8px;
     }
-    .dep-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
+    .dep-links { display: flex; flex-wrap: wrap; gap: 6px; }
     .dep-btn {
       appearance: none;
       border: 1px solid var(--line);
@@ -598,177 +503,62 @@
       font: 500 12.5px/1.3 var(--font-body);
       border-radius: var(--radius);
       cursor: pointer;
-      text-align: left;
     }
-    .dep-btn:hover {
-      background: var(--surface-3);
-      color: var(--surface);
-    }
+    .dep-btn:hover { background: var(--surface-3); color: var(--surface); }
     .dep-btn.is-up { border-color: var(--blue); }
     .dep-btn.is-down { border-color: var(--green); }
-    .dep-btn.is-loop { border-color: var(--ochre); border-style: dashed; }
-    .dep-empty {
-      font-size: 12.5px;
-      color: var(--ink-soft);
-    }
+    .dep-empty { font-size: 12.5px; color: var(--ink-soft); }
 
-    /* Section 3: 4 Non-Negotiable Disciplines */
-    .disc-grid {
+    /* Section 4: Playbook Cards */
+    .play-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1px;
       background: var(--line);
       border: 1px solid var(--line);
     }
-    .disc-cell {
+    .play-card {
       background: var(--surface);
-      padding: 18px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .disc-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--line-soft);
-    }
-    .disc-code {
-      font: 700 12px/1 var(--font-mono);
-      color: var(--blue);
-    }
-    .disc-cell ul {
-      padding-left: 1.25em;
-      font-size: 13.5px;
-      line-height: 1.68;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    /* Section 4: 6 Orthogonal Portfolio Axes */
-    .axis-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      background: var(--surface);
-    }
-    table.ledger {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13.5px;
-    }
-    table.ledger th, table.ledger td {
-      text-align: left;
-      vertical-align: top;
-      padding: 11px 13px;
-      border-bottom: 1px solid var(--line-soft);
-    }
-    table.ledger thead th {
-      background: var(--surface-2);
-      border-bottom: 1px solid var(--line);
-      font-weight: 700;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    table.ledger tbody tr:last-child td { border-bottom: 0; }
-    table.ledger tbody tr.is-hidden { display: none; }
-    table.ledger tbody tr:hover { background: rgba(233, 226, 213, 0.45); }
-    .lever-tag {
-      display: inline-block;
-      font: 700 11.5px/1.3 var(--font-mono);
-      padding: 2px 6px;
-      border: 1px solid var(--line);
-      background: var(--bg);
-      border-radius: var(--radius);
-      margin: 0 4px 4px 0;
-    }
-    .lever-tag.u { border-color: var(--blue); color: var(--blue); }
-    .lever-tag.m { border-color: var(--green); color: var(--green); }
-    .lever-tag.d { border-color: var(--ochre); color: var(--ochre); }
-
-    /* Section 5: Multi-Horizon & Role Decoupling */
-    .dual-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-      gap: 16px;
-      align-items: start;
-    }
-    .panel-box {
-      background: var(--surface);
-      border: 1px solid var(--line);
       padding: 16px 18px;
-    }
-    .panel-box h3 {
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--line-soft);
-      margin-bottom: 12px;
-    }
-    .role-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 7px;
     }
-    .role-row {
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--line-soft);
-      font-size: 13.5px;
-      line-height: 1.65;
+    .play-kicker { font: 700 11.5px/1 var(--font-mono); color: var(--blue); }
+    .play-card h3 { font-size: 16px; }
+    .play-card p { font-size: 13.5px; line-height: 1.68; color: var(--ink-soft); }
+    .play-card p strong { color: var(--text); }
+
+    /* Section 5: Next 3 Decisions */
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
-    .role-row:last-child { border-bottom: 0; padding-bottom: 0; }
-    .role-name {
-      font-weight: 700;
-      font-family: var(--font-serif);
-      margin-bottom: 3px;
+    .next-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--focus);
+      padding: 16px 18px;
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      flex-direction: column;
       gap: 8px;
     }
-    .role-name span.mono {
-      font-size: 11.5px;
-      font-weight: 400;
-      color: var(--blue);
-    }
-
-    /* Section 6: Parallel Tracks A-E */
-    .track-badge {
-      display: inline-block;
-      font: 700 12px/1.2 var(--font-mono);
-      padding: 2px 7px;
-      border-radius: var(--radius);
-      background: var(--surface-3);
-      color: var(--surface);
-      white-space: nowrap;
-    }
-    .track-badge.is-research { background: var(--blue); }
-    .track-badge.is-cpp { background: var(--green); }
-    .track-link-btn {
-      appearance: none;
-      border: 1px solid var(--line-soft);
-      background: var(--bg);
-      color: var(--text);
-      padding: 3px 8px;
-      font: 500 12px/1.3 var(--font-body);
-      border-radius: var(--radius);
-      cursor: pointer;
-    }
-    .track-link-btn:hover {
-      border-color: var(--line);
-      background: var(--surface-3);
-      color: var(--surface);
+    .next-card.is-blue { border-top-color: var(--blue); }
+    .next-card.is-ochre { border-top-color: var(--ochre); }
+    .next-card h3 { font-size: 16.5px; }
+    .next-card p { font-size: 13.5px; line-height: 1.68; }
+    .next-meta {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px dashed var(--line-soft);
+      font-size: 12.5px;
+      color: var(--ink-soft);
     }
 
     /* Footer */
     .doc-foot {
-      margin-top: 34px;
+      margin-top: 36px;
       padding-top: 14px;
       border-top: 1px solid var(--line);
       display: flex;
@@ -778,32 +568,27 @@
       font-size: 12.5px;
       color: var(--ink-soft);
     }
-    .doc-foot-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 14px;
-    }
+    .doc-foot-links { display: flex; flex-wrap: wrap; gap: 6px 14px; }
 
     @media (max-width: 960px) {
-      .baseline-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .inspector, .eq-detail, .dual-grid { grid-template-columns: minmax(0, 1fr); }
+      .kpi-strip, .finding-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .finding-grid, .inspector, .eq-detail { grid-template-columns: minmax(0, 1fr); }
       .insp-main { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+      .play-grid, .next-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    @media (max-width: 680px) {
-      .mast-stance, .disc-grid, .baseline-strip { grid-template-columns: minmax(0, 1fr); }
-      .seg-btn, .flt-btn, .dep-btn, .eq-jump-btn { min-height: 40px; }
+    @media (max-width: 640px) {
+      .kpi-strip, .finding-tabs, .play-grid, .next-grid { grid-template-columns: minmax(0, 1fr); }
     }
   </style>
 </head>
 <body>
-  <nav class="jump-nav" aria-label="章节快速导航">
+  <nav class="jump-nav" aria-label="页面导航">
     <div class="jump-nav-inner">
-      <a href="#sec-identity" class="active">收益恒等式与基线</a>
-      <a href="#sec-topology">层级与依存拓扑</a>
-      <a href="#sec-disciplines">四条底层纪律</a>
-      <a href="#sec-axes">六轴资金设计空间</a>
-      <a href="#sec-modeling">建模增效与跨周期</a>
-      <a href="#sec-tracks">五大并行启动轨道</a>
+      <a href="#sec-problem" class="active">1. 现在卡在哪</a>
+      <a href="#sec-findings">2. 刚挖出的 4 个真相</a>
+      <a href="#sec-map">3. 全盘进度与依存图</a>
+      <a href="#sec-playbook">4. 怎么把 1 亿用起来</a>
+      <a href="#sec-next">5. 下一步拍板</a>
     </div>
   </nav>
 
@@ -812,125 +597,474 @@
       <div class="mast-meta">
         <div class="mast-meta-left">
           <span class="mono">2026-11-27</span>
-          <span>顶层研究与系统演进北极星</span>
-          <span>1 亿元真实账户裁判 · 全仓 C++ 主骨架</span>
+          <span>1 亿元实盘研究作战图</span>
+          <span>不提前猜答案 · 用真实账簿说话</span>
         </div>
-        <span class="mast-stamp">PLAN / 2026-11-27 · ACTIVE</span>
+        <span class="mast-stamp">首批 3 项工单已验收 · 含最新实证</span>
       </div>
-      <h1>思瑞投资量化策略研究与系统演进总纲</h1>
+      <h1>为什么单笔能赚 30–64 bp，1 亿账户两年却只增厚不到 0.8%？</h1>
       <p class="mast-lead">
-        从第一性原理出发，将「股票池与基准 × 因子与模型 × 时空周期与时钟 × 资金组合与执行」纳入同一套严格四重 PIT 的 C++ 真实账户裁判框架；所有工程提速、因子建模与交易设计均在明确层级与上下游依存关系中推进。
+        这份看板只讲两件事：<strong>第一，按第一性原理把 1 亿实盘的卡点拆明白</strong>；<strong>第二，汇总今天刚跑完的 683 天真实数据</strong>——它们直接改写了我们之前的直觉，指出了真正的大矿和暗雷在哪里。
       </p>
-      <div class="mast-stance">
-        <div class="stance-cell">
-          <strong>开放策略形态</strong>
-          不提前锁死日内 T0、跨股指增、隔日/多日轮动、跨周期复合或期货对冲，由统一真实账簿净表现决出胜者。
-        </div>
-        <div class="stance-cell">
-          <strong>开放对标基准</strong>
-          不提前锁死中证 2000 / 1000 / 500 / 国证 2000 或流动性分层池，用「净期望 bp × 盘口可容纳金额」实测定位最优肥肉区。
-        </div>
-      </div>
     </header>
 
-    <section class="baseline-strip" aria-label="截至 2026-11-27 真实起跑线盘点">
-      <div class="base-cell">
-        <span class="base-title">Wave 13 原生 C++ 算力底座</span>
-        <span class="base-metric is-green">9.9s / 44.5s</span>
-        <span class="base-desc">深市 344 列五连日 9.9 秒/日、极端日 2024-12-30 44.5 秒（提速 153×），定参 7.6 秒/日；沪市五连日 18.1 秒/日；0 ULP 无 Python；22/22 全栈迁移 DAG 已合入 main。</span>
+    <section class="kpi-strip" aria-label="今日关键实证速览">
+      <div class="kpi-cell">
+        <span class="kpi-label">头号容量大矿（深市 G2 · 流动性高档）</span>
+        <span class="kpi-val is-green">+142.7 万/日</span>
+        <span class="kpi-note">全期净超额 +28.63 bp × 4.58 亿容量；<strong>末 82 天逆风期不跌反赚 +169.5 万/日</strong>，全面碾压中证 2000。</span>
       </div>
-      <div class="base-cell">
-        <span class="base-title">全天 88 截点负载实测已签收</span>
-        <span class="base-metric is-blue">683日 × 88截点</span>
-        <span class="base-desc">1,385 亿条有效逐笔已采集签收（活跃耗时 1h21m）；全天三表行数为开盘 5m 的 9.88×、撤单 17.93×、局部匹配最高 28×，倒逼流式与紧凑合并演进。</span>
+      <div class="kpi-cell">
+        <span class="kpi-label">新因子库逆风王牌（1–3 日波段）</span>
+        <span class="kpi-val is-green">IC 飙至 0.14</span>
+        <span class="kpi-note">44 族新因子中，活跃度/容量/波动状态 4 族在末 82 天逆风期 RankIC 升至 +0.123~+0.144，与日内天然互补。</span>
       </div>
-      <div class="base-cell">
-        <span class="base-title">算法单信号真实物理画像（R05）</span>
-        <span class="base-metric is-focus">+64.14 bp</span>
-        <span class="base-desc">566 日深市严格 VWAP 前 1% 达 +64.14 bp、1–2.5% +43.65 bp、2.5–5% +28.88 bp；空头腿净亏 -41~-46 bp；末 82 逆风日去风格残差仍正（+7.4~+12.1 bp）。</span>
+      <div class="kpi-cell">
+        <span class="kpi-label">午盘 13:00–13:05 算法单密度</span>
+        <span class="kpi-val is-blue">早盘的 7.35×</span>
+        <span class="kpi-note">只占全天 2.16% 成交额，却集中 8.43% 的 1 秒撤单重报；叠加振幅减半，每亿每振幅 bp 密度达 7.35 倍。</span>
       </div>
-      <div class="base-cell">
-        <span class="base-title">现有因子与研究资产沉淀</span>
-        <span class="base-metric">344列 + 44族</span>
-        <span class="base-desc">沪深 340/344 列心血重型因子完整保留；候选库已梳理 72 维 / 74 族（44 族已算完），D24 已证实 G2（隔夜/竞价/成本 9 族 34 列）显著有效。</span>
+      <div class="kpi-cell">
+        <span class="kpi-label">老“全 601 天定参”验毒结果</span>
+        <span class="kpi-val is-focus">偏差达 38%</span>
+        <span class="kpi-note">9·24 放量引发参数断层（事件频率涨 95%）；老做法含严重未来偏差，已用 30× 压缩日摘要跑通 10ms 级严格事前定参。</span>
       </div>
     </section>
 
-    <!-- SECTION 1: First-Principles Identity -->
-    <section class="sec" id="sec-identity" aria-labelledby="h-identity">
+    <!-- SECTION 1: First-Principles Problem -->
+    <section class="sec" id="sec-problem" aria-labelledby="h-problem">
       <div class="sec-head">
-        <h2 id="h-identity">第一性原理收益恒等式与瓶颈定位</h2>
-        <span class="sec-sub">点击恒等式中的三个核心杠杆项，查看历史瓶颈成因，并可一键在下方拓扑图中高亮对应攻坚节点。</span>
+        <h2 id="h-problem">1. 第一性原理：1 亿资金能不能赚钱，只看这三项</h2>
+        <span class="sec-sub">点击公式里的三个开关，直接看过去为什么赚不到钱、以及我们准备怎么破局。</span>
       </div>
       <div class="eq-box">
-        <div class="eq-formula" role="group" aria-label="整户年化净表现分解公式">
-          <span><strong>整户年化净表现</strong></span>
+        <div class="eq-formula" role="group" aria-label="整户年化净收益拆解">
+          <span><strong>整户年化净收益</strong></span>
           <span class="eq-op">≈ 242 ×</span>
           <button type="button" class="eq-term" data-lever="U" aria-pressed="true">
-            ① 资金日周转率 U
-            <small>日均有效成交额 / 总本金 E₀</small>
+            ① 每天转起来多少钱
+            <small>日均有效成交额 / 1 亿元</small>
           </button>
           <span class="eq-op">×</span>
           <button type="button" class="eq-term" data-lever="M" aria-pressed="false">
-            ② 单笔净边际 M
-            <small>毛 Alpha(h) − 滑点/冲击(v,τ) − 税费 6.8bp</small>
+            ② 每转一笔净赚多少
+            <small>毛收益 − 盘口滑点 − 6.8bp 税费</small>
           </button>
           <span class="eq-op">−</span>
           <button type="button" class="eq-term" data-lever="D" aria-pressed="false">
-            ③ 组合拖累与稳健 D
-            <small>闲置 / 敞口 / 风格与逆风回撤</small>
+            ③ 逆风与敞口拖累
+            <small>资金闲置 / 风格逆风 / 参数失配</small>
           </button>
         </div>
 
         <div class="eq-detail" id="eq-detail" aria-live="polite"></div>
 
-        <div class="eq-coupling">
-          <div class="eq-chips" aria-label="四维强耦合自由度">
-            <span class="eq-chip"><strong>四维耦合：</strong>股票池 / 基准</span>
-            <span class="eq-chip">因子与模型角色</span>
-            <span class="eq-chip">时空周期与信息时钟</span>
-            <span class="eq-chip">资金组合与微观执行</span>
-          </div>
-          <button type="button" class="eq-jump-btn" id="eq-highlight-btn">在下方依存图谱中高亮该杠杆对应节点</button>
+        <div class="eq-foot">
+          <span><strong>两条研究底线：</strong>① 不提前猜最终形态（日内 T0 / 跨股替代 / 1–3 日轮动 / 跨周期叠加 / 期货对冲），谁在 1 亿真账簿里赚得多就用谁；② <code>2026-11</code> 之后行情彻底封存，全套逻辑定死前严禁偷看。</span>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: Interactive Hierarchy & Dependency Topology -->
-    <section class="sec" id="sec-topology" aria-labelledby="h-topology">
+    <!-- SECTION 2: 4 Real Empirical Discoveries -->
+    <section class="sec" id="sec-findings" aria-labelledby="h-findings">
       <div class="sec-head">
-        <h2 id="h-topology">任务层级与依存关系交互图谱</h2>
-        <span class="sec-sub">点击图中任意节点，实时追踪其上游前置依赖、下游驱动任务及螺旋回检闭环；按 Esc 键恢复全局视图。</span>
+        <h2 id="h-findings">2. 今天刚挖出的 4 个硬真相（零重算，基于 566–683 天真数据）</h2>
+        <span class="sec-sub">点击下方 4 个标签切换查看完整实证图表。全部数据截至 2026-10-30，0 次触碰 2026-11+ 盲测期。</span>
+      </div>
+
+      <div class="finding-tabs" role="tablist" aria-label="四大实证发现">
+        <button type="button" class="ftab" data-ftab="f1" aria-pressed="true">
+          <span class="ftab-k">真相 01 · 选对池子</span>
+          <span class="ftab-t">大矿在“流动性高档”，不在中证 2000</span>
+        </button>
+        <button type="button" class="ftab" data-ftab="f2" aria-pressed="false">
+          <span class="ftab-k">真相 02 · 拿多久 &amp; 新因子</span>
+          <span class="ftab-t">旧信号绝不能裸隔夜，44 族藏着逆风王牌</span>
+        </button>
+        <button type="button" class="ftab" data-ftab="f3" aria-pressed="false">
+          <span class="ftab-k">真相 03 · 什么时候买</span>
+          <span class="ftab-t">13:00–13:05 午盘复开是 7.35× 密度金矿</span>
+        </button>
+        <button type="button" class="ftab" data-ftab="f4" aria-pressed="false">
+          <span class="ftab-k">真相 04 · 因子地基验毒</span>
+          <span class="ftab-t">老定参偏差高达 38%，市场漂移极快</span>
+        </button>
+      </div>
+
+      <!-- Finding 1: Pool Capacity -->
+      <div class="finding-panel" id="panel-f1">
+        <div class="finding-lead">
+          <strong>颠覆直觉的发现：</strong>过去我们默认死磕中证 2000，但把“扣费净收益 × 3 分钟能买进去的钱”乘起来一看，<strong>深市 G2 流动性高档（昨天为止前 20 日成交额前 1/3）</strong>不仅全期日均净潜力高达 <strong>+142.7 万/日</strong>（是中证 2000 的 2.5 倍），更在<strong>末 82 天中证/国证 2000 全部亏钱的逆风期逆势大赚 +169.5 万/日（+26.77 bp）</strong>。
+        </div>
+        <div class="finding-grid">
+          <div class="chart-box">
+            <div class="chart-title">
+              深市 G2 各股票池：3 分钟盘口净潜力对比（万元/日）
+              <span>全期 566 日（青） vs 末 82 日逆风期（红/绿）</span>
+            </div>
+            <svg viewBox="0 0 580 278" role="img" aria-label="深市 G2 各股票池全期与末 82 天净潜力对比柱状图">
+              <!-- Zero Axis at x = 230, scale: 1.55px per 1w; category labels end at x = 78 -->
+              <line x1="230" y1="18" x2="230" y2="246" stroke="#1e2a31" stroke-width="1.2"/>
+              <line x1="152.5" y1="18" x2="152.5" y2="246" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+              <line x1="307.5" y1="18" x2="307.5" y2="246" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+              <line x1="385" y1="18" x2="385" y2="246" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+              <line x1="462.5" y1="18" x2="462.5" y2="246" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+              <text x="152.5" y="264" text-anchor="middle" font-size="11" fill="#434e54">-50万</text>
+              <text x="230" y="264" text-anchor="middle" font-size="11" font-weight="700" fill="#15212b">0</text>
+              <text x="307.5" y="264" text-anchor="middle" font-size="11" fill="#434e54">+50万</text>
+              <text x="385" y="264" text-anchor="middle" font-size="11" fill="#434e54">+100万</text>
+              <text x="462.5" y="264" text-anchor="middle" font-size="11" fill="#434e54">+150万</text>
+
+              <!-- Row 1: 流动性高档 (+142.71 / +169.46) -->
+              <text x="76" y="42" text-anchor="end" font-size="12.5" font-weight="700" fill="#2c5e56">流动性高档</text>
+              <rect x="230" y="24" width="221.2" height="14" fill="#345f79"/>
+              <text x="457" y="35" font-size="11" font-weight="700" fill="#345f79">+142.7万</text>
+              <rect x="230" y="40" width="262.7" height="14" fill="#2c5e56"/>
+              <text x="498" y="51" font-size="11" font-weight="700" fill="#2c5e56">+169.5万</text>
+
+              <!-- Row 2: 国证 2000 (+58.58 / -31.18) -->
+              <text x="76" y="88" text-anchor="end" font-size="12.5" fill="#15212b">国证 2000</text>
+              <rect x="230" y="70" width="90.8" height="14" fill="#345f79"/>
+              <text x="326" y="81" font-size="11" fill="#345f79">+58.6万</text>
+              <rect x="181.7" y="86" width="48.3" height="14" fill="#d9654f"/>
+              <text x="176" y="97" text-anchor="end" font-size="11" font-weight="700" fill="#a6382f">-31.2万</text>
+
+              <!-- Row 3: 中证 2000 (+57.74 / -19.51) -->
+              <text x="76" y="134" text-anchor="end" font-size="12.5" fill="#15212b">中证 2000</text>
+              <rect x="230" y="116" width="89.5" height="14" fill="#345f79"/>
+              <text x="325" y="127" font-size="11" fill="#345f79">+57.7万</text>
+              <rect x="199.8" y="132" width="30.2" height="14" fill="#d9654f"/>
+              <text x="194" y="143" text-anchor="end" font-size="11" font-weight="700" fill="#a6382f">-19.5万</text>
+
+              <!-- Row 4: 中证 1000 (+28.62 / -27.13) -->
+              <text x="76" y="180" text-anchor="end" font-size="12.5" fill="#15212b">中证 1000</text>
+              <rect x="230" y="162" width="44.4" height="14" fill="#345f79"/>
+              <text x="280" y="173" font-size="11" fill="#345f79">+28.6万</text>
+              <rect x="187.9" y="178" width="42.1" height="14" fill="#d9654f"/>
+              <text x="182" y="189" text-anchor="end" font-size="11" font-weight="700" fill="#a6382f">-27.1万</text>
+
+              <!-- Row 5: 中证 500 (+4.05 / -56.83) -->
+              <text x="76" y="226" text-anchor="end" font-size="12.5" fill="#15212b">中证 500</text>
+              <rect x="230" y="208" width="6.3" height="14" fill="#345f79"/>
+              <text x="242" y="219" font-size="11" fill="#345f79">+4.1万</text>
+              <rect x="141.9" y="224" width="88.1" height="14" fill="#d9654f"/>
+              <text x="136" y="235" text-anchor="end" font-size="11" font-weight="700" fill="#a6382f">-56.8万</text>
+            </svg>
+          </div>
+
+          <div class="table-wrap">
+            <table class="ledger">
+              <thead>
+                <tr>
+                  <th>市场 · 池子</th>
+                  <th class="num">全期净 bp</th>
+                  <th class="num">3m 容量</th>
+                  <th class="num">末 82 天净 bp</th>
+                  <th class="num">末 82 万/日</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="is-best">
+                  <td>深市 G2 · 流动性高档</td>
+                  <td class="num pos">+28.63</td>
+                  <td class="num">4.58 亿</td>
+                  <td class="num pos">+26.77</td>
+                  <td class="num pos">+169.5</td>
+                </tr>
+                <tr>
+                  <td>深市 G2 · 中证 2000</td>
+                  <td class="num pos">+25.00</td>
+                  <td class="num">2.19 亿</td>
+                  <td class="num neg">-4.25</td>
+                  <td class="num neg">-19.5</td>
+                </tr>
+                <tr>
+                  <td>深市 G2 · 国证 2000</td>
+                  <td class="num pos">+18.32</td>
+                  <td class="num">2.83 亿</td>
+                  <td class="num neg">-5.73</td>
+                  <td class="num neg">-31.2</td>
+                </tr>
+                <tr>
+                  <td>深市 G2 · 中证 1000</td>
+                  <td class="num pos">+11.80</td>
+                  <td class="num">1.80 亿</td>
+                  <td class="num neg">-8.51</td>
+                  <td class="num neg">-27.1</td>
+                </tr>
+                <tr class="is-best">
+                  <td>沪市 SSE+ · 中证 2000</td>
+                  <td class="num pos">+17.48</td>
+                  <td class="num">0.97 亿</td>
+                  <td class="num pos">+8.92</td>
+                  <td class="num pos">+14.1</td>
+                </tr>
+                <tr>
+                  <td>沪市 B0 上午 · 高档 2.5%</td>
+                  <td class="num pos">+19.28</td>
+                  <td class="num">2.50 亿</td>
+                  <td class="num pos">+5.65</td>
+                  <td class="num pos">+14.6</td>
+                </tr>
+                <tr>
+                  <td>沪市 SSE+ · 流动性高档</td>
+                  <td class="num pos">+15.16</td>
+                  <td class="num">2.59 亿</td>
+                  <td class="num neg">-10.61</td>
+                  <td class="num neg">-92.3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p style="margin-top:12px;font-size:13px;color:var(--ink-soft);">
+          口径说明：Top 5%（除标注外），按买一/卖一真实同侧价差再扣 6.8 bp 税费；3m 容量按 09:35 后 3 分钟真实成交额 10% 上限计，实际实盘仍受现金、T+1 老股库存和冲击制约。
+        </p>
+      </div>
+
+      <!-- Finding 2: Horizon Decay & 44 Families -->
+      <div class="finding-panel" id="panel-f2" hidden>
+        <div class="finding-lead">
+          <strong>两个关键结论：</strong>① 现有 09:35 算法单信号在当天收盘见顶（深市 G2 常态 <strong>+40.4 bp</strong>），但<strong>隔夜一口暴吐 -57.9 bp</strong>，绝对不能直接拿它赌隔夜；② 已算完的 <strong>44 族新因子</strong>里，活跃度/容量/波动状态类在 1–3 日波段里越到逆风越强（末 82 天 RankIC 飙到 <strong>+0.123 ~ +0.144</strong>），是天然的跨周期对冲王牌。
+        </div>
+        <div class="finding-grid">
+          <div class="chart-box">
+            <div class="chart-title">
+              深市 G2（Top 5%）从买进到 T+3 的累计毛超额走势（bp）
+              <span>常态 484 日（青线） vs 末 82 日逆风（红线）</span>
+            </div>
+            <svg viewBox="0 0 560 250" role="img" aria-label="深市 G2 从 1 分钟到 T+3 的收益衰减折线图">
+              <!-- Y scale: +50 at y=28, 0 at y=80, -50 at y=132, -100 at y=184, -180 at y=224 -->
+              <!-- Use linear: y = 78 - val * 0.82 -->
+              <line x1="48" y1="78" x2="538" y2="78" stroke="#1e2a31" stroke-width="1.2"/>
+              <line x1="48" y1="37" x2="538" y2="37" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+              <line x1="48" y1="119" x2="538" y2="119" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+              <line x1="48" y1="160" x2="538" y2="160" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+              <line x1="48" y1="201" x2="538" y2="201" stroke="#c8c1b4" stroke-dasharray="3,3"/>
+
+              <text x="42" y="41" text-anchor="end" font-size="10.5" fill="#434e54">+50</text>
+              <text x="42" y="82" text-anchor="end" font-size="10.5" font-weight="700" fill="#15212b">0</text>
+              <text x="42" y="123" text-anchor="end" font-size="10.5" fill="#434e54">-50</text>
+              <text x="42" y="164" text-anchor="end" font-size="10.5" fill="#434e54">-100</text>
+              <text x="42" y="205" text-anchor="end" font-size="10.5" fill="#434e54">-150</text>
+
+              <!-- Overnight cliff band between Close (x=344) and T+1 (x=408) -->
+              <rect x="344" y="20" width="64" height="202" fill="rgba(217,101,79,0.09)"/>
+              <text x="376" y="34" text-anchor="middle" font-size="10.5" font-weight="700" fill="#a63d29">隔夜暴吐</text>
+              <text x="376" y="47" text-anchor="middle" font-size="10.5" font-weight="700" fill="#a63d29">-57.9 bp</text>
+
+              <!-- X positions: 1m:64, 5m:120, 30m:176, 60m:232, AM:288, Close:344, T+1:408, T+2:472, T+3:528 -->
+              <!-- Normal 484d: 3.6, 11.9, 22.0, 28.8, 35.4, 40.4, 2.0, -21.2, -39.7 -->
+              <polyline fill="none" stroke="#2c5e56" stroke-width="2.4"
+                points="64,75 120,68.2 176,60 232,54.4 288,49 344,44.9 408,76.4 472,95.4 528,110.6"/>
+              <circle cx="344" cy="44.9" r="4" fill="#2c5e56"/>
+              <text x="340" y="36" text-anchor="end" font-size="11" font-weight="700" fill="#2c5e56">收盘 +40.4</text>
+              <circle cx="528" cy="110.6" r="3.5" fill="#2c5e56"/>
+              <text x="526" y="102" text-anchor="end" font-size="10.5" fill="#2c5e56">-39.7</text>
+
+              <!-- Last 82d: 1.3, 8.9, 11.2, 12.7, 11.4, 4.2, -68.0, -121.7, -170.7 -->
+              <polyline fill="none" stroke="#d9654f" stroke-width="2.2" stroke-dasharray="5,3"
+                points="64,76.9 120,70.7 176,68.8 232,67.6 288,68.7 344,74.6 408,133.8 472,177.8 528,218"/>
+              <circle cx="232" cy="67.6" r="3.5" fill="#d9654f"/>
+              <text x="232" y="60" text-anchor="middle" font-size="10.5" fill="#a63d29">60m +12.7</text>
+              <circle cx="528" cy="218" r="4" fill="#d9654f"/>
+              <text x="524" y="212" text-anchor="end" font-size="11" font-weight="700" fill="#a63d29">T+3 -170.7</text>
+
+              <!-- X labels -->
+              <text x="64" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">1m</text>
+              <text x="120" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">5m</text>
+              <text x="176" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">30m</text>
+              <text x="232" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">60m</text>
+              <text x="288" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">上午收</text>
+              <text x="344" y="240" text-anchor="middle" font-size="10.5" font-weight="700" fill="#15212b">当日收</text>
+              <text x="408" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">T+1收</text>
+              <text x="472" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">T+2收</text>
+              <text x="528" y="240" text-anchor="middle" font-size="10.5" fill="#434e54">T+3收</text>
+            </svg>
+          </div>
+
+          <div class="table-wrap">
+            <table class="ledger">
+              <thead>
+                <tr>
+                  <th>用途角色</th>
+                  <th>44 族新因子头部（沪深一致）</th>
+                  <th class="num">常态 IC</th>
+                  <th class="num">末 82 天 IC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>日内主力</strong></td>
+                  <td><code>TPLUSONE-GAINMASS</code>（日内浮盈质量）</td>
+                  <td class="num pos">+0.058</td>
+                  <td class="num pos">+0.039~0.050</td>
+                </tr>
+                <tr class="is-best">
+                  <td><strong>1–3 日逆风王牌</strong></td>
+                  <td><code>ACTIVITY-CAPACITY / GRAIN / ATTENTION</code> + <code>VOL-STATE</code></td>
+                  <td class="num pos">+0.049</td>
+                  <td class="num pos">+0.123~0.144</td>
+                </tr>
+                <tr>
+                  <td><strong>跨周期双正</strong></td>
+                  <td><code>TPLUSONE-GAINMASS (VAR-05)</code> / <code>REGIME-REOPEN</code></td>
+                  <td class="num pos">+0.040</td>
+                  <td class="num pos">+0.047~0.050</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finding 3: Intraday Density & Cost -->
+      <div class="finding-panel" id="panel-f3" hidden>
+        <div class="finding-lead">
+          <strong>全天不是只有 09:35 能做：</strong>深市 683 天 2,672 亿对撤单重报统计显示，全天一半算法单在 <strong>09:52</strong> 前就走完了，但 <strong>13:00–13:05 午盘复开</strong>出现了全天第二大尖峰——单位成交额的算法密度是早盘 <code>09:35–09:37</code> 的 <strong>3.56 倍</strong>，叠加上午后振幅砍半，<strong>信噪比是早盘的 7.35 倍</strong>，且在末 82 天逆风期完全没衰减。
+        </div>
+        <div class="finding-grid">
+          <div class="table-wrap">
+            <table class="ledger">
+              <thead>
+                <tr>
+                  <th>深市时段（683 日）</th>
+                  <th class="num">算法配对占比</th>
+                  <th class="num">成交额占比</th>
+                  <th class="num">每亿元配对数</th>
+                  <th class="num">分钟振幅 bp</th>
+                  <th class="num">每亿每振幅密度</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>09:35–09:37（早盘）</td>
+                  <td class="num">2.85%</td>
+                  <td class="num">2.60%</td>
+                  <td class="num">44,633</td>
+                  <td class="num">42.60</td>
+                  <td class="num">1,048</td>
+                </tr>
+                <tr class="is-best">
+                  <td><strong>13:00–13:05（午盘复开）</strong></td>
+                  <td class="num pos">8.43%</td>
+                  <td class="num">2.16%</td>
+                  <td class="num pos">158,796</td>
+                  <td class="num pos">20.62</td>
+                  <td class="num pos">7,702 (7.35×)</td>
+                </tr>
+                <tr>
+                  <td>13:05–14:00（午后常态）</td>
+                  <td class="num">8.29%</td>
+                  <td class="num">14.52%</td>
+                  <td class="num">23,224</td>
+                  <td class="num">14.94</td>
+                  <td class="num">1,554</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <ul class="plain-list">
+              <li><strong>盘口越往后越便宜、越厚</strong>：683 天现成 4 个盘口窗显示，深市买卖价差从 <code>09:35</code> 的 <strong>12.92 bp</strong> 一路降到 <code>14:27</code> 的 <strong>9.24 bp</strong>，卖一挂单金额从 <strong>9.17 万</strong> 翻倍到 <strong>20.48 万</strong>（沪市同趋势：13.12 → 9.80 bp）。</li>
+              <li><strong>成交额时钟节奏</strong>：深市全天成交额的 10% / 50% / 75% 分别落在 <code>09:35</code> / <code>10:39</code> / <code>13:38</code>，说明早盘 1 小时走完了全天一半的真实流动性。</li>
+            </ul>
+            <div class="callout-warn">
+              <strong>诚实标注唯一缺口：</strong>现有 S3 缓存没有保存 <code>13:00–13:05</code> 午盘复开的真实买一/卖一价差和深度。要不要花 6–64 分钟补查 24–60 个代表日的 L1 快照来验实盘成本，放在第 5 节由你拍板。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finding 4: PIT Calibration Audit -->
+      <div class="finding-panel" id="panel-f4" hidden>
+        <div class="finding-lead">
+          <strong>地基验毒结果：</strong>老流程用“全 601 天一次性定参”，把 2024 年 9·24 放量之后的数据提前泄露给了前面 9 个月——核心参数相对严格事前的 P95 偏差高达 <strong>26%–38%</strong>（最大 <strong>64.6%</strong>）。同时我们已经验证了 30× 压缩日摘要方案：<strong>每天算一次严格事前参数只要 10–14 毫秒，误差不到 0.023%</strong>。
+        </div>
+        <div class="finding-grid">
+          <div class="table-wrap">
+            <table class="ledger">
+              <thead>
+                <tr>
+                  <th>高风险定参项</th>
+                  <th class="num">9·24 放量后变化</th>
+                  <th class="num">老办法 P95 偏差</th>
+                  <th class="num">最大偏差</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>深市 <code>lambda42</code></td>
+                  <td class="num neg">-62.99%</td>
+                  <td class="num neg">37.59%</td>
+                  <td class="num neg">51.98%</td>
+                </tr>
+                <tr>
+                  <td>沪市 <code>price_upper_ticks</code></td>
+                  <td class="num pos">+45.20%</td>
+                  <td class="num neg">35.07%</td>
+                  <td class="num neg">36.21%</td>
+                </tr>
+                <tr>
+                  <td>深/沪 <code>theta_events</code></td>
+                  <td class="num pos">+94.9%</td>
+                  <td class="num neg">26.6% / 32.9%</td>
+                  <td class="num neg">33.99%</td>
+                </tr>
+                <tr>
+                  <td>沪市 <code>lambda_RV</code></td>
+                  <td class="num pos">+143.9%</td>
+                  <td class="num neg">18.42%</td>
+                  <td class="num neg">64.64%</td>
+                </tr>
+                <tr>
+                  <td>沪市 <code>f85</code>（科创板）</td>
+                  <td class="num pos">+50.13%</td>
+                  <td class="num neg">24.57%</td>
+                  <td class="num neg">33.73%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <ul class="plain-list">
+              <li><strong>压缩速度已打通</strong>：深市 23.2 GB → 0.77 GB（30×）、沪市 49.1 GB → 1.44 GB（34×），核尺度与离散整数 <strong>0 ULP 完全一致</strong>，连续分位数误差 <code>&lt;0.023%</code>。</li>
+              <li><strong>反常识洞察</strong>：绝大多数参数在 240 天内都没“静态收敛”，不是因为样本少，而是<strong>市场节奏真的一直在漂移</strong>；纯预测明天分布的最优半衰期只有 <strong>1–5 天</strong>。</li>
+              <li><strong>下一步务实取舍</strong>：1–5 天窗口太短会让因子天天剧烈抖动，下一阶段将在“零超参扩张窗”和“5 / 10 / 20 / 60 天稳态平滑窗”之间做真实回测对比，选出最稳的高原。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Plain-Language Interactive Dependency Map -->
+    <section class="sec" id="sec-map" aria-labelledby="h-map">
+      <div class="sec-head">
+        <h2 id="h-map">3. 全盘进度与任务依存图（已砍掉多余编号，点击节点看上下游）</h2>
+        <span class="sec-sub">绿标 = 今天已完成验收；红标 = 下一步待拍板启动；灰标 = 承接后续推进。按 Esc 复位。</span>
       </div>
 
       <div class="topo-controls">
-        <div class="seg-group" role="group" aria-label="架构视图切换">
-          <button type="button" class="seg-btn" id="view-dag-btn" aria-pressed="true">视图 A｜五步螺旋 × 并行轨道依存拓扑</button>
-          <button type="button" class="seg-btn" id="view-arch-btn" aria-pressed="false">视图 B｜四层解耦 C++ 系统数据闭环</button>
-        </div>
-
-        <div class="filter-row" id="dag-filters" role="group" aria-label="图谱快速筛选">
-          <button type="button" class="flt-btn" data-filter="all" aria-pressed="true">全部节点 (14)</button>
-          <button type="button" class="flt-btn" data-filter="parallel" aria-pressed="false">立即并行 · 轨 A–E</button>
-          <button type="button" class="flt-btn" data-filter="U" aria-pressed="false">杠杆 ① 周转率 U</button>
-          <button type="button" class="flt-btn" data-filter="M" aria-pressed="false">杠杆 ② 净边际 M</button>
-          <button type="button" class="flt-btn" data-filter="D" aria-pressed="false">杠杆 ③ 拖累稳健 D</button>
-          <button type="button" class="flt-btn" data-filter="loop" aria-pressed="false">螺旋回检与 Pin &amp; Roll</button>
+        <div class="filter-row" id="dag-filters" role="group" aria-label="状态筛选">
+          <button type="button" class="flt-btn" data-filter="all" aria-pressed="true">全部 10 项</button>
+          <button type="button" class="flt-btn" data-filter="done" aria-pressed="false">已完成 (4)</button>
+          <button type="button" class="flt-btn" data-filter="next" aria-pressed="false">下一步拍板 (3)</button>
+          <button type="button" class="flt-btn" data-filter="later" aria-pressed="false">后续主线 (3)</button>
         </div>
       </div>
 
-      <div class="legend-bar" id="topo-legend" aria-label="图谱图例">
-        <span class="legend-item"><span class="swatch-box is-focus"></span>当前选中节点</span>
-        <span class="legend-item"><span class="swatch-box is-up"></span>上游前置依赖</span>
-        <span class="legend-item"><span class="swatch-box is-down"></span>下游驱动 / 解耦任务</span>
-        <span class="legend-item"><span class="swatch-line"></span>主链路交付依赖</span>
-        <span class="legend-item"><span class="swatch-line is-dashed"></span>螺旋耦合回检（Step 4 → Step 2）</span>
-        <span class="legend-item"><span class="swatch-line is-pin"></span>Pin &amp; Roll 算力热替换通道</span>
+      <div class="legend-bar">
+        <span class="legend-item"><span class="dot done"></span>已完成验收</span>
+        <span class="legend-item"><span class="dot next"></span>下一步待拍板</span>
+        <span class="legend-item"><span class="dot later"></span>后续接力推进</span>
+        <span class="legend-item"><span class="swatch-line"></span>前置依赖方向</span>
+        <span class="legend-item"><span class="swatch-line loop"></span>因子升级后回检选池/周期</span>
       </div>
 
-      <!-- View A: 5-Step Spiral x Parallel Tracks DAG -->
-      <div class="svg-frame" id="view-dag-wrap">
-        <svg id="dag-svg" viewBox="0 0 1160 632" role="img" aria-label="五步螺旋演进与五大并行轨道层级依存图谱">
+      <div class="svg-frame">
+        <svg id="dag-svg" viewBox="0 0 1120 492" role="img" aria-label="1 亿实盘方案 10 节点任务进度与依存图">
           <defs>
             <marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#434e54"/>
@@ -939,413 +1073,140 @@
               <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#345f79"/>
             </marker>
             <marker id="arr-green" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-              <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#356861"/>
+              <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#2c5e56"/>
             </marker>
             <marker id="arr-ochre" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#7d5724"/>
             </marker>
           </defs>
 
-          <!-- Tier Background Zones (5 Strata) -->
-          <g class="dag-zones">
-            <rect x="16" y="16" width="212" height="516" rx="4" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4" stroke-width="1"/>
-            <rect x="24" y="24" width="196" height="28" rx="2" fill="#e9e2d5"/>
-            <text x="122" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">STEP 1 · C++ 底座与 PIT 裁判</text>
+          <!-- 4 Clean Column Zones -->
+          <g>
+            <rect x="14" y="14" width="250" height="412" rx="3" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4"/>
+            <rect x="22" y="22" width="234" height="26" rx="2" fill="#e9e2d5"/>
+            <text x="139" y="39" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">一、已完成底座与首批真相</text>
 
-            <rect x="248" y="16" width="212" height="516" rx="4" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4" stroke-width="1"/>
-            <rect x="256" y="24" width="196" height="28" rx="2" fill="#e9e2d5"/>
-            <text x="354" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">STEP 2 · 无预设全景物理侦察</text>
+            <rect x="294" y="14" width="250" height="412" rx="3" fill="rgba(217,101,79,0.03)" stroke="#d9654f"/>
+            <rect x="302" y="22" width="234" height="26" rx="2" fill="#d9654f"/>
+            <text x="419" y="39" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f8f4eb">二、下一步待拍板启动</text>
 
-            <rect x="480" y="16" width="212" height="516" rx="4" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4" stroke-width="1"/>
-            <rect x="488" y="24" width="196" height="28" rx="2" fill="#e9e2d5"/>
-            <text x="586" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">STEP 3 · 六轴资金执行打擂</text>
+            <rect x="574" y="14" width="250" height="412" rx="3" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4"/>
+            <rect x="582" y="22" width="234" height="26" rx="2" fill="#e9e2d5"/>
+            <text x="699" y="39" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">三、真实账户打擂与策略进化</text>
 
-            <rect x="712" y="16" width="212" height="516" rx="4" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4" stroke-width="1"/>
-            <rect x="720" y="24" width="196" height="28" rx="2" fill="#e9e2d5"/>
-            <text x="818" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">STEP 4 · 双引擎螺旋与跨周期</text>
-
-            <rect x="944" y="16" width="200" height="516" rx="4" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4" stroke-width="1"/>
-            <rect x="952" y="24" width="184" height="28" rx="2" fill="#15212b"/>
-            <text x="1044" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f8f4eb">STEP 5 · 高原复核与盲测</text>
+            <rect x="854" y="14" width="252" height="412" rx="3" fill="rgba(21,33,43,0.025)" stroke="#c8c1b4"/>
+            <rect x="862" y="22" width="236" height="26" rx="2" fill="#15212b"/>
+            <text x="980" y="39" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f8f4eb">四、稳定性复核与盲测终审</text>
           </g>
 
-          <!-- Orthogonal Edges Layer (drawn behind nodes) -->
           <g id="dag-edges-layer"></g>
-
-          <!-- Nodes Layer -->
           <g id="dag-nodes-layer"></g>
         </svg>
       </div>
 
-      <!-- View B: 4-Layer Decoupled C++ Architecture -->
-      <div class="svg-frame" id="view-arch-wrap" hidden>
-        <svg id="arch-svg" viewBox="0 0 1160 440" role="img" aria-label="四层解耦 C++ 架构与三大负反馈闭环">
-          <defs>
-            <marker id="a2-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-              <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#1e2a31"/>
-            </marker>
-            <marker id="a2-ochre" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-              <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#7d5724"/>
-            </marker>
-          </defs>
-
-          <!-- Forward Flow Backbone -->
-          <g id="arch-edges-layer">
-            <path class="dag-edge" data-arch-edge="L1-L2" d="M 268,144 H 304" stroke="#1e2a31" stroke-width="1.6" marker-end="url(#a2-ink)"/>
-            <path class="dag-edge" data-arch-edge="L2-L3" d="M 552,144 H 588" stroke="#1e2a31" stroke-width="1.6" marker-end="url(#a2-ink)"/>
-            <path class="dag-edge" data-arch-edge="L3-L4" d="M 836,144 H 872" stroke="#1e2a31" stroke-width="1.6" marker-end="url(#a2-ink)"/>
-
-            <!-- 3 Feedback Channels below (orthogonal rounded elbows) -->
-            <!-- L4 -> L3: Turnover & Drawdown -->
-            <path class="dag-edge" data-arch-edge="L4-L3" data-loop="true" d="M 944,248 V 286 Q 944,294 936,294 H 720 Q 712,294 712,286 V 252" stroke="#7d5724" stroke-width="1.3" stroke-dasharray="5,4" marker-end="url(#a2-ochre)"/>
-            <rect x="768" y="283" width="124" height="22" rx="2" fill="#f8f4eb"/>
-            <text x="830" y="298" text-anchor="middle" font-size="12" font-weight="600" fill="#7d5724">周转率与回撤反馈</text>
-
-            <!-- L4 -> L2: Slippage & Unfilled Error -->
-            <path class="dag-edge" data-arch-edge="L4-L2" data-loop="true" d="M 1000,248 V 338 Q 1000,346 992,346 H 436 Q 428,346 428,338 V 252" stroke="#7d5724" stroke-width="1.3" stroke-dasharray="5,4" marker-end="url(#a2-ochre)"/>
-            <rect x="634" y="335" width="160" height="22" rx="2" fill="#f8f4eb"/>
-            <text x="714" y="350" text-anchor="middle" font-size="12" font-weight="600" fill="#7d5724">滑点与未成交误差反馈</text>
-
-            <!-- L4 -> L1: Net Return / Attribution / Capacity -->
-            <path class="dag-edge" data-arch-edge="L4-L1" data-loop="true" d="M 1056,248 V 390 Q 1056,398 1048,398 H 152 Q 144,398 144,390 V 252" stroke="#7d5724" stroke-width="1.3" stroke-dasharray="5,4" marker-end="url(#a2-ochre)"/>
-            <rect x="492" y="387" width="212" height="22" rx="2" fill="#f8f4eb"/>
-            <text x="598" y="402" text-anchor="middle" font-size="12" font-weight="600" fill="#7d5724">整户净收益 / 归因 / 容量反馈</text>
-          </g>
-
-          <!-- 4 Layer Nodes -->
-          <g id="arch-nodes-layer"></g>
-        </svg>
-      </div>
-
-      <!-- Structured Inspector Panel -->
       <div class="inspector" id="inspector" aria-live="polite">
         <div class="insp-main">
           <div class="insp-head">
-            <span class="insp-id" id="insp-id">T-C</span>
-            <span class="insp-tier" id="insp-tier">Step 1 · 层 3+4 底座</span>
-            <span class="insp-status" id="insp-status">零阻塞 · 立即并行</span>
+            <span class="pill id" id="insp-id"></span>
+            <span class="pill" id="insp-status"></span>
           </div>
           <h3 id="insp-title"></h3>
           <p class="insp-summary" id="insp-summary"></p>
           <dl class="insp-kv">
-            <dt>恒等式杠杆</dt>
-            <dd id="insp-lever"></dd>
-            <dt>核心交付物</dt>
-            <dd id="insp-deliverable"></dd>
-            <dt>PIT / 硬约束</dt>
-            <dd id="insp-pit"></dd>
+            <dt>产出与现状</dt>
+            <dd id="insp-result"></dd>
+            <dt>为什么重要</dt>
+            <dd id="insp-why"></dd>
           </dl>
         </div>
         <div class="insp-side">
           <div class="dep-group">
-            <h4>直接前置依赖（点击跳转溯源）</h4>
+            <h4>依赖哪些前置（点此跳转）</h4>
             <div class="dep-links" id="insp-up"></div>
           </div>
           <div class="dep-group">
-            <h4>直接驱动下游（点击追踪去向）</h4>
+            <h4>解锁哪些下游（点此追踪）</h4>
             <div class="dep-links" id="insp-down"></div>
           </div>
-          <div class="dep-group">
-            <h4>闭环 / 协同关联</h4>
-            <div class="dep-links" id="insp-loop"></div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 3: 4 Core Disciplines -->
-    <section class="sec" id="sec-disciplines" aria-labelledby="h-disciplines">
+    <!-- SECTION 4: Plain-Language Playbook -->
+    <section class="sec" id="sec-playbook" aria-labelledby="h-playbook">
       <div class="sec-head">
-        <h2 id="h-disciplines">四条不可动摇的底层纪律</h2>
-        <span class="sec-sub">所有并行轨道共享的制度红线：算力不卡研究、零未来泄露、保留心血资产、拒绝过拟合尖峰。</span>
+        <h2 id="h-playbook">4. 怎么把 1 亿元真正用起来？（一页看懂交易与建模改造）</h2>
+        <span class="sec-sub">不搞花哨术语，只改这 6 件直接决定“每天赚多少钱”的实事，全部放进同一 C++ 真账簿比高下。</span>
       </div>
-      <div class="disc-grid">
-        <article class="disc-cell">
-          <div class="disc-head">
-            <h3>双轨满速并发与版本解耦（Pin &amp; Roll）</h3>
-            <span class="disc-code">RULE 01</span>
-          </div>
-          <ul>
-            <li><strong>工程轨全速去 Python 化：</strong>照常推进全仓 C++ 迁移与极端日提速，不降优先级；按业务杠杆优先交付六轴账簿、日摘要 PIT 定参与紧凑多截点流式引擎。</li>
-            <li><strong>研究轨绝不等终极完美版：</strong>随时锁定截至此刻最快且已验签的 C++ 版本推进实证；工程轨每产出更快已签版本，研究轨无痛切换加速。</li>
-          </ul>
+      <div class="play-grid">
+        <article class="play-card">
+          <span class="play-kicker">01 · 买什么池子</span>
+          <h3>重点主攻流动性高档池</h3>
+          <p><strong>用数据说话：</strong>不再默认死守中证 2000，把深市流动性高档（全期 +142.7 万/日、逆风 +169.5 万/日）和沪市稳健子池放到头号位置对照测试。</p>
         </article>
-
-        <article class="disc-cell">
-          <div class="disc-head">
-            <h3>四重全链 PIT 红线（零未来信息泄露）</h3>
-            <span class="disc-code">RULE 02</span>
-          </div>
-          <ul>
-            <li><strong>因子定参 PIT + 零拍脑袋窗口：</strong>日 <i>t</i> 参数严格只用 <i>t</i>−1 及之前数据；拆为「逐日紧凑充分统计量」+「<i>O</i>(<i>N</i>) 毫秒归约」，按实测<strong>方差收敛下界</strong>与<strong>漂移自相关尺度</strong>客观决定扩张窗或 EWMA 半衰期。</li>
-            <li><strong>训练与标准化 PIT：</strong>严格按日切分，跨边界未结算标签一律剔除。</li>
-            <li><strong>收益校准与容量预估 PIT：</strong>score → <i>α̂<sub>i</sub></i> 映射与成交量上限严格只用事前历史与实时盘口，绝不偷看未来执行窗成交量下单。</li>
-            <li><strong>时钟与库存 PIT：</strong>报价、现金、可卖旧股严格满足 <code>received_ts &lt; decision_ts</code> 并叠加计算与报单延迟。</li>
-          </ul>
+        <article class="play-card">
+          <span class="play-kicker">02 · 钱怎么分给每只票</span>
+          <h3>谁扣完成本剩得多，先给谁分钱</h3>
+          <p><strong>破掉等权稀释：</strong>旧办法把钱平均撒给前 5%，把前 1%（+64 bp）稀释惨了。新算法只看下单前盘口，按“预期毛利 − 预估滑点 − 6.8 bp”从高到低注水。</p>
         </article>
-
-        <article class="disc-cell">
-          <div class="disc-head">
-            <h3>全量心血保留与多截点算力三级降维</h3>
-            <span class="disc-code">RULE 03</span>
-          </div>
-          <ul>
-            <li><strong>不删任何重型因子：</strong>340/344 列微结构与 44 族已算新因子完整保留，按真实分组消融与边际贡献决定入模角色与权重。</li>
-            <li><strong>消除 S3 碎片开销：</strong>单日多截点合并为单一紧凑列式对象写出，直接削掉旧估算中仅对象碎片发布回读就占去的约 18.6 小时。</li>
-            <li><strong>两级探索漏斗 + 流式闭合：</strong>先在 60–80 个分层代表日（覆盖牛熊、缩量、重日及末 82 日）跑通地图（1–2 小时级）再扩至 683 日；单遍流式订单簿 <i>O</i>(1) 更新 + 局部闭合分量即时释放，稳守 100 GiB 内存线。</li>
-          </ul>
+        <article class="play-card">
+          <span class="play-kicker">03 · 怎么下单不被吃滑点</span>
+          <h3>三种成交情景同时对照</h3>
+          <p><strong>不做单一假想：</strong>新 C++ 账簿已支持同时跑“悲观硬吃多档 / 中性区间 VWAP / 乐观排队挂单”，把 1 分钟硬吃卖一改长、改聪明，保住单笔毛利。</p>
         </article>
-
-        <article class="disc-cell">
-          <div class="disc-head">
-            <h3>拒绝拍脑袋超参与严防数据窥探</h3>
-            <span class="disc-code">RULE 04</span>
-          </div>
-          <ul>
-            <li><strong>只认参数高原（Plateau）：</strong>回看窗、触发步长、执行时长、持有期与配权参数全部由无模型物理底图 + 粗-细网格得出，淘汰孤立尖峰。</li>
-            <li><strong>常态与逆风并列对照：</strong>开发期统一在 <code>2024-07-01 ~ 2026-10-30</code> 评估，所有改动必须同时检视常态段与末 82 日逆风段表现。</li>
-            <li><strong>终极盲测永久封存：</strong><code>2026-11</code> 及之后新日期在全部代码、因子、定参、配权与风控锁定前严禁触碰，留作一次性终审。</li>
-          </ul>
+        <article class="play-card">
+          <span class="play-kicker">04 · 怎么打破 T+1 周转上限</span>
+          <h3>四种退出方式同台打擂</h3>
+          <p><strong>把资金转起来：</strong>同股老股 T0、<strong>卖同行业低分底仓替代平仓</strong>、自然持仓 1–3 天退出、反向信号提前平仓——四种做法在同一账簿里硬碰硬比净收益。</p>
+        </article>
+        <article class="play-card">
+          <span class="play-kicker">05 · 日内和隔日怎么配合</span>
+          <h3>别二选一，直接跨周期联手</h3>
+          <p><strong>把逆风王牌用上：</strong>用刚发现的 1–3 日逆风强因子（末 82 天 IC 高达 0.14）挑出好票或跑波段池，叠加日内算法单挑盘中买点，兼顾胜率、容量和逆风防守。</p>
+        </article>
+        <article class="play-card">
+          <span class="play-kicker">06 · 怎么管风控和防过拟合</span>
+          <h3>只认宽高原，2026-11+ 封存终审</h3>
+          <p><strong>不靠拍脑袋调参：</strong>逆风期按事前活跃度与拥挤度缩预算、控行业/风格偏离；只留邻域稳定高原，全部定死后再解封 2026-11+ 一次性盲测。</p>
         </article>
       </div>
     </section>
 
-    <!-- SECTION 4: 6 Orthogonal Capital & Portfolio Design Axes -->
-    <section class="sec" id="sec-axes" aria-labelledby="h-axes">
+    <!-- SECTION 5: Next 3 Decisions -->
+    <section class="sec" id="sec-next" aria-labelledby="h-next">
       <div class="sec-head">
-        <h2 id="h-axes">资金组合与周转的六条正交设计轴</h2>
-        <span class="sec-sub">在 Step 1 统一 C++ 账簿裁判下按控制变量法逐轴打擂，不预设胜者；可按收益恒等式杠杆筛选查看。</span>
+        <h2 id="h-next">5. 接下来立刻可以推进的 3 件事</h2>
+        <span class="sec-sub">首批 3 个工单今天已全部收口，下面 3 项由总控随时可派 Codex 并发推进。</span>
       </div>
+      <div class="next-grid">
+        <article class="next-card">
+          <span class="pill next">优先级最高 · 直接出 1 亿净值曲线</span>
+          <h3>① 轨 C 账簿顺接 M3+M4</h3>
+          <p>在刚过验的 C++ 新账簿上装入“按扣费净收益注水配权”、跨股替代平仓、1–3 日持仓退出、股指期货对冲和风控开关，立刻跑出 566 天 1 亿真账簿成绩单。</p>
+          <div class="next-meta">前置已齐：M1+M2 已在双平台 5/5 绿灯验收。</div>
+        </article>
 
-      <div class="axis-controls" role="group" aria-label="按杠杆筛选设计轴">
-        <button type="button" class="flt-btn" data-axis-filter="all" aria-pressed="true">全部六轴</button>
-        <button type="button" class="flt-btn" data-axis-filter="U" aria-pressed="false">提升资金日周转 U</button>
-        <button type="button" class="flt-btn" data-axis-filter="M" aria-pressed="false">保护单笔净边际 M</button>
-        <button type="button" class="flt-btn" data-axis-filter="D" aria-pressed="false">压缩组合拖累 D</button>
-      </div>
+        <article class="next-card is-blue">
+          <span class="pill done" style="border-color:var(--blue);color:var(--blue);background:var(--blue-tint);">彻底排雷 · 补齐严格事前因子</span>
+          <h3>② 轨 D 跑 683 日顺序 PIT 摘要</h3>
+          <p>借 Wave 13 高速 C++ 引擎（深市 7.6 秒/日），一次性生成全 683 天无泄露定参摘要（补齐深市退役缺源），在扩张窗与 5/10/20/60 天平滑窗里定出最稳方案。</p>
+          <div class="next-meta">前置已齐：30× 压缩与 10ms 归约已验证 0 误差。</div>
+        </article>
 
-      <div class="table-wrap">
-        <table class="ledger" id="axes-table">
-          <thead>
-            <tr>
-              <th style="width: 15%">设计轴</th>
-              <th style="width: 13%">主攻杠杆</th>
-              <th style="width: 24%">解决的核心物理问题</th>
-              <th style="width: 48%">系统化探索空间（统一裁判下公平打擂）</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-levers="U D">
-              <td><strong>轴 1｜资本与底仓结构</strong></td>
-              <td><span class="lever-tag u">U 周转</span><span class="lever-tag d">D 敞口</span></td>
-              <td>1 亿元资金如何在底仓、机动现金与对冲端之间配比？</td>
-              <td>全现金裸多 vs 底仓/现金连续谱（<code>95/5</code> 至 <code>50/50</code>）vs 多头叠加股指期货对冲（含贴水估算与保证金占用）。</td>
-            </tr>
-            <tr data-levers="M U">
-              <td><strong>轴 2｜横截面资金分配</strong></td>
-              <td><span class="lever-tag m">M 净边际</span><span class="lever-tag u">U 容量</span></td>
-              <td>同一决策截点，如何在候选票之间分配每一元资金？</td>
-              <td>等权 vs 分数加权 vs <strong>严格 PIT 剩余收益率平价</strong>：动态求解各票股数 <i>q<sub>i</sub></i>，使边际净期望 <i>α̂<sub>i</sub></i> − <i>ĉ<sub>i</sub></i>(<i>q<sub>i</sub></i>) − 6.8 bp 在多档盘口约束下全局最优，根除等权前 5% 稀释 Top 1% 头部。</td>
-            </tr>
-            <tr data-levers="U">
-              <td><strong>轴 3｜时间截面资金调度</strong></td>
-              <td><span class="lever-tag u">U 周转</span></td>
-              <td>日内多轮与跨日之间，现金如何高效流动与复用？</td>
-              <td>单次打满 vs 分轮配额 vs <strong>动态资金水池</strong>（谁过净收益阈值谁拿钱 + 卖出回款实时回流 + 满载时评估「卖弱换强」净增益）。</td>
-            </tr>
-            <tr data-levers="M">
-              <td><strong>轴 4｜盘口微观执行与容量</strong></td>
-              <td><span class="lever-tag m">M 滑点</span></td>
-              <td>单笔订单如何吃盘口、如何估算每档真实承载深度？</td>
-              <td>自适应市场成交量占比执行窗 + 按预期毛收益折价设定多档限价上限；<strong>三情景并行</strong>：悲观多档吃单 vs 中性区间 VWAP vs 乐观有限排队（1m→3m 已实测可把一档成交率从 51% 提至 82%、三档至 90%）。</td>
-            </tr>
-            <tr data-levers="U M">
-              <td><strong>轴 5｜持仓了结与 T+1 回转</strong></td>
-              <td><span class="lever-tag u">U 周转</span><span class="lever-tag m">M 周期</span></td>
-              <td>买进的股票如何退出，怎样突破 A 股 T+1 老股回转天花板？</td>
-              <td>① 严格同股老股回转（卖不掉转被动隔夜）；② <strong>跨股低分替代平仓</strong>（卖同行业/市值低分底仓恢复总敞口，严控偏离上限）；③ <strong>自然跨日/多日持有</strong>（T+1 解锁后按周期退出）；④ 主动反向信号提前平仓 vs 到期被动平仓。</td>
-            </tr>
-            <tr data-levers="D M">
-              <td><strong>轴 6｜宏观环境与风险约束</strong></td>
-              <td><span class="lever-tag d">D 回撤</span><span class="lever-tag m">M 胜率</span></td>
-              <td>如何在缩量/风格切换/算法拥挤逆风期保住收益、稳住回撤？</td>
-              <td>事前市场活跃度、波动率与全市场算法拥挤度动态缩放总预算；行业与 Barra 风格偏离硬上限；阶段回撤保护机制。</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- SECTION 5: Modeling & Multi-Horizon Synergy -->
-    <section class="sec" id="sec-modeling" aria-labelledby="h-modeling">
-      <div class="sec-head">
-        <h2 id="h-modeling">建模三大增效机制与跨周期协同结构</h2>
-        <span class="sec-sub">告别「几百列不同机制因子硬糊进一棵树」（D24 教训），以角色解耦与跨周期协同打通单笔胜率与 T+1 约束。</span>
-      </div>
-
-      <div class="dual-grid">
-        <div class="panel-box">
-          <h3>跨周期协同双形态（不把日内与隔日做互斥二选一）</h3>
-          <div style="overflow-x:auto;">
-            <svg viewBox="0 0 640 318" style="width:100%;min-width:520px;height:auto;display:block;" role="img" aria-label="跨周期协同两种形态架构对比图">
-              <defs>
-                <marker id="mh-arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#1e2a31"/>
-                </marker>
-                <marker id="mh-arr-focus" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 1 1.5 L 9 5 L 1 8.5 z" fill="#d9654f"/>
-                </marker>
-              </defs>
-
-              <!-- Form 1: Shared Pool -->
-              <rect x="8" y="8" width="624" height="136" rx="4" fill="rgba(52,95,121,0.04)" stroke="#c8c1b4" stroke-width="1"/>
-              <rect x="16" y="16" width="248" height="24" rx="2" fill="#e9e2d5"/>
-              <text x="140" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#15212b">形态一｜1 亿元复合资金池（低相关平滑净值）</text>
-
-              <path d="M 216,74 H 264 Q 272,74 272,82 V 86 Q 272,94 280,94 H 316" fill="none" stroke="#1e2a31" stroke-width="1.3" marker-end="url(#mh-arr)"/>
-              <path d="M 216,118 H 264 Q 272,118 272,110 V 104 Q 272,96 280,96 H 316" fill="none" stroke="#1e2a31" stroke-width="1.3" marker-end="url(#mh-arr)"/>
-              <path d="M 468,95 H 504" fill="none" stroke="#1e2a31" stroke-width="1.3" marker-end="url(#mh-arr)"/>
-
-              <rect x="24" y="54" width="192" height="36" rx="2" fill="#f8f4eb" stroke="#345f79" stroke-width="1.2"/>
-              <text x="120" y="76" text-anchor="middle" font-size="12.5" font-weight="600" fill="#15212b">日内短周期流派（高周转）</text>
-
-              <rect x="24" y="98" width="192" height="36" rx="2" fill="#f8f4eb" stroke="#356861" stroke-width="1.2"/>
-              <text x="120" y="120" text-anchor="middle" font-size="12.5" font-weight="600" fill="#15212b">1–3 日跨日波段流派（稳容量）</text>
-
-              <rect x="320" y="64" width="148" height="62" rx="2" fill="#f8f4eb" stroke="#1e2a31" stroke-width="1.4"/>
-              <text x="394" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">统一动态资金水池</text>
-              <text x="394" y="109" text-anchor="middle" font-size="11.5" fill="#434e54">共享现金 + 底仓库存</text>
-
-              <rect x="508" y="64" width="112" height="62" rx="2" fill="#e9e2d5" stroke="#1e2a31" stroke-width="1.2"/>
-              <text x="564" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">整户低波动</text>
-              <text x="564" y="109" text-anchor="middle" font-size="11.5" fill="#434e54">高夏普复合净值</text>
-
-              <!-- Form 2: Multi-Horizon Signal Stacking -->
-              <rect x="8" y="160" width="624" height="150" rx="4" fill="rgba(217,101,79,0.05)" stroke="#d9654f" stroke-width="1"/>
-              <rect x="16" y="168" width="318" height="24" rx="2" fill="#f8f4eb" stroke="#d9654f" stroke-width="0.9"/>
-              <text x="175" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#a63d29">形态二｜多周期信号叠加（Multi-Horizon Stacking）</text>
-
-              <path d="M 208,246 H 244" fill="none" stroke="#d9654f" stroke-width="1.5" marker-end="url(#mh-arr-focus)"/>
-              <path d="M 436,246 H 472" fill="none" stroke="#d9654f" stroke-width="1.5" marker-end="url(#mh-arr-focus)"/>
-
-              <rect x="24" y="206" width="184" height="82" rx="2" fill="#f8f4eb" stroke="#1e2a31" stroke-width="1.2"/>
-              <text x="116" y="230" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15212b">1. 隔日/多日因子选池</text>
-              <text x="116" y="250" text-anchor="middle" font-size="11.5" fill="#434e54">G2 隔夜竞价 / 持仓成本</text>
-              <text x="116" y="268" text-anchor="middle" font-size="11.5" fill="#434e54">尾盘浮亏 / 日间 Barra 变化</text>
-
-              <rect x="248" y="206" width="188" height="82" rx="2" fill="rgba(217,101,79,0.1)" stroke="#d9654f" stroke-width="1.6"/>
-              <text x="342" y="230" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a63d29">2. 日内算法单择时切入</text>
-              <text x="342" y="250" text-anchor="middle" font-size="11.5" fill="#15212b">盘中算法资金真实启动窗</text>
-              <text x="342" y="268" text-anchor="middle" font-size="11.5" fill="#15212b">择时入场 + 多档减成本执行</text>
-
-              <rect x="476" y="206" width="144" height="82" rx="2" fill="#15212b"/>
-              <text x="548" y="230" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f8f4eb">3. 物理红利释放</text>
-              <text x="548" y="250" text-anchor="middle" font-size="11.5" fill="#e9e2d5">拉长周期覆盖 6.8bp</text>
-              <text x="548" y="268" text-anchor="middle" font-size="11.5" fill="#e9e2d5">自然化解 T+1 卖不掉</text>
-            </svg>
-          </div>
-        </div>
-
-        <div class="panel-box">
-          <h3>四角色解耦与目标函数升级</h3>
-          <div class="role-list">
-            <div class="role-row">
-              <div class="role-name">
-                <span>1. 去风格残差 Alpha + 头部聚焦主模型</span>
-                <span class="mono">ROLE · PREDICT</span>
-              </div>
-              <p>主模型直接预测扣除市场、行业与市值后的纯残差收益，防止树模型学进伪 Beta；针对信号集中在 Top 1%–5% 的非对称形态，测试头部加权 / Top-K 排序 / 扣成本阈值目标，不让中间 80% 噪音带偏分裂。</p>
-            </div>
-            <div class="role-row">
-              <div class="role-name">
-                <span>2. 二级门控模型（Meta-Labeling）</span>
-                <span class="mono">ROLE · GATE</span>
-              </div>
-              <p>专门吸收「单看 IC 一般、但大幅提升稳健性」的正交特征：日间 Barra 边际变化、全市场算法拥挤同步度（<code>FAM-CROWD-SYNC</code>）、活跃度与价差，预测主模型本次出手的扣费胜率与仓位缩放系数 <i>p̂<sub>i</sub></i>。</p>
-            </div>
-            <div class="role-row">
-              <div class="role-name">
-                <span>3. 独立平仓模型（Exit Decoupling）</span>
-                <span class="mono">ROLE · EXIT</span>
-              </div>
-              <p>将「启动延续（开仓）」与「衰竭回吐（平仓）」彻底拆分为独立模型与标签，支持主动反向信号提前了结与到期被动平仓的客观对照。</p>
-            </div>
-            <div class="role-row">
-              <div class="role-name">
-                <span>4. 事前盘口过滤与冲击函数</span>
-                <span class="mono">ROLE · FILTER / COST</span>
-              </div>
-              <p>严格 PIT 估计盘口档位深度与预期滑点函数 <i>ĉ<sub>i</sub></i>(<i>q</i>)，直接喂给层 3 的剩余收益率平价优化器，剔除扣成本后无净边际的伪机会。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 6: Parallel Launch Tracks A-E -->
-    <section class="sec" id="sec-tracks" aria-labelledby="h-tracks">
-      <div class="sec-head">
-        <h2 id="h-tracks">首批五大并行高杠杆轨道清单</h2>
-        <span class="sec-sub">五条轨道零阻塞立即并行启动，研究侦察与 C++ 底座双向奔赴；点击右侧按钮可在上方图谱中定位依赖链路。</span>
-      </div>
-      <div class="table-wrap">
-        <table class="ledger">
-          <thead>
-            <tr>
-              <th style="width: 14%">轨道编号</th>
-              <th style="width: 12%">层级定位</th>
-              <th style="width: 28%">当前启动任务</th>
-              <th style="width: 34%">直接产出与工程/研究价值</th>
-              <th style="width: 12%">拓扑定位</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="track-badge is-research">研究侦察轨 A</span></td>
-              <td>Step 2 · 层 1</td>
-              <td><strong>解析已签收 <code>szse-full683-20261124</code> 88 截点库 + L1/分钟价差</strong></td>
-              <td>零重算即得「全天 240 分钟算法事件密度 vs 成交量 vs 盘口价差」物理底图，客观对比固定时间时钟与等成交量/事件时钟。</td>
-              <td><button type="button" class="track-link-btn" data-jump-node="T-A">定位 T-A</button></td>
-            </tr>
-            <tr>
-              <td><span class="track-badge is-research">研究侦察轨 B</span></td>
-              <td>Step 2 · 层 2</td>
-              <td><strong>跨股票池『净 bp × 盘口容量』与全期限（分钟→T+3）半衰期摸底</strong></td>
-              <td>用现成旧分数 + 已算完 44 族新因子（含 <code>G2</code> 等），首次用真金白银盘口容量看清中证 500/1000/2000/国证 2000/流动性池与日内/隔日各自肥肉分布。</td>
-              <td><button type="button" class="track-link-btn" data-jump-node="T-B">定位 T-B</button></td>
-            </tr>
-            <tr>
-              <td><span class="track-badge is-cpp">C++ 工程轨 C</span></td>
-              <td>Step 1 · 层 3+4</td>
-              <td><strong>升级 <code>N04</code> 为通用六轴 C++ 动态账簿 + 多档撮合 + PIT 剩余收益率平价</strong></td>
-              <td>建好全项目唯一高速裁判，彻底打通「微结构因子 → 盘口容量约束 → 1 亿元真实整户净收益」的最后一公里。</td>
-              <td><button type="button" class="track-link-btn" data-jump-node="T-C">定位 T-C</button></td>
-            </tr>
-            <tr>
-              <td><span class="track-badge is-cpp">C++ 工程轨 D</span></td>
-              <td>Step 1 · 层 1</td>
-              <td><strong>设计并实现「日摘要充分统计量 <i>O</i>(<i>N</i>) 归约式严格 PIT 定参」+ 收敛/漂移曲线</strong></td>
-              <td>彻底修复历史全 601 天一次性定参的 PIT 漏洞，并用方差收敛下界与漂移自相关实测决定扩张窗或 EWMA 半衰期，告别拍脑袋。</td>
-              <td><button type="button" class="track-link-btn" data-jump-node="T-D">定位 T-D</button></td>
-            </tr>
-            <tr>
-              <td><span class="track-badge is-cpp">C++ 工程轨 E</span></td>
-              <td>Step 1 · 全底座</td>
-              <td><strong>既有全仓去 Python 化（22/22 已合入）+ Wave 14 极端日与紧凑多截点流式演进</strong></td>
-              <td>稳步推进 Wave 14（<code>600930</code> / <code>001391</code> 极端股提速），并以单日紧凑合并发布直接消除 ~18.6h S3 碎片瓶颈，为研究轨提供 Pin &amp; Roll 热替换加速。</td>
-              <td><button type="button" class="track-link-btn" data-jump-node="T-E">定位 T-E</button></td>
-            </tr>
-          </tbody>
-        </table>
+        <article class="next-card is-ochre">
+          <span class="pill later" style="border-color:var(--ochre);color:var(--ochre);background:var(--ochre-tint);">按需补数 · 验证午盘 13:00 金矿</span>
+          <h3>③ 补查 24–60 日午盘 L1 价差</h3>
+          <p>现有缓存缺 <code>13:00–13:05</code> 的真实买卖价差与卖一深度。授权查一次深市 24–60 个代表日快照，即可确认午盘 7.35× 密度尖峰扣完价差后能不能直接上实盘。</p>
+          <div class="next-meta">预计耗时：单条裁剪 6–16 分钟，全候选 26–64 分钟。</div>
+        </article>
       </div>
     </section>
 
     <footer class="doc-foot">
-      <span>思瑞投资量化策略研究总纲 · 2026-11-27 第一性原理版 · 研究编辑台交互档案</span>
+      <span>思瑞投资 1 亿实盘研究作战图 · 2026-11-27（已注入首批轨 A/B/C/D 验收实证）</span>
       <div class="doc-foot-links">
-        <a href="https://github.com/MengerWen/sirui-quant-research/blob/main/PLAN/2026-11-27-first-principles-research-master-plan.md" target="_blank" rel="noopener">总纲原文 (PLAN)</a>
-        <a href="https://github.com/MengerWen/sirui-quant-research/blob/main/PLAN/2026-11-24-project-wide-cpp-migration-master-plan.md" target="_blank" rel="noopener">全栈 C++ 迁移台账</a>
-        <a href="https://github.com/MengerWen/sirui-quant-research/blob/main/reports/2026-11/2026-11-27-wave13-wangly-szse-verify.md" target="_blank" rel="noopener">深市 Wave 13 验收</a>
+        <a href="https://github.com/MengerWen/sirui-quant-research/blob/main/PLAN/2026-11-27-first-principles-research-master-plan.md" target="_blank" rel="noopener">完整总纲原文</a>
+        <a href="https://github.com/MengerWen/sirui-quant-research/blob/main/reports/2026-11/2026-11-27-wave13-wangly-szse-verify.md" target="_blank" rel="noopener">深市 Wave 13 提速验收</a>
         <a href="https://github.com/MengerWen/sirui-quant-research/blob/main/reports/2026-11/2026-11-19-intraday-r05-attribution-followup.md" target="_blank" rel="noopener">R05 归因补算</a>
       </div>
     </footer>
@@ -1355,272 +1216,175 @@
   (() => {
     "use strict";
 
-    /* ===== 1. First-Principles Equation Explorer ===== */
+    /* 1. First-Principles Equation Explorer */
     const LEVERS = {
       U: {
-        title: "① 资金日周转率 U = 日均有效成交额 / 总本金 E₀",
-        diagnosis: "过去「单笔能赚 20–35 bp、两年整户累计增强却不到 0.8%」的首要元凶：资金日周转被「早盘单轮固定前 5% + 强制同股老股回转」焊死在极低水位，绝大部分机动资金与盘中机会处于闲置状态。",
-        unlock: "通过「轨 A（全天 88 截点与等量/事件时钟）」「轨 B（五池盘口容量地图）」「轴 3（动态资金水池与回款实时回流）」「轴 5（跨股低分替代平仓 / 自然多日持有）」「跨周期复合资金池」系统抬升有效周转上限。"
+        badTitle: "以前为什么被卡死？",
+        bad: "每天只在 09:35 做一轮，且强制只能卖同只股票的老仓——1 亿元资金大部分时间躺着不动，单笔就算赚 30 bp，乘上极低的日周转率，两年整户加起来也才不到 0.8%。",
+        fixTitle: "现在用什么破局？",
+        fix: "今天数据已经指明三条路：① 转向容量大 2.5 倍的深市流动性高档池（3m 可容 4.58 亿）；② 挖掘 13:00–13:05 午盘第二尖峰做多轮滚动；③ 在新 C++ 账簿里放开卖出回款实时复用、跨股替代平仓和 1–3 日波段。"
       },
       M: {
-        title: "② 单笔净边际 M = 毛 Alpha(h) − 滑点/冲击(v, τ) − 税费 6.8bp",
-        diagnosis: "历史 1 分钟硬吃卖一吞掉 11–18 bp 价差，且等权买前 5% 严重稀释了极端头部（Top 1% +64.14 bp → 2.5–5% 降至 +28.88 bp）；同时过短的日内持有期让 6.8 bp 固定税费占比过高。",
-        unlock: "通过「严格 PIT 剩余收益率平价（轴 2）」「3m+ 自适应执行与多档限价（轴 4）」「去风格残差 + 头部聚焦主模型（S4-1）」「多周期信号叠加拉长持有期（S4-3）」同时做大毛 Alpha(h) 并压低冲击成本。"
+        badTitle: "以前为什么毛利高、净利薄？",
+        bad: "一方面 1 分钟硬吃卖一吞掉了 11–18 bp 价差，另一方面把钱平均分给前 5%，把前 1%（+64 bp）的肥肉严重稀释了；再加上日内拿得短，6.8 bp 固定税费占比太高。",
+        fixTitle: "现在用什么破局？",
+        fix: "新账簿把“等权硬吃”升级成“谁扣完滑点税费剩得多先给谁分钱”，并同时对比吃多档 / VWAP / 排队三种执行；再配合 1–3 日新因子拉长部分资金的持有期，彻底摊薄固定税费。"
       },
       D: {
-        title: "③ 组合拖累与稳健 D = 闲置 / 敞口 / 风格与逆风回撤",
-        diagnosis: "在全市场普遍难做的末 82 日（2026-07 至 10 月），核心头部去风格残差依然为正（深市 +11.48~+12.05 bp，沪市 +7.44~+9.83 bp），表面暴跌主因是大盘走弱、行业风格逆风与算法拥挤叠加，且旧定参存在非 PIT 失配。",
-        unlock: "通过「日摘要 O(N) 严格 PIT 滚动/扩张定参（轨 D）」「二级门控 Meta-Labeling 吸收 Barra 边际与拥挤同步度（S4-2）」「逆风预算缩放与行业/风格偏离上限（轴 6）」「高原复核与 2026-11+ 终极盲测（Step 5）」稳固跨周期鲁棒性。"
+        badTitle: "以前为什么逆风期容易回撤？",
+        bad: "最后 82 天（2026-07~10 月）其实头部去风格残差仍是正的（+7.4~+12.1 bp），表面大跌主要是中证 2000 风格逆风 + 单一算法单拥挤；同时今天刚测出，老“全 601 天定参”在 9·24 放量后偏差高达 38%。",
+        fixTitle: "现在用什么破局？",
+        fix: "① 切向逆风仍大赚 +26.8 bp 的深市流动性高档池；② 接入末 82 天 RankIC 飙到 0.14 的 4 族 1–3 日逆风王牌因子；③ 用刚验通的 10ms 级严格事前定参彻底排掉未来泄露。"
       }
     };
 
-    let activeLever = "U";
-    const eqDetailEl = document.getElementById("eq-detail");
-    const eqTermBtns = Array.from(document.querySelectorAll(".eq-term"));
-    const eqHighlightBtn = document.getElementById("eq-highlight-btn");
-
-    function renderLever(key) {
-      activeLever = key;
-      eqTermBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lever === key)));
-      const item = LEVERS[key];
-      eqDetailEl.innerHTML =
-        `<div><h3>历史症结诊断：${item.title}</h3><p>${item.diagnosis}</p></div>` +
-        `<div><h3>总纲系统性破局路径</h3><p>${item.unlock}</p></div>`;
+    const eqDetail = document.getElementById("eq-detail");
+    const eqBtns = Array.from(document.querySelectorAll(".eq-term"));
+    function renderLever(k) {
+      eqBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lever === k)));
+      const d = LEVERS[k];
+      eqDetail.innerHTML =
+        `<div><h3>${d.badTitle}</h3><p>${d.bad}</p></div>` +
+        `<div><h3>${d.fixTitle}</h3><p>${d.fix}</p></div>`;
     }
-
-    eqTermBtns.forEach(btn => {
-      btn.addEventListener("click", () => renderLever(btn.dataset.lever));
-    });
+    eqBtns.forEach(b => b.addEventListener("click", () => renderLever(b.dataset.lever)));
     renderLever("U");
 
-    /* ===== 2. Hierarchical Dependency DAG Data & Orthogonal Layout ===== */
-    const DAG_NODES = [
-      // Tier 1: Step 1 (x = 28, w = 188, h = 122, rows y = 74 / 222 / 370)
+    /* 2. Findings Tabs */
+    const fTabs = Array.from(document.querySelectorAll(".ftab"));
+    const fPanels = {
+      f1: document.getElementById("panel-f1"),
+      f2: document.getElementById("panel-f2"),
+      f3: document.getElementById("panel-f3"),
+      f4: document.getElementById("panel-f4")
+    };
+    fTabs.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.ftab;
+        fTabs.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+        Object.entries(fPanels).forEach(([k, el]) => { el.hidden = k !== key; });
+      });
+    });
+
+    /* 3. Plain-Language 10-Node Dependency DAG */
+    const NODES = [
+      // Col 1: Done (x=24, w=230, h=76)
       {
-        id: "T-C", tier: 1, x: 28, y: 74, w: 188, h: 122,
-        badge: "轨 C · 立即并行", statusKind: "ready",
-        tierLabel: "Step 1 · 层 3+4 统一裁判",
-        title: "六轴 C++ 动态账簿与 PIT 平价优化器",
-        lines: ["六轴 C++ 动态账簿与", "PIT 平价优化器"],
-        shortSub: "多档撮合 · 实时回款 · 剩余平价",
-        levers: ["U", "M", "D"],
-        parallel: true, focal: true,
-        summary: "在既有 C++ N04 结算台账基础上升级为全项目唯一高速裁判：支持六条正交资金设计轴、悲观多档吃单 / 中性 VWAP / 乐观有限排队三情景撮合、实时现金回流、T+1 锁仓以及严格 PIT 的剩余收益率平价下单求解器。",
-        deliverable: "独立无 Python C++ 引擎（n04_engine 升级版）、六轴统一配置协议、三情景成交归因与多基准净值核算报表。",
-        pit: "下单额仅使用 t 之前到达的实时盘口深度与历史校准 α̂(i)，严禁偷看未来执行窗真实成交量；严格校验 received_ts < decision_ts。"
+        id: "D1", col: 1, x: 24, y: 64, w: 230, h: 76, status: "done",
+        tag: "已完成 · 算力底座",
+        title: "C++ 极速算因子底座",
+        lines: ["C++ 极速算因子底座", "深市 9.9s/日 · 22/22 已合入"],
+        summary: "原本全仓 Python 迁 C++ 已 100% 合入主干，深市 344 因子五连日最优 9.9 秒/日、极端日 44.5 秒（快 153 倍）；后台 Wave 14 仍在自动提速，研究线随时用现成最快版本。",
+        result: "Wave 13 沪深双机 0-ULP 验签通过；Wave 14 两个极端股提速工兵后台健康运行中。",
+        why: "算得足够快，后面才算得动全天多截点、683 天无泄露定参和大批量新因子。"
       },
       {
-        id: "T-D", tier: 1, x: 28, y: 222, w: 188, h: 122,
-        badge: "轨 D · 立即并行", statusKind: "ready",
-        tierLabel: "Step 1 · 层 1 PIT 定参底座",
-        title: "日摘要 O(N) 归约式严格 PIT 定参",
-        lines: ["日摘要 O(N) 归约式", "严格 PIT 定参"],
-        shortSub: "方差收敛 · 漂移自相关 · EWMA",
-        levers: ["D", "M"],
-        parallel: true,
-        summary: "将核尺度与结构定参拆解为「单遍逐日紧凑充分统计量（Daily Sketches / Histograms）」+「任意窗口 [t-W, t-1] 毫秒级合并归约」，彻底根除全 601 天一次性定参的未来泄露，并用收敛与漂移实测数据决定扩张窗或 EWMA 半衰期。",
-        deliverable: "O(N) 日摘要归约 C++ 模块、683 日参数方差收敛下界曲线与漂移自相关时间尺度实测报告。",
-        pit: "任意交易日 t 所用全部因子核尺度与结构参数严格仅依赖 t-1 及之前已结算历史，零拍脑袋硬编码窗口。"
+        id: "D2", col: 1, x: 24, y: 154, w: 230, h: 76, status: "done",
+        tag: "已完成 · 轨 A+B",
+        title: "五池容量与全期限地形图",
+        lines: ["五池容量与全期限地形图", "流动性高档逆风大赚 +169万/日"],
+        summary: "0 次查库、0 次重算，摸清 5 大股票池容量、旧模型+44 族新因子从 1 分钟到 T+3 的衰减，以及全天 88 截点算法单密度曲线。",
+        result: "发现三大真相：深市流动性高档容量碾压中证 2000；44 族新因子里 4 族 1–3 日逆风 IC 飙到 0.14；午盘 13:00 密度是早盘 7.35 倍。",
+        why: "先看清哪里有大矿，避免后面盲目写代码、做错池子和周期。"
       },
       {
-        id: "T-E", tier: 1, x: 28, y: 370, w: 188, h: 122,
-        badge: "轨 E · 持续演进", statusKind: "ready",
-        tierLabel: "Step 1 · 层 1 算力与流式底座",
-        title: "全仓 C++ 化与紧凑多截点流式引擎",
-        lines: ["全仓 C++ 化与紧凑", "多截点流式引擎"],
-        shortSub: "Wave 14 · 紧凑发布 · 局部闭合",
-        levers: ["U"],
-        parallel: true,
-        summary: "在 22/22 全栈 C++ 迁移 DAG 已合入基础上，持续推进 Wave 14 极端股加速（600930 / 001391），并实现单日多截点合并紧凑列式发布（消掉 ~18.6h S3 碎片开销）与单遍流式订单簿 + 局部闭合释放，通过 Pin & Roll 持续赋能研究轨。",
-        deliverable: "单日多截点紧凑列式写出协议、参数化时钟/窗口流式 C++ 因子引擎、持续更新的 0-ULP 验签二进制版本。",
-        pit: "全量保留 340/344 重型因子不删列，守住 16 核 / 100 GiB / 0 swap 硬件护栏与 0 ULP 逐位一致契约。"
+        id: "D3", col: 1, x: 24, y: 244, w: 230, h: 76, status: "done",
+        tag: "已完成 · 轨 D Phase 0",
+        title: "老定参验毒与 30× 压缩",
+        lines: ["老定参验毒与 30× 压缩", "实测偏差达 38% · 归约 10ms"],
+        summary: "直接把现存 601 天原始定参支持文件压成日摘要直方图，实测 19 个参数的未来泄露偏差和漂移速度。",
+        result: "深市 23.2G→0.77G、沪市 49.1G→1.44G，连续误差 <0.023%；实锤 9·24 后参数断层，老做法偏差高达 38%（最大 64.6%）。",
+        why: "确认了老地基确实带毒，也证明用日摘要就能在 10ms 内做严格事前定参，无需慢速重扫。"
+      },
+      {
+        id: "D4", col: 1, x: 24, y: 334, w: 230, h: 76, status: "done",
+        tag: "已完成 · 轨 C M1+M2",
+        title: "1 亿 C++ 真账簿（前半段）",
+        lines: ["1 亿 C++ 真账簿（前半段）", "多档三情景撮合 · 双平台全绿"],
+        summary: "在独立 worktree 里给 n04_engine 加上了按日流式读（破 256MB 上限）、5/10 档盘口、悲观/VWAP/排队三情景撮合、连续多日回款实时复用和严格 PIT 拦截。",
+        result: "Windows 与 Linux 双平台零警告编译，5/5 组 CTest（无 Python 依赖）全绿通过，零污染主分支。",
+        why: "没有这个高速真账簿，永远只能看纸面 bps，算不出 1 亿资金的真实净值。"
       },
 
-      // Tier 2: Step 2 (x = 260, w = 188)
+      // Col 2: Next Decisions (x=304, w=230, h=96)
       {
-        id: "T-A", tier: 2, x: 260, y: 74, w: 188, h: 122,
-        badge: "轨 A · 零重算并行", statusKind: "ready",
-        tierLabel: "Step 2 · 全景物理侦察",
-        title: "683日×88截点物理底图与信息时钟",
-        lines: ["683日×88截点物理底图", "与等量/事件时钟"],
-        shortSub: "事件密度 vs 成交量 vs 价差",
-        levers: ["U", "M"],
-        parallel: true,
-        summary: "直接解析已签收的 szse-full683-20261124（1,385 亿有效逐笔 × 88 日内截点）并叠加 L1/分钟盘口价差，零重算绘出全天 240 分钟算法事件密度、成交额与价差曲线，客观对比固定时间时钟与等成交量/事件时钟。",
-        deliverable: "全天 240 分钟信息-成本比物理底图、固定时间 vs 等成交量/事件时钟触发分布对比表、60–80 分层代表日抽样清单。",
-        pit: "完全无模型、零超参猜测；所有采样节点与窗口候选必须从物理信息-成本比底图中客观提取。"
+        id: "N1", col: 2, x: 304, y: 68, w: 230, h: 96, status: "next",
+        tag: "待拍板 ① · 最高优先级",
+        title: "账簿后半段（配权+退出+对冲）",
+        lines: ["账簿后半段（M3+M4）", "注水配权 · 跨股替代 · 期货对冲"],
+        summary: "在刚过验的 C++ 账簿上装入核心赚钱模块：按扣费净收益注水配权、跨股卖低分底仓替代、1–3 日自然持有、股指期货对冲与逆风风控开关。",
+        result: "完成后即可在 1 亿真账簿上直接跑出 566 天全期与末 82 天真实净值对比。",
+        why: "直接打通“有好信号 → 1 亿账户年化真正拉起来”的最后一公里。"
       },
       {
-        id: "T-B", tier: 2, x: 260, y: 222, w: 188, h: 122,
-        badge: "轨 B · 零重算并行", statusKind: "ready",
-        tierLabel: "Step 2 · 容量与半衰期侦察",
-        title: "五池净bp×容量与全期限半衰期摸底",
-        lines: ["五池净bp×容量与", "全期限半衰期摸底"],
-        shortSub: "五大股池 · 分钟→收盘→T+3",
-        levers: ["U", "M"],
-        parallel: true,
-        summary: "复用现成旧分数与已算完的 44 族新因子（含 G2 等），首次在同一真实盘口容量尺子下测绘中证 500/1000/2000/国证 2000/流动性分层池的「净期望 bp × 盘口可容纳金额」，并绘制分钟→收盘→T+1→T+3 自然半衰期衰减曲线。",
-        deliverable: "五大股票池绝对收益容量矩阵（亿元级别）、旧 344 + 44 族新因子全期限（分钟至 T+3）收益衰减图谱。",
-        pit: "使用当时有效成分名单（无幸存者偏差）与严格事前盘口容量估计，区分常态段与末 82 逆风段并列列示。"
+        id: "N2", col: 2, x: 304, y: 186, w: 230, h: 96, status: "next",
+        tag: "待拍板 ② · 地基排雷",
+        title: "683 天无泄露定参直出",
+        lines: ["683 天无泄露定参直出", "补齐深市缺源 · 定最稳窗口"],
+        summary: "借 Wave 13 高速 C++ 引擎单遍生成全 683 天严格事前日摘要，补齐深市退役缺源，并实测扩张窗 vs 5/10/20/60 天平滑窗的实盘稳健性。",
+        result: "产出一份彻底干净、零未来泄露的 683 天因子参数包，供后续模型训练使用。",
+        why: "不把定参里的未来泄露清干净，后面模型训得再好看也有虚高风险。"
       },
       {
-        id: "S2-4", tier: 2, x: 260, y: 370, w: 188, h: 122,
-        badge: "Step 2 · 体检归类", statusKind: "wait",
-        tierLabel: "Step 2 · 因子资产体检",
-        title: "全量因子分层与分组消融体检",
-        lines: ["全量因子分层与", "分组消融体检"],
-        shortSub: "344列+44族 · 四角色分流",
-        levers: ["M", "D"],
-        parallel: false,
-        summary: "在不删除任何心血重型因子的前提下，先在 60–80 分层代表日上完成全量 340/344 列 + 44 族已算新因子 + R04 候选的分组消融，明确识别各流派在预测、门控、平仓与盘口过滤四类角色中的真实边际贡献。",
-        deliverable: "全量因子四角色分类台账、分组消融边际收益与相关性热图、高价值扩窗候选优先清单。",
-        pit: "基于轨 D 产出的严格 PIT 参数与按日切分样本开展消融，避免非 PIT 参数或全量糊树掩盖真实信号。"
+        id: "N3", col: 2, x: 304, y: 304, w: 230, h: 96, status: "next",
+        tag: "待拍板 ③ · 按需补数",
+        title: "补查午盘 13:00 真实价差",
+        lines: ["补查午盘 13:00 真实价差", "24–60 代表日快照验成本"],
+        summary: "现成缓存缺 13:00–13:05 的真实买一/卖一价差和挂单深度；查一次 24–60 个代表日快照即可确认午盘 7.35× 密度尖峰扣完价差后能不能直接上实盘。",
+        result: "预计耗时 6–16 分钟（单条裁剪）至 26–64 分钟（全候选），零重算因子。",
+        why: "决定要不要把午盘复开纳入日内第二轮主战场。"
       },
 
-      // Tier 3: Step 3 (x = 492, w = 188)
+      // Col 3: Next Mainline (x=584, w=230, h=140)
       {
-        id: "S3-1", tier: 3, x: 492, y: 74, w: 188, h: 122,
-        badge: "Step 3 · 轴 2 + 轴 4", statusKind: "wait",
-        tierLabel: "Step 3 · 盘口与配权打擂",
-        title: "三情景盘口执行与剩余收益率平价",
-        lines: ["三情景盘口执行与", "剩余收益率平价"],
-        shortSub: "吃单 / VWAP / 有限排队",
-        levers: ["M", "U"],
-        parallel: false,
-        summary: "在统一 C++ 动态账簿上固定模型分数，控制变量对比等权、分数加权与严格 PIT 剩余收益率平价，并在自适应执行窗（1m/3m/成交占比）下并行检验悲观多档吃单、中性 VWAP 与乐观排队三情景。",
-        deliverable: "轴 2 × 轴 4 整户净收益与冲击成本敏感性矩阵、最优盘口限价折价与单票容量上限高原图。",
-        pit: "事前收益映射 α̂(i) 与冲击函数 ĉ(i, q) 严格仅用事前历史和实时盘口拟合，真实成交量仅用于撮合结算。"
+        id: "L1", col: 3, x: 584, y: 76, w: 230, h: 140, status: "later",
+        tag: "后续主线 A",
+        title: "1 亿真账簿同台打擂",
+        lines: ["1 亿真账簿同台打擂", "选池 × 配权 × 退出 × 对冲"],
+        summary: "固定现有分数，在同一个 1 亿 C++ 真账簿里用控制变量法测清：深市流动性高档 vs 中证 2000、等权 vs 注水配权、同股 T0 vs 跨股替代 vs 跨日退出、裸多 vs 期货对冲，究竟各加多少年化。",
+        result: "拿到第一张真正可信的 1 亿元 566 天实盘级成绩单（含常态与末 82 天对照）。",
+        why: "先靠交易结构把现有信号的钱榨干，再看缺口在哪。"
       },
       {
-        id: "S3-2", tier: 3, x: 492, y: 222, w: 188, h: 122,
-        badge: "Step 3 · 轴 1 + 轴 3 + 轴 5", statusKind: "wait",
-        tierLabel: "Step 3 · 资金周转与 T+1 突破",
-        title: "动态资金水池与 T+1 四退出模式",
-        lines: ["动态资金水池与", "T+1 四退出模式"],
-        shortSub: "股现比 · 跨股替代 · 卖弱换强",
-        levers: ["U", "M"],
-        parallel: false,
-        summary: "系统实测轴 1（全现金 / 95-5 至 50-50 底仓 / 期货对冲）、轴 3（单次 / 分轮 / 动态资金水池回流与卖弱换强）与轴 5（同股 T0 / 跨股低分替代平仓 / 自然多日持有 / 主动反向信号退出）的整户真实增益。",
-        deliverable: "1 亿元整户日均有效周转率 U、T+1 回转瓶颈突破量与四退出模式扣费净值对照表。",
-        pit: "逐股旧仓可卖数量、卖出回款入账时点与跨股替代时的行业/市值偏离均逐笔在 C++ 账簿硬校验。"
-      },
-      {
-        id: "S3-3", tier: 3, x: 492, y: 370, w: 188, h: 122,
-        badge: "Step 3 · 轴 6", statusKind: "wait",
-        tierLabel: "Step 3 · 宏观与风控约束",
-        title: "逆风期风险预算与风格敞口约束",
-        lines: ["逆风期风险预算与", "风格敞口约束"],
-        shortSub: "拥挤缩放 · Barra上限 · 防回撤",
-        levers: ["D"],
-        parallel: false,
-        summary: "基于事前市场活跃度、波动率与算法拥挤度动态调节总交易预算，并施加行业与 Barra 风格偏离硬上限及阶段回撤保护，重点检验在 2026-07~10 末 82 逆风日中的防守与回撤压缩能力。",
-        deliverable: "常态段 vs 末 82 逆风段双列风控归因表、最优风险预算缩放函数与风格偏离边界。",
-        pit: "预算缩放与拥挤度指标严格基于事前可观测截面实时计算，杜绝事后按大盘走势择时。"
+        id: "L2", col: 3, x: 584, y: 244, w: 230, h: 140, status: "later",
+        tag: "后续主线 B",
+        title: "无泄露重训与跨周期联手",
+        lines: ["无泄露重训与跨周期联手", "日内择时 + 1–3 日逆风王牌"],
+        summary: "基于彻底排雷的 683 天无泄露因子，按角色分开建模（预测主模型 / 逆风门控 / 独立平仓），重点把“1–3 日逆风王牌（IC 0.14）+ 日内算法单择时”合进同一 1 亿资金池。",
+        result: "显著拉高夏普、削平末 82 天回撤，并在因子质变后回检最优股池与持有期。",
+        why: "把单腿日内策略升级成全天候跨周期组合。"
       },
 
-      // Tier 4: Step 4 (x = 724, w = 188)
+      // Col 4: Final Gate (x=864, w=232, h=220)
       {
-        id: "S4-1", tier: 4, x: 724, y: 74, w: 188, h: 122,
-        badge: "Step 4 · 主模型升级", statusKind: "wait",
-        tierLabel: "Step 4 · 层 2 预测主模型",
-        title: "去风格残差 Alpha 与头部聚焦主模型",
-        lines: ["去风格残差 Alpha 与", "头部聚焦主模型"],
-        shortSub: "纯残差标签 · Top-K 头部目标",
-        levers: ["M", "D"],
-        parallel: false,
-        summary: "使用轨 D 的严格 PIT 因子与 S2-4 筛选出的强预测流派（旧 344 + G2 等），在纯 C++ LightGBM 引擎中训练直接预测去市场/行业/市值残差且聚焦 Top 1%–5% 头部的滚动模型。",
-        deliverable: "沪深分池滚动 PIT 主模型系列、Top 1% / 2.5% / 5% 纯残差净边际与整户账户增益复验报告。",
-        pit: "严格按日滚动训练与标准化，跨边界未结算成熟标签一律剔除，常态与末 82 日并列考核。"
-      },
-      {
-        id: "S4-2", tier: 4, x: 724, y: 222, w: 188, h: 122,
-        badge: "Step 4 · 门控与平仓", statusKind: "wait",
-        tierLabel: "Step 4 · 层 2 角色解耦",
-        title: "二级门控（Meta-Labeling）与独立平仓",
-        lines: ["二级门控 Meta-Label", "与独立平仓模型"],
-        shortSub: "Barra 边际 · 拥挤同步 · 拆分",
-        levers: ["D", "M"],
-        parallel: false,
-        summary: "将日间 Barra 边际变化、全市场算法拥挤同步度（FAM-CROWD-SYNC）、盘口深度等鲁棒性因子注入二级门控模型预测扣费胜率与仓位系数，同时独立训练平仓衰竭模型，避免单树混杂退化。",
-        deliverable: "Meta-Labeling 二级门控仓位缩放模型、独立反向平仓信号模型及其在 C++ 六轴账簿中的净增益消融。",
-        pit: "门控模型仅在主模型严格样本外（OOF）预测结果上按时间序滚动训练，杜绝嵌套过拟合。"
-      },
-      {
-        id: "S4-3", tier: 4, x: 724, y: 370, w: 188, h: 122,
-        badge: "Step 4 · 核心战略支柱", statusKind: "wait",
-        tierLabel: "Step 4 · 跨周期协同",
-        title: "跨周期协同：复合资金池 & 信号叠加",
-        lines: ["跨周期协同：复合池", "与多周期信号叠加"],
-        shortSub: "隔日选池 + 日内择时 · 共享账簿",
-        levers: ["U", "M", "D"],
-        parallel: false,
-        summary: "重点打通两大协同形态：① 1 亿元同一账簿并行运行日内短周期与 1–3 日波段流派共享现金底仓；② 用 G2/尾盘浮亏/Barra 变化选出 1–3 日优质池，再用日内算法单信号择时切入与减成本执行。",
-        deliverable: "复合资金池 vs 多周期信号叠加 vs 单周期基线的 1 亿元全账簿对比报告（年化、夏普、卡尔玛、回撤、容量）。",
-        pit: "两条周期流派在统一 C++ 账簿中实时竞争同一资金与老股库存，完整核算跨日资金机会成本与隔夜跳空。"
-      },
-
-      // Tier 5: Step 5 (x = 956, w = 176)
-      {
-        id: "S5-1", tier: 5, x: 956, y: 126, w: 176, h: 128,
-        badge: "Step 5 · 稳定性复核", statusKind: "gate",
-        tierLabel: "Step 5 · 锁定前审查",
-        title: "参数高原 Plateau 稳定性复核",
-        lines: ["参数高原 Plateau", "稳定性复核与冻结"],
-        shortSub: "淘汰孤立尖峰 · 跨段压测",
-        levers: ["D", "M"],
-        parallel: false,
-        summary: "对所有胜出方案的回看窗、触发步长、执行时长、持有期与风控阈值进行邻域微扰检验，只保留位于宽阔参数高原的稳健组合；核对常态段与末 82 逆风段无崩塌后，冻结全套 C++ 代码、因子、定参与参数。",
-        deliverable: "参数高原三维稳定面审计报告、冻结版本 Git SHA 清单与完整可复现无 Python 二进制包。",
-        pit: "任何仅在单点超参有效、邻域收益骤降的尖峰方案一律淘汰；全部冻结工作在触碰盲测期前完成。"
-      },
-      {
-        id: "S5-2", tier: 5, x: 956, y: 306, w: 176, h: 128,
-        badge: "Step 5 · 一次性终审", statusKind: "gate",
-        tierLabel: "Step 5 · 独立盲测终审",
-        title: "2026-11+ 封存新日期终极盲测",
-        lines: ["2026-11+ 封存新日", "一次性终极盲测"],
-        shortSub: "封存样本 · 零调参实盘验真",
-        levers: ["U", "M", "D"],
-        parallel: false,
-        summary: "解封此前严禁触碰的 2026-11 及之后独立新日期行情，用已冻结的全套纯 C++ 流水线一次性跑完定参、预测、优化与真实盘口撮合回放，给出策略形态与基准选择的最终实盘准入裁判。",
-        deliverable: "2026-11+ 独立盲测最终成绩单、三情景盘口归因与实盘上线决策建议。",
-        pit: "严格一次性盲测：严禁在看过 2026-11+ 结果后回头调参、换因子或修改风控阈值。"
+        id: "L3", col: 4, x: 864, y: 120, w: 232, h: 220, status: "later",
+        tag: "终审闸门 · 严格封存",
+        title: "参数高原复核与 2026-11+ 终极盲测",
+        lines: ["参数高原复核与", "2026-11+ 终极盲测"],
+        summary: "对胜出方案的所有核心参数做邻域微扰测试，淘汰只能碰巧赚钱的孤立尖峰、只留宽阔高原；随后彻底冻结代码、因子、参数和风控，一次性解封从未看过的 2026-11+ 行情做终极盲测。",
+        result: "输出最终实盘准入成绩单，严禁看过盲测结果后再回头调参。",
+        why: "防止过拟合的最后一道铁闸，决定能不能真金白银上实盘。"
       }
     ];
 
-    const DAG_EDGES = [
-      // Main forward handoffs (solid)
-      { from: "T-D", to: "S2-4", kind: "main" },
-      { from: "T-A", to: "S3-1", kind: "main" },
-      { from: "T-A", to: "S3-2", kind: "main" },
-      { from: "T-B", to: "S3-1", kind: "main" },
-      { from: "T-B", to: "S3-2", kind: "main" },
-      { from: "T-C", to: "S3-1", kind: "main" },
-      { from: "T-C", to: "S3-2", kind: "main" },
-      { from: "T-C", to: "S3-3", kind: "main" },
-      { from: "S2-4", to: "S4-1", kind: "main" },
-      { from: "S2-4", to: "S4-2", kind: "main" },
-      { from: "S3-1", to: "S4-1", kind: "main" },
-      { from: "S3-2", to: "S4-3", kind: "main" },
-      { from: "S3-3", to: "S4-2", kind: "main" },
-      { from: "S4-1", to: "S4-3", kind: "main" },
-      { from: "S4-2", to: "S4-3", kind: "main" },
-      { from: "S4-1", to: "S5-1", kind: "main" },
-      { from: "S4-2", to: "S5-1", kind: "main" },
-      { from: "S4-3", to: "S5-1", kind: "main" },
-      { from: "S5-1", to: "S5-2", kind: "main" },
-
-      // Pin & Roll continuous acceleration channel (dotted blue)
-      { from: "T-E", to: "S2-4", kind: "pin" },
-      { from: "T-E", to: "S4-1", kind: "pin" },
-
-      // Spiral coupling feedback loop (dashed ochre: Step 4 -> Step 2)
-      { from: "S4-3", to: "T-B", kind: "loop" }
+    const EDGES = [
+      { from: "D1", to: "N2", kind: "main" },
+      { from: "D2", to: "N1", kind: "main" },
+      { from: "D2", to: "N3", kind: "main" },
+      { from: "D3", to: "N2", kind: "main" },
+      { from: "D4", to: "N1", kind: "main" },
+      { from: "N1", to: "L1", kind: "main" },
+      { from: "N3", to: "L1", kind: "main" },
+      { from: "N2", to: "L2", kind: "main" },
+      { from: "L1", to: "L2", kind: "main" },
+      { from: "L1", to: "L3", kind: "main" },
+      { from: "L2", to: "L3", kind: "main" },
+      { from: "L2", to: "D2", kind: "loop" }
     ];
 
-    const nodeMap = new Map(DAG_NODES.map(n => [n.id, n]));
-    const dagNodesLayer = document.getElementById("dag-nodes-layer");
-    const dagEdgesLayer = document.getElementById("dag-edges-layer");
+    const nodeMap = new Map(NODES.map(n => [n.id, n]));
+    const edgesLayer = document.getElementById("dag-edges-layer");
+    const nodesLayer = document.getElementById("dag-nodes-layer");
 
     function svgEl(tag, attrs = {}) {
       const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
@@ -1628,656 +1392,228 @@
       return el;
     }
 
-    // Build clean orthogonal connector paths
-    function buildEdgePath(e, idx) {
+    function buildPath(e) {
       const a = nodeMap.get(e.from);
       const b = nodeMap.get(e.to);
-
-      // Special bottom bus for Spiral Feedback Loop: S4-3 -> T-B
       if (e.kind === "loop") {
         const x1 = a.x + a.w / 2;
         const y1 = a.y + a.h;
         const x2 = b.x + b.w / 2;
         const y2 = b.y + b.h;
-        const busY = 594;
-        return `M ${x1},${y1} V ${busY - 8} Q ${x1},${busY} ${x1 - 8},${busY} H 472 Q 464,${busY} 464,${busY - 8} V 364 Q 464,356 456,356 H ${x2 + 24} Q ${x2 + 16},356 ${x2 + 16},348 V ${y2 + 4}`;
+        const busY = 454;
+        return `M ${x1},${y1} V ${busY - 8} Q ${x1},${busY} ${x1 - 8},${busY} H 274 Q 266,${busY} 266,${busY - 8} V 236 Q 266,228 258,228 H ${b.x + b.w + 4}`;
       }
-
-      // Special bottom-upper bus for Pin & Roll: T-E -> S4-1
-      if (e.from === "T-E" && e.to === "S4-1") {
-        const x1 = a.x + a.w / 2;
-        const y1 = a.y + a.h;
-        const busY = 556;
-        const x2 = b.x - 12;
-        return `M ${x1},${y1} V ${busY - 8} Q ${x1},${busY} ${x1 + 8},${busY} H ${x2 - 8} Q ${x2},${busY} ${x2},${busY - 8} V ${b.y + 32} Q ${x2},${b.y + 24} ${x2 + 8},${b.y + 24} H ${b.x - 4}`;
-      }
-
-      // Special top bus for T-C -> S3-1 / S3-2 / S3-3 (skipping Tier 2 cleanly via gutters)
-      if (e.from === "T-C" && e.to === "S3-1") {
-        const yBus = 62;
-        const x1 = a.x + a.w / 2;
-        const x2 = b.x + b.w / 2;
-        return `M ${x1},${a.y} V ${yBus + 6} Q ${x1},${yBus} ${x1 + 6},${yBus} H ${x2 - 6} Q ${x2},${yBus} ${x2},${yBus + 6} V ${b.y - 4}`;
-      }
-      if (e.from === "T-C" && (e.to === "S3-2" || e.to === "S3-3")) {
-        const x1 = a.x + a.w;
-        const y1 = a.y + (e.to === "S3-2" ? 72 : 94);
-        const gutter1 = 236;
-        const yBus = e.to === "S3-2" ? 208 : 356;
-        const gutter2 = 472;
-        const x2 = b.x;
-        const y2 = b.y + 28;
-        return `M ${x1},${y1} H ${gutter1 - 6} Q ${gutter1},${y1} ${gutter1},${y1 + 6} V ${yBus - 6} Q ${gutter1},${yBus} ${gutter1 + 6},${yBus} H ${gutter2 - 6} Q ${gutter2},${yBus} ${gutter2},${yBus + 6} V ${y2 - 6} Q ${gutter2},${y2} ${gutter2 + 6},${y2} H ${x2 - 4}`;
-      }
-
-      // Same-tier vertical arrow (S4-1 -> S4-3, S4-2 -> S4-3, S5-1 -> S5-2)
-      if (a.tier === b.tier) {
-        if (e.from === "S4-1" && e.to === "S4-3") {
-          const xRight = a.x + a.w;
-          const g = xRight + 10;
-          return `M ${xRight},${a.y + 84} H ${g - 4} Q ${g},${a.y + 84} ${g},${a.y + 90} V ${b.y + 24} Q ${g},${b.y + 30} ${g - 4},${b.y + 30} H ${xRight + 4}`;
-        }
+      if (a.col === b.col) {
         const cx = a.x + a.w / 2;
         return `M ${cx},${a.y + a.h} V ${b.y - 4}`;
       }
-
-      // Skipping Tier 3: S2-4 -> S4-1 / S4-2 via clean horizontal bus at y=506 / 518
-      if (b.tier - a.tier === 2 && e.from === "S2-4") {
-        const yBus = e.to === "S4-1" ? 506 : 518;
-        const x1 = a.x + a.w;
-        const y1 = a.y + (e.to === "S4-1" ? 76 : 96);
-        const g1 = 468;
-        const g2 = e.to === "S4-1" ? 702 : 708;
-        const y2 = b.y + 88;
-        return `M ${x1},${y1} H ${g1 - 6} Q ${g1},${y1} ${g1},${y1 + 6} V ${yBus - 6} Q ${g1},${yBus} ${g1 + 6},${yBus} H ${g2 - 6} Q ${g2},${yBus} ${g2},${yBus - 6} V ${y2 + 6} Q ${g2},${y2} ${g2 + 6},${y2} H ${b.x - 4}`;
-      }
-
-      // Standard adjacent-tier orthogonal rounded elbow
       const x1 = a.x + a.w;
       const x2 = b.x;
-      const fanOffsets = {
-        "T-A->S3-1": [44, 44],
-        "T-A->S3-2": [76, 48],
-        "T-B->S3-1": [36, 76],
-        "T-B->S3-2": [64, 68],
-        "T-D->S2-4": [68, 44],
-        "T-E->S2-4": [56, 68],
-        "S3-1->S4-1": [56, 56],
-        "S3-2->S4-3": [74, 56],
-        "S3-3->S4-2": [48, 56],
-        "S4-1->S5-1": [56, 36],
-        "S4-2->S5-1": [56, 66],
-        "S4-3->S5-1": [56, 96]
+      const offsets = {
+        "D1->N2": [48, 30],
+        "D2->N1": [34, 34],
+        "D2->N3": [56, 48],
+        "D3->N2": [38, 62],
+        "D4->N1": [38, 72],
+        "N1->L1": [48, 48],
+        "N3->L1": [48, 108],
+        "N2->L2": [48, 52],
+        "L1->L3": [70, 64],
+        "L2->L3": [70, 156]
       };
-      const key = `${e.from}->${e.to}`;
-      const [o1, o2] = fanOffsets[key] || [a.h / 2, b.h / 2];
+      const [o1, o2] = offsets[`${e.from}->${e.to}`] || [a.h / 2, b.h / 2];
       const y1 = a.y + o1;
       const y2 = b.y + o2;
-      if (Math.abs(y1 - y2) < 2) {
-        return `M ${x1},${y1} H ${x2 - 4}`;
-      }
-      const midOffset = (idx % 3 - 1) * 5;
-      const mid = (x1 + x2) / 2 + midOffset;
+      if (Math.abs(y1 - y2) < 2) return `M ${x1},${y1} H ${x2 - 4}`;
+      const gutterMap = { "D1->N2": 274, "D2->N1": 284, "D2->N3": 272, "D3->N2": 282, "D4->N1": 290, "N1->L1": 558, "N3->L1": 566, "N2->L2": 554, "L1->L3": 840, "L2->L3": 844 };
+      const mid = gutterMap[`${e.from}->${e.to}`] || (x1 + x2) / 2;
       const dir = y2 > y1 ? 1 : -1;
       const r = Math.min(8, Math.abs(y2 - y1) / 2);
       return `M ${x1},${y1} H ${mid - r} Q ${mid},${y1} ${mid},${y1 + dir * r} V ${y2 - dir * r} Q ${mid},${y2} ${mid + r},${y2} H ${x2 - 4}`;
     }
 
-    // Render edges
-    DAG_EDGES.forEach((e, idx) => {
-      const stroke = e.kind === "loop" ? "#7d5724" : e.kind === "pin" ? "#345f79" : "#434e54";
-      const marker = e.kind === "loop" ? "url(#arr-ochre)" : e.kind === "pin" ? "url(#arr-blue)" : "url(#arr-ink)";
+    EDGES.forEach(e => {
       const p = svgEl("path", {
-        d: buildEdgePath(e, idx),
+        d: buildPath(e),
         class: "dag-edge",
-        stroke,
-        "stroke-width": e.kind === "main" ? "1.25" : "1.35",
-        "marker-end": marker,
+        stroke: e.kind === "loop" ? "#7d5724" : "#434e54",
+        "stroke-width": e.kind === "loop" ? "1.4" : "1.3",
+        "marker-end": e.kind === "loop" ? "url(#arr-ochre)" : "url(#arr-ink)",
         "data-from": e.from,
         "data-to": e.to,
         "data-kind": e.kind
       });
       if (e.kind === "loop") p.setAttribute("stroke-dasharray", "5,4");
-      if (e.kind === "pin") p.setAttribute("stroke-dasharray", "2,3.5");
-      dagEdgesLayer.appendChild(p);
+      edgesLayer.appendChild(p);
     });
 
-    // Edge bus labels (drawn cleanly on paper masks)
-    const busLabels = [
-      { x: 540, y: 545, w: 266, text: "Pin & Roll 算力热替换通道（更快版本无痛切换）", color: "#345f79" },
-      { x: 556, y: 583, w: 280, text: "螺旋耦合回检：因子库质变触发池 / 周期重检", color: "#7d5724" }
-    ];
-    busLabels.forEach(bl => {
-      dagEdgesLayer.appendChild(svgEl("rect", {
-        x: bl.x, y: bl.y, width: bl.w, height: 22, rx: 2, fill: "#f8f4eb"
-      }));
-      const t = svgEl("text", {
-        x: bl.x + bl.w / 2, y: bl.y + 15,
-        "text-anchor": "middle", "font-size": "12", "font-weight": "600", fill: bl.color
-      });
-      t.textContent = bl.text;
-      dagEdgesLayer.appendChild(t);
-    });
+    // Loop label pill
+    edgesLayer.appendChild(svgEl("rect", { x: 386, y: 443, width: 248, height: 22, rx: 2, fill: "#f8f4eb" }));
+    const lt = svgEl("text", { x: 510, y: 458, "text-anchor": "middle", "font-size": "11.5", "font-weight": "600", fill: "#7d5724" });
+    lt.textContent = "新因子升级后，回头复检最优股池与周期";
+    edgesLayer.appendChild(lt);
 
-    // Render nodes
-    DAG_NODES.forEach(n => {
-      const g = svgEl("g", {
-        class: "dag-node",
-        tabindex: "0",
-        role: "button",
-        "aria-label": `${n.id} ${n.title}`,
-        "data-id": n.id
-      });
+    NODES.forEach(n => {
+      const g = svgEl("g", { class: "dag-node", tabindex: "0", role: "button", "aria-label": n.title, "data-id": n.id });
+      const bg = n.status === "next" ? "rgba(217,101,79,0.06)" : n.status === "done" ? "rgba(44,94,86,0.05)" : "#f8f4eb";
+      const st = n.status === "next" ? "#d9654f" : n.status === "done" ? "#2c5e56" : "#6c767c";
+      g.appendChild(svgEl("rect", { class: "node-bg", x: n.x, y: n.y, width: n.w, height: n.h, rx: 3, fill: bg, stroke: st, "stroke-width": n.status === "later" ? "1.1" : "1.5" }));
 
-      const strokeCol = n.focal ? "#d9654f" : n.statusKind === "ready" ? "#1e2a31" : "#6c767c";
-      const fillCol = n.focal ? "rgba(217,101,79,0.07)" : "#f8f4eb";
-      g.appendChild(svgEl("rect", {
-        class: "node-bg",
-        x: n.x, y: n.y, width: n.w, height: n.h, rx: 3,
-        fill: fillCol, stroke: strokeCol, "stroke-width": n.focal ? "1.6" : "1.1"
-      }));
+      const tagFill = n.status === "done" ? "#2c5e56" : n.status === "next" ? "#d9654f" : "#e9e2d5";
+      const tagCol = n.status === "later" ? "#15212b" : "#f8f4eb";
+      g.appendChild(svgEl("rect", { x: n.x + 8, y: n.y + 8, width: n.w - 16, height: 20, rx: 2, fill: tagFill }));
+      const tt = svgEl("text", { x: n.x + 14, y: n.y + 22, "font-size": "11", "font-weight": "700", fill: tagCol });
+      tt.textContent = n.tag;
+      g.appendChild(tt);
 
-      // Top badge strip
-      const badgeFill = n.statusKind === "ready" ? "#15212b" : n.statusKind === "gate" ? "#a63d29" : "#e9e2d5";
-      const badgeText = n.statusKind === "ready" || n.statusKind === "gate" ? "#f8f4eb" : "#15212b";
-      g.appendChild(svgEl("rect", {
-        x: n.x + 8, y: n.y + 8, width: n.w - 16, height: 20, rx: 2, fill: badgeFill
-      }));
-      const bt = svgEl("text", {
-        x: n.x + 14, y: n.y + 22, "font-size": "11.5", "font-weight": "700", fill: badgeText
-      });
-      bt.textContent = `${n.id} · ${n.badge.replace(/^轨 [A-E] · |^Step \d · /, "")}`;
-      g.appendChild(bt);
-
-      // Explicit 2-line title (zero mid-word breaks)
-      const [line1, line2] = n.lines || [n.title, ""];
-      const t1 = svgEl("text", {
-        x: n.x + 10, y: n.y + 47, "font-size": "13", "font-weight": "700", fill: "#15212b"
-      });
-      t1.textContent = line1;
+      const yStart = n.h >= 140 ? n.y + 56 : n.y + 46;
+      const t1 = svgEl("text", { x: n.x + 12, y: yStart, "font-size": "13.5", "font-weight": "700", fill: "#15212b" });
+      t1.textContent = n.lines[0];
       g.appendChild(t1);
 
-      if (line2) {
-        const t2 = svgEl("text", {
-          x: n.x + 10, y: n.y + 66, "font-size": "13", "font-weight": "700", fill: "#15212b"
-        });
-        t2.textContent = line2;
-        g.appendChild(t2);
+      const t2 = svgEl("text", { x: n.x + 12, y: yStart + 20, "font-size": "12", fill: "#434e54" });
+      t2.textContent = n.lines[1];
+      g.appendChild(t2);
+
+      if (n.id === "L3") {
+        const t3 = svgEl("text", { x: n.x + 12, y: yStart + 52, "font-size": "12", fill: "#a63d29", "font-weight": "600" });
+        t3.textContent = "冻结全部代码与参数";
+        g.appendChild(t3);
+        const t4 = svgEl("text", { x: n.x + 12, y: yStart + 74, "font-size": "12", fill: "#434e54" });
+        t4.textContent = "一次性盲测决定是否上线";
+        g.appendChild(t4);
       }
 
-      // Short sublabel (clean gap above lever pills)
-      const sub = svgEl("text", {
-        x: n.x + 10, y: n.y + 86, "font-size": "11.5", fill: "#434e54"
-      });
-      sub.textContent = n.shortSub;
-      g.appendChild(sub);
-
-      // Lever pills cleanly at bottom (zero overlap with sublabel)
-      let px = n.x + 10;
-      const py = n.y + n.h - 11;
-      n.levers.forEach(lv => {
-        const col = lv === "U" ? "#345f79" : lv === "M" ? "#356861" : "#7d5724";
-        g.appendChild(svgEl("rect", {
-          x: px, y: py - 11, width: 22, height: 15, rx: 1.5,
-          fill: "#f2eee4", stroke: col, "stroke-width": "0.9"
-        }));
-        const lt = svgEl("text", {
-          x: px + 11, y: py, "text-anchor": "middle",
-          "font-family": "Cascadia Mono, Consolas, monospace",
-          "font-size": "10", "font-weight": "700", fill: col
-        });
-        lt.textContent = lv;
-        g.appendChild(lt);
-        px += 26;
-      });
-
-      g.addEventListener("click", () => selectDagNode(n.id));
-      g.addEventListener("keydown", ev => {
-        if (ev.key === "Enter" || ev.key === " ") {
-          ev.preventDefault();
-          selectDagNode(n.id);
-        }
-      });
-      dagNodesLayer.appendChild(g);
+      g.addEventListener("click", () => selectNode(n.id));
+      g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); selectNode(n.id); } });
+      nodesLayer.appendChild(g);
     });
 
-    /* ===== 3. Transitive Lineage & Inspector Logic ===== */
-    function getDirectNeighbors(id) {
-      const up = [], down = [], loops = [];
-      DAG_EDGES.forEach(e => {
-        if (e.kind === "loop" || e.kind === "pin") {
-          if (e.from === id) loops.push({ id: e.to, dir: "→", kind: e.kind });
-          if (e.to === id) loops.push({ id: e.from, dir: "←", kind: e.kind });
-        } else {
-          if (e.to === id) up.push(e.from);
-          if (e.from === id) down.push(e.to);
-        }
-      });
-      return { up, down, loops };
-    }
-
-    function getTransitiveSet(startId, direction) {
-      const visited = new Set();
-      const queue = [startId];
-      while (queue.length) {
-        const cur = queue.shift();
-        DAG_EDGES.forEach(e => {
-          if (e.kind !== "main") return;
-          const next = direction === "up" ? (e.to === cur ? e.from : null) : (e.from === cur ? e.to : null);
-          if (next && !visited.has(next)) {
-            visited.add(next);
-            queue.push(next);
-          }
-        });
-      }
-      return visited;
-    }
-
     const inspId = document.getElementById("insp-id");
-    const inspTier = document.getElementById("insp-tier");
     const inspStatus = document.getElementById("insp-status");
     const inspTitle = document.getElementById("insp-title");
     const inspSummary = document.getElementById("insp-summary");
-    const inspLever = document.getElementById("insp-lever");
-    const inspDeliv = document.getElementById("insp-deliverable");
-    const inspPit = document.getElementById("insp-pit");
+    const inspResult = document.getElementById("insp-result");
+    const inspWhy = document.getElementById("insp-why");
     const inspUp = document.getElementById("insp-up");
     const inspDown = document.getElementById("insp-down");
-    const inspLoop = document.getElementById("insp-loop");
 
-    let currentView = "dag";
-    let selectedDagId = "T-C";
-    let currentFilter = "all";
+    function getTransitive(start, dir) {
+      const vis = new Set(), q = [start];
+      while (q.length) {
+        const c = q.shift();
+        EDGES.forEach(e => {
+          if (e.kind !== "main") return;
+          const nx = dir === "up" ? (e.to === c ? e.from : null) : (e.from === c ? e.to : null);
+          if (nx && !vis.has(nx)) { vis.add(nx); q.push(nx); }
+        });
+      }
+      return vis;
+    }
 
-    function renderDepButtons(container, ids, cls, labelFn) {
-      container.innerHTML = "";
-      if (!ids.length) {
-        const span = document.createElement("span");
-        span.className = "dep-empty";
-        span.textContent = "无前置阻塞（可独立直接启动）";
-        container.appendChild(span);
+    function renderDeps(el, list, cls, emptyText) {
+      el.innerHTML = "";
+      if (!list.length) {
+        el.innerHTML = `<span class="dep-empty">${emptyText}</span>`;
         return;
       }
-      ids.forEach(item => {
-        const targetId = typeof item === "string" ? item : item.id;
-        const target = nodeMap.get(targetId);
-        if (!target) return;
+      list.forEach(id => {
+        const target = nodeMap.get(id);
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = `dep-btn ${cls}`;
-        btn.textContent = labelFn ? labelFn(item, target) : `${target.id} · ${target.title}`;
-        btn.addEventListener("click", () => selectDagNode(target.id));
-        container.appendChild(btn);
+        btn.textContent = target.title;
+        btn.addEventListener("click", () => selectNode(id));
+        el.appendChild(btn);
       });
     }
 
-    function updateInspectorForDag(id) {
+    let selectedId = "N1";
+    function selectNode(id) {
+      selectedId = id;
+      document.querySelectorAll("#dag-filters .flt-btn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === "all")));
       const n = nodeMap.get(id);
-      if (!n) return;
-      inspId.textContent = n.id;
-      inspTier.textContent = n.tierLabel;
-      inspStatus.className = "insp-status" + (n.statusKind === "wait" ? " is-wait" : n.statusKind === "gate" ? " is-gate" : "");
-      inspStatus.textContent = n.statusKind === "ready" ? "零阻塞 · 立即并行" : n.statusKind === "gate" ? "终审闸门 · 严格封存" : "承接上游交付";
-      inspTitle.textContent = n.title;
-      inspSummary.textContent = n.summary;
-      const leverNames = { U: "① 资金日周转率 U", M: "② 单笔净边际 M", D: "③ 组合拖累与稳健 D" };
-      inspLever.innerHTML = n.levers.map(l => `<span class="lever-tag ${l.toLowerCase()}">${leverNames[l]}</span>`).join(" ");
-      inspDeliv.textContent = n.deliverable;
-      inspPit.textContent = n.pit;
-
-      const { up, down, loops } = getDirectNeighbors(id);
-      renderDepButtons(inspUp, up, "is-up");
-      if (!down.length) {
-        inspDown.innerHTML = `<span class="dep-empty">终审输出节点（交实盘上线决策）</span>`;
-      } else {
-        renderDepButtons(inspDown, down, "is-down");
-      }
-      if (!loops.length) {
-        inspLoop.innerHTML = `<span class="dep-empty">无直接螺旋/热替换回路（经主链路传导）</span>`;
-      } else {
-        renderDepButtons(inspLoop, loops, "is-loop", (item, target) => {
-          const tag = item.kind === "loop" ? "螺旋回检" : "Pin & Roll";
-          return `[${tag}] ${item.dir} ${target.id} · ${target.title}`;
-        });
-      }
-    }
-
-    function applyDagHighlight(selectedId) {
-      const upSet = getTransitiveSet(selectedId, "up");
-      const downSet = getTransitiveSet(selectedId, "down");
-      const loopPartners = new Set();
-      DAG_EDGES.forEach(e => {
-        if ((e.kind === "loop" || e.kind === "pin") && (e.from === selectedId || e.to === selectedId)) {
-          loopPartners.add(e.from);
-          loopPartners.add(e.to);
-        }
-      });
+      const upSet = getTransitive(id, "up");
+      const downSet = getTransitive(id, "down");
 
       document.querySelectorAll("#dag-nodes-layer .dag-node").forEach(el => {
         const nid = el.dataset.id;
         el.classList.remove("is-dimmed", "is-selected", "is-upstream", "is-downstream");
-        if (nid === selectedId) el.classList.add("is-selected");
+        if (nid === id) el.classList.add("is-selected");
         else if (upSet.has(nid)) el.classList.add("is-upstream");
         else if (downSet.has(nid)) el.classList.add("is-downstream");
-        else if (loopPartners.has(nid)) el.classList.add("is-upstream");
         else el.classList.add("is-dimmed");
       });
 
       document.querySelectorAll("#dag-edges-layer .dag-edge").forEach(el => {
-        const f = el.dataset.from;
-        const t = el.dataset.to;
-        const k = el.dataset.kind;
+        const f = el.dataset.from, t = el.dataset.to, k = el.dataset.kind;
         el.classList.remove("is-dimmed", "is-highlight-edge", "edge-up", "edge-down", "edge-loop");
         if (k === "main") {
-          const inUp = (t === selectedId || upSet.has(t)) && upSet.has(f);
-          const inDown = (f === selectedId || downSet.has(f)) && downSet.has(t);
-          if (inUp) {
-            el.classList.add("is-highlight-edge", "edge-up");
-            el.setAttribute("marker-end", "url(#arr-blue)");
-          } else if (inDown) {
-            el.classList.add("is-highlight-edge", "edge-down");
-            el.setAttribute("marker-end", "url(#arr-green)");
-          } else {
-            el.classList.add("is-dimmed");
-            el.setAttribute("marker-end", "url(#arr-ink)");
-          }
+          const inUp = (t === id || upSet.has(t)) && upSet.has(f);
+          const inDown = (f === id || downSet.has(f)) && downSet.has(t);
+          if (inUp) { el.classList.add("is-highlight-edge", "edge-up"); el.setAttribute("marker-end", "url(#arr-blue)"); }
+          else if (inDown) { el.classList.add("is-highlight-edge", "edge-down"); el.setAttribute("marker-end", "url(#arr-green)"); }
+          else { el.classList.add("is-dimmed"); el.setAttribute("marker-end", "url(#arr-ink)"); }
         } else {
-          if (f === selectedId || t === selectedId) {
-            el.classList.add("is-highlight-edge", "edge-loop");
-          } else {
-            el.classList.add("is-dimmed");
-          }
+          if (f === id || t === id) el.classList.add("is-highlight-edge", "edge-loop");
+          else el.classList.add("is-dimmed");
         }
       });
+
+      inspId.textContent = n.tag;
+      inspStatus.className = "pill " + n.status;
+      inspStatus.textContent = n.status === "done" ? "已验收" : n.status === "next" ? "待你拍板" : "后续推进";
+      inspTitle.textContent = n.title;
+      inspSummary.textContent = n.summary;
+      inspResult.textContent = n.result;
+      inspWhy.textContent = n.why;
+
+      const directUp = EDGES.filter(e => e.kind === "main" && e.to === id).map(e => e.from);
+      const directDown = EDGES.filter(e => e.kind === "main" && e.from === id).map(e => e.to);
+      renderDeps(inspUp, directUp, "is-up", "起点任务，无需等待上游");
+      renderDeps(inspDown, directDown, "is-down", "最终验收闸门（决定是否上线实盘）");
     }
 
-    function clearDagFilterHighlight() {
+    function applyFilter(mode) {
+      document.querySelectorAll("#dag-filters .flt-btn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === mode)));
       document.querySelectorAll("#dag-nodes-layer .dag-node").forEach(el => {
         el.classList.remove("is-dimmed", "is-selected", "is-upstream", "is-downstream");
-      });
-      document.querySelectorAll("#dag-edges-layer .dag-edge").forEach(el => {
-        el.classList.remove("is-dimmed", "is-highlight-edge", "edge-up", "edge-down", "edge-loop");
-        const k = el.dataset.kind;
-        el.setAttribute("marker-end", k === "loop" ? "url(#arr-ochre)" : k === "pin" ? "url(#arr-blue)" : "url(#arr-ink)");
-      });
-    }
-
-    function applyFilterMode(mode) {
-      currentFilter = mode;
-      document.querySelectorAll("#dag-filters .flt-btn").forEach(b => {
-        b.setAttribute("aria-pressed", String(b.dataset.filter === mode));
-      });
-      if (mode === "all") {
-        clearDagFilterHighlight();
-        const selEl = document.querySelector(`#dag-nodes-layer .dag-node[data-id="${selectedDagId}"]`);
-        if (selEl) selEl.classList.add("is-selected");
-        return;
-      }
-      if (mode === "loop") {
-        const keepNodes = new Set(["T-E", "S2-4", "S4-1", "S4-3", "T-B"]);
-        document.querySelectorAll("#dag-nodes-layer .dag-node").forEach(el => {
-          el.classList.remove("is-selected", "is-upstream", "is-downstream", "is-dimmed");
-          if (!keepNodes.has(el.dataset.id)) el.classList.add("is-dimmed");
-          else el.classList.add("is-upstream");
-        });
-        document.querySelectorAll("#dag-edges-layer .dag-edge").forEach(el => {
-          el.classList.remove("is-dimmed", "is-highlight-edge", "edge-up", "edge-down", "edge-loop");
-          if (el.dataset.kind === "loop" || el.dataset.kind === "pin") {
-            el.classList.add("is-highlight-edge");
-          } else {
-            el.classList.add("is-dimmed");
-          }
-        });
-        return;
-      }
-
-      const matched = new Set();
-      DAG_NODES.forEach(n => {
-        if (mode === "parallel" && n.parallel) matched.add(n.id);
-        if ((mode === "U" || mode === "M" || mode === "D") && n.levers.includes(mode)) matched.add(n.id);
-      });
-      document.querySelectorAll("#dag-nodes-layer .dag-node").forEach(el => {
-        el.classList.remove("is-selected", "is-upstream", "is-downstream", "is-dimmed");
-        if (matched.has(el.dataset.id)) el.classList.add(mode === "parallel" ? "is-downstream" : "is-selected");
-        else el.classList.add("is-dimmed");
-      });
-      document.querySelectorAll("#dag-edges-layer .dag-edge").forEach(el => {
-        el.classList.remove("is-dimmed", "is-highlight-edge", "edge-up", "edge-down", "edge-loop");
-        if (matched.has(el.dataset.from) && matched.has(el.dataset.to)) {
-          el.classList.add("is-highlight-edge");
-        } else {
+        const n = nodeMap.get(el.dataset.id);
+        if (mode === "all") {
+          if (n.id === selectedId) el.classList.add("is-selected");
+        } else if (n.status !== mode) {
           el.classList.add("is-dimmed");
+        } else {
+          el.classList.add("is-selected");
         }
       });
+      document.querySelectorAll("#dag-edges-layer .dag-edge").forEach(el => {
+        el.classList.remove("is-dimmed", "is-highlight-edge", "edge-up", "edge-down", "edge-loop");
+        el.setAttribute("marker-end", el.dataset.kind === "loop" ? "url(#arr-ochre)" : "url(#arr-ink)");
+        if (mode !== "all") el.classList.add("is-dimmed");
+      });
     }
 
-    function selectDagNode(id) {
-      if (currentView !== "dag") switchTopoView("dag");
-      selectedDagId = id;
-      currentFilter = "all";
-      document.querySelectorAll("#dag-filters .flt-btn").forEach(b => {
-        b.setAttribute("aria-pressed", String(b.dataset.filter === "all"));
-      });
-      applyDagHighlight(id);
-      updateInspectorForDag(id);
-    }
+    document.querySelectorAll("#dag-filters .flt-btn").forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.filter)));
+    document.addEventListener("keydown", ev => { if (ev.key === "Escape") applyFilter("all"); });
 
-    document.querySelectorAll("#dag-filters .flt-btn").forEach(btn => {
-      btn.addEventListener("click", () => applyFilterMode(btn.dataset.filter));
-    });
-
-    /* ===== 4. View B: 4-Layer Decoupled C++ Architecture ===== */
-    const ARCH_LAYERS = [
-      {
-        id: "L1", x: 20, y: 40, w: 248, h: 208,
-        tierLabel: "LAYER 1 · C++ 特征与时钟引擎",
-        title: "L1 特征与时钟引擎（C++）",
-        statusKind: "ready",
-        lines: ["输入：L2 逐笔 / 快照 / 分钟 / 日线", "核心：szse344_cpp / sse340_cpp / opening_cpp", "定参：日摘要 O(N) 严格 PIT 滚动/扩张", "输出：时间/事件时钟全量 344 + 44 族面板"],
-        levers: ["U", "D"],
-        summary: "负责全部原始行情流式解析、严格 PIT 因子定参与参数化时钟输出。22/22 全栈 C++ 底座已合入（Wave 13 深市 9.9s/日、沪市 18.1s/日），下一步补齐日摘要 O(N) PIT 定参与单日紧凑多截点合并发布。",
-        deliverable: "零 Python 依赖的流式订单簿与特征生产二进制、紧凑多截点 Parquet/Arrow 面板与 PIT 参数包。",
-        pit: "参数严格仅由 t-1 及之前历史归约得出；单遍流式状态机与局部闭合释放稳守 100 GiB 内存上限。",
-        up: [], down: ["L2"], loops: ["L4（接收净收益/归因/容量反馈）"]
-      },
-      {
-        id: "L2", x: 308, y: 40, w: 244, h: 208,
-        tierLabel: "LAYER 2 · C++ 预测、门控与成本校准",
-        title: "L2 预测、门控与成本校准（C++）",
-        statusKind: "wait",
-        lines: ["角色：主预测 / 二级门控 / 独立平仓 / 过滤", "引擎：LightGBM C API + AdaBoost.R2 C++", "目标：去风格纯残差 + Top 1%–5% 头部聚焦", "输出：α̂(i,h) · 门控 p̂(i) · 冲击 ĉ(i,q)"],
-        levers: ["M", "D"],
-        summary: "按股票池 × 周期 × 角色（开仓/平仓/门控/过滤）解耦建模，避免单树糊入异质因子导致性能退化；同步输出 PIT 校准的预期毛收益（bp）、门控胜率系数与事前盘口冲击函数。",
-        deliverable: "去风格残差主模型、Meta-Labeling 门控模型、独立平仓模型及事前收益-冲击校准模块。",
-        pit: "严格按日期滚动训练与 OOF 门控拟合，剔除跨边界未成熟未来标签；收益映射绝不偷看未来执行窗成交量。",
-        up: ["L1"], down: ["L3"], loops: ["L4（接收滑点与未成交误差反馈）"]
-      },
-      {
-        id: "L3", x: 592, y: 40, w: 244, h: 208,
-        tierLabel: "LAYER 3 · C++ 六轴组合与优化引擎",
-        title: "L3 六轴资金组合与优化（C++）",
-        statusKind: "ready",
-        lines: ["约束：实时现金 / 可卖旧股 / 多档深度 / 风控", "求解：严格 PIT 剩余收益率平价矩阵", "协同：动态水池 · 跨股替代 · 跨周期叠加", "输出：逐票限价与挂单股数矩阵 q*(i,t)"],
-        levers: ["U", "M", "D"],
-        summary: "在实时现金、逐股 T+1 老股库存、事前多档盘口深度和行业/Barra 风格偏离硬约束下，将六条正交资金设计轴统一编码为全局最优下单矩阵求解器。",
-        deliverable: "严格 PIT 剩余收益率平价优化器、六轴组合调度器（支持复合资金池与多周期信号叠加）。",
-        pit: "优化求解只可见决策时刻前已确认现金、可卖旧股与实时挂单队列，绝不使用事后真实成交量反推目标仓位。",
-        up: ["L2"], down: ["L4"], loops: ["L4（接收周转率与回撤反馈）"]
-      },
-      {
-        id: "L4", x: 876, y: 40, w: 264, h: 208,
-        tierLabel: "LAYER 4 · C++ 真实撮合与连续账簿",
-        title: "L4 真实撮合与动态连续账簿（C++）",
-        statusKind: "ready", focal: true,
-        lines: ["唯一裁判：1 亿元本金全周期真实净值", "撮合：悲观多档吃单 / 中性 VWAP / 有限排队", "结算：实时回款 · T+1 锁仓 · 6.8bp 税费分红", "归因：常态/末82日 · 多基准 · 反馈三层上游"],
-        levers: ["U", "M", "D"],
-        summary: "全项目唯一裁判：用 1 亿元连续现金与逐股库存逐笔撮合并结算每一笔多轮与跨日订单，同时向层 1/2/3 回传净收益容量、滑点误差和周转回撤三大闭环信号。",
-        deliverable: "高吞吐 C++ 连续动态账簿与三情景盘口撮合器、逐笔审计收据与多基准归因报告。",
-        pit: "严格执行 received_ts < decision_ts + 计算/报单延迟、涨跌停/停牌限制、T+1 锁仓与真实市场参与率上限。",
-        up: ["L3"], down: [], loops: ["回传至 L1 / L2 / L3 构成系统闭环"]
-      }
-    ];
-
-    const archNodesLayer = document.getElementById("arch-nodes-layer");
-    const archMap = new Map(ARCH_LAYERS.map(l => [l.id, l]));
-
-    ARCH_LAYERS.forEach(l => {
-      const g = svgEl("g", {
-        class: "dag-node",
-        tabindex: "0",
-        role: "button",
-        "aria-label": l.title,
-        "data-arch-id": l.id
-      });
-      g.appendChild(svgEl("rect", {
-        class: "node-bg",
-        x: l.x, y: l.y, width: l.w, height: l.h, rx: 3,
-        fill: l.focal ? "rgba(217,101,79,0.08)" : "#f8f4eb",
-        stroke: l.focal ? "#d9654f" : "#1e2a31",
-        "stroke-width": l.focal ? "1.8" : "1.2"
-      }));
-      g.appendChild(svgEl("rect", {
-        x: l.x + 10, y: l.y + 10, width: l.w - 20, height: 24, rx: 2,
-        fill: l.focal ? "#d9654f" : "#15212b"
-      }));
-      const ht = svgEl("text", {
-        x: l.x + 18, y: l.y + 26, "font-size": "12", "font-weight": "700", fill: "#f8f4eb"
-      });
-      ht.textContent = l.title;
-      g.appendChild(ht);
-
-      l.lines.forEach((line, i) => {
-        const lt = svgEl("text", {
-          x: l.x + 12, y: l.y + 62 + i * 34, "font-size": "12", fill: i === 3 ? "#15212b" : "#434e54",
-          "font-weight": i === 3 ? "700" : "400"
-        });
-        lt.textContent = line;
-        g.appendChild(lt);
-        if (i < 3) {
-          g.appendChild(svgEl("line", {
-            x1: l.x + 12, y1: l.y + 72 + i * 34, x2: l.x + l.w - 12, y2: l.y + 72 + i * 34,
-            stroke: "#c8c1b4", "stroke-width": "0.8"
-          }));
-        }
-      });
-
-      g.addEventListener("click", () => selectArchLayer(l.id));
-      g.addEventListener("keydown", ev => {
-        if (ev.key === "Enter" || ev.key === " ") {
-          ev.preventDefault();
-          selectArchLayer(l.id);
-        }
-      });
-      archNodesLayer.appendChild(g);
-    });
-
-    function selectArchLayer(id) {
-      const l = archMap.get(id);
-      if (!l) return;
-      document.querySelectorAll("#arch-nodes-layer .dag-node").forEach(el => {
-        el.classList.remove("is-selected", "is-dimmed");
-        if (el.dataset.archId === id) el.classList.add("is-selected");
-      });
-      inspId.textContent = l.id;
-      inspTier.textContent = l.tierLabel;
-      inspStatus.className = "insp-status" + (l.statusKind === "wait" ? " is-wait" : "");
-      inspStatus.textContent = l.statusKind === "ready" ? "核心引擎已就位 / 持续升级" : "接力演进层";
-      inspTitle.textContent = l.title;
-      inspSummary.textContent = l.summary;
-      const leverNames = { U: "① 资金日周转率 U", M: "② 单笔净边际 M", D: "③ 组合拖累与稳健 D" };
-      inspLever.innerHTML = l.levers.map(lv => `<span class="lever-tag ${lv.toLowerCase()}">${leverNames[lv]}</span>`).join(" ");
-      inspDeliv.textContent = l.deliverable;
-      inspPit.textContent = l.pit;
-
-      inspUp.innerHTML = l.up.length
-        ? l.up.map(u => `<button type="button" class="dep-btn is-up" data-arch-jump="${u}">${archMap.get(u).title}</button>`).join("")
-        : `<span class="dep-empty">原始行情与外部数据入口层</span>`;
-      inspDown.innerHTML = l.down.length
-        ? l.down.map(d => `<button type="button" class="dep-btn is-down" data-arch-jump="${d}">${archMap.get(d).title}</button>`).join("")
-        : `<span class="dep-empty">终极账户裁判与归因输出层</span>`;
-      inspLoop.innerHTML = l.loops.map(t => `<span class="dep-empty" style="color:#7d5724;font-weight:600;">${t}</span>`).join("");
-
-      inspUp.querySelectorAll("[data-arch-jump]").forEach(b => b.addEventListener("click", () => selectArchLayer(b.dataset.archJump)));
-      inspDown.querySelectorAll("[data-arch-jump]").forEach(b => b.addEventListener("click", () => selectArchLayer(b.dataset.archJump)));
-    }
-
-    /* ===== 5. View Switch & Cross-Section Actions ===== */
-    const viewDagBtn = document.getElementById("view-dag-btn");
-    const viewArchBtn = document.getElementById("view-arch-btn");
-    const viewDagWrap = document.getElementById("view-dag-wrap");
-    const viewArchWrap = document.getElementById("view-arch-wrap");
-    const dagFilters = document.getElementById("dag-filters");
-
-    function switchTopoView(view) {
-      currentView = view;
-      const isDag = view === "dag";
-      viewDagBtn.setAttribute("aria-pressed", String(isDag));
-      viewArchBtn.setAttribute("aria-pressed", String(!isDag));
-      viewDagWrap.hidden = !isDag;
-      viewArchWrap.hidden = isDag;
-      dagFilters.hidden = !isDag;
-      if (isDag) {
-        selectDagNode(selectedDagId);
-      } else {
-        selectArchLayer("L4");
-      }
-    }
-
-    viewDagBtn.addEventListener("click", () => switchTopoView("dag"));
-    viewArchBtn.addEventListener("click", () => switchTopoView("arch"));
-
-    eqHighlightBtn.addEventListener("click", () => {
-      if (currentView !== "dag") switchTopoView("dag");
-      applyFilterMode(activeLever);
-      document.getElementById("sec-topology").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    document.querySelectorAll("[data-jump-node]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        selectDagNode(btn.dataset.jumpNode);
-        document.getElementById("sec-topology").scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-
-    // Axis filter buttons
-    const axisBtns = Array.from(document.querySelectorAll("[data-axis-filter]"));
-    const axisRows = Array.from(document.querySelectorAll("#axes-table tbody tr"));
-    axisBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const f = btn.dataset.axisFilter;
-        axisBtns.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
-        axisRows.forEach(r => {
-          const match = f === "all" || r.dataset.levers.split(" ").includes(f);
-          r.classList.toggle("is-hidden", !match);
-        });
-      });
-    });
-
-    // Esc resets highlight
-    document.addEventListener("keydown", ev => {
-      if (ev.key === "Escape" && currentView === "dag") {
-        applyFilterMode("all");
-      }
-    });
-
-    // Sticky jump nav active state on scroll
+    // Sticky nav active tracking
     const navLinks = Array.from(document.querySelectorAll(".jump-nav a"));
-    const sections = navLinks.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+    const secs = navLinks.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
     if ("IntersectionObserver" in window) {
       const obs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = "#" + entry.target.id;
-            navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === id));
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            const h = "#" + en.target.id;
+            navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === h));
           }
         });
       }, { rootMargin: "-20% 0px -65% 0px" });
-      sections.forEach(s => obs.observe(s));
+      secs.forEach(s => obs.observe(s));
     }
 
-    // Initialize with default clean overview + T-C inspected
-    selectDagNode("T-C");
-    applyFilterMode("all");
+    selectNode("N1");
+    applyFilter("all");
   })();
   </script>
 </body>
