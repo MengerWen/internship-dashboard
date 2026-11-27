@@ -1,0 +1,1448 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-26",
+  "method": "每条提交总计一份；明确涉及多个独立任务时在任务间等分。共享实现随本次修改目标归属，不向所有消费者重复计数。无法确认目标的提交保留待核。",
+  "source_config_sha256": "72183de608ff2b5f3914be2803e4011c8877b511b817d7bc888a4628ae5115a4",
+  "rules_sha256": "4b682e387e2b0457dee6d2253adc6cca649d0eb8835e08ac15ab8bad6c234a02",
+  "revisions": {
+    "sirui-quant-research": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+    "Quant_Research-Trading": "e8f3ca7571a38f0838bbc6b6cc30a848611f7ca8",
+    "internship-dashboard": "11bdf811c95e85ac524308880be78522d856994d"
+  },
+  "items": [
+    {
+      "repo": "internship-dashboard",
+      "sha": "07d4cdd9930c1138369ca7a4a21bb83ee1c249c7",
+      "date": "2026-11-26",
+      "subject": "补记11月25日深市在线复验与C++迁移",
+      "status": "excluded",
+      "chains": [],
+      "reason": "前一轮研究日志及其交付收据，避免重复计重。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "content/chains.json",
+        "content/journal/2026-11-25.md",
+        "content/journal/_attribution/2026-06-23.json",
+        "content/journal/_attribution/2026-06-24.json",
+        "content/journal/_attribution/2026-06-25.json",
+        "content/journal/_attribution/2026-06-26.json",
+        "content/journal/_attribution/2026-06-29.json",
+        "content/journal/_attribution/2026-06-30.json",
+        "content/journal/_attribution/2026-07-01.json",
+        "content/journal/_attribution/2026-07-03.json",
+        "content/journal/_attribution/2026-07-06.json",
+        "content/journal/_attribution/2026-07-07.json"
+      ]
+    },
+    {
+      "repo": "internship-dashboard",
+      "sha": "11bdf811c95e85ac524308880be78522d856994d",
+      "date": "2026-11-26",
+      "subject": "记录11月26日研究日志发布与核验收据",
+      "status": "excluded",
+      "chains": [],
+      "reason": "前一轮研究日志及其交付收据，避免重复计重。",
+      "shares": {},
+      "basis": "专项复核",
+      "paths": [
+        "docs/journal-review/daily-updates/2026-11-26/delivery-receipt.json"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d184a8f7519040fabb6eec1a45f87461575ba98e",
+      "date": "2026-11-26",
+      "subject": "fix(sse340_cpp): restore v5 0-ULP parity and activate doris_stream LiveFetch",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/driver.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e7c1dc3fd9c781433ed39dd2a365ebfcbef50a9d",
+      "date": "2026-11-26",
+      "subject": "记录深市 P75 因子、三日定参与 Doris 并发真机测绘",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共逐笔取数、并发阶梯探针或自适应分页实现。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave1-1b-wangly-steady-and-doris-ramp-evidence.json",
+        "reports/2026-11/2026-11-26-wave1-1b-wangly-steady-and-doris-ramp.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5669c73af1ae16c0786bbb17c985f68868d92e80",
+      "date": "2026-11-26",
+      "subject": "提速 Doris 自适应分页和跨窗口派发",
+      "status": "assigned",
+      "chains": [
+        "doris-efficiency"
+      ],
+      "reason": "公共逐笔取数、并发阶梯探针或自适应分页实现。",
+      "shares": {
+        "doris-efficiency": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "lv2_snapshot_workspace/native/doris_stream/adaptive.hpp",
+        "lv2_snapshot_workspace/native/doris_stream/adaptive_tests.cpp",
+        "lv2_snapshot_workspace/native/doris_stream/doris_stream.hpp",
+        "lv2_snapshot_workspace/native/doris_stream/mysql_pool.cpp",
+        "lv2_snapshot_workspace/native/doris_stream/stream.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "8c05928f49f92ce184eee6fdf756508b69f7dc28",
+      "date": "2026-11-26",
+      "subject": "提速深市定参的逐股计算与跨日调度",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/szse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/szse_calibration_cpp/calibration.hpp",
+        "因子/algobench/native/szse_calibration_cpp/f40.cpp",
+        "因子/algobench/native/szse_calibration_cpp/observations.cpp",
+        "因子/algobench/native/szse_calibration_cpp/performance_test.cpp",
+        "因子/algobench/native/szse_calibration_cpp/stock_pipeline.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "472721f602c374af3aeacb88fe75b918bfbc8aa0",
+      "date": "2026-11-26",
+      "subject": "深市 344 列复用评分扫描并保护重股借核",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/driver.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.hpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/priority.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d01f1f94812d73a4040e8ae9a49246c189ee52c2",
+      "date": "2026-11-26",
+      "subject": "记录深市定参与因子波次 2A 真机联验",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave2-2a-wangly-1c1d-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave2-2a-wangly-1c1d-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "5348e3cba14dd18f3c4305b992a1ff43b562f54e",
+      "date": "2026-11-26",
+      "subject": "Record Wave 1A SSE guarded benchmarks and extreme-day profile",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave1-1a-wenjie-sse-baseline-heatmap-evidence.json",
+        "reports/2026-11/2026-11-26-wave1-1a-wenjie-sse-baseline-heatmap.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "66a1ca27583bb33edd60c62faa387326ec92e783",
+      "date": "2026-11-26",
+      "subject": "修复深市取数并发准入与定参精确归约暂存",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp_driver/driver.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/priority.cpp",
+        "因子/algobench/native/szse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/szse_calibration_cpp/performance_test.cpp",
+        "因子/algobench/native/szse_calibration_cpp/stream_reductions.cpp",
+        "因子/algobench/native/szse_calibration_cpp/stream_reductions.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e55fd8fe22cef9da4d147ce1bce0dee2edc62906",
+      "date": "2026-11-26",
+      "subject": "提速沪市 340 因子响应评分与原生定参",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/driver.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/sse340_cpp/response_performance_test.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.hpp",
+        "因子/algobench/experiments/sse340_cpp/stage4b_extreme_check.cpp",
+        "因子/algobench/experiments/sse340_cpp/tests/sse_e2_driver_check.cpp",
+        "因子/algobench/experiments/sse340_cpp/tests/sse_e2_driver_priority.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "74dd0b78425c5f934b3790da3be6d3d7a382d587",
+      "date": "2026-11-26",
+      "subject": "Record Wave 3A SZSE native validation and cleanup",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave3-3a-wangly-szse-final-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave3-3a-wangly-szse-final-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2e55b779a561f5cdcf75dd31c2faa5cc006ba75c",
+      "date": "2026-11-26",
+      "subject": "docs: record wave 3B wenjie SSE verification",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave3-3b-wenjie-sse-final-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave3-3b-wenjie-sse-final-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ac011793a0dbed5d1899d9ae634a6894782f1db",
+      "date": "2026-11-26",
+      "subject": "加速沪市匹配准入与定参支持量归并",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/driver.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_source_priority.hpp",
+        "因子/algobench/experiments/sse340_cpp/page_core.cpp",
+        "因子/algobench/experiments/sse340_cpp/page_core.hpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "13a63e1613314ce59bafd1440853da3c5205b23e",
+      "date": "2026-11-26",
+      "subject": "修复沪市 F41 非周期性方差 libm pow 1-ULP 折叠差异",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/opening_chains.cpp",
+        "因子/algobench/experiments/sse340_cpp/response_performance_test.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "44eb98d08aa0d1cedf817180eab6a31f702c929b",
+      "date": "2026-11-26",
+      "subject": "记录 Wave 3.5V 沪市真机复验与 F41 位型定案",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave35-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave35-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "45e2d503eef36aeb31ca94f4f2fbb0bcc68e1034",
+      "date": "2026-11-26",
+      "subject": "让沪市频道钟和面板发布与评分重叠",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/driver.cpp",
+        "因子/algobench/experiments/sse340_cpp/stage4a_pipeline.cpp",
+        "因子/algobench/experiments/sse340_cpp/stage4a_pipeline.hpp",
+        "因子/algobench/experiments/sse340_cpp/tests/sse_e2_driver_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "37e9c8e97f9284755421758aa6aa99dba696a4ae",
+      "date": "2026-11-26",
+      "subject": "记录 Wave 4 沪市函数热点与并发剖析",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave4-1-wenjie-sse-xray-profile-evidence.json",
+        "reports/2026-11/2026-11-26-wave4-1-wenjie-sse-xray-profile.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "828027db051f568b6b9d1d93ba8690410599b315",
+      "date": "2026-11-26",
+      "subject": "加速深市定参取数交付与 F40 分量认证",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/szse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/szse_calibration_cpp/f40.cpp",
+        "因子/algobench/native/szse_calibration_cpp/performance_test.cpp",
+        "因子/algobench/native/szse_calibration_cpp/stock_pipeline.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2e4f01e76ed003b4a4fa45bf600807cc762ed5b3",
+      "date": "2026-11-26",
+      "subject": "Speed up exact SZSE344 opening scores and size graph reservations by phase",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/driver.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/driver.hpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.hpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/priority.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/slow_core.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0852fa5c9eefb25487781f77ca0953a82252a1f8",
+      "date": "2026-11-26",
+      "subject": "并行沪市定参候选扫描并减少 BBO 重复评分",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/kernels/bbo_sweep/bbo_replacement_outer_v1.hpp",
+        "因子/algobench/native/opening_cpp/opening_bbo.hpp",
+        "因子/algobench/native/sse_calibration_cpp/observations.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "73af3e27766077c5a1a1d859cf8930a574d37853",
+      "date": "2026-11-26",
+      "subject": "加速沪市冲击响应与共享 F40 指派",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/native/kernels/response_pruning/impact_query_v1.hpp",
+        "因子/algobench/native/pair_engine.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "88ef2daff4ec20ce1552f3a1eed90960b683466b",
+      "date": "2026-11-26",
+      "subject": "docs: record Wave 4 SZSE server verification",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave4-wangly-szse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave4-wangly-szse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "97b9493b1f95c1420e97330d5c5e129ad08130d5",
+      "date": "2026-11-26",
+      "subject": "Report Wave 4 Shanghai native validation",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave4-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave4-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "4fa5e10f84dc68de71d47aaffd855779ecad34eb",
+      "date": "2026-11-26",
+      "subject": "校准深市并行评分的图内存预留",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp_driver/driver.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/driver.hpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/priority.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ead75e124aab1688aaa96d8d384a73ccd0b80969",
+      "date": "2026-11-26",
+      "subject": "提速共享 F40 稀疏定价并重叠沪市定参",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/native/sse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/sse_calibration_cpp/heavy_stock_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/stock_schedule.hpp",
+        "因子/algobench/tests/native_assignment_boundary_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "0683143bbf80454d1c0f0ee16ccf03a8357c6941",
+      "date": "2026-11-26",
+      "subject": "并行沪市 F40 与 F42 并协调跨日发布",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/driver.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.hpp",
+        "因子/algobench/experiments/sse340_cpp/response_performance_test.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.hpp",
+        "因子/algobench/experiments/sse340_cpp/stage4a_pipeline.cpp",
+        "因子/algobench/experiments/sse340_cpp/stage4a_pipeline.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d4861a85cc305272360e6f6e88de70f46facf681",
+      "date": "2026-11-26",
+      "subject": "修正深市定参分页与输入内存准入",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/szse_calibration_cpp/README.md",
+        "因子/algobench/native/szse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/szse_calibration_cpp/fetch_policy.hpp",
+        "因子/algobench/native/szse_calibration_cpp/fetch_test.cpp",
+        "因子/algobench/native/szse_calibration_cpp/stock_pipeline.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f55c1211d738f50180bfd6dddbd230b1c00added",
+      "date": "2026-11-26",
+      "subject": "记录 Wave 4.5 深市双格真机终验",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave45-wangly-szse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave45-wangly-szse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1ec0eb0ddebf7a724789c1ff82757482a83d7297",
+      "date": "2026-11-26",
+      "subject": "将沪市 Stage 4B 全评分冻结对照更新至 Wave 4",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/STAGE4B_NOTES.md",
+        "因子/algobench/experiments/sse340_cpp/stage4b_extreme_check.cpp",
+        "因子/algobench/experiments/sse340_cpp/tests/sse_s4ab_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "75440ef3439e3114438a32c4c286e8da78b52756",
+      "date": "2026-11-26",
+      "subject": "合入全流程存储生命周期规约与 CLI",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "存储分级和生命周期 CLI，含帐本及正式索引保护。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "AGENT.md",
+        "AGENTS.md",
+        "docs/agents/local-artifacts.md",
+        "docs/agents/storage-lifecycle.md",
+        "scripts/storage_lifecycle_cli.py",
+        "scripts/tests/test_storage_lifecycle_cli.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d81f3db29cad19d2fe532ea561ea52fc93b52878",
+      "date": "2026-11-26",
+      "subject": "记录 Wave 4.5 沪市双格真机终验",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave45-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave45-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "45da940d215393da6aa7a5c2e9c67c8295f5c1b9",
+      "date": "2026-11-26",
+      "subject": "保护深市大股原生评分借核",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp_driver/driver.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.hpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/priority.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ecb24b4dc06525a4779f6e77883df3723299a160",
+      "date": "2026-11-26",
+      "subject": "加速 F40 正向匹配与沪市定参跨日派发",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/native/sse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/sse_calibration_cpp/heavy_stock_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/stock_schedule.hpp",
+        "因子/algobench/native/sse_calibration_cpp/test_connected_assignment.hpp",
+        "因子/algobench/tests/native_assignment_boundary_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b0d9353218908150a0da59adc7e6dcc906e69871",
+      "date": "2026-11-26",
+      "subject": "隔离沪市 F40/F42 图预算并复用冲击响应计算",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/sse340_cpp/stage4b_extreme_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "7450ec03f0853c92808353476ae37c197ae675cb",
+      "date": "2026-11-26",
+      "subject": "修复存储反查的相对键和嵌套正式索引",
+      "status": "assigned",
+      "chains": [
+        "storage-cleanup"
+      ],
+      "reason": "存储分级和生命周期 CLI，含帐本及正式索引保护。",
+      "shares": {
+        "storage-cleanup": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "scripts/storage_lifecycle_cli.py",
+        "scripts/tests/test_storage_lifecycle_cli.py"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "ef61bdb85cfe7b1e0e88859e617f3ef4a6e465ee",
+      "date": "2026-11-26",
+      "subject": "docs: record Wave 5 Shanghai live verification",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave5-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave5-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "22140427f59509d8cd6dcb2dbc1670b6ff5dae08",
+      "date": "2026-11-26",
+      "subject": "记录 Wave 5 深市 344 因子真机终验",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave5-wangly-szse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave5-wangly-szse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b5b029437e1b8fc62d1b7d3087aa6ffac41c5b3c",
+      "date": "2026-11-26",
+      "subject": "加快沪市开盘响应查询和重股匹配准入",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/driver.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_matching_resources.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.hpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_priority_pool.hpp",
+        "因子/algobench/experiments/sse340_cpp/stage4b_extreme_check.cpp",
+        "因子/algobench/experiments/sse340_cpp/tests/sse_e2_driver_priority.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "b01522f96a9a955bef2a3c224cc5fa2211879483",
+      "date": "2026-11-26",
+      "subject": "降低沪市定参图池和取数预留",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/sse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/sse_calibration_cpp/calibration.hpp",
+        "因子/algobench/native/sse_calibration_cpp/f40.cpp",
+        "因子/algobench/native/sse_calibration_cpp/fetch_policy.hpp",
+        "因子/algobench/native/sse_calibration_cpp/fetch_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/heavy_stock_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/observations.cpp",
+        "因子/algobench/native/sse_calibration_cpp/performance_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/stock_schedule.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f96848fd176d0cdbefb89454ea68348314193de1",
+      "date": "2026-11-26",
+      "subject": "修复深市重股派发并压缩开盘评分热路径",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/priority_pool.hpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/priority.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/synthetic_benchmark.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "6f6564ebe2536c85125063546caf898a98975d9a",
+      "date": "2026-11-26",
+      "subject": "优化深市定参报价支持与 F40 图池准入",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/szse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/szse_calibration_cpp/f40.cpp",
+        "因子/algobench/native/szse_calibration_cpp/graph_pool.hpp",
+        "因子/algobench/native/szse_calibration_cpp/observations.cpp",
+        "因子/algobench/native/szse_calibration_cpp/performance_test.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "1e214791be20818e454dd45a11ea6a820544514e",
+      "date": "2026-11-26",
+      "subject": "加快沪市股票频道钟切片",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/driver_clock.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "bcd9ac7df76c2beb966fba17ddc1c983ae6788c7",
+      "date": "2026-11-26",
+      "subject": "docs: record Wave 6 wangly SZSE live verification",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave6-wangly-szse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave6-wangly-szse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d5a3bc7431a46e26b694e73292c564d64fbc9dd9",
+      "date": "2026-11-26",
+      "subject": "压缩 F40 定价子图的搜索状态",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/pair_engine.cpp",
+        "因子/algobench/tests/native_assignment_boundary_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "cc2e8acdd9250439de147083841f2933b9380a41",
+      "date": "2026-11-26",
+      "subject": "深市定参按重报动作复用 BBO 报价权重",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/szse_calibration_cpp/observations.cpp",
+        "因子/algobench/native/szse_calibration_cpp/performance_test.cpp",
+        "因子/algobench/native/szse_calibration_cpp/stock_pipeline.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "92c29c26cd8d0e13f29db0dcdc9231165ebac733",
+      "date": "2026-11-26",
+      "subject": "Record Wave 6 Shanghai live verification",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave6-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave6-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "68c262728d0733bdf009ca28fbf296b9c756452b",
+      "date": "2026-11-26",
+      "subject": "缩减沪市极端股匹配预留与回放开销",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_matching_resources.hpp",
+        "因子/algobench/experiments/sse340_cpp/sse_opening_replay.cpp",
+        "因子/algobench/experiments/sse340_cpp/stage4b_extreme_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e4c611959fde7c1a674f8a5ed9ee8cd2131c1122",
+      "date": "2026-11-26",
+      "subject": "并行构建深市响应索引与合并 BBO 图",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.hpp",
+        "因子/algobench/experiments/szse344_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/synthetic_benchmark.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "273fed82fa1b012c187ed6c3cc0e22ca3d9dfb96",
+      "date": "2026-11-26",
+      "subject": "沪市定参复用重报价权重并缓存六核距离频数",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/sse_calibration_cpp/heavy_stock_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/observations.cpp",
+        "因子/algobench/native/sse_calibration_cpp/stock_schedule.hpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a78520c99c0de6653fc6381f9f13bd6fdb17e92b",
+      "date": "2026-11-26",
+      "subject": "Add offline GNU build polish for four native workloads",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/scripts/BUILD_POLISH.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "a41b5a56c014f7b8340204875e0c5e5500b13c4d",
+      "date": "2026-11-26",
+      "subject": "记录 Wave 7 沪市因子与定参真机终验",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave7-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave7-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "df3bb926214b80f690536100349823a946eb436f",
+      "date": "2026-11-26",
+      "subject": "docs: record Wave 7 SSE default-build live verification",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave7-r2-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave7-r2-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "d52aac1af0dad2c513d4358e41587cb0d7db5d6f",
+      "date": "2026-11-26",
+      "subject": "Stream SSE F42 lanes under F40 graph pressure",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_matching_resources.hpp",
+        "因子/algobench/experiments/sse340_cpp/opening_scored_orders.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_opening_replay.cpp",
+        "因子/algobench/experiments/sse340_cpp/stage4b_extreme_check.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "df114fb1626a8d0b76592decd969cc372d03a3fd",
+      "date": "2026-11-26",
+      "subject": "Tighten SSE calibration F40 graph reservation and reuse scored tiles",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/sse_calibration_cpp/daily_support.cpp",
+        "因子/algobench/native/sse_calibration_cpp/f40.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "2adce2ca5aab30311db91c45ab124c9b11ce1969",
+      "date": "2026-11-26",
+      "subject": "Optimize SZSE template windows and large response blocks",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/szse344_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/szse344_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/szse344_cpp_driver/tests/synthetic_benchmark.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "e45450aae9f1ae4d0a141045bcb6d6d6fcd39e0d",
+      "date": "2026-11-26",
+      "subject": "Record Wave 8 wenjie SSE live verification",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave8-wenjie-sse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave8-wenjie-sse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "f96bf4daef8bd284a79b3e29b5da5a118705e5cf",
+      "date": "2026-11-26",
+      "subject": "docs: record Wave 7.5 Shenzhen live verification",
+      "status": "assigned",
+      "chains": [
+        "szse344-cpp-rewrite"
+      ],
+      "reason": "深市 344 列原生因子入口、调度或跨版本结果核对。",
+      "shares": {
+        "szse344-cpp-rewrite": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "reports/2026-11/2026-11-26-wave7-wangly-szse-verify-evidence.json",
+        "reports/2026-11/2026-11-26-wave7-wangly-szse-verify.md"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "59c552cf6c908b927492a5c570804505d6e7d5b7",
+      "date": "2026-11-26",
+      "subject": "提前分配沪市 F40 工位并优化冲击响应",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/experiments/sse340_cpp/opening_candidates.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_f40_matching.cpp",
+        "因子/algobench/experiments/sse340_cpp/opening_impacts.cpp",
+        "因子/algobench/experiments/sse340_cpp/sse_opening_replay.cpp"
+      ]
+    },
+    {
+      "repo": "sirui-quant-research",
+      "sha": "c824b89c447da34ae86848bf81b217899a62be53",
+      "date": "2026-11-26",
+      "subject": "沪市定参按 F40 阶段准入并优先读取重股",
+      "status": "assigned",
+      "chains": [
+        "project-cpp-migration"
+      ],
+      "reason": "沪市 340 列入口、沪深定参、共享匹配算法或双机工具链及实测。",
+      "shares": {
+        "project-cpp-migration": {
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "basis": "专项复核",
+      "paths": [
+        "因子/algobench/native/sse_calibration_cpp/calibration.cpp",
+        "因子/algobench/native/sse_calibration_cpp/calibration.hpp",
+        "因子/algobench/native/sse_calibration_cpp/f40.cpp",
+        "因子/algobench/native/sse_calibration_cpp/f40_graph.hpp",
+        "因子/algobench/native/sse_calibration_cpp/fetch_policy.hpp",
+        "因子/algobench/native/sse_calibration_cpp/fetch_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/heavy_stock_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/performance_test.cpp",
+        "因子/algobench/native/sse_calibration_cpp/stock_schedule.hpp"
+      ]
+    }
+  ]
+}

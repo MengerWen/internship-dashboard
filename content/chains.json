@@ -212,20 +212,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 6,
+        "days": 7,
         "span": [
           "2026-09-29",
-          "2026-11-25"
+          "2026-11-26"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-26",
-          "scope": "核对目标日固定材料、原始回执和会话决定。"
+          "on": "2026-11-27",
+          "scope": "核对目标日固定材料及原始回执。"
         }
       },
       "fate": "landed",
-      "fate_note": "10 月 9 日公共取数入口接入分组定标。10 月 26 日实测后定为账户共用两路 SQL，27 日换新分页形状、在冷数据上改选三路；28 日把有效核数的量法改成按完整的一日周期算。Doris 的详细执行信息没有权限看。 11月25日同一代表日全池取数、验签和封包从12.00秒降至6.31秒，冻结输入一致。自适应分页进入深市在线复验。",
+      "fate_note": "10 月 9 日公共取数入口接入分组定标。10 月 26 日实测后定为账户共用两路 SQL，27 日换新分页形状、在冷数据上改选三路；28 日把有效核数的量法改成按完整的一日周期算。Doris 的详细执行信息没有权限看。 11月25日同一代表日全池取数、验签和封包从12.00秒降至6.31秒，冻结输入一致。自适应分页进入深市在线复验。 11月26日同样本1至8路短测，8路达845 MB/s，首行延迟随并发上升，测试后账户配额恢复2路。沪市340列正式入口接入原生公共取数。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -301,6 +301,44 @@
           "revision": "4a85f78bdd63a09d97cedc1a130cd79a0e62aea1",
           "title": "修复 Arrow 页预算",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/4a85f78bdd63a09d97cedc1a130cd79a0e62aea1"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave1-1b-wangly-steady-and-doris-ramp.md",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            71,
+            100
+          ],
+          "title": "Doris逐笔取数并发阶梯与配额恢复",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave1-1b-wangly-steady-and-doris-ramp.md#L71-L100"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave1-1b-wangly-steady-and-doris-ramp-evidence.json",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            55
+          ],
+          "title": "Doris实测原始回执",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave1-1b-wangly-steady-and-doris-ramp-evidence.json#L1-L55"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "5669c73af1ae16c0786bbb17c985f68868d92e80",
+          "title": "公共自适应分页与跨窗口派发",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/5669c73af1ae16c0786bbb17c985f68868d92e80"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "d184a8f7519040fabb6eec1a45f87461575ba98e",
+          "title": "沪市340列正式入口接入公共取数",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/d184a8f7519040fabb6eec1a45f87461575ba98e"
         }
       ]
     },
@@ -320,20 +358,20 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 39,
+        "days": 40,
         "span": [
           "2026-08-08",
-          "2026-11-24"
+          "2026-11-26"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-25",
-          "scope": "核对目标日固定材料、原始回执和会话决定。"
+          "on": "2026-11-27",
+          "scope": "核对目标日固定材料及原始回执。"
         }
       },
       "fate": "landed",
-      "fate_note": "8 月起多次盘点和清理两个账户的存储。较大的几次：10 月 15 日 wangly 清理到期材料约 304 GB，10 月 25 日清定参原料和旧匹配缓存约 128 GB，10 月 31 日两账户清大型 S3 文件净减少约 185 GB。最近一次是 11 月 6 日删三个旧版远程服务端，腾出约 2 GB。 11月23日计算账户热暂存释放16.69 GB、对象存储净释放3.10 GB，另一账户热暂存释放1.42 GB。清理后重新读回代表日与极端日的完整344列。 11月24日补了对象列表超时后的逐层核对，深市预检保留日级对象并释放用完的热暂存。",
+      "fate_note": "8 月起多次盘点和清理两个账户的存储。较大的几次：10 月 15 日 wangly 清理到期材料约 304 GB，10 月 25 日清定参原料和旧匹配缓存约 128 GB，10 月 31 日两账户清大型 S3 文件净减少约 185 GB。最近一次是 11 月 6 日删三个旧版远程服务端，腾出约 2 GB。 11月23日计算账户热暂存释放16.69 GB、对象存储净释放3.10 GB，另一账户热暂存释放1.42 GB。清理后重新读回代表日与极端日的完整344列。 11月24日补了对象列表超时后的逐层核对，深市预检保留日级对象并释放用完的热暂存。 11月26日存储分级和写入对象账本工具合入，修复相对对象键及嵌套正式索引反查。修订版CLI完整定向测试通过。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -493,6 +531,32 @@
           "revision": "f27739ec34b7fe4fcadc15b4b92f4f65153f4189",
           "title": "对象盘点超时后用分层列表补齐",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/f27739ec34b7fe4fcadc15b4b92f4f65153f4189"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "docs/agents/storage-lifecycle.md",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            26,
+            69
+          ],
+          "title": "存储分级、对象账本与旧索引保护",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/docs/agents/storage-lifecycle.md#L26-L69"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "75440ef3439e3114438a32c4c286e8da78b52756",
+          "title": "合入存储生命周期规约和命令行工具",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/75440ef3439e3114438a32c4c286e8da78b52756"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "7450ec03f0853c92808353476ae37c197ae675cb",
+          "title": "修正相对对象键与嵌套正式索引反查",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/7450ec03f0853c92808353476ae37c197ae675cb"
         }
       ]
     },
@@ -5258,7 +5322,7 @@
       "purpose": "从逐笔行情到深市344列面板复用原公式，比较冻结Python、Python调C++和独立C++的正确性与完整耗时。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。 同版代表日23.10和23.12秒、极端日140.90秒，均完成科学核对和持久读回。683日保守外推5.77小时，三项时限和后续交接未完成。 11月23日增加了报价区间复用和跨日预取，响应模板改写已撤回。同版整链耗时待核。 11月24日同版完整对照为代表日27.91秒、极端日140.54秒，三项时限仍未过。保留64列分块，后续按重股候选、构图和指派重新设计内核。 11月25日两日在线因子逐位一致，测试发布和独立读回通过。成功重试的双日守护墙钟64.12秒，683日在线两小时目标待实测。",
+      "fate_note": "独立C++在五个全池样本日逐位复现344列。普通样本日业务命令由330.98秒降至65.60秒，两者审计收尾范围不同。极端日仍有一只重股拖尾约113分钟，主要耗在最优买卖报价匹配。继续优化普通日和极端日。 普通代表日完整签收25.150秒，极端日341.071秒仍缺完整独立审计，全期也未实测。三项速度门待过。 同版代表日23.10和23.12秒、极端日140.90秒，均完成科学核对和持久读回。683日保守外推5.77小时，三项时限和后续交接未完成。 11月23日增加了报价区间复用和跨日预取，响应模板改写已撤回。同版整链耗时待核。 11月24日同版完整对照为代表日27.91秒、极端日140.54秒，三项时限仍未过。保留64列分块，后续按重股候选、构图和指派重新设计内核。 11月25日两日在线因子逐位一致，测试发布和独立读回通过。成功重试的双日守护墙钟64.12秒，683日在线两小时目标待实测。 11月26日六个样本日完成在线测试发布及独立回读，两份冻结面板逐位一致。五连日55.59秒，极端日44.50秒，样本速度门均未过，全期仍待测。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5266,16 +5330,16 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-21",
-        "days": 6,
+        "days": 7,
         "span": [
           "2026-11-20",
-          "2026-11-25"
+          "2026-11-26"
         ],
         "unreviewed_days": [],
         "scope": "固定原始报告、组件与全池收据、用户立项和验收范围。",
         "incremental_review": {
-          "on": "2026-11-26",
-          "scope": "核对目标日固定材料、原始回执和会话决定。"
+          "on": "2026-11-27",
+          "scope": "核对目标日固定材料及原始回执。"
         }
       },
       "source_refs": [
@@ -5512,6 +5576,25 @@
           "revision": "3f14178a02c8b77ca2f9136197f217797f429399",
           "title": "在线取数、发布与有序恢复收据",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/3f14178a02c8b77ca2f9136197f217797f429399"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave7-wangly-szse-verify.md",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "深市344列与深市定参的在线实测",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave7-wangly-szse-verify.md#L1-L65"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "2adce2ca5aab30311db91c45ab124c9b11ce1969",
+          "title": "深市因子响应计算的离线逐位对照",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/2adce2ca5aab30311db91c45ab124c9b11ce1969"
         }
       ]
     },
@@ -5523,7 +5606,7 @@
       "purpose": "按实际入口迁移项目自研Python功能，分别验收沪深定参和正式因子全链的正确性与耗时。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "盘点三仓3,649个文件，迁移部分取数、成表、定参、正式计算和看板工具。沪深含重负载三日定参平均660.00和258.19秒，仍高于8秒目标。17:37保存进度并暂停，全面迁移和各项时限待验收。 11月23日完成沪市340列代表日、极端日及独立留出对照。极端日约3小时26分，两市定参仍未达到时限。更新版本的极端日保留三个侧断点。 11月24日沪市340列正式因子最快代表日194.30秒，沪市固定上游定参最快代表日140.62秒、七月三日日均141.00秒，均高于目标。存量3,659条记录已分类，并确定8条业务必须有独立C++顶层入口。 11月25日两台服务器通过原生构建及空 PATH 离线测试。沪市340列和定参入口继续合入，双日实数对照待完成。深市定参连续三日日均15.76秒，仍高于8秒。",
+      "fate_note": "盘点三仓3,649个文件，迁移部分取数、成表、定参、正式计算和看板工具。沪深含重负载三日定参平均660.00和258.19秒，仍高于8秒目标。17:37保存进度并暂停，全面迁移和各项时限待验收。 11月23日完成沪市340列代表日、极端日及独立留出对照。极端日约3小时26分，两市定参仍未达到时限。更新版本的极端日保留三个侧断点。 11月24日沪市340列正式因子最快代表日194.30秒，沪市固定上游定参最快代表日140.62秒、七月三日日均141.00秒，均高于目标。存量3,659条记录已分类，并确定8条业务必须有独立C++顶层入口。 11月25日两台服务器通过原生构建及空 PATH 离线测试。沪市340列和定参入口继续合入，双日实数对照待完成。深市定参连续三日日均15.76秒，仍高于8秒。 11月26日沪市340列和沪深定参完成代表样本的逐位验证。深市极端日定参38.06秒通过45秒上限，沪市当天四项样本速度门均未过。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5531,16 +5614,16 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-23",
-        "days": 4,
+        "days": 5,
         "span": [
           "2026-11-22",
-          "2026-11-25"
+          "2026-11-26"
         ],
         "unreviewed_days": [],
         "scope": "独立立项、沪深同标要求、原始运行收据、持久结果及暂停决定。",
         "incremental_review": {
-          "on": "2026-11-26",
-          "scope": "核对目标日固定材料、原始回执和会话决定。"
+          "on": "2026-11-27",
+          "scope": "核对目标日固定材料及原始回执。"
         }
       },
       "source_refs": [
@@ -5806,6 +5889,87 @@
           "revision": "d664b5159c245c086eb142db41053a79e4775b14",
           "title": "深市定参共享图预算和跨日预取",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/d664b5159c245c086eb142db41053a79e4775b14"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave7-wangly-szse-verify-evidence.json",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            70
+          ],
+          "title": "深市五连日与极端日机器证据",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave7-wangly-szse-verify-evidence.json#L1-L70"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave8-wenjie-sse-verify.md",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            32
+          ],
+          "title": "沪市340列与定参默认构建真机复验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave8-wenjie-sse-verify.md#L1-L32"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave8-wenjie-sse-verify-evidence.json",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            72
+          ],
+          "title": "沪市四组真机测试机器证据",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave8-wenjie-sse-verify-evidence.json#L1-L72"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave35-wenjie-sse-verify.md",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            23
+          ],
+          "title": "沪市极端日一个最低有效位差异的修复",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave35-wenjie-sse-verify.md#L1-L23"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave7-r2-wenjie-sse-verify.md",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            24
+          ],
+          "title": "沪市同一业务源码两种构建档实测",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave7-r2-wenjie-sse-verify.md#L1-L24"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "13a63e1613314ce59bafd1440853da3c5205b23e",
+          "title": "沪市F41保留冻结版幂函数",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/13a63e1613314ce59bafd1440853da3c5205b23e"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "59c552cf6c908b927492a5c570804505d6e7d5b7",
+          "title": "沪市匹配工位与冲击响应晚间改动",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/59c552cf6c908b927492a5c570804505d6e7d5b7"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "c824b89c447da34ae86848bf81b217899a62be53",
+          "title": "沪市定参图内存释放与优先读取",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/c824b89c447da34ae86848bf81b217899a62be53"
         }
       ]
     },
@@ -9141,6 +9305,43 @@
         "on": "2026-11-26",
         "basis": "两日原始回执显示文本通道、并发水位和实际页数。",
         "scope": "测试发布期间的真实取数与面板读回。"
+      }
+    },
+    {
+      "from": "doris-efficiency",
+      "to": "project-cpp-migration",
+      "date": "2026-11-26",
+      "source_date": "2026-11-26",
+      "type": "派生",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "note": "把公共原生取数入口接入沪市340列，沿生产入口实测。",
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "d184a8f7519040fabb6eec1a45f87461575ba98e",
+          "title": "沪市340列正式入口接入公共取数",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/d184a8f7519040fabb6eec1a45f87461575ba98e"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-26-wave8-wenjie-sse-verify.md",
+          "revision": "e93b115535dd1b6129257aa8db8fc9c53642a8bf",
+          "lines": [
+            1,
+            32
+          ],
+          "title": "沪市340列与定参默认构建真机复验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/e93b115535dd1b6129257aa8db8fc9c53642a8bf/reports/2026-11/2026-11-26-wave8-wenjie-sse-verify.md#L1-L32"
+        }
+      ],
+      "review": {
+        "by": "Codex",
+        "on": "2026-11-27",
+        "basis": "固定提交中的LiveFetch和沪市A1真机取数收据。",
+        "scope": "当天沪市因子的线上取数和原生生产入口。"
       }
     }
   ],
