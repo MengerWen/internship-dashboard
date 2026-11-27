@@ -1,4 +1,4 @@
-"""只读索引本机 Codex / Claude 会话，候选全文仅写入被 Git 忽略的 data/。"""
+"""只读索引本机 Codex / Claude / T3 Code 会话，候选全文仅写入被 Git 忽略的 data/。"""
 from __future__ import annotations
 
 import argparse
@@ -10,6 +10,7 @@ import ntpath
 import os
 from pathlib import Path
 import re
+import sqlite3
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,7 +27,10 @@ def dump(value):
 
 
 def norm(path):
-    value = str(path).replace("\\", "/")
+    raw = str(path)
+    if raw.startswith("~"):
+        raw = os.path.expanduser(raw)
+    value = raw.replace("\\", "/")
     if value.startswith('//?/UNC/'):
         value = '//' + value[8:]
     elif value.startswith('//?/'):
@@ -185,12 +189,149 @@ def scan_file(path, platform, since, until):
             "messages": rows, "metadata": meta, "directories": sorted(directories)}
 
 
+def scan_t3_sqlite(db_path, source_name, config, since, until, excluded, included):
+    """只读扫描 T3 Code statev2.sqlite，覆盖 Antigravity/Codex/Claude 全部线程与 worktree。"""
+    sessions, failures, counts, files = [], [], Counter(), []
+    if not db_path.is_file():
+        failures.append({"source": source_name, "error": "source_missing", "path": str(db_path)})
+        return sessions, failures, counts, files
+    counts["files_discovered"] += 1
+    disposition = {"source": source_name, "platform": "t3", "file": str(db_path)}
+    files.append(disposition)
+    uri = db_path.resolve().as_uri() + "?mode=ro"
+    try:
+        conn = sqlite3.connect(uri, uri=True)
+        cur = conn.cursor()
+        proj_rows = cur.execute(
+            "SELECT project_id, title, workspace_root FROM projection_projects WHERE deleted_at IS NULL"
+        ).fetchall()
+        explicit_pids = set(config.get("t3_project_ids", []))
+        scoped_projects = {}
+        for pid, ptitle, wroot in proj_rows:
+            if pid in explicit_pids or (wroot and within(wroot, config["project_roots"])):
+                scoped_projects[pid] = {"title": ptitle, "workspace_root": wroot}
+
+        thread_rows = cur.execute("""
+            SELECT t.thread_id, t.project_id, t.title, t.default_provider, t.payload_json,
+                   (SELECT group_concat(DISTINCT pt.provider)
+                    FROM orchestration_v2_projection_provider_threads pt
+                    WHERE pt.thread_id = t.thread_id) AS providers
+            FROM orchestration_v2_projection_threads t
+            WHERE t.deleted_at IS NULL
+        """).fetchall()
+
+        matched_sids = []
+        for tid, pid, title, default_prov, t_payload_s, providers_csv in thread_rows:
+            if tid in excluded:
+                counts["self_excluded"] += 1
+                continue
+            tp = json.loads(t_payload_s) if t_payload_s else {}
+            wt = tp.get("worktreePath") or (scoped_projects.get(pid, {}).get("workspace_root"))
+            in_project = pid in scoped_projects
+            in_wt = bool(wt and within(wt, config["project_roots"]))
+            reviewed = tid in included
+
+            msg_rows = cur.execute("""
+                SELECT message_id, role, created_at, payload_json
+                FROM orchestration_v2_projection_messages
+                WHERE thread_id = ? AND role IN ('user', 'assistant')
+                ORDER BY created_at ASC, message_id ASC
+            """, (tid,)).fetchall()
+            if not msg_rows:
+                continue
+
+            parsed_msgs = []
+            explicit_hit = False
+            for idx, (mid, role, created_at, pj) in enumerate(msg_rows, start=1):
+                if not pj:
+                    continue
+                try:
+                    p = json.loads(pj)
+                except ValueError:
+                    continue
+                text = (p.get("text") or "").strip()
+                if not text or text.startswith(WRAPPERS):
+                    continue
+                try:
+                    ts = local_time(created_at)
+                except (ValueError, TypeError):
+                    continue
+                if role == "user" and any(term.casefold() in scope_text(text).casefold()
+                                          for term in config.get("explicit_project_markers", [])):
+                    explicit_hit = True
+                day = ts[:10]
+                if not since <= day <= until:
+                    continue
+                raw_bytes = pj.encode("utf-8")
+                parsed_msgs.append({
+                    "role": role,
+                    "text": text,
+                    "message_id": mid,
+                    "phase": None,
+                    "evidence_kind": "message",
+                    "date": day,
+                    "timestamp": ts,
+                    "session_id": tid,
+                    "cwd": wt,
+                    "line": idx,
+                    "byte_offset": 0,
+                    "byte_length": len(raw_bytes),
+                    "line_sha256": hashlib.sha256(raw_bytes).hexdigest(),
+                })
+
+            if not (in_project or in_wt or reviewed or explicit_hit):
+                counts["outside_scope"] += 1
+                continue
+            if not parsed_msgs:
+                continue
+            matched_sids.append(tid)
+            providers = sorted({p for p in (providers_csv or "").split(",") if p}) or ([default_prov] if default_prov else [])
+            sessions.append({
+                "platform": "t3",
+                "providers": providers,
+                "session_id": tid,
+                "title": title or "",
+                "project_id": pid,
+                "project_title": scoped_projects.get(pid, {}).get("title", ""),
+                "source": source_name,
+                "file": str(db_path),
+                "cwd": wt,
+                "scope_basis": "reviewed-session-id" if reviewed else "t3-project" if in_project else "cwd" if in_wt else "user-project-reference",
+                "forked_from_id": tp.get("forkedFrom"),
+                "creation_source": tp.get("creationSource"),
+                "snapshot_bytes": db_path.stat().st_size,
+                "snapshot_sha256": "",
+                "grew_during_scan": False,
+                "problems": [],
+                "messages": parsed_msgs,
+            })
+        conn.close()
+        if matched_sids:
+            counts["candidate_files"] += 1
+        disposition["session_ids"] = sorted(matched_sids)
+        disposition["disposition"] = "candidate" if matched_sids else "excluded-or-no-messages-in-period"
+    except (OSError, sqlite3.Error, ValueError) as exc:
+        failures.append({"path": str(db_path), "error": type(exc).__name__})
+        disposition.update(disposition="read-failed", error=type(exc).__name__)
+    return sessions, failures, counts, files
+
+
 def collect(config, since, until):
     sessions, failures, counts, files = [], [], Counter(), []
-    excluded = set(config.get("exclude_session_ids", [])) | {os.environ.get("CODEX_THREAD_ID")}
+    excluded = set(config.get("exclude_session_ids", [])) | {
+        os.environ.get("CODEX_THREAD_ID"),
+        os.environ.get("T3CODE_THREAD_ID"),
+    }
     included = set(config.get('include_session_ids', []))
     for source in config["sources"]:
         base = Path(source["path"]).expanduser()
+        if source["platform"] == "t3":
+            s_list, f_list, c_map, file_list = scan_t3_sqlite(base, source["name"], config, since, until, excluded, included)
+            sessions.extend(s_list)
+            failures.extend(f_list)
+            counts.update(c_map)
+            files.extend(file_list)
+            continue
         if not base.is_dir():
             failures.append({"source": source["name"], "error": "source_missing", "path": str(base)})
             continue
@@ -261,14 +402,30 @@ def verify_ref(ref, index):
                 continue
             if row["role"] != ref["role"] or row["timestamp"] != ref["timestamp"]:
                 continue
-            with Path(session["file"]).open("rb") as handle:
-                handle.seek(row["byte_offset"])
-                raw = handle.read(row["byte_length"])
-            if hashlib.sha256(raw).hexdigest() != row["line_sha256"]:
-                raise ValueError("原始会话行已变化")
-            record = json.loads(raw)
-            if ref["platform"] == "claude" and record.get("sessionId") and record["sessionId"] != ref["session_id"]:
-                raise ValueError("原始消息会话ID与引用不符")
+            if ref["platform"] == "t3":
+                uri = Path(session["file"]).resolve().as_uri() + "?mode=ro"
+                conn = sqlite3.connect(uri, uri=True)
+                try:
+                    db_row = conn.execute(
+                        "SELECT payload_json FROM orchestration_v2_projection_messages WHERE thread_id = ? AND message_id = ?",
+                        (ref["session_id"], row["message_id"]),
+                    ).fetchone()
+                finally:
+                    conn.close()
+                if not db_row or not db_row[0]:
+                    raise ValueError("原始会话消息已缺失")
+                raw = db_row[0].encode("utf-8")
+                if hashlib.sha256(raw).hexdigest() != row["line_sha256"]:
+                    raise ValueError("原始会话行已变化")
+            else:
+                with Path(session["file"]).open("rb") as handle:
+                    handle.seek(row["byte_offset"])
+                    raw = handle.read(row["byte_length"])
+                if hashlib.sha256(raw).hexdigest() != row["line_sha256"]:
+                    raise ValueError("原始会话行已变化")
+                record = json.loads(raw)
+                if ref["platform"] == "claude" and record.get("sessionId") and record["sessionId"] != ref["session_id"]:
+                    raise ValueError("原始消息会话ID与引用不符")
             if not ref["excerpt"] or ref["excerpt"] not in row["text"]:
                 raise ValueError("摘录不在原始消息中")
             return row
@@ -327,7 +484,7 @@ def render_manifest(manifest, check=False):
             # 行哈希保存在审阅清单里供核验，正文只给读者能定位原话的会话和行号。
             section = [begin, "## 会话摘录", ""]
             for ref in refs:
-                platform = "Codex" if ref["platform"] == "codex" else "Claude"
+                platform = {"codex": "Codex", "claude": "Claude", "t3": "T3 Code"}.get(ref["platform"], ref["platform"])
                 section += [f"- **{platform} · {labels[ref['kind']]}**（{ref['timestamp'][11:19]}，北京时间）：{html.escape(ref['supports'])}",
                             f"  <blockquote><p>{html.escape(ref['excerpt'])}</p></blockquote>",
                             f"  <small>会话 <code>{ref['session_id']}</code>，原始记录第 {ref['line']} 行</small>", ""]

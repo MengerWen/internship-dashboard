@@ -176,6 +176,51 @@ class SessionEvidenceTests(unittest.TestCase):
             self.assertIn('&lt;script&gt;', fresh.read_text(encoding='utf-8'))
             self.assertTrue(fresh.read_text(encoding='utf-8').startswith('当日正文\n'))
 
+    def test_t3_sqlite_collects_scoped_projects_and_verifies_excerpts(self):
+        import sqlite3
+        with tempfile.TemporaryDirectory() as folder:
+            db = Path(folder) / 'statev2.sqlite'
+            conn = sqlite3.connect(db)
+            conn.executescript("""
+                CREATE TABLE projection_projects (project_id TEXT, title TEXT, workspace_root TEXT, deleted_at TEXT);
+                CREATE TABLE orchestration_v2_projection_threads (thread_id TEXT, project_id TEXT, title TEXT, default_provider TEXT, payload_json TEXT, deleted_at TEXT);
+                CREATE TABLE orchestration_v2_projection_provider_threads (thread_id TEXT, provider TEXT);
+                CREATE TABLE orchestration_v2_projection_messages (message_id TEXT, thread_id TEXT, role TEXT, created_at TEXT, payload_json TEXT);
+            """)
+            conn.execute("INSERT INTO projection_projects VALUES ('p1', '研究', 'D:/research', NULL)")
+            conn.execute("INSERT INTO projection_projects VALUES ('p2', '无关', 'D:/other', NULL)")
+            conn.execute("INSERT INTO orchestration_v2_projection_threads VALUES ('t1', 'p1', '总指挥', 'antigravity', ?, NULL)",
+                         (json.dumps({'worktreePath': 'D:/worktrees/w1'}),))
+            conn.execute("INSERT INTO orchestration_v2_projection_threads VALUES ('t2', 'p2', '闲聊', 'codex', '{}', NULL)")
+            conn.execute("INSERT INTO orchestration_v2_projection_threads VALUES ('t-self', 'p1', '自身', 'antigravity', '{}', NULL)")
+            conn.execute("INSERT INTO orchestration_v2_projection_provider_threads VALUES ('t1', 'antigravity')")
+            conn.execute("INSERT INTO orchestration_v2_projection_provider_threads VALUES ('t2', 'codex')")
+            conn.execute("INSERT INTO orchestration_v2_projection_messages VALUES ('m1', 't1', 'user', '2026-11-26T02:00:00Z', ?)",
+                         (json.dumps({'id': 'm1', 'text': '把深市344列定参压到45秒以内'}, ensure_ascii=False),))
+            conn.execute("INSERT INTO orchestration_v2_projection_messages VALUES ('m2', 't2', 'user', '2026-11-26T02:00:00Z', ?)",
+                         (json.dumps({'id': 'm2', 'text': '无关话题'}, ensure_ascii=False),))
+            conn.execute("INSERT INTO orchestration_v2_projection_messages VALUES ('m3', 't-self', 'user', '2026-11-26T02:00:00Z', ?)",
+                         (json.dumps({'id': 'm3', 'text': '日志维护自身'}, ensure_ascii=False),))
+            conn.commit()
+            conn.close()
+            with patch.dict('os.environ', {'T3CODE_THREAD_ID': 't-self'}):
+                result = sessions.collect(
+                    {'sources': [{'name': 't3-code', 'platform': 't3', 'path': str(db)}],
+                     'project_roots': ['D:/research'], 'explicit_project_markers': []},
+                    '2026-11-26', '2026-11-26'
+                )
+            self.assertEqual(result['failures'], [])
+            self.assertEqual(len(result['sessions']), 1)
+            sess = result['sessions'][0]
+            self.assertEqual(sess['platform'], 't3')
+            self.assertEqual(sess['providers'], ['antigravity'])
+            self.assertEqual(sess['session_id'], 't1')
+            self.assertEqual(len(sess['messages']), 1)
+            msg = sess['messages'][0]
+            self.assertEqual(msg['date'], '2026-11-26')
+            ref = {**msg, 'platform': 't3', 'session_id': 't1', 'excerpt': '压到45秒以内'}
+            sessions.verify_ref(ref, result)
+
 
 if __name__ == '__main__':
     unittest.main()
