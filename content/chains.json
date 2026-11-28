@@ -1725,21 +1725,21 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 15,
+        "days": 16,
         "span": [
           "2026-07-07",
-          "2026-11-25"
+          "2026-11-27"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-26",
-          "scope": "核对目标日固定材料、原始回执和会话决定。"
+          "on": "2026-11-28",
+          "scope": "核对 2026-11-27 固定提交、原始报告与 T3 会话回执。"
         },
         "neon_audit": "2026-11-27"
       },
       "fate": "landed",
-      "fate_note": "持续迭代网站构建和发布链路：11 月 10 日切换为本机增量发布并修复 Windows 控制台编码问题；11 月下旬陆续把工作区盘点、导航、搜索、Markdown 渲染与全站发布构建迁入独立 C++ 工具。11 月 25 日 C++ 构建入口合入主线，9,136 个产物文件与冻结版逐字节一致，冷构建 22.97 秒、暖缓存 6.87 秒。",
+      "fate_note": "持续迭代网站构建和发布链路：11 月 10 日切换为本机增量发布并修复 Windows 控制台编码问题；11 月 25 日独立 C++ 构建入口合入主线，9,136 个产物与冻结版逐字节一致（冷构建 22.97 秒、暖缓存 6.87 秒）；11 月 27 日将本机发布脚本切换至持久隔离 worktree 构建，本地未提交文件不再阻塞或混入生产产物。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -1890,6 +1890,25 @@
           "revision": "8bf92deff7928f9a6e1110765e05dee7be864a78",
           "title": "看板发布入口切换为独立 C++",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/8bf92deff7928f9a6e1110765e05dee7be864a78"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "commit",
+          "revision": "19ce6c05a1c13c274e7fef98ff14985051bdb9b0",
+          "title": "通过隔离 worktree 执行本地发布",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/19ce6c05a1c13c274e7fef98ff14985051bdb9b0"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "DEPLOY.md",
+          "revision": "426878a6bbd12d3b52c7fae6c196dcc79d902905",
+          "lines": [
+            124,
+            159
+          ],
+          "title": "日常发布流程与隔离 worktree 说明",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/426878a6bbd12d3b52c7fae6c196dcc79d902905/DEPLOY.md#L124-L159"
         }
       ]
     },
@@ -1924,27 +1943,28 @@
           "2026-11-16",
           "2026-11-18",
           "2026-11-22",
-          "2026-11-23"
+          "2026-11-23",
+          "2026-11-27"
         ]
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 53,
+        "days": 54,
         "span": [
           "2026-07-07",
-          "2026-11-24"
+          "2026-11-27"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-25",
-          "scope": "核对目标日固定材料、原始回执和会话决定。"
+          "on": "2026-11-28",
+          "scope": "核对 2026-11-27 固定提交、原始报告与 T3 会话回执。"
         },
         "neon_audit": "2026-11-27"
       },
       "fate": "landed",
-      "fate_note": "持续把因子、模型、策略和算力摸底结果整理成可交互报告：11 月中旬发布中证 2000 底仓与沪深新旧模型对比、日内与隔日双线路线图；11 月 23–24 日发布深市全天扩窗负载与工期摸底报告（含通俗化改写版），并将 227 日提速过程单独成文。",
+      "fate_note": "持续把因子、模型、策略和算力摸底结果整理成可交互报告：11 月中旬发布中证 2000 底仓与沪深新旧模型对比、日内与隔日双线路线图；11 月 23–24 日发布深市全天扩窗负载与工期摸底报告及 227 日提速记录；11 月 27 日发布《1 亿实盘研究总纲与首批实证》说人话版交互展示页，并为 11 月 22 日深市预检页补加后续基准演进提示。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2126,6 +2146,25 @@
           ],
           "title": "227日提速技术报告",
           "url": "https://github.com/MengerWen/internship-dashboard/blob/fcfac725b3bba5aa1d40455c57b362292b6050eb/content/daily/2026-11-23.md#L1-L22"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "content/daily/2026-11-27.md",
+          "revision": "426878a6bbd12d3b52c7fae6c196dcc79d902905",
+          "lines": [
+            1,
+            29
+          ],
+          "title": "1 亿实盘研究总纲与首批实证（说人话版）",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/426878a6bbd12d3b52c7fae6c196dcc79d902905/content/daily/2026-11-27.md#L1-L29"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "commit",
+          "revision": "426878a6bbd12d3b52c7fae6c196dcc79d902905",
+          "title": "以说人话口径重写 11 月 27 日交互展示页并注入轨 A-D 实证",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/426878a6bbd12d3b52c7fae6c196dcc79d902905"
         }
       ]
     },
@@ -2511,7 +2550,7 @@
       "purpose": "搭建和维护研究日志、任务链图谱与证据索引，让每天的工作和结论都能追回原始提交、报告和会话。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "10 月 20 日上线并迭代出链条高亮、证据点形和交接视图。11 月 27 日将每日自动更新从 Codex 迁至 T3 Code（Gemini 4 Neon High），会话采集补齐 T3 全量线程与 worktree，并通盘重审全部链条与历史日卡。",
+      "fate_note": "10 月 20 日上线并迭代出链条高亮、证据点形和交接视图。11 月 27 日将每日自动更新从 Codex 迁至 T3 Code（Gemini 4 Neon High），会话采集补齐 T3 全量线程与 worktree，将链条由 61 条收敛为 60 条并通盘重审全部 136 篇历史日卡。",
       "closes_into": {
         "daily": []
       },
@@ -2519,16 +2558,16 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 6,
+        "days": 7,
         "span": [
           "2026-10-20",
-          "2026-11-03"
+          "2026-11-27"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-04",
-          "scope": "11月3日链条归属修订与公共图谱铺满页面的交付。"
+          "on": "2026-11-28",
+          "scope": "核对 2026-11-27 固定提交、原始报告与 T3 会话回执。"
         },
         "neon_audit": "2026-11-27"
       },
@@ -2570,6 +2609,25 @@
           "revision": "0910a201154aa02b6889ad77899943a2eb656d1c",
           "title": "支持研究日志点击图例高亮对应交接线",
           "url": "https://github.com/MengerWen/internship-dashboard/commit/0910a201154aa02b6889ad77899943a2eb656d1c"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "docs/journal-review/daily-updates/2026-11-27-neon-migration.md",
+          "revision": "426878a6bbd12d3b52c7fae6c196dcc79d902905",
+          "lines": [
+            1,
+            26
+          ],
+          "title": "研究日志迁移至 T3 Code (Neon High) 与全量重审记录",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/426878a6bbd12d3b52c7fae6c196dcc79d902905/docs/journal-review/daily-updates/2026-11-27-neon-migration.md#L1-L26"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "commit",
+          "revision": "820d301893f00ef966a04f5e0d79b2c886aaa7b2",
+          "title": "研究日志迁至 T3 Neon High、接入 T3 全量会话并重审全部链条与日卡",
+          "url": "https://github.com/MengerWen/internship-dashboard/commit/820d301893f00ef966a04f5e0d79b2c886aaa7b2"
         }
       ]
     },
@@ -2640,21 +2698,21 @@
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 34,
+        "days": 35,
         "span": [
           "2026-08-19",
-          "2026-11-21"
+          "2026-11-27"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-22",
-          "scope": "复核固定结果、Git差异和阶段交付。"
+          "on": "2026-11-28",
+          "scope": "核对 2026-11-27 固定提交、原始报告与 T3 会话回执。"
         },
         "neon_audit": "2026-11-27"
       },
       "fate": "landed",
-      "fate_note": "8 月起研判 B/C/D/V 系列，10 月底起拓展算法单以外的新信息维度，逐步整理出 74 个因子族并分批定稿交付计算。11 月下旬对外部参考来源中的 301 个候选条目逐行查重，并新增午后跳价和尾盘浮亏两项候选规格等待计算。",
+      "fate_note": "8 月起研判 B/C/D/V 系列并整理出 74 个因子族；11 月下旬完成外部 301 个候选逐行查重后，于 11 月 27 日合入沪市深度因子公开数量修复（public_qv）、纯 T 公开激进度、P1 72 代表日同股降级方案、沪市 44 族 165 列角色解耦方案与二代算法单扩容蓝图。晚间隔离分支实测显示：public_qv 将真实沪市 5 连日 20 个深度因子覆盖率由 4.18% 提至 100.00%（深市 3 日遮罩对照恢复至 83.03% 且几乎不失真）；44 族角色体检确认原定 103 列门控 0 列过线，二代零重算初筛转由历史 E-clock 面板继续核查。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -2860,6 +2918,49 @@
           ],
           "title": "午后跳价和尾盘浮亏首批规格",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/71de695a13992cba6a0f24061fe443dd1f730d24/reports/2026-11/2026-11-21-n11-p1-first-factor-batch.md#L1-L31"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-v2-algo-order-factor-expansion-blueprint.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            65
+          ],
+          "title": "第二代沪深算法单因子扩容蓝图",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-v2-algo-order-factor-expansion-blueprint.md#L1-L65"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-p1-representative-days-and-ablation.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            61
+          ],
+          "title": "P1 深市同股降级实验与 72 日样本",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-p1-representative-days-and-ablation.md#L1-L61"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-sse-candidate-role-decoupling-audit.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            59
+          ],
+          "title": "沪市候选因子角色解耦与 H01 扩样",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-sse-candidate-role-decoupling-audit.md#L1-L59"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "acfd5ec0d56b1cc9a2e22ef3abb04de2d34b591f",
+          "title": "合入沪市 public_qv 修复、P1 消融、四板块分桶与二代蓝图",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/acfd5ec0d56b1cc9a2e22ef3abb04de2d34b591f"
         }
       ]
     },
@@ -2985,27 +3086,28 @@
       "status": "active",
       "closes_into": {
         "daily": [
-          "2026-11-18"
+          "2026-11-18",
+          "2026-11-27"
         ]
       },
       "review": {
         "by": "Claude",
         "on": "2026-10-22",
-        "days": 12,
+        "days": 13,
         "span": [
           "2026-09-17",
-          "2026-11-21"
+          "2026-11-27"
         ],
         "unreviewed_days": [],
         "scope": "已按原始提交和会话复核这条链的归属与起止日期。",
         "incremental_review": {
-          "on": "2026-11-22",
-          "scope": "复核固定结果、Git差异和阶段交付。"
+          "on": "2026-11-28",
+          "scope": "核对 2026-11-27 固定提交、原始报告与 T3 会话回执。"
         },
         "neon_audit": "2026-11-27"
       },
       "fate": "landed",
-      "fate_note": "已建立股票池、风险、容量与交易成本对照：先用 2 亿元账户和 566 日底仓测算了同股可卖上限与冲击容量；11 月下旬转向 1 亿元连续账户框架，并行推进日内与隔日两条策略线，以旧因子扩窗对照和 309 日连续账簿核对现金与可卖库存，新方案的两腿拆解与临界分数仍在推进中。",
+      "fate_note": "已从早期 2 亿元底仓摸底升级为 1 亿元真实账户第一性原理总纲（11 月 27 日定稿）：不预设最终策略形态与对标指数，封存 2026-11+ 留作终审盲测。首轮 566–683 日零重算实证确认深市流动性高档池（+142.7 万/日、末 82 天 +169.5 万/日）显著优于中证 2000，现有 09:35 信号隔夜大吐 -57.9 bp 不可裸持，13:00 午盘复开密度达早盘 7.35 倍，老 601 天定参存在 26%–38% 事前偏差（30 倍压缩日摘要已跑通 10–14 ms 归约）。全新 C++ 六轴账簿 n04_engine（多档三情景撮合、盘口折价与动态限价）已在隔离分支双平台过验，待合入主线跑全期回放。",
       "report_coverage": "curated",
       "source_refs": [
         {
@@ -3151,6 +3253,42 @@
           ],
           "title": "旧分数校准和报价门槛对照",
           "url": "https://github.com/MengerWen/sirui-quant-research/blob/71de695a13992cba6a0f24061fe443dd1f730d24/reports/2026-11/2026-11-21-intraday-n09-p4-frozen-score-calibration.md#L1-L25"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-first-principles-research-master-plan.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            140
+          ],
+          "title": "思瑞投资量化策略研究与系统演进总纲（第一性原理版）",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-first-principles-research-master-plan.md#L1-L140"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-track-d-board-bucket-sketch-spec.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            49
+          ],
+          "title": "轨 D 严格 PIT 日摘要与四板块分桶规格",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-track-d-board-bucket-sketch-spec.md#L1-L49"
+        },
+        {
+          "repo": "internship-dashboard",
+          "kind": "file",
+          "path": "content/daily/2026-11-27.md",
+          "revision": "426878a6bbd12d3b52c7fae6c196dcc79d902905",
+          "lines": [
+            1,
+            29
+          ],
+          "title": "1 亿实盘研究总纲与首批实证展示页",
+          "url": "https://github.com/MengerWen/internship-dashboard/blob/426878a6bbd12d3b52c7fae6c196dcc79d902905/content/daily/2026-11-27.md#L1-L29"
         }
       ]
     },
@@ -5352,7 +5490,7 @@
       "purpose": "在不改变任何数学公式的前提下，把深市 344 列从逐笔取数到因子输出的全链路改写为独立 C++ 引擎，持续压降普通日和极端重股日耗时并逐位核对一致性。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "独立 C++ 引擎已在普通日和极端日全部通过与冻结参考的逐位（0 ULP）一致性核对，并完成在线测试与持久化复查。普通日单日耗时从最初 330.98 秒大幅压至 11 秒左右（五连日 55.59 秒），极端日从早期 113 分钟拖尾压至 44.50 秒，但距五连日 7 秒/日、极端日 38 秒及 683 日两小时目标仍有差距，仍在持续优化。",
+      "fate_note": "独立 C++ 引擎已在普通日和极端日全部通过与冻结参考的逐位（0 ULP）核对。11 月 27 日撤回引发回退的 AVX-512 改动并上线重股 F40+BBO 双图重叠，Wave 14 极端日压至新低 42.40 秒且彻底消除重股 001391 的 22 秒独尾，五连日从取数波动后的 90.38 秒回落至 53.68 秒；但极端日仍出现 1 次评分预算背压（晚间已合入隔离资源改动），整体距五连日 35–37.5 秒与极端日 30–35 秒目标仍有差距。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5360,16 +5498,16 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-21",
-        "days": 7,
+        "days": 8,
         "span": [
           "2026-11-20",
-          "2026-11-26"
+          "2026-11-27"
         ],
         "unreviewed_days": [],
         "scope": "固定原始报告、组件与全池收据、用户立项和验收范围。",
         "incremental_review": {
-          "on": "2026-11-27",
-          "scope": "核对目标日固定材料及原始回执。"
+          "on": "2026-11-28",
+          "scope": "核对 2026-11-27 固定提交、原始报告与 T3 会话回执。"
         },
         "neon_audit": "2026-11-27"
       },
@@ -5626,6 +5764,37 @@
           "revision": "2adce2ca5aab30311db91c45ab124c9b11ce1969",
           "title": "深市因子响应计算的离线逐位对照",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/2adce2ca5aab30311db91c45ab124c9b11ce1969"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-27-wave14-wangly-szse-verify.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            68
+          ],
+          "title": "Wave 14 深市 344 因子与定参真机终验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/reports/2026-11/2026-11-27-wave14-wangly-szse-verify.md#L1-L68"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-27-wave13-wangly-szse-verify.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            48
+          ],
+          "title": "Wave 13 深市 344 因子真机验收",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/reports/2026-11/2026-11-27-wave13-wangly-szse-verify.md#L1-L48"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "fc49908e8b24790ebb53604c2b61da5facdf37fe",
+          "title": "共享深市 F40 门控并按预算重叠重股双图",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/fc49908e8b24790ebb53604c2b61da5facdf37fe"
         }
       ]
     },
@@ -5637,7 +5806,7 @@
       "purpose": "将思瑞研究仓的核心 Python 计算入口（公共取数、沪深因子与定参、对象发布等）整体迁入纯 C++ 底座，建立自动化多波次研发与双机真机验收流程。",
       "status": "active",
       "fate": "landed",
-      "fate_note": "11 月 24 日正式拍板全项目迁往 C++ 并启动多波次自动推进；11 月 25 日原始 22 项 C++ 底座改造全部合入主线，补齐双机（wangly、wenjie）对等编译环境并抽出沪深共享库 opening_cpp。截至 11 月 26 日，沪深定参与沪市 340 列全部通过逐位核对，深市极端日定参降至 38.06 秒通过 45 秒门槛，沪市四项速度门槛仍待攻克。",
+      "fate_note": "11 月 24 日启动全项目迁往 C++ 并实行多波次自动推进，11 月 25 日 22 项底座改造全部合入主线并拉齐双机环境。截至 11 月 27 日 Wave 14 双机终验，沪深因子与定参全部保持 0 ULP 逐位一致、0 字节溢写：沪市 340 列极端日压至 89.97 秒，率先突破 105 秒门槛；深市极端日定参进一步降至 34.77 秒（过 45 秒线）。沪市五连日（88.97 秒）、代表日定参（15.93 秒）、七月三日定参（122.85 秒）及深市五连日定参（37.44 秒）仍待后续波次攻克。",
       "report_coverage": "curated",
       "closes_into": {
         "daily": []
@@ -5645,16 +5814,16 @@
       "review": {
         "by": "Codex",
         "on": "2026-11-23",
-        "days": 5,
+        "days": 6,
         "span": [
           "2026-11-22",
-          "2026-11-26"
+          "2026-11-27"
         ],
         "unreviewed_days": [],
         "scope": "独立立项、沪深同标要求、原始运行收据、持久结果及暂停决定。",
         "incremental_review": {
-          "on": "2026-11-27",
-          "scope": "核对目标日固定材料及原始回执。"
+          "on": "2026-11-28",
+          "scope": "核对 2026-11-27 固定提交、原始报告与 T3 会话回执。"
         },
         "neon_audit": "2026-11-27"
       },
@@ -6002,6 +6171,37 @@
           "revision": "c824b89c447da34ae86848bf81b217899a62be53",
           "title": "沪市定参图内存释放与优先读取",
           "url": "https://github.com/MengerWen/sirui-quant-research/commit/c824b89c447da34ae86848bf81b217899a62be53"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-27-wave14-wenjie-sse-verify.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            113
+          ],
+          "title": "Wave 14 沪市因子与定参真机终验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/reports/2026-11/2026-11-27-wave14-wenjie-sse-verify.md#L1-L113"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-27-wave13-wenjie-sse-verify.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            95
+          ],
+          "title": "Wave 13 沪市因子与定参真机终验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/reports/2026-11/2026-11-27-wave13-wenjie-sse-verify.md#L1-L95"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "commit",
+          "revision": "9ce8f61f989624b2fa7fde059fb8c6da0e465f5f",
+          "title": "减少 F40 指派前沿扫描开销",
+          "url": "https://github.com/MengerWen/sirui-quant-research/commit/9ce8f61f989624b2fa7fde059fb8c6da0e465f5f"
         }
       ]
     },
@@ -9333,6 +9533,132 @@
         "on": "2026-11-27",
         "basis": "固定提交中的LiveFetch和沪市A1真机取数收据。",
         "scope": "当天沪市因子的线上取数和原生生产入口。"
+      }
+    },
+    {
+      "from": "szse-intraday-workload-preflight",
+      "to": "strategy-research",
+      "source_date": "2026-11-24",
+      "date": "2026-11-27",
+      "note": "683 日 × 88 截点全天负载库直接用于轨 A 午盘密度侦察（发现 13:00 7.35 倍密度峰）及代表日分层抽样。",
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-first-principles-research-master-plan.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            27,
+            30
+          ],
+          "title": "总纲引用全天负载库作为轨 A 侦察与起跑线输入",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-first-principles-research-master-plan.md#L27-L30"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-p1-representative-days-and-ablation.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            5,
+            17
+          ],
+          "title": "P1 72 代表日直接消费深市全天负载覆盖表",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-p1-representative-days-and-ablation.md#L5-L17"
+        }
+      ],
+      "type": "派生",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "review": {
+        "by": "Gemini 4 Neon",
+        "on": "2026-11-28",
+        "basis": "总纲与 P1 72 日代表日方案直接引用 683 日全天负载库。",
+        "scope": "轨 A 午盘密度侦察与代表日分层抽样输入。"
+      }
+    },
+    {
+      "from": "project-cpp-migration",
+      "to": "strategy-research",
+      "source_date": "2026-11-27",
+      "date": "2026-11-27",
+      "note": "Wave 13–14 沪深 C++ 因子与定参实测建立起总纲的算力起跑线，并支撑双轨并发与日摘要 PIT 改造。",
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-first-principles-research-master-plan.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            27,
+            43
+          ],
+          "title": "总纲以 Wave 13 真机耗时确立双轨并发起跑线",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-first-principles-research-master-plan.md#L27-L43"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "reports/2026-11/2026-11-27-wave14-wenjie-sse-verify.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            22
+          ],
+          "title": "Wave 14 沪市因子与定参真机终验",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/reports/2026-11/2026-11-27-wave14-wenjie-sse-verify.md#L1-L22"
+        }
+      ],
+      "type": "依赖解除",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "review": {
+        "by": "Gemini 4 Neon",
+        "on": "2026-11-28",
+        "basis": "11 月 27 日研究总纲直接以 Wave 13–14 真机实测确立双轨并发起跑线。",
+        "scope": "沪深原生 C++ 引擎耗时基线与轨 D/E 演进承接。"
+      }
+    },
+    {
+      "from": "strategy-research",
+      "to": "behavior-design",
+      "source_date": "2026-11-27",
+      "date": "2026-11-27",
+      "note": "1 亿实盘总纲确立的四层架构、四重 PIT 与角色解耦要求，直接指导沪市深度修复与二代算法单因子扩容蓝图。",
+      "source_refs": [
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-v2-algo-order-factor-expansion-blueprint.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            1,
+            11
+          ],
+          "title": "二代算法单蓝图明确承接 11-27 总纲的时钟与角色接口",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-v2-algo-order-factor-expansion-blueprint.md#L1-L11"
+        },
+        {
+          "repo": "sirui-quant-research",
+          "kind": "file",
+          "path": "PLAN/2026-11-27-sse-candidate-role-decoupling-audit.md",
+          "revision": "3f10d92d9e3533fbeeae603e73af2171f50e5f74",
+          "lines": [
+            11,
+            33
+          ],
+          "title": "沪市 44 族角色分工承接总纲解耦框架",
+          "url": "https://github.com/MengerWen/sirui-quant-research/blob/3f10d92d9e3533fbeeae603e73af2171f50e5f74/PLAN/2026-11-27-sse-candidate-role-decoupling-audit.md#L11-L33"
+        }
+      ],
+      "type": "派生",
+      "confidence": "confirmed",
+      "evidence_kind": "artifact_input",
+      "review": {
+        "by": "Gemini 4 Neon",
+        "on": "2026-11-28",
+        "basis": "二代算法单蓝图与沪市 44 族角色解耦方案均明确承接 11 月 27 日研究总纲。",
+        "scope": "四层架构、四重 PIT 与角色解耦向因子扩容线的传导。"
       }
     }
   ],
